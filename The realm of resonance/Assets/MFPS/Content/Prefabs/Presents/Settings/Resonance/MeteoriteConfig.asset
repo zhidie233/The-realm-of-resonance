@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e1a06bbb359bccb4bb52564b1a750c2c, type: 3}
+  m_Name: MeteoriteConfig
+  m_EditorClassIdentifier: 
+  triggerProbability: 1
+  meteoritePrefab: {fileID: 1338248142525780293, guid: 2276b6d5d0a1dfa488c1d325275bec93, type: 3}
+  meteoriteCountdown: 0.5
+  meteoriteFallSpeed: 20
+  damageCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0.02
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 100
+      value: 3
+      inSlope: 0.02
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  baseDamage: 50
+  arrowMarkerPrefab: {fileID: 265523947708552412, guid: 9dbd80ae504f2ee45be41fab367846ac, type: 3}
+  markerDisplayTime: 5
