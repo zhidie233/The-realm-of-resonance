@@ -16,6 +16,10 @@
 *.log
 .workbuddy-ai
 
+# Local collaboration and editor settings
+/AGENTS.md
+/Project/.vscode/
+
 # By default unity supports Blender asset imports, *.blend1 blender files do not need to be commited to version control.
 *.blend1
 *.blend1.meta
