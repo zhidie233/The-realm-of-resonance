@@ -105,10 +105,7 @@ InitTestScene*.unity*
 # ============================================================
 # Project-specific: TextMesh Pro SourceHanSans SDF font assets
 # ============================================================
-# These .asset files are generated build artifacts (>100MB each) and must NOT
-# enter version control. GitHub rejects files over 100MB. Collaborators
-# generate them locally from the source .otf files using TMP Font Asset Creator.
+# SourceHanSans TMP SDF assets are required for the project font references.
+# Keep these generated assets in version control. Each file is below GitHub's
+# 100 MB single-file limit.
 # See: docs/TMP-字体生成说明.md
-#
-/[Aa]ssets/TextMesh Pro/Fonts/SourceHanSans* SDF.asset
-/[Aa]ssets/TextMesh Pro/Fonts/SourceHanSans* SDF.asset.meta
