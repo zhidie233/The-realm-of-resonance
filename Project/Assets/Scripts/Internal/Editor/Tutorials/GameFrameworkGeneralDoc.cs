@@ -874,15 +874,8 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void DrawAddonsDoc()
     {
-        DrawText("Game Framework 的核心功能设计得相当完整，但你可能会发现它并不包含 FPS 游戏常见的一些标准功能，例如小地图、登录系统、等级系统、载具、商店等。这并非疏漏，MFPS 确实提供其中许多功能，只是以扩展或插件形式提供，让你按需选择。\n \n你可能会问为什么这些不放进默认配置。理由如下：\n \n把这些功能拆分为可选插件是双向考虑，对 MFPS 开发团队和作为游戏开发者的你都有好处。首先关乎价格与灵活性。若把所有可能的功能都塞进核心包，价格必然被推高，可能超出很多人的承受范围，至少要涨到 500 美元以上。提供精简的核心包可以把入门价格控制在低位，让从爱好者到专业开发者的更广泛人群都能负担。\n \n其次，这种模块化方式尊重不同项目的独特需求与限制。并非每个游戏都需要复杂的账号系统、载具或连杀奖励。让开发者只挑选并集成自己需要的功能，可以避免为不需要的东西付费或耗费精力。这让 MFPS 不仅更可定制，也更轻量高效。\n\n<b>需要说明的是，核心包本身功能完整，插件全部可选。</b>\n \n尽管是可选的，这些插件都经过细致设计，能与核心系统无缝衔接。大多数支持自动集成，无需手动编码或配置。你只需选择需要的功能，系统会平滑接入你的项目。\n \n为让你的开发过程更顺畅，也便于了解可引入的功能范围，请查看k out the '<b>Addon Manager</b>' window. You can access it in MFPS by navigating to <b>MFPS ➔ Addons ➔ Addons Manager.</b> Here, you'll find a suite of add-ons designed to elevate your game vision, all while maintaining the balance between complexity, performance, and budget.");
+        DrawText("Game Framework 的核心功能设计得相当完整，但不包含 FPS 游戏常见的一些标准功能，例如小地图、登录系统、等级系统、载具、商店等。MFPS 确实提供其中许多功能，以扩展或插件形式提供，让你按需选择。\n \n这些功能不放进默认配置，主要出于价格与灵活性的考虑。若把所有可能的功能都塞进核心包，价格必然被推高，可能超出很多人的承受范围。提供精简的核心包可以把入门价格控制在低位，让从爱好者到专业开发者的更广泛人群都能负担。\n \n模块化方式也尊重不同项目的独特需求与限制。并非每个游戏都需要复杂的账号系统、载具或连杀奖励。让开发者只挑选并集成自己需要的功能，可以避免为不需要的东西付费或耗费精力。这让 MFPS 不仅更可定制，也更轻量高效。\n\n<b>核心包本身功能完整，插件全部可选。</b>\n \n尽管是可选的，这些插件都经过细致设计，能与核心系统无缝衔接。大多数支持自动集成，无需手动编码或配置。你只需选择需要的功能，系统会平滑接入你的项目。");
 
-        DrawNote("受资源商店规则限制，我无法直接列出插件链接，但所有可用插件都可以在官网 <b>lovattostudio.com</b> 找到");
-
-        /*using (new CenteredScope())
-            if (Buttons.OutlineButton("打开插件管理器", Color.yellow, GUILayout.Height(32)))
-            {
-                GetWindow<MFPSEditor.Addons.MFPSAddonsWindow>("Addons Manager");
-            }*/
         DrawText("<b><size=22>如何集成插件？</size></b>\n\n所有插件的根目录下都有 <b>ReadMe.txt</b> 说明文件，而且几乎所有插件都<b>支持自动集成</b>，你只需启用插件并点击 Integrate 菜单项：\n");
         DrawAnimatedImage(3);
     }
@@ -891,8 +884,8 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         DrawText("MFPS 提供了一系列独立的 <b>编辑器窗口</b>，位于 Unity 编辑器顶部菜单的 <b>MFPS</b> 根菜单下：");
         DrawServerImage("img-26.png");
-        DrawText("以下简要说明各项用途：\n \n<b><size=18>MFPS ➔ Addons ➔ *</size></b>\n \n- 该子菜单下是项目中所有插件的<i>快捷操作</i>，按插件名列出，包含启用或禁用插件、执行自动集成、以及文档链接等按钮。\n \n<b><size=18>MFPS ➔ Addons ➔ Addons Manager</size></b>\n \n- 打开插件管理器窗口，可查看 Game Framework 全部可用插件的名录，\n包括各插件的最新更新时间、更新日志、最新版本、插件说明、启用或禁用、插件链接，以及项目内插件的当前状态。\n \n<b><size=18>MFPS ➔ Tutorials</size></b>\n \n- 该子菜单列出了 MFPS 与项目中所有插件的内置编辑器文档与教程，其中 <b>Tutorials ➔ Documentation</b> 是 MFPS 的主文档。\n \n<b><size=18>MFPS ➔ Tools</size></b>\n \n- 该子菜单提供多种操作与辅助窗口，为 MFPS 及特定插件提供实用的自动化操作。");
-        DrawText("<b><size=18>MFPS ➔ Manager</size></b>\n \n- 打开 MFPS 管理器窗口，可查看 MFPS 与项目中所有插件的前端设置。该窗口还包含一组实用工具窗口，可管理 MFPS 的一些主要设置，例如玩家默认武器配置、武器信息、关卡等。\n \n<b><size=18>MFPS ➔ Store</size></b>\n \n- 打开 MFPS 商店窗口，其中列出所有可用的 MFPS 插件及其说明、预览图和购买链接。\n \n<b><size=18>MFPS ➔ MFPS</size></b>\n \n- 打开 MFPS 窗口，也就是首次导入 MFPS 时自动弹出的那个窗口。其中包含当前 MFPS 项目的实用信息，例如所用 MFPS 版本、该版本的更新日志、插件信息、教程链接与联系方式。\n \n<b><size=18>MFPS ➔ MFPS News</size></b>\n \n- 打开 MFPS 新闻窗口，顾名思义，其中包含 MFPS 与各插件的动态、\n插件最新更新，以及你可能感兴趣的射击类项目第三方资源商店素材。\n \n该窗口的信息从服务器获取，建议定期查看以免错过 MFPS 的相关内容。");
+        DrawText("以下简要说明各项用途：\n \n<b><size=18>MFPS ➔ Tutorials</size></b>\n \n- 该子菜单列出了 MFPS 的内置编辑器文档与教程，其中 <b>Tutorials ➔ Documentation</b> 是 MFPS 的主文档。\n \n<b><size=18>MFPS ➔ Tools</size></b>\n \n- 该子菜单提供多种操作与辅助窗口，为 MFPS 提供实用的自动化操作。");
+        DrawText("<b><size=18>MFPS ➔ Manager</size></b>\n \n- 打开 MFPS 管理器窗口，可查看 MFPS 的前端设置。该窗口还包含一组实用工具窗口，可管理 MFPS 的一些主要设置，例如玩家默认武器配置、武器信息、关卡等。\n \n<b><size=18>MFPS ➔ MFPS</size></b>\n \n- 打开 MFPS 窗口，也就是首次导入 MFPS 时自动弹出的那个窗口。其中包含当前 MFPS 项目的实用信息，例如所用 MFPS 版本、该版本的更新日志、教程链接与联系方式。");
     }
 
     void DrawGameTexts()

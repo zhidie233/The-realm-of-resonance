@@ -1,7 +1,6 @@
 ﻿//#define AUTO_REFRESH
 #define ASCOMPLIANCE
 using MFPSEditor;
-using MFPSEditor.Addons;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -24,25 +23,11 @@ public class bl_MFPSManagerWindow : EditorWindow
     private List<ManagerPanel> managerPanels = new List<ManagerPanel>()
     {
     new ManagerPanel(){Name = "游戏数据", BodyFuncName = nameof(DrawGameDataSettings)},
-    new ManagerPanel(){Name = "ULogin Pro", BodyFuncName = nameof(DrawULogin)},
     new ManagerPanel(){Name = "玩家选择器", BodyFuncName = nameof(DrawPlayerSelector)},
-    new ManagerPanel(){Name = "Shop", BodyFuncName = nameof(DrawShop)},
     new ManagerPanel(){Name = "兵种自定义", BodyFuncName = nameof(DrawClassCustomizer)},
     new ManagerPanel(){Name = "Customizer", BodyFuncName = nameof(DrawCustomizer)},
-    new ManagerPanel(){Name = "反作弊", BodyFuncName = nameof(DrawAntiCheat)},
-    new ManagerPanel(){Name = "Vehicles", BodyFuncName = nameof(DrawVehicles)},
-    new ManagerPanel(){Name = "Mobile", BodyFuncName = nameof(DrawMobileControl)},
-    new ManagerPanel(){Name = "Localization", BodyFuncName = nameof(DrawLocalization)},
     new ManagerPanel(){Name = "关卡管理器", BodyFuncName = nameof(DrawlevelManager)},
     new ManagerPanel(){Name = "输入管理器", BodyFuncName = nameof(DrawInputManager)},
-    new ManagerPanel(){Name = "连杀奖励", BodyFuncName = nameof(DrawKillStreaks)},
-    new ManagerPanel(){Name = "第三人称", BodyFuncName = nameof(DrawThirdPerson)},
-    new ManagerPanel(){Name = "Minimap", BodyFuncName = nameof(DrawMinimap)},
-    new ManagerPanel(){Name = "战队系统", BodyFuncName = nameof(DrawClan)},
-    new ManagerPanel(){Name = "漂浮文字", BodyFuncName = nameof(DrawFloatingText)},
-    new ManagerPanel(){Name = "徽章与名片", BodyFuncName = nameof(DrawEmblems)},
-    new ManagerPanel(){Name = "游戏资讯", BodyFuncName = nameof(DrawGameNews)},
-    new ManagerPanel(){Name = "布局自定义", BodyFuncName = nameof(DrawLayoutCustomizer)},
     };
     private WindowType currentWindow = WindowType.Home;
     private string currentPanelType = "";
@@ -871,8 +856,6 @@ public class bl_MFPSManagerWindow : EditorWindow
         DrawTitleText("玩家选择器");
 #if PSELECTOR
         DrawEditorOf(bl_PlayerSelector.Data);
-#else
-        DrawDisableAddon("玩家选择器", "PSELECTOR");
 #endif
     }
 
@@ -881,18 +864,6 @@ public class bl_MFPSManagerWindow : EditorWindow
         DrawTitleText("Customizer");
 #if CUSTOMIZER
         DrawEditorOf(bl_CustomizerData.Instance);
-#else
-        DrawDisableAddon("兵种自定义", "CUSTOMIZER");
-#endif
-    }
-
-    void DrawMobileControl()
-    {
-        DrawTitleText("移动端控制");
-#if MFPSM
-        DrawEditorOf(bl_MobileControlSettings.Instance);
-#else
-        DrawDisableAddon("MFPS 移动版", "MFPSM");
 #endif
     }
 
@@ -901,18 +872,6 @@ public class bl_MFPSManagerWindow : EditorWindow
         DrawTitleText("兵种自定义");
 #if CLASS_CUSTOMIZER
         DrawEditorOf(bl_ClassManager.Instance);
-#else
-        DrawDisableAddon("兵种自定义", "CLASS_CUSTOMIZER");
-#endif
-    }
-
-    void DrawULogin()
-    {
-        DrawTitleText("ULogin Pro");
-#if ULSP
-        DrawEditorOf(bl_LoginProDataBase.Instance);
-#else
-        DrawDisableAddon("ULogin Pro", "ULSP");
 #endif
     }
 
@@ -921,113 +880,6 @@ public class bl_MFPSManagerWindow : EditorWindow
         DrawTitleText("关卡管理器");
 #if LM
         DrawEditorOf(bl_LevelManager.Instance);
-#else
-        DrawDisableAddon("关卡管理器", "LM");
-#endif
-    }
-
-    void DrawMinimap()
-    {
-        DrawTitleText("MiniMap");
-#if UMM
-        DrawEditorOf(bl_MiniMapData.Instance);
-#else
-        DrawDisableAddon("MiniMap", "UMM");
-#endif
-    }
-
-    void DrawClan()
-    {
-        DrawTitleText("战队系统");
-#if CLANS
-        DrawEditorOf(bl_ClanSettings.Instance);
-#else
-        DrawDisableAddon("战队系统", "CLANS");
-#endif
-    }
-
-    void DrawFloatingText()
-    {
-        var fm = Resources.Load("FloatingTextManagerSettings", typeof(ScriptableObject)) as ScriptableObject;
-        if (fm == null)
-        {
-            DrawDisableAddon("漂浮文字", "FT");
-            return;
-        }
-
-        DrawTitleText("漂浮文字");
-        DrawEditorOf(fm);
-    }
-
-    void DrawEmblems()
-    {
-        var fm = Resources.Load("EmblemsDataBase", typeof(ScriptableObject)) as ScriptableObject;
-        if (fm == null)
-        {
-            DrawDisableAddon("徽章与名片", "EACC");
-            return;
-        }
-
-        DrawTitleText("徽章与名片");
-        DrawEditorOf(fm);
-    }
-
-    void DrawLayoutCustomizer()
-    {
-        var fm = Resources.Load("LayoutCustomizerSettings", typeof(ScriptableObject)) as ScriptableObject;
-        if (fm == null)
-        {
-            DrawDisableAddon("布局自定义", "LCZ");
-            return;
-        }
-
-        DrawTitleText("布局自定义");
-        DrawEditorOf(fm);
-    }
-
-    void DrawVehicles()
-    {
-        var fm = Resources.Load("VehicleSettings", typeof(ScriptableObject)) as ScriptableObject;
-        if (fm == null)
-        {
-            DrawDisableAddon("Vehicle", "");
-            return;
-        }
-
-        DrawTitleText("载具通用设置");
-        DrawEditorOf(fm);
-    }
-
-    void DrawAntiCheat()
-    {
-        DrawTitleText("反作弊");
-#if ACTK_IS_HERE
-        DrawEditorOf(bl_AntiCheatSettings.Instance);
-#else
-        DrawDisableAddon("反作弊", "ACTK_IS_HERE");
-#endif
-    }
-
-    void DrawGameNews()
-    {
-        var fm = Resources.Load("GameNewsSettings", typeof(ScriptableObject)) as ScriptableObject;
-        if (fm == null)
-        {
-            DrawDisableAddon("游戏资讯", "");
-            return;
-        }
-
-        DrawTitleText("游戏资讯");
-        DrawEditorOf(fm);
-    }
-
-    void DrawThirdPerson()
-    {
-        DrawTitleText("第三人称");
-#if MFPSTPV
-        DrawEditorOf(bl_CameraViewSettings.Instance);
-#else
-        DrawDisableAddon("第三人称", "MFPSTPV");
 #endif
     }
 
@@ -1042,62 +894,6 @@ public class bl_MFPSManagerWindow : EditorWindow
             DrawTitleText($"映射 {bl_Input.InputData.DefaultMapped.name}");
             DrawEditorOf(bl_Input.InputData.DefaultMapped);
         }
-    }
-
-    void DrawShop()
-    {
-        DrawTitleText("SHOP");
-#if SHOP
-        DrawEditorOf(bl_ShopData.Instance);
-#else
-        DrawDisableAddon("Shop", "SHOP");
-#endif
-
-        GUILayout.Space(10);
-        DrawTitleText("Unity IAP");
-#if SHOP_UIAP
-        DrawEditorOf(bl_UnityIAP.Instance);
-#else
-        DrawDisableAddon("Unity IAP", "SHOP_UIAP");
-#endif
-
-        GUILayout.Space(10);
-        DrawTitleText("Paypal");
-#if SHOP_PAYPAL
-        DrawEditorOf(bl_Paypal.Settings);
-#else
-        DrawDisableAddon("Paypal", "SHOP_PAYPAL");
-#endif
-    }
-
-    void DrawKillStreaks()
-    {
-        DrawTitleText("连杀奖励");
-#if KSA
-        DrawEditorOf(bl_KillStreakData.Instance);
-#else
-        DrawDisableAddon("连杀奖励", "KSA");
-#endif
-
-        GUILayout.Space(10);
-        DrawTitleText("连杀提示");
-#if KILL_NOTIFIER
-        DrawEditorOf(MFPS.Addon.KillStreak.bl_KillNotifierData.Instance);
-#else
-        DrawDisableAddon("连杀提示", "KILL_STREAK");
-#endif
-    }
-
-    void DrawLocalization()
-    {
-        DrawTitleText("Localization");
-#if LOCALIZATION
-        var editor = bl_LocalizationEditor.CreateEditor(bl_Localization.Instance);
-        if (editor != null)
-            editor.OnInspectorGUI();
-#else
-        DrawDisableAddon("Localization", "LOCALIZATION");
-#endif
     }
     #endregion
 
@@ -1239,45 +1035,6 @@ public class bl_MFPSManagerWindow : EditorWindow
         editor.OnInspectorGUI();
         EditorGUILayout.EndVertical();
     }
-
-    public void DrawDisableAddon(string addonName, string addonKey)
-    {
-        Rect r = EditorGUILayout.BeginVertical(styles["borders"]);
-        EditorGUI.DrawRect(r, new Color(1, 1, 1, 0.02f));
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-        EditorGUILayout.BeginVertical();
-        GUILayout.Label(GetUnityIcon("console.warnicon"), styles["panelButton"]);
-        GUILayout.Label($"<color=#fff><size=18><b>{addonName.ToUpper()}</b></size></color>", styles["textC"]);
-        var addonInfo = GetAddonsInfo(addonKey);
-        if (addonInfo.IsAddonInProject())
-        {
-            GUILayout.Label("已禁用。", styles["textC"]);
-        }
-        else
-        {
-            GUILayout.Label("当前项目中不可用。", styles["textC"]);
-        }
-        GUILayout.Space(10);
-        EditorGUILayout.BeginHorizontal();
-        GUILayout.FlexibleSpace();
-
-#if !ASCOMPLIANCE
-        if (MFPSEditorStyles.ButtonOutline("插件管理器", Color.yellow, GUILayout.Width(110)))
-        {
-            EditorWindow.GetWindow<MFPSAddonsWindow>().OpenAddonPage(addonInfo.NiceName);
-        }
-#else
-        GUILayout.Label("扩展可从 Lovatto Studio 获取", styles["textC"]);
-#endif
-        GUILayout.FlexibleSpace();
-        EditorGUILayout.EndHorizontal();
-        GUILayout.Space(5);
-        EditorGUILayout.EndVertical();
-        GUILayout.FlexibleSpace();
-        EditorGUILayout.EndHorizontal();
-        EditorGUILayout.EndVertical();
-    }
     #endregion
 
     #region Utils
@@ -1297,17 +1054,6 @@ public class bl_MFPSManagerWindow : EditorWindow
 
     public static Color GetHexColor(string hex) => MFPSEditorStyles.GetColorFromHex(hex);
 
-    private Dictionary<string, MFPSAddonsInfo> cachedAddonsInfo;
-    public MFPSAddonsInfo GetAddonsInfo(string addonKey)
-    {
-        if (cachedAddonsInfo == null) cachedAddonsInfo = new Dictionary<string, MFPSAddonsInfo>();
-        if (!cachedAddonsInfo.ContainsKey(addonKey))
-        {
-            cachedAddonsInfo.Add(addonKey, MFPSAddonsData.Instance.GetAddonInfoByKey(addonKey));
-        }
-        return cachedAddonsInfo[addonKey];
-    }
-
     private static Dictionary<string, Color> cachedColors;
     public static Color GetCachedColor(string key, Color color)
     {
@@ -1319,7 +1065,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         return cachedColors[key];
     }
 
-    [MenuItem("MFPS/管理器 %m")]
+    [MenuItem("游戏框架/管理器 %m")]
     static void Open()
     {
         GetWindow<bl_MFPSManagerWindow>("MFPS 管理器");
