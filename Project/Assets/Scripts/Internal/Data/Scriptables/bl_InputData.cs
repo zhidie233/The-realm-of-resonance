@@ -4,7 +4,7 @@ using MFPSEditor;
 
 namespace MFPS.InputManager
 {
-    [CreateAssetMenu(fileName = "InputManager", menuName = "MFPS/Input/Manager")]
+    [CreateAssetMenu(fileName = "InputManager", menuName = "Game Framework/Input/Manager")]
     public class bl_InputData : ScriptableObject
     {
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MFPS.InputManager
 {
-    [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "MFPS/Input/Input Mapped")]
+    [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game Framework/Input/Input Mapped")]
     public class ButtonMapped : ScriptableObject
     {
         public InputType inputType = InputType.Keyboard;

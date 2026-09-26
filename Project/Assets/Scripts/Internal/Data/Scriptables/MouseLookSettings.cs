@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MFPS.Internal.Scriptables
 {
-    [CreateAssetMenu(fileName = "Mouse Settings", menuName = "MFPS/Camera/Mouse Settings")]
+    [CreateAssetMenu(fileName = "Mouse Settings", menuName = "Game Framework/Camera/Mouse Settings")]
     public class MouseLookSettings : ScriptableObject
     {
         [LovattoToogle] public bool useSmoothing = true;

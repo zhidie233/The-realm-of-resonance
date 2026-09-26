@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Arms Material", menuName = "MFPS/Player/Arm Material")]
+[CreateAssetMenu(fileName = "Arms Material", menuName = "Game Framework/Player/Arm Material")]
 public class bl_FPArmsMaterial : ScriptableObject
 {
     public string materialColorPropertyName = "_Color";

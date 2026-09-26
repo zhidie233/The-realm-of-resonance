@@ -124,7 +124,7 @@ TextureImporter:
     indices: 
     edges: []
     weights: []
-  spritePackingTag: mfps
+  spritePackingTag: game-framework
   pSDRemoveMatte: 1
   pSDShowRemoveMatteOption: 1
   userData: 

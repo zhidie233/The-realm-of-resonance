@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MFPS.Internal.Scriptables
 {
-    [CreateAssetMenu(fileName = "Bullet Decal List", menuName = "MFPS/Weapons/Decal/List")]
+    [CreateAssetMenu(fileName = "Bullet Decal List", menuName = "Game Framework/Weapons/Decal/List")]
     public class bl_BulletDecalList : ScriptableObject
     {
         public int genericSurfaceId = 0;

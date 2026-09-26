@@ -3,7 +3,7 @@ using System;
 
 namespace MFPS.Core.Motion
 {
-    [CreateAssetMenu(fileName = "CameraMotionData", menuName = "MFPS/Camera/MotionData")]
+    [CreateAssetMenu(fileName = "CameraMotionData", menuName = "Game Framework/Camera/MotionData")]
     public class FirstPersonMotionData : ScriptableObject
     {
         public string Name = "Motion Name";

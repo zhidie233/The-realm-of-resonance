@@ -1,6 +1,6 @@
 // Made with Amplify Shader Editor
 // Available at the Unity Asset Store - http://u3d.as/y3X 
-Shader "MFPS/Utils/Render OverAll"
+Shader "Game Framework/Utils/Render OverAll"
 {
     Properties{
        _Color("Main Color", Color) = (1,1,1,1)

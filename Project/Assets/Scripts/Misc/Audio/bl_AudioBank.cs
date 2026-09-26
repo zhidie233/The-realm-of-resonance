@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MFPS.Audio
 {
-    [CreateAssetMenu(fileName = "Audio Bank", menuName = "MFPS/Audio/Bank", order = 301)]
+    [CreateAssetMenu(fileName = "Audio Bank", menuName = "Game Framework/Audio/Bank", order = 301)]
     public class bl_AudioBank : ScriptableObject
     {
         [Reorderable] public List<AudioInfo> AudioBank = new List<AudioInfo>();

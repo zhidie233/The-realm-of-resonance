@@ -67,7 +67,7 @@ public class AddWeaponTutorial : TutorialWizard
     {
         base.OnEnable();
         base.Initizalized(m_ServerImages, AllSteps, ImagesFolder, AnimatedImages);
-        GUISkin gs = Resources.Load<GUISkin>("content/MFPSEditorSkin") as GUISkin;
+        GUISkin gs = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin") as GUISkin;
         if (gs != null)
         {
             base.SetTextStyle(gs.customStyles[2]);
@@ -474,7 +474,7 @@ public class AddWeaponTutorial : TutorialWizard
         DrawYoutubeCover("How to create animation and animation group for FPS arms and guns inside blender 2.8", GetServerImage("https://img.youtube.com/vi/DWOWdZf8MDA/0.jpg"), "https://www.youtube.com/watch?v=DWOWdZf8MDA&ab_channel=SaqibHussain");
     }
 
-    [MenuItem("MFPS/Tutorials/Add Weapon", false, 500)]
+    [MenuItem("Game Framework/Tutorials/Add Weapon", false, 500)]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(AddWeaponTutorial));

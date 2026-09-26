@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MFPS.Core.Motion
 {
-    [System.Serializable, CreateAssetMenu(fileName = "Shaker Present", menuName = "MFPS/Presents/Shaker", order = 302)]
+    [System.Serializable, CreateAssetMenu(fileName = "Shaker Present", menuName = "Game Framework/Presents/Shaker", order = 302)]
     public class ShakerPresent : ScriptableObject
     {
         public ShakeMethod shakeMethod = ShakeMethod.PerlinNoise;

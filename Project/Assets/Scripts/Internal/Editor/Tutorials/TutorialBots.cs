@@ -184,7 +184,7 @@ public class TutorialBots : TutorialWizard
         Selection.activeTransform = botPrefab.transform;
     }
 
-    [MenuItem("MFPS/Tutorials/ Change Bots", false, 501)]
+    [MenuItem("Game Framework/Tutorials/ Change Bots", false, 501)]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(TutorialBots));

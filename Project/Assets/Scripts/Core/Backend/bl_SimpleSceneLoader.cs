@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 /// If you want to use your custom scene loader e.g: Lovatto Studio's Loading Screen
 /// Create a new script and inherited from <see cref="bl_SceneLoaderBase"/>
 /// </summary>
-[CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "MFPS/Level/Simple Loader")]
+[CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "Game Framework/Level/Simple Loader")]
 public class bl_SimpleSceneLoader : bl_SceneLoaderBase
 {
 

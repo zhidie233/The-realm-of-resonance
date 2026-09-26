@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MFPS.Runtime.AI
 {
-    [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "MFPS/AI/Soldier Settings")]
+    [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "Game Framework/AI/Soldier Settings")]
     public class bl_AISoldierSettings : ScriptableObject
     {
         [Header("Speeds")]

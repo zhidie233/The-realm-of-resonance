@@ -18,7 +18,7 @@ public class bl_GameData : ScriptableObject
     [LovattoToogle] public bool offlineMode = false;
     [LovattoToogle] public bool verifySingleSession = true;
     [LovattoToogle] public bool UseLobbyChat = true;
-    [LovattoToogle] public bool UseVoiceChat = true;
+    [LovattoToogle] public bool UseVoiceChat = false;
     [LovattoToogle] public bool BulletTracer = false;
     [LovattoToogle] public bool DropGunOnDeath = true;
     [LovattoToogle] public bool SelfGrenadeDamage = true;

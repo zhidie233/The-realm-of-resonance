@@ -16,7 +16,7 @@ namespace MFPSEditor
         Texture[] stateIcons = new Texture[3];
         readonly string LAST_PATH = "last-path-ls";
 
-        [MenuItem("MFPS/Tools/Import Weapon")]
+        [MenuItem("Game Framework/Tools/Import Weapon")]
         static void OpenImport()
         {
             GetWindow<bl_ImportExportWeapon>("Import").PrepareToImport(null, null);

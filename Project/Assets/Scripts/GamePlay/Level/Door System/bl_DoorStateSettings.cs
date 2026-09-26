@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace MFPS.Internal.Scriptables
 {
-    [CreateAssetMenu(fileName = "Door Setting", menuName = "MFPS/Level/Door Setting")]
+    [CreateAssetMenu(fileName = "Door Setting", menuName = "Game Framework/Level/Door Setting")]
     public class bl_DoorStateSettings : ScriptableObject
     {
         public float TransitionDuration = 1;

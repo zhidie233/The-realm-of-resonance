@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[DisallowMultipleComponent, CreateAssetMenu(fileName = "Player Class Loadout", menuName = "MFPS/Player Class/Loadout")]
+[DisallowMultipleComponent, CreateAssetMenu(fileName = "Player Class Loadout", menuName = "Game Framework/Player Class/Loadout")]
 public class bl_PlayerClassLoadout : ScriptableObject
 {
     [GunID] public int Primary = 0;

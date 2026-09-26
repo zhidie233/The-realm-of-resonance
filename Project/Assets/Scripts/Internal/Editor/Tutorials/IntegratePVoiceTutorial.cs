@@ -23,7 +23,7 @@ public class IntegratePVoiceTutorial : TutorialWizard
     {
         base.OnEnable();
         base.Initizalized(m_ServerImages, AllSteps, ImagesFolder);
-        GUISkin gs = Resources.Load<GUISkin>("content/MFPSEditorSkin") as GUISkin;
+        GUISkin gs = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin") as GUISkin;
         if (gs != null)
         {
             base.SetTextStyle(gs.customStyles[2]);
@@ -76,7 +76,7 @@ public class IntegratePVoiceTutorial : TutorialWizard
         }
     }
 
-    [MenuItem("MFPS/Tutorials/Photon Voice")]
+    [MenuItem("Game Framework/Tutorials/Photon Voice")]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(IntegratePVoiceTutorial));

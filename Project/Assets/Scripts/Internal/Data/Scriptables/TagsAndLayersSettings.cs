@@ -2,7 +2,7 @@
 
 namespace MFPS.Internal.Scriptables
 {
-    [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "MFPS/Settings/TagsAndLayers")]
+    [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "Game Framework/Settings/TagsAndLayers")]
     public class TagsAndLayersSettings : ScriptableObject
     {
         public LayerMask LocalPlayerHitableLayers;

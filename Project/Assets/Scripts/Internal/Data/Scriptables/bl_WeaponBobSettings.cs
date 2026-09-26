@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon Bob Settings", menuName = "MFPS/Weapons/Bob/Settings")]
+[CreateAssetMenu(fileName = "Weapon Bob Settings", menuName = "Game Framework/Weapons/Bob/Settings")]
 public class bl_WeaponBobSettings : ScriptableObject
 {
     [Header("Walk")]

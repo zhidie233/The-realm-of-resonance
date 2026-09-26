@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Weapon Slot Ruler", menuName = "MFPS/Loadout/Ruler")]
+[CreateAssetMenu(fileName = "Weapon Slot Ruler", menuName = "Game Framework/Loadout/Ruler")]
 public class bl_WeaponSlotRuler : ScriptableObject
 {
     [Reorderable] public GunType[] primarySlots;

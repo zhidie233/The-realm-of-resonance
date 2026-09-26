@@ -48,7 +48,7 @@ public class AddPlayerTutorial : TutorialWizard
     {
         base.OnEnable();
         base.Initizalized(m_ServerImages, AllSteps, ImagesFolder, AnimatedImages);
-        GUISkin gs = Resources.Load<GUISkin>("content/MFPSEditorSkin") as GUISkin;
+        GUISkin gs = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin") as GUISkin;
         if (gs != null)
         {
             base.SetTextStyle(gs.customStyles[2]);
@@ -530,7 +530,7 @@ public class AddPlayerTutorial : TutorialWizard
         KeepSameLocation
     }
 
-    [MenuItem("MFPS/Tutorials/Add Player", false, 500)]
+    [MenuItem("Game Framework/Tutorials/Add Player", false, 500)]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(AddPlayerTutorial));

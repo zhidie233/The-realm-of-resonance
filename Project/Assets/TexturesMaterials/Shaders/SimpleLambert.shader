@@ -1,4 +1,4 @@
-Shader "MFPS/SimpleLambert"
+Shader "Game Framework/SimpleLambert"
 {
 	Properties
 	{

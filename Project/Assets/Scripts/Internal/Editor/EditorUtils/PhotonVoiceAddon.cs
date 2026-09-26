@@ -14,7 +14,7 @@ public class PhotonVoiceAddon : MonoBehaviour
     private const string DEFINE_KEY = "PVOICE";
 
 #if !PVOICE
-    [MenuItem("MFPS/Addons/Voice/Enable")]
+    [MenuItem("Game Framework/Addons/Voice/Enable")]
     private static void Enable()
     {
         bl_GameData.Instance.UseVoiceChat = true;
@@ -24,7 +24,7 @@ public class PhotonVoiceAddon : MonoBehaviour
 #endif
 
 #if PVOICE
-    [MenuItem("MFPS/Addons/Voice/Disable")]
+    [MenuItem("Game Framework/Addons/Voice/Disable")]
     private static void Disable()
     {
         bl_GameData.Instance.UseVoiceChat = false;
@@ -33,7 +33,7 @@ public class PhotonVoiceAddon : MonoBehaviour
     }
 #endif
 
-    [MenuItem("MFPS/Addons/Voice/Integrate")]
+    [MenuItem("Game Framework/Addons/Voice/Integrate")]
     private static void Instegrate()
     {
 
@@ -122,13 +122,13 @@ public class PhotonVoiceAddon : MonoBehaviour
     }
 #endif
 
-    [MenuItem("MFPS/Addons/Voice/Package")]
+    [MenuItem("Game Framework/Addons/Voice/Package")]
     private static void OpenPackagePage()
     {
         AssetStore.Open("content/130518");
     }
 
-    [MenuItem("MFPS/Tools/Fix Define Symbols")]
+    [MenuItem("Game Framework/Tools/Fix Define Symbols")]
     private static void FixDefineSymbols()
     {
         bool defines = EditorUtils.CompilerIsDefine("LM");
@@ -139,7 +139,7 @@ public class PhotonVoiceAddon : MonoBehaviour
     }
 
 #if UNITY_POST_PROCESSING_STACK_V2
-    [MenuItem("MFPS/Tools/Delete Post-Processing")]
+    [MenuItem("Game Framework/Tools/Delete Post-Processing")]
     private static void DeletePP()
     {
         UnityEditor.PackageManager.Client.Remove("com.unity.postprocessing");

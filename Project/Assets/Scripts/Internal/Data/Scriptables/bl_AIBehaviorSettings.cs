@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace MFPS.Runtime.AI
 {
-    [CreateAssetMenu(fileName = "AI Behavior Settings", menuName = "MFPS/AI/Behavior Settings")]
+    [CreateAssetMenu(fileName = "AI Behavior Settings", menuName = "Game Framework/AI/Behavior Settings")]
     public class bl_AIBehaviorSettings : ScriptableObject
     {
         [Header("Settings")]

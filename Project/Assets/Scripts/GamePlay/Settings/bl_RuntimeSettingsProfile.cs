@@ -7,7 +7,7 @@ using UnityEditor;
 
 namespace MFPS.Runtime.Settings
 {
-    [CreateAssetMenu(fileName = "Settings Profile", menuName = "MFPS/Settings/Profile")]
+    [CreateAssetMenu(fileName = "Settings Profile", menuName = "Game Framework/Settings/Profile")]
     public class bl_RuntimeSettingsProfile : ScriptableObject
     {
         public enum ResolutionApplication
