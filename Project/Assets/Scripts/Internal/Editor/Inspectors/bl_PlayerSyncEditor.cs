@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 using Photon.Pun;
 
 [CustomEditor(typeof(bl_PlayerNetwork))]
@@ -155,7 +155,7 @@ public class bl_PlayerSyncEditor : Editor
         float containerElementHeight = 22;
         float containerHeight = listProperty.arraySize * containerElementHeight;
 
-        bool isOpen = MFPSEditorStyles.ContainerHeaderFoldout("网络武器 (" + GetGunsCount() + ")", gunListProp.isExpanded);
+        bool isOpen = GFWKEditorStyles.ContainerHeaderFoldout("网络武器 (" + GetGunsCount() + ")", gunListProp.isExpanded);
         gunListProp.isExpanded = isOpen;
 
         if (isOpen == false)
@@ -171,7 +171,7 @@ public class bl_PlayerSyncEditor : Editor
                 Rect elementRect = new Rect(containerRect.xMin, containerRect.yMin + containerElementHeight * i, containerRect.width, containerElementHeight);
                 {
                     Rect texturePosition = new Rect(elementRect.xMin + 6, elementRect.yMin + elementRect.height / 2f - 1, 9, 5);
-                    //MFPSEditorUtils.DrawTexture(texturePosition, MFPSEditorUtils.texGrabHandle);
+                    //GFWKEditorUtils.DrawTexture(texturePosition, GFWKEditorUtils.texGrabHandle);
 
                     Rect propertyPosition = new Rect(elementRect.xMin + 20, elementRect.yMin + 3, elementRect.width - 45, 16);
                     EditorGUI.PropertyField(propertyPosition, listProperty.GetArrayElementAtIndex(i), new GUIContent());
@@ -182,7 +182,7 @@ public class bl_PlayerSyncEditor : Editor
                                                         PhotonGUI.DefaultRemoveButtonStyle.fixedHeight);
 
                     GUI.enabled = listProperty.arraySize > 1;
-                    if (GUI.Button(removeButtonRect, new GUIContent(MFPSEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
+                    if (GUI.Button(removeButtonRect, new GUIContent(GFWKEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
                     {
                         listProperty.DeleteArrayElementAtIndex(i);
                     }

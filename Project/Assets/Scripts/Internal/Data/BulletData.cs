@@ -40,14 +40,14 @@ public class BulletData
     // The Cached Network View
     public int ActorViewID { get; set; }
 
-    // The MFPS Actor who create this bullet
-    public MFPSPlayer MFPSActor { get; set; }
+    // The GFWK Actor who create this bullet
+    public GFWKPlayer GFWKActor { get; set; }
 
     // Create the bullet data and fetch info from the <see cref="DamageData"/>
     // <param name="data"></param>
     public BulletData(DamageData data)
     {
-        MFPSActor = data.MFPSActor;
+        GFWKActor = data.GFWKActor;
         Damage = data.Damage;
         ActorViewID = data.ActorViewID;
         WeaponID = data.GunID;

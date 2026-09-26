@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MFPSWater
+  m_Name: GFWKWater
   m_Shader: {fileID: 4800000, guid: c90a83a54932a814f8928345d8414ec0, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4

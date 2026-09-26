@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using MFPS.Internal.Scriptables;
-using MFPSEditor;
+using GFWK.Internal.Scriptables;
+using GFWKEditor;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_BulletDecalManager : bl_BulletDecalManagerBase
     {

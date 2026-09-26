@@ -1,5 +1,5 @@
-using MFPS.Audio;
-using MFPS.Runtime.AI;
+using GFWK.Audio;
+using GFWK.Runtime.AI;
 using Photon.Pun;
 using UnityEngine;
 
@@ -50,7 +50,7 @@ public class bl_AIShooterHealth : bl_PlayerHealthManagerBase
             }
         }
 
-        DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.MFPSActor.isRealPlayer, damageData.MFPSActor.Team, damageData.isHeadShot);
+        DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.GFWKActor.isRealPlayer, damageData.GFWKActor.Team, damageData.isHeadShot);
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public class bl_AIShooterHealth : bl_PlayerHealthManagerBase
         {
             bl_CrosshairBase.Instance.OnHit();
             bl_AudioController.Instance.PlayClip("body-hit");
-            bl_EventHandler.DispatchLocalPlayerHitEnemy(new MFPSHitData()
+            bl_EventHandler.DispatchLocalPlayerHitEnemy(new GFWKHitData()
             {
                 HitTransform = transform,
                 HitPosition = transform.position,
@@ -167,8 +167,8 @@ public class bl_AIShooterHealth : bl_PlayerHealthManagerBase
 
         if (bl_PhotonNetwork.IsMasterClient && references.Agent.enabled) references.Agent.isStopped = true;
         GetComponent<bl_NamePlateBase>().SetActive(false);
-        //update the MFPSPlayer data
-        MFPSPlayer player = bl_GameManager.Instance.GetMFPSPlayer(m_AIShooter.AIName);
+        //update the GFWKPlayer data
+        GFWKPlayer player = bl_GameManager.Instance.GetGFWKPlayer(m_AIShooter.AIName);
         if (player != null)
             player.isAlive = false;
 
@@ -204,7 +204,7 @@ public class bl_AIShooterHealth : bl_PlayerHealthManagerBase
                     bl_PhotonNetwork.LocalPlayer.PostKill(1);
                     bl_RoomSettings.IncreaseMatchPersistData("bot-kills", 1);
                 }
-                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != bl_MFPS.LocalPlayer.Team)
+                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != bl_GFWK.LocalPlayer.Team)
                 {
                     bl_PhotonNetwork.LocalPlayer.PostKill(1);
                     bl_RoomSettings.IncreaseMatchPersistData("bot-kills", 1);
@@ -227,7 +227,7 @@ public class bl_AIShooterHealth : bl_PlayerHealthManagerBase
                 }
 
                 if (isOneTeamMode) bl_PhotonNetwork.LocalPlayer.PostScore(score);
-                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != bl_MFPS.LocalPlayer.Team)
+                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != bl_GFWK.LocalPlayer.Team)
                 {
                     bl_PhotonNetwork.LocalPlayer.PostScore(score);
                 }
@@ -303,7 +303,7 @@ public class bl_AIShooterHealth : bl_PlayerHealthManagerBase
             }
         }
 
-        var mplayer = new MFPSPlayer(photonView, false, false);
+        var mplayer = new GFWKPlayer(photonView, false, false);
         bl_EventHandler.DispatchRemotePlayerDeath(mplayer);
 
         //update the bot deaths count.

@@ -2,7 +2,7 @@
 
 public class bl_SpectatorMode : bl_SpectatorModeBase
 {
-    [LovattoToogle] public bool leaveSpectatorWithEscape = false;
+    [GFWorksToogle] public bool leaveSpectatorWithEscape = false;
     [SerializeField] private GameObject content = null;
 
     /// <summary>

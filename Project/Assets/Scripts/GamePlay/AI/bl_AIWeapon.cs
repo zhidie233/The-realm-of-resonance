@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.AI
+namespace GFWK.Runtime.AI
 {
     public class bl_AIWeapon : MonoBehaviour
     {

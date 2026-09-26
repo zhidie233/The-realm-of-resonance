@@ -5,7 +5,7 @@ using System.Globalization;
 using UnityEditor;
 #endif
 
-namespace MFPS.Runtime.Settings
+namespace GFWK.Runtime.Settings
 {
     [CreateAssetMenu(fileName = "Settings Profile", menuName = "Game Framework/Settings/Profile")]
     public class bl_RuntimeSettingsProfile : ScriptableObject

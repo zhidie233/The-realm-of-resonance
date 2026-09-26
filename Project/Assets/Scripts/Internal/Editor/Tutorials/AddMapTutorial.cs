@@ -1,5 +1,5 @@
-﻿using MFPS.Internal.Structures;
-using MFPSEditor;
+﻿using GFWK.Internal.Structures;
+using GFWKEditor;
 using Unity.AI.Navigation;
 using UnityEditor;
 using UnityEditor.SceneManagement;
@@ -9,7 +9,7 @@ using Object = UnityEngine.Object;
 public class AddMapTutorial : TutorialWizard
 {
     //required//////////////////////////////////////////////////////
-    private const string ImagesFolder = "mfps2/editor/map/";
+    private const string ImagesFolder = "gfwk2/editor/map/";
     private NetworkImages[] m_ServerImages = new NetworkImages[]
     {
         new NetworkImages{Name = "img-1.jpg", Image = null},
@@ -71,10 +71,10 @@ public class AddMapTutorial : TutorialWizard
 
     void DrawStarted()
     {
-        DrawNote("本教程将逐步讲解如何为 MFPS 游戏添加新地图。");
+        DrawNote("本教程将逐步讲解如何为 GFWK 游戏添加新地图。");
         DownArrow();
         DrawText("首先，你当然需要一张地图。这里的地图指的是关卡环境设计，包含所有美术内容，模型、预制体、灯光、天空等，摆放成战场的样子。");
-        DrawSuperText("地图有一些基本要求，是所有 Unity 用户都应了解的，适用于所有游戏而不仅是 MFPS：\n\n-<b>地图模型网格必须带碰撞体</b>，仅作装饰的模型除外。场景中玩家不该穿过的所有模型网格都必须有碰撞体。\n\n-<b>灯光</b>，灯光是地图的重要组成部分，但对游戏性能影响很大。网上有大量关于搭建场景灯光和烘焙光照贴图的教程，例如：\n<?link=https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#>https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#</link>\n\n-<b>性能优化优先于画面效果</b>。人人都喜欢游戏有好的画质，但优化不佳的关卡会毁掉你的游戏。MFPS 在代码层面已做了不错的优化，但比代码更重要的是图形优化。Unity 官方有一篇不错的图形优化文章，值得一看：\n<?link=https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html>https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html</link>");
+        DrawSuperText("地图有一些基本要求，是所有 Unity 用户都应了解的，适用于所有游戏而不仅是 GFWK：\n\n-<b>地图模型网格必须带碰撞体</b>，仅作装饰的模型除外。场景中玩家不该穿过的所有模型网格都必须有碰撞体。\n\n-<b>灯光</b>，灯光是地图的重要组成部分，但对游戏性能影响很大。网上有大量关于搭建场景灯光和烘焙光照贴图的教程，例如：\n<?link=https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#>https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#</link>\n\n-<b>性能优化优先于画面效果</b>。人人都喜欢游戏有好的画质，但优化不佳的关卡会毁掉你的游戏。GFWK 在代码层面已做了不错的优化，但比代码更重要的是图形优化。Unity 官方有一篇不错的图形优化文章，值得一看：\n<?link=https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html>https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html</link>");
         DownArrow();
         DrawText("好，如果你的地图关卡设计已就绪，我们继续。");
     }
@@ -84,7 +84,7 @@ public class AddMapTutorial : TutorialWizard
         if (subStep == 0)
         {
             DrawText("如前所述，你需要准备好新地图设计，但不能只做成预制体，而要<b>放置在一个只包含地图环境的 Unity 场景中</b>。如果没有，请在编辑器顶部菜单 ➔ <b>File ➔ New Scene</b> 新建场景，然后在打开的空场景中放入地图环境或直接在其中设计。\n                 \n准备好后，在 Unity 工程中保存该场景<b>（File ➔ Save）</b>，然后继续下一步。");
-            DrawNote("<b>在接入 MFPS 之前，请务必删除地图场景中的所有相机</b>。这里不需要它们，MFPS 会创建所需的相机。");
+            DrawNote("<b>在接入 GFWK 之前，请务必删除地图场景中的所有相机</b>。这里不需要它们，GFWK 会创建所需的相机。");
             DrawImage(GetServerImage(0));
             DownArrow();
             DrawText("在下方字段中指定你的 Unity 地图场景<i>（.scene）</i>，<b>然后点击继续</b>按钮进行场景校验。");
@@ -95,7 +95,7 @@ public class AddMapTutorial : TutorialWizard
             GUILayout.EndHorizontal();
             GUI.enabled = m_SceneReference != null;
             Space(5);
-            if (GUILayout.Button("CONTINUE", MFPSEditorStyles.EditorSkin.customStyles[11]))
+            if (GUILayout.Button("CONTINUE", GFWKEditorStyles.EditorSkin.customStyles[11]))
             {
                 if (EditorSceneManager.GetActiveScene().name == m_SceneReference.name)
                 {
@@ -114,7 +114,7 @@ public class AddMapTutorial : TutorialWizard
         else if (subStep == 1)
         {
             HideNextButton = isMissing();
-            DrawText("地图场景已打开，现在拖入 MFPS 所需的对象。先检查场景中已有的资源，点击下方按钮自动检测。");
+            DrawText("地图场景已打开，现在拖入 GFWK 所需的对象。先检查场景中已有的资源，点击下方按钮自动检测。");
             Space();
             if (DrawButton("检查场景"))
             {
@@ -164,7 +164,7 @@ public class AddMapTutorial : TutorialWizard
         }
         else if (subStep == 2)
         {
-            DrawText("实例化 MFPS 对象后，你会在 Game 视图中看到一个从顶部渲染的相机，这是玩家进入房间选择阵营时显示俯视角的相机。请将它摆放到能俯瞰地图全貌的位置。\n \n该相机位于<i>（层级面板）<b>GameManager ➔ Room Camera</b></i>。");
+            DrawText("实例化 GFWK 对象后，你会在 Game 视图中看到一个从顶部渲染的相机，这是玩家进入房间选择阵营时显示俯视角的相机。请将它摆放到能俯瞰地图全貌的位置。\n \n该相机位于<i>（层级面板）<b>GameManager ➔ Room Camera</b></i>。");
             DrawImage(GetServerImage(1));
             DownArrow();
             DrawText("地图中有一些对象需要重新摆位，其中两个是 CTF 模式的两面旗帜，位于层级面板中的 <b>GameModes -> CaptureOfFlag</b> 对象下，" +
@@ -228,7 +228,7 @@ public class AddMapTutorial : TutorialWizard
         }
         else if (subStep == 5)
         {
-            DrawText("场景已设置完成！\n \n接下来只需将其登记到可用场景列表中，玩家创建房间时就能选择该场景。可以手动在 GameData 的 <b>AllScenes</b> 列表中新增一项：<b><i>（MFPS 的 Resources 文件夹）GameData ➔ AllScenes ➔ 新增一项</i></b>，并填写所需信息\n\n或者<b>在此处自动完成</b>，只需在下方为地图设置名称和预览图：");
+            DrawText("场景已设置完成！\n \n接下来只需将其登记到可用场景列表中，玩家创建房间时就能选择该场景。可以手动在 GameData 的 <b>AllScenes</b> 列表中新增一项：<b><i>（GFWK 的 Resources 文件夹）GameData ➔ AllScenes ➔ 新增一项</i></b>，并填写所需信息\n\n或者<b>在此处自动完成</b>，只需在下方为地图设置名称和预览图：");
             DrawImage(GetServerImage(8));
             DownArrow();
             GUILayout.BeginVertical("box");
@@ -318,7 +318,7 @@ public class AddMapTutorial : TutorialWizard
 
     void MapAssetsDoc()
     {
-        DrawText("这里有两份资源商店素材清单，由我挑选，适用于动作射击游戏。若你想为 MFPS 添加更多地图，可作参考。\n \n两份清单分别面向高端平台如 <b>PC 与主机</b> 的最佳素材，以及适合 <b>移动端</b> 的素材，后者可用于移动端游戏的地图。");
+        DrawText("这里有两份资源商店素材清单，由我挑选，适用于动作射击游戏。若你想为 GFWK 添加更多地图，可作参考。\n \n两份清单分别面向高端平台如 <b>PC 与主机</b> 的最佳素材，以及适合 <b>移动端</b> 的素材，后者可用于移动端游戏的地图。");
 
         using (new GUILayout.HorizontalScope())
         {

@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace MFPS.Internal
+namespace GFWK.Internal
 {
     public class FlagEnumAttribute : PropertyAttribute
     {

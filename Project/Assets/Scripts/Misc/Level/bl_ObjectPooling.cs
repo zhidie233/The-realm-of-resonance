@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 /// <summary>
-/// Default MFPS pooling system
+/// Default GFWK pooling system
 /// If you want to use your custom pool system, simply inherited your script from bl_ObjectPoolingBase.cs
 /// And make sure you served the default prefabs from the default pool system with the same key/identifiers.
 /// </summary>

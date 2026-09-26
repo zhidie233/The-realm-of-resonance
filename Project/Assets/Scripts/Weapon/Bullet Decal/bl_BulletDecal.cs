@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_BulletDecal : bl_BulletDecalBase
     {

@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
     public class bl_ImportExportWeapon : EditorWindow
     {
@@ -38,7 +38,7 @@ namespace MFPSEditor
         /// </summary>
         private void OnGUI()
         {
-            EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor());
+            EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor());
 
             if (isExport)
             {
@@ -170,7 +170,7 @@ namespace MFPSEditor
                 }
                 GUI.enabled = canImport;
                 GUILayout.FlexibleSpace();
-                if (MFPSEditorStyles.ButtonOutline("导入"))
+                if (GFWKEditorStyles.ButtonOutline("导入"))
                 {
                     Import();
                 }

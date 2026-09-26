@@ -2,14 +2,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using MFPS.Internal.Scriptables;
-using MFPSEditor;
+using GFWK.Internal.Scriptables;
+using GFWKEditor;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
-    public class bl_MFPSCoinUI : MonoBehaviour
+    public class bl_GFWKCoinUI : MonoBehaviour
     {
-        [MFPSCoinID] public int coin;
+        [GFWKCoinID] public int coin;
         [SerializeField] private TextMeshProUGUI coinText = null;
         [SerializeField] private Text coinTextUGUI = null;
         [SerializeField] private Image coinIconImg = null;
@@ -35,9 +35,9 @@ namespace MFPS.Runtime.UI
         /// 
         /// </summary>
         /// <param name="updatedCoin"></param>
-        void OnCoinUpdate(MFPSCoin updatedCoin)
+        void OnCoinUpdate(GFWKCoin updatedCoin)
         {
-            var coinData = bl_MFPS.Coins.GetCoinData(coin);
+            var coinData = bl_GFWK.Coins.GetCoinData(coin);
             if (coinData == null) return;
 
             if (coinText != null) coinText.text = coinData.GetCoins(bl_PhotonNetwork.NickName).ToString();

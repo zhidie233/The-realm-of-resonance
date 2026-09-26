@@ -1,4 +1,4 @@
-﻿using MFPS.Internal.Structures;
+﻿using GFWK.Internal.Structures;
 
 public abstract class bl_KillFeedUIBindingBase : bl_PhotonHelper
 {

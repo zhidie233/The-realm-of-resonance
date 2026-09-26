@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 using TMPro;
 using UnityEngine.UI;
-using MFPS.Internal.Structures;
-using MFPS.Internal.Scriptables;
+using GFWK.Internal.Structures;
+using GFWK.Internal.Scriptables;
 using System.Linq;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
-    public class bl_MFPSCoinPriceUI : MonoBehaviour
+    public class bl_GFWKCoinPriceUI : MonoBehaviour
     {
         public CoinUI[] coins;
         public LayoutGroup layoutGroup;
@@ -19,7 +19,7 @@ namespace MFPS.Runtime.UI
         /// 
         /// </summary>
         /// <param name="realPrice"></param>
-        public bl_MFPSCoinPriceUI SetPrice(int realPrice)
+        public bl_GFWKCoinPriceUI SetPrice(int realPrice)
         {
             foreach (var item in coins)
             {
@@ -32,13 +32,13 @@ namespace MFPS.Runtime.UI
         /// 
         /// </summary>
         /// <param name="realPrice"></param>
-        public bl_MFPSCoinPriceUI SetPrice(MFPSItemUnlockability unlockability)
+        public bl_GFWKCoinPriceUI SetPrice(GFWKItemUnlockability unlockability)
         {
             var noallowedCoins = unlockability.NoAllowedCoins.ToList();
             foreach (var item in coins)
             {
                 item.ParsePrice(unlockability.Price);
-                if(item.PriceText != null && noallowedCoins.Contains(bl_MFPS.Coins.GetCoinData(item.CoinID)))
+                if(item.PriceText != null && noallowedCoins.Contains(bl_GFWK.Coins.GetCoinData(item.CoinID)))
                 {
                     item.PriceText.gameObject.SetActive(false);
                 }
@@ -63,13 +63,13 @@ namespace MFPS.Runtime.UI
         [Serializable]
         public class CoinUI
         {
-            [MFPSCoinID] public int CoinID;
+            [GFWKCoinID] public int CoinID;
             public TextMeshProUGUI PriceText;
             public Image CoinIcon;
 
             public void ParsePrice(int realPrice)
             {
-                var coin = bl_MFPS.Coins.GetCoinData(CoinID);
+                var coin = bl_GFWK.Coins.GetCoinData(CoinID);
                 if (coin == null) return;
 
                 if (CoinIcon != null) CoinIcon.sprite = coin.CoinIcon;

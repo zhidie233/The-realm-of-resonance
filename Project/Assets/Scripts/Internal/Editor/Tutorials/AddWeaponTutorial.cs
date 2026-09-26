@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 
 public class AddWeaponTutorial : TutorialWizard
 {
     //required//////////////////////////////////////////////////////
-    private const string ImagesFolder = "mfps2/editor/";
+    private const string ImagesFolder = "gfwk2/editor/";
     private NetworkImages[] m_ServerImages = new NetworkImages[]
     {
         new NetworkImages{Name = "img-1.jpg", Image = null},
@@ -91,16 +91,16 @@ public class AddWeaponTutorial : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("添加新武器当然需要武器的 3D 模型。添加新武器有几种做法，有些人只替换武器模型，沿用 MFPS 默认的手部模型和动画<i>（本质上是把新武器模型摆到手中）</i>。这虽然不算错，但绝非最佳方案，因为 MFPS 的手部模型和动画只是示例占位，换成不同武器模型后动画效果并不理想。\n \n强烈建议使用你自己的模型和动画<i>（包括手臂模型）</i>。可以沿用 MFPS 默认手部，但这样需要为每一把要添加的武器单独做动画；若不擅长动画制作，会相当吃力，因为<b>至少需要 4 个动画：掏出、收起、开火、换弹</b>。\n \n<b>另一种选择</b>，若想省时省力，可以购买兼容 MFPS 的武器模型包，自带所需动画和配套手臂模型。下方提供了这类素材的资源商店合集清单：");
+            DrawText("添加新武器当然需要武器的 3D 模型。添加新武器有几种做法，有些人只替换武器模型，沿用 GFWK 默认的手部模型和动画<i>（本质上是把新武器模型摆到手中）</i>。这虽然不算错，但绝非最佳方案，因为 GFWK 的手部模型和动画只是示例占位，换成不同武器模型后动画效果并不理想。\n \n强烈建议使用你自己的模型和动画<i>（包括手臂模型）</i>。可以沿用 GFWK 默认手部，但这样需要为每一把要添加的武器单独做动画；若不擅长动画制作，会相当吃力，因为<b>至少需要 4 个动画：掏出、收起、开火、换弹</b>。\n \n<b>另一种选择</b>，若想省时省力，可以购买兼容 GFWK 的武器模型包，自带所需动画和配套手臂模型。下方提供了这类素材的资源商店合集清单：");
             GUILayout.Space(5);
             Rect r = EditorGUILayout.BeginHorizontal();
-            MFPSEditorStyles.DrawBackground(r, new Color(0, 0, 0, 0.3f));
+            GFWKEditorStyles.DrawBackground(r, new Color(0, 0, 0, 0.3f));
             GUILayout.Space(10);
             weaponList.OnGUI();
             EditorGUILayout.EndHorizontal();
             if (GUILayout.Button("<color=yellow>在线查看</color>", EditorStyles.label))
             {
-                Application.OpenURL("https://www.lovattostudio.com/en/weapon-packs-for-mfps/");
+                Application.OpenURL("https://www.gfworksstudio.com/en/weapon-packs-for-gfwk/");
             }
         }
     }
@@ -274,7 +274,7 @@ public class AddWeaponTutorial : TutorialWizard
         }
         else if (subStep == 6)
         {
-            DrawText("部分武器包自带行走和奔跑动画，但 MFPS 中这些动作由代码程序化生成，无需使用这些动画。" +
+            DrawText("部分武器包自带行走和奔跑动画，但 GFWK 中这些动作由代码程序化生成，无需使用这些动画。" +
                 " 接下来需要在刚才挂载 bl_WeaponAnimation 的同一个对象上，再添加 <b>bl_WeaponMovement.cs</b> 脚本。");
             DrawAnimatedImage(5);
             DownArrow();
@@ -355,7 +355,7 @@ public class AddWeaponTutorial : TutorialWizard
             DrawText("完成，你已添加了一把新的第一人称武器。\n\n若想更进一步，为玩家提供在所有可用武器中自选配装的菜单，可使用 <b>兵种自定义</b> 扩展。");
             if (DrawButton("兵种自定义"))
             {
-                Application.OpenURL("https://www.lovattostudio.com/en/shop/addons/class-cutomization/");
+                Application.OpenURL("https://www.gfworksstudio.com/en/shop/addons/class-cutomization/");
             }
         }
     }
@@ -386,7 +386,7 @@ public class AddWeaponTutorial : TutorialWizard
             DrawText("点击该按钮会自动指定所选的第一人称武器，脚本检视面板中会出现一些新的变量：");
             DrawPropertieInfo("MuzzlefFlash", "粒子系统", "开火粒子效果。");
             DownArrow();
-            DrawText("枪口火焰方面，把你的粒子特效拖入武器对象内；若没有自己的，MFPS 默认特效位于：<i>MFPS->" +
+            DrawText("枪口火焰方面，把你的粒子特效拖入武器对象内；若没有自己的，GFWK 默认特效位于：<i>GFWK->" +
                 "Content->Prefabs->Particles->WeaponsEffects->Prefabs->MuzzleFlashEffect</i>。把它拖入层级，放进武器内部并摆到枪口末端。" +
                 "然后在 MuzzleFlash 字段中指定它。");
             DownArrow();
@@ -461,7 +461,7 @@ public class AddWeaponTutorial : TutorialWizard
 
     void AnimateWeaponDoc()
     {
-        DrawText("关于武器最常见的问题之一是如何为武器制作动画。如前所述，要在 MFPS 中为第一人称视角集成一把新武器，你需要：\n \n•  手臂或手部模型\n•  武器模型\n•  4 个动画<b>（掏出、收起、开火、换弹）</b>\n \n无论你使用 MFPS 示例手臂模型还是自定义模型，都需要自己或由美术为它们和新武器模型制作动画；<b>这一过程与 MFPS 无关</b>，简单来说就是<b>按你为游戏中任何其他对象或模型做动画的方式来做即可</b>。MFPS 对武器动画的制作方式没有任何限制，你可以在任何顺手的工具中制作，Unity 内部或 Blender、Maya、3ds Max 等第三方软件皆可。\n \n对于没有相关经验的新手，这里提供一份简易入门指南：");
+        DrawText("关于武器最常见的问题之一是如何为武器制作动画。如前所述，要在 GFWK 中为第一人称视角集成一把新武器，你需要：\n \n•  手臂或手部模型\n•  武器模型\n•  4 个动画<b>（掏出、收起、开火、换弹）</b>\n \n无论你使用 GFWK 示例手臂模型还是自定义模型，都需要自己或由美术为它们和新武器模型制作动画；<b>这一过程与 GFWK 无关</b>，简单来说就是<b>按你为游戏中任何其他对象或模型做动画的方式来做即可</b>。GFWK 对武器动画的制作方式没有任何限制，你可以在任何顺手的工具中制作，Unity 内部或 Blender、Maya、3ds Max 等第三方软件皆可。\n \n对于没有相关经验的新手，这里提供一份简易入门指南：");
         Space(10);
         DrawHyperlinkText("<b><size=22>在 UNITY 内制作</size></b>\n\n若想在 Unity 内制作动画以便快速原型开发和高效迭代，Unity 内置动画系统很方便。但对于本例这类骨骼较多、需要用到反向动力学和约束的复杂情况，内置方案未必最佳。此时可使用资源商店中的外部编辑器工具 \"UMotion\"，它有免费版本，可在此查看：<link=https://assetstore.unity.com/packages/tools/animation/umotion-community-animation-editor-95986?aid=1101lJFi>UMotion Pro</link>\n\n以及其免费版：<link=https://assetstore.unity.com/packages/tools/animation/umotion-community-animation-editor-95986?aid=1101lJFi>UMotion Community</link>");
         DrawText("以下视频展示了如何用 UMotion 为第一人称武器制作动画：");

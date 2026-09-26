@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace MFPS.Runtime.Settings
+namespace GFWK.Runtime.Settings
 {
     public class bl_SingleSettingsSlider : MonoBehaviour
     {
@@ -34,7 +34,7 @@ namespace MFPS.Runtime.Settings
         /// </summary>
         void Load()
         {
-            currentValue = (float)bl_MFPS.Settings.GetSettingOf(SettingKeyName);
+            currentValue = (float)bl_GFWK.Settings.GetSettingOf(SettingKeyName);
             slider.value = currentValue;
             ApplyCurrentValue();
         }
@@ -56,7 +56,7 @@ namespace MFPS.Runtime.Settings
         public void ApplySetting()
         {
             //Set the changed setting value to the instance settings group.
-            bl_MFPS.Settings.SetSettingOf(SettingKeyName, currentValue, bl_RuntimeSettings.Instance.autoSaveSettings);
+            bl_GFWK.Settings.SetSettingOf(SettingKeyName, currentValue, bl_RuntimeSettings.Instance.autoSaveSettings);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace MFPS.Runtime.Settings
         /// </summary>
         public void SaveValue()
         {
-            bl_MFPS.Settings.SaveSettings();
+            bl_GFWK.Settings.SaveSettings();
         }
 
         /// <summary>

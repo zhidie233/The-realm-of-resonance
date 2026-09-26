@@ -1,5 +1,5 @@
-using MFPS.PlayerController;
-using MFPS.Runtime.Level;
+using GFWK.PlayerController;
+using GFWK.Runtime.Level;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -39,12 +39,12 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
     public float m_StickToGroundForce;
     public float m_GravityMultiplier;
 
-    [LovattoToogle] public bool RunFovEffect = true;
+    [GFWorksToogle] public bool RunFovEffect = true;
     public float runFOVAmount = 8;
-    [LovattoToogle] public bool KeepToCrouch = true;
+    [GFWorksToogle] public bool KeepToCrouch = true;
     public bool canStealthMode = true;
     [Header("坠落伤害")]
-    [LovattoToogle] public bool FallDamage = true;
+    [GFWorksToogle] public bool FallDamage = true;
     [Range(0.1f, 5f)]
     public float SafeFallDistance = 3;
     [Range(3, 25)]
@@ -94,7 +94,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
     private bool isClimbing, isAiming = false;
     private bl_Ladder _ladder;
     private bool MoveToStarted = false;
-#if MFPSM
+#if GFWKM
     private bl_Joystick Joystick;
 #endif
     private float PostGroundVerticalPos = 0;
@@ -136,7 +136,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
         _transform = transform;
         playerReferences = GetComponent<bl_PlayerReferences>();
         _characterController = playerReferences.characterController;
-#if MFPSM
+#if GFWKM
         Joystick = FindObjectOfType<bl_Joystick>();
 #endif
         defaultCameraRPosition = CameraRoot.localPosition;
@@ -156,7 +156,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
         bl_EventHandler.onMatchStart += OnMatchStart;
         bl_EventHandler.onGameSettingsChange += OnGameSettingsChanged;
         bl_EventHandler.onLocalAimChanged += OnAimChange;
-#if MFPSM
+#if GFWKM
         bl_TouchHelper.OnCrouch += OnCrouchClicked;
         bl_TouchHelper.OnJump += OnJump;
 #endif
@@ -169,7 +169,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
         bl_EventHandler.onMatchStart -= OnMatchStart;
         bl_EventHandler.onGameSettingsChange -= OnGameSettingsChanged;
         bl_EventHandler.onLocalAimChanged -= OnAimChange;
-#if MFPSM
+#if GFWKM
         bl_TouchHelper.OnCrouch -= OnCrouchClicked;
         bl_TouchHelper.OnJump -= OnJump;
 #endif
@@ -738,7 +738,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
         HorizontalInput = bl_GameInput.Horizontal;
         VerticalInput = bl_GameInput.Vertical;
 
-#if MFPSM
+#if GFWKM
         if (bl_UtilityHelper.isMobile)
         {
             HorizontalInput = Joystick.Horizontal;
@@ -889,7 +889,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
         JumpInmune = true;
     }
 
-#if MFPSM
+#if GFWKM
     void OnCrouchClicked()
     {
         Crounching = !Crounching;
@@ -909,7 +909,7 @@ public class bl_FirstPersonController : bl_FirstPersonControllerBase
     {
         mouseLook.Update();
 
-        if (bl_GameInput.InputFocus != MFPSInputFocus.Player) return;
+        if (bl_GameInput.InputFocus != GFWKInputFocus.Player) return;
 
         if (!isClimbing)
         {

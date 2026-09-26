@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.Audio
+namespace GFWK.Audio
 {
     public class bl_AudioInstance : MonoBehaviour
     {

@@ -343,12 +343,12 @@ public static class bl_Extensions
     }
 
     /// <summary>
-    /// Get the current room info parsed in the custom MFPS class
+    /// Get the current room info parsed in the custom GFWK class
     /// </summary>
     /// <returns></returns>
-    public static MFPSRoomInfo GetRoomInfo(this Room room)
+    public static GFWKRoomInfo GetRoomInfo(this Room room)
     {
-        return new MFPSRoomInfo(room);
+        return new GFWKRoomInfo(room);
     }
 
     /// <summary>
@@ -430,7 +430,7 @@ public static class bl_Extensions
     /// <returns></returns>
     public static bool isLocalPlayerCollider(this Collider collider)
     {
-        return collider.CompareTag(bl_MFPS.LOCAL_PLAYER_TAG);
+        return collider.CompareTag(bl_GFWK.LOCAL_PLAYER_TAG);
     }
 
     /// <summary>
@@ -485,13 +485,13 @@ public static class bl_Extensions
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static MFPSPlayer[] ToMFPSPlayerList(this Player[] list)
+    public static GFWKPlayer[] ToGFWKPlayerList(this Player[] list)
     {
-        var mfpsList = new MFPSPlayer[list.Length];
+        var gfwkList = new GFWKPlayer[list.Length];
         for (int i = 0; i < list.Length; i++)
         {
-            mfpsList[i] = bl_GameManager.Instance.GetMFPSPlayer(list[i].NickName);
+            gfwkList[i] = bl_GameManager.Instance.GetGFWKPlayer(list[i].NickName);
         }
-        return mfpsList;
+        return gfwkList;
     }
 }

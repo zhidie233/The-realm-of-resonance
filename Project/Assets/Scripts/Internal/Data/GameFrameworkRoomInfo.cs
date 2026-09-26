@@ -1,13 +1,13 @@
 ﻿using System;
 using Photon.Realtime;
 using UnityEngine;
-using MFPS.Internal.Structures;
+using GFWK.Internal.Structures;
 
 /// <summary>
 /// use to get all room properties easily
 /// usage:  RoomProperties props = PhotonNetwork.CurrentRoom.GetRoomInfo();
 /// </summary>
-public struct MFPSRoomInfo 
+public struct GFWKRoomInfo 
 {
     public string roomName { get; set; }
     public string mapName { get; set; }
@@ -26,7 +26,7 @@ public struct MFPSRoomInfo
 
     public bool isPrivate { get { return !string.IsNullOrEmpty(password); } }
 
-    public MFPSRoomInfo(Room roomTarget)
+    public GFWKRoomInfo(Room roomTarget)
     {
         room = roomTarget;
         roomName = room.Name;

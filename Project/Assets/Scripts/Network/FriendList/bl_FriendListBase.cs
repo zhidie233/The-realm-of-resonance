@@ -1,7 +1,7 @@
 using Photon.Realtime;
 using TMPro;
 
-namespace MFPS.Runtime.FriendList
+namespace GFWK.Runtime.FriendList
 {
     public abstract class bl_FriendListBase : bl_PhotonHelper
     {

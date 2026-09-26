@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_BarracksWindow : MonoBehaviour
     {
@@ -84,7 +84,7 @@ namespace MFPS.Runtime.UI
             public string Name;
             public GameObject Window;
             public Button OpenButton;
-            [LovattoToogle] public bool Active = true;
+            [GFWorksToogle] public bool Active = true;
             public bl_EventHandler.UEvent onOpen;
 
             public void SetActive(bool active)

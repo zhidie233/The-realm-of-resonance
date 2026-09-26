@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using MFPS.Internal;
+using GFWK.Internal;
 
 public class bl_PlayerAnimations : bl_PlayerAnimationsBase
 {

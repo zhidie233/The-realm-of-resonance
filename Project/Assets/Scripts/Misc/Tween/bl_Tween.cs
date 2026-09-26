@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Tween
+namespace GFWK.Tween
 {
     public interface ITween
     {

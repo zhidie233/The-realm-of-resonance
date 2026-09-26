@@ -12,20 +12,20 @@ public class bl_FrameRateManager : MonoBehaviour
     /// </summary>
     void OnStart()
     {
-        if(optionDropdown != null && bl_MFPS.Settings != null)
+        if(optionDropdown != null && bl_GFWK.Settings != null)
         {
             optionDropdown.ClearOptions();
             List<Dropdown.OptionData> ol = new List<Dropdown.OptionData>();
-            int[] options = bl_MFPS.Settings.RefreshRates;
+            int[] options = bl_GFWK.Settings.RefreshRates;
             for (int i = 0; i < options.Length; i++)
             {
                 if(options[i] == 0) { ol.Add(new Dropdown.OptionData() { text = "UNLIMITED" }); continue; }
                 ol.Add(new Dropdown.OptionData() { text = options[i].ToString() });
             }
             optionDropdown.AddOptions(ol);
-            int df = PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKey("framerateid"), (int)bl_MFPS.Settings.GetSettingOf("帧率上限"));
+            int df = PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKey("framerateid"), (int)bl_GFWK.Settings.GetSettingOf("帧率上限"));
             optionDropdown.value = df;
-            Application.targetFrameRate = bl_MFPS.Settings.RefreshRates[df];
+            Application.targetFrameRate = bl_GFWK.Settings.RefreshRates[df];
         }
     }
 
@@ -34,7 +34,7 @@ public class bl_FrameRateManager : MonoBehaviour
     /// </summary>
     public void OnChange(int option)
     {        
-        Application.targetFrameRate = bl_MFPS.Settings.RefreshRates[option];
+        Application.targetFrameRate = bl_GFWK.Settings.RefreshRates[option];
         PlayerPrefs.SetInt(PropertiesKeys.GetUniqueKey("framerateid"), option);
     }
 
@@ -43,6 +43,6 @@ public class bl_FrameRateManager : MonoBehaviour
     /// </summary>
     public void OnChangeCustom(int option)
     {
-        Application.targetFrameRate = bl_MFPS.Settings.RefreshRates[option];
+        Application.targetFrameRate = bl_GFWK.Settings.RefreshRates[option];
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
-using MFPS.Internal.Structures;
-using MFPSEditor;
+using GFWK.Internal.Structures;
+using GFWKEditor;
 
 [Serializable]
 public class bl_GunInfo
@@ -9,7 +9,7 @@ public class bl_GunInfo
     [Header("Info")]
     public string Name;
     public GunType Type = GunType.Machinegun;
-    [LovattoToogle] public bool Active = true;
+    [GFWorksToogle] public bool Active = true;
 
     [Header("Settings")]
     [Range(1, 100)] public int Damage;
@@ -18,7 +18,7 @@ public class bl_GunInfo
     [Range(0, 1000)] public int Range;
     [Range(0.01f, 5)] public int Accuracy;
     [Range(0, 4)] public float Weight;
-    public MFPSItemUnlockability Unlockability;
+    public GFWKItemUnlockability Unlockability;
 
     [Header("References")]
     public bl_GunPickUpBase PickUpPrefab;
@@ -30,6 +30,6 @@ public class bl_GunInfo
     /// <returns></returns>
     public bool CanShowWeapon()
     {
-        return Active && Unlockability.UnlockMethod != MFPSItemUnlockability.UnlockabilityMethod.Hidden;
+        return Active && Unlockability.UnlockMethod != GFWKItemUnlockability.UnlockabilityMethod.Hidden;
     }
 }

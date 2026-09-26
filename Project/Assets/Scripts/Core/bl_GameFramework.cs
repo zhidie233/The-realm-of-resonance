@@ -1,13 +1,13 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using MFPS.Runtime.Settings;
-using MFPS.Internal.Scriptables;
+using GFWK.Runtime.Settings;
+using GFWK.Internal.Scriptables;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using static bl_CameraRayBase;
 
-public static class bl_MFPS
+public static class bl_GFWK
 {
     public static float MusicVolume = 1;
 
@@ -26,7 +26,7 @@ public static class bl_MFPS
     public static class LocalPlayer
     {
         public static int ViewID => bl_GameManager.LocalPlayerViewID;
-        public static MFPSPlayer MFPSActor => bl_GameManager.Instance.LocalActor;
+        public static GFWKPlayer GFWKActor => bl_GameManager.Instance.LocalActor;
 
         /// <summary>
         /// The team of the local player
@@ -185,7 +185,7 @@ public static class bl_MFPS
     }
 
     /// <summary>
-    /// Static functions for the MFPS coins
+    /// Static functions for the GFWK coins
     /// </summary>
     public static class Coins
     {
@@ -194,7 +194,7 @@ public static class bl_MFPS
         /// </summary>
         /// <param name="coinID"></param>
         /// <returns></returns>
-        public static MFPSCoin GetCoinData(int coinID)
+        public static GFWKCoin GetCoinData(int coinID)
         {
             if (coinID >= bl_GameData.Instance.gameCoins.Count) return null;
 
@@ -206,7 +206,7 @@ public static class bl_MFPS
         /// </summary>
         /// <param name="coin"></param>
         /// <returns></returns>
-        public static int GetIndexOfCoin(MFPSCoin coin)
+        public static int GetIndexOfCoin(GFWKCoin coin)
         {
             return GetAllCoins().FindIndex(x => x.CoinName == coin.CoinName);
         }
@@ -215,7 +215,7 @@ public static class bl_MFPS
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<MFPSCoin> GetAllCoins() => bl_GameData.Instance.gameCoins;
+        public static List<GFWKCoin> GetAllCoins() => bl_GameData.Instance.gameCoins;
     }
 
     /// <summary>
@@ -256,7 +256,7 @@ public static class bl_MFPS
         /// <returns></returns>
         public static bool UsingWaitingRoom()
         {
-            return bl_GameData.Instance.lobbyJoinMethod == MFPS.Internal.Structures.LobbyJoinMethod.WaitingRoom;
+            return bl_GameData.Instance.lobbyJoinMethod == GFWK.Internal.Structures.LobbyJoinMethod.WaitingRoom;
         }
     }
 }

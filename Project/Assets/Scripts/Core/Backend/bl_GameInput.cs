@@ -1,4 +1,4 @@
-﻿using MFPS.InputManager;
+﻿using GFWK.InputManager;
 using UnityEngine;
 
 public enum GameInputType
@@ -8,7 +8,7 @@ public enum GameInputType
     Hold,
 }
 
-public enum MFPSInputFocus
+public enum GFWKInputFocus
 {
     Player,
     Interface,
@@ -17,7 +17,7 @@ public enum MFPSInputFocus
 
 public class bl_GameInput 
 {
-    public static MFPSInputFocus InputFocus = MFPSInputFocus.Player;
+    public static GFWKInputFocus InputFocus = GFWKInputFocus.Player;
 
     public static bool Fire(GameInputType inputType = GameInputType.Hold)
     {

@@ -5,7 +5,7 @@ using Photon.Realtime;
 using UnityEditor;
 #endif
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_DoorManager : bl_MonoBehaviour
     {

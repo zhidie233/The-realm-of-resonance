@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [CustomEditor(typeof(ButtonMapped))]
     public class InputMappedEditor : Editor

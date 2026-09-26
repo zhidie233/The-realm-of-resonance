@@ -1,6 +1,6 @@
 ﻿//#define AUTO_REFRESH
 #define ASCOMPLIANCE
-using MFPSEditor;
+using GFWKEditor;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,7 +11,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public class bl_MFPSManagerWindow : EditorWindow
+public class bl_GFWKManagerWindow : EditorWindow
 {
     #region Parameters
     public static Color primaryColor = new Color(0.098f, 0.098f, 0.098f, 1.00f);
@@ -36,7 +36,7 @@ public class bl_MFPSManagerWindow : EditorWindow
     public bool m_initGUI = false;
     private bl_GameData gameData;
     private Vector2 bodyScroll = Vector2.zero;
-    private Texture2D mfpsLogo, soldierIcon;
+    private Texture2D gfwkLogo, soldierIcon;
     SearchField weaponSearchfield, managerSearchField;
     private string weaponSearchKey, managerSearchKey = "";
     readonly string[] slotsNames = new string[] { "Assault", "Recon", "Support", "Engineer" };
@@ -60,13 +60,13 @@ public class bl_MFPSManagerWindow : EditorWindow
     private void OnEnable()
     {
         serializedObject = new SerializedObject(this);
-        titleContent = new GUIContent(" MFPS", GetUnityIcon("音频混音器"));
-        mfpsLogo = Resources.Load("content/Images/mfps-name", typeof(Texture2D)) as Texture2D;
+        titleContent = new GUIContent(" GFWK", GetUnityIcon("音频混音器"));
+        gfwkLogo = Resources.Load("content/Images/gfwk-name", typeof(Texture2D)) as Texture2D;
         soldierIcon = AssetDatabase.LoadAssetAtPath("Assets/Art/UI/Icons/framework-soldier.png", typeof(Texture2D)) as Texture2D;
         minSize = new Vector2(720, 570);
         weaponSearchfield = new SearchField();
         managerSearchField = new SearchField();
-        LovattoStats.SetStat("mfps-manager-window", 1);
+        GFWorksStats.SetStat("gfwk-manager-window", 1);
         currentPlayerClass = currentPlayerClass.GetSavePlayerClass();
         cachedType = this.GetType();
         FetchCustomTabs();
@@ -167,7 +167,7 @@ public class bl_MFPSManagerWindow : EditorWindow
     {
         Rect r = EditorGUILayout.BeginVertical(GUILayout.Width(150));
         EditorGUI.DrawRect(r, primaryColor);
-        GUILayout.Label(mfpsLogo, GUILayout.Height(58), GUILayout.Width(150));
+        GUILayout.Label(gfwkLogo, GUILayout.Height(58), GUILayout.Width(150));
         DrawBottomLine(0.2f);
         if (currentWindow == WindowType.Managers || currentWindow == WindowType.Home)
             DrawManagerButtons();
@@ -255,9 +255,9 @@ public class bl_MFPSManagerWindow : EditorWindow
         float lw = EditorGUIUtility.labelWidth;
         EditorGUIUtility.labelWidth = 75;
         var sls = GUI.skin.horizontalSlider;
-        GUI.skin.horizontalSlider = MFPSEditorStyles.EditorSkin.customStyles[9];
+        GUI.skin.horizontalSlider = GFWKEditorStyles.EditorSkin.customStyles[9];
         var slt = GUI.skin.horizontalSliderThumb;
-        GUI.skin.horizontalSliderThumb = MFPSEditorStyles.EditorSkin.customStyles[10];
+        GUI.skin.horizontalSliderThumb = GFWKEditorStyles.EditorSkin.customStyles[10];
 
         var all = bl_GameData.Instance.AllWeapons;
         int rowID = 0;
@@ -347,13 +347,13 @@ public class bl_MFPSManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("取消", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
+            if (GUILayout.Button("取消", GFWKEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
             {
                 editWeaponId = -1;
                 editGunInfo = null;
             }
             GUILayout.Space(10);
-            if (GUILayout.Button("保存", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(110)))
+            if (GUILayout.Button("保存", GFWKEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(110)))
             {
                 EditorUtility.SetDirty(bl_GameData.Instance);
                 editWeaponId = -1;
@@ -377,7 +377,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         player = bl_GameData.Instance.Player2.PlayerReferences;
         DrawPlayerLoadout(player, ref currentSlot2);
 #else
-        GUILayout.Label("<b>已启用兵种自定义</b>\n<b><size=8><i>玩家武器配置由全局配置统一管理，可在游戏内修改，不再像 MFPS 默认那样按玩家预制体固定配置</i></size></b>\n", styles["textC"]);
+        GUILayout.Label("<b>已启用兵种自定义</b>\n<b><size=8><i>玩家武器配置由全局配置统一管理，可在游戏内修改，不再像 GFWK 默认那样按玩家预制体固定配置</i></size></b>\n", styles["textC"]);
         GUILayout.Space(10);
         Rect r = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
         {
@@ -395,7 +395,7 @@ public class bl_MFPSManagerWindow : EditorWindow
                     {
                         EditorGUI.DrawRect(br, altColor);
                         GUI.color = new Color(1, 1, 1, 0.2f);
-                        GUI.Box(br, GUIContent.none, MFPSEditorStyles.OutlineButtonStyle);
+                        GUI.Box(br, GUIContent.none, GFWKEditorStyles.OutlineButtonStyle);
                         GUI.color = Color.white;
                     }
                     if (GUI.Button(br, slotsNames[i], styles["textC"]))
@@ -529,22 +529,22 @@ public class bl_MFPSManagerWindow : EditorWindow
         m.ModeName = EditorGUILayout.TextField("游戏模式名称", m.ModeName);
         m.gameMode = (GameMode)EditorGUILayout.EnumPopup("模式标识", m.gameMode);
         var r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.isEnabled = MFPSEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
+        m.isEnabled = GFWKEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
 
         GUILayout.Space(10);
         DrawTitleText("SETTINGS");
         m.GoalName = EditorGUILayout.TextField("模式目标名称", m.GoalName);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.supportBots = MFPSEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
+        m.supportBots = GFWKEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.AutoTeamSelection = MFPSEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
+        m.AutoTeamSelection = GFWKEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.allowedPickupWeapons = MFPSEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
+        m.allowedPickupWeapons = GFWKEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.UnlistGameAfterStarted = MFPSEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
+        m.UnlistGameAfterStarted = GFWKEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
 
         m.RequiredPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.RequiredPlayersToStart, 1, 64);
         m.onRoundStartedSpawn = (GameModeSettings.OnRoundStartedSpawn)EditorGUILayout.EnumPopup("回合开始时", m.onRoundStartedSpawn);
@@ -609,7 +609,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("返回", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
+            if (GUILayout.Button("返回", GFWKEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
             {
                 selectedGameMode = null;
             }
@@ -673,7 +673,7 @@ public class bl_MFPSManagerWindow : EditorWindow
                         {
                             EditorGUI.DrawRect(br, altColor);
                             GUI.color = new Color(1, 1, 1, 0.2f);
-                            GUI.Box(br, GUIContent.none, MFPSEditorStyles.OutlineButtonStyle);
+                            GUI.Box(br, GUIContent.none, GFWKEditorStyles.OutlineButtonStyle);
                             GUI.color = Color.white;
                         }
                         if (GUI.Button(br, slotsNames[i], styles["textC"]))
@@ -755,7 +755,7 @@ public class bl_MFPSManagerWindow : EditorWindow
 
     void DrawWeaponSelectionList()
     {
-        var all = bl_MFPS.AllWeapons;
+        var all = bl_GFWK.AllWeapons;
         weaponScroll = GUILayout.BeginScrollView(weaponScroll);
         GUILayout.Space(10);
         Color c = new Color(0, 0, 0, 0.1f);
@@ -1052,7 +1052,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         return cachedUnityIcons[iconName];
     }
 
-    public static Color GetHexColor(string hex) => MFPSEditorStyles.GetColorFromHex(hex);
+    public static Color GetHexColor(string hex) => GFWKEditorStyles.GetColorFromHex(hex);
 
     private static Dictionary<string, Color> cachedColors;
     public static Color GetCachedColor(string key, Color color)
@@ -1068,16 +1068,16 @@ public class bl_MFPSManagerWindow : EditorWindow
     [MenuItem("游戏框架/管理器 %m")]
     static void Open()
     {
-        GetWindow<bl_MFPSManagerWindow>("MFPS 管理器");
+        GetWindow<bl_GFWKManagerWindow>("GFWK 管理器");
     }
 
     void FetchCustomTabs()
     {
-        var classes = TypeCache.GetTypesWithAttribute<MFPSManagerTab>();
+        var classes = TypeCache.GetTypesWithAttribute<GFWKManagerTab>();
         foreach (var classInfo in classes)
         {
             // get the attribute information
-            var attr = classInfo.GetCustomAttribute<MFPSManagerTab>();
+            var attr = classInfo.GetCustomAttribute<GFWKManagerTab>();
 
             var panel = managerPanels.Find(x => x.Name == attr.name);
             if (panel != null)
@@ -1089,8 +1089,8 @@ public class bl_MFPSManagerWindow : EditorWindow
                 else continue;
             }
 
-            // Cast the MFPSManagerTabData type from the classInfo
-            var tab = (MFPSManagerTabData)Activator.CreateInstance(classInfo);
+            // Cast the GFWKManagerTabData type from the classInfo
+            var tab = (GFWKManagerTabData)Activator.CreateInstance(classInfo);
             var data = tab.GetData();
 
             if (panel == null)
@@ -1120,7 +1120,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         internal MethodInfo bodyFunc;
         internal bool isExternalDrawer = false;
 
-        public void DrawBody(Type type, bl_MFPSManagerWindow target)
+        public void DrawBody(Type type, bl_GFWKManagerWindow target)
         {
             if (string.IsNullOrEmpty(BodyFuncName) && bodyFunc == null) { return; }
 
@@ -1157,7 +1157,7 @@ public class bl_MFPSManagerWindow : EditorWindow
 /// <summary>
 /// 
 /// </summary>
-public abstract class MFPSManagerTabData
+public abstract class GFWKManagerTabData
 {
     public struct Data
     {
@@ -1178,11 +1178,11 @@ public abstract class MFPSManagerTabData
 /// 
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public class MFPSManagerTab : Attribute
+public class GFWKManagerTab : Attribute
 {
     public string name;
 
-    public MFPSManagerTab(string name)
+    public GFWKManagerTab(string name)
     {
         this.name = name;
     }

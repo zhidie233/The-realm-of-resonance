@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using MFPS.Internal.BaseClass;
+using GFWK.Internal.BaseClass;
 
 public class bl_SpawnPointManager : MonoBehaviour
 {
     public SpawnMode spawnMode = SpawnMode.Random;
-    [LovattoToogle] public bool drawSpawnPoints = true;
+    [GFWorksToogle] public bool drawSpawnPoints = true;
 
     [Header("References")]
     public bl_KillCamBase killCameraInstance;

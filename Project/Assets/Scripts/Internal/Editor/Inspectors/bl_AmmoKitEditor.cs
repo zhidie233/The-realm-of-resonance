@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     [CustomEditor(typeof(bl_Ammo))]
     public class bl_AmmoKitEditor : Editor
@@ -31,13 +31,13 @@ namespace MFPS.Runtime.Level
                 script.itemAuthority = (bl_NetworkItem.ItemAuthority)EditorGUILayout.EnumPopup("物品权限", script.itemAuthority, EditorStyles.toolbarPopup);
                 GUILayout.Space(4);
                 Rect r = GUILayoutUtility.GetRect(Screen.width - 100, EditorGUIUtility.singleLineHeight);
-                script.isSceneItem = MFPSEditorStyles.FeatureToogle(r, script.isSceneItem, "是否为场景物品");
+                script.isSceneItem = GFWKEditorStyles.FeatureToogle(r, script.isSceneItem, "是否为场景物品");
                 GUILayout.Space(10);
                 r = GUILayoutUtility.GetRect(Screen.width - 100, EditorGUIUtility.singleLineHeight);
-                script.isGlobal = MFPSEditorStyles.FeatureToogle(r, script.isGlobal, "是否为全局弹药");
+                script.isGlobal = GFWKEditorStyles.FeatureToogle(r, script.isGlobal, "是否为全局弹药");
                 GUILayout.Space(2);
                 r = GUILayoutUtility.GetRect(Screen.width - 100, EditorGUIUtility.singleLineHeight);
-                script.autoRespawn = MFPSEditorStyles.FeatureToogle(r, script.autoRespawn, "自动重生");
+                script.autoRespawn = GFWKEditorStyles.FeatureToogle(r, script.autoRespawn, "自动重生");
                 GUILayout.Space(2);
                 if (!script.isGlobal)
                 {

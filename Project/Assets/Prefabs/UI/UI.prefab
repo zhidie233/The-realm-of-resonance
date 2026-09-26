@@ -15238,7 +15238,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'VOTE BY: LOVATTO'
+  m_text: 'VOTE BY: GFWORKS'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
   m_sharedMaterial: {fileID: 3906779889605611924, guid: 65bab3a880c5c3a4dbf6d1c8afb8de16, type: 2}
@@ -21605,7 +21605,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Lovatto
+  m_text: GFWorks
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
   m_sharedMaterial: {fileID: -2996529710204131526, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
@@ -23355,7 +23355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6961162238300381029}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -35934,7 +35934,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2462447241644371102}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -37899,7 +37899,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9187195275885564164}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -50626,7 +50626,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7888357549882012487}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -55505,7 +55505,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7212457037349229711}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -62129,7 +62129,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9143973189120292272}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0

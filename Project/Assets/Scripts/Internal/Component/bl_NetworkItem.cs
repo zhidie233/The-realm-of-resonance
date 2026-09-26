@@ -4,7 +4,7 @@ using UnityEngine;
 public class bl_NetworkItem : MonoBehaviour
 {
     public ItemAuthority itemAuthority = ItemAuthority.All;
-    [LovattoToogle] public bool isSceneItem = false;
+    [GFWorksToogle] public bool isSceneItem = false;
 
     [SerializeField, HideInInspector]
     private bool isInitializated = false;

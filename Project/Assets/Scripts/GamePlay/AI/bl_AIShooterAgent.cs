@@ -4,8 +4,8 @@ using UnityEngine.AI;
 using Photon.Pun;
 using Photon.Realtime;
 using NetHashTable = ExitGames.Client.Photon.Hashtable;
-using MFPS.Runtime.AI;
-using MFPSEditor;
+using GFWK.Runtime.AI;
+using GFWKEditor;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class bl_AIShooterAgent : bl_AIShooter
@@ -743,7 +743,7 @@ public class bl_AIShooterAgent : bl_AIShooter
 
         if (Physics.Linecast(AIWeapon.GetFirePosition(), TargetPosition, out obsRay, ObstaclesLayer, QueryTriggerInteraction.Ignore))
         {
-            ObstacleBetweenTarget = obsRay.transform.root.CompareTag(bl_MFPS.LOCAL_PLAYER_TAG) == false;
+            ObstacleBetweenTarget = obsRay.transform.root.CompareTag(bl_GFWK.LOCAL_PLAYER_TAG) == false;
         }
         else { ObstacleBetweenTarget = false; }
 
@@ -1323,7 +1323,7 @@ public class bl_AIShooterAgent : bl_AIShooter
     /// </summary>
     void OnLocalSpawn()
     {
-        if (!isOneTeamMode && bl_MFPS.LocalPlayer.Team == AITeam)
+        if (!isOneTeamMode && bl_GFWK.LocalPlayer.Team == AITeam)
         {
             References.namePlateDrawer.enabled = true;
         }
@@ -1488,13 +1488,13 @@ public class bl_AIShooterAgent : bl_AIShooter
         return t;
     }
 
-    private MFPSPlayer m_MFPSActor;
-    public MFPSPlayer BotMFPSActor
+    private GFWKPlayer m_GFWKActor;
+    public GFWKPlayer BotGFWKActor
     {
         get
         {
-            if (m_MFPSActor == null) { m_MFPSActor = bl_GameManager.Instance.GetMFPSPlayer(AIName); }
-            return m_MFPSActor;
+            if (m_GFWKActor == null) { m_GFWKActor = bl_GameManager.Instance.GetGFWKPlayer(AIName); }
+            return m_GFWKActor;
         }
     }
 

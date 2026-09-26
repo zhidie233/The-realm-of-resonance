@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_DamageIndicator : bl_DamageIndicatorBase
     {
@@ -68,7 +68,7 @@ namespace MFPS.Runtime.UI
         public override void OnUpdate()
         {
             if (alpha <= 0) return;
-            if (bl_MFPS.LocalPlayerReferences == null) return;
+            if (bl_GFWK.LocalPlayerReferences == null) return;
 
             alpha -= Time.deltaTime;
             UpdateDirection();
@@ -79,7 +79,7 @@ namespace MFPS.Runtime.UI
         /// </summary>
         void UpdateDirection()
         {
-            rhs = attackDirection - bl_MFPS.LocalPlayerReferences.PlayerCameraTransform.position;
+            rhs = attackDirection - bl_GFWK.LocalPlayerReferences.PlayerCameraTransform.position;
             rhs.y = 0;
             rhs.Normalize();
             if (bl_GameManager.Instance.CameraRendered != null)

@@ -36,7 +36,7 @@ public class bl_KillCamUI :  bl_KillCamUIBase
 
         levelIcon.gameObject.SetActive(false);
         StartCoroutine(RespawnCountDown());
-        MFPSPlayer actor = bl_GameManager.Instance.FindActor(killer);
+        GFWKPlayer actor = bl_GameManager.Instance.FindActor(killer);
         if(actor != null)
         {
 

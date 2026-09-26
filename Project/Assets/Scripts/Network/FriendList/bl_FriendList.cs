@@ -4,7 +4,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-namespace MFPS.Runtime.FriendList
+namespace GFWK.Runtime.FriendList
 {
     public class bl_FriendList : bl_FriendListBase, IMatchmakingCallbacks, IConnectionCallbacks, ILobbyCallbacks
     {
@@ -126,7 +126,7 @@ namespace MFPS.Runtime.FriendList
 #if ULSP
             if (bl_DataBase.IsUserLogged)
             {
-                bl_ULoginMFPS.SaveFriendList(allfriends, () =>
+                bl_ULoginGFWK.SaveFriendList(allfriends, () =>
                 {
                     Debug.Log("Friend list save in database!");
                     bl_DataBase.LocalUserInstance.SetFriends(allfriends);
@@ -295,7 +295,7 @@ namespace MFPS.Runtime.FriendList
         {
             get
             {
-                return PropertiesKeys.GetUniqueKeyForPlayer("mfps.friends", bl_PhotonNetwork.NickName);
+                return PropertiesKeys.GetUniqueKeyForPlayer("gfwk.friends", bl_PhotonNetwork.NickName);
             }
         }
 

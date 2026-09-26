@@ -1,12 +1,12 @@
 ﻿using System.Collections;
 using UnityEngine;
-using MFPSEditor;
-using MFPS.Internal.Scriptables;
+using GFWKEditor;
+using GFWK.Internal.Scriptables;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     /// <summary>
-    /// This is the default Basic Door of MFPS
+    /// This is the default Basic Door of GFWK
     /// If you want to create a custom door, create a new script and inherited from <see cref="bl_DoorBase"/>
     /// Use this only as reference.
     /// </summary>
@@ -89,7 +89,7 @@ namespace MFPS.Runtime.Level
         /// <returns></returns>
         private State GetOpenDirection()
         {
-            var player = bl_MFPS.LocalPlayerReferences;
+            var player = bl_GFWK.LocalPlayerReferences;
             if (player == null) return State.Close;
 
             Vector3 dir = transform.position + player.Transform.forward;

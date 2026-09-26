@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using TMPro;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_DeathZone : bl_PhotonHelper
     {
-        [LovattoToogle] public bool instaKill = false;
+        [GFWorksToogle] public bool instaKill = false;
         public int countDown = 5;
         [TextArea(2, 4)]
         public string CustomMessage = "you're in a zone prohibited \n returns to the playing area or die at \n";
@@ -43,7 +43,7 @@ namespace MFPS.Runtime.Level
             }
             else if (mCol.CompareTag("Metal"))
             {
-#if MFPS_VEHICLE
+#if GFWK_VEHICLE
                 var vehicle = mCol.GetComponentInParent<Vehicles.bl_VehicleManager>();
                 if (vehicle != null && vehicle.IsLocalPlayerInside())
                 {
@@ -63,7 +63,7 @@ namespace MFPS.Runtime.Level
             {
                 if (instaKill)
                 {
-                    bl_MFPS.LocalPlayer.Suicide();
+                    bl_GFWK.LocalPlayer.Suicide();
                     return;
                 }
                 InvokeRepeating(nameof(DoCountDown), 1, 1);

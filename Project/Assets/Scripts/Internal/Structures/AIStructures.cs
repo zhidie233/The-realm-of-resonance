@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MFPS.Runtime.AI
+namespace GFWK.Runtime.AI
 {
     [Serializable]
     public enum BotGameState : byte
@@ -12,7 +12,7 @@ namespace MFPS.Runtime.AI
     }
 
     [Serializable]
-    public class MFPSBotProperties
+    public class GFWKBotProperties
     {
         public string Name;
         public BotGameState GameState;

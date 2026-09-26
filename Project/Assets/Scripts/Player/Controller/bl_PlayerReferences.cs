@@ -132,7 +132,7 @@ public class bl_PlayerReferences : bl_PlayerReferencesCommon
     public int ViewID => photonView.ViewID;
     public int ActorNumber => photonView.Owner.ActorNumber;
 
-#if MFPS_VEHICLE
+#if GFWK_VEHICLE
     private bl_PlayerVehicle _playerVehicle = null;
     public bl_PlayerVehicle PlayerVehicle
     {

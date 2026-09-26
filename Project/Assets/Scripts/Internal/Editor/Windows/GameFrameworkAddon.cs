@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 #endif
 
-namespace MFPSEditor.Addons
+namespace GFWKEditor.Addons
 {
     [CreateAssetMenu(fileName = "Game Framework 插件", menuName = "游戏框架/扩展信息", order = 300)]
-    public class MFPSAddon : ScriptableObject
+    public class GFWKAddon : ScriptableObject
     {
         public string Name;
         public string Version;
-        public string MinMFPSVersion = "1.6";
+        public string MinGFWKVersion = "1.6";
 
         [TextArea(4, 10)]
         public string Instructions;
@@ -20,10 +20,10 @@ namespace MFPSEditor.Addons
 
 
 #if UNITY_EDITOR
-    [CustomEditor(typeof(MFPSAddon))]
-    public class MFPSAddonsEditor : Editor
+    [CustomEditor(typeof(GFWKAddon))]
+    public class GFWKAddonsEditor : Editor
     {
-        MFPSAddon script;
+        GFWKAddon script;
         private GUIStyle TextStyle = null;
         private GUIStyle TextStyleFlat = null;
         private bool editMode = false;
@@ -31,21 +31,21 @@ namespace MFPSEditor.Addons
 
         private void OnEnable()
         {
-            script = (MFPSAddon)target;
+            script = (GFWKAddon)target;
             TextStyle = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin").customStyles[3];
             TextStyleFlat = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin").customStyles[1];
             contentText = new TutorialWizardText();
 
-            if (MFPSAddonsData.Instance != null)
+            if (GFWKAddonsData.Instance != null)
             {
-                int i = MFPSAddonsData.Instance.Addons.FindIndex(x => x.NiceName == script.Name);
-                if (i >= 0 && MFPSAddonsData.Instance.Addons[i].Info == null)
+                int i = GFWKAddonsData.Instance.Addons.FindIndex(x => x.NiceName == script.Name);
+                if (i >= 0 && GFWKAddonsData.Instance.Addons[i].Info == null)
                 {
-                    MFPSAddonsData.Instance.Addons[i].Info = script;
-                    EditorUtility.SetDirty(MFPSAddonsData.Instance);
+                    GFWKAddonsData.Instance.Addons[i].Info = script;
+                    EditorUtility.SetDirty(GFWKAddonsData.Instance);
                     AssetDatabase.SaveAssets();
                     AssetDatabase.Refresh();
-                    LovattoStats.SetStat($"aa-{script.Name}", 1);
+                    GFWorksStats.SetStat($"aa-{script.Name}", 1);
                 }
             }
         }
@@ -56,12 +56,12 @@ namespace MFPSEditor.Addons
             Rect r = EditorGUILayout.BeginVertical();
             {
                 rect = r;
-                TutorialWizard.Style.DrawGlowRect(r, MFPSEditorStyles.LovattoEditorPalette.GetMainColor(true), Color.white);
+                TutorialWizard.Style.DrawGlowRect(r, GFWKEditorStyles.GFWorksEditorPalette.GetMainColor(true), Color.white);
                 if (!editMode && !string.IsNullOrEmpty(script.Name))
                 {
                     r = EditorGUILayout.BeginVertical();
                     {
-                        TutorialWizard.Style.DrawGlowRect(r, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true), Color.white);
+                        TutorialWizard.Style.DrawGlowRect(r, GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true), Color.white);
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField($"<size=30>{script.Name.ToUpper()}</size>", TextStyle);
                         GUILayout.FlexibleSpace();
@@ -70,12 +70,12 @@ namespace MFPSEditor.Addons
                         EditorGUILayout.BeginHorizontal();
                         EditorGUILayout.LabelField(string.Format("<size=14>版本： <b>{0}</b></size>", script.Version), TextStyleFlat);
                         GUILayout.Space(10);
-                        EditorGUILayout.LabelField(string.Format("<size=14>最低 MFPS 版本： <b>{0}</b></size>", script.MinMFPSVersion), TextStyleFlat);
+                        EditorGUILayout.LabelField(string.Format("<size=14>最低 GFWK 版本： <b>{0}</b></size>", script.MinGFWKVersion), TextStyleFlat);
                         EditorGUILayout.EndHorizontal();
                         if (!string.IsNullOrEmpty(script.TutorialScript))
                         {
                             GUILayout.Space(5);
-                            if (MFPSEditorStyles.ButtonOutline("文档", MFPSEditorStyles.LovattoEditorPalette.GetHighlightColor(true)))
+                            if (GFWKEditorStyles.ButtonOutline("文档", GFWKEditorStyles.GFWorksEditorPalette.GetHighlightColor(true)))
                             {
                                 EditorWindow.GetWindow(System.Type.GetType(string.Format("{0}, Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null", script.TutorialScript)));
                             }
@@ -97,9 +97,9 @@ namespace MFPSEditor.Addons
                     DrawDefaultInspector();
                 }
                 GUILayout.Space(25);
-                if (TutorialWizard.Buttons.GlowButton("扩展管理器", MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
+                if (TutorialWizard.Buttons.GlowButton("扩展管理器", GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
                 {
-                    EditorWindow.GetWindow<MFPSAddonsWindow>().OpenAddonPage(script.Name);
+                    EditorWindow.GetWindow<GFWKAddonsWindow>().OpenAddonPage(script.Name);
                 }
                 GUILayout.Space(5);
             }

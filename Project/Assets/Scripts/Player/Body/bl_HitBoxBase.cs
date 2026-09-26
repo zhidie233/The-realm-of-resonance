@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public abstract class bl_HitBoxBase : MonoBehaviour, IMFPSDamageable
+public abstract class bl_HitBoxBase : MonoBehaviour, IGFWKDamageable
 {
     public HitBoxInfo hitBoxInfo;
     public bl_HitBoxManager hitBoxManager;

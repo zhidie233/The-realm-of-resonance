@@ -6,7 +6,7 @@ public class bl_RoomCamera : bl_RoomCameraBase
 {
     #region Public members
     [Header("Auto Rotation")]
-    [LovattoToogle] public bool autoRotation = true;
+    [GFWorksToogle] public bool autoRotation = true;
     public Axis rotationDirection = Axis.X;
     public float rotationSpeed = 4;
 

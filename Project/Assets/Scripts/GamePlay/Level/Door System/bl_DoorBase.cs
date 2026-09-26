@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     /// <summary>
-    /// MFPS door base class
+    /// GFWK door base class
     /// Inherited from this class your custom door system.
     /// </summary>
     public abstract class bl_DoorBase : MonoBehaviour

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 using Object = UnityEngine.Object;
 
-namespace MFPS.Internal.Structures
+namespace GFWK.Internal.Structures
 {
     [Serializable]
     public class MapInfo

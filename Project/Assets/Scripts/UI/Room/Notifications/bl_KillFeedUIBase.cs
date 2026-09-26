@@ -1,4 +1,4 @@
-﻿using MFPS.Internal.Structures;
+﻿using GFWK.Internal.Structures;
 using UnityEngine;
 
 public abstract class bl_KillFeedUIBase : MonoBehaviour

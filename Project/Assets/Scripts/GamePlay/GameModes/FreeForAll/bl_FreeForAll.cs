@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using Photon.Realtime;
 using UnityEngine;
-using MFPS.GameModes.FreeForAll;
+using GFWK.GameModes.FreeForAll;
 
 public class bl_FreeForAll : MonoBehaviour, IGameMode
 {
 
     private bool isSub = false;
-    [HideInInspector] public List<MFPSPlayer> FFAPlayerSort = new List<MFPSPlayer>();
+    [HideInInspector] public List<GFWKPlayer> FFAPlayerSort = new List<GFWKPlayer>();
 
     /// <summary>
     /// 
@@ -53,7 +53,7 @@ public class bl_FreeForAll : MonoBehaviour, IGameMode
         FFAPlayerSort.AddRange(bl_GameManager.Instance.OthersActorsInScene);
         FFAPlayerSort.Add(bl_GameManager.Instance.LocalActor);
 
-        MFPSPlayer player = null;
+        GFWKPlayer player = null;
         if (FFAPlayerSort.Count > 0 && FFAPlayerSort != null)
         {
             FFAPlayerSort.Sort(bl_UtilityHelper.GetSortPlayerByKills);
@@ -84,7 +84,7 @@ public class bl_FreeForAll : MonoBehaviour, IGameMode
     /// 
     /// </summary>
     /// <returns></returns>
-    public MFPSPlayer GetBestPlayer()
+    public GFWKPlayer GetBestPlayer()
     {
         if (FFAPlayerSort.Count > 0 && FFAPlayerSort != null)
         {

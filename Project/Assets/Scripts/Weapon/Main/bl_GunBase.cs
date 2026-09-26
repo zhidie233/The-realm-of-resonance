@@ -3,7 +3,7 @@ using CodeStage.AntiCheat.ObscuredTypes;
 #endif
 
 /// <summary>
-/// Base class for the default MFPS weapons
+/// Base class for the default GFWK weapons
 /// bl_Gun.cs is a hard coded class not easy to extend, a modular weapon system is on the works
 /// At the moment, bl_CustomGunBase.cs is the way to extended and create your own custom weapon script.
 /// </summary>

@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
-using MFPSEditor;
+using GFWKEditor;
 
 public class bl_PlayerSettings : bl_PhotonHelper
 {
@@ -55,11 +55,11 @@ public class bl_PlayerSettings : bl_PhotonHelper
             }
         }
         LocalObjects.SetActive(false);
-        gameObject.tag = bl_MFPS.REMOTE_PLAYER_TAG;
+        gameObject.tag = bl_GFWK.REMOTE_PLAYER_TAG;
         gameObject.layer = (int)Mathf.Log(bl_GameData.TagsAndLayerSettings.RemotePlayerRootLayer.value, 2);
 
         //Build Player Data
-        MFPSPlayer playerData = new MFPSPlayer()
+        GFWKPlayer playerData = new GFWKPlayer()
         {
             Name = photonView.Owner.NickName,
             Team = PlayerTeam,
@@ -73,7 +73,7 @@ public class bl_PlayerSettings : bl_PhotonHelper
         bl_EventHandler.DispatchRemoteActorChange(new bl_EventHandler.PlayerChangeData()
         {
             PlayerName = photonView.Owner.NickName,
-            MFPSActor = playerData,
+            GFWKActor = playerData,
             IsAlive = true,
             NetworkView = photonView
         });
@@ -93,7 +93,7 @@ public class bl_PlayerSettings : bl_PhotonHelper
             }
         }
         RemoteObjects.SetActive(false);
-        gameObject.tag = bl_MFPS.LOCAL_PLAYER_TAG;
+        gameObject.tag = bl_GFWK.LOCAL_PLAYER_TAG;
         gameObject.layer = bl_GameData.TagsAndLayerSettings.GetLocalPlayerLayerIndex();
 
         armsMaterial?.SelectTeamMaterial(PlayerTeam);
@@ -101,7 +101,7 @@ public class bl_PlayerSettings : bl_PhotonHelper
         {
             StartCoroutine(DoSpawnLoop());
         }
-        playerReferences.DefaultCameraFOV = (float)bl_MFPS.Settings.GetSettingOf("FOV");
+        playerReferences.DefaultCameraFOV = (float)bl_GFWK.Settings.GetSettingOf("FOV");
         bl_EventHandler.onGameSettingsChange += OnGameSettingsChanged;
 #if GR
         transform.GetComponentInChildren<bl_GunManager>().isGunRace = (GetGameMode == GameMode.GR);
@@ -130,7 +130,7 @@ public class bl_PlayerSettings : bl_PhotonHelper
             bl_EventHandler.DispatchRemoteActorChange(new bl_EventHandler.PlayerChangeData()
             {
                 PlayerName = gameObject.name,
-                MFPSActor = null,
+                GFWKActor = null,
                 IsAlive = false,
             });
         }
@@ -141,7 +141,7 @@ public class bl_PlayerSettings : bl_PhotonHelper
     /// </summary>
     void OnGameSettingsChanged()
     {
-        playerReferences.DefaultCameraFOV = (float)bl_MFPS.Settings.GetSettingOf("FOV");
+        playerReferences.DefaultCameraFOV = (float)bl_GFWK.Settings.GetSettingOf("FOV");
     }
 
 #if UNITY_EDITOR

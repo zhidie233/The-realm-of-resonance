@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Internal.Scriptables
+namespace GFWK.Internal.Scriptables
 {
     [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "Game Framework/Settings/TagsAndLayers")]
     public class TagsAndLayersSettings : ScriptableObject

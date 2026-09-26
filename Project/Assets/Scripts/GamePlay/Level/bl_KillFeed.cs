@@ -1,6 +1,6 @@
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
-using MFPS.Internal.Structures;
+using GFWK.Internal.Structures;
 using Photon.Realtime;
 
 public class bl_KillFeed : bl_KillFeedBase

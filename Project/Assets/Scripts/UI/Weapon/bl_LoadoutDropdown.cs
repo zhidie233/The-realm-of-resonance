@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_LoadoutDropdown : MonoBehaviour
     {

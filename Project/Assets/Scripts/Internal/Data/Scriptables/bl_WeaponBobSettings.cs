@@ -21,7 +21,7 @@ public class bl_WeaponBobSettings : ScriptableObject
     public float idleBobbingSpeed = 0.1f;
     public float AimIntensity = 0.01f;
     public float aimRotationIntensity = 0.33f;
-    [LovattoToogle] public bool pitchTowardUp = true;
+    [GFWorksToogle] public bool pitchTowardUp = true;
 
     public AnimationCurve rollCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public AnimationCurve pitchCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);

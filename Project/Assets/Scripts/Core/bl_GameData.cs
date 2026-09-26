@@ -3,49 +3,49 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using MFPSEditor;
+using GFWKEditor;
 using UnityEngine.Serialization;
-using MFPS.Runtime.Settings;
-using MFPS.Internal.Structures;
-using MFPS.Internal.Scriptables;
-using MFPS.Internal.BaseClass;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.Settings;
+using GFWK.Internal.Structures;
+using GFWK.Internal.Scriptables;
+using GFWK.Internal.BaseClass;
+using GFWK.Runtime.AI;
 
 public class bl_GameData : ScriptableObject
 {
     #region Public members
     [Header("Game Settings")]
-    [LovattoToogle] public bool offlineMode = false;
-    [LovattoToogle] public bool verifySingleSession = true;
-    [LovattoToogle] public bool UseLobbyChat = true;
-    [LovattoToogle] public bool UseVoiceChat = false;
-    [LovattoToogle] public bool BulletTracer = false;
-    [LovattoToogle] public bool DropGunOnDeath = true;
-    [LovattoToogle] public bool SelfGrenadeDamage = true;
-    [LovattoToogle] public bool CanFireWhileRunning = true;
-    [LovattoToogle] public bool HealthRegeneration = true;
-    [LovattoToogle] public bool ShowTeamMateHealthBar = true;
-    [LovattoToogle] public bool CanChangeTeam = false;
-    [LovattoToogle] public bool ShowBlood = true;
-    [LovattoToogle] public bool DetectAFK = false;
-    [LovattoToogle] public bool MasterCanKickPlayers = true;
-    [LovattoToogle] public bool ArriveKitsCauseDamage = true;
-    [LovattoToogle] public bool CalculateNetworkFootSteps = false;
-    [LovattoToogle] public bool ShowNetworkStats = false;
-    [LovattoToogle] public bool RememberPlayerName = true;
-    [LovattoToogle] public bool ShowWeaponLoadout = true;
-    [LovattoToogle] public bool useCountDownOnStart = true;
-    [LovattoToogle] public bool showCrosshair = true;
-    [LovattoToogle] public bool showDamageIndicator = true;
-    [LovattoToogle] public bool doSpawnHandMeshEffect = true;
-    [LovattoToogle] public bool playerCameraWiggle = true;
-    [LovattoToogle] public bool showDeathIcons = true;
-    [LovattoToogle] public bool allowFallDamage = true;
-    [LovattoToogle] public bool realisticBullets = true;
-    [LovattoToogle] public bool bulletDecals = true;
-    [LovattoToogle] public bool showProjectilesTrails = true;
-#if MFPSM
-    [LovattoToogle] public bool AutoWeaponFire = false;
+    [GFWorksToogle] public bool offlineMode = false;
+    [GFWorksToogle] public bool verifySingleSession = true;
+    [GFWorksToogle] public bool UseLobbyChat = true;
+    [GFWorksToogle] public bool UseVoiceChat = false;
+    [GFWorksToogle] public bool BulletTracer = false;
+    [GFWorksToogle] public bool DropGunOnDeath = true;
+    [GFWorksToogle] public bool SelfGrenadeDamage = true;
+    [GFWorksToogle] public bool CanFireWhileRunning = true;
+    [GFWorksToogle] public bool HealthRegeneration = true;
+    [GFWorksToogle] public bool ShowTeamMateHealthBar = true;
+    [GFWorksToogle] public bool CanChangeTeam = false;
+    [GFWorksToogle] public bool ShowBlood = true;
+    [GFWorksToogle] public bool DetectAFK = false;
+    [GFWorksToogle] public bool MasterCanKickPlayers = true;
+    [GFWorksToogle] public bool ArriveKitsCauseDamage = true;
+    [GFWorksToogle] public bool CalculateNetworkFootSteps = false;
+    [GFWorksToogle] public bool ShowNetworkStats = false;
+    [GFWorksToogle] public bool RememberPlayerName = true;
+    [GFWorksToogle] public bool ShowWeaponLoadout = true;
+    [GFWorksToogle] public bool useCountDownOnStart = true;
+    [GFWorksToogle] public bool showCrosshair = true;
+    [GFWorksToogle] public bool showDamageIndicator = true;
+    [GFWorksToogle] public bool doSpawnHandMeshEffect = true;
+    [GFWorksToogle] public bool playerCameraWiggle = true;
+    [GFWorksToogle] public bool showDeathIcons = true;
+    [GFWorksToogle] public bool allowFallDamage = true;
+    [GFWorksToogle] public bool realisticBullets = true;
+    [GFWorksToogle] public bool bulletDecals = true;
+    [GFWorksToogle] public bool showProjectilesTrails = true;
+#if GFWKM
+    [GFWorksToogle] public bool AutoWeaponFire = false;
 #endif
     public AmmunitionType AmmoType = AmmunitionType.Bullets;
     public KillFeedWeaponShowMode killFeedWeaponShowMode = KillFeedWeaponShowMode.WeaponIcon;
@@ -66,7 +66,7 @@ public class bl_GameData : ScriptableObject
 #if UNITY_2020_2_OR_NEWER
     [NonReorderable]
 #endif
-    [ScriptableDrawer] public List<MFPSCoin> gameCoins;
+    [ScriptableDrawer] public List<GFWKCoin> gameCoins;
 
     [Header("Settings")]
     public string GameVersion = "1.0";
@@ -132,8 +132,8 @@ public class bl_GameData : ScriptableObject
     #region Private Members
     public GameTeamInfo CurrentTeamUser { get; set; } = null;
     [HideInInspector] public bool isChating = false;
-    [HideInInspector] public string _MFPSLicense = string.Empty;
-    [HideInInspector] public int _MFPSFromStore = 2;
+    [HideInInspector] public string _GFWKLicense = string.Empty;
+    [HideInInspector] public int _GFWKFromStore = 2;
     [HideInInspector] public string _keyToken = "";
     private static bl_PhotonNetwork PhotonGameInstance = null;
     public static bool isDataCached = false;
@@ -402,14 +402,14 @@ public class bl_GameData : ScriptableObject
     [Serializable]
     public class VirtualCoin
     {
-        [MFPSCoinID] public int XPCoin;
+        [GFWKCoinID] public int XPCoin;
         [Tooltip("how much score/xp worth one coin")]
         public int CoinScoreValue = 1000;//how much score/xp worth one coin
         public int InitialCoins
         {
             get
             {
-                var coin = bl_MFPS.Coins.GetCoinData(XPCoin);
+                var coin = bl_GFWK.Coins.GetCoinData(XPCoin);
                 return coin == null ? 0 : coin.InitialCoins;
             }
         }
@@ -418,7 +418,7 @@ public class bl_GameData : ScriptableObject
         /// 
         /// </summary>
         /// <param name="newCoins"></param>
-        public void AddCoins(int newCoins, string endPoint = "") => bl_MFPS.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
+        public void AddCoins(int newCoins, string endPoint = "") => bl_GFWK.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
 
         /// <summary>
         /// 

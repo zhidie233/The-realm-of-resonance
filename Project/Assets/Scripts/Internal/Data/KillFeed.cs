@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Internal.Structures
+namespace GFWK.Internal.Structures
 {
     public class KillFeed
     {
@@ -32,11 +32,11 @@ namespace MFPS.Internal.Structures
     /// <summary>
     /// 
     /// </summary>
-    public struct MFPSLocalNotification
+    public struct GFWKLocalNotification
     {
         public string Message { get; private set; }
 
-        public MFPSLocalNotification(string message)
+        public GFWKLocalNotification(string message)
         {
             Message = message;
             bl_EventHandler.onLocalNotification?.Invoke(this);

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace MFPS.Internal.Structures
+namespace GFWK.Internal.Structures
 {
     public class bl_UCrosshairInfo : MonoBehaviour
     {

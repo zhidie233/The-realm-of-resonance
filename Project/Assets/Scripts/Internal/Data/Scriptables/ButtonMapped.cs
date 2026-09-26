@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game Framework/Input/Input Mapped")]
     public class ButtonMapped : ScriptableObject

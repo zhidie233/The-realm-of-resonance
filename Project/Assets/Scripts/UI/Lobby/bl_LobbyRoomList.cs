@@ -1,5 +1,5 @@
-﻿using MFPS.Internal;
-using MFPS.Runtime.UI;
+﻿using GFWK.Internal;
+using GFWK.Runtime.UI;
 using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_ClampIcon : MonoBehaviour
     {

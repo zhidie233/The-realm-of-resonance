@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 #if UNITY_EDITOR
-using MFPSEditor;
+using GFWKEditor;
 #endif
 
 /// <summary>
@@ -22,7 +22,7 @@ public class bl_SpawnPoint : bl_SpawnPointBase
     [Tooltip("Detection ground limit")]
     public float groundSnapLimit = 1.5f;
     [Tooltip("Should the player spawn looking at the spawn direction or a random direction?")]
-    [LovattoToogle] public bool randomRotation = false;
+    [GFWorksToogle] public bool randomRotation = false;
 
     RaycastHit hitInfo;
     private const float BASE_VERTICAL_THRESHOLD = 0.01f; // if your players fall of the map after spawn, try to increase this value.

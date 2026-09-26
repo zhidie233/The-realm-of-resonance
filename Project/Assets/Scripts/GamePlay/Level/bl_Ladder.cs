@@ -3,7 +3,7 @@
 using UnityEditor;
 #endif
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_Ladder : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace MFPS.Runtime.Level
             Detaching,
         }
 
-        [LovattoToogle] public bool hideWeapons = true;
+        [GFWorksToogle] public bool hideWeapons = true;
         [Tooltip("Climbing position offset (x,z) relative to the ladder transform.")]
         public Vector3 climbOffset;
         [Tooltip("Direction where the player will look at when climbing, indicated by the yellow arrow gizmo.")]

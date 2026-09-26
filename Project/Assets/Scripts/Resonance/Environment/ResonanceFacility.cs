@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using UnityEngine;
 
-public class ResonanceFacility : MonoBehaviour, IMFPSDamageable
+public class ResonanceFacility : MonoBehaviour, IGFWKDamageable
 {
     [Header("设施配置")]
     public string resonanceKey;

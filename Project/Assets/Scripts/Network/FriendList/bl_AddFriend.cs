@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-namespace MFPS.Runtime.FriendList
+namespace GFWK.Runtime.FriendList
 {
     public class bl_AddFriend : MonoBehaviour
     {

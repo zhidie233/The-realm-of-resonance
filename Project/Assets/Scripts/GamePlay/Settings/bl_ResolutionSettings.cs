@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace MFPS.Runtime.Settings
+namespace GFWK.Runtime.Settings
 {
     public class bl_ResolutionSettings : MonoBehaviour
     {
@@ -112,7 +112,7 @@ namespace MFPS.Runtime.Settings
 
             settingsBinding.SetOptions(names, false);
 
-            int displayModeID = (int)bl_MFPS.Settings.GetSettingOf("Display Mode");
+            int displayModeID = (int)bl_GFWK.Settings.GetSettingOf("Display Mode");
             if (displayModeID == -1)
             {
                 settingsBinding.currentOption = (int)Screen.fullScreenMode;
@@ -146,7 +146,7 @@ namespace MFPS.Runtime.Settings
         /// <param name="id"></param>
         public void OnChangeDisplayMode(int id)
         {
-            bl_MFPS.Settings.SetSettingOf("Display Mode", id, bl_RuntimeSettings.Instance.autoSaveSettings);
+            bl_GFWK.Settings.SetSettingOf("Display Mode", id, bl_RuntimeSettings.Instance.autoSaveSettings);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace MFPS.Runtime.Settings
 
             ResolutionHandler.CurrentResolutionRelativeID = id;
             ResolutionHandler.CurrentResolutionAbsoluteID = ResolutionHandler.resolutions[id].Index;
-            bl_MFPS.Settings.SetSettingOf("Resolution", ResolutionHandler.CurrentResolutionAbsoluteID, bl_RuntimeSettings.Instance.autoSaveSettings);
+            bl_GFWK.Settings.SetSettingOf("Resolution", ResolutionHandler.CurrentResolutionAbsoluteID, bl_RuntimeSettings.Instance.autoSaveSettings);
         }
 
         /// <summary>
@@ -171,9 +171,9 @@ namespace MFPS.Runtime.Settings
             var list = new List<ResolutionData>();
             var currentRes = Screen.currentResolution;
 
-            if (bl_MFPS.Settings.HasSettingDefinedFor("Resolution"))
+            if (bl_GFWK.Settings.HasSettingDefinedFor("Resolution"))
             {
-                int crid = (int)bl_MFPS.Settings.GetSettingOf("Resolution");
+                int crid = (int)bl_GFWK.Settings.GetSettingOf("Resolution");
                 if (crid != -1 && crid <= resolutions.Length - 1)
                 {
                     currentRes = resolutions[crid];

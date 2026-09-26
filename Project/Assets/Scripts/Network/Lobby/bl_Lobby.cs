@@ -1,6 +1,6 @@
-using MFPS.Audio;
-using MFPS.Internal.Structures;
-using MFPS.Runtime.UI;
+using GFWK.Audio;
+using GFWK.Internal.Structures;
+using GFWK.Runtime.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -16,7 +16,7 @@ public class bl_Lobby : bl_PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, 
     #region Public members
     [Header("Photon")]
     public SeverRegionCode DefaultServer = SeverRegionCode.usw;
-    [LovattoToogle] public bool ShowPhotonStatistics;
+    [GFWorksToogle] public bool ShowPhotonStatistics;
 
     [Header("Room Options")]
     //Room Max Ping
@@ -412,7 +412,7 @@ public class bl_Lobby : bl_PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, 
         int timeRandom = Random.Range(0, gameMode.timeLimits.Length);
         int randomGoal = Random.Range(0, gameMode.GameGoalsOptions.Length);
 
-        var roomInfo = new MFPSRoomInfo();
+        var roomInfo = new GFWKRoomInfo();
         roomInfo.roomName = string.Format("[PUBLIC] {0}{1}", bl_PhotonNetwork.NickName.Substring(0, 2), Random.Range(0, 9999));
         roomInfo.gameMode = gameMode.gameMode;
         roomInfo.time = gameMode.timeLimits[timeRandom];
@@ -443,7 +443,7 @@ public class bl_Lobby : bl_PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, 
     /// Create and Join in a room with the given info.
     /// </summary>
     /// <param name="roomInfo"></param>
-    public void CreateRoom(MFPSRoomInfo roomInfo)
+    public void CreateRoom(GFWKRoomInfo roomInfo)
     {
         SetLobbyChat(false);
         justCreatedRoomName = roomInfo.roomName;
@@ -627,7 +627,7 @@ public class bl_Lobby : bl_PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, 
     /// </summary>
     public void OnConnectedToMaster()
     {
-        // MFPS intermediately connect to a 'common' lobby.
+        // GFWK intermediately connect to a 'common' lobby.
         PhotonNetwork.JoinLobby();
         Debug.Log("Connected to Master.");
     }
@@ -763,7 +763,7 @@ public class bl_Lobby : bl_PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
     public void OnJoinedRoom()
     {
-        if (!bl_MFPS.GameData.UsingWaitingRoom())
+        if (!bl_GFWK.GameData.UsingWaitingRoom())
         {
             Debug.Log($"Local client joined to the room '{bl_PhotonNetwork.CurrentRoom.Name}'");
             StartCoroutine(MoveToGameScene());

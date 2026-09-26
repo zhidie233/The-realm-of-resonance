@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
     public class ScriptableDrawerAttribute : PropertyAttribute
     {
@@ -38,7 +38,7 @@ namespace MFPSEditor
                 {
                     name = property.objectReferenceValue.name;
                 }
-                property.isExpanded = MFPSEditorStyles.ContainerHeaderFoldout(name, property.isExpanded);
+                property.isExpanded = GFWKEditorStyles.ContainerHeaderFoldout(name, property.isExpanded);
                 if (property.isExpanded)
                 {
                     EditorGUILayout.BeginVertical("box");

@@ -1,7 +1,7 @@
-﻿using MFPS.Audio;
-using MFPS.Runtime.FriendList;
-using MFPS.Runtime.Settings;
-using MFPS.Runtime.UI;
+﻿using GFWK.Audio;
+using GFWK.Runtime.FriendList;
+using GFWK.Runtime.Settings;
+using GFWK.Runtime.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -169,7 +169,7 @@ public class bl_LobbyUI : MonoBehaviour
     {
         if (bl_PhotonNetwork.IsConnected && bl_GameData.isDataCached)
         {
-            PlayerNameText.text = bl_MFPS.LocalPlayer.FullNickName();
+            PlayerNameText.text = bl_GFWK.LocalPlayer.FullNickName();
         }
     }
 
@@ -232,15 +232,15 @@ public class bl_LobbyUI : MonoBehaviour
     /// </summary>
     void ApplyRuntimeSettings()
     {
-        if (bl_MFPS.Settings != null)
+        if (bl_GFWK.Settings != null)
         {
             var apm = bl_ResolutionSettings.ResolutionHandler == null ? bl_RuntimeSettingsProfile.ResolutionApplication.ApplyCurrent : bl_RuntimeSettingsProfile.ResolutionApplication.NoApply;
-            bl_MFPS.Settings.ApplySettings(apm, false);
-            Application.targetFrameRate = bl_MFPS.Settings.RefreshRates[(int)bl_MFPS.Settings.GetSettingOf("帧率上限")];
-            bl_MFPS.MusicVolume = (float)bl_MFPS.Settings.GetSettingOf("音乐音量");
+            bl_GFWK.Settings.ApplySettings(apm, false);
+            Application.targetFrameRate = bl_GFWK.Settings.RefreshRates[(int)bl_GFWK.Settings.GetSettingOf("帧率上限")];
+            bl_GFWK.MusicVolume = (float)bl_GFWK.Settings.GetSettingOf("音乐音量");
             bl_AudioController.Instance.ForceStopAllFades();
-            bl_AudioController.Instance.BackgroundVolume = bl_MFPS.MusicVolume;
-            bl_AudioController.Instance.MaxBackgroundVolume = bl_MFPS.MusicVolume;
+            bl_AudioController.Instance.BackgroundVolume = bl_GFWK.MusicVolume;
+            bl_AudioController.Instance.MaxBackgroundVolume = bl_GFWK.MusicVolume;
         }
     }
 
@@ -405,14 +405,14 @@ public class bl_LobbyUI : MonoBehaviour
     public void ShowBuyCoins()
     {
 #if SHOP
-        MFPS.Shop.bl_CoinsWindow.Instance.SetActive(true);
+        GFWK.Shop.bl_CoinsWindow.Instance.SetActive(true);
 #else
         Debug.Log("Require shop addon.");
 #endif
     }
 
 #if ULSP
-    void OnUpdateDataBaseInfo(MFPS.ULogin.LoginUserInfo info)
+    void OnUpdateDataBaseInfo(GFWK.ULogin.LoginUserInfo info)
     {
         bl_EventHandler.DispatchCoinUpdate(null);
     }

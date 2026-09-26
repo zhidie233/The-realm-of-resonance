@@ -1,4 +1,4 @@
-﻿using MFPS.Runtime.AI;
+﻿using GFWK.Runtime.AI;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -19,7 +19,7 @@ public abstract class bl_PlayerScoreboardTableBase : MonoBehaviour
     /// <param name="player"></param>
     /// <param name="uiPrefab"></param>
     /// <returns></returns>
-    public abstract bl_PlayerScoreboardUIBase InstanceBot(MFPSBotProperties player, GameObject uiPrefab);
+    public abstract bl_PlayerScoreboardUIBase InstanceBot(GFWKBotProperties player, GameObject uiPrefab);
 
     /// <summary>
     /// 

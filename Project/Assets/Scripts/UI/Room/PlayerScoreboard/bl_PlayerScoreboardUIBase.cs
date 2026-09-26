@@ -1,4 +1,4 @@
-﻿using MFPS.Runtime.AI;
+﻿using GFWK.Runtime.AI;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public abstract class bl_PlayerScoreboardUIBase : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public MFPSBotProperties Bot 
+    public GFWKBotProperties Bot 
     { 
         get; 
         set; 
@@ -36,7 +36,7 @@ public abstract class bl_PlayerScoreboardUIBase : MonoBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <param name="bot"></param>
-    public abstract void Init(Player player, MFPSBotProperties bot = null);
+    public abstract void Init(Player player, GFWKBotProperties bot = null);
 
     /// <summary>
     /// Called each time the scoreboard is update (when the scoreboard is open)

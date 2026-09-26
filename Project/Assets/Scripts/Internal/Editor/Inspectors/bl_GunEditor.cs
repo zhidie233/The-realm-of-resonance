@@ -1,5 +1,5 @@
-﻿using MFPS.Core.Motion;
-using MFPSEditor;
+﻿using GFWK.Core.Motion;
+using GFWKEditor;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;

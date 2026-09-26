@@ -8,7 +8,7 @@ public class bl_NamePlateEditor : Editor
     bl_NamePlateDrawer script;
     public bool isSimulating = false;
     public int simulatedHealth = 100;
-    public string simulatedName = "Lovatto";
+    public string simulatedName = "GFWorks";
     public bool editPresent = false;
 
     /// <summary>

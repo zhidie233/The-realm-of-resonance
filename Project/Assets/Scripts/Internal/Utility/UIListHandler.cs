@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.Internal
+namespace GFWK.Internal
 {
     [Serializable]
     public class UIListHandler
     {
-        [LovattoToogle] public bool PoolList = true;
+        [GFWorksToogle] public bool PoolList = true;
         public int PoolCount = 10;
         public GameObject Prefab;
         public RectTransform Panel;

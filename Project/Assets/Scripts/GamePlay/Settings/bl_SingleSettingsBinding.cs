@@ -5,14 +5,14 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-namespace MFPS.Runtime.Settings
+namespace GFWK.Runtime.Settings
 {
     public class bl_SingleSettingsBinding : MonoBehaviour
     {
         [Header("Settings")]
         public string SettingKeyName = "";
         public string[] optionsNames = new string[] { "禁用", "启用" };
-        [LovattoToogle] public bool autoUpperCase = false;
+        [GFWorksToogle] public bool autoUpperCase = false;
 
         [Header("Listener")]
         public OnChange onChange;
@@ -71,7 +71,7 @@ namespace MFPS.Runtime.Settings
         /// </summary>
         public void Load()
         {
-            var val = bl_MFPS.Settings.GetSettingOf(SettingKeyName);
+            var val = bl_GFWK.Settings.GetSettingOf(SettingKeyName);
             int v = 0;
             if (val is bool) { v = (bool)val == true ? 1 : 0; }
             else if (val is int)
@@ -124,11 +124,11 @@ namespace MFPS.Runtime.Settings
             if (string.IsNullOrEmpty(SettingKeyName)) return;
 
             //Set the changed setting value to the instance settings group.
-            bl_MFPS.Settings.SetSettingOf(SettingKeyName, currentOption, bl_RuntimeSettings.Instance.autoSaveSettings);
+            bl_GFWK.Settings.SetSettingOf(SettingKeyName, currentOption, bl_RuntimeSettings.Instance.autoSaveSettings);
             if (bl_RuntimeSettings.Instance.applySettingsOnChange)
             {
                 //call the listener that will apply the settings in game
-                bl_MFPS.Settings.ApplySettings(bl_RuntimeSettingsProfile.ResolutionApplication.NoApply);
+                bl_GFWK.Settings.ApplySettings(bl_RuntimeSettingsProfile.ResolutionApplication.NoApply);
             }
         }
 
@@ -160,7 +160,7 @@ namespace MFPS.Runtime.Settings
         /// </summary>
         public void SaveValue()
         {
-            bl_MFPS.Settings.SaveSettings();
+            bl_GFWK.Settings.SaveSettings();
         }
 
         /// <summary>

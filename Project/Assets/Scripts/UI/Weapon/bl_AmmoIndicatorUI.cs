@@ -1,17 +1,17 @@
 ﻿using UnityEngine;
 using TMPro;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     /// <summary>
-    /// Default MFPS Ammo Indicator handler
+    /// Default GFWK Ammo Indicator handler
     /// The purpose of this script is to show a text that indicate of the current ammo state of the equipped weapon
     /// in order to let the player know if he need to reload, have low ammo remain or doesn't have any at all.
     /// This script is reference free, so if you want don't want to use or want to use your custom one, simply remove it from the UI instance.
     /// </summary>
     public class bl_AmmoIndicatorUI : MonoBehaviour
     {
-        [LovattoToogle] public bool forceUpperCase = true;
+        [GFWorksToogle] public bool forceUpperCase = true;
         public TextMeshProUGUI indicatorText;
 
         private readonly Color m_warninColor = Color.yellow;
@@ -25,7 +25,7 @@ namespace MFPS.Runtime.UI
             SetActive(false);
             bl_EventHandler.onLocalPlayerAmmoUpdate += OnLocalAmmoChange;
             bl_EventHandler.onChangeWeapon += onWeaponChanged;
-#if MFPS_VEHICLE
+#if GFWK_VEHICLE
             bl_VehicleEvents.onLocalEnterInVehicle += OnEnterInVehicle;
 #endif
         }
@@ -37,7 +37,7 @@ namespace MFPS.Runtime.UI
         {
             bl_EventHandler.onLocalPlayerAmmoUpdate -= OnLocalAmmoChange;
             bl_EventHandler.onChangeWeapon -= onWeaponChanged;
-#if MFPS_VEHICLE
+#if GFWK_VEHICLE
             bl_VehicleEvents.onLocalEnterInVehicle -= OnEnterInVehicle;
 #endif
         }
@@ -47,7 +47,7 @@ namespace MFPS.Runtime.UI
         /// </summary>
         void OnLocalAmmoChange(int ammoCount)
         {
-            var player = bl_MFPS.LocalPlayerReferences;
+            var player = bl_GFWK.LocalPlayerReferences;
             if (player == null) return;
 
             var weapon = player.gunManager.GetCurrentWeapon();
@@ -136,7 +136,7 @@ namespace MFPS.Runtime.UI
             indicatorText.gameObject.SetActive(active);
         }
 
-#if MFPS_VEHICLE
+#if GFWK_VEHICLE
         /// <summary>
         /// 
         /// </summary>

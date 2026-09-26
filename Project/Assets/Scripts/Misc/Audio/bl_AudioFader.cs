@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.Audio
+namespace GFWK.Audio
 {
     [RequireComponent(typeof(AudioSource))]
     public class bl_AudioFader : MonoBehaviour

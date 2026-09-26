@@ -3,7 +3,7 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_RoomListItemUI : bl_RoomListItemUIBase
     {

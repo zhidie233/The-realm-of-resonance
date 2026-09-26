@@ -1,24 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using MFPS.Internal.Scriptables;
+using GFWK.Internal.Scriptables;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace MFPS.Internal.Structures
+namespace GFWK.Internal.Structures
 {
     [Serializable]
-    public class MFPSItemUnlockability
+    public class GFWKItemUnlockability
     {
         public UnlockabilityMethod UnlockMethod = UnlockabilityMethod.UnlockedByDefault;
         public ItemTypeEnum ItemType = ItemTypeEnum.Weapon;
         public int Price = 0;
         public int UnlockAtLevel = 0;
         [Tooltip("Coins with which can't purchase this item; leave empty if all coins are available.")]
-        [MFPSCoinID] public int[] NoAllowedCoins;
+        [GFWKCoinID] public int[] NoAllowedCoins;
 
         /// <summary>
         /// Is this item unlocked for the local player?
@@ -119,10 +119,10 @@ namespace MFPS.Internal.Structures
         /// </summary>
         /// <param name="originalCoins"></param>
         /// <returns></returns>
-        public List<MFPSCoin> GetAllowedCoins()
+        public List<GFWKCoin> GetAllowedCoins()
         {
-            var all = bl_MFPS.Coins.GetAllCoins();
-            var copy = new List<MFPSCoin>();
+            var all = bl_GFWK.Coins.GetAllCoins();
+            var copy = new List<GFWKCoin>();
             foreach (var c in all)
             {
                 copy.Add(c);
@@ -137,12 +137,12 @@ namespace MFPS.Internal.Structures
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<MFPSCoin> GetNoAllowedCoins()
+        public List<GFWKCoin> GetNoAllowedCoins()
         {
-            var copy = new List<MFPSCoin>();
+            var copy = new List<GFWKCoin>();
             for (int i = 0; i < NoAllowedCoins.Length; i++)
             {
-                copy.Add((MFPSCoin)NoAllowedCoins[i]);
+                copy.Add((GFWKCoin)NoAllowedCoins[i]);
             }
             return copy;
         }
@@ -185,8 +185,8 @@ namespace MFPS.Internal.Structures
     }
 
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(MFPSItemUnlockability))]
-    public class MFPSItemUnlockabilityDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(GFWKItemUnlockability))]
+    public class GFWKItemUnlockabilityDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -214,21 +214,21 @@ namespace MFPS.Internal.Structures
                 var itemType = property.FindPropertyRelative("ItemType");
                 EditorGUI.PropertyField(r, itemType);
 
-                var um = (MFPSItemUnlockability.UnlockabilityMethod)unlockMethod.enumValueIndex;
-                GUI.enabled = um != MFPSItemUnlockability.UnlockabilityMethod.UnlockedByDefault;
-                if (um != MFPSItemUnlockability.UnlockabilityMethod.LevelUpOnly)
+                var um = (GFWKItemUnlockability.UnlockabilityMethod)unlockMethod.enumValueIndex;
+                GUI.enabled = um != GFWKItemUnlockability.UnlockabilityMethod.UnlockedByDefault;
+                if (um != GFWKItemUnlockability.UnlockabilityMethod.LevelUpOnly)
                 {
                     r.y += EditorGUIUtility.singleLineHeight;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("Price"));
                 }
 
-                if (um != MFPSItemUnlockability.UnlockabilityMethod.PurchasedOnly)
+                if (um != GFWKItemUnlockability.UnlockabilityMethod.PurchasedOnly)
                 {
                     r.y += EditorGUIUtility.singleLineHeight;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("UnlockAtLevel"));
                 }
 
-                if (um != MFPSItemUnlockability.UnlockabilityMethod.LevelUpOnly)
+                if (um != GFWKItemUnlockability.UnlockabilityMethod.LevelUpOnly)
                 {
                     r.y += EditorGUIUtility.singleLineHeight;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("NoAllowedCoins"), true);

@@ -1,10 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using MFPS.Internal.Structures;
+using GFWK.Internal.Structures;
 using TMPro;
 
-namespace MFPS.Runtime.UI.Bindings
+namespace GFWK.Runtime.UI.Bindings
 {
     public class bl_KillFeedUIBinding : bl_KillFeedUIBindingBase
     {

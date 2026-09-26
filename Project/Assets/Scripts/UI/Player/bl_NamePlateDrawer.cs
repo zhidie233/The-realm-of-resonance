@@ -4,10 +4,10 @@ using Photon.Voice.Unity;
 using Photon.Voice.PUN;
 #endif
 using UnityEngine.Serialization;
-using MFPS.Internal.BaseClass;
+using GFWK.Internal.BaseClass;
 
 /// <summary>
-/// Default MFPS Name Plate (Name above head) script
+/// Default GFWK Name Plate (Name above head) script
 /// If you want to make a different approach like use UGUI instead of OnGUI
 /// Create a custom script and inherited it from bl_NamePlateBase.cs
 /// </summary>

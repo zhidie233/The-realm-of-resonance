@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using TMPro;
 
-namespace MFPS.Runtime.UI.Layout
+namespace GFWK.Runtime.UI.Layout
 {
     public class bl_RoundFinishScreen : bl_RoundFinishScreenBase
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [CreateAssetMenu(fileName = "InputManager", menuName = "Game Framework/Input/Manager")]
     public class bl_InputData : ScriptableObject
@@ -10,8 +10,8 @@ namespace MFPS.InputManager
 
         [SerializeField, ScriptableDrawer] private ButtonMapped Mapped = null;
         public string inputVersion = "1.0.0";
-        [LovattoToogle] public bool useGamePadNavigation = false;
-        [LovattoToogle] public bool runWithButton = false;
+        [GFWorksToogle] public bool useGamePadNavigation = false;
+        [GFWorksToogle] public bool runWithButton = false;
 
         [Header("References")]
         public GameObject GamePadInputModule;
@@ -22,7 +22,7 @@ namespace MFPS.InputManager
 
         public ButtonMapped mappedInstance { get; set; }
         private Dictionary<string, ButtonData> cachedKeys = new Dictionary<string, ButtonData>();
-        public const string KEYS = "mfps.input.bindings";
+        public const string KEYS = "gfwk.input.bindings";
 
         public InputType inputType
         {

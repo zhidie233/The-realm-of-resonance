@@ -10,10 +10,10 @@ public class bl_OfflineRoom : MonoBehaviour, IConnectionCallbacks
 {
     [Header("Offline Room")]
     public GameMode gameMode = GameMode.FFA;
-    [LovattoToogle] public bool forceOffline = false;
-    [LovattoToogle] public bool withBots = false;
-    [LovattoToogle] public bool autoTeamSelection = true;
-    [LovattoToogle] public bool friendlyFire = false;
+    [GFWorksToogle] public bool forceOffline = false;
+    [GFWorksToogle] public bool withBots = false;
+    [GFWorksToogle] public bool autoTeamSelection = true;
+    [GFWorksToogle] public bool friendlyFire = false;
     [Range(1, 64)] public int maxPlayers = 1;
     public int MatchTime = 9989;
     public int gameModeGoal = 100;

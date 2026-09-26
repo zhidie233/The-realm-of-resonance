@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [Serializable]
     public class ButtonData

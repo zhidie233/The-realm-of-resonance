@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using MFPS.Internal.Structures;
+using GFWK.Internal.Structures;
 using System.Linq;
 
 /// <summary>
@@ -13,7 +13,7 @@ public class bl_Crosshair : bl_CrosshairBase
 
     #region Public members
     [Header("Settings")]
-    [LovattoToogle] public bool fadeOnAim = true;
+    [GFWorksToogle] public bool fadeOnAim = true;
     [Range(1, 10)] public float ScaleLerp = 5;
     [Range(0.1f, 5)] public float RotationSpeed = 2;
     [Range(0.01f, 1)] public float OnFireScaleRate = 0.1f;

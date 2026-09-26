@@ -1,14 +1,14 @@
 ﻿using UnityEngine;
 using TMPro;
 
-namespace MFPS.GameModes.FreeForAll
+namespace GFWK.GameModes.FreeForAll
 {
     public class bl_FreeForAllUI : MonoBehaviour
     {
         public GameObject Content;
         public TextMeshProUGUI ScoreText;
 
-        public void SetScores(MFPSPlayer bestPlayer)
+        public void SetScores(GFWKPlayer bestPlayer)
         {
             string scoreText = string.Format(bl_GameTexts.PlayerStart, bestPlayer.Name);
             ScoreText.text = scoreText;

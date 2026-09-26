@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Default MFPS PickUp UI handler
+/// Default GFWK PickUp UI handler
 /// This script take care of receive information about pick up weapon events and display to the player
 /// To modify the behave DO NOT modify this script, instead create your own and inherited from bl_PickUpUIBase
 /// Use this as reference.

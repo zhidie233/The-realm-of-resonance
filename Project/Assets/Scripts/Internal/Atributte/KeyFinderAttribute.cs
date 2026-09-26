@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 #endif
 
 public class KeyFinderAttribute : PropertyAttribute

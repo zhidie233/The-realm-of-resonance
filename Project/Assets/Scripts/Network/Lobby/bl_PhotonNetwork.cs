@@ -17,7 +17,7 @@ public class bl_PhotonNetwork : bl_PhotonHelper
 
     private void Awake()
     {
-        gameObject.name = "MFPS Network";
+        gameObject.name = "GFWK Network";
         DontDestroyOnLoad(gameObject);
         EventsAll.Receivers = ReceiverGroup.All;
         PhotonNetwork.NetworkingClient.EventReceived += OnEventCustom;

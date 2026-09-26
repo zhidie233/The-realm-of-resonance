@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
-using MFPS.Internal;
-using MFPS.Internal.Structures;
-using MFPS.Runtime.UI.Bindings;
+using GFWK.Internal;
+using GFWK.Internal.Structures;
+using GFWK.Runtime.UI.Bindings;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_RoomNotificationsUI : MonoBehaviour
     {
@@ -30,7 +30,7 @@ namespace MFPS.Runtime.UI
         /// <summary>
         /// 
         /// </summary>
-        void OnLocalNotification(MFPSLocalNotification notification)
+        void OnLocalNotification(GFWKLocalNotification notification)
         {
             listHandler.Initialize();
             listHandler.InstatiateAndGet<bl_UILeftNotifier>().SetInfo(notification.Message, showTime);

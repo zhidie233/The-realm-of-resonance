@@ -27,8 +27,8 @@ public static class GFWKMenuRemover
     // 需要强制关闭的插件窗口类型名片段
     private static readonly string[] WindowTypeNames =
     {
-        "MFPSNews",
-        "MFPSUpdaterWindow"
+        "GFWKNews",
+        "GFWKUpdaterWindow"
     };
 
     static GFWKMenuRemover()

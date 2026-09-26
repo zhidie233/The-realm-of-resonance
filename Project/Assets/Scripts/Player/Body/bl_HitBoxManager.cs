@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 #endif
 
 public class bl_HitBoxManager : MonoBehaviour
@@ -57,7 +57,7 @@ public class bl_HitBoxManager : MonoBehaviour
         if (col == null) { Debug.LogWarning("The bone: " + bone.ToString() + " doesn't have a collider."); return; }
 
         col.gameObject.layer = LayerMask.NameToLayer("Player");
-        col.gameObject.tag = bl_MFPS.HITBOX_TAG;
+        col.gameObject.tag = bl_GFWK.HITBOX_TAG;
         box.Bone = bone;
         box.collider = col;
         if (bone == HumanBodyBones.Head) { box.DamageMultiplier = 5; }
@@ -104,7 +104,7 @@ public class bl_BodyHitBoxManagerEditor: Editor
             EditorGUILayout.HelpBox("No Health Manager has been assigned, therefore none damage will be applied from the hitboxes", MessageType.Warning);
         }
         var rect = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.toolbarButton);
-        script.managerPerSegments = MFPSEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
+        script.managerPerSegments = GFWKEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
         DrawBodyMultiplier();
         DrawHitBoxesList();
 

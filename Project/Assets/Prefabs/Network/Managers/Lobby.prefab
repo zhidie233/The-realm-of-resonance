@@ -31068,7 +31068,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: CONNECTING WITH MFPS SERVER...
+  m_Text: CONNECTING WITH GFWK SERVER...
 --- !u!1 &2873155796177438412
 GameObject:
   m_ObjectHideFlags: 0
@@ -37340,7 +37340,7 @@ PrefabInstance:
     - target: {fileID: 4508706423105117754, guid: c8d8e5e238c50b54ab87cdbdb9f1798f,
         type: 3}
       propertyPath: m_Name
-      value: Ranking [MFPS]
+      value: Ranking [GFWK]
       objectReference: {fileID: 0}
     - target: {fileID: 4508706423105117753, guid: c8d8e5e238c50b54ab87cdbdb9f1798f,
         type: 3}

@@ -1,4 +1,4 @@
-﻿public interface IMFPSDamageable
+﻿public interface IGFWKDamageable
 {
     void ReceiveDamage(DamageData damageData);
 }

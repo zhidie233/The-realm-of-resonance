@@ -2,14 +2,14 @@
 using UnityEngine.Events;
 using UnityEngine;
 
-namespace MFPS.Tween
+namespace GFWK.Tween
 {
     public class bl_TweenCurveScale : bl_TweenBase, ITween
     {
 
         [Header("Settings")]
-        [LovattoToogle] public bool OnStart = true;
-        [LovattoToogle] public bool ApplyOnStart = true;
+        [GFWorksToogle] public bool OnStart = true;
+        [GFWorksToogle] public bool ApplyOnStart = true;
         [Range(0, 10)] public float Delay = 0;
         [Range(0.1f, 7)] public float Duration = 1;
         [Range(0.1f, 4)] public float Multiplier = 1;
@@ -172,13 +172,13 @@ namespace MFPS.Tween
         public override void PlayEditor()
         {
             InitInEditor();
-            MFPSEditor.EditorCoroutines.StartBackgroundTask(DoTween());
+            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTween());
         }
 
         public override void PlayReverseEditor()
         {
             InitInEditor();
-            MFPSEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
+            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
         }
 
         public override void InitInEditor()

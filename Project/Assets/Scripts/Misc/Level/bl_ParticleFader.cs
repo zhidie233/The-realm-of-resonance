@@ -2,12 +2,12 @@
 using System.Collections;
 using UnityEngine;
 
-namespace MFPS.Runtime.Misc
+namespace GFWK.Runtime.Misc
 {
     public class bl_ParticleFader : MonoBehaviour
     {
-        [LovattoToogle] public bool StartFadeEmit = false;
-        [LovattoToogle] public bool DestroyAfterTime = false;
+        [GFWorksToogle] public bool StartFadeEmit = false;
+        [GFWorksToogle] public bool DestroyAfterTime = false;
         [Range(1, 20)] public float Emission = 12;
         [Range(1, 10)] public float DestroyTime = 7;
 

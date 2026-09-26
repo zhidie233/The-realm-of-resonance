@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 
 public class AddPlayerTutorial : TutorialWizard
 {
 
     //required//////////////////////////////////////////////////////
-    private const string ImagesFolder = "mfps2/editor/player/";
+    private const string ImagesFolder = "gfwk2/editor/player/";
     private NetworkImages[] m_ServerImages = new NetworkImages[]
     {
         new NetworkImages{Name = "img-1.jpg", Image = null},
@@ -18,7 +18,7 @@ public class AddPlayerTutorial : TutorialWizard
         new NetworkImages{Name = "img-6.jpg", Image = null},
         new NetworkImages{Name = "img-7.jpg", Image = null},
         new NetworkImages{Name = "img-8.jpg", Image = null},
-        new NetworkImages{Name = "https://www.lovattostudio.com/en/wp-content/uploads/2017/03/player-selector-product-cover-925x484.png",Type = NetworkImages.ImageType.Custom},
+        new NetworkImages{Name = "https://www.gfworksstudio.com/en/wp-content/uploads/2017/03/player-selector-product-cover-925x484.png",Type = NetworkImages.ImageType.Custom},
     };
     private Steps[] AllSteps = new Steps[] {
      new Steps { Name = "3D 模型", StepsLenght = 0, DrawFunctionName = nameof(DrawModelInfo) },
@@ -278,7 +278,7 @@ public class AddPlayerTutorial : TutorialWizard
                 DrawText("没问题，点击下方按钮将模型设置到玩家预制体中。");
                 GUILayout.Space(10);
                 var r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none);
-                autoPoseAiming = MFPSEditorStyles.FeatureToogle(r, autoPoseAiming, "自动摆出瞄准姿态");
+                autoPoseAiming = GFWKEditorStyles.FeatureToogle(r, autoPoseAiming, "自动摆出瞄准姿态");
                 GUILayout.Space(4);
                 weaponOrientationMode = (TPWeaponOrientationMode)EditorGUILayout.EnumPopup("第三人称武器重定位方式", weaponOrientationMode);
                 GUILayout.Space(20);
@@ -334,7 +334,7 @@ public class AddPlayerTutorial : TutorialWizard
         }
         else if (subStep == 4)
         {
-            DrawText("现在需要将该预制体复制到 <b>Resources</b> 文件夹，拖到 MFPS -> Resources 即可，可按需重命名。");
+            DrawText("现在需要将该预制体复制到 <b>Resources</b> 文件夹，拖到 GFWK -> Resources 即可，可按需重命名。");
             DrawImage(GetServerImage(7));
             DownArrow();
             DrawText("接下来需要将该新玩家预制体分配给某个阵营使用（阵营 1 或阵营 2）。打开 GameData（同样位于 Resources 文件夹）-> Players 区段，在对应字段（Team1 或 Team2）中指定，" +
@@ -351,7 +351,7 @@ public class AddPlayerTutorial : TutorialWizard
             GUILayout.Space(5);
             if (DrawButton("玩家选择器"))
             {
-                Application.OpenURL("https://www.lovattostudio.com/en/shop/addons/player-selector/");
+                Application.OpenURL("https://www.gfworksstudio.com/en/shop/addons/player-selector/");
             }
             DrawImage(GetServerImage(9));
         }
@@ -359,7 +359,7 @@ public class AddPlayerTutorial : TutorialWizard
 
     void PlayerModelAssetsDoc()
     {
-        DrawText("以下资源商店玩家模型素材可用于集成到 MFPS");
+        DrawText("以下资源商店玩家模型素材可用于集成到 GFWK");
         Space(10);
         playerAssets.OnGUI();
     }
@@ -502,7 +502,7 @@ public class AddPlayerTutorial : TutorialWizard
         ActualModel.SetActive(false);
 
         var view = (SceneView)SceneView.sceneViews[0];
-        var pbounds = MFPSEditorUtils.GetTransformBounds(tempPlayerReferences.gameObject);
+        var pbounds = GFWKEditorUtils.GetTransformBounds(tempPlayerReferences.gameObject);
         pbounds.center += Vector3.up * 0.5f;
         view.LookAt(pbounds.center);
         //view.Frame(pbounds);

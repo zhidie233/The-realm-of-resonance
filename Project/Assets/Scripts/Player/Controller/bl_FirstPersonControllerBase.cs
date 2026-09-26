@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using MFPS.PlayerController;
+using GFWK.PlayerController;
 
 /// <summary>
 /// Base class for the player controller
@@ -60,16 +60,16 @@ public abstract class bl_FirstPersonControllerBase : bl_MonoBehaviour
     }
 
     /// <summary>
-    /// Use to access to variables of the default MFPS controller
+    /// Use to access to variables of the default GFWK controller
     /// If you are using your own inherited class, you don't need this.
     /// </summary>
-    private bl_FirstPersonController _mfpsController = null;
-    public bl_FirstPersonController MFPSController
+    private bl_FirstPersonController _gfwkController = null;
+    public bl_FirstPersonController GFWKController
     {
         get
         {
-            if (_mfpsController == null) TryGetComponent(out _mfpsController);
-            return _mfpsController;
+            if (_gfwkController == null) TryGetComponent(out _gfwkController);
+            return _gfwkController;
         }
     }
 

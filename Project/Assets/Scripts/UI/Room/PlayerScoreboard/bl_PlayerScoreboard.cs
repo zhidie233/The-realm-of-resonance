@@ -3,14 +3,14 @@ using UnityEngine;
 using Photon.Realtime;
 using System.Linq;
 using TMPro;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 
 public class bl_PlayerScoreboard : bl_PlayerScoreboardBase
 {
     #region Public members
     [Header("Settings")]
-    [LovattoToogle] public bool updateOnEnable = true;
-    [LovattoToogle] public bool autoUpdate = true;
+    [GFWorksToogle] public bool updateOnEnable = true;
+    [GFWorksToogle] public bool autoUpdate = true;
 
     [Header("References")]
     public bl_PlayerScoreboardTableBase[] TwoTeamScoreboards;
@@ -22,7 +22,7 @@ public class bl_PlayerScoreboard : bl_PlayerScoreboardBase
 
     #region Private members
     Dictionary<int, bl_PlayerScoreboardUIBase> cachedUIBindings = new Dictionary<int, bl_PlayerScoreboardUIBase>();
-    Dictionary<MFPSBotProperties, bl_PlayerScoreboardUIBase> cachedBotsUIBindings = new Dictionary<MFPSBotProperties, bl_PlayerScoreboardUIBase>();
+    Dictionary<GFWKBotProperties, bl_PlayerScoreboardUIBase> cachedBotsUIBindings = new Dictionary<GFWKBotProperties, bl_PlayerScoreboardUIBase>();
     bool botsScoreInstance = false;
     private List<bl_PlayerScoreboardUIBase> cachePlayerScoreboardSorted = new List<bl_PlayerScoreboardUIBase>();
     private List<bl_PlayerScoreboardUIBase> cachePlayerScoreboardSorted2 = new List<bl_PlayerScoreboardUIBase>();
@@ -128,7 +128,7 @@ public class bl_PlayerScoreboard : bl_PlayerScoreboardBase
         int c = bl_AIMananger.Instance.BotsStatistics.Count;
         for (int i = 0; i < c; i++)
         {
-            MFPSBotProperties stat = bl_AIMananger.Instance.BotsStatistics[i];
+            GFWKBotProperties stat = bl_AIMananger.Instance.BotsStatistics[i];
             if (botsScoreInstance)
             {
                 if (cachedBotsUIBindings.ContainsKey(stat))
@@ -152,7 +152,7 @@ public class bl_PlayerScoreboard : bl_PlayerScoreboardBase
     /// 
     /// </summary>
     /// <param name="info"></param>
-    void InstanceBotUIBinding(MFPSBotProperties info)
+    void InstanceBotUIBinding(GFWKBotProperties info)
     {
         bl_PlayerScoreboardUIBase script = null;
         if (!isOneTeamMode)

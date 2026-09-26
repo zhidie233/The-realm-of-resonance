@@ -36,9 +36,9 @@ public class bl_PlayerVoice : bl_MonoBehaviour
         {
             if(VoiceRecorder != null)
             VoiceRecorder.enabled = true;
-            PushToTalk = (bool)bl_MFPS.Settings.GetSettingOf("Voice Chat");
+            PushToTalk = (bool)bl_GFWK.Settings.GetSettingOf("Voice Chat");
             if (Speaker != null)
-            Speaker.enabled = (bool)bl_MFPS.Settings.GetSettingOf("PushToTalk");
+            Speaker.enabled = (bool)bl_GFWK.Settings.GetSettingOf("PushToTalk");
         }
         else
         {
@@ -56,7 +56,7 @@ public class bl_PlayerVoice : bl_MonoBehaviour
     protected override void OnEnable()
     {
         base.OnEnable();
-#if MFPSM
+#if GFWKM
         if (View.IsMine)
         {
             bl_TouchHelper.OnTransmit += OnPushToTalkMobile;
@@ -67,7 +67,7 @@ public class bl_PlayerVoice : bl_MonoBehaviour
     protected override void OnDisable()
     {
         base.OnDisable();
-#if MFPSM
+#if GFWKM
         if (View.IsMine)
         {
             bl_TouchHelper.OnTransmit -= OnPushToTalkMobile;
@@ -126,7 +126,7 @@ public class bl_PlayerVoice : bl_MonoBehaviour
 #if !UNITY_WEBGL && PVOICE
             PushToTalk = b;
 #endif
-#if MFPSM
+#if GFWKM
             if (bl_TouchHelper.Instance != null)
             {
                 bl_TouchHelper.Instance.OnPushToTalkChange(b);

@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 
 public class TutorialBots : TutorialWizard
 {
     //required//////////////////////////////////////////////////////
-    private const string ImagesFolder = "mfps2/editor/bots/";
+    private const string ImagesFolder = "gfwk2/editor/bots/";
     private NetworkImages[] m_ServerImages = new NetworkImages[]
     {
         new NetworkImages{Name = "img-1.jpg", Image = null},
@@ -28,7 +28,7 @@ public class TutorialBots : TutorialWizard
         base.OnEnable();
         base.Initizalized(m_ServerImages, AllSteps, ImagesFolder);
         allowTextSuggestions = true;
-        FetchWebTutorials("mfps2/tutorials/");
+        FetchWebTutorials("gfwk2/tutorials/");
     }
 
     public override void WindowArea(int window)
@@ -44,7 +44,7 @@ public class TutorialBots : TutorialWizard
 
     void CoverPointDoc()
     {
-        DrawSuperText("MFPS 的 AI 系统支持掩体点。<b>掩体点是按策略分布在地图中的点位，可优化 AI 的导航寻路</b>。机器人会根据战场情况利用这些点，为自身行为增加随机性，用于躲避敌人或作为随机移动目标。\n \n这些点位推荐使用但并非必需。地图中掩体点越多，机器人的行为就越随机、导航也越自然。\n \n<?title=18>添加新的掩体点</title>\n \n添加掩体点只需复制一个现有点位，再手动摆放到地图中。\n \n为便于预览所有掩体点，可在 <i><b>地图场景层级 ➔ AIManager ➔ bl_AICoverPointManager ➔ Show Gizmos</b></i> 中开启辅助显示。");
+        DrawSuperText("GFWK 的 AI 系统支持掩体点。<b>掩体点是按策略分布在地图中的点位，可优化 AI 的导航寻路</b>。机器人会根据战场情况利用这些点，为自身行为增加随机性，用于躲避敌人或作为随机移动目标。\n \n这些点位推荐使用但并非必需。地图中掩体点越多，机器人的行为就越随机、导航也越自然。\n \n<?title=18>添加新的掩体点</title>\n \n添加掩体点只需复制一个现有点位，再手动摆放到地图中。\n \n为便于预览所有掩体点，可在 <i><b>地图场景层级 ➔ AIManager ➔ bl_AICoverPointManager ➔ Show Gizmos</b></i> 中开启辅助显示。");
         DrawServerImage("img-5.png");
         DownArrow();
         DrawText("每个掩体点都必须挂载 <b>bl_AICoverPoint</b> 脚本，否则不会作为掩体点生效，该脚本在检视面板中有几个公开属性：");
@@ -109,7 +109,7 @@ public class TutorialBots : TutorialWizard
         }else if(subStep == 2)
         {
             DrawText("一切就绪，现在需要为其创建预制体，或替换现有的机器人预制体。" +
-                "将层级中的 <b>AISoldier [NEW]</b> 拖入 <b>Resources</b> 文件夹，默认可拖到 <i>MFPS -> Resources</i>，在该文件夹中可创建预制体" +
+                "将层级中的 <b>AISoldier [NEW]</b> 拖入 <b>Resources</b> 文件夹，默认可拖到 <i>GFWK -> Resources</i>，在该文件夹中可创建预制体" +
                 "或替换默认的机器人预制体（AISoldier 或 AISoldier2）。若创建了新预制体，还需在 游戏数据 -> BotTeam1 或 BotTeam2 中指定该预制体。");
             DrawImage(GetServerImage(3));
             DrawText("就这些 :)");

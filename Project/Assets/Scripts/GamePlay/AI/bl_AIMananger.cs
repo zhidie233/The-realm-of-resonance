@@ -1,4 +1,4 @@
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public class bl_AIMananger : bl_PhotonHelper
     [HideInInspector] public List<Transform> AllBotsTransforms = new List<Transform>();
 
     // Information and stats of all the bots currently playing
-    [HideInInspector] public List<MFPSBotProperties> BotsStatistics = new List<MFPSBotProperties>();
+    [HideInInspector] public List<GFWKBotProperties> BotsStatistics = new List<GFWKBotProperties>();
 
     // Is this game using bots?
     public bool BotsActive { get; set; }
@@ -22,9 +22,9 @@ public class bl_AIMananger : bl_PhotonHelper
     // Is the bots information already synced by the Mater client?
     public bool HasMasterInfo { get; set; } = false;
 
-    public delegate void EEvent(List<MFPSBotProperties> stats);
+    public delegate void EEvent(List<GFWKBotProperties> stats);
     public static EEvent OnMaterStatsReceived;
-    public delegate void StatEvent(MFPSBotProperties stat);
+    public delegate void StatEvent(GFWKBotProperties stat);
     public static StatEvent OnBotStatUpdate;
 
     private bl_GameManager GameManager;
@@ -62,7 +62,7 @@ public class bl_AIMananger : bl_PhotonHelper
     private void Start()
     {
         FirstSpawn();
-        if (bl_MFPS.GameData.UsingWaitingRoom() && bl_PhotonNetwork.IsMasterClient)
+        if (bl_GFWK.GameData.UsingWaitingRoom() && bl_PhotonNetwork.IsMasterClient)
         {
             this.InvokeAfter(2, SyncBotsDataToAllOthers);
         }
@@ -137,7 +137,7 @@ public class bl_AIMananger : bl_PhotonHelper
         string line = string.Empty;
         for (int i = 0; i < BotsStatistics.Count; i++)
         {
-            MFPSBotProperties b = BotsStatistics[i];
+            GFWKBotProperties b = BotsStatistics[i];
             line += string.Format("{0},{1},{2},{3},{4},{5}|", b.Name, b.Kills, b.Deaths, b.Score, (int)b.Team, b.ViewID);
         }
         return line;
@@ -306,7 +306,7 @@ public class bl_AIMananger : bl_PhotonHelper
             newAgent.AITeam = _team;
             BotsNames.RemoveAt(rbn);
             //insert bot stats
-            var bs = new MFPSBotProperties();
+            var bs = new GFWKBotProperties();
             bs.Name = newAgent.AIName;
             bs.Team = _team;
             bs.ViewID = bot.GetComponent<PhotonView>().ViewID;
@@ -317,7 +317,7 @@ public class bl_AIMananger : bl_PhotonHelper
         newAgent.Init();
 
         //Build Player Data
-        MFPSPlayer playerData = new MFPSPlayer()
+        GFWKPlayer playerData = new GFWKPlayer()
         {
             Name = newAgent.AIName,
             Team = newAgent.AITeam,
@@ -330,7 +330,7 @@ public class bl_AIMananger : bl_PhotonHelper
         bl_EventHandler.DispatchRemoteActorChange(new bl_EventHandler.PlayerChangeData()
         {
             PlayerName = newAgent.AIName,
-            MFPSActor = playerData,
+            GFWKActor = playerData,
             IsAlive = true,
             NetworkView = newAgent.GetComponent<PhotonView>()
         });
@@ -376,9 +376,9 @@ public class bl_AIMananger : bl_PhotonHelper
             targetsLists.Add(all[i].Actor.GetComponent<bl_PlayerReferencesCommon>());
         }
 
-        if (bl_MFPS.LocalPlayerReferences != null)
+        if (bl_GFWK.LocalPlayerReferences != null)
         {
-            targetsLists.Add(bl_MFPS.LocalPlayerReferences);
+            targetsLists.Add(bl_GFWK.LocalPlayerReferences);
         }
 
         // Update the targets for each bot
@@ -700,7 +700,7 @@ public class bl_AIMananger : bl_PhotonHelper
     [PunRPC]
     public void SyncBotStat(string data, int value, byte cmd)
     {
-        MFPSBotProperties bs = BotsStatistics.Find(x => x.Name == data);
+        GFWKBotProperties bs = BotsStatistics.Find(x => x.Name == data);
         if (bs == null && cmd != 5) return;
         if (cmd == 0)//add kill
         {
@@ -739,7 +739,7 @@ public class bl_AIMananger : bl_PhotonHelper
             list[value].Bot = dataSplit[1];
 
             //add the bot statistic
-            bs = new MFPSBotProperties();
+            bs = new GFWKBotProperties();
             bs.Name = dataSplit[1];
             bs.Team = team;
             bs.ViewID = int.Parse(dataSplit[2]);
@@ -760,7 +760,7 @@ public class bl_AIMananger : bl_PhotonHelper
             {
                 if (string.IsNullOrEmpty(split[i])) continue;
                 string[] info = split[i].Split(","[0]);
-                MFPSBotProperties bs = new MFPSBotProperties();
+                GFWKBotProperties bs = new GFWKBotProperties();
                 bs.Name = info[0];
                 bs.Kills = int.Parse(info[1]);
                 bs.Deaths = int.Parse(info[2]);
@@ -771,7 +771,7 @@ public class bl_AIMananger : bl_PhotonHelper
 
                 if (!bl_GameManager.Instance.OthersActorsInScene.Exists(x => x.Name == bs.Name))
                 {
-                    bl_GameManager.Instance.OthersActorsInScene.Add(new MFPSPlayer()
+                    bl_GameManager.Instance.OthersActorsInScene.Add(new GFWKPlayer()
                     {
                         Name = bs.Name,
                         isRealPlayer = false,
@@ -851,9 +851,9 @@ public class bl_AIMananger : bl_PhotonHelper
 
     // <param name="team"></param>
     // <returns></returns>
-    public List<MFPSPlayer> GetAllBotsInTeam(Team team)
+    public List<GFWKPlayer> GetAllBotsInTeam(Team team)
     {
-        List<MFPSPlayer> list = new List<MFPSPlayer>();
+        List<GFWKPlayer> list = new List<GFWKPlayer>();
         for (int i = 0; i < bl_GameManager.Instance.OthersActorsInScene.Count; i++)
         {
             if (bl_GameManager.Instance.OthersActorsInScene[i].isRealPlayer) continue;
@@ -907,7 +907,7 @@ public class bl_AIMananger : bl_PhotonHelper
 
     // <param name="botName"></param>
     // <returns></returns>
-    public MFPSBotProperties GetBotStatistics(string botName)
+    public GFWKBotProperties GetBotStatistics(string botName)
     {
         var id = BotsStatistics.FindIndex(x => x.Name == botName);
         if (id < 0) return null;
@@ -964,11 +964,11 @@ public class bl_AIMananger : bl_PhotonHelper
     }
 
     // <returns></returns>
-    public MFPSBotProperties GetBotWithMoreKills()
+    public GFWKBotProperties GetBotWithMoreKills()
     {
         if (BotsStatistics == null || BotsStatistics.Count <= 0)
         {
-            MFPSBotProperties bs = new MFPSBotProperties()
+            GFWKBotProperties bs = new GFWKBotProperties()
             {
                 Name = "None",
                 Kills = 0,

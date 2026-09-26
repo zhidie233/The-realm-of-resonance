@@ -1,11 +1,11 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-// This the default bullet handler of MFPS If you want to use your custom bullet script, simply append the bl_ProjectileBase class to it Handle the override functions and attach it to a bullet prefab Follow the Bullet documentation to see how to use a custom bullet prefab. You can use this script as reference to see how to apply damage to players and bots.
+// This the default bullet handler of GFWK If you want to use your custom bullet script, simply append the bl_ProjectileBase class to it Handle the override functions and attach it to a bullet prefab Follow the Bullet documentation to see how to use a custom bullet prefab. You can use this script as reference to see how to apply damage to players and bots.
 public class bl_Bullet : bl_ProjectileBase
 {
-    // If is enabled, on all collisions will check if the hitted object have a IMFPSDamageable component
-    [LovattoToogle] public bool checkDamageables = false;
+    // If is enabled, on all collisions will check if the hitted object have a IGFWKDamageable component
+    [GFWorksToogle] public bool checkDamageables = false;
     public LayerMask HittableLayers;
     public TrailRenderer Trail = null;
 
@@ -170,7 +170,7 @@ public class bl_Bullet : bl_ProjectileBase
             case "Projectile":
                 // do nothing if 2 bullets collide
                 break;
-            case bl_MFPS.HITBOX_TAG://Send Damage for other players
+            case bl_GFWK.HITBOX_TAG://Send Damage for other players
                 SendPlayerDamage(hit);
                 break;
             case "AI":
@@ -213,7 +213,7 @@ public class bl_Bullet : bl_ProjectileBase
     {
         if (bulletData.isNetwork) return;
         
-        IMFPSDamageable damageable = hit.transform.GetComponent<IMFPSDamageable>();
+        IGFWKDamageable damageable = hit.transform.GetComponent<IGFWKDamageable>();
         if (damageable != null)
         {
             DamageData damageData = BuildBaseDamageData();
@@ -221,7 +221,7 @@ public class bl_Bullet : bl_ProjectileBase
             var playerRefs = hit.transform.root.GetComponent<bl_PlayerReferences>();
             if (playerRefs != null && !isOneTeamMode)//是真人
             {
-                if (playerRefs.playerSettings.PlayerTeam == bulletData.MFPSActor.Team)
+                if (playerRefs.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
                 {
                     if (!bl_RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                     {
@@ -246,7 +246,7 @@ public class bl_Bullet : bl_ProjectileBase
             
             if (botRefs != null && !isOneTeamMode)//是人机
             {
-                if (botRefs.PlayerTeam == bulletData.MFPSActor.Team)//判断是不是队友
+                if (botRefs.PlayerTeam == bulletData.GFWKActor.Team)//判断是不是队友
                 {
                     if (!bl_RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                     {
@@ -267,9 +267,9 @@ public class bl_Bullet : bl_ProjectileBase
             }
             
             //check if the bullet comes from a bot or a real player.
-            if (bulletData.MFPSActor != null)
+            if (bulletData.GFWKActor != null)
             {
-                damageData.Cause = bulletData.MFPSActor.isRealPlayer ? DamageCause.Player : DamageCause.Bot;
+                damageData.Cause = bulletData.GFWKActor.isRealPlayer ? DamageCause.Player : DamageCause.Bot;
             }
             else
             {
@@ -293,12 +293,12 @@ public class bl_Bullet : bl_ProjectileBase
         //Ping of Master Clients can be volatile since it depend of the client connection, that could affect all the players in the room.
         if (!bulletData.isNetwork)
         {
-            if (bulletData.MFPSActor == null)
+            if (bulletData.GFWKActor == null)
             {
                 Debug.LogWarning($"Bullet ownerID {bulletData.ActorViewID} not found, ignore this if a player just enter in the match.");
             }
-            if (hit.transform.root != null && bulletData.MFPSActor.Name == hit.transform.root.name) { return; }
-            IMFPSDamageable damageable = hit.transform.GetComponent<IMFPSDamageable>();
+            if (hit.transform.root != null && bulletData.GFWKActor.Name == hit.transform.root.name) { return; }
+            IGFWKDamageable damageable = hit.transform.GetComponent<IGFWKDamageable>();
             
             if (damageable != null)
             {
@@ -308,7 +308,7 @@ public class bl_Bullet : bl_ProjectileBase
                 var botRefs = hit.transform.root.GetComponent<bl_AIShooterReferences>();//判断是不是人机
                 if (botRefs != null && !isOneTeamMode)//是人机
                 {
-                    if (botRefs.PlayerTeam == bulletData.MFPSActor.Team)//判断是不是队友
+                    if (botRefs.PlayerTeam == bulletData.GFWKActor.Team)//判断是不是队友
                     {
                         if (!bl_RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                         {
@@ -344,13 +344,13 @@ public class bl_Bullet : bl_ProjectileBase
         //Bots doesn't hit the players HitBoxes like other real players does, instead they hit the Character Controller Collider,
         //So instead of communicate with the hit box script we have to communicate with the player health script directly
         var pdm = hit.transform.GetComponent<bl_PlayerReferences>();
-        //if (pdm != null && bulletData.MFPSActor != null && !bulletData.MFPSActor.isRealPlayer)
-        if (pdm != null && bulletData.MFPSActor != null)
+        //if (pdm != null && bulletData.GFWKActor != null && !bulletData.GFWKActor.isRealPlayer)
+        if (pdm != null && bulletData.GFWKActor != null)
         {
             DamageData info = BuildBaseDamageData();
             if (!isOneTeamMode)
             {
-                if (pdm.playerSettings.PlayerTeam == bulletData.MFPSActor.Team)
+                if (pdm.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
                 {
                     if (!bl_RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                     {
@@ -379,7 +379,7 @@ public class bl_Bullet : bl_ProjectileBase
     void SendFacilityDamage(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
-        IMFPSDamageable damageable = hit.transform.GetComponent<IMFPSDamageable>();
+        IGFWKDamageable damageable = hit.transform.GetComponent<IGFWKDamageable>();
         ResonanceFacility facility = hit.transform.GetComponent<ResonanceFacility>();
         if (damageable != null)
         {
@@ -401,7 +401,7 @@ public class bl_Bullet : bl_ProjectileBase
         {
             // 如果不是房主，通过RPC通知房主
             // 需要获取一个PhotonView来发送RPC
-            PhotonView shooterPhotonView = bulletData.MFPSActor.m_actorView; // 获取发射者的PhotonView
+            PhotonView shooterPhotonView = bulletData.GFWKActor.m_actorView; // 获取发射者的PhotonView
             shooterPhotonView.RPC("RPC_RequestResonanceChange", RpcTarget.MasterClient, 
                 resonanceKey, damage);
         }
@@ -419,7 +419,7 @@ public class bl_Bullet : bl_ProjectileBase
 
         if (checkDamageables || overrideDamageable)
         {
-            var damageable = hit.transform.GetComponent<IMFPSDamageable>();
+            var damageable = hit.transform.GetComponent<IGFWKDamageable>();
             if (damageable == null) return;
             DamageData damageData = BuildBaseDamageData();
             damageData.Cause = DamageCause.Player;
@@ -434,11 +434,11 @@ public class bl_Bullet : bl_ProjectileBase
         {
             Damage = (int)bulletData.Damage,
             Direction = bulletData.Position,
-            MFPSActor = bulletData.MFPSActor,
+            GFWKActor = bulletData.GFWKActor,
             ActorViewID = bulletData.ActorViewID,
             GunID = bulletData.WeaponID,
         };
-        if (data.MFPSActor != null) { data.From = data.MFPSActor.Name; }
+        if (data.GFWKActor != null) { data.From = data.GFWKActor.Name; }
         return data;
     }   
 }

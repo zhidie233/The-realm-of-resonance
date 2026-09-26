@@ -19,10 +19,10 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
     public List<Player> connectedPlayerList = new List<Player>();
 
     // List with references to all instanced players (bots and real players) in the scene. This list included all but the local player.
-    public List<MFPSPlayer> OthersActorsInScene = new List<MFPSPlayer>();
+    public List<GFWKPlayer> OthersActorsInScene = new List<GFWKPlayer>();
 
-    // 本地玩家 MFPSPlayer 数据
-    public MFPSPlayer LocalActor { get; set; } = new MFPSPlayer();
+    // 本地玩家 GFWKPlayer 数据
+    public GFWKPlayer LocalActor { get; set; } = new GFWKPlayer();
 
     // 玩家等待生成时为 true
     public bool IsLocalWaitingForSpawn { get; set; }
@@ -77,7 +77,7 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
         LocalActor.Name = PhotonNetwork.NickName;
 
         bl_CrosshairBase.Instance.Show(false);
-        if (bl_MFPS.GameData.UsingWaitingRoom() && bl_PhotonNetwork.LocalPlayer.GetPlayerTeam() != Team.None)
+        if (bl_GFWK.GameData.UsingWaitingRoom() && bl_PhotonNetwork.LocalPlayer.GetPlayerTeam() != Team.None)
         {
             Invoke(nameof(SpawnPlayerWithCurrentTeam), 2);
         }
@@ -137,7 +137,7 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
             { PropertiesKeys.TeamKey, playerTeam.ToString() }
         };
         bl_PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerTeam);
-        bl_MFPS.LocalPlayer.Team = playerTeam;
+        bl_GFWK.LocalPlayer.Team = playerTeam;
 
         //spawn the player model
 #if !PSELECTOR
@@ -272,7 +272,7 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
             { PropertiesKeys.TeamKey, team.ToString() }
         };
         bl_PhotonNetwork.LocalPlayer.SetCustomProperties(PlayerTeam, null);
-        bl_MFPS.LocalPlayer.Team = team;
+        bl_GFWK.LocalPlayer.Team = team;
         Joined = true;
     }
 
@@ -446,9 +446,9 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
         {
             if (data.IsAlive)
             {
-                if (data.MFPSActor != null)
+                if (data.GFWKActor != null)
                 {
-                    OthersActorsInScene[id] = data.MFPSActor;
+                    OthersActorsInScene[id] = data.GFWKActor;
                 }
                 else
                 {
@@ -468,9 +468,9 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
         {
             if (data.IsAlive)
             {
-                if (data.MFPSActor == null) { Debug.LogWarning($"Actor data for {data.PlayerName} has not been build yet."); return; }
-                if (data.MFPSActor.ActorView == null) { data.MFPSActor.ActorView = data.MFPSActor.Actor?.GetComponent<PhotonView>(); }
-                OthersActorsInScene.Add(data.MFPSActor);
+                if (data.GFWKActor == null) { Debug.LogWarning($"Actor data for {data.PlayerName} has not been build yet."); return; }
+                if (data.GFWKActor.ActorView == null) { data.GFWKActor.ActorView = data.GFWKActor.Actor?.GetComponent<PhotonView>(); }
+                OthersActorsInScene.Add(data.GFWKActor);
             }
         }
     }
@@ -478,7 +478,7 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
     // Add a new player info in the <see cref="OthersActorsInScene"/> list
     // The new player to register
     // Replace the information if record already exist for this player
-    public void RegisterMFPSPlayer(MFPSPlayer newPlayer, bool force = false)
+    public void RegisterGFWKPlayer(GFWKPlayer newPlayer, bool force = false)
     {
         if (OthersActorsInScene.Exists(x => x.Name == newPlayer.Name) && !force) return;
 
@@ -527,7 +527,7 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
 
     // Find a player or bot by their PhotonPlayer
     // <returns></returns>
-    public MFPSPlayer FindActor(string actorName)
+    public GFWKPlayer FindActor(string actorName)
     {
         for (int i = 0; i < OthersActorsInScene.Count; i++)
         {
@@ -542,7 +542,7 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
 
     // Find a player or bot by their ViewID
     // <returns></returns>
-    public MFPSPlayer GetMFPSActor(int viewID)
+    public GFWKPlayer GetGFWKActor(int viewID)
     {
         if (LocalActor.ActorViewID == viewID) { return LocalActor; }
         for (int i = 0; i < OthersActorsInScene.Count; i++)
@@ -555,9 +555,9 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
         return null;
     }
 
-    public MFPSPlayer GetMFPSPlayer(string nickName)
+    public GFWKPlayer GetGFWKPlayer(string nickName)
     {
-        MFPSPlayer player = OthersActorsInScene.Find(x => x.Name == nickName);
+        GFWKPlayer player = OthersActorsInScene.Find(x => x.Name == nickName);
         if (player == null && nickName == LocalName)
         {
             player = LocalActor;
@@ -565,13 +565,13 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
         return player;
     }
 
-    // Get the list of MFPS players that are joined in the given team
+    // Get the list of GFWK players that are joined in the given team
     // Team from where the players have to be part of.
     // Fetch only players that has been registered in the <see cref="OthersActorsInScene"/> list.
     // <returns></returns>
-    public MFPSPlayer[] GetMFPSPlayerInTeam(Team team, bool registeredActorsOnly = true)
+    public GFWKPlayer[] GetGFWKPlayerInTeam(Team team, bool registeredActorsOnly = true)
     {
-        List<MFPSPlayer> list = new List<MFPSPlayer>();
+        List<GFWKPlayer> list = new List<GFWKPlayer>();
         if (registeredActorsOnly)
         {
             for (int i = 0; i < OthersActorsInScene.Count; i++)
@@ -590,13 +590,13 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
         return list.ToArray();
     }
 
-    // Get the list of MFPS actors that are not in the same team of the local player
+    // Get the list of GFWK actors that are not in the same team of the local player
     // <param name="includeBots"></param>
     // <returns></returns>
-    public List<MFPSPlayer> GetNonTeamMatePlayers(bool includeBots = true)
+    public List<GFWKPlayer> GetNonTeamMatePlayers(bool includeBots = true)
     {
         Team playerTeam = bl_PhotonNetwork.LocalPlayer.GetPlayerTeam();
-        List<MFPSPlayer> list = new List<MFPSPlayer>();
+        List<GFWKPlayer> list = new List<GFWKPlayer>();
         bool oneTeamMode = isOneTeamMode;
         for (int i = 0; i < OthersActorsInScene.Count; i++)
         {
@@ -753,14 +753,14 @@ public class bl_GameManager : bl_PhotonHelper, IInRoomCallbacks, IConnectionCall
             // Try register the player info right away
             // This is important to do since in game modes where the player have to wait until a round finish before he can spawn
             // the player record won't be added until the second time he spawn
-            var playerData = new MFPSPlayer()
+            var playerData = new GFWKPlayer()
             {
                 Name = newPlayer.NickName,
                 Team = newPlayer.GetPlayerTeam(),
                 isRealPlayer = true,
                 isAlive = false,
             };
-            RegisterMFPSPlayer(playerData);
+            RegisterGFWKPlayer(playerData);
         }
     }
 

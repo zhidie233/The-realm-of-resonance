@@ -46,7 +46,7 @@ public class bl_FrameRate : bl_MonoBehaviour
     /// </summary>
     void OnSettingsChanged()
     {
-        countFPS = (bool)bl_MFPS.Settings.GetSettingOf("显示帧率");
+        countFPS = (bool)bl_GFWK.Settings.GetSettingOf("显示帧率");
         if (TextUI != null) TextUI.gameObject.SetActive(countFPS);
     }
 

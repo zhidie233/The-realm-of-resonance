@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Text;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 #if ACTK_IS_HERE
 using CodeStage.AntiCheat.Storage;
 #endif
 
-namespace MFPS.Internal.Scriptables
+namespace GFWK.Internal.Scriptables
 {
     [CreateAssetMenu(menuName = "Game Framework/Shop/Coin", fileName = "Coin")]
-    public class MFPSCoin : ScriptableObject
+    public class GFWKCoin : ScriptableObject
     {
         public string CoinName;
         public string Acronym;
@@ -24,7 +24,7 @@ namespace MFPS.Internal.Scriptables
         /// </summary>
         /// <param name="coins">Coins to add</param>
         /// <returns></returns>
-        public MFPSCoin Add(int coins, string forUser = "")
+        public GFWKCoin Add(int coins, string forUser = "")
         {
 #if ULSP
             if (!bl_DataBase.IsUserLogged) return this;
@@ -44,7 +44,7 @@ namespace MFPS.Internal.Scriptables
         /// </summary>
         /// <param name="coins">Coins to add</param>
         /// <returns></returns>
-        public MFPSCoin Deduct(int coins, string forUser = "")
+        public GFWKCoin Deduct(int coins, string forUser = "")
         {
 #if ULSP
             if (!bl_DataBase.IsUserLogged) return this;
@@ -81,7 +81,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
                 // Debug.Log($"You need an account to accesses to the coins.");
                 return 0;
             }
-            int indexOfCoin = bl_MFPS.Coins.GetIndexOfCoin(this);
+            int indexOfCoin = bl_GFWK.Coins.GetIndexOfCoin(this);
             var userCoins = bl_DataBase.LocalUserInstance.Coins;
             if(indexOfCoin >= userCoins.Length)
             {
@@ -122,7 +122,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
             return k;
         }
 
-        public static implicit operator int(MFPSCoin coin) => bl_MFPS.Coins.GetIndexOfCoin(coin);
-        public static explicit operator MFPSCoin(int coinID) => bl_MFPS.Coins.GetAllCoins()[coinID];
+        public static implicit operator int(GFWKCoin coin) => bl_GFWK.Coins.GetIndexOfCoin(coin);
+        public static explicit operator GFWKCoin(int coinID) => bl_GFWK.Coins.GetAllCoins()[coinID];
     }
 }

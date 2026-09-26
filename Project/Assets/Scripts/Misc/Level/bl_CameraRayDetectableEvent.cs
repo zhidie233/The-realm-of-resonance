@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     /// <summary>
     /// This script invoke OnDetected or UnDetected events when the local player is looking at the object

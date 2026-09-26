@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [RequireComponent(typeof(EventSystem))]
     public class bl_GamePadPointerModule : PointerInputModule

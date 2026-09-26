@@ -488,7 +488,7 @@ public class bl_MatchTimeManager : bl_MatchTimeManagerBase
     [PunRPC]
     void RpcStartTime(int wait)
     {
-        if (bl_MFPS.LocalPlayer.Team == Team.None) return;
+        if (bl_GFWK.LocalPlayer.Team == Team.None) return;
 
         SetTimeState(RoomTimeState.Started, bl_PhotonNetwork.IsMasterClient);
         bl_UIReferences.Instance.SetWaitingPlayersText(bl_GameTexts.StartingMatch, true);

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace MFPS.Runtime.FriendList
+namespace GFWK.Runtime.FriendList
 {
     public abstract class bl_FriendListUIBase : MonoBehaviour
     {

@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 
-namespace MFPS.Audio
+namespace GFWK.Audio
 {
     [System.Serializable]
     public class bl_VirtualAudioController

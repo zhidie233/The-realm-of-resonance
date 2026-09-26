@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
-using MFPSEditor;
+using GFWKEditor;
 
 [CustomEditor(typeof(bl_NetworkGun))]
 public class bl_NetworkGunEditor : Editor

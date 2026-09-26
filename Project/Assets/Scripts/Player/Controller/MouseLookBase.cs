@@ -1,7 +1,7 @@
-﻿using MFPS.Runtime.Level;
+﻿using GFWK.Runtime.Level;
 using UnityEngine;
 
-namespace MFPS.PlayerController
+namespace GFWK.PlayerController
 {
     public abstract class MouseLookBase
     {

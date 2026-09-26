@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using MFPS.Runtime.Settings;
+using GFWK.Runtime.Settings;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     public class bl_InputDeviceSwitcher : MonoBehaviour
     {

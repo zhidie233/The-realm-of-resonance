@@ -38,7 +38,7 @@ public class bl_ThrowKits : bl_MonoBehaviour
         remaingKits = AmountOfKits;
     }
 
-#if MFPSM
+#if GFWKM
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -107,7 +107,7 @@ public class bl_ThrowKits : bl_MonoBehaviour
             KitID = id,
             Delay = CallDelay
         });
-        kit.GetComponent<Rigidbody>().AddForce(bl_MFPS.LocalPlayerReferences.PlayerCameraTransform.forward * ForceImpulse);
+        kit.GetComponent<Rigidbody>().AddForce(bl_GFWK.LocalPlayerReferences.PlayerCameraTransform.forward * ForceImpulse);
         if (SpawnSound)
         {
             AudioSource.PlayClipAtPoint(SpawnSound, this.transform.position, 1.0f);

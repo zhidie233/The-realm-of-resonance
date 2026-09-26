@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class bl_MFPSRoomPreview : MonoBehaviour
+public class bl_GFWKRoomPreview : MonoBehaviour
 {
 
     [Header("References")]
@@ -14,7 +14,7 @@ public class bl_MFPSRoomPreview : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void Show(MFPSRoomInfo info)
+    public void Show(GFWKRoomInfo info)
     {
         var map = info.GetMapInfo();
         MapPreview.sprite = map.Preview;

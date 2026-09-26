@@ -105,6 +105,6 @@ public abstract class bl_PlayerReferencesCommon : MonoBehaviour
     /// <returns></returns>
     public virtual bool IsTeamMateOfLocalPlayer()
     {
-        return bl_RoomSettings.Instance != null && bl_RoomSettings.Instance.isOneTeamMode ? false : PlayerTeam == bl_MFPS.LocalPlayer.Team;
+        return bl_RoomSettings.Instance != null && bl_RoomSettings.Instance.isOneTeamMode ? false : PlayerTeam == bl_GFWK.LocalPlayer.Team;
     }
 }

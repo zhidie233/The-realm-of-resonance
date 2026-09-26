@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace MFPS.Audio
+namespace GFWK.Audio
 {
     public class bl_AudioController : MonoBehaviour
     {
@@ -32,7 +32,7 @@ namespace MFPS.Audio
         /// </summary>
         private void OnEnable()
         {
-            MaxBackgroundVolume = bl_MFPS.MusicVolume;
+            MaxBackgroundVolume = bl_GFWK.MusicVolume;
         }
 
         /// <summary>

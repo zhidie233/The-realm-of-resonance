@@ -56,7 +56,7 @@ public class bl_GunManager : bl_MonoBehaviour
         {
             GunRace = FindObjectOfType<bl_GunRace>();
             if (GunRace != null) { GunRace.SetGunManager(this); }
-            else { Debug.Log("Gun Race is not integrated in this map, just go to MFPS -> Addons -> Gun Race -> Integrate, with the map scene open)."); }
+            else { Debug.Log("Gun Race is not integrated in this map, just go to GFWK -> Addons -> Gun Race -> Integrate, with the map scene open)."); }
         }
 #endif
         //when player instance select player class select in bl_RoomMenu
@@ -611,9 +611,9 @@ public class bl_GunManager : bl_MonoBehaviour
     // Called when the game settings changed in runtime
     public void OnGameSettingsChanged()
     {
-        if (bl_MFPS.Settings == null) return;
+        if (bl_GFWK.Settings == null) return;
 
-        float fov = (float)bl_MFPS.Settings.GetSettingOf("武器FOV");
+        float fov = (float)bl_GFWK.Settings.GetSettingOf("武器FOV");
         foreach (var item in PlayerEquip)
         {
             if (item == null) continue;
@@ -651,7 +651,7 @@ public class bl_GunManager : bl_MonoBehaviour
     // <returns></returns>
     private Vector3 GetThrowPosition()
     {
-#if MFPSTPV
+#if GFWKTPV
         if (bl_CameraViewSettings.IsThirdPerson())
         {
             return transform.root.TransformPoint(new Vector3(0, 1, 1) * 0.55f);
@@ -663,7 +663,7 @@ public class bl_GunManager : bl_MonoBehaviour
     // <returns></returns>
     private Vector3 GetThrowDirection()
     {
-#if MFPSTPV
+#if GFWKTPV
         if (bl_CameraViewSettings.IsThirdPerson())
         {
             return transform.root.forward;
@@ -675,7 +675,7 @@ public class bl_GunManager : bl_MonoBehaviour
     {
         if (HeadAnimator == null)
             return;
-#if MFPSTPV
+#if GFWKTPV
         if (bl_CameraViewSettings.IsThirdPerson()) return;
 #endif
         switch (state)

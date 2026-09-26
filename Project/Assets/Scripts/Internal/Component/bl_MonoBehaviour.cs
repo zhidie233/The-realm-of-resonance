@@ -1,4 +1,4 @@
-﻿using MFPS.Internal;
+﻿using GFWK.Internal;
 using UnityEngine;
 
 public class bl_MonoBehaviour : bl_PhotonHelper

@@ -41,24 +41,24 @@ public class GameModeSettings
     /// <summary>
     /// Is this mode enable in your game?
     /// </summary>
-    [LovattoToogle] public bool isEnabled = true;
+    [GFWorksToogle] public bool isEnabled = true;
 
     /// <summary>
     /// Allow play with bots in this mode?
     /// </summary>
     [Header("Settings")]
-    [LovattoToogle] public bool supportBots = false;
+    [GFWorksToogle] public bool supportBots = false;
 
     /// <summary>
     /// Force automatically assign the teams for this mode
     /// </summary>
-    [LovattoToogle] public bool AutoTeamSelection = false;
+    [GFWorksToogle] public bool AutoTeamSelection = false;
 
     /// <summary>
     /// Unlist the room from the server list after the match has started?
     /// So new players can't join in the middle of the match
     /// </summary>
-    [LovattoToogle] public bool UnlistGameAfterStarted = false;
+    [GFWorksToogle] public bool UnlistGameAfterStarted = false;
 
     /// <summary>
     /// The minimum number of players that have to be joined in the match
@@ -90,7 +90,7 @@ public class GameModeSettings
     /// <summary>
     /// Can players pick up weapons in this game mode?
     /// </summary>
-    [LovattoToogle] public bool allowedPickupWeapons = true;
+    [GFWorksToogle] public bool allowedPickupWeapons = true;
 
     /// <summary>
     /// Max players options allowed for this game mode

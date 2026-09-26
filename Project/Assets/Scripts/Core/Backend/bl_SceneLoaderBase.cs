@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace MFPS.Internal.BaseClass
+namespace GFWK.Internal.BaseClass
 {
     public abstract class bl_SceneLoaderBase : ScriptableObject
     {

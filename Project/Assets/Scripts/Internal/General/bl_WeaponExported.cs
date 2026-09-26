@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
     public class bl_WeaponExported : MonoBehaviour
     {

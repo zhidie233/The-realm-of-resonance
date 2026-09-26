@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_UIInputAxis : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {

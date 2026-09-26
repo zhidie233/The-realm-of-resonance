@@ -570,7 +570,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Lovatto
+  m_Text: GFWorks
 --- !u!114 &11476732
 MonoBehaviour:
   m_ObjectHideFlags: 0

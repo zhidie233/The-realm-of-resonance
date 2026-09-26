@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// MFPS Default recoil movement
+/// GFWK Default recoil movement
 /// If you want to use your custom recoil script, inherited your script from bl_RecoilBase.cs
 /// Use this as reference only.
 /// </summary>
@@ -30,7 +30,7 @@ public class bl_Recoil : bl_RecoilBase
         m_Transform.localPosition = Vector3.zero;
         m_Transform.localEulerAngles = Vector3.zero;
         transform.parent = m_Transform;
-#if !MFPSTPV
+#if !GFWKTPV
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
 #endif
@@ -111,7 +111,7 @@ public class bl_Recoil : bl_RecoilBase
     /// </summary>
     public override void SetRecoil(RecoilData data)
     {
-#if MFPSM
+#if GFWKM
         if (bl_UtilityHelper.isMobile && bl_MobileControlSettings.Instance.disableRecoil) return;
 #endif
         

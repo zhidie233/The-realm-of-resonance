@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// MFPS default script to handle the FPWeapon animations.
+/// GFWK default script to handle the FPWeapon animations.
 /// You can use your own script to handle the animations if you inherit your script from bl_WeaponAnimationBase.cs
 /// </summary>
 public class bl_WeaponAnimation : bl_WeaponAnimationBase

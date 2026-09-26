@@ -1,4 +1,4 @@
-﻿namespace MFPS.InputManager
+﻿namespace GFWK.InputManager
 {
     using UnityEngine;
     using System.Collections.Generic;

@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using MFPS.Internal;
-using MFPS.Runtime.UI;
-using MFPS.Internal.Interfaces;
-using MFPS.Internal.Structures;
+using GFWK.Internal;
+using GFWK.Runtime.UI;
+using GFWK.Internal.Interfaces;
+using GFWK.Internal.Structures;
 using TMPro;
-using MFPS.InputManager;
+using GFWK.InputManager;
 
 public class bl_UIReferences : bl_PhotonHelper, IInRoomCallbacks
 {
@@ -18,7 +18,7 @@ public class bl_UIReferences : bl_PhotonHelper, IInRoomCallbacks
         set => m_uiMask = value;
     }
 
-    public IMFPSResumeScreen ResumeScreen { get; set; }
+    public IGFWKResumeScreen ResumeScreen { get; set; }
 
     [Header("References")]
     public bl_PlayerScoreboardBase playerScoreboards;
@@ -161,7 +161,7 @@ public class bl_UIReferences : bl_PhotonHelper, IInRoomCallbacks
 #if LMS
         if (GetGameMode == GameMode.BR) ShowMenu(false);
 #endif
-        if (bl_MFPS.GameData.UsingWaitingRoom())
+        if (bl_GFWK.GameData.UsingWaitingRoom())
         {
             if (bl_PhotonNetwork.OfflineMode && !bl_PhotonNetwork.CurrentRoom.GetRoomInfo().autoTeamSelection) return;
 
@@ -277,7 +277,7 @@ public class bl_UIReferences : bl_PhotonHelper, IInRoomCallbacks
     /// </summary>
     public void Suicide()
     {
-        if (!bl_MFPS.LocalPlayer.Suicide())
+        if (!bl_GFWK.LocalPlayer.Suicide())
         {
             bl_EventHandler.DispatchGamePauseEvent(false);
         }
@@ -375,7 +375,7 @@ public class bl_UIReferences : bl_PhotonHelper, IInRoomCallbacks
     /// 
     /// </summary>
     /// <param name="t_amount"></param>
-    void OnPicUpMedKit(int Amount) => new MFPSLocalNotification(string.Format("+{0} 血量", Amount));
+    void OnPicUpMedKit(int Amount) => new GFWKLocalNotification(string.Format("+{0} 血量", Amount));
 
     /// <summary>
     /// 
@@ -447,7 +447,7 @@ public class bl_UIReferences : bl_PhotonHelper, IInRoomCallbacks
     /// <returns></returns>
     private bool CanSelectTeamToJoin()
     {
-        return !inTeam && (!bl_RoomSettings.Instance.AutoTeamSelection || !bl_MFPS.GameData.UsingWaitingRoom());
+        return !inTeam && (!bl_RoomSettings.Instance.AutoTeamSelection || !bl_GFWK.GameData.UsingWaitingRoom());
     }
 
     #region Photon Callbacks

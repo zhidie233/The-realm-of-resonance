@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     /// <summary>
     /// This scripts active / deactivated the local player camera ray detection
@@ -44,9 +44,9 @@ namespace MFPS.Runtime.Level
         /// </summary>
         private void SetDetectionActive(bool active)
         {
-            if (bl_MFPS.LocalPlayerReferences == null) return;
+            if (bl_GFWK.LocalPlayerReferences == null) return;
 
-            bl_MFPS.LocalPlayerReferences.cameraRay.IsCurrentlyDetecting = active;
+            bl_GFWK.LocalPlayerReferences.cameraRay.IsCurrentlyDetecting = active;
         }
     }
 }

@@ -1,6 +1,6 @@
 using Photon.Realtime;
 using UnityEngine;
-using MFPS.GameModes.TeamDeathMatch;
+using GFWK.GameModes.TeamDeathMatch;
 
 public class bl_TeamDeathMatch : bl_PhotonHelper, IGameMode
 {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace MFPS.Tween
+namespace GFWK.Tween
 {
     public static class Easing
     {

@@ -1,4 +1,4 @@
-﻿namespace MFPS.Runtime.AI
+﻿namespace GFWK.Runtime.AI
 {
     /// <summary>
     /// The default bots states

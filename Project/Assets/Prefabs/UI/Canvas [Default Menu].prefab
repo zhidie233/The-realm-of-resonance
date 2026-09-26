@@ -8123,7 +8123,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5689433044499620945}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsBinding,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsBinding,
           Assembly-CSharp
         m_MethodName: ChangeOption
         m_Mode: 6
@@ -21982,7 +21982,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5689433044677356673}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -22870,7 +22870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.lovattostudio.com/en/shop/network/ulogin-pro/
+  url: https://www.gfworksstudio.com/en/shop/network/ulogin-pro/
   activeIfChilds: 1
 --- !u!1 &5689433043643733372
 GameObject:
@@ -44362,7 +44362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.lovattostudio.com/en/shop/network/clan-system/
+  url: https://www.gfworksstudio.com/en/shop/network/clan-system/
   activeIfChilds: 1
 --- !u!1 &6631396264231031580
 GameObject:
@@ -46864,7 +46864,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265000274209}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -52275,7 +52275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.lovattostudio.com/en/shop/addons/level-system/
+  url: https://www.gfworksstudio.com/en/shop/addons/level-system/
   activeIfChilds: 1
 --- !u!1 &6631396264868759010
 GameObject:
@@ -53376,7 +53376,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265062668105}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -57908,7 +57908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.lovattostudio.com/en/shop/gui/emblems-and-calling-cards/
+  url: https://www.gfworksstudio.com/en/shop/gui/emblems-and-calling-cards/
   activeIfChilds: 1
 --- !u!1 &6631396265398678568
 GameObject:
@@ -58442,7 +58442,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265116612752}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -62702,7 +62702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.lovattostudio.com/en/shop/gui/emblems-and-calling-cards/
+  url: https://www.gfworksstudio.com/en/shop/gui/emblems-and-calling-cards/
   activeIfChilds: 1
 --- !u!1 &6631396265809646397
 GameObject:
@@ -63493,7 +63493,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265908360366}
-        m_TargetAssemblyTypeName: MFPS.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0

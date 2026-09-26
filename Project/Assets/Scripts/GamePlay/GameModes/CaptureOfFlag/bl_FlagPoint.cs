@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-namespace MFPS.GameModes.CaptureOfFlag
+namespace GFWK.GameModes.CaptureOfFlag
 {
     public class bl_FlagPoint : bl_PhotonHelper
     {
@@ -83,7 +83,7 @@ namespace MFPS.GameModes.CaptureOfFlag
                 return;
             }
 
-            var local = bl_MFPS.LocalPlayerReferences;
+            var local = bl_GFWK.LocalPlayerReferences;
             if (local == null) return;
 
             if (carriyingPlayer.View.ViewID == local.ViewID)
@@ -105,7 +105,7 @@ namespace MFPS.GameModes.CaptureOfFlag
             if (carriyingPlayer == null)
                 return;
 
-            if (carriyingPlayer.View.ViewID != bl_MFPS.LocalPlayer.ViewID)
+            if (carriyingPlayer.View.ViewID != bl_GFWK.LocalPlayer.ViewID)
             {
                 return;
             }
@@ -285,7 +285,7 @@ namespace MFPS.GameModes.CaptureOfFlag
         #region GUI
         void OnGUI()
         {
-            if (carriyingPlayer != null && carriyingPlayer.View.ViewID == bl_MFPS.LocalPlayer.ViewID) return;
+            if (carriyingPlayer != null && carriyingPlayer.View.ViewID == bl_GFWK.LocalPlayer.ViewID) return;
 
             GUI.color = IconColor;
             if (bl_GameManager.Instance.CameraRendered)

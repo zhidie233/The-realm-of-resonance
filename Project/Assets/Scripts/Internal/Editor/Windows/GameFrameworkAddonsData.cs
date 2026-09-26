@@ -12,18 +12,18 @@ using Version = System.Version;
 using System;
 using System.Linq;
 #if DEV_MODE
-using Lovatto.DevTools;
+using GFWorks.DevTools;
 #else
-using MFPSEditor.Account;
+using GFWKEditor.Account;
 #endif
 using UnityEditor.IMGUI.Controls;
 
-namespace MFPSEditor.Addons
+namespace GFWKEditor.Addons
 {
-    public class MFPSAddonsData : ScriptableObject
+    public class GFWKAddonsData : ScriptableObject
     {
 
-        [Reorderable] public List<MFPSAddonsInfo> Addons = new List<MFPSAddonsInfo>();
+        [Reorderable] public List<GFWKAddonsInfo> Addons = new List<GFWKAddonsInfo>();
         public bool AutoUpdate = false;
 
         [ContextMenu("获取版本信息")]
@@ -32,7 +32,7 @@ namespace MFPSEditor.Addons
             AddonsVersionList avl = new AddonsVersionList();
             for (int i = 0; i < Addons.Count; i++)
             {
-                MFPSAddonVersion version = new MFPSAddonVersion();
+                GFWKAddonVersion version = new GFWKAddonVersion();
                 version.Name = Addons[i].NiceName;
                 version.Version = Addons[i].Info == null ? Addons[i].LastVersion : Addons[i].Info.Version;
                 version.ChangeLog = Addons[i].ChangeLog;
@@ -66,10 +66,10 @@ namespace MFPSEditor.Addons
             AddonsVersionList avl = new AddonsVersionList();
             for (int i = 0; i < Addons.Count; i++)
             {
-                MFPSAddonVersion version = new MFPSAddonVersion();
+                GFWKAddonVersion version = new GFWKAddonVersion();
                 version.Name = Addons[i].NiceName;
                 version.Version = Addons[i].Info == null ? Addons[i].LastVersion : Addons[i].Info.Version;
-                version.MinMFPS = Addons[i].Info == null ? Addons[i].MinVersion : Addons[i].Info.MinMFPSVersion;
+                version.MinGFWK = Addons[i].Info == null ? Addons[i].MinVersion : Addons[i].Info.MinGFWKVersion;
                 version.ChangeLog = Addons[i].ChangeLog;
                 avl.Data.Add(version);
             }
@@ -80,20 +80,20 @@ namespace MFPSEditor.Addons
         /// <summary>
         /// 
         /// </summary>
-        public MFPSAddonsInfo GetAddonInfoByKey(string addonKey)
+        public GFWKAddonsInfo GetAddonInfoByKey(string addonKey)
         {
             var info = Addons.Find(x => x.KeyName == addonKey);
             return info;
         }
 
-        private static MFPSAddonsData m_Data;
-        public static MFPSAddonsData Instance
+        private static GFWKAddonsData m_Data;
+        public static GFWKAddonsData Instance
         {
             get
             {
                 if (m_Data == null)
                 {
-                    m_Data = Resources.Load("MFPSAddonsData", typeof(MFPSAddonsData)) as MFPSAddonsData;
+                    m_Data = Resources.Load("GFWKAddonsData", typeof(GFWKAddonsData)) as GFWKAddonsData;
                 }
                 return m_Data;
             }
@@ -101,33 +101,33 @@ namespace MFPSEditor.Addons
     }
 
 #if UNITY_EDITOR
-    [CustomEditor(typeof(MFPSAddonsData))]
-    public class MFPSAddonsDataEditor : Editor
+    [CustomEditor(typeof(GFWKAddonsData))]
+    public class GFWKAddonsDataEditor : Editor
     {
-        private MFPSAddonsData script;
+        private GFWKAddonsData script;
         private SerializedProperty list;
 
         private EditorWWW WWW;
         private AddonsVersionList VersionData;
         private int State = 0;
-        public const string VersionURL = "https://www.lovattostudio.com/game-system/mfps-addons-info/addons-versions.txt";
+        public const string VersionURL = "https://www.gfworksstudio.com/game-system/gfwk-addons-info/addons-versions.txt";
         private const string lastCheckKey = "addons.version.lastcheck";
         private string lastCheckTime = "--";
-        Version MFPSVersion;
+        Version GFWKVersion;
 
         /// <summary>
         /// 
         /// </summary>
         private void OnEnable()
         {
-            script = (MFPSAddonsData)target;
+            script = (GFWKAddonsData)target;
             serializedObject.Update();
             list = serializedObject.FindProperty("Addons");
             WWW = new EditorWWW();
             float lastCheck = PlayerPrefs.GetFloat(lastCheckKey, 0);
             float nextTime = (float)EditorApplication.timeSinceStartup - lastCheck;
             bool checkNow = (lastCheck <= 0 || nextTime > 3600);
-            MFPSVersion = new Version(AssetData.Version);
+            GFWKVersion = new Version(AssetData.Version);
 
             if (State == 0 && checkNow && script.AutoUpdate)
             {
@@ -194,7 +194,7 @@ namespace MFPSEditor.Addons
                 CheckForNewAddons(VersionData);
                 for (int i = 0; i < script.Addons.Count; i++)
                 {
-                    MFPSAddonsInfo addon = script.Addons[i];
+                    GFWKAddonsInfo addon = script.Addons[i];
                     BuildAddon(ref addon);
                 }
             }
@@ -228,7 +228,7 @@ namespace MFPSEditor.Addons
 
         IEnumerator DownloadAddonsPackagesInfo()
         {
-            using (UnityWebRequest w = UnityWebRequest.Get("https://www.lovattostudio.com/game-system/mfps-addons-info/addons-packages.txt"))
+            using (UnityWebRequest w = UnityWebRequest.Get("https://www.gfworksstudio.com/game-system/gfwk-addons-info/addons-packages.txt"))
             {
                 var r = w.SendWebRequest();
                 while (!r.isDone) yield return null;
@@ -243,7 +243,7 @@ namespace MFPSEditor.Addons
                             var pack = packages.packages[i];
                             if (!script.Addons.Exists(x => x.NiceName == pack.NiceName))
                             {
-                                /*var info = new MFPSAddonsInfo();
+                                /*var info = new GFWKAddonsInfo();
                                 info.NiceName = pack.NiceName;
                                 info.KeyName = pack.Key;
                                 info.MinVersion = pack.MinVersion;
@@ -259,7 +259,7 @@ namespace MFPSEditor.Addons
             }
         }
 
-        void BuildAddon(ref MFPSAddonsInfo addon)
+        void BuildAddon(ref GFWKAddonsInfo addon)
         {
             bool isFolder = AssetDatabase.IsValidFolder("Assets/Addons");
             if (isFolder)
@@ -269,9 +269,9 @@ namespace MFPSEditor.Addons
             addon.isIntegrated = EditorUtils.CompilerIsDefine(addon.KeyName);
             if (addon.Info != null)
             {
-                Version av = new Version(addon.Info.MinMFPSVersion);
-                int result = MFPSVersion.CompareTo(av);
-                addon.CompatibleWithThisMFPS = result >= 0;
+                Version av = new Version(addon.Info.MinGFWKVersion);
+                int result = GFWKVersion.CompareTo(av);
+                addon.CompatibleWithThisGFWK = result >= 0;
             }
 
             if (VersionData != null)
@@ -293,15 +293,15 @@ namespace MFPSEditor.Addons
         }
     }
 
-    public class MFPSAddonsWindow : EditorWindow
+    public class GFWKAddonsWindow : EditorWindow
     {
         #region Parameters
         public TutorialWizardText superText;
         public AddonsVersionList VersionData;
         public EditorSpinnerGUI loadingSpinner;
-        public LovattoStudioAccount lsAccount;
+        public GFWorksStudioAccount lsAccount;
         public List<string> addonsWithNewVersions = new List<string>();
-        public GUISkin mfpsSkin;
+        public GUISkin gfwkSkin;
         public Dictionary<string, GUIStyle> styles = new Dictionary<string, GUIStyle>() { { "titleH2", null }, { "borders", null }, { "text", null }, { "button", null }, { "foldout", null } };
         public Dictionary<string, List<AddonsChangeHistory>> addonsChangeLogs = new Dictionary<string, List<AddonsChangeHistory>>();
         private Vector2 addonsList = new Vector2();
@@ -309,7 +309,7 @@ namespace MFPSEditor.Addons
         private int addonID = -1;
         private EditorWWW WWW = new EditorWWW();
         private StoreData AddonsInfoData = null;
-        Version MFPSVersion;
+        Version GFWKVersion;
         private int WindowState = 0;
         private GUIStyle desStyle = null;
         private GUIStyle TextStyleFlat, inputFieldStyle = null;
@@ -322,15 +322,15 @@ namespace MFPSEditor.Addons
         private GUIStyle changeLogStyle, rightSideText;
         private GUIStyle textStyle, miniBold, miniLabel;
         public Texture2D downloadIcon;
-        private Dictionary<int, MFPSAddonsInfo> addonsInfoSorted = new Dictionary<int, MFPSAddonsInfo>();
+        private Dictionary<int, GFWKAddonsInfo> addonsInfoSorted = new Dictionary<int, GFWKAddonsInfo>();
         public string userName, userEmail = "";
         public string userPass = "";
-        public LovattoStudioAccount.AccountAddons accountAddons;
+        public GFWorksStudioAccount.AccountAddons accountAddons;
         private float downloadProgress = 0;
         public bool recheckCache = false;
         private bool init = false;
         Vector2 updateScroll, downloadScroll = Vector2.zero;
-        private MFPSAddonsData Data => MFPSAddonsData.Instance;
+        private GFWKAddonsData Data => GFWKAddonsData.Instance;
         public SearchField m_searchField;
         private string searchStr = "";
         public int showPerPage = 25;
@@ -344,11 +344,11 @@ namespace MFPSEditor.Addons
         private void OnEnable()
         {
             minSize = new Vector2(800, 500);
-            MFPSVersion = new Version(AssetData.Version);
+            GFWKVersion = new Version(AssetData.Version);
             if (!init || VersionData == null)
             {
-                WWW.SendRequest(MFPSAddonsDataEditor.VersionURL, null, ReceiveInfo);
-                LovattoStats.SetStat("addons_window", 1, LovattoStats.OpType.ADD);
+                WWW.SendRequest(GFWKAddonsDataEditor.VersionURL, null, ReceiveInfo);
+                GFWorksStats.SetStat("addons_window", 1, GFWorksStats.OpType.ADD);
                 Data.UpdateValues();
                 WindowState = 1;
                 init = true;
@@ -361,8 +361,8 @@ namespace MFPSEditor.Addons
 
             loadingSpinner = new EditorSpinnerGUI();
             loadingSpinner.Initializated(this);
-            titleContent = new GUIContent("Addons", bl_MFPSManagerWindow.GetUnityIcon("d_PreMatCube"));
-            mfpsSkin = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin") as GUISkin;
+            titleContent = new GUIContent("Addons", bl_GFWKManagerWindow.GetUnityIcon("d_PreMatCube"));
+            gfwkSkin = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin") as GUISkin;
             initGUI = false;
             if (superText == null)
             {
@@ -370,7 +370,7 @@ namespace MFPSEditor.Addons
             }
             if (lsAccount == null)
             {
-                lsAccount = new LovattoStudioAccount(this);
+                lsAccount = new GFWorksStudioAccount(this);
                 var credentials = lsAccount.CheckSession();
                 if (credentials != null)
                 {
@@ -403,7 +403,7 @@ namespace MFPSEditor.Addons
         /// </summary>
         private void OnGUI()
         {
-            MFPSEditorStyles.DrawBackground(new Rect(0, 0, position.width, position.height), MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor());
+            GFWKEditorStyles.DrawBackground(new Rect(0, 0, position.width, position.height), GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor());
             InitGUI();
             if (Data == null) return;
 
@@ -453,9 +453,9 @@ namespace MFPSEditor.Addons
             var r = EditorGUILayout.BeginVertical(GUILayout.Height(22));
             GUILayout.Space(2);
             EditorGUILayout.BeginHorizontal();
-            EditorGUI.DrawRect(r, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
+            EditorGUI.DrawRect(r, GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true));
             GUILayout.Space(4);
-            var bt = MFPSEditorStyles.EditorSkin.customStyles[11];
+            var bt = GFWKEditorStyles.EditorSkin.customStyles[11];
             if (GUILayout.Button("首页", bt))
             {
                 contentWindow = CustomWindows.Addons;
@@ -464,13 +464,13 @@ namespace MFPSEditor.Addons
             GUILayout.Space(4);
             if (GUILayout.Button("商店", bt))
             {
-                Application.OpenURL("https://www.lovattostudio.com/en/shop/");
+                Application.OpenURL("https://www.gfworksstudio.com/en/shop/");
             }
             GUILayout.FlexibleSpace();
             if (GUILayout.Button("下载", bt))
             {
                 contentWindow = CustomWindows.Auth;
-                if (!string.IsNullOrEmpty(userName) && accountAddons == null && lsAccount.AccountStatus != LovattoStudioAccount.Status.AuthFailed)
+                if (!string.IsNullOrEmpty(userName) && accountAddons == null && lsAccount.AccountStatus != GFWorksStudioAccount.Status.AuthFailed)
                 {
                     AuthWithAccount();
                 }
@@ -483,10 +483,10 @@ namespace MFPSEditor.Addons
             GUILayout.Space(4);
             if (GUILayout.Button(TutorialWizard.CustomImages.GetUnityIcon("刷新"), bt))
             {
-                WWW.SendRequest(MFPSAddonsDataEditor.VersionURL, null, ReceiveInfo);
+                WWW.SendRequest(GFWKAddonsDataEditor.VersionURL, null, ReceiveInfo);
                 WindowState = 1;
             }
-            GUI.color = MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true);
+            GUI.color = GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true);
             var rbtmr = GUILayoutUtility.GetLastRect();
             GUI.Label(rbtmr, TutorialWizard.CustomImages.GetUnityIcon("刷新"));
             GUI.color = Color.white;
@@ -528,7 +528,7 @@ namespace MFPSEditor.Addons
                 }
 
                 Rect r = GUILayoutUtility.GetRect(205, 18);
-                var bc = MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true);
+                var bc = GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true);
                 bc.a = primaryColor ? 1 : 0.7f;
                 TutorialWizard.Style.DrawGlowRect(r, bc, Color.white);
                 primaryColor = !primaryColor;
@@ -543,7 +543,7 @@ namespace MFPSEditor.Addons
                 {
                     Rect rs = r;
                     rs.width = 4;
-                    EditorGUI.DrawRect(rs, MFPSEditorStyles.LovattoEditorPalette.GetHighlightColor());
+                    EditorGUI.DrawRect(rs, GFWKEditorStyles.GFWorksEditorPalette.GetHighlightColor());
                 }
                 r.x += 5;
                 GUI.Label(r, addon.NiceName, EditorStyles.miniLabel);
@@ -607,7 +607,7 @@ namespace MFPSEditor.Addons
         {
             if (addonID >= 0)
             {
-                MFPSAddonsInfo addon = Data.Addons[addonID];
+                GFWKAddonsInfo addon = Data.Addons[addonID];
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(20);
                 GUILayout.Label(string.Format("<size=22><color=white>{0}</color></size> ", addon.NiceName.ToUpper()), EditorStyles.boldLabel);
@@ -670,7 +670,7 @@ namespace MFPSEditor.Addons
                     br.y -= 20;
                     br.height += 30;
                     GUI.color = new Color(0, 0.8256686f, 1, 1);
-                    if (GUI.Button(br, new GUIContent("<b>GET</b>", bl_MFPSManagerWindow.GetUnityIcon("收藏图标")), MFPSEditorStyles.OutlineButtonStyle))
+                    if (GUI.Button(br, new GUIContent("<b>GET</b>", bl_GFWKManagerWindow.GetUnityIcon("收藏图标")), GFWKEditorStyles.OutlineButtonStyle))
                     {
                         Application.OpenURL(sp.Url);
                     }
@@ -687,7 +687,7 @@ namespace MFPSEditor.Addons
                     GUILayout.Space(20);
                     if (addon.isInProject)
                     {
-                        string ct = addon.CompatibleWithThisMFPS ? "兼容 <b>MFPS" : "不兼容 <b>MFPS";
+                        string ct = addon.CompatibleWithThisGFWK ? "兼容 <b>GFWK" : "不兼容 <b>GFWK";
                         GUILayout.Label(string.Format("■  {0} {1}</b>", ct, AssetData.Version), miniLabel);
                         if (string.IsNullOrEmpty(addon.KeyName) || addon.DoNotRequireEnabled)
                         {
@@ -774,7 +774,7 @@ namespace MFPSEditor.Addons
                 var fr = EditorGUILayout.BeginVertical(GUILayout.Height(30));
                 GUILayout.Space(4);
                 EditorGUILayout.BeginHorizontal();
-                EditorGUI.DrawRect(fr, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
+                EditorGUI.DrawRect(fr, GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true));
 
                 GUILayout.FlexibleSpace();
                 string ipt = addon.isInProject ? "插件已存在于项目中" : "插件不存在于项目中";
@@ -782,7 +782,7 @@ namespace MFPSEditor.Addons
                 if (!addon.isInProject)
                 {
                     GUILayout.Space(4);
-                    if (GUILayout.Button("获取此扩展", MFPSEditorStyles.EditorSkin.customStyles[12]))
+                    if (GUILayout.Button("获取此扩展", GFWKEditorStyles.EditorSkin.customStyles[12]))
                     {
                         if (sp != null)
                         {
@@ -796,9 +796,9 @@ namespace MFPSEditor.Addons
                 {
                     GUI.enabled = addon.isInProject;
                     string idt = addon.isIntegrated ? "DISABLE" : "ENABLE";
-                    if (GUILayout.Button(idt, MFPSEditorStyles.EditorSkin.customStyles[12]))
+                    if (GUILayout.Button(idt, GFWKEditorStyles.EditorSkin.customStyles[12]))
                     {
-                        if (!addon.isIntegrated) LovattoStats.SetStat($"addon-active-{addon.NiceName}", 1);
+                        if (!addon.isIntegrated) GFWorksStats.SetStat($"addon-active-{addon.NiceName}", 1);
                         EditorUtils.SetEnabled(addon.KeyName, !addon.isIntegrated);
                         WindowState = 1;
                     }
@@ -825,7 +825,7 @@ namespace MFPSEditor.Addons
             {
                 GUILayout.Space(10);
                 GUILayout.BeginVertical();
-                GUILayout.Label("<size=20>扩展更新</size>", mfpsSkin.customStyles[4]);
+                GUILayout.Label("<size=20>扩展更新</size>", gfwkSkin.customStyles[4]);
                 GUILayout.Space(10);
 
                 int pages = changeLogsCount / showPerPage;
@@ -870,21 +870,21 @@ namespace MFPSEditor.Addons
             var accr = EditorGUILayout.BeginVertical();
             {
                 GUILayout.Space(4);
-                EditorGUI.DrawRect(accr, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
-                if (lsAccount.AccountStatus != LovattoStudioAccount.Status.Authenticated)
-                    DrawText("使用你的 <b>lovattostudio.com</b> 账号登录，以访问你已购买的插件。", GUILayout.Height(22));
+                EditorGUI.DrawRect(accr, GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true));
+                if (lsAccount.AccountStatus != GFWorksStudioAccount.Status.Authenticated)
+                    DrawText("使用你的 <b>gfworksstudio.com</b> 账号登录，以访问你已购买的插件。", GUILayout.Height(22));
                 EditorGUILayout.BeginHorizontal(GUILayout.Height(22));
                 GUILayout.Space(10);
-                if (lsAccount.AccountStatus != LovattoStudioAccount.Status.Authenticated)
+                if (lsAccount.AccountStatus != GFWorksStudioAccount.Status.Authenticated)
                 {
-                    GUI.enabled = lsAccount.AccountStatus != LovattoStudioAccount.Status.Authenticating;
+                    GUI.enabled = lsAccount.AccountStatus != GFWorksStudioAccount.Status.Authenticating;
                     userEmail = EditorGUILayout.TextField("<color=#white>邮箱</color>", userEmail, inputFieldStyle, GUILayout.Width(275));
                     GUILayout.Space(10);
                     userPass = EditorGUILayout.PasswordField("<color=#white>密码</color>", userPass, inputFieldStyle, GUILayout.Width(200));
                     EditorGUIUtility.labelWidth = lw;
                     GUILayout.Space(30);
                     GUI.enabled = GUI.enabled && !string.IsNullOrEmpty(userEmail) && !string.IsNullOrEmpty(userPass);
-                    if (GUILayout.Button("登录", MFPSEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
+                    if (GUILayout.Button("登录", GFWKEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
                     {
                         AuthWithAccount();
                     }
@@ -894,7 +894,7 @@ namespace MFPSEditor.Addons
                 {
                     DrawText($"已登录：<b>{userName}</b>", GUILayout.Height(22));
                     GUILayout.Space(30);
-                    if (GUILayout.Button("退出登录", MFPSEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
+                    if (GUILayout.Button("退出登录", GFWKEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
                     {
                         userName = userEmail = userPass = "";
                         lsAccount.Logout();
@@ -940,7 +940,7 @@ namespace MFPSEditor.Addons
                 if (addon._isExpanded)
                 {
                     var br = EditorGUILayout.BeginVertical();
-                    EditorGUI.DrawRect(br, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
+                    EditorGUI.DrawRect(br, GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor(true));
                     GUILayout.Space(5);
                     for (int i = addon.links.Count - 1; i >= 0; i--)
                     {
@@ -1004,7 +1004,7 @@ namespace MFPSEditor.Addons
             p.width = r.width * downloadProgress;
 
             EditorGUI.DrawRect(r, new Color(1, 1, 1, 0.3f));
-            EditorGUI.DrawRect(p, MFPSEditorStyles.LovattoEditorPalette.GetHighlightColor());
+            EditorGUI.DrawRect(p, GFWKEditorStyles.GFWorksEditorPalette.GetHighlightColor());
         }
 
         private void OnDownloadingAddon(float progress)
@@ -1059,7 +1059,7 @@ namespace MFPSEditor.Addons
                     }
                     lr.x -= 7; lr.width += 4;
                     lr.y -= 7; lr.height += 4;
-                    MFPSEditorStyles.DrawBackground(lr, Color.white);
+                    GFWKEditorStyles.DrawBackground(lr, Color.white);
                     lr.y += 2; lr.x += 2;
                     GUI.Label(lr, content, textStyle);
 
@@ -1086,9 +1086,9 @@ namespace MFPSEditor.Addons
             {
                 EditorGUILayout.TextArea("如果你遇到某个插件的问题或有相关疑问，可以通过多种方式联系我们：", TextStyleFlat);
                 GUILayout.Space(10);
-                if (GUILayout.Button("<color=yellow>论坛</color>", TextStyleFlat)) { Application.OpenURL("https://www.lovattostudio.com/forum/index.php"); }
-                if (GUILayout.Button("<color=yellow>邮件表单</color>", TextStyleFlat)) { Application.OpenURL("https://www.lovattostudio.com/en/select-support/"); }
-                if (GUILayout.Button("<color=yellow>直接邮件</color>", TextStyleFlat)) { Application.OpenURL("mailto:contact.lovattostudio@gmail.com"); }
+                if (GUILayout.Button("<color=yellow>论坛</color>", TextStyleFlat)) { Application.OpenURL("https://www.gfworksstudio.com/forum/index.php"); }
+                if (GUILayout.Button("<color=yellow>邮件表单</color>", TextStyleFlat)) { Application.OpenURL("https://www.gfworksstudio.com/en/select-support/"); }
+                if (GUILayout.Button("<color=yellow>直接邮件</color>", TextStyleFlat)) { Application.OpenURL("mailto:contact.gfworksstudio@gmail.com"); }
             }
             EditorGUILayout.EndVertical();
 
@@ -1096,9 +1096,9 @@ namespace MFPSEditor.Addons
             questionFoulds[1] = EditorGUILayout.Foldout(questionFoulds[1], "<i>在哪里可以获取这些插件？</i>", EditorStyles.foldout);
             if (questionFoulds[1])
             {
-                EditorGUILayout.TextArea("此处列出的所有插件均可在 lovattostudio.com 商店获取：", TextStyleFlat);
+                EditorGUILayout.TextArea("此处列出的所有插件均可在 gfworksstudio.com 商店获取：", TextStyleFlat);
                 GUILayout.Space(10);
-                if (GUILayout.Button("扩展商店", EditorStyles.toolbarButton)) { Application.OpenURL("https://www.lovattostudio.com/en/shop/"); }
+                if (GUILayout.Button("扩展商店", EditorStyles.toolbarButton)) { Application.OpenURL("https://www.gfworksstudio.com/en/shop/"); }
             }
             EditorGUILayout.EndVertical();
 
@@ -1123,13 +1123,13 @@ namespace MFPSEditor.Addons
             questionFoulds[4] = EditorGUILayout.Foldout(questionFoulds[4], "<i>如何知道我的插件有更新？</i>", EditorStyles.foldout);
             if (questionFoulds[4])
             {
-                EditorGUILayout.TextArea("若你在 lovattostudio.com 商店购买插件，更新时会收到邮件通知。也可以查看 Unity 编辑器中的 MFPS News <i>MFPS -> News</i>，或 " +
+                EditorGUILayout.TextArea("若你在 gfworksstudio.com 商店购买插件，更新时会收到邮件通知。也可以查看 Unity 编辑器中的 GFWK News <i>GFWK -> News</i>，或 " +
                     "查看论坛的插件页面。", TextStyleFlat);
             }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[5] = EditorGUILayout.Foldout(questionFoulds[5], "<i>Lovatto 是外星人吗？</i>", EditorStyles.foldout);
+            questionFoulds[5] = EditorGUILayout.Foldout(questionFoulds[5], "<i>GFWorks 是外星人吗？</i>", EditorStyles.foldout);
             if (questionFoulds[5])
             {
                 EditorGUILayout.TextArea("确实是。", TextStyleFlat);
@@ -1152,7 +1152,7 @@ namespace MFPSEditor.Addons
 
         bool DrawButton(string text, params GUILayoutOption[] options)
         {
-            bool b = GUILayout.Button(text, MFPSEditorStyles.EditorSkin.customStyles[11], options);
+            bool b = GUILayout.Button(text, GFWKEditorStyles.EditorSkin.customStyles[11], options);
             return b;
         }
 
@@ -1162,7 +1162,7 @@ namespace MFPSEditor.Addons
             {
                 VersionData = JsonUtility.FromJson<AddonsVersionList>(data);
                 PrepareData();
-                WWW.SendRequest("https://www.lovattostudio.com/game-system/mfps-addons-info/addons.txt", null, AddonsInfoDataReceive);
+                WWW.SendRequest("https://www.gfworksstudio.com/game-system/gfwk-addons-info/addons.txt", null, AddonsInfoDataReceive);
             }
             else { WindowState = 0; }
 #if !CONST_UPDATE
@@ -1179,10 +1179,10 @@ namespace MFPSEditor.Addons
             CheckNewVersions();
             FetchChangeLogsPerAddon();
 
-            addonsInfoSorted = new Dictionary<int, MFPSAddonsInfo>();
-            for (int i = 0; i < MFPSAddonsData.Instance.Addons.Count; i++)
+            addonsInfoSorted = new Dictionary<int, GFWKAddonsInfo>();
+            for (int i = 0; i < GFWKAddonsData.Instance.Addons.Count; i++)
             {
-                MFPSAddonsInfo addon = MFPSAddonsData.Instance.Addons[i];
+                GFWKAddonsInfo addon = GFWKAddonsData.Instance.Addons[i];
                 BuildAddon(ref addon);
                 addonsInfoSorted.Add(i, addon);
             }
@@ -1208,8 +1208,8 @@ namespace MFPSEditor.Addons
             addonsWithNewVersions.Clear();
             for (int i = 0; i < VersionData.Data.Count; i++)
             {
-                MFPSAddonVersion updated = VersionData.Data[i];
-                MFPSAddonsInfo mai = Data.Addons.Find(x => x.NiceName == updated.Name);
+                GFWKAddonVersion updated = VersionData.Data[i];
+                GFWKAddonsInfo mai = Data.Addons.Find(x => x.NiceName == updated.Name);
                 if (mai == null || string.IsNullOrEmpty(updated.Version)) continue;
                 Version nv;
                 if (!Version.TryParse(updated.Version, out nv)) continue;
@@ -1230,7 +1230,7 @@ namespace MFPSEditor.Addons
             for (int i = 0; i < addons.Data.Count; i++)
             {
                 var addon = addons.Data[i];
-                if (!MFPSAddonsData.Instance.Addons.Exists(x => x.NiceName == addon.Name))
+                if (!GFWKAddonsData.Instance.Addons.Exists(x => x.NiceName == addon.Name))
                 {
                     //New addon
                     EditorCoroutines.StartBackgroundTask(DownloadAddonsPackagesInfo());
@@ -1257,7 +1257,7 @@ namespace MFPSEditor.Addons
 
         IEnumerator DownloadAddonsPackagesInfo()
         {
-            using (UnityWebRequest w = UnityWebRequest.Get("https://www.lovattostudio.com/game-system/mfps-addons-info/addons-packages.txt"))
+            using (UnityWebRequest w = UnityWebRequest.Get("https://www.gfworksstudio.com/game-system/gfwk-addons-info/addons-packages.txt"))
             {
                 var r = w.SendWebRequest();
                 while (!r.isDone) yield return null;
@@ -1270,16 +1270,16 @@ namespace MFPSEditor.Addons
                         for (int i = 0; i < packages.packages.Count; i++)
                         {
                             var pack = packages.packages[i];
-                            if (!MFPSAddonsData.Instance.Addons.Exists(x => x.NiceName == pack.NiceName))
+                            if (!GFWKAddonsData.Instance.Addons.Exists(x => x.NiceName == pack.NiceName))
                             {
-                                var info = new MFPSAddonsInfo();
+                                var info = new GFWKAddonsInfo();
                                 info.NiceName = pack.NiceName;
                                 info.KeyName = pack.Key;
                                 info.MinVersion = pack.MinVersion;
                                 info.FolderName = pack.FolderName;
-                                MFPSAddonsData.Instance.Addons.Add(info);
+                                GFWKAddonsData.Instance.Addons.Add(info);
                                 // Debug.Log($"新插件 <b>{info.NiceName}</b>");
-                                EditorUtility.SetDirty(MFPSAddonsData.Instance);
+                                EditorUtility.SetDirty(GFWKAddonsData.Instance);
                             }
                         }
                     }
@@ -1304,7 +1304,7 @@ namespace MFPSEditor.Addons
 #endif
         }
 
-        void BuildAddon(ref MFPSAddonsInfo addon)
+        void BuildAddon(ref GFWKAddonsInfo addon)
         {
             bool isFolder = AssetDatabase.IsValidFolder("Assets/Addons");
             string addonFolderPath = "Assets/Addons/" + addon.FolderName;
@@ -1316,23 +1316,23 @@ namespace MFPSEditor.Addons
 
             if (addon.Info == null && addon.isInProject)
             {
-                var guids = AssetDatabase.FindAssets("t:MFPSAddon", new string[] { addonFolderPath });
+                var guids = AssetDatabase.FindAssets("t:GFWKAddon", new string[] { addonFolderPath });
                 foreach (var guid in guids)
                 {
                     var guidPath = AssetDatabase.GUIDToAssetPath(guid);
-                    var addonInfo = AssetDatabase.LoadAssetAtPath(guidPath, typeof(MFPSAddon)) as MFPSAddon;
+                    var addonInfo = AssetDatabase.LoadAssetAtPath(guidPath, typeof(GFWKAddon)) as GFWKAddon;
                     addon.Info = addonInfo;
                 }
-                EditorUtility.SetDirty(MFPSAddonsData.Instance);
-                LovattoStats.SetStat($"aa-{addon.NiceName}", 1);
+                EditorUtility.SetDirty(GFWKAddonsData.Instance);
+                GFWorksStats.SetStat($"aa-{addon.NiceName}", 1);
             }
 
             if (addon.Info != null)
             {
-                Version av = new Version(addon.Info.MinMFPSVersion);
-                int result = MFPSVersion.CompareTo(av);
-                addon.CompatibleWithThisMFPS = result >= 0;
-                EditorUtility.SetDirty(MFPSAddonsData.Instance);
+                Version av = new Version(addon.Info.MinGFWKVersion);
+                int result = GFWKVersion.CompareTo(av);
+                addon.CompatibleWithThisGFWK = result >= 0;
+                EditorUtility.SetDirty(GFWKAddonsData.Instance);
             }
 
             if (VersionData != null)
@@ -1442,7 +1442,7 @@ namespace MFPSEditor.Addons
         [MenuItem("游戏框架/扩展/扩展管理器", false, -1000)]
         public static void Open()
         {
-            GetWindow<MFPSAddonsWindow>(true, "扩展");
+            GetWindow<GFWKAddonsWindow>(true, "扩展");
         }
 #endif
 
@@ -1459,12 +1459,12 @@ namespace MFPSEditor.Addons
 #endif
 
     [System.Serializable]
-    public class MFPSAddonsInfo
+    public class GFWKAddonsInfo
     {
         public string NiceName;
         public string KeyName;
         public string LastVersion;
-        public MFPSAddon Info;
+        public GFWKAddon Info;
         public string CurrentVersion = "--";
         public string MinVersion;
         public string FolderName;
@@ -1476,7 +1476,7 @@ namespace MFPSEditor.Addons
         [NonSerialized]
         public bool isIntegrated = false;
         [NonSerialized]
-        public bool CompatibleWithThisMFPS = false;
+        public bool CompatibleWithThisGFWK = false;
 
         public Dictionary<string, string> GetInfoInDictionary()
         {
@@ -1505,11 +1505,11 @@ namespace MFPSEditor.Addons
     }
 
     [System.Serializable]
-    public class MFPSAddonVersion
+    public class GFWKAddonVersion
     {
         public string Name;
         public string Version;
-        public string MinMFPS;
+        public string MinGFWK;
         public List<VersionHistory> ChangeLog = new List<VersionHistory>();
     }
 
@@ -1536,7 +1536,7 @@ namespace MFPSEditor.Addons
     [Serializable]
     public class AddonsVersionList
     {
-        public List<MFPSAddonVersion> Data = new List<MFPSAddonVersion>();
+        public List<GFWKAddonVersion> Data = new List<GFWKAddonVersion>();
         public List<AddonsChangeHistory> ChangeHistory = new List<AddonsChangeHistory>();
     }
 

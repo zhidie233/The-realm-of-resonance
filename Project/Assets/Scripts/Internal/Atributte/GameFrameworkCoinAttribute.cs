@@ -4,18 +4,18 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
-    public class MFPSCoinIDAttribute : PropertyAttribute
+    public class GFWKCoinIDAttribute : PropertyAttribute
     {
-        public MFPSCoinIDAttribute()
+        public GFWKCoinIDAttribute()
         {
         }
     }
 
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(MFPSCoinIDAttribute))]
-    public class MFPSCoinIDAttributeDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(GFWKCoinIDAttribute))]
+    public class GFWKCoinIDAttributeDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

@@ -2,15 +2,15 @@
 using System.Collections;
 using UnityEngine.Events;
 
-namespace MFPS.Tween
+namespace GFWK.Tween
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class bl_TweenCurveAlpha : bl_TweenBase, ITween
     {
         [Header("Settings")]
-        [LovattoToogle] public bool OnStart = true;
-        [LovattoToogle] public bool AlphaOnStart = true;
-        [LovattoToogle] public bool Loop = false;
+        [GFWorksToogle] public bool OnStart = true;
+        [GFWorksToogle] public bool AlphaOnStart = true;
+        [GFWorksToogle] public bool Loop = false;
         [Range(0, 10)] public float Delay = 0;
         [Range(0.1f, 10)] public float Duration = 1;
         public AnimationCurve m_Curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
@@ -171,13 +171,13 @@ namespace MFPS.Tween
         public override void PlayEditor()
         {
             InitInEditor();
-            MFPSEditor.EditorCoroutines.StartBackgroundTask(DoTween());
+            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTween());
         }
 
         public override void PlayReverseEditor()
         {
             InitInEditor();
-            MFPSEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
+            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
         }
         public override void InitInEditor()
         {

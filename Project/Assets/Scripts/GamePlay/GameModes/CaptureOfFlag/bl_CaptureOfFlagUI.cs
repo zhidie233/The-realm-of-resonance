@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 using TMPro;
 
-namespace MFPS.GameModes.CaptureOfFlag
+namespace GFWK.GameModes.CaptureOfFlag
 {
     public class bl_CaptureOfFlagUI : MonoBehaviour
     {

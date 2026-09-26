@@ -81,13 +81,13 @@ public class bl_Projectile : bl_ProjectileBase
                     var blast = e.GetComponent<bl_ExplosionBase>();
                     if (blast != null)
                     {
-                        blast.InitExplosion(bulletData, bulletData.MFPSActor);
+                        blast.InitExplosion(bulletData, bulletData.GFWKActor);
                     }
                 }
                 else if (m_Type == ProjectileType.Molotov)
                 {
                     var da = e.GetComponent<bl_DamageArea>();
-                    if (bulletData.MFPSActor != null) da.SetInfo(bulletData.MFPSActor.Name, isNetwork);
+                    if (bulletData.GFWKActor != null) da.SetInfo(bulletData.GFWKActor.Name, isNetwork);
                 }
                 if (enterObject.rigidbody)
                 {
@@ -113,7 +113,7 @@ public class bl_Projectile : bl_ProjectileBase
                 var blast = e.GetComponent<bl_ExplosionBase>();
                 if (blast != null)
                 {
-                    var actor = bulletData.MFPSActor;
+                    var actor = bulletData.GFWKActor;
                     if (actor != null && actor.ActorView != null)
                     {
                         blast.InitExplosion(bulletData, actor);

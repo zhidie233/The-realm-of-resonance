@@ -9,8 +9,8 @@ public class bl_AICovertPointManager : MonoBehaviour
     public float MaxDistance = 50;
     public float UsageTime = 10;
     public float maxNeighbordDistance = 25;
-    [LovattoToogle] public bool onlyAllowOneBotPerCover = true;
-    [LovattoToogle] public bool ShowGizmos = true;
+    [GFWorksToogle] public bool onlyAllowOneBotPerCover = true;
+    [GFWorksToogle] public bool ShowGizmos = true;
 
     public static List<bl_AICoverPoint> AllCovers = new List<bl_AICoverPoint>();
 

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using MFPS.Internal;
+using GFWK.Internal;
 using Photon.Realtime;
 using TMPro;
 using UnityEngine;

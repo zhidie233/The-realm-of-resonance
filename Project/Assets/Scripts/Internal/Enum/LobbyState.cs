@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Internal.Structures
+namespace GFWK.Internal.Structures
 {
     public enum LobbyState
     {

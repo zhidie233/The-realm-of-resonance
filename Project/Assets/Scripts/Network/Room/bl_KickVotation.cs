@@ -88,7 +88,7 @@ public class bl_KickVotation : bl_MonoBehaviour
         data.Add("type", CallType.VoteStart);
         data.Add("player", player);
         data.Add("by", bl_PhotonNetwork.LocalPlayer);
-        bl_MFPS.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
+        bl_GFWK.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public class bl_KickVotation : bl_MonoBehaviour
         var data = bl_UtilityHelper.CreatePhotonHashTable();
         data.Add("type", CallType.Vote);
         data.Add("vote", yes);
-        bl_MFPS.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
+        bl_GFWK.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
 
         UI.OnSendLocalVote(yes);
     }
@@ -208,7 +208,7 @@ public class bl_KickVotation : bl_MonoBehaviour
         }
 
         data.Add("kick", kicked);
-        bl_MFPS.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
+        bl_GFWK.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
     }
 
     /// <summary>

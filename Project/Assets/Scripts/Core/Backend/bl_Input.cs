@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using MFPS.InputManager;
+using GFWK.InputManager;
 using UnityEngine.UI;
 
 public static class bl_Input

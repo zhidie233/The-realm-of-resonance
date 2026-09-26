@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 using System;
-using MFPS.Core.Motion;
-using MFPS.Internal.Structures;
-using MFPS.Internal.Scriptables;
+using GFWK.Core.Motion;
+using GFWK.Internal.Structures;
+using GFWK.Internal.Scriptables;
 using UnityEngine.Events;
 using Photon.Pun;
 
@@ -54,8 +54,8 @@ public static class bl_EventHandler
     /// <summary>
     /// Event called when a REMOTE player die in game
     /// </summary>
-    public static Action<MFPSPlayer> onRemotePlayerDeath;
-    public static void DispatchRemotePlayerDeath(MFPSPlayer player) => onRemotePlayerDeath?.Invoke(player);
+    public static Action<GFWKPlayer> onRemotePlayerDeath;
+    public static void DispatchRemotePlayerDeath(GFWKPlayer player) => onRemotePlayerDeath?.Invoke(player);
 
     /// <summary>
     /// Event called when the LOCAL player spawn
@@ -90,7 +90,7 @@ public static class bl_EventHandler
     public struct PlayerChangeData
     {
         public string PlayerName;
-        public MFPSPlayer MFPSActor;
+        public GFWKPlayer GFWKActor;
         public bool IsAlive;
         public PhotonView NetworkView;
     }
@@ -150,8 +150,8 @@ public static class bl_EventHandler
     /// <summary>
     /// Called when the local player hit an enemy.
     /// </summary>
-    public static Action<MFPSHitData> onLocalPlayerHitEnemy;
-    public static void DispatchLocalPlayerHitEnemy(MFPSHitData hitData) => onLocalPlayerHitEnemy?.Invoke(hitData);
+    public static Action<GFWKHitData> onLocalPlayerHitEnemy;
+    public static void DispatchLocalPlayerHitEnemy(GFWKHitData hitData) => onLocalPlayerHitEnemy?.Invoke(hitData);
 
     /// <summary>
     /// Called when the match state change (Waiting, Player, Countdown, etc...), this is called in all the clients
@@ -168,7 +168,7 @@ public static class bl_EventHandler
     /// <summary>
     /// Called when a local notification is sent
     /// </summary>
-    public static Action<MFPSLocalNotification> onLocalNotification;
+    public static Action<GFWKLocalNotification> onLocalNotification;
 
     /// <summary>
     /// Called when the player controller state change (from state -> to state)
@@ -191,8 +191,8 @@ public static class bl_EventHandler
     /// <summary>
     /// Called every time that one coins change its value.
     /// </summary>
-    public static Action<MFPSCoin> onCoinUpdate;
-    public static void DispatchCoinUpdate(MFPSCoin updatedCoin) => onCoinUpdate?.Invoke(updatedCoin);
+    public static Action<GFWKCoin> onCoinUpdate;
+    public static void DispatchCoinUpdate(GFWKCoin updatedCoin) => onCoinUpdate?.Invoke(updatedCoin);
 
     /// <summary>
     /// Called when the room properties reset

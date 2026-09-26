@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.Internal
+namespace GFWK.Internal
 {
     public class bl_MissingAddonText : MonoBehaviour
     {

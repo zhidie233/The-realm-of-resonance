@@ -1,10 +1,10 @@
-using MFPS.Internal.Scriptables;
-using MFPS.Runtime.Level;
+using GFWK.Internal.Scriptables;
+using GFWK.Runtime.Level;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.PlayerController
+namespace GFWK.PlayerController
 {
     [Serializable]
     public class MouseLook : MouseLookBase
@@ -60,7 +60,7 @@ namespace MFPS.PlayerController
             // When use a mobile device or Unity Remote
             if (bl_UtilityHelper.isMobile)
             {
-#if MFPSM
+#if GFWKM
                 Vector2 input = bl_TouchPad.Instance.GetInput(CurrentSensitivity);
                 input.x = !InvertHorizontal ? input.x : (input.x * -1f);
                 input.y = InvertVertical ? (input.y * -1f) : input.y;
@@ -276,10 +276,10 @@ namespace MFPS.PlayerController
         /// </summary>
         public void FetchSettings()
         {
-            sensitivity = (float)bl_MFPS.Settings.GetSettingOf("灵敏度");
-            aimSensitivity = (float)bl_MFPS.Settings.GetSettingOf("瞄准灵敏度");
-            InvertHorizontal = (bool)bl_MFPS.Settings.GetSettingOf("倒置水平视角");
-            InvertVertical = (bool)bl_MFPS.Settings.GetSettingOf("倒置垂直视角");
+            sensitivity = (float)bl_GFWK.Settings.GetSettingOf("灵敏度");
+            aimSensitivity = (float)bl_GFWK.Settings.GetSettingOf("瞄准灵敏度");
+            InvertHorizontal = (bool)bl_GFWK.Settings.GetSettingOf("倒置水平视角");
+            InvertVertical = (bool)bl_GFWK.Settings.GetSettingOf("倒置垂直视角");
             CurrentSensitivity = sensitivity;
         }
 

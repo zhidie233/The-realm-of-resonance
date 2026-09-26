@@ -34,11 +34,11 @@ public class MeteoriteFacility : ResonanceFacility
     private void TriggerMeteorite(DamageData damageData)
     {
         // 获取敌方队伍
-        Team enemyTeam = GetEnemyTeam(damageData.MFPSActor.Team);
+        Team enemyTeam = GetEnemyTeam(damageData.GFWKActor.Team);
         if (enemyTeam == Team.None) return;
         
         // 随机选择一个敌方目标
-        MFPSPlayer target = GetRandomEnemyPlayer(enemyTeam);
+        GFWKPlayer target = GetRandomEnemyPlayer(enemyTeam);
         if (target == null) return;
         
         // 开始冷却
@@ -49,7 +49,7 @@ public class MeteoriteFacility : ResonanceFacility
         // 通知所有客户端生成陨石
         PhotonView photonView = GetComponent<PhotonView>();
         photonView.RPC("RPC_TriggerMeteorite", RpcTarget.All, 
-            damageData.MFPSActor.Name, 
+            damageData.GFWKActor.Name, 
             target.Name,
             damageData.ActorViewID);
     }
@@ -57,15 +57,15 @@ public class MeteoriteFacility : ResonanceFacility
     [PunRPC]
     private void RPC_TriggerMeteorite(string shooterName, string targetName, int shooterViewID)
     {
-        MFPSPlayer shooter = bl_GameManager.Instance.GetMFPSPlayer(shooterName);
-        MFPSPlayer target = bl_GameManager.Instance.GetMFPSPlayer(targetName);
+        GFWKPlayer shooter = bl_GameManager.Instance.GetGFWKPlayer(shooterName);
+        GFWKPlayer target = bl_GameManager.Instance.GetGFWKPlayer(targetName);
         if (shooter != null && target != null)
         {
             StartCoroutine(SpawnMeteorite(shooter, target, shooterViewID));
         }
     }
     
-    private IEnumerator SpawnMeteorite(MFPSPlayer shooter, MFPSPlayer target, int shooterViewID)
+    private IEnumerator SpawnMeteorite(GFWKPlayer shooter, GFWKPlayer target, int shooterViewID)
     {
         // 显示射击者标记
         if (shooter.isRealPlayer && shooter.Name == PhotonNetwork.NickName)
@@ -88,7 +88,7 @@ public class MeteoriteFacility : ResonanceFacility
         SpawnMeteoriteProjectile(spawnPosition, target.Actor.position, finalDamage, shooterViewID, shooter);
     }
     
-    private void SpawnMeteoriteProjectile(Vector3 spawnPos, Vector3 targetPos, int damage, int shooterViewID, MFPSPlayer shooter)
+    private void SpawnMeteoriteProjectile(Vector3 spawnPos, Vector3 targetPos, int damage, int shooterViewID, GFWKPlayer shooter)
     {
         // 使用现有的榴弹发射器逻辑，但修改为陨石行为
         GameObject meteorite = Instantiate(meteoriteConfig.meteoritePrefab, spawnPos, Quaternion.identity);
@@ -97,7 +97,7 @@ public class MeteoriteFacility : ResonanceFacility
         BulletData bulletData = new BulletData
         {
             Damage = damage,
-            MFPSActor = shooter,
+            GFWKActor = shooter,
             ActorViewID = shooterViewID,
             Speed = meteoriteConfig.meteoriteFallSpeed,
             Position = spawnPos,
@@ -112,7 +112,7 @@ public class MeteoriteFacility : ResonanceFacility
         meteorite.transform.forward = direction;
     }
     
-    private void ShowShooterMarker(MFPSPlayer shooter)
+    private void ShowShooterMarker(GFWKPlayer shooter)
     {
         if (meteoriteConfig.arrowMarkerPrefab == null) return;
         
@@ -129,9 +129,9 @@ public class MeteoriteFacility : ResonanceFacility
         return shooterTeam == Team.Team1 ? Team.Team2 : Team.Team1;
     }
     
-    private MFPSPlayer GetRandomEnemyPlayer(Team enemyTeam)
+    private GFWKPlayer GetRandomEnemyPlayer(Team enemyTeam)
     {
-        MFPSPlayer[] enemies = bl_GameManager.Instance.GetMFPSPlayerInTeam(enemyTeam, true);
+        GFWKPlayer[] enemies = bl_GameManager.Instance.GetGFWKPlayerInTeam(enemyTeam, true);
         return enemies.Length > 0 ? enemies[Random.Range(0, enemies.Length)] : null;
     }
     

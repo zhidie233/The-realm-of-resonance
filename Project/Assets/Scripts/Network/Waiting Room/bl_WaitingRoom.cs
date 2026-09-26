@@ -69,7 +69,7 @@ public class bl_WaitingRoom : bl_WaitingRoomBase, IMatchmakingCallbacks, IInRoom
     {
         var table = bl_UtilityHelper.CreatePhotonHashTable();
         table.Add(PropertiesKeys.UserRole, bl_GameData.Instance.RolePrefix);
-        table.Add(PropertiesKeys.PlayerTotalScore, bl_MFPS.LocalPlayer.Stats.GetAllTimeScore());
+        table.Add(PropertiesKeys.PlayerTotalScore, bl_GFWK.LocalPlayer.Stats.GetAllTimeScore());
         bl_PhotonNetwork.LocalPlayer.SetCustomProperties(table);
     }
 
@@ -279,7 +279,7 @@ public class bl_WaitingRoom : bl_WaitingRoomBase, IMatchmakingCallbacks, IInRoom
 
     public void OnJoinedRoom()
     {
-        if (bl_MFPS.GameData.UsingWaitingRoom())
+        if (bl_GFWK.GameData.UsingWaitingRoom())
         {
             StartCoroutine(WaitUntilFullyJoin());
         }

@@ -66,7 +66,7 @@ public class bl_GrenadeLauncherProjectile : bl_ProjectileBase
         {
             bulletData.Position = transform.position;
             blast.SetRadius(ExplosionRadius);
-            blast.InitExplosion(bulletData, bl_MFPS.LocalPlayer.MFPSActor);
+            blast.InitExplosion(bulletData, bl_GFWK.LocalPlayer.GFWKActor);
         }
         detecting = false;
         if (Pooled) { gameObject.SetActive(false); }

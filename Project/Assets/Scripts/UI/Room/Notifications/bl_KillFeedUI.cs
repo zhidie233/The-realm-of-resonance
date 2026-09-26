@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
-using MFPS.Internal.Structures;
-using MFPS.Runtime.UI.Bindings;
+using GFWK.Internal.Structures;
+using GFWK.Runtime.UI.Bindings;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_KillFeedUI : bl_KillFeedUIBase
     {

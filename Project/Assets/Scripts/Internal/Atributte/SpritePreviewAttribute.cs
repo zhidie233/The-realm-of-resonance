@@ -3,7 +3,7 @@
 using UnityEditor;
 #endif
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
     public class SpritePreviewAttribute : PropertyAttribute
     {

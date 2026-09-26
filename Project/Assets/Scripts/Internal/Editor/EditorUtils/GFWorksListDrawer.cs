@@ -7,7 +7,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
     [CustomEditor(typeof(Object), true, isFallback = true)]
     [CanEditMultipleObjects]

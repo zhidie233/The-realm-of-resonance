@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using Photon.Realtime;
 
-// MFPS class with all the Damage information
+// GFWK class with all the Damage information
 public class DamageData
 {
     // The amount of damage to apply to the IDamageable object
     public int Damage = 10;
 
-    // The cached name of the actor of this damage Since the damage can't always comes from a <see cref="MFPSActor"/> (player or bot) This the alternative way to get the name of the actor.
+    // The cached name of the actor of this damage Since the damage can't always comes from a <see cref="GFWKActor"/> (player or bot) This the alternative way to get the name of the actor.
     public string From;
 
     // Cause of the damage
@@ -25,8 +25,8 @@ public class DamageData
     // The network player from which this damage
     public Player Actor { get; set; }
 
-    // The MFPS Actor of this damage Can be a real player or bot
-    public MFPSPlayer MFPSActor { get; set; }
+    // The GFWK Actor of this damage Can be a real player or bot
+    public GFWKPlayer GFWKActor { get; set; }
 
     // The cached network view id of the actor of this damage
     public int ActorViewID { get; set; }
@@ -56,13 +56,13 @@ public class DamageData
         From = (string)data["f"];
         if (data.ContainsKey("dr")) Direction = (Vector3)data["dr"];
 
-        MFPSActor = bl_GameManager.Instance.GetMFPSActor(ActorViewID);
+        GFWKActor = bl_GameManager.Instance.GetGFWKActor(ActorViewID);
     }
 
     public DamageData() { }
 }
 
-public struct MFPSHitData
+public struct GFWKHitData
 {
     // The name of the object who was hit
     public string HitName;

@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_MedicalKit : bl_NetworkItem
     {
-        [LovattoToogle] public bool autoRespawn = false;
+        [GFWorksToogle] public bool autoRespawn = false;
         [Range(0, 100)]
         public int health = 25;
 

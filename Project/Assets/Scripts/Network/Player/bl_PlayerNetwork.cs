@@ -285,7 +285,7 @@ public class bl_PlayerNetwork : bl_MonoBehaviour, IPunObservable
     public void ReplicateFire(GunType weaponType, Vector3 hitPosition, Vector3 inacuracity)
     {
         photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inacuracity);
-#if MFPSTPV
+#if GFWKTPV
         if (bl_CameraViewSettings.IsThirdPerson())
             PlayerReferences.playerAnimations?.PlayFireAnimation(weaponType);
 #endif

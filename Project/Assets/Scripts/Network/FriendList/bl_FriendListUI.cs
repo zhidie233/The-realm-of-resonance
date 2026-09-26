@@ -6,7 +6,7 @@ using Photon.Realtime;
 using System.Collections;
 using TMPro;
 
-namespace MFPS.Runtime.FriendList
+namespace GFWK.Runtime.FriendList
 {
     public class bl_FriendListUI : bl_FriendListUIBase
     {

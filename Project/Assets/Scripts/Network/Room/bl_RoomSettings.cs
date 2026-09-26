@@ -1,7 +1,7 @@
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
-using MFPS.Runtime.Settings;
+using GFWK.Runtime.Settings;
 using System.Collections.Generic;
 
 /// <summary>
@@ -10,13 +10,13 @@ using System.Collections.Generic;
 /// </summary>
 public class bl_RoomSettings : bl_MonoBehaviour
 {
-    [LovattoToogle] public bool canSuicide = true;
+    [GFWorksToogle] public bool canSuicide = true;
 
     #region Public properties
     public GameMode CurrentGameMode => CurrentRoomInfo.gameMode;
     public int GameGoal => CurrentRoomInfo.goal;
     public bool AutoTeamSelection => CurrentRoomInfo.autoTeamSelection;
-    public MFPSRoomInfo CurrentRoomInfo { get; set; }
+    public GFWKRoomInfo CurrentRoomInfo { get; set; }
     public bool RoomInfoFetched { get; set; } = false;
     #endregion
 
@@ -41,7 +41,7 @@ public class bl_RoomSettings : bl_MonoBehaviour
     IEnumerator Start()
     {
         while (!bl_GameData.isDataCached) yield return null;
-        if (bl_MFPS.Settings != null) bl_MFPS.Settings.ApplySettings(bl_RuntimeSettingsProfile.ResolutionApplication.NoApply, true);
+        if (bl_GFWK.Settings != null) bl_GFWK.Settings.ApplySettings(bl_RuntimeSettingsProfile.ResolutionApplication.NoApply, true);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class bl_RoomSettings : bl_MonoBehaviour
         }
         table.Clear();
         //Initialize new properties where the information will stay Players
-        if (!bl_MFPS.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
+        if (!bl_GFWK.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
         {
             table.Add(PropertiesKeys.TeamKey, Team.None.ToString());
         }
@@ -67,7 +67,7 @@ public class bl_RoomSettings : bl_MonoBehaviour
         table.Add(PropertiesKeys.DeathsKey, 0);
         table.Add(PropertiesKeys.ScoreKey, 0);
         table.Add(PropertiesKeys.UserRole, bl_GameData.Instance.RolePrefix);
-        table.Add(PropertiesKeys.PlayerTotalScore, bl_MFPS.LocalPlayer.Stats.GetAllTimeScore());
+        table.Add(PropertiesKeys.PlayerTotalScore, bl_GFWK.LocalPlayer.Stats.GetAllTimeScore());
 
         LocalPlayer.SetCustomProperties(table);
 
@@ -93,13 +93,13 @@ public class bl_RoomSettings : bl_MonoBehaviour
     /// </summary>
     public void CheckAutoSpawn()
     {
-        if (CurrentRoomInfo.autoTeamSelection && !bl_MFPS.GameData.UsingWaitingRoom())
+        if (CurrentRoomInfo.autoTeamSelection && !bl_GFWK.GameData.UsingWaitingRoom())
         {
             bl_UIReferences.Instance.AutoTeam(true);
             bl_UIReferences.Instance.ShowMenu(false);
             Invoke(nameof(SelectTeamAutomatically), 3);
         }
-        else if (bl_MFPS.GameData.UsingWaitingRoom() && LocalPlayer.GetPlayerTeam() == Team.None)
+        else if (bl_GFWK.GameData.UsingWaitingRoom() && LocalPlayer.GetPlayerTeam() == Team.None)
         {
             if (PhotonNetwork.OfflineMode && !CurrentRoomInfo.autoTeamSelection)
             {

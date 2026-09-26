@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 
 [ExecuteInEditMode]
 public class bl_AIAnimation : bl_AIAnimationBase

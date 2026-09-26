@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using MFPSEditor;
+using GFWKEditor;
 
 [CustomEditor(typeof(bl_AIAnimation))]
 public class bl_AIAnimationEditor : Editor

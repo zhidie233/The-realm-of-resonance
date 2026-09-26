@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace MFPS.Runtime.Settings
+namespace GFWK.Runtime.Settings
 {
     public class bl_RuntimeSettings : MonoBehaviour
     {
@@ -76,8 +76,8 @@ namespace MFPS.Runtime.Settings
         /// </summary>
         public void ApplySettings()
         {
-            bl_MFPS.Settings.SaveSettings();
-            bl_MFPS.Settings.ApplySettings(bl_RuntimeSettingsProfile.ResolutionApplication.ApplyUserSelected);
+            bl_GFWK.Settings.SaveSettings();
+            bl_GFWK.Settings.ApplySettings(bl_RuntimeSettingsProfile.ResolutionApplication.ApplyUserSelected);
 
             var im = transform.GetComponentInChildren<InputManager.bl_InputUI>();
             if (im != null)

@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.AI;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 
 public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
 {
@@ -16,7 +16,7 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
     private Quaternion correctPlayerRot = Quaternion.identity; // We lerp towards this
     private Vector3 networkLookAtPosition = Vector3.zero;
 
-    private MFPSBotProperties BotStat = null;
+    private GFWKBotProperties BotStat = null;
 
     /// <summary>
     /// 
@@ -147,7 +147,7 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
     /// <summary>
     /// 
     /// </summary>
-    void OnMasterStatsReceived(List<MFPSBotProperties> stats)
+    void OnMasterStatsReceived(List<GFWKBotProperties> stats)
     {
         ApplyMasterInfo(stats);
     }
@@ -155,16 +155,16 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
     /// <summary>
     /// 
     /// </summary>
-    void ApplyMasterInfo(List<MFPSBotProperties> stats)
+    void ApplyMasterInfo(List<GFWKBotProperties> stats)
     {
         int viewID = photonView.ViewID;
-        MFPSBotProperties bs = stats.Find(x => x.ViewID == viewID);
+        GFWKBotProperties bs = stats.Find(x => x.ViewID == viewID);
         if (bs != null)
         {
             AIName = bs.Name;
             AITeam = bs.Team;
             gameObject.name = AIName;
-            BotStat = new MFPSBotProperties();
+            BotStat = new GFWKBotProperties();
             BotStat.Name = AIName;
             BotStat.Score = bs.Score;
             BotStat.Kills = bs.Kills;
@@ -181,7 +181,7 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
     /// 
     /// </summary>
     /// <param name="stat"></param>
-    void OnBotStatUpdate(MFPSBotProperties stat)
+    void OnBotStatUpdate(GFWKBotProperties stat)
     {
         if (stat.ViewID != photonView.ViewID) return;
 
@@ -202,7 +202,7 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
         bl_EventHandler.DispatchRemoteActorChange(new bl_EventHandler.PlayerChangeData()
         {
             PlayerName = name,
-            MFPSActor = BuildPlayer(),
+            GFWKActor = BuildPlayer(),
             IsAlive = true,
             NetworkView = photonView
         });
@@ -212,9 +212,9 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
     /// 
     /// </summary>
     /// <returns></returns>
-    private MFPSPlayer BuildPlayer(bool isAlive = true)
+    private GFWKPlayer BuildPlayer(bool isAlive = true)
     {
-        MFPSPlayer player = new MFPSPlayer()
+        GFWKPlayer player = new GFWKPlayer()
         {
             Name = AIName,
             ActorView = photonView,
@@ -236,7 +236,7 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
         bl_EventHandler.DispatchRemoteActorChange(new bl_EventHandler.PlayerChangeData()
         {
             PlayerName = AIName,
-            MFPSActor = BuildPlayer(false),
+            GFWKActor = BuildPlayer(false),
             IsAlive = false,
         });
     }
@@ -249,7 +249,7 @@ public sealed class bl_AIShooterNetwork : bl_MonoBehaviour, IPunObservable
         References.namePlateDrawer.SetName(AIName);
         if (!isOneTeamMode && bl_GameManager.Instance.LocalPlayer != null && !References.aiShooter.isDeath)
         {
-            References.namePlateDrawer.SetActive(bl_MFPS.LocalPlayer.Team == AITeam);
+            References.namePlateDrawer.SetActive(bl_GFWK.LocalPlayer.Team == AITeam);
         }
         else
         {

@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using MFPS.Core.Motion;
+using GFWK.Core.Motion;
 
 public abstract class bl_CameraShakerBase : MonoBehaviour
 {

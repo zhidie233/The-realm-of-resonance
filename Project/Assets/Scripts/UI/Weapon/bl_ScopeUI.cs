@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     public class bl_ScopeUI : bl_ScopeUIBase
     {

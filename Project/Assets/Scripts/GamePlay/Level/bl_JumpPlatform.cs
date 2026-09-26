@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     [RequireComponent(typeof(AudioSource))]
     public class bl_JumpPlatform : MonoBehaviour

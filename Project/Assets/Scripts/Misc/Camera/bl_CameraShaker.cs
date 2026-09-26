@@ -2,7 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using MFPS.Core.Motion;
+using GFWK.Core.Motion;
 
 public class bl_CameraShaker : bl_CameraShakerBase
 {

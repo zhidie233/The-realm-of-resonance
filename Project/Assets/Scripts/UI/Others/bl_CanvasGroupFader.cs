@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class bl_CanvasGroupFader : MonoBehaviour

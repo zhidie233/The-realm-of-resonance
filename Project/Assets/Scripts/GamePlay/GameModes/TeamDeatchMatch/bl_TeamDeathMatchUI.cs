@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine.UI;
 
-namespace MFPS.GameModes.TeamDeathMatch
+namespace GFWK.GameModes.TeamDeathMatch
 {
     public class bl_TeamDeathMatchUI : MonoBehaviour
     {

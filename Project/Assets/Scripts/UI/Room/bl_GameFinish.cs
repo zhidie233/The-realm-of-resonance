@@ -1,14 +1,14 @@
 using UnityEngine;
-using MFPS.Internal.Interfaces;
+using GFWK.Internal.Interfaces;
 using TMPro;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 
 /// <summary>
-/// Default MFPS after match resume screen
-/// If you want to use your custom resume screen, simply append the IMFPSResumeScreen interface to your script
+/// Default GFWK after match resume screen
+/// If you want to use your custom resume screen, simply append the IGFWKResumeScreen interface to your script
 /// and handle the inherited functions.
 /// </summary>
-public class bl_GameFinish : bl_PhotonHelper, IMFPSResumeScreen
+public class bl_GameFinish : bl_PhotonHelper, IGFWKResumeScreen
 {
 
     [SerializeField] private TextMeshProUGUI PlayerNameText = null;
@@ -80,7 +80,7 @@ public class bl_GameFinish : bl_PhotonHelper, IMFPSResumeScreen
         if (bl_DataBase.Instance != null)
         {
             var p = bl_PhotonNetwork.LocalPlayer;
-            bl_ULoginMFPS.SaveLocalPlayerKDS();
+            bl_ULoginGFWK.SaveLocalPlayerKDS();
             bl_DataBase.Instance.StopAndSaveTime();
             if (coins > 0)
             {

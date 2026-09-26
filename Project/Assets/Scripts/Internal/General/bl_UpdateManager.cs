@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace MFPS.Internal
+namespace GFWK.Internal
 {
     public class bl_UpdateManager : MonoBehaviour
     {

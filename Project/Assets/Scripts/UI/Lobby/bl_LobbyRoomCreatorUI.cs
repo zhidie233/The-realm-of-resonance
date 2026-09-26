@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using MFPS.Runtime.Settings;
+using GFWK.Runtime.Settings;
 using System.Linq;
 using TMPro;
 
@@ -18,7 +18,7 @@ public class bl_LobbyRoomCreatorUI : MonoBehaviour
     public bl_SingleSettingsBinding TeamSelectionSelector;
     public TMP_InputField roomInputField;
     public TMP_InputField roomPasswordInputField;
-    public bl_MFPSRoomPreview roomPreview;
+    public bl_GFWKRoomPreview roomPreview;
 
     private GameModeSettings[] allModes;
     private string defaultRoomName = "Server";

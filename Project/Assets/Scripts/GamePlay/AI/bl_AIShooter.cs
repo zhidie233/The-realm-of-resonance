@@ -1,5 +1,5 @@
 using UnityEngine;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 using UnityEngine.AI;
 
 public abstract class bl_AIShooter : bl_MonoBehaviour

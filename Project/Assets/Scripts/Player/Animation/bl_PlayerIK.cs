@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// MFPS Default IK implementation
+/// GFWK Default IK implementation
 /// In order to use your own IK control system, simply create a new script
 /// and inherited from bl_PlayerIKBase.cs
 /// </summary>
@@ -22,13 +22,13 @@ public class bl_PlayerIK : bl_PlayerIKBase
     public Vector3 AimSightPosition = new Vector3(0.02f, 0.19f, 0.02f);
 
     [Header("FOOT IK")]
-    [LovattoToogle] public bool useFootPlacement = true;
+    [GFWorksToogle] public bool useFootPlacement = true;
     public LayerMask FootLayers;
     [Range(0.1f, 1)] public float FootHeight = 0.43f;
     [Range(-0.5f, 0.5f)] public float TerrainOffset = 0.13f;
     public Vector3 leftKneeTarget, rightKneeTarget;
     public Vector3 leftFeetRotationOffset, rightFeetRotationOffset;
-    [LovattoToogle] public bool debugFootGizmos = true;
+    [GFWorksToogle] public bool debugFootGizmos = true;
 
     public bool IsCustomHeadTarget { get; set; } = false;
     #endregion

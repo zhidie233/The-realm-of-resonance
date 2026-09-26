@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     /// <summary>
     /// Default lobby connection loading screen

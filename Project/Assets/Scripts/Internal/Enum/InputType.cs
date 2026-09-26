@@ -1,5 +1,5 @@
 ﻿using System;
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [Flags]
     public enum InputType : short

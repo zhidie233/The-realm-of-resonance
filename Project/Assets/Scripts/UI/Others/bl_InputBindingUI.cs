@@ -3,7 +3,7 @@ using System.Text.RegularExpressions;
 using TMPro;
 using System.Collections.Generic;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     public class bl_InputBindingUI : MonoBehaviour
     {

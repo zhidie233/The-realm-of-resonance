@@ -2,7 +2,7 @@
 using System.Collections;
 using TMPro;
 
-namespace MFPS.Runtime.UI.Bindings
+namespace GFWK.Runtime.UI.Bindings
 {
     public class bl_UILeftNotifier : MonoBehaviour
     {

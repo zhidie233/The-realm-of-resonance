@@ -1,5 +1,5 @@
 ﻿/// <summary>
-/// MFPS Explosion base class
+/// GFWK Explosion base class
 /// Inherited from this your custom explosion script.
 /// </summary>
 public abstract class bl_ExplosionBase : bl_PhotonHelper
@@ -7,7 +7,7 @@ public abstract class bl_ExplosionBase : bl_PhotonHelper
     /// <summary>
     /// 
     /// </summary>
-    public abstract void InitExplosion(BulletData bulletData, MFPSPlayer fromPlayer);
+    public abstract void InitExplosion(BulletData bulletData, GFWKPlayer fromPlayer);
 
     /// <summary>
     ///

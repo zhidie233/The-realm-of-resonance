@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class bl_MapMods : MonoBehaviour
 {
-    [LovattoToogle] public bool infinityAmmo = false;
+    [GFWorksToogle] public bool infinityAmmo = false;
 
     /// <summary>
     /// 
@@ -27,7 +27,7 @@ public class bl_MapMods : MonoBehaviour
     /// </summary>
     void OnLocalPlayerSpawn()
     {
-        var p = bl_MFPS.LocalPlayerReferences;
+        var p = bl_GFWK.LocalPlayerReferences;
 
         if (infinityAmmo) p.gunManager.SetInfinityAmmoToAllEquippeds(true);
     }

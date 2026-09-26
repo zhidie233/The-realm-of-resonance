@@ -77,7 +77,7 @@ public class bl_RoomMenu : bl_MonoBehaviour
     {
         bl_EventHandler.onLocalPlayerSpawn += OnPlayerSpawn;
         bl_EventHandler.onLocalPlayerDeath += OnPlayerLocalDeath;
-#if MFPSM
+#if GFWKM
         bl_TouchHelper.OnPause += TogglePause;
 #endif
         bl_PhotonCallbacks.LeftRoom += OnLeftRoom;
@@ -90,7 +90,7 @@ public class bl_RoomMenu : bl_MonoBehaviour
     {
         bl_EventHandler.onLocalPlayerSpawn -= OnPlayerSpawn;
         bl_EventHandler.onLocalPlayerDeath -= OnPlayerLocalDeath;
-#if MFPSM
+#if GFWKM
         bl_TouchHelper.OnPause -= TogglePause;
 #endif
         bl_PhotonCallbacks.LeftRoom -= OnLeftRoom;
@@ -241,7 +241,7 @@ public class bl_RoomMenu : bl_MonoBehaviour
         if (bl_DataBase.IsUserLogged && save)
         {
             var p = bl_PhotonNetwork.LocalPlayer;
-            bl_ULoginMFPS.SaveLocalPlayerKDS();
+            bl_ULoginGFWK.SaveLocalPlayerKDS();
             bl_DataBase.Instance.StopAndSaveTime();
         }
 #endif

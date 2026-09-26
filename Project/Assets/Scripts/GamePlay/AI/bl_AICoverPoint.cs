@@ -4,7 +4,7 @@ using UnityEngine;
 public class bl_AICoverPoint : MonoBehaviour
 {
     [Tooltip("Should the bot crouch when reach this cover point?")]
-    [LovattoToogle] public bool Crouch = false;
+    [GFWorksToogle] public bool Crouch = false;
     public float lastUseTime { get; set; } = 0;
     public List<bl_AICoverPoint> NeighbordPoints = new List<bl_AICoverPoint>();
 

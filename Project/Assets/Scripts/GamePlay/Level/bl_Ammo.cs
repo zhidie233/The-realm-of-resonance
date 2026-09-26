@@ -1,12 +1,12 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-namespace MFPS.Runtime.Level
+namespace GFWK.Runtime.Level
 {
     public class bl_Ammo : bl_NetworkItem
     {
-        [LovattoToogle] public bool isGlobal = true;
-        [LovattoToogle] public bool autoRespawn = false;
+        [GFWorksToogle] public bool isGlobal = true;
+        [GFWorksToogle] public bool autoRespawn = false;
         [GunID] public int ForGun = 0;
 
         public int Bullets = 30;

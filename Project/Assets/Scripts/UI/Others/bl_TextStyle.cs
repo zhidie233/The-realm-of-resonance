@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 
-namespace MFPS.Runtime.UI
+namespace GFWK.Runtime.UI
 {
     [AddComponentMenu("UI/Letter Spacing", 14)]
     public class bl_TextStyle : BaseMeshEffect

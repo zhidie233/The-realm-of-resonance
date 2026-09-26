@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Collections;
-using MFPS.Runtime.UI;
+using GFWK.Runtime.UI;
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     public class bl_InputUI : MonoBehaviour
     {
-        [LovattoToogle] public bool autoHideOnMobile = true;
+        [GFWorksToogle] public bool autoHideOnMobile = true;
         public GameObject KeyBindingTemplate;
         public RectTransform ListPanel;
         public bl_ConfirmationWindow confirmationWindow;

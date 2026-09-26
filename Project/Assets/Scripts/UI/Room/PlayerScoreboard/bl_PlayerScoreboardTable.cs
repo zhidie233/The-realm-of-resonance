@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using MFPS.Runtime.AI;
+using GFWK.Runtime.AI;
 
 public class bl_PlayerScoreboardTable : bl_PlayerScoreboardTableBase
 {
@@ -53,7 +53,7 @@ public class bl_PlayerScoreboardTable : bl_PlayerScoreboardTableBase
     /// <param name="player"></param>
     /// <param name="uiPrefab"></param>
     /// <returns></returns>
-    public override bl_PlayerScoreboardUIBase InstanceBot(MFPSBotProperties player, GameObject uiPrefab)
+    public override bl_PlayerScoreboardUIBase InstanceBot(GFWKBotProperties player, GameObject uiPrefab)
     {
         GameObject instance = Instantiate(uiPrefab) as GameObject;
         instance.transform.SetParent(panel, false);

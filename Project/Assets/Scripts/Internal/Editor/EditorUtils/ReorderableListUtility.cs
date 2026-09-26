@@ -7,7 +7,7 @@ using System.Reflection;
 using System;
 using System.Collections;
 
-namespace MFPSEditor
+namespace GFWKEditor
 {
     public static class ReorderableListUtility
     {

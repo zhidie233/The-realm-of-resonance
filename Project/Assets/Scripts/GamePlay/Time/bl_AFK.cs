@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace MFPS.Runtime.Misc
+namespace GFWK.Runtime.Misc
 {
     public class bl_AFK : bl_MonoBehaviour
     {

@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditorInternal;
 #endif
 
-namespace MFPS.InputManager
+namespace GFWK.InputManager
 {
     [Serializable]
     public class Mapped

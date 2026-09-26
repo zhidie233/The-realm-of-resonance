@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-namespace MFPS.Tween
+namespace GFWK.Tween
 {
     public class bl_TweenBase : MonoBehaviour
     {
