@@ -23,26 +23,26 @@ public class bl_MFPSManagerWindow : EditorWindow
 
     private List<ManagerPanel> managerPanels = new List<ManagerPanel>()
     {
-    new ManagerPanel(){Name = "Game Data", BodyFuncName = nameof(DrawGameDataSettings)},
+    new ManagerPanel(){Name = "游戏数据", BodyFuncName = nameof(DrawGameDataSettings)},
     new ManagerPanel(){Name = "ULogin Pro", BodyFuncName = nameof(DrawULogin)},
-    new ManagerPanel(){Name = "Player Selector", BodyFuncName = nameof(DrawPlayerSelector)},
+    new ManagerPanel(){Name = "玩家选择器", BodyFuncName = nameof(DrawPlayerSelector)},
     new ManagerPanel(){Name = "Shop", BodyFuncName = nameof(DrawShop)},
-    new ManagerPanel(){Name = "Class Customization", BodyFuncName = nameof(DrawClassCustomizer)},
+    new ManagerPanel(){Name = "兵种自定义", BodyFuncName = nameof(DrawClassCustomizer)},
     new ManagerPanel(){Name = "Customizer", BodyFuncName = nameof(DrawCustomizer)},
-    new ManagerPanel(){Name = "Anti-Cheat", BodyFuncName = nameof(DrawAntiCheat)},
+    new ManagerPanel(){Name = "反作弊", BodyFuncName = nameof(DrawAntiCheat)},
     new ManagerPanel(){Name = "Vehicles", BodyFuncName = nameof(DrawVehicles)},
     new ManagerPanel(){Name = "Mobile", BodyFuncName = nameof(DrawMobileControl)},
     new ManagerPanel(){Name = "Localization", BodyFuncName = nameof(DrawLocalization)},
-    new ManagerPanel(){Name = "Level Manager", BodyFuncName = nameof(DrawlevelManager)},
-    new ManagerPanel(){Name = "Input Manager", BodyFuncName = nameof(DrawInputManager)},
-    new ManagerPanel(){Name = "Kill Streaks", BodyFuncName = nameof(DrawKillStreaks)},
-    new ManagerPanel(){Name = "Third Person", BodyFuncName = nameof(DrawThirdPerson)},
+    new ManagerPanel(){Name = "关卡管理器", BodyFuncName = nameof(DrawlevelManager)},
+    new ManagerPanel(){Name = "输入管理器", BodyFuncName = nameof(DrawInputManager)},
+    new ManagerPanel(){Name = "连杀奖励", BodyFuncName = nameof(DrawKillStreaks)},
+    new ManagerPanel(){Name = "第三人称", BodyFuncName = nameof(DrawThirdPerson)},
     new ManagerPanel(){Name = "Minimap", BodyFuncName = nameof(DrawMinimap)},
-    new ManagerPanel(){Name = "Clan System", BodyFuncName = nameof(DrawClan)},
-    new ManagerPanel(){Name = "Floating Text", BodyFuncName = nameof(DrawFloatingText)},
-    new ManagerPanel(){Name = "Emblems and Cards", BodyFuncName = nameof(DrawEmblems)},
-    new ManagerPanel(){Name = "Game News", BodyFuncName = nameof(DrawGameNews)},
-    new ManagerPanel(){Name = "Layout Customizer", BodyFuncName = nameof(DrawLayoutCustomizer)},
+    new ManagerPanel(){Name = "战队系统", BodyFuncName = nameof(DrawClan)},
+    new ManagerPanel(){Name = "漂浮文字", BodyFuncName = nameof(DrawFloatingText)},
+    new ManagerPanel(){Name = "徽章与名片", BodyFuncName = nameof(DrawEmblems)},
+    new ManagerPanel(){Name = "游戏资讯", BodyFuncName = nameof(DrawGameNews)},
+    new ManagerPanel(){Name = "布局自定义", BodyFuncName = nameof(DrawLayoutCustomizer)},
     };
     private WindowType currentWindow = WindowType.Home;
     private string currentPanelType = "";
@@ -75,7 +75,7 @@ public class bl_MFPSManagerWindow : EditorWindow
     private void OnEnable()
     {
         serializedObject = new SerializedObject(this);
-        titleContent = new GUIContent(" MFPS", GetUnityIcon("Audio Mixer"));
+        titleContent = new GUIContent(" MFPS", GetUnityIcon("音频混音器"));
         mfpsLogo = Resources.Load("content/Images/mfps-name", typeof(Texture2D)) as Texture2D;
         soldierIcon = AssetDatabase.LoadAssetAtPath("Assets/Art/UI/Icons/framework-soldier.png", typeof(Texture2D)) as Texture2D;
         minSize = new Vector2(720, 570);
@@ -140,12 +140,12 @@ public class bl_MFPSManagerWindow : EditorWindow
     /// </summary>
     void DrawWindowButtons()
     {
-        WindowButton("MANAGERS", WindowType.Managers);
-        WindowButton("WEAPONS", WindowType.Weapons);
-        WindowButton("LOADOUTS", WindowType.Loadouts);
-        WindowButton("GAME MODES", WindowType.GameModes);
+        WindowButton("管理器", WindowType.Managers);
+        WindowButton("武器", WindowType.Weapons);
+        WindowButton("装备配置", WindowType.Loadouts);
+        WindowButton("游戏模式", WindowType.GameModes);
 #if LM
-        WindowButton("LEVELS", WindowType.Levels);
+        WindowButton("关卡", WindowType.Levels);
 #endif
 
         GUILayout.Space(25);
@@ -216,7 +216,7 @@ public class bl_MFPSManagerWindow : EditorWindow
     /// </summary>
     void DrawHomeBody()
     {
-        GUILayout.Label("SELECT THE GAME SETTING WINDOW", styles["textC"]);
+        GUILayout.Label("请选择游戏设置窗口", styles["textC"]);
         GUILayout.Space(20);
         Rect r;
         for (int i = 0; i < managerPanels.Count; i++)
@@ -335,18 +335,18 @@ public class bl_MFPSManagerWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(18);
 
-        w.Name = EditorGUILayout.TextField("Weapon Name", w.Name);
-        w.Type = (GunType)EditorGUILayout.EnumPopup("Weapon Type", w.Type);
+        w.Name = EditorGUILayout.TextField("武器名称", w.Name);
+        w.Type = (GunType)EditorGUILayout.EnumPopup("武器类型", w.Type);
 
         GUILayout.Space(18);
         DrawTitleText("Specs");
 
-        w.Damage = EditorGUILayout.IntField("Damage", w.Damage);
-        w.FireRate = EditorGUILayout.FloatField("Fire Rate", w.FireRate);
-        w.ReloadTime = EditorGUILayout.FloatField("Reload Time", w.ReloadTime);
-        w.Range = EditorGUILayout.IntField("Range", w.Range);
-        w.Accuracy = EditorGUILayout.IntField("Accuracy", w.Accuracy);
-        w.Weight = EditorGUILayout.FloatField("Weight", w.Weight);
+        w.Damage = EditorGUILayout.IntField("伤害", w.Damage);
+        w.FireRate = EditorGUILayout.FloatField("射速", w.FireRate);
+        w.ReloadTime = EditorGUILayout.FloatField("换弹时间", w.ReloadTime);
+        w.Range = EditorGUILayout.IntField("射程", w.Range);
+        w.Accuracy = EditorGUILayout.IntField("精准度", w.Accuracy);
+        w.Weight = EditorGUILayout.FloatField("重量", w.Weight);
 
         GUILayout.Space(18);
         DrawTitleText("Unlockability");
@@ -356,19 +356,19 @@ public class bl_MFPSManagerWindow : EditorWindow
         GUILayout.Space(18);
         DrawTitleText("Others");
 
-        w.PickUpPrefab = EditorGUILayout.ObjectField("Gun PickUp Prefab", w.PickUpPrefab, typeof(bl_GunPickUpBase), false) as bl_GunPickUpBase;
+        w.PickUpPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.PickUpPrefab, typeof(bl_GunPickUpBase), false) as bl_GunPickUpBase;
 
         GUILayout.Space(18);
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Cancel", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
+            if (GUILayout.Button("取消", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
             {
                 editWeaponId = -1;
                 editGunInfo = null;
             }
             GUILayout.Space(10);
-            if (GUILayout.Button("Save", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(110)))
+            if (GUILayout.Button("保存", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(110)))
             {
                 EditorUtility.SetDirty(bl_GameData.Instance);
                 editWeaponId = -1;
@@ -392,7 +392,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         player = bl_GameData.Instance.Player2.PlayerReferences;
         DrawPlayerLoadout(player, ref currentSlot2);
 #else
-        GUILayout.Label("<b>Class Customizer is enabled</b>\n<b><size=8><i>The player loadout is managed for a global loadouts that can be change in game instead of a fixed loadout per player prefab (MFPS default)</i></size></b>\n", styles["textC"]);
+        GUILayout.Label("<b>已启用兵种自定义</b>\n<b><size=8><i>玩家武器配置由全局配置统一管理，可在游戏内修改，不再像 MFPS 默认那样按玩家预制体固定配置</i></size></b>\n", styles["textC"]);
         GUILayout.Space(10);
         Rect r = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
         {
@@ -439,7 +439,7 @@ public class bl_MFPSManagerWindow : EditorWindow
 #endif
         GUILayout.Space(10);
         var latpc = currentPlayerClass;
-        currentPlayerClass = (PlayerClass)EditorGUILayout.EnumPopup("Current Player Class", currentPlayerClass);
+        currentPlayerClass = (PlayerClass)EditorGUILayout.EnumPopup("当前玩家兵种", currentPlayerClass);
         if (currentPlayerClass != latpc)
         {
             currentPlayerClass.SavePlayerClass();
@@ -495,15 +495,15 @@ public class bl_MFPSManagerWindow : EditorWindow
         GUILayout.Label($"<size=12>{gameMode.ModeName.ToUpper()}</size>\n<color=#606060FF><size=9>({gameMode.gameMode.ToString()})</size></color>", styles["titleH2"]);
 
         GUILayout.FlexibleSpace();
-        string teamMode = isOneTeamMode(gameMode.gameMode) ? "One vs All" : "Team vs Team";
-        DrawText($"<b><size=10>TEAM MODE</size></b>\n<color=#A4A4A4FF><size=9>{teamMode}</size></color>");
+        string teamMode = isOneTeamMode(gameMode.gameMode) ? "单人对抗全体" : "阵营对抗";
+        DrawText($"<b><size=10>阵营模式</size></b>\n<color=#A4A4A4FF><size=9>{teamMode}</size></color>");
 
         int maxPlayers = 1;
         foreach (var item in gameMode.maxPlayers)
         {
             maxPlayers = Mathf.Max(maxPlayers, item);
         }
-        DrawText($"<b><size=10>REQUIRED PLAYERS</size></b>\n<color=#A4A4A4FF><size=9>{gameMode.RequiredPlayersToStart} of up to {maxPlayers}</size></color>");
+        DrawText($"<b><size=10>所需玩家数</size></b>\n<color=#A4A4A4FF><size=9>{gameMode.RequiredPlayersToStart}，最多 {maxPlayers}</size></color>");
         GUILayout.Space(10);
         EditorGUILayout.EndVertical();
 
@@ -540,34 +540,34 @@ public class bl_MFPSManagerWindow : EditorWindow
 
         var m = selectedGameMode;
         GUILayout.Space(10);
-        DrawTitleText("GAME MODE INFO");
-        m.ModeName = EditorGUILayout.TextField("Game Mode Name", m.ModeName);
-        m.gameMode = (GameMode)EditorGUILayout.EnumPopup("Mode Identifier", m.gameMode);
+        DrawTitleText("游戏模式信息");
+        m.ModeName = EditorGUILayout.TextField("游戏模式名称", m.ModeName);
+        m.gameMode = (GameMode)EditorGUILayout.EnumPopup("模式标识", m.gameMode);
         var r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.isEnabled = MFPSEditorStyles.FeatureToogle(r, m.isEnabled, "Is Enabled");
+        m.isEnabled = MFPSEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
 
         GUILayout.Space(10);
         DrawTitleText("SETTINGS");
-        m.GoalName = EditorGUILayout.TextField("Mode Goal Name", m.GoalName);
+        m.GoalName = EditorGUILayout.TextField("模式目标名称", m.GoalName);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.supportBots = MFPSEditorStyles.FeatureToogle(r, m.supportBots, "Support bots?");
+        m.supportBots = MFPSEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.AutoTeamSelection = MFPSEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "Force auto team selection?");
+        m.AutoTeamSelection = MFPSEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.allowedPickupWeapons = MFPSEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "Allow pick up weapons?");
+        m.allowedPickupWeapons = MFPSEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.UnlistGameAfterStarted = MFPSEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "Unlist/Close the room after start?");
+        m.UnlistGameAfterStarted = MFPSEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
 
-        m.RequiredPlayersToStart = EditorGUILayout.IntSlider("Required players to start", m.RequiredPlayersToStart, 1, 64);
-        m.onRoundStartedSpawn = (GameModeSettings.OnRoundStartedSpawn)EditorGUILayout.EnumPopup("When round has started", m.onRoundStartedSpawn);
-        m.onPlayerDie = (GameModeSettings.OnPlayerDie)EditorGUILayout.EnumPopup("When local player dies", m.onPlayerDie);
-        m.RoundModeAllowed = (GameModeSettings.RoundModeAllowedOptions)EditorGUILayout.EnumPopup("Allowed round modes", m.RoundModeAllowed);
+        m.RequiredPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.RequiredPlayersToStart, 1, 64);
+        m.onRoundStartedSpawn = (GameModeSettings.OnRoundStartedSpawn)EditorGUILayout.EnumPopup("回合开始时", m.onRoundStartedSpawn);
+        m.onPlayerDie = (GameModeSettings.OnPlayerDie)EditorGUILayout.EnumPopup("本地玩家死亡时", m.onPlayerDie);
+        m.RoundModeAllowed = (GameModeSettings.RoundModeAllowedOptions)EditorGUILayout.EnumPopup("允许的回合模式", m.RoundModeAllowed);
 
         GUILayout.Space(10);
-        DrawTitleText("MODE OPTIONS");
+        DrawTitleText("模式选项");
 
         EditorGUILayout.BeginHorizontal();
         {
@@ -581,9 +581,9 @@ public class bl_MFPSManagerWindow : EditorWindow
             foreach (var item in m.maxPlayers)
             {
                 if (isOneTeamMode(m.gameMode)) options += $"({item}) ";
-                else options += $"({item / 2}vs{item / 2}) ";
+                else options += $"({item / 2} 对 {item / 2}) ";
             }
-            EditorGUI.HelpBox(r, $"Current options: {options}", MessageType.Info);
+            EditorGUI.HelpBox(r, $"当前选项：{options}", MessageType.Info);
         }
         EditorGUILayout.EndHorizontal();
 
@@ -599,7 +599,7 @@ public class bl_MFPSManagerWindow : EditorWindow
             {
                 options += $"({item} {m.GoalName}) ";
             }
-            EditorGUI.HelpBox(r, $"Current options: {options}", MessageType.Info);
+            EditorGUI.HelpBox(r, $"当前选项：{options}", MessageType.Info);
         }
         EditorGUILayout.EndHorizontal();
 
@@ -613,10 +613,10 @@ public class bl_MFPSManagerWindow : EditorWindow
             string options = "";
             foreach (var item in m.timeLimits)
             {
-                if (item < 60) options += $"({item} Seconds) ";
-                else options += $"({Mathf.FloorToInt(item / 60)} Minutes) ";
+                if (item < 60) options += $"({item} 秒) ";
+                else options += $"({Mathf.FloorToInt(item / 60)} 分钟) ";
             }
-            EditorGUI.HelpBox(r, $"Current options: {options}", MessageType.Info);
+            EditorGUI.HelpBox(r, $"当前选项：{options}", MessageType.Info);
         }
         EditorGUILayout.EndHorizontal();
 
@@ -624,7 +624,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Back", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
+            if (GUILayout.Button("返回", MFPSEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
             {
                 selectedGameMode = null;
             }
@@ -756,9 +756,9 @@ public class bl_MFPSManagerWindow : EditorWindow
             if (gun.GunIcon != null)
                 GUILayout.Label(gun.GunIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
 
-            Rect br = GUILayoutUtility.GetRect(new GUIContent("CHANGE"), styles["textC"], GUILayout.Width(100));
+            Rect br = GUILayoutUtility.GetRect(new GUIContent("更改"), styles["textC"], GUILayout.Width(100));
             EditorGUI.DrawRect(br, altColor);
-            if (GUI.Button(br, "CHANGE", styles["textC"]))
+            if (GUI.Button(br, "更改", styles["textC"]))
             {
                 selectedSlot = slotID;
                 selectedLoadout = loadout;
@@ -785,9 +785,9 @@ public class bl_MFPSManagerWindow : EditorWindow
                 GUILayout.Label(all[i].GunIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
 
             GUILayout.Space(25);
-            Rect br = GUILayoutUtility.GetRect(new GUIContent("SELECT"), styles["textC"], GUILayout.Width(100));
+            Rect br = GUILayoutUtility.GetRect(new GUIContent("选择"), styles["textC"], GUILayout.Width(100));
             EditorGUI.DrawRect(br, altColor);
-            if (GUI.Button(br, "SELECT", styles["textC"]))
+            if (GUI.Button(br, "选择", styles["textC"]))
             {
                 if (selectedSlot == 0) selectedLoadout.Primary = i;
                 else if (selectedSlot == 1) selectedLoadout.Secondary = i;
@@ -830,12 +830,12 @@ public class bl_MFPSManagerWindow : EditorWindow
             EditorGUILayout.BeginVertical();
             {
                 gun.Damage = EditorGUILayout.IntSlider("DAMAGE", gun.Damage, 1, 100);
-                gun.FireRate = EditorGUILayout.Slider("FIRE RATE", gun.FireRate, 0.01f, 2f);
+                gun.FireRate = EditorGUILayout.Slider("射速", gun.FireRate, 0.01f, 2f);
                 gun.Accuracy = EditorGUILayout.IntSlider("ACCURACY", gun.Accuracy, 1, 5);
                 gun.ReloadTime = EditorGUILayout.Slider("RELOAD", gun.ReloadTime, 0.5f, 10);
                 gun.Range = EditorGUILayout.IntSlider("RANGE", gun.Range, 1, 700);
                 gun.Weight = EditorGUILayout.Slider("WEIGHT", gun.Weight, 0, 4);
-                gun.Unlockability.Price = EditorGUILayout.IntField("PRICE", gun.Unlockability.Price);
+                gun.Unlockability.Price = EditorGUILayout.IntField("价格", gun.Unlockability.Price);
                 GUILayout.Space(5);
             }
             EditorGUILayout.EndVertical();
@@ -849,7 +849,7 @@ public class bl_MFPSManagerWindow : EditorWindow
         editR.x += 4;
         editR.y += editR.height - 18;
         editR.height = 14;
-        if (GUI.Button(editR, "EDIT"))
+        if (GUI.Button(editR, "编辑"))
         {
             editWeaponId = gunId;
             editGunInfo = gun;
@@ -861,18 +861,18 @@ public class bl_MFPSManagerWindow : EditorWindow
     {
         if (gameData == null) gameData = bl_GameData.Instance;
 
-        DrawTitleText("GAME DATA");
+        DrawTitleText("游戏数据");
         if (gameData == null) return;
         DrawEditorOf(gameData);
     }
 
     void DrawPlayerSelector()
     {
-        DrawTitleText("PLAYER SELECTOR");
+        DrawTitleText("玩家选择器");
 #if PSELECTOR
         DrawEditorOf(bl_PlayerSelector.Data);
 #else
-        DrawDisableAddon("PLAYER SELECTOR", "PSELECTOR");
+        DrawDisableAddon("玩家选择器", "PSELECTOR");
 #endif
     }
 
@@ -882,27 +882,27 @@ public class bl_MFPSManagerWindow : EditorWindow
 #if CUSTOMIZER
         DrawEditorOf(bl_CustomizerData.Instance);
 #else
-        DrawDisableAddon("Class Customizer", "CUSTOMIZER");
+        DrawDisableAddon("兵种自定义", "CUSTOMIZER");
 #endif
     }
 
     void DrawMobileControl()
     {
-        DrawTitleText("Mobile Control");
+        DrawTitleText("移动端控制");
 #if MFPSM
         DrawEditorOf(bl_MobileControlSettings.Instance);
 #else
-        DrawDisableAddon("MFPS Mobile", "MFPSM");
+        DrawDisableAddon("MFPS 移动版", "MFPSM");
 #endif
     }
 
     void DrawClassCustomizer()
     {
-        DrawTitleText("Class Customizer");
+        DrawTitleText("兵种自定义");
 #if CLASS_CUSTOMIZER
         DrawEditorOf(bl_ClassManager.Instance);
 #else
-        DrawDisableAddon("Class Customizer", "CLASS_CUSTOMIZER");
+        DrawDisableAddon("兵种自定义", "CLASS_CUSTOMIZER");
 #endif
     }
 
@@ -918,11 +918,11 @@ public class bl_MFPSManagerWindow : EditorWindow
 
     void DrawlevelManager()
     {
-        DrawTitleText("Level Manager");
+        DrawTitleText("关卡管理器");
 #if LM
         DrawEditorOf(bl_LevelManager.Instance);
 #else
-        DrawDisableAddon("Level Manager", "LM");
+        DrawDisableAddon("关卡管理器", "LM");
 #endif
     }
 
@@ -938,11 +938,11 @@ public class bl_MFPSManagerWindow : EditorWindow
 
     void DrawClan()
     {
-        DrawTitleText("Clan System");
+        DrawTitleText("战队系统");
 #if CLANS
         DrawEditorOf(bl_ClanSettings.Instance);
 #else
-        DrawDisableAddon("Clan System", "CLANS");
+        DrawDisableAddon("战队系统", "CLANS");
 #endif
     }
 
@@ -951,11 +951,11 @@ public class bl_MFPSManagerWindow : EditorWindow
         var fm = Resources.Load("FloatingTextManagerSettings", typeof(ScriptableObject)) as ScriptableObject;
         if (fm == null)
         {
-            DrawDisableAddon("Floating Text", "FT");
+            DrawDisableAddon("漂浮文字", "FT");
             return;
         }
 
-        DrawTitleText("Floating Text");
+        DrawTitleText("漂浮文字");
         DrawEditorOf(fm);
     }
 
@@ -964,11 +964,11 @@ public class bl_MFPSManagerWindow : EditorWindow
         var fm = Resources.Load("EmblemsDataBase", typeof(ScriptableObject)) as ScriptableObject;
         if (fm == null)
         {
-            DrawDisableAddon("Emblems And Calling Cards", "EACC");
+            DrawDisableAddon("徽章与名片", "EACC");
             return;
         }
 
-        DrawTitleText("Emblems And Calling Cards");
+        DrawTitleText("徽章与名片");
         DrawEditorOf(fm);
     }
 
@@ -977,11 +977,11 @@ public class bl_MFPSManagerWindow : EditorWindow
         var fm = Resources.Load("LayoutCustomizerSettings", typeof(ScriptableObject)) as ScriptableObject;
         if (fm == null)
         {
-            DrawDisableAddon("Layout Customizer", "LCZ");
+            DrawDisableAddon("布局自定义", "LCZ");
             return;
         }
 
-        DrawTitleText("Layout Customizer");
+        DrawTitleText("布局自定义");
         DrawEditorOf(fm);
     }
 
@@ -994,17 +994,17 @@ public class bl_MFPSManagerWindow : EditorWindow
             return;
         }
 
-        DrawTitleText("General Vehicle Settings");
+        DrawTitleText("载具通用设置");
         DrawEditorOf(fm);
     }
 
     void DrawAntiCheat()
     {
-        DrawTitleText("Anti-Cheat");
+        DrawTitleText("反作弊");
 #if ACTK_IS_HERE
         DrawEditorOf(bl_AntiCheatSettings.Instance);
 #else
-        DrawDisableAddon("Anti-Cheat", "ACTK_IS_HERE");
+        DrawDisableAddon("反作弊", "ACTK_IS_HERE");
 #endif
     }
 
@@ -1013,33 +1013,33 @@ public class bl_MFPSManagerWindow : EditorWindow
         var fm = Resources.Load("GameNewsSettings", typeof(ScriptableObject)) as ScriptableObject;
         if (fm == null)
         {
-            DrawDisableAddon("Game News", "");
+            DrawDisableAddon("游戏资讯", "");
             return;
         }
 
-        DrawTitleText("Game News");
+        DrawTitleText("游戏资讯");
         DrawEditorOf(fm);
     }
 
     void DrawThirdPerson()
     {
-        DrawTitleText("Third Person");
+        DrawTitleText("第三人称");
 #if MFPSTPV
         DrawEditorOf(bl_CameraViewSettings.Instance);
 #else
-        DrawDisableAddon("Third Person", "MFPSTPV");
+        DrawDisableAddon("第三人称", "MFPSTPV");
 #endif
     }
 
     void DrawInputManager()
     {
-        DrawTitleText("Input Manager");
+        DrawTitleText("输入管理器");
 
         DrawEditorOf(bl_Input.InputData);
         GUILayout.Space(10);
         if (bl_Input.InputData.DefaultMapped != null)
         {
-            DrawTitleText($"Mapped ({bl_Input.InputData.DefaultMapped.name})");
+            DrawTitleText($"映射 {bl_Input.InputData.DefaultMapped.name}");
             DrawEditorOf(bl_Input.InputData.DefaultMapped);
         }
     }
@@ -1072,19 +1072,19 @@ public class bl_MFPSManagerWindow : EditorWindow
 
     void DrawKillStreaks()
     {
-        DrawTitleText("Kill Streaks");
+        DrawTitleText("连杀奖励");
 #if KSA
         DrawEditorOf(bl_KillStreakData.Instance);
 #else
-        DrawDisableAddon("Kill Streaks", "KSA");
+        DrawDisableAddon("连杀奖励", "KSA");
 #endif
 
         GUILayout.Space(10);
-        DrawTitleText("Kill Streak Notifier");
+        DrawTitleText("连杀提示");
 #if KILL_NOTIFIER
         DrawEditorOf(MFPS.Addon.KillStreak.bl_KillNotifierData.Instance);
 #else
-        DrawDisableAddon("Kill Streak Notifier", "KILL_STREAK");
+        DrawDisableAddon("连杀提示", "KILL_STREAK");
 #endif
     }
 
@@ -1252,23 +1252,23 @@ public class bl_MFPSManagerWindow : EditorWindow
         var addonInfo = GetAddonsInfo(addonKey);
         if (addonInfo.IsAddonInProject())
         {
-            GUILayout.Label("Is disabled.", styles["textC"]);
+            GUILayout.Label("已禁用。", styles["textC"]);
         }
         else
         {
-            GUILayout.Label("Is not available in your project.", styles["textC"]);
+            GUILayout.Label("当前项目中不可用。", styles["textC"]);
         }
         GUILayout.Space(10);
         EditorGUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
 
 #if !ASCOMPLIANCE
-        if (MFPSEditorStyles.ButtonOutline("Addon Manager", Color.yellow, GUILayout.Width(110)))
+        if (MFPSEditorStyles.ButtonOutline("插件管理器", Color.yellow, GUILayout.Width(110)))
         {
             EditorWindow.GetWindow<MFPSAddonsWindow>().OpenAddonPage(addonInfo.NiceName);
         }
 #else
-        GUILayout.Label("Addons can be acquire from Lovatto Studio", styles["textC"]);
+        GUILayout.Label("扩展可从 Lovatto Studio 获取", styles["textC"]);
 #endif
         GUILayout.FlexibleSpace();
         EditorGUILayout.EndHorizontal();
@@ -1319,10 +1319,10 @@ public class bl_MFPSManagerWindow : EditorWindow
         return cachedColors[key];
     }
 
-    [MenuItem("MFPS/Manager %m")]
+    [MenuItem("MFPS/管理器 %m")]
     static void Open()
     {
-        GetWindow<bl_MFPSManagerWindow>();
+        GetWindow<bl_MFPSManagerWindow>("MFPS 管理器");
     }
 
     void FetchCustomTabs()

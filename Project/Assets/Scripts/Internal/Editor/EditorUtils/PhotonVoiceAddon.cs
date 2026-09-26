@@ -14,7 +14,7 @@ public class PhotonVoiceAddon : MonoBehaviour
     private const string DEFINE_KEY = "PVOICE";
 
 #if !PVOICE
-    [MenuItem("Game Framework/Addons/Voice/Enable")]
+    [MenuItem("游戏框架/扩展/语音/启用")]
     private static void Enable()
     {
         bl_GameData.Instance.UseVoiceChat = true;
@@ -24,7 +24,7 @@ public class PhotonVoiceAddon : MonoBehaviour
 #endif
 
 #if PVOICE
-    [MenuItem("Game Framework/Addons/Voice/Disable")]
+    [MenuItem("游戏框架/扩展/语音/禁用")]
     private static void Disable()
     {
         bl_GameData.Instance.UseVoiceChat = false;
@@ -33,7 +33,7 @@ public class PhotonVoiceAddon : MonoBehaviour
     }
 #endif
 
-    [MenuItem("Game Framework/Addons/Voice/Integrate")]
+    [MenuItem("游戏框架/扩展/语音/集成")]
     private static void Instegrate()
     {
 
@@ -63,7 +63,7 @@ public class PhotonVoiceAddon : MonoBehaviour
                 if (old != null)
                 {
                     DestroyImmediate(old);
-                    Debug.Log("Remove old setup");
+                    Debug.Log("已移除旧的语音设置");
                 }
                 if (FindObjectOfType<PunVoiceClient>() == null)
                 {
@@ -86,19 +86,19 @@ public class PhotonVoiceAddon : MonoBehaviour
                     EditorUtility.SetDirty(pvs);
                     EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
                 }
-                Debug.Log("Photon Voice Integrated, enable it on GameData.");
+                Debug.Log("Photon 语音已集成，请在 GameData 中启用它。");
             }
             else
             {
-                Debug.Log("Can't found Menu scene.");
+                Debug.Log("未找到 Menu 场景。");
             }
         }
         else
         {
-            Debug.LogWarning("Can't complete the integration of the addons because MFPS folder structure has been change, please do the manual integration.");
+            Debug.LogWarning("无法自动完成扩展集成，因为 MFPS 目录结构已被修改，请手动集成。");
         }
 #else
-        Debug.LogWarning("Enable Photon Voice addon before integrate.");
+        Debug.LogWarning("请先启用 Photon 语音扩展再执行集成。");
 #endif
     }
 
@@ -122,13 +122,13 @@ public class PhotonVoiceAddon : MonoBehaviour
     }
 #endif
 
-    [MenuItem("Game Framework/Addons/Voice/Package")]
+    [MenuItem("游戏框架/扩展/语音/安装包")]
     private static void OpenPackagePage()
     {
         AssetStore.Open("content/130518");
     }
 
-    [MenuItem("Game Framework/Tools/Fix Define Symbols")]
+    [MenuItem("游戏框架/工具/修复编译符号")]
     private static void FixDefineSymbols()
     {
         bool defines = EditorUtils.CompilerIsDefine("LM");
@@ -139,7 +139,7 @@ public class PhotonVoiceAddon : MonoBehaviour
     }
 
 #if UNITY_POST_PROCESSING_STACK_V2
-    [MenuItem("Game Framework/Tools/Delete Post-Processing")]
+    [MenuItem("游戏框架/工具/删除后处理")]
     private static void DeletePP()
     {
         UnityEditor.PackageManager.Client.Remove("com.unity.postprocessing");

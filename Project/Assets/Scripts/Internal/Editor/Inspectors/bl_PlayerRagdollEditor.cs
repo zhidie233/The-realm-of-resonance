@@ -18,7 +18,7 @@ public class bl_PlayerRagdollEditor : Editor
         base.OnInspectorGUI();
         EditorGUI.indentLevel--;
         EditorGUILayout.EndVertical();
-        if (GUILayout.Button("Refresh"))
+        if (GUILayout.Button("刷新"))
         {
             script.SetUpHitBoxes();
         }

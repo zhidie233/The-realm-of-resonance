@@ -33,7 +33,7 @@ public class bl_WeaponAnimationEditor : Editor
             rect.y += 2;
             EditorGUI.PropertyField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), element, GUIContent.none);
         };
-        list.drawHeaderCallback = (Rect rect) => { EditorGUI.LabelField(rect, "Fire Animations");  };
+        list.drawHeaderCallback = (Rect rect) => { EditorGUI.LabelField(rect, "开火动画");  };
     }
 
     public override void OnInspectorGUI()
@@ -46,7 +46,7 @@ public class bl_WeaponAnimationEditor : Editor
         GUILayout.BeginVertical("box");
 
         GUILayout.BeginVertical("box");
-        script.m_AnimationType = (bl_WeaponAnimation.AnimationType)EditorGUILayout.EnumPopup("Animation Type", script.m_AnimationType);
+        script.m_AnimationType = (bl_WeaponAnimation.AnimationType)EditorGUILayout.EnumPopup("动画类型", script.m_AnimationType);
         GUILayout.EndVertical();
 
         if (script.m_AnimationType == bl_WeaponAnimation.AnimationType.Animation)
@@ -61,9 +61,9 @@ public class bl_WeaponAnimationEditor : Editor
         if (Gun.SoundReloadByAnim && gType != GunType.Knife)
         {
             GUILayout.BeginVertical("box");
-            script.Reload_1 = EditorGUILayout.ObjectField("Clip Out Audio", script.Reload_1, typeof(AudioClip), allowSceneObjects) as AudioClip;
-            script.Reload_2 = EditorGUILayout.ObjectField("Clip In Audio", script.Reload_2, typeof(AudioClip), allowSceneObjects) as AudioClip;
-            script.Reload_3 = EditorGUILayout.ObjectField("Slide Audio", script.Reload_3, typeof(AudioClip), allowSceneObjects) as AudioClip;
+            script.Reload_1 = EditorGUILayout.ObjectField("卸弹音效", script.Reload_1, typeof(AudioClip), allowSceneObjects) as AudioClip;
+            script.Reload_2 = EditorGUILayout.ObjectField("装弹音效", script.Reload_2, typeof(AudioClip), allowSceneObjects) as AudioClip;
+            script.Reload_3 = EditorGUILayout.ObjectField("滑套音效", script.Reload_3, typeof(AudioClip), allowSceneObjects) as AudioClip;
             GUILayout.EndVertical();
         }
         EditorGUI.EndChangeCheck();
@@ -81,50 +81,50 @@ public class bl_WeaponAnimationEditor : Editor
             _animator = script.GetComponent<Animator>();
             if (_animator == null)
             {
-                EditorGUILayout.HelpBox("This weapon don't have a Animator Component!", MessageType.Warning);
+                EditorGUILayout.HelpBox("该武器没有 Animator 组件！", MessageType.Warning);
                 return;
             }
         }
         if (_animator.runtimeAnimatorController == null)
         {
-            EditorGUILayout.HelpBox("The animator for this weapons has not been assigned yet, if you already have it, assign it in the Animator Component, otherwise you can create it here," +
-                "simply draw the AnimationClips in the respective field below and click in the button SetUp", MessageType.Info);
+            EditorGUILayout.HelpBox("该武器的动画器尚未指定。若你已有动画器，请在 Animator 组件中指定；否则可在此创建，" +
+                "把动画片段拖入下方对应字段，然后点击 SetUp 按钮", MessageType.Info);
 
             GUILayout.BeginVertical("box");
-            script.DrawName = EditorGUILayout.ObjectField("Draw Animation", script.DrawName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-            script.TakeOut = EditorGUILayout.ObjectField("Hide Animation", script.TakeOut, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-            script.SoloFireClip = EditorGUILayout.ObjectField("Fire Animation", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-            script.FireAimAnimation = EditorGUILayout.ObjectField("Aim Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.DrawName = EditorGUILayout.ObjectField("掏枪动画", script.DrawName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.TakeOut = EditorGUILayout.ObjectField("收枪动画", script.TakeOut, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.SoloFireClip = EditorGUILayout.ObjectField("开火动画", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.FireAimAnimation = EditorGUILayout.ObjectField("瞄准开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             if (gType != GunType.Knife)
             {
                 if (Gun.reloadPer == bl_Gun.ReloadPer.Bullet)
                 {
-                    script.StartReloadAnim = EditorGUILayout.ObjectField("Begin Reload", script.StartReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-                    script.InsertAnim = EditorGUILayout.ObjectField("Insert Bullet", script.InsertAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-                    script.AfterReloadAnim = EditorGUILayout.ObjectField("After Reload", script.AfterReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.StartReloadAnim = EditorGUILayout.ObjectField("开始换弹", script.StartReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.InsertAnim = EditorGUILayout.ObjectField("插入子弹", script.InsertAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.AfterReloadAnim = EditorGUILayout.ObjectField("换弹后", script.AfterReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 }
                 else
                 {
-                    script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 }
             }
             else
             {
-                script.QuickFireAnim = EditorGUILayout.ObjectField("Quick Fire Animation", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.QuickFireAnim = EditorGUILayout.ObjectField("快速开火动画", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             }
             if (gType == GunType.Grenade || gType == GunType.Launcher)
             {
-                script.QuickFireAnim = EditorGUILayout.ObjectField("Quick Fire Animation", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.QuickFireAnim = EditorGUILayout.ObjectField("快速开火动画", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             }
-            script.IdleClip = EditorGUILayout.ObjectField("Idle Animation", script.IdleClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-            script.AnimatedMovements = EditorGUILayout.ToggleLeft("Custom Animations For Movements", script.AnimatedMovements, EditorStyles.toolbarButton);
+            script.IdleClip = EditorGUILayout.ObjectField("待机动画", script.IdleClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.AnimatedMovements = EditorGUILayout.ToggleLeft("动作自定义动画", script.AnimatedMovements, EditorStyles.toolbarButton);
             GUILayout.Space(4);
             if (script.AnimatedMovements)
             {
-                WalkAnim = EditorGUILayout.ObjectField("Walk Animation", WalkAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
-                RunAnim = EditorGUILayout.ObjectField("Run Animation", RunAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                WalkAnim = EditorGUILayout.ObjectField("行走动画", WalkAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                RunAnim = EditorGUILayout.ObjectField("奔跑动画", RunAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             }
-            if (GUILayout.Button("SetUp", EditorStyles.toolbarButton))
+            if (GUILayout.Button("设置", EditorStyles.toolbarButton))
             {
                 CreateAnimator();
             }
@@ -133,95 +133,95 @@ public class bl_WeaponAnimationEditor : Editor
         else
         {
             GUILayout.BeginHorizontal("box");
-            script.DrawName = EditorGUILayout.ObjectField("Draw Animation", script.DrawName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.DrawName = EditorGUILayout.ObjectField("掏枪动画", script.DrawName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             script.DrawSpeed = EditorGUILayout.Slider(script.DrawSpeed, 0.1f, 3, GUILayout.Width(125));
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal("box");
-            script.TakeOut = EditorGUILayout.ObjectField("Hide Animation", script.TakeOut, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.TakeOut = EditorGUILayout.ObjectField("收枪动画", script.TakeOut, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             script.HideSpeed = EditorGUILayout.Slider(script.HideSpeed, 0.1f, 3, GUILayout.Width(125));
             GUILayout.EndHorizontal();
             if (gType == GunType.Machinegun || gType == GunType.Pistol || gType == GunType.Burst)
             {
-                script.fireBlendMethod = (bl_WeaponAnimation.FireBlendMethod)EditorGUILayout.EnumPopup("Fire Blend Method", script.fireBlendMethod);
+                script.fireBlendMethod = (bl_WeaponAnimation.FireBlendMethod)EditorGUILayout.EnumPopup("开火融合方式", script.fireBlendMethod);
                 GUILayout.BeginHorizontal("box");
-                script.SoloFireClip = EditorGUILayout.ObjectField("Fire Animation", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.SoloFireClip = EditorGUILayout.ObjectField("开火动画", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 if(script.fireBlendMethod == bl_WeaponAnimation.FireBlendMethod.FireSpeed || script.fireBlendMethod == bl_WeaponAnimation.FireBlendMethod.FireSpeedCrossFade)
                 script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.FireAimAnimation = EditorGUILayout.ObjectField("Aim Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.FireAimAnimation = EditorGUILayout.ObjectField("瞄准开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
             }
             else if (gType == GunType.Shotgun || gType == GunType.Sniper)
             {
                 GUILayout.BeginHorizontal("box");
-                script.SoloFireClip = EditorGUILayout.ObjectField("Fire Animation", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.SoloFireClip = EditorGUILayout.ObjectField("开火动画", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
                 GUILayout.EndHorizontal();
-                script.FireAimAnimation = EditorGUILayout.ObjectField("Aim Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.FireAimAnimation = EditorGUILayout.ObjectField("瞄准开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 if (Gun.reloadPer == bl_Gun.ReloadPer.Bullet)
                 {
                     GUILayout.BeginHorizontal("box");
-                    script.StartReloadAnim = EditorGUILayout.ObjectField("Start Reload", script.StartReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.StartReloadAnim = EditorGUILayout.ObjectField("开始换弹", script.StartReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal("box");
-                    script.InsertAnim = EditorGUILayout.ObjectField("Insert Bullet", script.InsertAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.InsertAnim = EditorGUILayout.ObjectField("插入子弹", script.InsertAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                     script.InsertSpeed = EditorGUILayout.Slider(script.InsertSpeed, 0.1f, 3, GUILayout.Width(125));
                     GUILayout.EndHorizontal();
                     GUILayout.BeginHorizontal("box");
-                    script.AfterReloadAnim = EditorGUILayout.ObjectField("End Reload", script.AfterReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.AfterReloadAnim = EditorGUILayout.ObjectField("结束换弹", script.AfterReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                     GUILayout.EndHorizontal();
                 }
                 else
                 {
                     GUILayout.BeginHorizontal("box");
-                    script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                    script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                     GUILayout.EndHorizontal();
                 }
             }
             else if (gType == GunType.Grenade || gType == GunType.Launcher)
             {
                 GUILayout.BeginHorizontal("box");
-                script.SoloFireClip = EditorGUILayout.ObjectField("Fire Animation", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.SoloFireClip = EditorGUILayout.ObjectField("开火动画", script.SoloFireClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.QuickFireAnim = EditorGUILayout.ObjectField("Quick Fire Animation", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.QuickFireAnim = EditorGUILayout.ObjectField("快速开火动画", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
-                script.HasParticles = EditorGUILayout.ToggleLeft("Use Particles", script.HasParticles, EditorStyles.toolbarPopup);
+                script.HasParticles = EditorGUILayout.ToggleLeft("使用粒子", script.HasParticles, EditorStyles.toolbarPopup);
                 if (script.HasParticles)
                 {
-                    script.ParticleRate = EditorGUILayout.Slider("Particle Rate", script.ParticleRate, 0.1f, 10);
+                    script.ParticleRate = EditorGUILayout.Slider("粒子生成速率", script.ParticleRate, 0.1f, 10);
                     var prop = serializedObject.FindProperty("Particles");
                     serializedObject.Update();
                     EditorGUILayout.PropertyField(prop, true);
                     serializedObject.ApplyModifiedProperties();
                 }
                 GUILayout.Space(2);
-                script.DrawAfterFire = EditorGUILayout.ToggleLeft("Draw After Fire", script.DrawAfterFire, EditorStyles.toolbarButton);
+                script.DrawAfterFire = EditorGUILayout.ToggleLeft("开火后绘制", script.DrawAfterFire, EditorStyles.toolbarButton);
             }
             else if (gType == GunType.Knife)
             {
                 GUILayout.BeginHorizontal("box");
-                script.FireAimAnimation = EditorGUILayout.ObjectField("Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.FireAimAnimation = EditorGUILayout.ObjectField("开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.QuickFireAnim = EditorGUILayout.ObjectField("Quick Fire Animation", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.QuickFireAnim = EditorGUILayout.ObjectField("快速开火动画", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
             }
             GUILayout.BeginHorizontal("box");
-            script.IdleClip = EditorGUILayout.ObjectField("Idle Animation", script.IdleClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.IdleClip = EditorGUILayout.ObjectField("待机动画", script.IdleClip, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal("box");
-            script.AnimatedMovements = EditorGUILayout.ToggleLeft("Custom Animations For Movements", script.AnimatedMovements, EditorStyles.toolbarButton);
+            script.AnimatedMovements = EditorGUILayout.ToggleLeft("动作自定义动画", script.AnimatedMovements, EditorStyles.toolbarButton);
             GUILayout.EndHorizontal();
         }
     }
@@ -229,8 +229,8 @@ public class bl_WeaponAnimationEditor : Editor
     void CreateAnimator()
     {
         string lastFolder = PlayerPrefs.GetString("mfpseditor.wanimator.save", "Assets/");
-        string path = EditorUtility.SaveFolderPanel("Save Animator Folder", lastFolder, script.gameObject.name);
-        if (string.IsNullOrEmpty(path)) { Debug.Log("Setup canceled"); return; }
+        string path = EditorUtility.SaveFolderPanel("动画器保存文件夹", lastFolder, script.gameObject.name);
+        if (string.IsNullOrEmpty(path)) { Debug.Log("设置已取消"); return; }
 
         PlayerPrefs.SetString("mfpseditor.wanimator.save", path);
 
@@ -311,47 +311,47 @@ public class bl_WeaponAnimationEditor : Editor
     void AnimationGUI()
     {
         GUILayout.BeginHorizontal("box");
-        script.DrawName = EditorGUILayout.ObjectField("Draw Animation", script.DrawName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+        script.DrawName = EditorGUILayout.ObjectField("掏枪动画", script.DrawName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
         script.DrawSpeed = EditorGUILayout.Slider(script.DrawSpeed, 0.1f, 3, GUILayout.Width(125));
         GUILayout.EndHorizontal();
         GUILayout.BeginHorizontal("box");
-        script.TakeOut = EditorGUILayout.ObjectField("Hide Animation", script.TakeOut, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+        script.TakeOut = EditorGUILayout.ObjectField("收枪动画", script.TakeOut, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
         script.HideSpeed = EditorGUILayout.Slider(script.HideSpeed, 0.1f, 3, GUILayout.Width(125));
         GUILayout.EndHorizontal();
         if (gType == GunType.Machinegun || gType == GunType.Pistol || gType == GunType.Burst)
         {
             GUILayout.BeginHorizontal("box");
-            script.FireAimAnimation = EditorGUILayout.ObjectField("Aim Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.FireAimAnimation = EditorGUILayout.ObjectField("瞄准开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal("box");
-            script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             GUILayout.EndHorizontal();
             list.DoLayoutList();
         }
         else if (gType == GunType.Shotgun || gType == GunType.Sniper)
         {
             GUILayout.BeginHorizontal("box");
-            script.FireAimAnimation = EditorGUILayout.ObjectField("Aim Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.FireAimAnimation = EditorGUILayout.ObjectField("瞄准开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
             GUILayout.EndHorizontal();
             if (Gun.reloadPer == bl_Gun.ReloadPer.Bullet)
             {
                 GUILayout.BeginHorizontal("box");
-                script.StartReloadAnim = EditorGUILayout.ObjectField("Start Reload", script.StartReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.StartReloadAnim = EditorGUILayout.ObjectField("开始换弹", script.StartReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.InsertAnim = EditorGUILayout.ObjectField("Insert Bullet", script.InsertAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.InsertAnim = EditorGUILayout.ObjectField("插入子弹", script.InsertAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 script.InsertSpeed = EditorGUILayout.Slider(script.InsertSpeed, 0.1f, 3, GUILayout.Width(125));
                 GUILayout.EndHorizontal();
                 GUILayout.BeginHorizontal("box");
-                script.AfterReloadAnim = EditorGUILayout.ObjectField("End Reload", script.AfterReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.AfterReloadAnim = EditorGUILayout.ObjectField("结束换弹", script.AfterReloadAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
             }
             else
             {
                 GUILayout.BeginHorizontal("box");
-                script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+                script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
                 GUILayout.EndHorizontal();
             }
             list.DoLayoutList();
@@ -359,19 +359,19 @@ public class bl_WeaponAnimationEditor : Editor
         else if (gType == GunType.Grenade || gType == GunType.Launcher)
         {
             GUILayout.BeginHorizontal("box");
-            script.FireAimAnimation = EditorGUILayout.ObjectField("Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.FireAimAnimation = EditorGUILayout.ObjectField("开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal("box");
-            script.QuickFireAnim = EditorGUILayout.ObjectField("Quick Fire Animation", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.QuickFireAnim = EditorGUILayout.ObjectField("快速开火动画", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal("box");
-            script.ReloadName = EditorGUILayout.ObjectField("Reload Animation", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.ReloadName = EditorGUILayout.ObjectField("换弹动画", script.ReloadName, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             GUILayout.EndHorizontal();
-            script.HasParticles = EditorGUILayout.ToggleLeft("Use Particles", script.HasParticles, EditorStyles.toolbarPopup);
+            script.HasParticles = EditorGUILayout.ToggleLeft("使用粒子", script.HasParticles, EditorStyles.toolbarPopup);
             if (script.HasParticles)
             {
-                script.ParticleRate = EditorGUILayout.Slider("Particle Rate", script.ParticleRate, 0.1f, 10);
+                script.ParticleRate = EditorGUILayout.Slider("粒子生成速率", script.ParticleRate, 0.1f, 10);
                 var prop = serializedObject.FindProperty("Particles");
                 serializedObject.Update();
                 EditorGUILayout.PropertyField(prop, true);
@@ -381,11 +381,11 @@ public class bl_WeaponAnimationEditor : Editor
         else if (gType == GunType.Knife)
         {
             GUILayout.BeginHorizontal("box");
-            script.FireAimAnimation = EditorGUILayout.ObjectField("Fire Animation", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.FireAimAnimation = EditorGUILayout.ObjectField("开火动画", script.FireAimAnimation, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             script.FireSpeed = EditorGUILayout.Slider(script.FireSpeed, 0.1f, 3, GUILayout.Width(125));
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal("box");
-            script.QuickFireAnim = EditorGUILayout.ObjectField("Quick Fire Animation", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
+            script.QuickFireAnim = EditorGUILayout.ObjectField("快速开火动画", script.QuickFireAnim, typeof(AnimationClip), allowSceneObjects) as AnimationClip;
             GUILayout.EndHorizontal();
         }
     }

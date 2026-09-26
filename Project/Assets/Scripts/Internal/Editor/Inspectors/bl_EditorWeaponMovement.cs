@@ -53,12 +53,12 @@ public class bl_EditorWeaponMovement : Editor
         GUI.color = Color.white;
         GUILayout.EndHorizontal();
 
-        GUILayout.Label("On Run weapon position", EditorStyles.helpBox);
-        script.moveTo = EditorGUILayout.Vector3Field("Position", script.moveTo);
-        script.rotateTo = EditorGUILayout.Vector3Field("Rotation", script.rotateTo);
+        GUILayout.Label("奔跑时武器位置", EditorStyles.helpBox);
+        script.moveTo = EditorGUILayout.Vector3Field("位置", script.moveTo);
+        script.rotateTo = EditorGUILayout.Vector3Field("旋转", script.rotateTo);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Get Actual Position", EditorStyles.toolbarButton))
+        if (GUILayout.Button("获取实际位置", EditorStyles.toolbarButton))
         {
             script.moveTo = script.transform.localPosition;
             script.rotateTo = script.transform.localEulerAngles;
@@ -68,17 +68,17 @@ public class bl_EditorWeaponMovement : Editor
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        GUILayout.Label("On Run and Reload weapon position", EditorStyles.helpBox);
-        script.moveToReload = EditorGUILayout.Vector3Field("Position", script.moveToReload);
-        script.rotateToReload = EditorGUILayout.Vector3Field("Rotation", script.rotateToReload);
+        GUILayout.Label("奔跑换弹时武器位置", EditorStyles.helpBox);
+        script.moveToReload = EditorGUILayout.Vector3Field("位置", script.moveToReload);
+        script.rotateToReload = EditorGUILayout.Vector3Field("旋转", script.rotateToReload);
         GUILayout.BeginHorizontal();
         GUILayout.FlexibleSpace();
-        if (GUILayout.Button("Get Actual Position", EditorStyles.toolbarButton))
+        if (GUILayout.Button("获取实际位置", EditorStyles.toolbarButton))
         {
             script.moveToReload = script.transform.localPosition;
             script.rotateToReload = script.transform.localRotation.eulerAngles;
         }
-        if (GUILayout.Button("Copy", EditorStyles.toolbarButton))
+        if (GUILayout.Button("复制", EditorStyles.toolbarButton))
         {
             script.moveToReload = script.moveTo;
             script.rotateToReload = script.rotateTo;
@@ -92,7 +92,7 @@ public class bl_EditorWeaponMovement : Editor
         script.OutSpeed = EditorGUILayout.Slider("Out Speed", script.OutSpeed, 1, 25);
         script.rotationSpeedMultiplier = EditorGUILayout.Slider("Rotation Speed Multiplier", script.rotationSpeedMultiplier, 0.1f, 3);
         script.accelerationMultiplier = EditorGUILayout.Slider("Acceleration Multiplier", script.accelerationMultiplier, 0.1f, 7);
-        script.accelerationCurve = EditorGUILayout.CurveField("Acceleration Curve", script.accelerationCurve);
+        script.accelerationCurve = EditorGUILayout.CurveField("加速曲线", script.accelerationCurve);
         GUILayout.EndVertical();
 
         if (!isRecording)

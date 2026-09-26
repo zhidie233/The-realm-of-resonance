@@ -48,13 +48,13 @@ public class bl_GunManagerEditor : Editor
 
 #if CLASS_CUSTOMIZER
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Class Customization is enabled, set default weapons here: ", EditorStyles.miniLabel);
-        if (GUILayout.Button("ClassManager")) { Selection.activeObject = bl_ClassManager.Instance; EditorGUIUtility.PingObject(bl_ClassManager.Instance); }
+        GUILayout.Label("已启用兵种自定义，在此设置默认武器： ", EditorStyles.miniLabel);
+        if (GUILayout.Button("兵种管理器")) { Selection.activeObject = bl_ClassManager.Instance; EditorGUIUtility.PingObject(bl_ClassManager.Instance); }
         GUILayout.EndHorizontal();
         GUI.enabled = false;
 #endif
         EditorGUILayout.BeginVertical("box");
-        ShowAssault = PhotonGUI.ContainerHeaderFoldout("Assault Class", ShowAssault);
+        ShowAssault = PhotonGUI.ContainerHeaderFoldout("突击兵兵种", ShowAssault);
         AssaultAnim.target = ShowAssault;
         if (EditorGUILayout.BeginFadeGroup(AssaultAnim.faded))
         {
@@ -66,7 +66,7 @@ public class bl_GunManagerEditor : Editor
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        ShowEngi = PhotonGUI.ContainerHeaderFoldout("Engineer Class", ShowEngi);
+        ShowEngi = PhotonGUI.ContainerHeaderFoldout("工程兵兵种", ShowEngi);
         EnginnerAnim.target = ShowEngi;
         if (EditorGUILayout.BeginFadeGroup(EnginnerAnim.faded))
         {
@@ -78,7 +78,7 @@ public class bl_GunManagerEditor : Editor
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        ShowRecon = PhotonGUI.ContainerHeaderFoldout("Recon Class", ShowRecon);
+        ShowRecon = PhotonGUI.ContainerHeaderFoldout("侦察兵兵种", ShowRecon);
         ReconAnim.target = ShowRecon;
         if (EditorGUILayout.BeginFadeGroup(ReconAnim.faded))
         {
@@ -90,7 +90,7 @@ public class bl_GunManagerEditor : Editor
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        ShowSupport = PhotonGUI.ContainerHeaderFoldout("Support Class", ShowSupport);
+        ShowSupport = PhotonGUI.ContainerHeaderFoldout("支援兵兵种", ShowSupport);
         SupportAnim.target = ShowSupport;
         if (EditorGUILayout.BeginFadeGroup(SupportAnim.faded))
         {
@@ -107,15 +107,15 @@ public class bl_GunManagerEditor : Editor
         GUILayout.BeginVertical("box");
         if (script.changeWeaponStyle == bl_GunManager.ChangeWeaponStyle.HideAndDraw)
         {
-            script.SwichTime = EditorGUILayout.Slider("Switch Time", script.SwichTime, 0.1f, 5);
+            script.SwichTime = EditorGUILayout.Slider("切换时间", script.SwichTime, 0.1f, 5);
         }
-        script.PickUpTime = EditorGUILayout.Slider("Pick Up Time", script.PickUpTime, 0.1f, 5);
-        script.changeWeaponStyle = (bl_GunManager.ChangeWeaponStyle)EditorGUILayout.EnumPopup("Change Weapon Style", script.changeWeaponStyle, EditorStyles.toolbarPopup);
+        script.PickUpTime = EditorGUILayout.Slider("拾取时间", script.PickUpTime, 0.1f, 5);
+        script.changeWeaponStyle = (bl_GunManager.ChangeWeaponStyle)EditorGUILayout.EnumPopup("切换武器样式", script.changeWeaponStyle, EditorStyles.toolbarPopup);
         GUILayout.EndVertical();
 
         GUILayout.BeginVertical("box");
-        script.HeadAnimator = EditorGUILayout.ObjectField("Head Animator", script.HeadAnimator, typeof(Animator), allowSceneObjects) as Animator;
-        script.SwitchFireAudioClip = EditorGUILayout.ObjectField("Switch Fire Mode Audio", script.SwitchFireAudioClip, typeof(AudioClip), allowSceneObjects) as AudioClip;
+        script.HeadAnimator = EditorGUILayout.ObjectField("头部动画器", script.HeadAnimator, typeof(Animator), allowSceneObjects) as Animator;
+        script.SwitchFireAudioClip = EditorGUILayout.ObjectField("切换开火模式音效", script.SwitchFireAudioClip, typeof(AudioClip), allowSceneObjects) as AudioClip;
         GUILayout.EndVertical();
 
         if (EditorGUI.EndChangeCheck())
@@ -149,9 +149,9 @@ public class bl_GunManagerEditor : Editor
                 string path = "Assets/Prefabs/Weapons/Loadouts";
                 if (!AssetDatabase.IsValidFolder(path))
                 {
-                    path = EditorUtility.OpenFolderPanel("Save Folder", "Assets", "Assets");
+                    path = EditorUtility.OpenFolderPanel("保存文件夹", "Assets", "Assets");
                 }
-                path = bl_UtilityHelper.CreateAsset<bl_PlayerClassLoadout>(path, false, "Player Class Loadout");
+                path = bl_UtilityHelper.CreateAsset<bl_PlayerClassLoadout>(path, false, "玩家兵种武器配置");
                 bl_PlayerClassLoadout pcl = AssetDatabase.LoadAssetAtPath(path, typeof(bl_PlayerClassLoadout)) as bl_PlayerClassLoadout;
                 so.objectReferenceValue = pcl;
                 EditorUtility.SetDirty(target);
@@ -165,9 +165,9 @@ public class bl_GunManagerEditor : Editor
                 string path = "Assets/Prefabs/Weapons/Loadouts";
                 if (!AssetDatabase.IsValidFolder(path))
                 {
-                    path = EditorUtility.OpenFolderPanel("Save Folder", "Assets", "Assets");
+                    path = EditorUtility.OpenFolderPanel("保存文件夹", "Assets", "Assets");
                 }
-                path = bl_UtilityHelper.CreateAsset<bl_PlayerClassLoadout>(path, false, $"{so.objectReferenceValue.name} copy");
+                path = bl_UtilityHelper.CreateAsset<bl_PlayerClassLoadout>(path, false, $"{so.objectReferenceValue.name} 副本");
                 bl_PlayerClassLoadout pcl = AssetDatabase.LoadAssetAtPath(path, typeof(bl_PlayerClassLoadout)) as bl_PlayerClassLoadout;
                 so.objectReferenceValue = pcl;
                 pcl.Primary = old.Primary;
@@ -184,7 +184,7 @@ public class bl_GunManagerEditor : Editor
     void DrawNetworkGunsList(bl_GunManager script)
     {
         GUILayout.BeginHorizontal();
-        GUILayout.Label("WEAPON MANAGER", EditorStyles.toolbarButton);
+        GUILayout.Label("武器管理器", EditorStyles.toolbarButton);
         GUILayout.Space(5);
         if (GUILayout.Button(new GUIContent("IMPORT", EditorGUIUtility.IconContent("ol plus").image), EditorStyles.toolbarButton, GUILayout.Width(70)))
         {

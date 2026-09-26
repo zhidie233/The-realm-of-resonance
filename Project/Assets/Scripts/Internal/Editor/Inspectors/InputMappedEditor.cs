@@ -24,7 +24,7 @@ namespace MFPS.InputManager
             string key = $"{bl_InputData.KEYS}.{(short)script.inputType}";
             if (PlayerPrefs.HasKey(key))
             {
-                if(GUILayout.Button("Delete save input binding"))
+                if(GUILayout.Button("删除已保存的输入绑定"))
                 {
                     PlayerPrefs.DeleteKey(key);
                 }

@@ -59,75 +59,75 @@ public class MFPSGeneralDoc : TutorialWizard
         new GifData{ Path = "adcwtp2.gif"},
     };
     private Steps[] AllSteps = new Steps[] {
-    new Steps { Name = "Resume", StepsLenght = 0, DrawFunctionName = nameof(Resume) },
-    new Steps { Name = "Terminology", StepsLenght = 0, DrawFunctionName = nameof(TerminologyDoc) },
-    new Steps { Name = "How to Modify MFPS", StepsLenght = 3, DrawFunctionName = nameof(HowToEditMFPSDoc),
-     SubStepsNames = new string[]{ "How to Modify", "Code Modifications", "Other Modifications" } },
-    new Steps { Name = "GameData", StepsLenght = 0, DrawFunctionName = nameof(GameDataDoc) },
+    new Steps { Name = "首页", StepsLenght = 0, DrawFunctionName = nameof(Resume) },
+    new Steps { Name = "术语", StepsLenght = 0, DrawFunctionName = nameof(TerminologyDoc) },
+    new Steps { Name = "如何修改 MFPS", StepsLenght = 3, DrawFunctionName = nameof(HowToEditMFPSDoc),
+     SubStepsNames = new string[]{ "如何修改", "代码修改", "其他修改" } },
+    new Steps { Name = "游戏数据", StepsLenght = 0, DrawFunctionName = nameof(GameDataDoc) },
     new Steps { Name = "Photon PUN", StepsLenght = 3, DrawFunctionName = nameof(DrawPhotonPunDoc),
-    SubStepsNames = new string[]{ "Photon PUN", "Photon Server", "What is CCU?"}},
-    new Steps { Name = "Offline", StepsLenght = 0, DrawFunctionName = nameof(OfflineDoc) },
-    new Steps { Name = "URP", StepsLenght = 4, DrawFunctionName = nameof(UniversalRPDoc) },
-    new Steps { Name = "HDRP", StepsLenght = 5, DrawFunctionName = nameof(HDRPDoc) },
-    new Steps { Name = "Kill Feed", StepsLenght = 2, DrawFunctionName = nameof(KillFeedDoc) },
-    new Steps { Name = "Player Prefabs", StepsLenght = 0, DrawFunctionName = nameof(PlayerPrefabsDoc) },
-    new Steps { Name = "Player Classes", StepsLenght = 0, DrawFunctionName = nameof(PlayerClassesDoc) },
-    new Steps { Name = "Head Bob", StepsLenght = 0, DrawFunctionName = nameof(HeadBobDoc) },
-    new Steps { Name = "Game Audio", StepsLenght = 3, DrawFunctionName = nameof(AudioDoc),
-    SubStepsNames = new string[]{ "Audio Reskin", "Audio Ranges", "Audio Assets"}},
-    new Steps { Name = "Game Texts", StepsLenght = 0, DrawFunctionName = nameof(DrawGameTexts) },
-    new Steps { Name = "Game Input", StepsLenght = 5, DrawFunctionName = nameof(GameInputDoc),
-    SubStepsNames = new string[]{ "Game Input", "Default Mapped", "Add Input", "GampePad", "Add Mapped" }},
-    new Steps { Name = "Game UI", StepsLenght = 2, DrawFunctionName = nameof(GameUIDoc),
-    SubStepsNames = new string[]{ "UI Reskin", "UI Assets" }},
-    new Steps { Name = "Teams", StepsLenght = 0, DrawFunctionName = nameof(DrawTeamsDoc) },
-    new Steps { Name = "Coins", StepsLenght = 2 , DrawFunctionName = nameof(DrawCoins),
-    SubStepsNames = new string[]{ "Properties", "Operations" } },
-    new Steps { Name = "Game Modes", StepsLenght = 3, DrawFunctionName = nameof(GameModesDoc),
-    SubStepsNames = new string[]{ "Game Modes", "Custom Mode", "Per Map Modes" } },
-    new Steps { Name = "Player Animations", StepsLenght = 4, DrawFunctionName = nameof(DrawPlayerAnimationDoc),
-    SubStepsNames = new string[]{ "Basic", "Advance", "Weapon Animations", "Animation Assets" } },
-    new Steps { Name = "Name Plates", StepsLenght = 0, DrawFunctionName = nameof(NamePlatesDoc) },
-    new Steps { Name = "Bullets", StepsLenght = 3 , DrawFunctionName = nameof(DrawBullets),
-    SubStepsNames = new string[]{ "Bullet Prefab", "Bullet Decals", "Custom Bullet" } },
-    new Steps { Name = "Kits", StepsLenght = 0, DrawFunctionName = nameof(DrawKitsSystem) },
-    new Steps { Name = "Kill Zones", StepsLenght = 0, DrawFunctionName = nameof(DrawKillZones) },
-    new Steps { Name = "Room Properties", StepsLenght = 0, DrawFunctionName = nameof(RoomPropertiesDoc) },
-    new Steps { Name = "Game Settings", StepsLenght = 0, DrawFunctionName = nameof(DrawGameSettings) },
-    new Steps { Name = "Mouse Look", StepsLenght = 0, DrawFunctionName = nameof(MouseLookDoc) },
-    new Steps { Name = "Object Pooling", StepsLenght = 0, DrawFunctionName = nameof(DrawObjectPooling) },
-    new Steps { Name = "Add New Menu", StepsLenght = 0, DrawFunctionName = nameof(AddNewMenu) },
-    new Steps { Name = "Player Arms IK", StepsLenght = 0, DrawFunctionName = nameof(PlayerIKDoc) },
-    new Steps { Name = "Crosshair", StepsLenght = 0, DrawFunctionName = nameof(CrosshairDoc) },
-    new Steps { Name = "Mobile", StepsLenght = 0, DrawFunctionName = nameof(DrawMobileDoc) },
-    new Steps { Name = "Particles & Decals", StepsLenght = 2, DrawFunctionName = nameof(ParticlesDecalsDoc) ,
-    SubStepsNames = new string[]{ "Particles & Decals", "FX Assets" }},
-    new Steps { Name = "Post Processing", StepsLenght = 3, DrawFunctionName = nameof(PostProcessingDoc),
-        SubStepsNames = new string[]{ "Post Processing", "Custom Profile", "Error Handling" } },
-    new Steps { Name = "Friend List", StepsLenght = 0, DrawFunctionName = nameof(DrawFriendListDoc) },
-    new Steps { Name = "InGame Chat", StepsLenght = 0, DrawFunctionName = nameof(InGameChatDoc) },
-    new Steps { Name = "FootStep", StepsLenght = 0, DrawFunctionName = nameof(FootStepsDoc) },
-    new Steps { Name = "Doors", StepsLenght = 0, DrawFunctionName = nameof(DoorsDoc) },
-    new Steps { Name = "Server Regions", StepsLenght = 0, DrawFunctionName = nameof(ServerRegionDoc) },
-    new Steps { Name = "Local Notifications", StepsLenght = 0, DrawFunctionName = nameof(LocalNotificationsDoc) },
-    new Steps { Name = "Kick Vote", StepsLenght = 0, DrawFunctionName = nameof(KickVotationDoc) },
-    new Steps { Name = "Game Staff", StepsLenght = 0, DrawFunctionName = nameof(GameStaffDoc) },
-    new Steps { Name = "Network Stats", StepsLenght = 0, DrawFunctionName = nameof(NetworkStats) },
-    new Steps { Name = "Player Hitbox", StepsLenght = 2, DrawFunctionName = nameof(PlayerHitboxDoc),
-    SubStepsNames = new string[]{ "Colliders", "Damage"}},
-    new Steps { Name = "Deal Damage", StepsLenght = 2, DrawFunctionName = nameof(PlayerDamageDoc),
-     SubStepsNames = new string[]{ "Player Damage", "Object Damage"}},
-    new Steps { Name = "Ladder", StepsLenght = 0, DrawFunctionName = nameof(LadderDoc) },
-    new Steps { Name = "Events", StepsLenght = 0, DrawFunctionName = nameof(MFPSEventsDoc) },
-    new Steps { Name = "Addons", StepsLenght = 0, DrawFunctionName = nameof(DrawAddonsDoc) },
-    new Steps { Name = "Editor Menus", StepsLenght = 0, DrawFunctionName = nameof(EditorMenusDoc) },
-    new Steps { Name = "Update MFPS", StepsLenght = 0, DrawFunctionName = nameof(UpdateMFPSDoc) },
-    new Steps { Name = "Anti-Cheat", StepsLenght = 0, DrawFunctionName = nameof(AntiCheatDoc) },
-    new Steps { Name = "FP Arms Material", StepsLenght = 0, DrawFunctionName = nameof(FPArmsMaterial) },
-    new Steps { Name = "AFK", StepsLenght = 0, DrawFunctionName = nameof(AfkDoc) },
-    new Steps { Name = "Lobby Chat", StepsLenght = 0, DrawFunctionName = nameof(DrawLobbyChat) },
-    new Steps { Name = "Common Q/A", StepsLenght = 0, DrawFunctionName = nameof(CommonQADoc) },
-    new Steps { Name = "Known Issues", StepsLenght = 0, DrawFunctionName = nameof(KnownIssuesDoc) },
+    SubStepsNames = new string[]{ "Photon PUN", "Photon 服务器", "什么是 CCU？"}},
+    new Steps { Name = "离线模式", StepsLenght = 0, DrawFunctionName = nameof(OfflineDoc) },
+    new Steps { Name = "URP 管线", StepsLenght = 4, DrawFunctionName = nameof(UniversalRPDoc) },
+    new Steps { Name = "HDRP 管线", StepsLenght = 5, DrawFunctionName = nameof(HDRPDoc) },
+    new Steps { Name = "击杀提示", StepsLenght = 2, DrawFunctionName = nameof(KillFeedDoc) },
+    new Steps { Name = "玩家预制体", StepsLenght = 0, DrawFunctionName = nameof(PlayerPrefabsDoc) },
+    new Steps { Name = "玩家兵种", StepsLenght = 0, DrawFunctionName = nameof(PlayerClassesDoc) },
+    new Steps { Name = "头部晃动", StepsLenght = 0, DrawFunctionName = nameof(HeadBobDoc) },
+    new Steps { Name = "游戏音频", StepsLenght = 3, DrawFunctionName = nameof(AudioDoc),
+    SubStepsNames = new string[]{ "音频换皮", "音频范围", "音频资源"}},
+    new Steps { Name = "游戏文本", StepsLenght = 0, DrawFunctionName = nameof(DrawGameTexts) },
+    new Steps { Name = "游戏输入", StepsLenght = 5, DrawFunctionName = nameof(GameInputDoc),
+    SubStepsNames = new string[]{ "游戏输入", "默认映射", "添加输入", "手柄", "添加映射" }},
+    new Steps { Name = "游戏界面", StepsLenght = 2, DrawFunctionName = nameof(GameUIDoc),
+    SubStepsNames = new string[]{ "界面换皮", "界面资源" }},
+    new Steps { Name = "队伍", StepsLenght = 0, DrawFunctionName = nameof(DrawTeamsDoc) },
+    new Steps { Name = "金币", StepsLenght = 2 , DrawFunctionName = nameof(DrawCoins),
+    SubStepsNames = new string[]{ "属性", "操作" } },
+    new Steps { Name = "游戏模式", StepsLenght = 3, DrawFunctionName = nameof(GameModesDoc),
+    SubStepsNames = new string[]{ "游戏模式", "自定义模式", "按地图模式" } },
+    new Steps { Name = "玩家动画", StepsLenght = 4, DrawFunctionName = nameof(DrawPlayerAnimationDoc),
+    SubStepsNames = new string[]{ "基础", "进阶", "武器动画", "动画资源" } },
+    new Steps { Name = "名牌", StepsLenght = 0, DrawFunctionName = nameof(NamePlatesDoc) },
+    new Steps { Name = "子弹", StepsLenght = 3 , DrawFunctionName = nameof(DrawBullets),
+    SubStepsNames = new string[]{ "子弹预制体", "子弹贴花", "自定义子弹" } },
+    new Steps { Name = "装备套件", StepsLenght = 0, DrawFunctionName = nameof(DrawKitsSystem) },
+    new Steps { Name = "击杀区域", StepsLenght = 0, DrawFunctionName = nameof(DrawKillZones) },
+    new Steps { Name = "房间属性", StepsLenght = 0, DrawFunctionName = nameof(RoomPropertiesDoc) },
+    new Steps { Name = "游戏设置", StepsLenght = 0, DrawFunctionName = nameof(DrawGameSettings) },
+    new Steps { Name = "鼠标视角", StepsLenght = 0, DrawFunctionName = nameof(MouseLookDoc) },
+    new Steps { Name = "对象池", StepsLenght = 0, DrawFunctionName = nameof(DrawObjectPooling) },
+    new Steps { Name = "新增菜单", StepsLenght = 0, DrawFunctionName = nameof(AddNewMenu) },
+    new Steps { Name = "玩家手臂 IK", StepsLenght = 0, DrawFunctionName = nameof(PlayerIKDoc) },
+    new Steps { Name = "准星", StepsLenght = 0, DrawFunctionName = nameof(CrosshairDoc) },
+    new Steps { Name = "移动端", StepsLenght = 0, DrawFunctionName = nameof(DrawMobileDoc) },
+    new Steps { Name = "粒子与贴花", StepsLenght = 2, DrawFunctionName = nameof(ParticlesDecalsDoc) ,
+    SubStepsNames = new string[]{ "粒子与贴花", "特效资源" }},
+    new Steps { Name = "后处理", StepsLenght = 3, DrawFunctionName = nameof(PostProcessingDoc),
+        SubStepsNames = new string[]{ "后处理", "自定义配置", "错误处理" } },
+    new Steps { Name = "好友列表", StepsLenght = 0, DrawFunctionName = nameof(DrawFriendListDoc) },
+    new Steps { Name = "游戏内聊天", StepsLenght = 0, DrawFunctionName = nameof(InGameChatDoc) },
+    new Steps { Name = "脚步声", StepsLenght = 0, DrawFunctionName = nameof(FootStepsDoc) },
+    new Steps { Name = "门", StepsLenght = 0, DrawFunctionName = nameof(DoorsDoc) },
+    new Steps { Name = "服务器区域", StepsLenght = 0, DrawFunctionName = nameof(ServerRegionDoc) },
+    new Steps { Name = "本地通知", StepsLenght = 0, DrawFunctionName = nameof(LocalNotificationsDoc) },
+    new Steps { Name = "踢人投票", StepsLenght = 0, DrawFunctionName = nameof(KickVotationDoc) },
+    new Steps { Name = "游戏管理员", StepsLenght = 0, DrawFunctionName = nameof(GameStaffDoc) },
+    new Steps { Name = "网络状态", StepsLenght = 0, DrawFunctionName = nameof(NetworkStats) },
+    new Steps { Name = "玩家碰撞盒", StepsLenght = 2, DrawFunctionName = nameof(PlayerHitboxDoc),
+    SubStepsNames = new string[]{ "碰撞体", "伤害"}},
+    new Steps { Name = "伤害结算", StepsLenght = 2, DrawFunctionName = nameof(PlayerDamageDoc),
+     SubStepsNames = new string[]{ "玩家伤害", "物体伤害"}},
+    new Steps { Name = "梯子", StepsLenght = 0, DrawFunctionName = nameof(LadderDoc) },
+    new Steps { Name = "事件", StepsLenght = 0, DrawFunctionName = nameof(MFPSEventsDoc) },
+    new Steps { Name = "扩展", StepsLenght = 0, DrawFunctionName = nameof(DrawAddonsDoc) },
+    new Steps { Name = "编辑器菜单", StepsLenght = 0, DrawFunctionName = nameof(EditorMenusDoc) },
+    new Steps { Name = "更新 MFPS", StepsLenght = 0, DrawFunctionName = nameof(UpdateMFPSDoc) },
+    new Steps { Name = "反作弊", StepsLenght = 0, DrawFunctionName = nameof(AntiCheatDoc) },
+    new Steps { Name = "第一人称手臂材质", StepsLenght = 0, DrawFunctionName = nameof(FPArmsMaterial) },
+    new Steps { Name = "挂机检测", StepsLenght = 0, DrawFunctionName = nameof(AfkDoc) },
+    new Steps { Name = "大厅聊天", StepsLenght = 0, DrawFunctionName = nameof(DrawLobbyChat) },
+    new Steps { Name = "常见问题", StepsLenght = 0, DrawFunctionName = nameof(CommonQADoc) },
+    new Steps { Name = "已知问题", StepsLenght = 0, DrawFunctionName = nameof(KnownIssuesDoc) },
     };
 
     public override void WindowArea(int window)
@@ -146,34 +146,34 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void Resume()
     {
-        DrawTitleText("Game Framework");
-        DrawText("Version: " + MFPSEditor.AssetData.Version);
-        DrawYoutubeCover("MFPS Get Started Video", GetServerImage(22), "https://www.youtube.com/watch?v=ysYqI4w1vq4");
-        DrawTitleText("Hot Tutorials");
+        DrawTitleText("游戏框架");
+        DrawText("版本： " + MFPSEditor.AssetData.Version);
+        DrawYoutubeCover("MFPS 入门视频", GetServerImage(22), "https://www.youtube.com/watch?v=ysYqI4w1vq4");
+        DrawTitleText("热门教程");
 
-        if (DrawLinkText("Add Maps"))
+        if (DrawLinkText("添加地图"))
         {
-            EditorApplication.ExecuteMenuItem("Game Framework/Tutorials/Add Map");
+            EditorApplication.ExecuteMenuItem("游戏框架/教程/添加地图");
         }
-        if (DrawLinkText("Add Weapon"))
+        if (DrawLinkText("添加武器"))
         {
-            EditorApplication.ExecuteMenuItem("Game Framework/Tutorials/Add Weapon");
+            EditorApplication.ExecuteMenuItem("游戏框架/教程/添加武器");
         }
-        if (DrawLinkText("Add Players"))
+        if (DrawLinkText("添加玩家"))
         {
-            EditorApplication.ExecuteMenuItem("Game Framework/Tutorials/Add Player");
+            EditorApplication.ExecuteMenuItem("游戏框架/教程/添加玩家");
         }
-        if (DrawLinkText("Change Bots"))
+        if (DrawLinkText("更换机器人"))
         {
-            EditorApplication.ExecuteMenuItem("Game Framework/Tutorials/Change Bots");
+            EditorApplication.ExecuteMenuItem("游戏框架/教程/更换机器人");
         }
 
-        DrawTitleText("Custom Integration Tutorials");
-        if (DrawLinkText("Integrate Loading Screen to MFPS"))
+        DrawTitleText("自定义集成教程");
+        if (DrawLinkText("将加载界面集成到 MFPS"))
         {
             Application.OpenURL("https://www.lovattostudio.com/en/integrate-loading-screen-to-mfps-2-0/");
         }
-        if (DrawLinkText("Integrate DestroyIt to MFPS"))
+        if (DrawLinkText("将 DestroyIt 集成到 MFPS"))
         {
             Application.OpenURL("https://www.lovattostudio.com/en/integrate-destroyit-to-mfps-2-0/");
         }
@@ -181,117 +181,117 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void TerminologyDoc()
     {
-        DrawText("There are some words and phrases that you will encounter a lot in this documentation that you may not be familiar with, here you find a short explanation of what they refer to.");
+        DrawText("本文档中会频繁出现一些你可能不熟悉的词汇和说法，这里给出简要解释。");
         DrawHorizontalSeparator();
         Space(10);
-        DrawHorizontalColumn("GameData", "Is a <i>ScriptableObject</i> that contain many front-end settings of MFPS that you can easily tweak to fit your needs and reskin the game, the options go from simple toggles to show or hide blood in the game up to the Weapon and Game Mode information, it can be found in the <b>Resources</b> folder of MFPS.\n\nFor more information check the <b>GameData</b> section.");
+        DrawHorizontalColumn("GameData", "一个 <i>ScriptableObject</i>，包含大量 MFPS 前端设置，可轻松调整以满足需求并为游戏换皮。选项从是否显示血液的简单开关，到武器和游戏模式信息一应俱全，位于 MFPS 的 <b>Resources</b> 文件夹中。\n\n更多信息请查看 <b>GameData</b> 章节。");
 
-        DrawHorizontalColumn("Player Prefab", "Are the unity prefabs or prefab that contain all the required scripts, objects, and structure that make up the MFPS player controller,\nby default the player prefabs are located in the <b>Resources</b> folder of MFPS.\n\nFor more information, check the <b>Player Prefab</b> section.");
+        DrawHorizontalColumn("Player Prefab", "构成 MFPS 玩家控制器的预制体，包含所需的全部脚本、对象和层级结构，\n默认位于 MFPS 的 <b>Resources</b> 文件夹中。\n\n更多信息请查看 <b>玩家预制体</b> 章节。");
 
-        DrawHorizontalColumn("FPWeapon", "Stands for '<b>First Person Weapon</b>' is referring to the weapon that it seems for the local player camera, also referenced as the <b>view model</b>, What differentiates this weapon from the <i>TPWeapon</i> is that it contains the weapon and the arms/hands model and it only shows for the local player camera.\n \nThe FPWeapons can be found inside the <b>Local</b> child of each player prefab.");
+        DrawHorizontalColumn("FPWeapon", "即<b>第一人称武器</b>，指本机玩家相机中看到的武器，也称<b>视图模型</b>。它与<i>第三人称武器</i>的区别在于包含武器本体和手臂或手部模型，且仅本机玩家相机可见。\n \n第一人称武器位于每个玩家预制体的 <b>Local</b> 子节点内。");
 
-        DrawHorizontalColumn("TPWeapon", "Stands for '<b>Third Person Weapon</b>' is referring to the weapon that it seems in the other player's soldier model, also referenced as the <b>world model</b>, What differentiates this weapon from the <i>FPWeapon</i> is that it is a single weapon model and is placed inside the player/soldier model hands.\n \nThe TPWeapons can be found inside the <b>Remote</b> child of each player prefab, specifically in the right-hand bone of the player model.");
+        DrawHorizontalColumn("TPWeapon", "即<b>第三人称武器</b>，指其他玩家的士兵模型上看到的武器，也称<b>世界模型</b>。它与<i>第一人称武器</i>的区别在于只是单个武器模型，放置在玩家或士兵模型的双手之间。\n \n第三人称武器位于每个玩家预制体的 <b>Remote</b> 子节点内，具体在玩家模型的右手骨骼上。");
 
-        DrawHorizontalColumn("Unity Top Menu", "Is referencing the Menu Items located at the top of the Unity Editor, <i><b>File, Edit, Assets, GameObject, Components, MFPS, etc...</b></i>");
+        DrawHorizontalColumn("Unity 顶部菜单", "指 Unity 编辑器顶部的菜单项，<i><b>File、Edit、Assets、GameObject、Components、MFPS 等…</b></i>");
     }
 
     void HowToEditMFPSDoc()
     {
         if (subStep == 0)
         {
-            DrawText("This is a question that could sound like you will have some sort of limitations for modifying MFPS, but that is definitely not the case, if you know what you want to do and you know how to do it, you practically have no limitations, MFPS includes the full source code and content of the game so everything can be modified as the developer please.\n \nThe purpose of this guide is to give a recommendation of the ideal way of modifying MFPS <b>if you want to make it a lot easier to merge future MFPS updates.</b>\n \nIf you have been using MFPS for quite a while, you already know that one of the biggest problems with MFPS has been the merge of Updates, since each major update require to be imported in a new Unity Project, this because import a new update in a project with an existing old version of MFPS, will cause to lose all the changes that you have done until that point in the game and most likely will break the game too, so the only possible way to apply the improves and fixes of new updates in old version projects have been to do a manual merge, checking script by script, comparing the prefabs, etc... definitely a nightmare.\n \nThis in part was caused by the way that MFPS was created, the only way to do modifications to the code was directly in the game default scripts, due to the hard-coded code and the \"spiderweb\" of references,\nalso at difference of tools or extensions assets, game templates are intended for the users/devs to modify the core content, which also contributes to making it harder to update to new versions.\nSince version 1.9 a redo of the game backend design has started, making most of the code inheritable allowing developer to make code changes without the need to modify the default scripts, instead, developers can create a new script ➔ inherited from the Base-Classes ➔ and implement their custom changes.\n \nOn the next page, you will have more information about this and how to work with that kind of code design.");
+            DrawText("这个问题听起来像是修改 MFPS 会受到某种限制，但事实并非如此。只要清楚要做什么、知道怎么做，理论上没有任何限制，MFPS 包含游戏的完整源代码和资源，一切都可以按开发者意愿修改。\n \n本指南旨在给出修改 MFPS 的理想方式建议，<b>以便将来合并 MFPS 更新时轻松许多。</b>\n \n如果使用 MFPS 已有一段时间，你会知道它最大的问题之一就是更新合并。每个大版本更新都需导入到新的 Unity 工程，因为把新版本导入到已有旧版本 MFPS 的工程中，会丢失此前对游戏所做的全部修改，而且极可能直接搞坏游戏。因此在旧版本工程中应用新版本的改进和修复，唯一可行的办法就是手动合并，逐个脚本检查、逐个预制体比对，堪称噩梦。\n \n这在一定程度上源于 MFPS 的创建方式。由于代码硬编码和引用关系盘根错节，修改代码的唯一途径就是直接改游戏的默认脚本；\n另外与工具类或扩展类素材不同，游戏模板本就预期用户或开发者去修改核心内容，这也加剧了升级到新版本的难度。\n从 1.9 版起，游戏后端设计开始重做，大部分代码支持继承，开发者无需修改默认脚本即可改代码，只需新建一个脚本 ➔ 继承自基类 ➔ 实现自己的改动。\n \n下一页会详细介绍这一点以及如何使用这类代码设计。");
         }
         else if (subStep == 1)
         {
-            DrawSuperText("<?background=#FFF>Code Modifications</background>\n\nStarting from MFPS 1.9, most of the default scripts are using code-inheritance design, <b>Inheritance allows you or your programmers to create classes that are built upon existing classes of the game, to specify a new implementation while maintaining the same behaviors, to reuse code, and to independently extend original code.</b>\n \n<b>As an example of how this design works and how it helps:</b>\n \nBefore MFPS 1.9, if you had wanted to make a modification to the weapon pick-up system, for example, you would have to make the changes to the script <b>bl_GunPickUp.cs</b> <i>(the default script)</i> which would cause you no longer be able to automatically update that script since you would lose your changes.\nInstead in MFPS 1.9 if you want to make the same modification, you won't need to make it directly in the default script, instead, you will create a new script and inherit it from the base class (in this case <b>bl_GunPickUpBase</b>) ➔ You will copy the code from the default script and pasted in your new one, and then make the wanted changes, you won't have to worry about the references to that script since all references are connected to the base class, so you only will need attach your new script in wherever game object the default script was attached (and you will remove/detach the default script).\n \n<?background=#FFF>How to inherit a script?</background>\n \nIf you are a medium-high experienced programmer, you may already be familiar with this programming design since is not only what is expected from a good code but also this type of design makes it a lot easier to maintain and scale the code and adds a polymorphism structure so you can implement new features/variants with less effort.\n \nIf you are not a programmer or you aren't familiarized with code inheritance, all you have to do is create a new script, using the same example of the gun pick up, let's say this script is for making modifications to the weapon pick up logic, so after you create that script you will have a simple structure like this:");
+            DrawSuperText("<?background=#FFF>代码修改</background>\n\n从 MFPS 1.9 起，大部分默认脚本采用代码继承设计，<b>继承允许你或你的程序员基于游戏已有的类创建新类，在保持行为一致的前提下指定新的实现，实现代码复用，并独立扩展原有代码。</b>\n \n<b>以下举例说明这种设计如何工作、有何帮助：</b>\n \n在 MFPS 1.9 之前，若想修改武器拾取系统，必须直接改 <b>bl_GunPickUp.cs</b> <i>（默认脚本）</i>，这会导致该脚本无法再自动更新，否则你的改动就会丢失。\n而在 MFPS 1.9 中做同样的修改，无需直接改默认脚本，而是新建一个脚本并继承其基类（本例为 <b>bl_GunPickUpBase</b>）➔ 把默认脚本的代码复制到新脚本中，然后做想要的修改。由于所有引用都指向基类，无需担心引用问题，只需在原本挂载默认脚本的物体上换挂你的新脚本，并移除或卸载默认脚本即可。\n \n<?background=#FFF>如何继承脚本？</background>\n \n若你是有中高级经验的程序员，可能已熟悉这种编程设计，它不仅是优秀代码的应有之义，也让代码更易维护和扩展，并带来多态结构，从而以更少代价实现新功能或变体。\n \n若你不是程序员或不熟悉代码继承，做法很简单：以武器拾取为例新建一个脚本，假设该脚本用于修改武器拾取逻辑，创建后其结构大致如下：");
             DrawCodeText("using UnityEngine;\n \npublic class bl_GunPickUp2 : MonoBehaviour\n{\n    ...\n}");
-            DrawText("What you have to do is change the base class <i>(the class name next to your class name)</i>, in this case, it's <color=#0E6148FF>MonoBeheaviour</color>, you have to change to the base class of <i>bl_GunPickUp</i> which is <color=#0E6148FF>bl_GunPickUpBase</color>, so you will have something like this:");
+            DrawText("接下来要修改基类<i>（紧随你的类名之后那个类名）</i>，此处原为 <color=#0E6148FF>MonoBeheaviour</color>，需改为 <i>bl_GunPickUp</i> 的基类 <color=#0E6148FF>bl_GunPickUpBase</color>，结果如下：");
             DrawCodeText("using UnityEngine;\n \npublic class bl_GunPickUp2 : bl_GunPickUpBase\n{\n    ...\n}");
-            DrawNote("Almost all the default scripts have this same name pattern of the base classes, they just end with the \"Base\" word at the end of the name, but you can always make sure which is the base of a script by opening the default script.");
-            DrawText("Once you change the base class, you will have to override the base class functions/methods, if you don't know how to do this, simply copy the code of the original class <i>(in this case <b>bl_GunPickUp.cs</b>)</i> and paste it your script,\nThat is all you need, know you can make the changes that you want in your new script.");
+            DrawNote("几乎所有默认脚本的基类都遵循同样的命名规则，只是在名称末尾加上 \"Base\" 一词。不过要确认某个脚本的基类，最可靠的方法还是打开该默认脚本查看。");
+            DrawText("改好基类后，需要重写基类的函数或方法。若不知如何操作，直接把原类<i>（本例为 <b>bl_GunPickUp.cs</b>）</i>的代码复制粘贴到你的脚本中即可，\n这样就够了，之后便可在新脚本中做任意修改。");
             DrawHorizontalSeparator();
-            DrawText("As said before, this is not a requirement to make code changes but is the recommended way, although not all code MFPS allow inheritance, as of version 1.9 more than half of the code has been redesigned to work that way but the works are still in progress, the target is that the whole code or at least most of it allows inheritance and be modular in future updates.");
+            DrawText("如前所述，这并非修改代码的强制要求，而是推荐做法。MFPS 并非所有代码都支持继承，截至 1.9 版已有一半以上代码按此方式重做，但工作仍在进行，目标是让全部或至少大部分代码支持继承并在未来更新中保持模块化。");
         }
         else if (subStep == 2)
         {
-            DrawText("The same idea of the <i>code modifications</i> applied to other game modifications like prefabs, menus, scenes, etc... <b>ideally you should not modify the defaults content, instead, you should create a duplicate</b> and use that duplicated, e.g:\nFor the MainMenu scene, you should create a duplicated of the scene and leave the default scene as-is for future reference.\nThat way if you want to merge a future update of MFPS you won't lose your changes on that scene if you import it, and you will have it as a reference to check the changes of the new version made in the scene.\n \nSame idea with the Player Prefabs, instead of using the default player prefabs <i>(MPlayer and MPlayer2)</i> you should create a duplicate of each and use these duplicates <i>(assigning them on GameData)</i>.\n \nYou get the idea, don't use the default content ➔ create and use a duplicate instead.");
-            DrawNote("In the editor, you can duplicate almost anything by selecting it in the Project View window and pressing <b>Ctrl + D</b> on Windows or <b>Command + D</b> on Mac.");
+            DrawText("<i>代码修改</i>的同一思路也适用于预制体、菜单、场景等其他游戏内容的修改。\n<b>理想做法是不修改默认内容，而是创建副本</b>并使用副本，例如：\n对于 MainMenu 场景，应创建该场景的副本，保留默认场景原样以备将来参考。\n这样将来合并 MFPS 更新时，导入后不会丢失你在该场景上的修改，且保留原场景可作为参照，对比新版本在该场景中做了哪些改动。\n \n玩家预制体同理，不要使用默认玩家预制体<i>（MPlayer 和 MPlayer2）</i>，而应为每个创建副本并使用这些副本<i>（在 GameData 中指定）</i>。\n \n道理就是这样，不要使用默认内容 ➔ 创建并使用副本。");
+            DrawNote("在编辑器中，几乎任何内容都可以通过以下方式复制：在 Project 视图中选中它，Windows 上按 <b>Ctrl + D</b>，Mac 上按 <b>Command + D</b>。");
         }
     }
 
     void GameDataDoc()
     {
         DrawTitleText("GameData");
-        DrawText("With MFPS you will notice that <b>GameData</b> is mentioned a lot in the documentation, readMe.txt, and many other comments.\nIf you don't know what <b>GameData</b> is, how it works or where it's located, here is a brief explanation:\n\n<b>GameData</b> is a <i>ScriptableObject</i> that contain a lot of front-end settings that you can easily tweak to fit your needs and reskin the game, the options go from simple toggles to show or hide blood in the game up to the Weapon and Game Mode information.");
-        DrawHyperlinkText("<link=asset:Assets/Resources/GameData.asset>GameData</link> is located in the <b>Resources</b> folder of MFPS:");
+        DrawText("使用 MFPS 时你会注意到，文档、readMe.txt 以及许多注释中都频繁提到 <b>GameData</b>。\n若不清楚 <b>GameData</b> 是什么、如何工作或位于何处，这里简要说明：\n\n<b>GameData</b> 是一个 <i>ScriptableObject</i>，包含大量前端设置，可轻松调整以满足需求并为游戏换皮。选项从是否显示血液的简单开关，到武器和游戏模式信息一应俱全。");
+        DrawHyperlinkText("<link=asset:Assets/Resources/GameData.asset>GameData</link> 位于 MFPS 的 <b>Resources</b> 文件夹中：");
         DrawServerImage(3);
-        DrawNote("You can also open this quickly using the <b>MFPS Manager</b> window by clicking <b>Ctrl + M</b> in the editor using Windows or <b>Command + M</b> on Mac.");
+        DrawNote("也可通过 <b>MFPS 管理器</b> 窗口快速打开，在 Windows 编辑器中按 <b>Ctrl + M</b>，Mac 上按 <b>Command + M</b>。");
     }
 
     void DrawPhotonPunDoc()
     {
         if (subStep == 0)
         {
-            DrawText("<b>Photon Unity Networking</b> a.k.a <b>Photon PUN</b> is the network solution that MFPS use to handle all the network/server side stuff, it's one if it's not the most solid solution out there for Unity, it's fast, reliable, scalable as you can expect from a generic network solution, PUN offer multiple server locations worldwide which you can connect to in order to get least ping.\n\nIn Unity PUN comes as a third party plugin which you can download for free from the Unity Asset Store <i><b><size=8>(you probably already did by following the Get Started tutorial)</size></b></i>,\nNow there some common question about this network solution, first of course when we talk about server side things that of course have a cost, since PUN handle all the server stuff including the code, Hosting, operations and scaling services, server maintainement, etc... you don't have to worry about that things since Photon Team takes care of that, but due that there is a cost for this service, <b>PUN is a Pay service</b> but offer a Free Plan that you can use for the development process and upgrade when you are about to release your game.\n");
+            DrawText("<b>Photon Unity Networking</b> 简称 <b>Photon PUN</b> 是 MFPS 用来处理所有网络与服务端事务的网络方案，它是 Unity 领域最扎实的解决方案之一，速度快、稳定、可扩展，符合你对通用网络方案的预期。PUN 在全球提供多个服务器节点，你可以连接到延迟最低的那个。\n\n在 Unity 中 PUN 以第三方插件形式提供，可在 Unity 资源商店免费下载 <i><b><size=8>按照「快速开始」教程操作你多半已经下载过了</size></b></i>。\n关于这套网络方案有一些常见疑问。首先，服务端事务必然产生成本，PUN 承担了全部服务端工作，包括代码、托管、运维、扩容、服务器维护等，这些都不用你操心，Photon 团队会处理。但正因为存在服务成本，<b>PUN 是付费服务</b>，同时提供免费套餐供开发阶段使用，正式发布前再升级即可。\n");
 
-            DrawHyperlinkText("You can see all the available Plans in their website:\n<link=https://www.photonengine.com/en-US/PUN/pricing>Photon Pun Plans</link>\n");
+            DrawHyperlinkText("你可以在其官网查看所有可用套餐：\n<link=https://www.photonengine.com/en-US/PUN/pricing>Photon PUN 套餐</link>\n");
             DrawHorizontalSeparator();
-            DrawText("A common question that I receive is:\n\n<i><b><size=16>What about Authoritative Server?</size></b></i>\n\nIf you have previous experience with networks systems, you may already noticed that Photon use a Client <i>(named as Master Client)</i> instead of a server <i>(Master Server)</i> to authority the game, this open a gap for cheaters to easily mod the gameplay in their end and duplicated for others clients, since there's not an independent Master Server to compare and validate the logic with.\n");
-            DrawHyperlinkText("Out of the box, Photon PUN doesn't offer a solid solution for fix this problem, instead they offer <link=https://www.photonengine.com/en-us/Server>Photon OnPremise</link> aka Photon Server with which you can host the server side code/sdk and make changes in the serve code and create your own authoritative server by modifying the server-side code but that also require some knowledge in the are, if you are interested in using Photon Server check the next section for more information regarding.");
+            DrawText("我经常收到的一个问题是：\n\n<i><b><size=16>那权威服务器呢？</size></b></i>\n\n如果你此前接触过网络系统，可能已经注意到 Photon 使用一个客户端 <i>称为 Master Client</i> 而非服务器 <i>Master Server</i> 来裁定游戏逻辑。这给作弊者留下了空间，他们可以在自己的客户端上修改玩法并同步给其他客户端，因为没有独立的 Master Server 来比对和校验逻辑。\n");
+            DrawHyperlinkText("开箱即用的 Photon PUN 并没有针对这个问题的完备方案，官方给出的是 <link=https://www.photonengine.com/en-us/Server>Photon OnPremise</link> 即 Photon Server。用它你可以自行托管服务端代码与 SDK，通过修改服务端代码打造自己的权威服务器，但这需要相应的技术积累。如果你对 Photon Server 感兴趣，下一节有更多说明。");
         }
         else if (subStep == 1)
         {
-            DrawText("As explained in the previous section, <b>Photon Server is an alternative to Photon PUN</b> which have some advantages but also some other things to take into consideration, some of the benefits of use Photon Server over Photon PUN are:\n \n- Self-Hosted servers and more control over the server-side code.\n- More affordable CCU plan prices with an unlimited plan option.\n- Allow hosting a server in a specific region not available in PUN.\n- Cheaper overall than using a Photon PUN plans.");
-            DrawText("But these are things you have to take into consideration when using Photon Server:\n \n- You are in charge of keeping your server running and handling any server crash, shutdown, clean-up, etc...\n\n- Regions availability depends on where you host the server, at difference of Photon PUN which includes the option to easily change over 13 different regions around the globe, with Photon Server it will depend on where you host your server and that will be the unique region available unless you also add a server selection system in your game.\n\n- Scalability will depend on your type of hosting and plan, at the difference of Photon PUN where you can easily upgrade your plan if you require more CCUs, with Photon Server even if you have the unlimited CCU plan, if your hosting server is not prepared for auto-scalability you will have troubles growing your game, because of that is recommended that you use a resizable server hosting plan like EC2 of AWS.");
-            DrawSuperText("For more detail information about Photon Server, check the website page here:\n<?link=https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-intro>https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-intro</link>");
+            DrawText("如上一节所述，<b>Photon Server 是 Photon PUN 的替代方案</b>，它有一些优势，也有需要权衡的地方。相比 Photon PUN，使用 Photon Server 的好处包括：\n \n- 自托管服务器，对服务端代码有更强控制力。\n- CCU 套餐价格更实惠，并提供不限量套餐。\n- 可以在 PUN 不覆盖的特定区域部署服务器。\n- 整体成本低于 Photon PUN 套餐。");
+            DrawText("但使用 Photon Server 时必须考虑以下问题：\n \n- 服务器的持续运行由你负责，崩溃、停机、清理等都要自行处理。\n\n- 可用区域取决于你把服务器托管在哪里。Photon PUN 可以轻松切换全球 13 个以上的区域，而 Photon Server 只有你托管的那一个区域，除非你在游戏里另外做一套服务器选择系统。\n\n- 扩展性取决于你的托管类型和套餐。Photon PUN 需要更多 CCU 时直接升级套餐即可，Photon Server 即便使用不限量 CCU 套餐，如果托管服务器本身不支持自动扩容，游戏规模增长就会遇到瓶颈。因此推荐使用 AWS EC2 这类可弹性伸缩的服务器方案。");
+            DrawSuperText("Photon Server 的详细资料见官方页面：\n<?link=https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-intro>https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-intro</link>");
             Space(18);
-            DrawSuperText("<b><size=16>Use Photon Server with MFPS</size></b>\n \nUsing Photon Server with MFPS instead of Photon PUN doesn't require code changes in MFPS but you have to set up the server SDK manually and that may require some experience or knowledge in the area, fortunately, the official documentation explains the process clearly and step by step to set up and deploy your own server, you can found the guide here:\n<?link=https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-in-5min>https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-in-5min</link>");
-            DrawSuperText("Once you have set up the Photon Server SDK and have it running, there're just a few things to do in your project to start using it:\n \n- In your MFPS Unity project, go to the <?link=asset:Assets/Required/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset>PhotonServerSettings (Click Here)</link> or located by default in <i>Assets ➔ Required ➔ Photon ➔ PhotonUnityNetworking ➔ Resources ➔ PhotonServerSettings</i>.\n\n- Foldout the <b>Server/Cloud Settings</b> > uncheck the <b>Use Name Server</b> toggle.\n\n- In the <b>Server</b> text field paste your server <i>(where you setup the Photon Server SDK)</i> public IP or domain name if apply.\n \n- In the <b>Port</b> input field set the port number that you open for your server or if you didn't change it set the default one which is <b>5055 for UDP</b> or <b>4530 for TCP</b>.\n \nThat's all, if everything was set up correctly you should not be able to play the game and it will be connecting to your server.");
+            DrawSuperText("<b><size=16>在 MFPS 中使用 Photon Server</size></b>\n \n在 MFPS 中使用 Photon Server 替代 Photon PUN 不需要改动 MFPS 代码，但需要手动配置服务端 SDK，这需要一定的经验。好在官方文档对搭建和部署自有服务器的流程讲解得清晰且步骤完整，指南见此处：\n<?link=https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-in-5min>https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-in-5min</link>");
+            DrawSuperText("Photon Server SDK 搭建并运行起来之后，项目里只需做几件事即可开始使用：\n \n- 在 MFPS 的 Unity 项目中打开 <?link=asset:Assets/Required/Photon/PhotonUnityNetworking/Resources/PhotonServerSettings.asset>PhotonServerSettings 点击此处</link>，其默认位置在 <i>Assets ➔ Required ➔ Photon ➔ PhotonUnityNetworking ➔ Resources ➔ PhotonServerSettings</i>。\n\n- 展开 <b>Server/Cloud Settings</b>，取消勾选 <b>Use Name Server</b>。\n\n- 在 <b>Server</b> 文本框中填入服务器 <i>即你部署 Photon Server SDK 的位置</i> 的公网 IP 或域名。\n \n- 在 <b>Port</b> 输入框中填写你为服务器开放的端口号，若未改动则使用默认值：<b>UDP 为 5055</b>，<b>TCP 为 4530</b>。\n \n完成以上设置后，若配置正确，游戏应当能正常运行并连接到你的服务器。");
             DrawServerImage("img-49.png", TextAlignment.Center);
         }
         else if (subStep == 2)
         {
-            DrawText("<b><size=16>What is CCU?</size></b>\n \n<b>CCU</b> stands for <b>Concurrently Connected Users</b> and with Photon and other networking plugins it refers to the limit number of concurrent players that the server or plan allows or supports.\n \nWith Photon PUN each plan has a CCU limit and when that limit is reached it will refuse more connections causing new players not able to connect until a slot gets free, the default plan which is for development purposes counts with a 20 CCU limit which means only 20 players can be connected at the same time.");
-            DrawNote("Do not confuse <b>CCU</b> with <b>DAU</b> <i>(Daily Active Users)</i> or <b>MAU</b> <i>(Monthly Active Users)</i>, CCU is only the players connected at the same time.");
-            DrawText("<b><size=16>How to know which CCU limit I need?</size></b>\n \nSince the higher the CCU limit a Photon plan has higher the monthly cost is, it's important to select the right plan, for it you can use the formula based on the average of CCU with respect to the DAU and MAU so based on how many daily or monthly players play your game, you can get an idea of which CCU plan will be enough for you.");
-            DrawNote("This data is based on official Photon stats collected across many titles and games working with Photon.");
-            DrawText("CCU to DAU has a factor of 10 to 100 (depending on the game).\nDAU to MAU has a factor of 10.\n \nSo <b>100 CCU might work for as many as 100k monthly active users</b>.\nThese numbers are distorted for new games that get a lot of attention and playtime initially, so it's never really a fixed factor");
+            DrawText("<b><size=16>什么是 CCU？</size></b>\n \n<b>CCU</b> 是 <b>Concurrently Connected Users</b> 的缩写，即同时在线用户数。在 Photon 及其他网络插件中，它指服务器或套餐允许的同时在线玩家上限。\n \nPhoton PUN 的每个套餐都有 CCU 上限，达到上限后会拒绝新连接，新玩家必须等到有位置空出才能进入。用于开发调试的默认套餐上限为 20 CCU，即最多 20 名玩家同时在线。");
+            DrawNote("不要把 <b>CCU</b> 与 <b>DAU</b> <i>日活跃用户</i> 或 <b>MAU</b> <i>月活跃用户</i> 混淆，CCU 只统计同一时刻在线的玩家。");
+            DrawText("<b><size=16>如何判断自己需要多大的 CCU 上限？</size></b>\n \nPhoton 套餐的 CCU 上限越高，月费越贵，因此选对套餐很重要。可以依据 CCU 与 DAU、MAU 之间的平均比例关系推算：根据你的游戏日活或月活玩家数量，就能大致判断需要多大的 CCU 套餐。");
+            DrawNote("这些数据取自 Photon 官方统计，覆盖了大量使用 Photon 的游戏作品。");
+            DrawText("CCU 到 DAU 的系数为 10 到 100 之间，视游戏而定。\nDAU 到 MAU 的系数为 10。\n \n所以 <b>100 CCU 可能足以支撑多达 10 万月活用户</b>。\n刚上线、初期关注度和在线时长都很高的新游戏会明显偏离这些数值，因此这些系数并不固定。");
         }
     }
 
     void OfflineDoc()
     {
-        DrawText("MFPS supports the Photon <b>Offline mode</b>, this allows you to test the map scene without the need to go to the lobby -> create a room -> load the map scene, instead you play the scene directly.\n\nThis feature is especially useful when, for example, you make changes to the player's prefab or a weapon and want to test them at runtime, save lot of time and improve the development work-flow.\n\nTo enable or disable this feature go to <b>GameData</b> -> Offline Mode\nAfter you enable it, simply open the map scene and Play.");
-        DrawNote("The offline mode <b>is not</b> designed or intended to develop an offline game using MFPS, but rather to facilitate the development of the multiplayer gameplay.");
+        DrawText("MFPS 支持 Photon <b>离线模式</b>，可以直接运行地图场景进行测试，无需经过进入大厅、创建房间、加载地图场景的流程。\n\n当你修改了玩家预制体或武器并想立刻在运行时验证时，这个功能尤其省事，能节省大量时间、提升开发效率。\n\n开关位置在 <b>GameData</b> -> Offline Mode。\n启用后直接打开地图场景点运行即可。");
+        DrawNote("离线模式<b>并非</b>用来借助 MFPS 开发单机游戏，它的目的是方便多人在线玩法的开发调试。");
     }
 
     void UniversalRPDoc()
     {
         if (subStep == 0)
         {
-            DrawText("By default MFPS use the legacy build-in render pipeline, MFPS will be using URP <i>(Universal Render Pipeline)</i> as the default Render Pipeline in the future when it's more standardized, but for the moment in order to use MFPS with URP or HDRP you have to manually convert the project, in this doc I'll teach you how you can do it:\n\n<b><size=20>Convert MFPS project to URP:</size></b>\n\n*<i>This tutorial takes for granted that you have an MFPS project working with the build-in render pipeline in Unity 2018.4 or later</i>*\n\nFirst of all, you have to remove the Post-Processing package, for this simply go to (Unity Top Menu) <b>MFPS -> Tools -> Delete Post-Processing</b> -> Wait until script compilation finish.\n\n<i>Continue in the next step.</i>");
+            DrawText("MFPS 默认使用旧版内置渲染管线。等 URP <i>通用渲染管线</i> 更加标准化之后，MFPS 会将其作为默认渲染管线。目前若要在 MFPS 中使用 URP 或 HDRP，必须手动转换项目，本文档说明具体做法：\n\n<b><size=20>将 MFPS 项目转换为 URP：</size></b>\n\n*<i>本教程假定你的 MFPS 项目基于内置渲染管线，Unity 版本为 2018.4 或更高</i>*\n\n首先需要移除 Post-Processing 包，操作为 Unity 顶部菜单 <b>MFPS -> Tools -> Delete Post-Processing</b>，等待脚本编译完成。\n\n<i>继续下一步。</i>");
         }
         else if (subStep == 1)
         {
-            DrawText("<b><size=22>Installing URP</size></b>\n\n1. In Unity, open your Project.\n2. In the top navigation bar, select Window > Package Manager to open the Package Manager window.\n3. Select the All tab. This tab displays the list of available packages for the version of Unity that you are currently running.\n4. Select Universal RP from the list of packages.\n5. In the bottom right corner of the Package Manager window, select Install. Unity installs URP directly into your Project.\n\n<b><size=22>Configuring URP</size></b>\n\nBefore you can start using URP, you need to configure it. To do this, you need to create a Scriptable Render Pipeline Asset and adjust your Graphics settings.\n\nCreating the Universal Render Pipeline Asset\nThe Universal Render Pipeline Asset controls the global rendering and quality settings of your Project, and creates the rendering pipeline instance. The rendering pipeline instance contains intermediate resources and the render pipeline implementation.\n\n<b><size=16>To create a Universal Render Pipeline Asset:</size></b>\n\n1. In the Editor, go to the Project window.\n2. Right-click in the Project window, and select Create > Rendering: Universal Render    Pipeline: Pipeline Asset. Alternatively, navigate to the menu bar at the top, and select Assets: Create: Rendering: Universal Render Pipeline: Pipeline Asset.\n\nYou can either leave the default name for the new Universal Render Pipeline Asset, or type a new one.");
-            DrawText("<b><size=16>Adding the Asset to your Graphics settings</size></b>\n\nTo use URP, you need to add the newly created Universal Render Pipeline Asset to your Graphics settings in Unity. If you don't, Unity still tries to use the Built-in render pipeline.\n\nTo add the Universal Render Pipeline Asset to your Graphics settings:\n\nNavigate to<b> Edit > Project Settings... > Graphics.</b>\nIn the <b>Scriptable Render Pipeline Settings</b> field, add the Universal Render Pipeline Asset you created earlier. When you add the Universal Render Pipeline Asset, the available Graphics settings immediately change. Your Project is now using URP.\n\n<b>Now you will see some (a lot) pink objects</b>, this is because the shaders from the build-in RP doesn't work on URP or HDRP, you have to upgrade the material shaders, in the next step, I'll show you how to convert them.");
+            DrawText("<b><size=22>安装 URP</size></b>\n\n1. 在 Unity 中打开你的项目。\n2. 顶部导航栏选择 Window > Package Manager 打开包管理器窗口。\n3. 选择 All 选项卡，这里列出了当前 Unity 版本可用的全部包。\n4. 在包列表中选择 Universal RP。\n5. 点击包管理器窗口右下角的 Install。Unity 会把 URP 直接安装到你的项目中。\n\n<b><size=22>配置 URP</size></b>\n\n使用 URP 之前需要先完成配置。为此要创建一个可编程渲染管线资源并调整图形设置。\n\n创建通用渲染管线资源\n通用渲染管线资源控制项目的全局渲染与画质设置，并创建渲染管线实例。渲染管线实例包含中间资源与渲染管线实现。\n\n<b><size=16>创建通用渲染管线资源：</size></b>\n\n1. 在编辑器中打开 Project 窗口。\n2. 在 Project 窗口中右键，选择 Create > Rendering: Universal Render Pipeline: Pipeline Asset。也可以从顶部菜单栏选择 Assets: Create: Rendering: Universal Render Pipeline: Pipeline Asset。\n\n新建的通用渲染管线资源可以沿用默认名称，也可以自行命名。");
+            DrawText("<b><size=16>将资源加入图形设置</size></b>\n\n要使用 URP，需要把刚创建的通用渲染管线资源加入 Unity 的图形设置，否则 Unity 仍会尝试使用内置渲染管线。\n\n将通用渲染管线资源加入图形设置的方法：\n\n打开 <b>Edit > Project Settings... > Graphics</b>。\n在 <b>Scriptable Render Pipeline Settings</b> 字段中加入之前创建的通用渲染管线资源。加入后图形设置会立即变化，项目即开始使用 URP。\n\n<b>此时你会看到一些乃至大量粉色物体</b>，原因是内置渲染管线的着色器无法在 URP 或 HDRP 下工作，必须升级材质着色器。下一步会说明如何转换。");
         }
         else if (subStep == 2)
         {
-            DrawText("<b><size=22>Upgrading your Shaders</size></b>\n\nIf your Project uses shaders from the built-in render pipeline, and you want to switch your Project to use the Universal Render Pipeline instead, you must convert those Shaders to the URP Shaders. This is because built-in Lit shaders are not compatible with URP Shaders. For an overview of the mapping between built-in shaders and URP Shaders, see Shader mappings.\n\nTo upgrade built-in Shaders:\n\n1. Open your Project in Unity, and go to Edit > Render Pipeline > Universal Render Pipeline.\n2. Select <b>Upgrade Project Materials to URP Materials</b>\n\n\n<b>Note:</b> These changes cannot be undone. Backup your Project before you upgrade it.\n\n<b>Tip:</b> If the Preview thumbnails in Project View are incorrect after you've upgraded, try right-clicking anywhere in the Project View window and selecting Reimport All.");
+            DrawText("<b><size=22>升级着色器</size></b>\n\n如果项目使用的是内置渲染管线的着色器，而要改用通用渲染管线，就必须把这些着色器转换为 URP 着色器，因为内置的 Lit 着色器与 URP 着色器不兼容。内置着色器与 URP 着色器的对应关系可参考着色器映射表。\n\n升级内置着色器的方法：\n\n1. 在 Unity 中打开项目，进入 Edit > Render Pipeline > Universal Render Pipeline。\n2. 选择 <b>Upgrade Project Materials to URP Materials</b>\n\n\n<b>注意：</b>该操作不可撤销，升级前请先备份项目。\n\n<b>提示：</b>升级后若 Project 视图中的预览缩略图显示异常，可在 Project 视图窗口内右键并选择 Reimport All。");
             Space(10);
-            DrawText("After this, you still may see some pink objects, those objects were using a custom shader, so in order to fix them simply select them and change their material shader to a Universal RP Shader.\n");
+            DrawText("完成之后可能仍有一些粉色物体，它们是使用了自定义着色器的对象。修复方式很简单，选中这些对象，把其材质着色器改为通用渲染管线着色器即可。\n");
             DrawServerImage(31);
-            DrawText("There's one last thing you have to do, see the next step.");
+            DrawText("还有最后一步要做，见下一步。");
         }
         else if (subStep == 3)
         {
-            DrawText("Finally, there's one last thing that you have to set up.\nin URP and HDRP Camera's work different than the build-in RP, in URP/HDRP there's a 'Base' camera and if you want to render any other camera at the same time, you have to set up it as an '<b>Overlay Camera</b>' and add it on the <b>'Stack'</b> camera list of the '<b>Base Camera</b>'\n\nMFPS players use 2 cameras, one that draws only the FP Weapons and the other that draws everything else, so you have to configure the one that draws the FP Weapons as an 'Overlay Camera', <b>you have to do the following for each player prefab that you are using:</b>\n\n1. In the <b>Project Window</b>, select the player prefab <i>(the default MFPS player prefabs are located in the Resources folder of MFPS)</i> ➔ Click on <b>Open Prefab</b> button.");
+            DrawText("最后还有一处需要设置。\nURP 和 HDRP 中的相机工作机制与内置渲染管线不同。URP/HDRP 中有一个 Base 相机，若想同时渲染其他相机，必须把它设为 <b>Overlay Camera</b> 并加入 <b>Base Camera</b> 的相机 <b>Stack</b> 列表。\n\nMFPS 的玩家使用两个相机，一个只渲染第一人称武器，另一个渲染其余所有内容。因此需要把渲染第一人称武器的那个相机配置为 Overlay Camera，<b>你使用的每个玩家预制体都要照此处理：</b>\n\n1. 在 <b>Project 窗口</b>中选中玩家预制体 <i>MFPS 默认的玩家预制体位于其 Resources 文件夹中</i>，点击 <b>Open Prefab</b> 按钮。");
 
-            DrawNote("<color=#FFFC01FF>NOTE:</color> You may see a warning message when you select the player prefab, this is because there's a null component attached in the 'Weapon Camera' because the Post-Processing package was removed, to fix this simply remove the null component from the Weapon Camera.");
-            DrawText("With the player prefab open do the following:");
+            DrawNote("<color=#FFFC01FF>注意：</color>选中玩家预制体时可能出现警告信息，原因是移除 Post-Processing 包后 Weapon Camera 上留下了一个空组件。解决方法是从 Weapon Camera 上删除该空组件。");
+            DrawText("打开玩家预制体后执行以下操作：");
             DrawAnimatedImage(4);
-            DrawText("And that's, you can start using MFPS with URP, just remember that this last step has to be done in all the player prefabs that you are using.");
+            DrawText("至此即可在 URP 下使用 MFPS。记住最后这一步要在你使用的所有玩家预制体上重复执行。");
         }
     }
 
@@ -299,30 +299,30 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("HDRP is one of the new Unity's render pipelines aiming for high-end platforms which allow access to cutting-edge real-time 3D rendering technology designed to deliver high-fidelity graphics and uncompromising GPU performance. By default, MFPS uses the built-in Render Pipeline, but you can manually convert the project to HDRP, in this guide you will learn how to do it.");
-            DrawSuperText("<b><size=16>Convert MFPS to HDRP</size></b>\n \nThis tutorial takes for granted that you have an MFPS project using the built-in render pipeline in Unity 2020.1 or later, some options features mentioned in this tutorial may not be located or called the same in newest versions of the editor, for these cases you can refer to the official Unity guide for your specific Unity version here:\n<?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Upgrading-To-HDRP.html>https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Upgrading-To-HDRP.html</link>");
-            DrawText("Before start setting up the render pipeline, is necessary to remove the <b>Post Processing</b> package since this is not supported in HDRP (Which includes their own PP system), to automatically remove the package, go to <i>(Unity Top Menu)</i> MFPS ➔ Tools ➔ <b>Delete Post-Processing</b> ➔ Wait until script compilation finish and then continue with the next step.");
+            DrawText("HDRP 是 Unity 面向高端平台的新渲染管线之一，可以调用前沿的实时 3D 渲染技术，提供高保真画质与不妥协的 GPU 性能。MFPS 默认使用内置渲染管线，你也可以手动把项目转换为 HDRP，本指南说明具体做法。");
+            DrawSuperText("<b><size=16>将 MFPS 转换为 HDRP</size></b>\n \n本教程假定你的 MFPS 项目基于内置渲染管线，Unity 版本为 2020.1 或更高。教程中提到的部分选项在新版编辑器中位置或名称可能不同，遇到这种情况可查阅对应 Unity 版本的官方指南：\n<?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Upgrading-To-HDRP.html>https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Upgrading-To-HDRP.html</link>");
+            DrawText("配置渲染管线之前必须先移除 <b>Post Processing</b> 包，因为 HDRP 不支持它，HDRP 自带了后处理系统。自动移除的方式为 Unity 顶部菜单 MFPS ➔ Tools ➔ <b>Delete Post-Processing</b>，等待脚本编译完成后继续下一步。");
         }
         else if (subStep == 1)
         {
-            DrawSuperText("<b><size=16>Setting up HDRP</size></b>\n\nFirstly, to install HDRP, add the High Definition RP package to your Unity Project:\n \n<?list=•>Open your Unity project.\nTo open the Package Manager window, go to Window > Package Manager.\nIn the Package Manager window, in the Packages: field, select <b>Unity Registry</b> from the menu.\nSelect <b>High Definition RP</b> from the list of packages.\nIn the bottom right corner of the Package Manager window, select <b>Install.</b></list>");
-            DrawNote("<i><size=8><color=#76767694>Note:</color></size></i> When you install HDRP, Unity automatically attaches two HDRP-specific components to GameObjects in your Scene. It attaches the <b>HD Additional Light Data</b> component to Lights, and the <b>HD Additional Camera Data</b> component to Cameras. If you don't set your Project to use HDRP, and any HDRP component is present in your Scene, Unity throws errors. To fix these errors, see the following instructions on how to set up HDRP in your Project.");
-            DrawSuperText("To set up HDRP in your project, use the <?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Render-Pipeline-Wizard.html>HDRP Wizard.</link>\n \nTo open the <b>HD Render Pipeline Wizard</b> window, go to <b>Window > Rendering > HD Render Pipeline Wizard</b>.\nIn the <b>Configuration Checking</b> section, go to the <b>HDRP</b> tab and click <b>Fix All</b>. This fixes every HDRP configuration issue with your Project.\nYou have fixed your Project's HDRP configuration issues, but your Scene doesn't render correctly because GameObjects in the Scene still use Shaders made for the Built-in Render Pipeline. To find out how to upgrade Built-in Shaders to HDRP Shaders, see Upgrading Materials in the next step.");
+            DrawSuperText("<b><size=16>配置 HDRP</size></b>\n\n首先为 Unity 项目添加 High Definition RP 包以安装 HDRP：\n \n<?list=•>打开 Unity 项目。\n通过 Window > Package Manager 打开包管理器窗口。\n在包管理器窗口的 Packages: 字段中，从菜单选择 <b>Unity Registry</b>。\n在包列表中选择 <b>High Definition RP</b>。\n点击包管理器窗口右下角的 <b>Install</b>。</list>");
+            DrawNote("<i><size=8><color=#76767694>注意：</color></size></i> 安装 HDRP 后，Unity 会自动为场景中的 GameObject 附加两个 HDRP 专用组件：为灯光附加 <b>HD Additional Light Data</b>，为相机附加 <b>HD Additional Camera Data</b>。如果项目未设置为使用 HDRP，而场景中又存在 HDRP 组件，Unity 会报错。要解决这些错误，按下面的说明在项目中配置 HDRP。");
+            DrawSuperText("在项目中配置 HDRP 请使用 <?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Render-Pipeline-Wizard.html>HDRP 向导</link>。\n \n通过 <b>Window > Rendering > HD Render Pipeline Wizard</b> 打开 <b>HD Render Pipeline Wizard</b> 窗口。\n在 <b>Configuration Checking</b> 区域切到 <b>HDRP</b> 选项卡，点击 <b>Fix All</b>，这会修复项目全部 HDRP 配置问题。\n配置问题修复之后场景可能仍渲染不正常，因为场景中的 GameObject 依然在使用内置渲染管线的着色器。内置着色器升级为 HDRP 着色器的方法见下一步的「升级材质」。");
         }
         else if (subStep == 2)
         {
-            DrawText("<b><size=16>Upgrading Materials</size></b>\n\nTo upgrade the Materials in your Scene to HDRP-compatible Materials:\n \n1. Go to <b>Edit > Rendering > Materials</b>\n2. Choose one of the following options:\n \n ■ <b>Convert All Built-in Materials to HDRP</b>: Converts every compatible Material in your Project to an HDRP Material.\n\n ■ <b>Convert Selected Built-in Materials to HDRP</b>: Converts every compatible Material currently selected in the Project window to an HDRP Material.\n\n ■ <b>Convert Scene Terrains to HDRP Terrains</b>: Replaces the built-in default standard terrain Material in every Terrain in the scene with HDRP default Terrain Material.");
-            DrawText("<b><size=16>Limitations</size></b>\n\nThe automatic upgrade options described above can't upgrade all Materials to HDRP correctly:\n \nYou can't automatically upgrade custom Materials or Shaders to HDRP. You must convert custom Materials and Shaders manually, in MFPS the water shader is a custom shader that can't be automatically upgrade so you will have to either replace it with a HDRP water sahder or remove the water from your scene.\n\nHeight mapped Materials might look incorrect. This is because HDRP supports more height map displacement techniques and decompression options than the Built-in Render Pipeline. To upgrade a Material that uses a heightmap, modify the Material's Amplitude and Base properties until the result more closely matches the Built-in Render Pipeline version.\n\n<b>You can't upgrade particle shaders</b>. HDRP doesn't support particle shaders, but it does provide Shader Graphs that are compatible with the Built-in Particle System. These Shader Graphs work in a similar way to the built-in particle shaders. To use these Shader Graphs, import the Particle System Shader Samples sample:\n \n 1. Open the <b>Package Manager</b> window (menu: <b>Window > Package Manager</b>).\n 2. Find and click the <b>High Definition RP</b> entry.\n 3. In the package information for <b>High Definition RP</b>, go to the <b>Samples</b> section and click the <b>Import into Project</b> button next to <b>Particle System Shader Samples</b>.");
+            DrawText("<b><size=16>升级材质</size></b>\n\n将场景中的材质升级为 HDRP 兼容材质的方法：\n \n1. 打开 <b>Edit > Rendering > Materials</b>\n2. 选择以下选项之一：\n \n ■ <b>Convert All Built-in Materials to HDRP</b>：把项目中所有可转换的材质转为 HDRP 材质。\n\n ■ <b>Convert Selected Built-in Materials to HDRP</b>：把 Project 窗口中当前选中的可转换材质转为 HDRP 材质。\n\n ■ <b>Convert Scene Terrains to HDRP Terrains</b>：把场景中每个地形的内置默认标准地形材质替换为 HDRP 默认地形材质。");
+            DrawText("<b><size=16>限制</size></b>\n\n上述自动升级选项无法把所有材质都正确转换到 HDRP：\n \n自定义材质与着色器无法自动升级，必须手动转换。MFPS 中的水面着色器属于自定义着色器，无法自动升级，你需要把它替换为 HDRP 水面着色器，或者从场景中移除水面。\n\n使用高度图的材质可能显示异常。原因是 HDRP 支持的高度图置换技术与压缩选项比内置渲染管线更多。要升级使用高度图的材质，请调整材质的 Amplitude 与 Base 属性，直到效果尽量接近内置渲染管线下的表现。\n\n<b>粒子着色器无法升级</b>。HDRP 不支持粒子着色器，但提供了与内置粒子系统兼容的 Shader Graph。这些 Shader Graph 的工作方式与内置粒子着色器类似。要使用它们，请导入 Particle System Shader Samples 示例：\n \n 1. 打开 <b>Package Manager</b> 窗口，菜单为 <b>Window > Package Manager</b>。\n 2. 找到并点击 <b>High Definition RP</b> 条目。\n 3. 在 <b>High Definition RP</b> 的包信息中进入 <b>Samples</b> 区域，点击 <b>Particle System Shader Samples</b> 旁的 <b>Import into Project</b> 按钮。");
         }
         else if (subStep == 3)
         {
-            DrawSuperText("<b><size=18>Adjusting lighting</size></b>\n\nHDRP uses <?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Physical-Light-Units.html>physical Light un</link>its to control the intensity of Lights. These units don't match the arbitrary units that the Built-in render pipeline uses.\n \nFor light intensity units, Directional Lights use Lux and all other Light types can use Lumen, Candela, EV, or simulate Lux at a certain distance.\n \nTo set up lighting in your HDRP Project:\n \n1. To add the default sky Volume to your Scene and set up ambient lighting go to <b>GameObject > Volume > Sky and Fog Global Volume.</b>\n\n2. Set the <?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Environment-Lighting.html>Environment Lighting</link> to use this new sky:\n \n - Open the Lighting window (menu: <b>Window > Rendering > Lighting Settings</b>).\n - In the <b>Environment</b> tab, set the <b>Profile</b> property to the same Volume Profile that the Sky and Fog Global Volume uses.\n - Set the <b>Static Lighting Sky</b> property to <b>PhysicallyBasedSky</b>.\n - Optionally, if you don't want Unity to re-bake the Scene's lighting when you make the rest of the changes in this section, you can disable the <b>Auto Generate</b> checkbox at the bottom of the window.");
-            DrawText("3. Currently, the shadows are low quality. To increase the shadow quality:\n \nCreate a new <b>Global Volume</b> GameObject (menu: <b>GameObject > Volume > Global Volume</b>) and name it <b>Global Settings.</b>\nTo create a new Volume Profile for this Global Volume:\n \n - Open the Global Volume's Inspector window and go to the Volume component.\n - Go to <b>Profile</b> and select <b>New</b>.\n - To add a Shadows override:\n \n  - Go to Add <b>Override > Shadowing > Shadows</b>.\n  - Enable Max Distance.\n  - Set Max Distance to 50.\n\n4.Configure your Sun Light GameObject.\n \n - Select your Light GameObject that represents the Sun in your Scene to view it in the Inspector.\n - Go to <b>Emmision</b> and set the Intensity to 100000.\n - Set <b>Light Appearance</b> to <b>Color</b>.\n - Set <b>Color</b> to white.\n - To see the sun in the sky, go to <b>Shape</b> and set <b>Angular Diameter</b> to 3.\n\n5. The Scene is now over-exposed. To fix this:\n \n - Select the <b>Global Settings</b> GameObject you created in step 3.\n - Add an <b>Exposure</b> override to its Volume component (menu: Add <b>Override > Exposure</b>).\n - Enable <b>Mode</b> and set it to <b>Automatic</b>.\n - To refresh the exposure, go to the Scene view and enable <b>Always Refresh</b>.");
+            DrawSuperText("<b><size=18>调整光照</size></b>\n\nHDRP 使用 <?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Physical-Light-Units.html>物理光照单位</link> 控制灯光强度，这些单位与内置渲染管线使用的任意单位并不对应。\n \n就光强单位而言，平行光使用 Lux，其余灯光类型可使用 Lumen、Candela、EV，或模拟特定距离处的 Lux。\n \n在 HDRP 项目中配置光照的步骤：\n \n1. 为场景添加默认天空 Volume 并配置环境光，操作路径为 <b>GameObject > Volume > Sky and Fog Global Volume</b>。\n\n2. 让 <?link=https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@14.0/manual/Environment-Lighting.html>环境光照</link> 使用这个新天空：\n \n - 打开光照窗口，菜单为 <b>Window > Rendering > Lighting Settings</b>。\n - 在 <b>Environment</b> 选项卡中，把 <b>Profile</b> 属性设为 Sky and Fog Global Volume 所用的同一个 Volume Profile。\n - 把 <b>Static Lighting Sky</b> 属性设为 <b>PhysicallyBasedSky</b>。\n - 可选：如果不想让 Unity 在本节后续改动时重新烘焙场景光照，可以取消勾选窗口底部的 <b>Auto Generate</b>。");
+            DrawText("3. 当前阴影画质偏低，提升阴影画质的方法：\n \n新建一个 <b>Global Volume</b> GameObject，菜单为 <b>GameObject > Volume > Global Volume</b>，命名为 <b>Global Settings</b>。\n为该 Global Volume 新建 Volume Profile：\n \n - 打开 Global Volume 的 Inspector 窗口，找到 Volume 组件。\n - 进入 <b>Profile</b>，选择 <b>New</b>。\n - 添加阴影覆盖项：\n \n  - 进入 Add <b>Override > Shadowing > Shadows</b>。\n  - 启用 Max Distance。\n  - 把 Max Distance 设为 50。\n\n4. 配置代表太阳的灯光 GameObject。\n \n - 在场景中选中代表太阳的 Light GameObject，在 Inspector 中查看。\n - 进入 <b>Emmision</b>，把 Intensity 设为 100000。\n - 把 <b>Light Appearance</b> 设为 <b>Color</b>。\n - 把 <b>Color</b> 设为白色。\n - 若要在天空中看到太阳，进入 <b>Shape</b>，把 <b>Angular Diameter</b> 设为 3。\n\n5. 此时场景会过曝，修正方式如下：\n \n - 选中第 3 步创建的 <b>Global Settings</b> GameObject。\n - 为其 Volume 组件添加 <b>Exposure</b> 覆盖项，菜单为 Add <b>Override > Exposure</b>。\n - 启用 <b>Mode</b> 并设为 <b>Automatic</b>。\n - 若需刷新曝光，进入 Scene 视图并启用 <b>Always Refresh</b>。");
             DrawServerImage("img-50.png");
         }
         else if (subStep == 4)
         {
-            DrawText("Finally, there's a manual setup you have to do for all the MFPS player prefabs to stack the player cameras:\n \n1. Open the player prefab by opening it in the prefab editor or dragging it into a scene hierarchy.\n \n2. Inside the Player Prefab hierarchy, select the <b>WeaponCamera</b> located in <b>Local > Mouse > Animations > Main Camera > WeaponCamera</b>.\n \n3. In the inspector window of the <b>Camera</b> component > unfold the <b>Output</b> tab and set the <b>Depth</b> value to 2.\n \nApply/Save the player prefab changes and repeat this process with all the remaining player prefabs in your game; once you finish with this, you have complete the basic project conversion to HDRP.");
+            DrawText("最后还需要手动为所有 MFPS 玩家预制体配置相机堆叠：\n \n1. 在预制体编辑器中打开玩家预制体，或把其拖入场景层级。\n \n2. 在玩家预制体层级中，选中位于 <b>Local > Mouse > Animations > Main Camera > WeaponCamera</b> 的 <b>WeaponCamera</b>。\n \n3. 在 <b>Camera</b> 组件的 Inspector 窗口中展开 <b>Output</b> 选项卡，把 <b>Depth</b> 设为 2。\n \n应用并保存玩家预制体的改动，对游戏中其余所有玩家预制体重复此流程。全部完成后，项目向 HDRP 的基础转换就完成了。");
             DrawServerImage("img-51.png");
         }
     }
@@ -332,65 +332,65 @@ public class MFPSGeneralDoc : TutorialWizard
         if (subStep == 0)
         {
             DrawTitleText("KILL FEED");
-            DrawText("<i>Kill Feed</i> or <i>Who Kill Who</i> is the UI text notification panel where displays events of the match like player's kills and other in-game eliminations, showing to the players who get eliminated and who eliminated him.\n \nNormally, this panel is placed in a corner of the screen to not interfere with the gameplay but easily visible.\n  \nHere I'll show you a few options that you have to customize this system without requiring to touch the code and how you can display your own events on it.");
+            DrawText("<i>击杀提示</i> 又称 <i>谁击杀了谁</i>，是显示对局中玩家击杀及其他淘汰事件的 UI 文本面板，向玩家展示谁被淘汰、又是谁淘汰了他。\n \n该面板通常放在屏幕角落，既不影响操作又便于查看。\n  \n下面介绍在不改动代码的前提下自定义这套系统的一些选项，以及如何显示你自己的事件。");
             DownArrow();
-            DrawText("• MFPS comes with two modes to display kills events on the kill feed, in a kill event there are 3 parts of event information to display: the name of the player who was eliminated, the name of the player who did the elimination, and the weapon or cause of the elimination.\n \nYou have two ways of shows the cause of the eliminations:\n \n<b>Weapon Name:</b>");
+            DrawText("• MFPS 提供两种在击杀提示中显示击杀事件的模式。一条击杀事件包含三部分信息：被淘汰的玩家名、完成淘汰的玩家名、以及淘汰所用的武器或原因。\n \n淘汰原因有两种显示方式：\n \n<b>武器名称：</b>");
             DrawServerImage(0);
             DrawText("<b>Weapon Icon:</b>");
             DrawServerImage(1);
-            DrawText("By default <b>Weapon Icon</b> is the default option, you can change that in <b>GameData</b> -> KillFeedWeaponShowMode.\n \nAnother option to customize is the color to highlight the local player name when this " +
-                "appear in the kill feed, for the context player names in kill feed are represented by the color of his Team but in order to the local player easily knows when an event that include him appear in the kill feed, his name " +
-                "should be highlight with a different color, <b>to choose that color</b> go to GameData -> <b>HighLightColor.</b>\n \nOkay, that are the front-end customize options, if you want to customize the way that the UI looks" +
-                " you have to do the in the UI prefab which is located in: <i>Assets -> Prefabs -> UI -> Instances -> <b>KillFeed</b></i>, drag this prefab inside the kill feed panel in canvas which is located by default in: ");
+            DrawText("默认选项为 <b>武器图标</b>，可在 <b>GameData</b> -> KillFeedWeaponShowMode 中修改。\n \n另一个可自定义项是本地玩家名出现在击杀提示中时 " +
+                "用于高亮的颜色。击杀提示中的玩家名一般以所属阵营的颜色表示，但为了让本地玩家一眼看出哪条事件与自己有关，他的名字 " +
+                "应当用另一种颜色高亮，<b>选择该颜色</b>的路径为 GameData -> <b>HighLightColor</b>。\n \n以上是前端可自定义的选项。如果你想自定义 UI 的外观" +
+                "，需要在 UI 预制体中操作，位置为 <i>Assets -> Prefabs -> UI -> Instances -> <b>KillFeed</b></i>。把这个预制体拖入 Canvas 中的击杀提示面板，该面板默认位于：");
             DrawServerImage(2);
-            DrawText("Right, these are all customize options that you have in front end, if you wanna create your own events to display, check the next step.");
+            DrawText("以上就是前端可用的全部自定义选项。如果你想创建自己的显示事件，见下一步。");
         }
         else if (subStep == 1)
         {
-            DrawTitleText("CREATE KILLFEED EVENTS");
-            DrawText("The kill feed system various type of events to display, use the one that fits your event:\n \n<b>Kill Event:</b>\n \n• This is should use when of course a kill event happen, but a kill that include two actors " +
-                "the killer and the killed, to show that you have to call this:");
+            DrawTitleText("创建击杀提示事件");
+            DrawText("击杀提示系统支持多种事件类型，按你的需求选用：\n \n<b>击杀事件：</b>\n \n• 用于发生了涉及两名角色的击杀时 " +
+                "即击杀者与被击杀者，调用方式如下：");
             DrawCodeText("bl_KillFeed.Instance.SendKillMessageEvent(string killer, string killed, int gunID, Team killerTeam, bool byHeadshot);");
-            DrawText("<b>Message:</b>\n \n• If you want to show a simple text of an event in concrete that doesn't include a player in specific, use:");
+            DrawText("<b>消息：</b>\n \n• 若要显示一条不涉及特定玩家的简单文本事件，使用：");
             DrawCodeText("bl_KillFeed.Instance.SendMessageEvent(string message);");
-            DrawText("<b>Team Highlight:</b>\n \n• If you want to show a text of an event in concrete that as subject have a team in specific and you wanna highlight a part of the text with the tam color, use:");
+            DrawText("<b>阵营高亮：</b>\n \n• 若要显示一条主体为特定阵营的文本事件，并用阵营颜色高亮其中一部分文本，使用：");
             DrawCodeText("bl_KillFeed.Instance.SendTeamHighlightMessage(string teamHighlightMessage, string normalMessage, Team playerTeam);");
         }
     }
 
     void PlayerClassesDoc()
     {
-        DrawText("MFPS use \"<b>Classes</b>\" system to diversify the weapon loadout, these classes are: <b>Recon, Support, Assault, and Engineer</b> each with distinct weapons.\n\nYou can set up the weapon loadout of each class per player prefab in the <b>bl_GunManager</b> script attached in the <b>WeaponsManager</b> object inside of the player prefab.\n\nEach class require 4 weapons <i>(Primary, Secondary, Perk and Letal)</i>, for set up the default weapons for each class you have two options: Create a new Present/ScritableObject or Edit the default one, basically you only have to create a new Scriptable if you want to keep a backup of the current class setup or if you want use a different setup in a player prefab, if you don't need that, simply edit the default instance.\n\nindependent if you want to create or just edit open the Player Prefabs or the specif player prefab that you want to edit the player class for, then go to the <b>WeaponsManager</b> object -> <b>bl_GunManager</b> inspector -> foldout the target Player Class -> set the weapons for each slot.\n\n(if you want to create a new present before edit, simply click in the <b>New</b> button");
+        DrawText("MFPS 使用 <b>兵种</b> 系统来丰富武器配置，兵种包括 <b>侦察兵、支援兵、突击兵和工程兵</b>，各自配备不同武器。\n\n每个玩家预制体各兵种的武器配置，可在玩家预制体内 <b>WeaponsManager</b> 对象上挂载的 <b>bl_GunManager</b> 脚本中设置。\n\n每个兵种需要 4 件武器 <i>主武器、副武器、技能和投掷物</i>。设置各兵种默认武器有两种方式：新建一个 Present 即 ScriptableObject，或直接编辑默认的那一个。只有在你需要保留当前兵种配置的备份，或想让某个玩家预制体使用不同配置时，才需要新建 ScriptableObject，否则直接编辑默认实例即可。\n\n无论新建还是编辑，都先打开玩家预制体，或你要修改兵种配置的那个玩家预制体，然后进入 <b>WeaponsManager</b> 对象 -> <b>bl_GunManager</b> 检视面板 -> 展开目标兵种 -> 为每个槽位设置武器。\n\n若想在编辑前新建一个 Present，直接点击 <b>New</b> 按钮");
         DrawServerImage(8);
-        DrawText("You also can edit the default class loadouts from the Project Window in the folder: <i>Assets->MFPS->Content->Prefabs->Weapons->Loadouts</i>\n");
+        DrawText("你也可以在 Project 窗口的 <i>Assets->MFPS->Content->Prefabs->Weapons->Loadouts</i> 文件夹中编辑默认兵种武器配置。\n");
     }
 
     void HeadBobDoc()
     {
-        DrawText("<b>Head Bob</b> is the camera movement that simulates the reaction of the player head when walk or run, in MFPS this movement is procedurally generated by code and you can adjust the value to obtain the desired result.\n\nIn order to obtain a more realistic result in MFPS we have sync the weapon bob and the head bob movement, so the settings will apply to both movements.\n\nYou can modify the values in the bl_WeaponBob.cs<i> (Attached in WeaponsManager object inside the players prefabs')</i>, you can edit in runtime to preview the movement as you edit it.\n");
+        DrawText("<b>头部晃动</b> 是模拟玩家行走或奔跑时头部反应的相机运动。MFPS 中该运动由代码程序化生成，你可以调整数值得到想要的效果。\n\n为获得更真实的表现，MFPS 把武器晃动与头部晃动做了同步，因此设置会同时作用于两者。\n\n数值可在 bl_WeaponBob.cs 中修改<i>，该脚本挂载在玩家预制体内的 WeaponsManager 对象上</i>。你可以在运行时编辑并即时预览效果。\n");
         DrawServerImage(9);
         DownArrow();
-        DrawText("If you want to use different movements per player or just want to have a backup of the current movement settings you can create a new \"Present\" of the settings and assing it in the script instead of the current one.\n\nFor create a new present simple select the folder where you wanna create it <i>(In Project View)</i> -> Right Click -> MFPS -> Weapons -> Bob -> Settings -> Drag the created profile in the bl_WeaponBob -> Settings -> Them make the changes that you want.\n");
+        DrawText("若想让不同玩家使用不同运动参数，或只是想备份当前运动设置，可以新建一份设置的 Present 并在脚本中替换原有的那份。\n\n新建 Present 的方式：在 <i>Project 视图</i> 中选中目标文件夹 -> 右键 -> MFPS -> Weapons -> Bob -> Settings -> 把生成的配置拖到 bl_WeaponBob 的 Settings 中 -> 然后按需修改。\n");
     }
 
     void AfkDoc()
     {
         DrawTitleText("AFK");
-        DrawText("AFK is an abbreviation for <i>away from keyboard</i>, players are called AFK when they have not interact with the game in a extended period of time.  in multi player games AFK players could be a problem," +
-            "like for example in MFPS where players play in teams, an AFK player represent free points for the enemy team, or in different context AFK player are used to leveling up, so that is way some games count with a system " +
-            "to detect these AFK players and kick out of the server/room after a certain period of time begin AFK.  MFPS include this system but <b>is disable by default</b>.\n \n" +
-            "In order to enable AFK detection, go to GameData -> turn on <b>Detect AFK</b>, -> set the seconds before kick out players after detected as AFK in <b>AFK Time Limit</b>");
+        DrawText("AFK 是 <i>away from keyboard</i> 的缩写，指玩家长时间未与游戏交互的状态。在多人游戏中，AFK 玩家会带来问题，" +
+            "例如 MFPS 采用阵营对抗，AFK 玩家相当于白送对方分数；在另一些场景中，AFK 玩家被用来刷等级。因此不少游戏都会配备一套 " +
+            "检测 AFK 玩家并在其持续 AFK 超过一定时间后移出服务器或房间的机制。MFPS 内置了该系统，但 <b>默认关闭</b>。\n \n" +
+            "启用 AFK 检测：进入 GameData -> 打开 <b>Detect AFK</b> -> 在 <b>AFK Time Limit</b> 中设置判定为 AFK 后多少秒将玩家移出。");
     }
 
     void KickVotationDoc()
     {
         DrawTitleText("KICK VOTATION");
-        DrawText("In order to give an option to players to get rip of toxic, hackers, non-rules players in a democratic way where a player put the option on the table and the majority of the players in room " +
-            "decide to kick out or cancel the petition, MFPS include a voting system.\n \nTo start a vote in game, players have to open the menu -> in the scoreboard click / touch over the player that they want to request the vote -> " +
-            "in the PopUp menu that will appear -> Click on <b>Request Kick</b> button.\n \nBy default the keys to vote are F1 for Yes and F2 for No, you can change these keys in bl_KickVotation.cs which is attached in <b>GameManager</b> " +
-            "in maps scenes.");
+        DrawText("为了让玩家能以民主方式处理捣乱、作弊、违规的玩家，由一名玩家发起提议，房间内多数玩家 " +
+            "表决是否将其移出或驳回提议，MFPS 内置了投票系统。\n \n在游戏中发起投票：玩家打开菜单 -> 在记分板上点击或触摸要表决的玩家 -> " +
+            "在弹出的菜单中选择 <b>Request Kick</b> 按钮。\n \n默认投票按键为 F1 表示同意、F2 表示反对，可在 <b>GameManager</b> 上挂载的 bl_KickVotation.cs 中修改 " +
+            "该脚本位于地图场景中。");
         DownArrow();
-        DrawText("If you want to implement your own way to start a voting request, you can do it by calling:");
+        DrawText("若想自行实现发起投票的方式，可调用：");
         DrawCodeText("bl_KickVotation.Instance.RequestKick(Photon.Realtime.Player playerToKick);");
     }
 
@@ -399,21 +399,21 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("<b><size=22>BACKGROUND AUDIO</size></b>\n \nBy default MFPS only use <b>background audio in the Lobby/MainMenu</b> scene, in order to change that soundtrack or remove it, you can do it by:\n \n■ In the <b>MainMenu</b> scene -> Lobby -> Scene -> AudioController -> <i>(Inspector window)</i> bl_AudioController -> assign/remove the audio clip in the field '<b>Background Clip</b>'");
+            DrawText("<b><size=22>背景音乐</size></b>\n \nMFPS 默认只在 <b>大厅与主菜单</b> 场景使用背景音乐。要更换或移除该音乐：\n \n■ 打开 <b>MainMenu</b> 场景 -> Lobby -> Scene -> AudioController -> 在检视面板中找到 bl_AudioController -> 在 <b>Background Clip</b> 字段中指定或移除音频片段");
             Space(20);
-            DrawText("<b><size=22>BULLET HITS</size></b>\n \nThere's a bullet hit sound effects that's played when the bullet hit particle is instanced, by design that sound volume is really low since it can be annoying for some persons, in order to change the audio sound effect or volume of these bullet impacts <b>you have to open the Bullet Impact particle prefab</b> which by default are located in the MFPS folder at <i>Assets -> Prefabs -> Level -> Particles -> WeaponEffects -> Prefabs->*</i>\n \nOpen the prefab of the impact you want to modify -> in the <b>Audio Source</b> component attached in the prefab, assign/replace the Audio Clip and adjust the volume as you please.");
+            DrawText("<b><size=22>子弹命中</size></b>\n \n子弹命中粒子生成时会播放一个命中音效。出于设计考虑该音量非常低，因为音量过大会让部分玩家感到不适。要更换这些命中音效或调整音量，<b>需要打开子弹命中粒子预制体</b>，其默认位置为 <i>Assets -> Prefabs -> Level -> Particles -> WeaponEffects -> Prefabs->*</i>。\n \n打开要修改的命中效果预制体 -> 在其上的 <b>Audio Source</b> 组件中指定或替换音频片段，并按需调整音量。");
             Space(20);
-            DrawText("<b><size=22>PLAYER HIT</size></b>\n \nAnother hit sound that is played is when the local player gets hit, there are two different sounds played, one when is hit by a bullet and the other when is any other kinda injure.\n \nYou can change these sounds per player prefab, simply select the <b>Player Prefab</b> where you wanna change the sounds -> bl_PlayerHealthManager -> in the lists:\n \n<b>Hits Sounds:</b> for the bullet hit sound effect\n<b>Injure Sounds:</b> for... well, the injured sound effects :D");
+            DrawText("<b><size=22>玩家受击</size></b>\n \n另一个会播放的受击音效是本地玩家被击中时。这里区分两种声音：被子弹击中，以及其他类型的受伤。\n \n这些音效可按玩家预制体分别设置。选中要修改的 <b>玩家预制体</b> -> bl_PlayerHealthManager -> 在以下列表中设置：\n \n<b>Hits Sounds：</b>子弹命中音效\n<b>Injure Sounds：</b>受伤音效");
         }
         else if (subStep == 1)
         {
-            DrawText("You may encounter a scenario where in your custom map you can hear players/bots shooting, footsteps, explosions, etc... sounds far away as if it were near to you, this is because the default audio ranges are not ideal for your map size, but this can be easily modified.");
-            DrawText("<b><size=16>Adjust Audio Ranges</size></b>\n \nTo adjust the audio ranges in a specific map > open your map scene in the editor > in the hierarchy window go to <b>GameManager</b> > <b>Audio Manager</b> > in the inspector window of this object > <b>bl_AudioController</b> > you will see some slider parameters that you can use to adjust the range of certain sound types, the ranges are defined in meters which means setting up a range to 50 means the audio will be heard only when the player is 50 meter or close to the audio source.\n \nthe audio volume will gradually fade out based on the origin and the max distance.");
+            DrawText("你可能会遇到这种情况：在自定义地图中，远处玩家或机器人的枪声、脚步、爆炸等听起来像就在身边。原因是默认音频范围不适合你的地图尺寸，这个问题很容易调整。");
+            DrawText("<b><size=16>调整音频范围</size></b>\n \n在特定地图中调整音频范围：在编辑器中打开地图场景 -> 在层级窗口进入 <b>GameManager</b> > <b>Audio Manager</b> -> 在该对象的检视面板中找到 <b>bl_AudioController</b> -> 你会看到若干滑块参数，用于调整特定类型声音的范围。范围以米为单位，设为 50 表示玩家距离音源 50 米以内才能听到。\n \n音量会随距离从声源处向最大距离逐渐衰减。");
             DrawServerImage("img-47.png");
         }
         else if (subStep == 2)
         {
-            DrawText("In case you are looking for sounds to replace the default ones in the game or maybe you need new sounds for your weapon or players, below you will find a hand-picked collection of assets that you can acquire from the Asset Store");
+            DrawText("如果你想寻找音效来替换游戏内的默认音效，或为武器、玩家补充新的音效，下面是一份人工筛选的资源合集，可在资源商店获取");
             Space(20);
             if (soundsAssets == null)
             {
@@ -431,38 +431,38 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void AntiCheatDoc()
     {
-        DrawSuperText("Hacking is one of the obstacles that soon or later you will face as a game developer, but especially in competitive multiplayer games, you will have to deal with those modders/hackers trying to exploit your game to get some advantage over regular players, because that, you have to take some measures since the beginning of your project to protect your game.\n \nBy default, MFPS doesn't include any Anti-Cheat system because these are big and complex systems that by they selves worth more than the MFPS core price, but since version 1.9.2, <b>MFPS comes with the basic integration of a third-party anti-cheat asset</b> that solves most of the common hacking methods used nowadays, this asset is the\n<?link=https://assetstore.unity.com/packages/tools/utilities/anti-cheat-toolkit-2021-202695?aid=1101lJFi>Anti-Cheat Toolkit (ACTk)</link>\nfrom the Asset Store, with it you can prevent the players to be able to cheat in your game e.g modifying the player health, ammo, drops, coins, etc...\n \nBy default, the MFPS core just includes the basic integration that allows prevents the players to modify these values, but there's an addon that extends the features <b>allowing automatically banning players that use Speed hacks, memory injection, code injection, or walk hacks</b>, it is the <?link=https://www.lovattostudio.com/en/shop/addons/anti-cheat-and-reporting/>MFPS Anti Cheat addon</link>.\n \nAlthough this will drive away most of the wanna-be hackers, this would not be enough for more experienced/hardened modders, actually, nothing is unhackable, you can only make it harder so they give up trying, with that in mind here you have other implementations and changes that you can do to make your game more secure in any platform:");
+        DrawSuperText("作弊是游戏开发者迟早要面对的问题，在竞技类多人游戏中尤为突出。你不得不应对那些试图利用漏洞获取优势的修改者和作弊者。因此从项目一开始就要采取防护措施。\n \nMFPS 默认不包含任何反作弊系统，因为这类系统体量大、复杂度高，其价值本身就超过 MFPS 核心的价格。但从 1.9.2 版本起，<b>MFPS 内置了第三方反作弊资源的基础集成</b>，可解决当下大多数常见作弊手段，该资源为资源商店的\n<?link=https://assetstore.unity.com/packages/tools/utilities/anti-cheat-toolkit-2021-202695?aid=1101lJFi>Anti-Cheat Toolkit (ACTk)</link>\n借助它可以阻止玩家修改生命值、弹药、掉落物、金币等数据。\n \nMFPS 核心只包含能阻止玩家修改这些数值的基础集成，另有一个扩展功能的插件 <b>可自动封禁使用加速、内存注入、代码注入或穿墙类作弊的玩家</b>，即 <?link=https://www.lovattostudio.com/en/shop/addons/anti-cheat-and-reporting/>MFPS Anti Cheat 插件</link>。\n \n这能劝退大多数业余作弊者，但对经验丰富的修改者仍不够。事实上没有绝对无法破解的程序，你只能不断提高门槛让对方放弃。基于这一点，以下还有若干实现与调整可以让你的游戏在各平台上更安全：");
         Space(20);
-        DrawSuperText("<b><size=14>1. Use IL2CPP</size></b>\n \nUnity supports 2 scripting backend at the moment: <b>Mono</b> and <b>IL2CPP</b> where this last one is newer and more secure, IL2CPP does produce raw binary code with metadata instead of Mono’s IL bytecode making all IL reversing tools useless and making it much, much harder to get good decompilation of your game code.\n \nThis is built-in Unity and you simply have to change the scripting backend option in the <b>Project Settings > Player > Scripting Backend</b>.\n \n\n<b><size=14>2. Code Obfuscation</size></b>\n \nCode obfuscation is the process of randomly generating names for your script parameters, functions, properties, etc... in the build process in order to make it pretty much unreadable for anyone that decompiles your binaries, the code will become a mess of useless names making reconstructed IL assembly very hard to reverse-engineer and analyze a complete nightmare.\n \nUnfortunately, Unity doesn't come with such a feature included, and third-party systems are required, the most popular and easy to use obfuscator for Unity is available on the Asset Store:\n<?link=https://assetstore.unity.com/packages/tools/utilities/obfuscator-48919?aid=1101lJFi>Obfuscator</link>");
+        DrawSuperText("<b><size=14>1. 使用 IL2CPP</size></b>\n \nUnity 目前支持两种脚本后端：<b>Mono</b> 与 <b>IL2CPP</b>，后者更新也更安全。IL2CPP 生成的是带元数据的原生二进制代码，而非 Mono 的 IL 字节码，所有 IL 反编译工具都会失效，想得到可读性好的游戏代码反编译结果会难上加难。\n \n该功能 Unity 内置，只需在 <b>Project Settings > Player > Scripting Backend</b> 中切换脚本后端。\n \n\n<b><size=14>2. 代码混淆</size></b>\n \n代码混淆是在构建过程中为脚本参数、函数、属性等随机生成名称，使反编译出的二进制代码几乎无法阅读。代码会变成一堆无意义名称的组合，重建出的 IL 程序集极难逆向分析。\n \n遗憾的是 Unity 并未内置该功能，需要借助第三方方案。Unity 生态中最流行且易用的混淆器可在资源商店获取：\n<?link=https://assetstore.unity.com/packages/tools/utilities/obfuscator-48919?aid=1101lJFi>Obfuscator</link>");
         DrawHorizontalSeparator();
-        DrawText("<b><size=16>Enable Anti-Cheat</size></b>\n \nIn order to enable the anti-cheat integration, if you are using the addon for the advance integration > follow the addon documentation, if you are not using the addon but you have installed the Anti-Cheat Toolking assets and want to enable the basic integration included in the core package > go to the editor top navigation menu > Tools > Code Stage > Anti-Cheat Toolking > Settings... > Conditional Compilation Symbols > check the <b>ACTK_IS_HERE</b> check box and that's.");
+        DrawText("<b><size=16>启用反作弊</size></b>\n \n启用反作弊集成的方式：若使用插件进行进阶集成，请参照插件文档；若未使用插件但已安装 Anti-Cheat Toolkit 资源，想启用核心包中的基础集成，则进入编辑器顶部菜单 Tools > Code Stage > Anti-Cheat Toolkit > Settings... > Conditional Compilation Symbols，勾选 <b>ACTK_IS_HERE</b> 即可。");
     }
 
     void FPArmsMaterial()
     {
-        DrawText("Normally you will use the same hand model for all of your weapons model, using a different material and textures for each team, so you may encounter with the inconvenient of change the hand texture for each weapon in the player prefabs is a little bit annoying, well MFPS handle this.\nYou don't have two manually change the arms, sleeves, gloves, etc.. materials, you only" +
-            "have to create a prefab and list all the arms materials along with the different textures per team.");
+        DrawText("通常所有武器模型共用同一个手部模型，只是为不同阵营使用不同材质与贴图。若要在玩家预制体中逐把武器修改手部贴图会很繁琐，MFPS 已经处理了这件事。\n无需手动逐个修改手臂、袖套、手套等材质，你只需" +
+            "创建一个配置资源，列出全部手臂材质以及各阵营对应的不同贴图即可。");
         DownArrow();
-        DrawText("Let's start by creating a new \"Arms Material\" asset, in the <b>Project Window</b> select a folder where save the asset and do <b>Right Mouse Click</b> -> MFPS -> Player -> <b>Arm Material</b>");
+        DrawText("首先新建一个手臂材质资源：在 <b>Project 窗口</b>中选中要保存该资源的文件夹，<b>右键</b> -> MFPS -> Player -> <b>Arm Material</b>");
         DrawServerImage(4);
         DownArrow();
-        DrawText("Then select the created material and in the Inspector window you'll see a List, in this list you have to add all the materials your Arms model <b> that change of texture depending of the player team</b>, for example the default MFPS arms model have 3 materials: Sleeve, Skin and Gloves, but only the Sleeves and Gloves material change of texture, the skin is the same, so only those two materials are include in the list.\nProbably you only have to add the Gloves Material, so add a new field on the list and assign the material and add the different Textures depending of the Team.\n \nWith that the materials will automatically change of textures in runtime depending on which team the player spawm.");
+        DrawText("然后选中新建的资源，在检视面板中会看到一个列表。需要把手臂模型中 <b>随玩家阵营变化贴图</b> 的材质全部加入该列表。以 MFPS 默认手臂模型为例，它有 3 个材质：袖套、皮肤和手套，但只有袖套和手套的贴图会变化，皮肤保持不变，因此列表中只包含这两个材质。\n多数情况下你只需添加手套材质，即新增一个列表项，指定材质，并按阵营添加不同贴图。\n \n设置完成后，材质会在运行时根据玩家出生所属阵营自动切换贴图。");
         DrawServerImage(5);
     }
 
     void RoomPropertiesDoc()
     {
-        DrawHyperlinkText("There're some properties that are different per room/match besides the game mode, that you can tweak, e.g: the max players options, max rounds time limits, game goals, etc... these properties options can be different per game mode and you can modify them in the game mode info like this:\n\n► Go to <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Game Modes ➔ <i>*Open a game mode*</i> ➔ there you will see the list and\noptions to modify these properties.");
+        DrawHyperlinkText("除游戏模式之外，还有一些逐房间即逐对局可调的属性，例如最大玩家数选项、单局时间上限、游戏目标等。这些属性的可选值可随游戏模式不同而不同，修改方式如下：\n\n► 打开 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Game Modes ➔ <i>展开某个游戏模式</i> ➔ 在这里可以看到相关列表与选项。");
 
-        DrawHorizontalColumn("Max Players", "the maximum number of players options that can join in the room for the game mode, for two-team game modes, the max number of the player for each team is half of the max players allowed.");
-        DrawHorizontalColumn("Game Goals Options:", "the score, point, or kills goals options of this game mode.");
-        DrawHorizontalColumn("Time Limits:", "the round time limit options for this game mode (in seconds).");
+        DrawHorizontalColumn("Max Players", "该游戏模式下房间可容纳的最大玩家数可选值。在双阵营模式下，每队最大人数为总上限的一半。");
+        DrawHorizontalColumn("游戏目标选项：", "该游戏模式下分数、积分数或击杀数的目标可选值。");
+        DrawHorizontalColumn("Time Limits:", "该游戏模式的单局时间上限可选值，单位为秒。");
         DrawServerImage("img-45.png");
     }
 
     void DrawTeamsDoc()
     {
-        DrawText("On MFPS there are various game modes that use Team systems like CTF (Capture the Flag) or TDM (Team Death Match), for default these teams are named as \"Delta\" and \"Recon\", you can modify these team names and representative color, for it go to <b>Game Data</b> in find the \"Team\" section:\n");
+        DrawText("MFPS 中有多个使用阵营系统的游戏模式，例如 CTF 夺旗与 TDM 团队死斗。默认阵营名为 Delta 与 Recon，你可以修改这两个名称及其代表色：进入 <b>Game Data</b>，找到 Team 区域：\n");
         DrawServerImage(13);
     }
 
@@ -470,23 +470,23 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawHyperlinkText("MFPS Integrate a virtual coin/currency system with two different coins, one that can be earned by playing the game <i>(with XP)</i> and another that should only be acquired by purchasing it with real money <i>(using the <link=https://www.lovattostudio.com/en/shop/network/shop/>Shop addon</link> or your custom IAP)</i>.\n \nYou can customize many aspects of these coins without touching any code, like <b>the names of the coins, color, icon, and value</b>.\n \nTo modify these properties, go to <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Game Coins ➔ unfold the coin you want to modify, most of the properties names are self-describing, but here is the explanation of the ones that could confuse you:");
+            DrawHyperlinkText("MFPS 内置虚拟货币系统，包含两种货币：一种通过游戏获得 <i>随经验值</i>，另一种只能用真实货币购买 <i>可通过 <link=https://www.lovattostudio.com/en/shop/network/shop/>商店插件</link> 或你自建的内购实现</i>。\n \n无需改动代码即可自定义货币的大量属性，例如 <b>货币名称、颜色、图标和面值</b>。\n \n修改这些属性请进入 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Game Coins ➔ 展开要修改的货币。多数属性名已能自解释，以下说明容易混淆的几个：");
             DrawHorizontalSeparator();
-            DrawHorizontalColumn("Acronym", "An abbreviation of the coin name.");
-            DrawHorizontalColumn("Coin Value", "The value of the coin with respect to 1, <b>e.g</b>: when you set the price for an in-game item let say 100 for a weapon if the coin value is equal to 0.25 it means that the player will need 400 of that coin to purchase that weapon <i>(0.25 = 1/4 ➔ 400/4 = 100)</i>, or if the coin value is equal to 2, the player just will need 50 of that coin.\n \nThe idea is that you only need to set a price for the in-game items, and the price for each coin is calculated automatically in-game.");
-            DrawHorizontalColumn("Initial Coins", "The amount of that coins that new player will receive the first time that play the game.");
+            DrawHorizontalColumn("Acronym", "货币名称的缩写。");
+            DrawHorizontalColumn("Coin Value", "货币相对于 1 的面值。举例说明：假设某武器的游戏内标价为 100，若该货币面值为 0.25，则玩家需要 400 枚该货币才能购买 <i>0.25 = 1/4，故 400/4 = 100</i>；若面值为 2，则只需 50 枚。\n \n这样设计的目的是：你只需为游戏内物品设置一个标价，各货币对应的实际数量由游戏自动换算。");
+            DrawHorizontalColumn("Initial Coins", "新玩家首次进入游戏时获得的该货币数量。");
             Space(10);
             DrawServerImage("img-38.png", TextAlignment.Center);
             DownArrow();
-            DrawSuperText("<?title=20>How to use the coins?</title>\n \nBy default <i>(in the core packages)</i> MFPS does not use the coins for anything, is up to you for what you wanna use them, either to buy game items like weapons, special skins, operators, etc... or implement a lootbox system or anything you can imagine.\n \nThere are some addons if you want to implement a shop system and allow players to buy weapons and coins packs:\n \n<?link=https://www.lovattostudio.com/en/shop/network/shop/>Shop System Addon.</link>\n \nAnd there are addons to integrate a payment system to allow purchases with real money/currencies:\n \n<?link=https://www.lovattostudio.com/en/shop/addons/unity-iap-for-shop/>Unity IAP Addon.</link>\n<?link=https://www.lovattostudio.com/en/shop/network/paypal-for-shop/>Paypal Addon.</link>");
+            DrawSuperText("<?title=20>如何使用这些货币？</title>\n \n在核心包中，MFPS 默认不将货币用于任何用途，怎么用由你决定：可用于购买武器、特殊皮肤、干员等游戏内物品，也可实现开箱系统，或任何你能想到的玩法。\n \n若想实现商店系统、让玩家购买武器与货币包，有相应插件：\n \n<?link=https://www.lovattostudio.com/en/shop/network/shop/>商店系统插件</link>\n \n若要接入支付系统以支持真实货币购买，也有对应插件：\n \n<?link=https://www.lovattostudio.com/en/shop/addons/unity-iap-for-shop/>Unity IAP 插件</link>\n<?link=https://www.lovattostudio.com/en/shop/network/paypal-for-shop/>Paypal 插件</link>");
         }
         else if (subStep == 1)
         {
-            DrawSuperText("If you want to do basic coin operations like <b>add</b> or <b>deduct</b> a specific amount of coins to the player wallet you can do so with a single line of code:\n \n<?title=#20>ADD COINS</title>");
+            DrawSuperText("若要对玩家钱包执行 <b>增加</b> 或 <b>扣减</b> 指定数量货币这类基础操作，一行代码即可完成：\n \n<?title=#20>增加货币</title>");
             DrawCodeText("bl_MFPS.Coins.GetCoinData(0).Add(100);");
-            DrawSuperText("where 0 = the index of the coin in GameData ➔ GameCoins list,\nby default 0 = XP Coin, 1 = Gold Coin.\n \n<?title=20>DEDUCT COINS</title>");
+            DrawSuperText("其中 0 表示该货币在 GameData ➔ GameCoins 列表中的索引。\n默认为 0 是经验货币，1 是金币。\n \n<?title=20>扣减货币</title>");
             DrawCodeText("bl_MFPS.Coins.GetCoinData(0).Deduct(100);");
-            DrawText("If you are using ULogin Pro addon the coin operation will be executed in the server and saved in the database, if you are not using it, the coins will be stored locally using <b>PlayerPrefs which is not secured</b>, that is why is recommended to save the coins externally in a dedicated database as ULogin Pro does.");
+            DrawText("若使用 ULogin Pro 插件，货币操作会在服务端执行并存入库中。若未使用，货币数据会通过 <b>PlayerPrefs 存储在本地，并不安全</b>。因此建议像 ULogin Pro 那样把货币数据保存到独立数据库中。");
         }
     }
 
@@ -494,50 +494,50 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("MFPS comes with 3 different game modes: <b>Team Deathmatch, Capture Of Flag, and Free For All</b>, each of these modes has its respective logic in separate scripts which can be found at: <i>Assets ➔ MFPS ➔ Scripts ➔ GamePlay ➔ GameModes➔*</i>\n \nEach game mode has some common properties that you can customize in the inspector in GameData ➔ Game Modes ➔ *,\nif you foldout one of the modes, you will find all the customizable properties");
+            DrawText("MFPS 提供 3 种游戏模式：<b>团队死斗、夺旗和自由混战</b>，各自逻辑位于独立脚本中，路径为 <i>Assets ➔ MFPS ➔ Scripts ➔ GamePlay ➔ GameModes➔*</i>。\n \n各模式都有一些通用属性可在 GameData ➔ Game Modes ➔ * 的检视面板中调整，展开任一模式即可看到全部可配置项。");
             DrawServerImage("img-36.png");
-            DrawText("Here what they are for:");
-            DrawPropertieInfo("Mode Name", "string", "The name represent this mode that will be displayed in-game.");
-            DrawPropertieInfo("Game Mode", "enum", "The internal id of this mode, it's use in code to identify a specific game mode, you can only have a mode in the Game Modes list with the same id.");
-            DrawPropertieInfo("Is Enable", "bool", "Will this mode be available in your game?");
-            DrawPropertieInfo("Support Bots", "bool", "Can games be created for this mode and filled them with bots? <b>NOTE:</b> that by default, bots are only supported in TDM and FFA modes.");
-            DrawPropertieInfo("Auto Team Selection", "bool", "Force auto team selection to keep teams balanced?");
-            DrawPropertieInfo("Required Players To Start", "int", "The minimum number of players that has to be joined in the match in order to start the game for this mode.");
-            DrawPropertieInfo("On Round Started Spawn", "enum", "When a player join in a match with this mode but a round is already started, what to do?");
-            DrawPropertieInfo("On Player Die", "enum", "What happens after a player die in this mode?");
-            DrawPropertieInfo("Goal Name", "string", "The name of the points/objective of this game mode, e.g kills, captures, score, etc...");
-            DrawPropertieInfo("Allow Pickup Weapons", "bool", "Can players pickup weapons in this mode?");
-            DrawPropertieInfo("Max Players", "int[]", "The available options of max players for this mode, these options are the ones that appear in the room creator menu in the lobby.");
-            DrawPropertieInfo("Game Goal Options", "int[]", "The available options for this mode goals (kills, captures, score, etc...), these options are the ones that appear in the room creator menu in the lobby.");
-            DrawPropertieInfo("Time Limits", "int[]", "The available match times options for this mode set in seconds, these options are the ones that appear in the room creator menu in the lobby.");
+            DrawText("各项含义如下：");
+            DrawPropertieInfo("Mode Name", "string", "该模式的名称，用于游戏内显示。");
+            DrawPropertieInfo("Game Mode", "enum", "该模式的内部标识，用于在代码中识别特定模式。Game Modes 列表中不允许存在标识相同的模式。");
+            DrawPropertieInfo("Is Enable", "bool", "该模式是否在游戏中可用。");
+            DrawPropertieInfo("Support Bots", "bool", "是否可创建该模式的房间并加入机器人？<b>注意：</b>默认情况下仅 TDM 与 FFA 模式支持机器人。");
+            DrawPropertieInfo("自动分配阵营", "bool", "是否强制自动分配阵营以保持双方人数均衡？");
+            DrawPropertieInfo("开始所需玩家数", "int", "该模式下开始游戏所需的最小加入人数。");
+            DrawPropertieInfo("回合中途加入时的出生方式", "enum", "在该模式的房间中，回合已开始后玩家加入时如何处理。");
+            DrawPropertieInfo("玩家死亡时", "enum", "该模式下玩家死亡后发生什么。");
+            DrawPropertieInfo("Goal Name", "string", "该模式中计分目标的名称，例如击杀、夺取、得分等。");
+            DrawPropertieInfo("允许拾取武器", "bool", "该模式下玩家能否拾取武器。");
+            DrawPropertieInfo("Max Players", "int[]", "该模式可选的最大玩家数，这些选项会出现在大厅的创建房间菜单中。");
+            DrawPropertieInfo("游戏目标选项", "int[]", "该模式目标的可选值，如击杀数、夺取数、分数等，这些选项会出现在大厅的创建房间菜单中。");
+            DrawPropertieInfo("Time Limits", "int[]", "该模式可选的对局时长，单位为秒，这些选项会出现在大厅的创建房间菜单中。");
         }
         else if (subStep == 1)
         {
-            DrawHyperlinkText("Besides the 3 modes included in MFPS, there are more of the popular game modes available for MFPS as add-ons that you can acquire, like <i><b>Demolition/Bomb Defuse, Domination/Cover Point, Gun Race/Gun Play, Elimination, and Kill Confirm</b></i>, all those are available in <link=https://www.lovattostudio.com/en/shop/>our Shop</link>.\n \nBut let's say you want to create a custom game mode, where to start?\nWell, that is a difficult question since each game mode has its unique requirements, different logic, gameplay, etc... because of that, each approach is different, so I can't tell you how to create your game mode per se, what I can do, is tell you how to integrate it to MFPS.\n \nThe first thing is to create an enum identifier for your game mode, which will be used to identify the game mode in the code, for that simply add a pseudonym of the game mode name in the script <b>GameMode.cs</b>, e.g:");
+            DrawHyperlinkText("除 MFPS 内置的 3 种模式外，还有更多热门模式以插件形式提供，可另行购买，例如 <i><b>爆破拆除、占点模式、枪战竞速、淘汰模式和确认击杀</b></i>，均可在 <link=https://www.lovattostudio.com/en/shop/>官方商店</link> 获取。\n \n假设你想做一个自定义游戏模式，该从哪里入手？\n这个问题不好一概而论，因为每个模式的需求、逻辑和玩法都不同，做法自然各异。因此我无法直接教你如何从零设计模式，但可以告诉你怎么把它接入 MFPS。\n \n第一步是为你的游戏模式创建枚举标识，用于在代码中识别该模式。只需在 <b>GameMode.cs</b> 脚本中按模式名添加一个代称，例如：");
             DrawCodeText("public enum GameMode\n{\n    TDM,\n    FFA,\n    CTF,\n    SND,\n    CP,\n    GR,\n    BR,\n    ELIM,\n    DM,\n    KC,\n    <color=#0D5400FF>MyCustomMode, </color>\n}");
-            DrawText("In the above example I added the <i>\"MyCustomMode\"</i> as example, but you can use anything you want, even just the initial as the others mode.");
+            DrawText("上例中的 <i>MyCustomMode</i> 只是示意，你可以用任何名称，也可以像其他模式那样只取首字母缩写。");
             DownArrow();
-            DrawHyperlinkText("The next thing is to define the script which will handle the integration of MFPS with your game mode, for that MFPS uses the interface <color=#DFFF2AFF>IGameMode</color> to define the functions that your game mode main script must implement, so what you have to do is <link=https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces>define that interface</link> in your main game mode script ➔ override the required functions of the interface in your script, to make easier, you can use the default game modes scripts <i>(bl_TeamDeathMatch.cs, bl_FreeForAll.cs, etc...)</i> as a reference and learn from its implementation\n \nOnce you define the <b>IGameMode</b> interface and its functions, there's a must-have code that you have to implement, in the Awake() function of your script <i>(where you define the interface)</i>, you have to call the Initialize() function <i>(from the Awake function)</i> and in this Initialize() function you have to register this mode with its enum identifier, like this:\n");
-            DrawCodeText("if(bl_GameManager.Instance.IsGameMode(GameMode.MyCustomMode, this))\n        {\n            // Active your game mode\n            // Active all the game objects, props, UI, etc... that are for this specific mode\n            // Register to game events needed for this mode\n        }\n        else\n        {\n            // Disable any object/UI that are for this specific mode\n        }");
+            DrawHyperlinkText("接下来要编写负责把 MFPS 与你的游戏模式对接的脚本。MFPS 通过 <color=#DFFF2AFF>IGameMode</color> 接口规定模式主脚本必须实现哪些函数。因此你需要在模式主脚本中 <link=https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces>实现该接口</link>，并重写其中要求的函数。为便于上手，可参考默认模式脚本 <i>bl_TeamDeathMatch.cs、bl_FreeForAll.cs 等</i> 的写法。\n \n实现 <b>IGameMode</b> 接口及其函数之后，还有一段必须编写的代码：在脚本 <i>即实现接口的那个</i> 的 Awake() 中调用 Initialize()，并在 Initialize() 中用枚举标识注册该模式，如下所示：\n");
+            DrawCodeText("if(bl_GameManager.Instance.IsGameMode(GameMode.MyCustomMode, this))\n        {\n            // 启用你的游戏模式\n            // 启用该模式专属的所有 GameObject、道具、UI 等\n            // 订阅该模式需要的游戏事件\n        }\n        else\n        {\n            // 禁用该模式专属的对象与 UI\n        }");
             DownArrow();
-            DrawText("Below you will find a complete script will the default skeleton of the above explained, you can use it as the base and start to modify it with your custom requirements for your mode:");
-            DrawCodeText("using Photon.Realtime;\nusing UnityEngine;\n \npublic class MyCustomModeScript : MonoBehaviour, IGameMode\n{\n \n    void Awake()\n    {\n        if (!bl_PhotonNetwork.IsConnected) return;\n \n        // Must have\n        Initialize();\n    }\n \n    #region Interface Overrides\n    public void Initialize()\n    {\n        if(bl_GameManager.Instance.IsGameMode(GameMode.MyCustomMode, this)) // replace 'MyCustomMode' with your mode identifier\n        {\n            // Active your game mode\n            // Active all the game objects, props, UI, etc... that are for this specific mode\n            // Register to game events needed for this mode\n        }\n        else\n        {\n            // Disable any object/UI that are for this specific mode\n        }\n    }\n \n    // Based in you game mode logic, determine if the local player is a winner\n    // This code is called after the game finish.\n    public bool isLocalPlayerWinner => throw new System.NotImplementedException();\n \n    public void OnFinishTime(bool gameOver)\n    {\n        // Automatically called when the game time finish.\n    }\n \n    public void OnLocalPlayerDeath()\n    {\n        // Automatically called when the local player die\n    }\n \n    public void OnLocalPlayerKill()\n    {\n        // Automatically called when the local player kill an enemy\n    }\n \n    public void OnLocalPoint(int points, Team teamToAddPoint)\n    {\n        // Called when you add a point to a team using:\n        // bl_GameManager.Instance.SetPointFromLocalPlayer(1, GameMode.MyCustomMode);\n    }\n \n    public void OnOtherPlayerEnter(Player newPlayer)\n    {\n \n    }\n \n    public void OnOtherPlayerLeave(Player otherPlayer)\n    {\n \n    }\n \n    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)\n    {\n        // Automatically called when a room property change (score, goal, team counts, etc...)\n    }\n    #endregion\n}");
+            DrawText("下面是一份完整脚本，包含上述内容的默认骨架。你可以以此为基础，按你的模式需求进行改造：");
+            DrawCodeText("using Photon.Realtime;\nusing UnityEngine;\n \npublic class MyCustomModeScript : MonoBehaviour, IGameMode\n{\n \n    void Awake()\n    {\n        if (!bl_PhotonNetwork.IsConnected) return;\n \n        // 必须调用\n        Initialize();\n    }\n \n    #region Interface Overrides\n    public void Initialize()\n    {\n        if(bl_GameManager.Instance.IsGameMode(GameMode.MyCustomMode, this)) // 把 MyCustomMode 替换为你的模式标识\n        {\n            // 启用你的游戏模式\n            // 启用该模式专属的所有 GameObject、道具、UI 等\n            // 订阅该模式需要的游戏事件\n        }\n        else\n        {\n            // 禁用该模式专属的对象与 UI\n        }\n    }\n \n    // 依据你模式的逻辑判断本地玩家是否获胜\n    // 该代码在对局结束后调用。\n    public bool isLocalPlayerWinner => throw new System.NotImplementedException();\n \n    public void OnFinishTime(bool gameOver)\n    {\n        // 对局时间结束时自动调用。\n    }\n \n    public void OnLocalPlayerDeath()\n    {\n        // 本地玩家死亡时自动调用\n    }\n \n    public void OnLocalPlayerKill()\n    {\n        // 本地玩家击杀敌人时自动调用\n    }\n \n    public void OnLocalPoint(int points, Team teamToAddPoint)\n    {\n        // 当你通过以下方式为阵营加分时调用：\n        // bl_GameManager.Instance.SetPointFromLocalPlayer(1, GameMode.MyCustomMode);\n    }\n \n    public void OnOtherPlayerEnter(Player newPlayer)\n    {\n \n    }\n \n    public void OnOtherPlayerLeave(Player otherPlayer)\n    {\n \n    }\n \n    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)\n    {\n        // 房间属性变化时自动调用，如分数、目标、阵营人数等\n    }\n    #endregion\n}");
         }
         else if (subStep == 2)
         {
-            DrawText("If you want to define which game modes will be allowed and which don't in certain maps of your game, you can do it by setting the games that are NOT allowed in the map info No Allowed Game Modes list, which is located in each map scene info in <i>GameData ➔ All Scenes ➔ *Scene info* ➔ <b>No Allowed Game Modes.</b></i>\n \nThe modes that you add to that list will not be available for that map, and all the rest will be available.");
+            DrawText("若你想指定某些地图允许或禁止哪些游戏模式，可在各地图信息中的「禁止的游戏模式」列表里设置。位置为 <i>GameData ➔ All Scenes ➔ 某场景信息 ➔ <b>No Allowed Game Modes</b></i>。\n \n加入该列表的模式在该地图上不可用，未加入的则全部可用。");
             DrawServerImage("img-37.png");
         }
     }
 
     void DrawLobbyChat()
     {
-        DrawText("Game Framework include a <b>lobby chat system</b>, for players by able to communicate between meanwhile search or wait for join to a match, this chat use Photon Chat plugin, for use it you need to have a Photon Chat AppID <i>(it's not the same that Photon PUN AppID)</i>, you can get this appid from your photon dashboard:\n\nGet your AppId from the Chat Dashboard:");
+        DrawText("Game Framework 内置 <b>大厅聊天系统</b>，玩家在搜索或等待加入对局期间可以互相交流。该聊天使用 Photon Chat 插件，使用时需要拥有 Photon Chat 的 AppID <i>它与 Photon PUN 的 AppID 不同</i>。AppID 可在 Photon 控制台获取：\n\n在 Chat 控制台获取你的 AppID：");
         if (Buttons.FlowButton("Chat Dashboard"))
         {
             Application.OpenURL("https://www.photonengine.com/en-US/Chat");
         }
-        DrawText("when you have your Chat AppID, paste it on the PhotonServerSettings:");
+        DrawText("拿到 Chat AppID 后，粘贴到 PhotonServerSettings 中：");
         DrawServerImage(6);
     }
 
@@ -553,36 +553,36 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawSuperText("Game Framework uses Mecanim system to handle the tp player animations, so change animations clips is simple as drag and drop the animation clip in the motion state in the Animator window, you only need a humanoid animation clip and override it in the Animator Override Controller.\n\n\n<?title=16>CHANGE PLAYER ANIMATION</title>\n\nIn order to change a specific animation clip:\n\n- Open the player prefab that you wanna change the animation for <i>(Player prefabs are located in the Resources folder).</i>\n\n- In the Animator component of your soldier model of the player prefab <b>double click</b> on the Controller field:");
+            DrawSuperText("Game Framework 使用 Mecanim 系统处理第三人称玩家动画。更换动画片段只需把动画片段拖到 Animator 窗口对应的运动状态上即可，你只需要一个 humanoid 动画片段，并在 Animator Override Controller 中覆盖它。\n\n\n<?title=16>更换玩家动画</title>\n\n更换指定动画片段的步骤：\n\n- 打开要修改动画的玩家预制体 <i>玩家预制体位于 Resources 文件夹中</i>。\n\n- 在玩家预制体士兵模型的 Animator 组件上，<b>双击</b> Controller 字段：");
             DrawServerImage("img-27.png");
-            DrawText("- Now in the <b>Inspector</b> window, you will see the list of the animations clips used in the player animator controller, next to the default animation clips names you can see a field to assign and override/replace the default animation with your custom animation clips.\n \nSo, you simply have to assign your custom animations in the corresponding box, <b>based on the default animation names you can figure out which animation is for what player motion</b>.");
+            DrawText("- 此时在 <b>Inspector</b> 窗口中会看到玩家动画控制器使用的动画片段列表。每个默认动画片段名旁边都有一个字段，用于指定自定义动画片段来覆盖或替换默认动画。\n \n你只需在对应框中指定自定义动画，<b>根据默认动画名称即可判断每个动画对应哪种玩家动作</b>。");
             DrawServerImage("img-28.png");
             DownArrow();
-            DrawSuperText("Now, if you want to use differents animations for an specific player prefab, <b>e.g</b> <i>each player prefab have a different soldier mode with custom movement animations for each model</i>, the solution is pretty easy.\n\nYou simply have to create or duplicate the <?underline=>Player Animations [Override]</underline> controller and assign it in the Animator component of your soldier model in the player prefab:");
+            DrawSuperText("如果你想让某个玩家预制体使用不同的动画，<b>例如</b> <i>每个玩家预制体有各自的士兵模型，并配有该模型专属的动作动画</i>，处理方式很简单。\n\n只需新建或复制一份 <?underline=>Player Animations [Override]</underline> 控制器，并把它指定到玩家预制体中士兵模型的 Animator 组件上：");
             DrawAnimatedImage(6);
         }
         else if (subStep == 1)
         {
-            DrawSuperText("<?title=18>CHANGE ANIMATIONS <b>ADVANCE</b></title>\n\n- Change the animations from the <?underline=>Animator Override Control</underline> <i>(from the Basic section)</i> have a limitation, and it's that you can only replace the animation clips, the problem is that by default some animations are used in multiple states of the Animator StateMachine, e.g <i>the 'reload-ar' which is the weapon reload animation is used for the Rifle, Pistol and Sniper weapons</i>, if you want to use a different animation for each type of weapon you will have to modify the Base <?underline=>Animator Controller</underline>.\n\n1. Duplicate the default Player Animator Controller asset (<?link=asset:Assets/Art/Animations/Player/Controllers/Player [Controller].controller>Player [Controller]</link>) ➔ Select the asset in the Project window ➔ Ctrl + D or Command + D on MAC.\n\n2. Assign the duplicated <b>Animator Controller</b> in the Animator component of the soldier model of the player prefab that you want to modify the animation for.\n\n3. Open the duplicated Animator Controller in the Animator window <i><size=9><color=#76767694>(double click on the Animator Controller)</color></size></i> ➔ Find the animation state that you want to change the animation clip, on the Animator view you need figure out for what part of player body is this animations Bottom or Upper body <i>(Legs or Arms)</i>, e.g the <b>Rifle Reload</b> motion is for the Arms, so it is for the Upper Body, so go to <b>Layers</b> - and select the <?underline=>Upper</underline> layer, there you will see various state machine with the name of the weapon types to which it belongs ➔ open the weapon state machine:");
+            DrawSuperText("<?title=18>高级动画更换</title>\n\n- 基础部分介绍的 <?underline=>Animator Override Control</underline> 更换动画存在限制：它只能替换动画片段，而默认情况下有些动画被动画状态机的多个状态共用。例如 <i>装弹动画 reload-ar 同时用于步枪、手枪和狙击枪</i>。若想让每类武器使用不同动画，就必须修改基础 <?underline=>Animator Controller</underline>。\n\n1. 复制默认的玩家动画控制器资源 <?link=asset:Assets/Art/Animations/Player/Controllers/Player [Controller].controller>Player [Controller]</link> ➔ 在 Project 窗口中选中该资源 ➔ 按 Ctrl + D，Mac 上为 Command + D。\n\n2. 把复制出的 <b>Animator Controller</b> 指定到你要修改动画的玩家预制体士兵模型的 Animator 组件上。\n\n3. 在 Animator 窗口中打开复制出的动画控制器 <i><size=9><color=#76767694>双击该动画控制器即可</color></size></i> ➔ 找到要更换动画片段的状态。在 Animator 视图中先判断该动画属于身体下半身还是上半身 <i>腿部或手臂</i>，例如 <b>步枪装弹</b> 动作属于手臂即上半身，因此进入 <b>Layers</b> 并选择 <?underline=>Upper</underline> 层，这里会看到以武器类型命名的若干状态机 ➔ 打开对应武器的状态机：");
             DrawServerImage("img-29.png");
-            DrawSuperText("Now you will see others animation states, those represent the weapon motion clips, in this example we are looking for the \"Reload\" state, so, select the Reload state ➔ in the inspector view you will see the settings of this state, what we are interested in is the <?underline=>Motion</underline> field, in that field you to need to assign the animation clip with which you want to replace the default one.\n\nOnce you do that, you are ready to go, you can replace all other animation clips if you want.");
+            DrawSuperText("此时会看到其他动画状态，它们代表武器动作片段。本例中要找的是 <i>装弹</i> 状态，选中该状态 ➔ 在检视视图中会显示该状态的设置，其中我们关心的是 <?underline=>Motion</underline> 字段，在该字段中指定用来替换默认动画的片段。\n\n完成后即可，其他动画片段也可按同样方式替换。");
             DrawServerImage(16);
         }
         else if (subStep == 2)
         {
-            DrawText("As you may already know in MFPS the first person and third person animations are different, the same applies to the weapon animations, you can't use the use FPWeapon animations for the TPWeapons, instead, humanoid animations are needed for the TPWeapons.");
-            DrawNote("TPWeapon animation set = the player animations needed for a weapon (Idle, Reload, Run, and Fire).");
-            DrawText("By default, MFPS uses different weapon animations for each weapon type <i>(Machinegun, Pistol, Sniper, Grenade, etc...)</i> a set of animations for all the weapons of the same type which means you have multiple <b>Sniper</b> weapons, all of them will play the same set of sniper TP animations.\n \nCould be the case in where you want to <b>use a custom animation set for a specific TPWeapon</b>, this will require creating a new <b>SubStateMachine</b> in the player <b>Animator Controller</b> and creating the necessary transitions, below you will find an automated guide in how to set up the SubStateMachine in order to use custom animations for a TPWeapon.");
+            DrawText("MFPS 中第一人称与第三人称动画是不同的，武器动画同样如此。第三人称武器不能使用第一人称武器的动画，它需要 humanoid 动画。");
+            DrawNote("第三人称武器动画集即一把武器所需的玩家动画，包括待机、装弹、奔跑和开火。");
+            DrawText("默认情况下，MFPS 按武器类型 <i>机枪、手枪、狙击枪、手雷等</i> 区分武器动画，同一类型的所有武器共用一套动画。也就是说若你有多把 <b>狙击枪</b>，它们都会播放同一套狙击枪第三人称动画。\n \n如果你想让 <b>某把特定的第三人称武器使用自定义动画集</b>，就需要在玩家 <b>Animator Controller</b> 中新建一个 <b>子状态机</b> 并建立必要的过渡。下面提供一份操作指引，说明如何通过子状态机为第三人称武器应用自定义动画。");
             DrawHorizontalSeparator();
-            DrawTitleText("ADD CUSTOM WEAPON ANIMATIONS");
-            DrawSuperText("The first thing we need is to know in which <b>Animator Controller</b> we want to add SubMachineState for the animation set, by default, the default Animator Controller which is used for all the MFPS player prefabs is located in: <i>Assets ➔ Art ➔ Animations ➔ Player ➔ Controllers ➔ Player [Controller]</i> <?link=asset:Assets/Art/Animations/Player/Controllers/Player [Controller].controller>(Click here to ping it)</link>\n \nIf you haven't changed the Animator Controller in any player prefab simply drag the default Animator Controller <i>(from the above path)</i> in the field below, otherwise drag the Animator Controller that you are using.");
+            DrawTitleText("添加自定义武器动画");
+            DrawSuperText("首先需要确定要把子状态机加入到哪个 <b>Animator Controller</b>。MFPS 所有玩家预制体默认使用的动画控制器位于 <i>Assets ➔ Art ➔ Animations ➔ Player ➔ Controllers ➔ Player [Controller]</i> <?link=asset:Assets/Art/Animations/Player/Controllers/Player [Controller].controller>点击此处定位</link>。\n \n如果你没有修改过任何玩家预制体的动画控制器，把上方的默认动画控制器拖入下方字段即可；否则拖入你实际使用的那个。");
             Space(10);
             var lw = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 150;
 
             EditorGUILayout.BeginHorizontal("box");
             Space(20);
-            playerAnimatorController = EditorGUILayout.ObjectField("Player Animator Controller", playerAnimatorController, typeof(AnimatorController), true) as AnimatorController;
+            playerAnimatorController = EditorGUILayout.ObjectField("玩家动画控制器", playerAnimatorController, typeof(AnimatorController), true) as AnimatorController;
             if (customWeaponStep == 0)
             {
                 GUI.enabled = playerAnimatorController != null;
@@ -598,7 +598,7 @@ public class MFPSGeneralDoc : TutorialWizard
             if (customWeaponStep > 0 && playerAnimatorController != null)
             {
                 Space(10);
-                DrawText("Now, in the dropdown below select the <b>weapon information</b> for which you want to add the custom animations and then click on the <b>Select</b> button.");
+                DrawText("在下方下拉框中选择要添加自定义动画的 <b>武器信息</b>，然后点击 <b>Select</b> 按钮。");
                 if (weaponNames == null)
                 {
                     weaponNames = bl_GameData.Instance.AllWeaponStringList();
@@ -617,14 +617,14 @@ public class MFPSGeneralDoc : TutorialWizard
             if (customWeaponStep > 1 && playerAnimatorController != null)
             {
                 Space(10);
-                DrawText("Alright, now you have to do this manually:\nFirst, open the <b>Animator Controller</b> in the <b>Animator window</b>, for it select the Animator Controller <i>(the one you assigned in the field above)</i> in the <b>Project View window</b> ➔ double click over it or right mouse click > <b>Open</b>.\n \nIn the Animator window that should be opened, select the <b>Layers</b> tab in the top left corner ➔ Select the second layer <b>Upper</b> ➔");
+                DrawText("接下来需要手动操作：\n首先在 <b>Animator 窗口</b>中打开该 <b>Animator Controller</b>，方式是在 <b>Project 视图</b> 中选中该控制器 <i>即上面字段中指定的那个</i> ➔ 双击它，或右键 > <b>Open</b>。\n \n在打开的 Animator 窗口中，点击左上角的 <b>Layers</b> 标签 ➔ 选择第二个层 <b>Upper</b> ➔");
                 DrawServerImage("img-43.png");
                 Space(10);
-                DrawSuperText("<?background=#CCCCCCFF>Duplicate one of the SubStateMachines</background>\n \nDuplicate a SubMachineState of a weapon of the same type that you want to add the animations, <b>e.g</b> if your custom animations are for a shotgun > Duplicate the Shotgun SubMachineState.\n \nFor duplicate the SubMachineState simply select it > right mouse click > Copy > right mouse click in an empty space > Paste:");
+                DrawSuperText("<?background=#CCCCCCFF>复制其中一个子状态机</background>\n \n复制一个与你要添加动画的武器同类型的子状态机，<b>例如</b> 自定义动画是给霰弹枪用的，就复制霰弹枪的子状态机。\n \n复制方式：选中该子状态机 > 右键 > Copy > 在空白处右键 > Paste：");
                 DrawAnimatedImage(7);
                 DownArrow();
-                DrawText("Once you duplicate it, click on the button below to fetch the Animator Controller data and proceed with the set up");
-                if (GUILayout.Button("Fetch Animator Controller Data"))
+                DrawText("复制完成后，点击下方按钮以获取动画控制器数据并继续配置");
+                if (GUILayout.Button("获取动画控制器数据"))
                 {
                     var rootStateMachine = playerAnimatorController.layers[1].stateMachine;
                     upperSubMachineStates = rootStateMachine.stateMachines;
@@ -636,7 +636,7 @@ public class MFPSGeneralDoc : TutorialWizard
             if (customWeaponStep > 2 && playerAnimatorController != null)
             {
                 Space(10);
-                DrawText("Alright, now in the dropdown below, select the <b>SubMachineState</b> that you just duplicate and click on the <b>Setup</b> Button.");
+                DrawText("在下方下拉框中选择你刚复制出的 <b>子状态机</b>，然后点击 <b>Setup</b> 按钮。");
                 GUI.enabled = customWeaponStep == 3;
                 EditorGUILayout.BeginHorizontal("box");
                 Space(20);
@@ -656,19 +656,19 @@ public class MFPSGeneralDoc : TutorialWizard
             if (customWeaponStep > 3 && playerAnimatorController != null)
             {
                 Space(10);
-                DrawText("Good, now the SubStateMachine is ready to use, the next step is to assign the player weapon animations ➔ in the Animator window select the <b>SubStateMachine</b> with the name of the weapon that the animations are for <i><b>(The name of the SubStateMachine that you just duplicated was automatically renamed to the weapon name that you selected)</b></i> ➔ Double click over SubStateMachine ➔ You should see some AnimatorStates <b>(Run, Idle, Reload, and Fire)</b> ➔ you can replace the Animation Clip of each state by selecting the State ➔ redirect to the Inspector window ➔ Assign the Animation Clip in the <b>Motion</b> field.");
+                DrawText("此时子状态机已可使用。下一步是指定玩家武器动画 ➔ 在 Animator 窗口中选择以目标武器命名的 <b>子状态机</b> <i><b>你刚复制的子状态机名称已自动改为你选中的武器名</b></i> ➔ 双击该子状态机 ➔ 会看到若干动画状态 <b>奔跑、待机、装弹和开火</b> ➔ 要替换某个状态的动画片段，选中该状态 ➔ 转到检视面板 ➔ 在 <b>Motion</b> 字段中指定动画片段。");
                 DrawAnimatedImage(8);
                 DownArrow();
 
-                DrawText("Once you finish assigning the animations, you are pretty much done, the last thing to do is to assign the custom animation information in the <b>TPWeapon > bl_NetworkGun</b> inspector, for it, open a player prefab <i>(you will have to do this for all the player prefabs that you are using)</i> ➔ Select the TPWeapon inside the player prefab ➔ in the inspector check the <b>Use Custom Player Animations</b> toggle ➔ Infill the next fields with this info:");
+                DrawText("动画指定完成后基本就绪，最后一步是在 <b>TPWeapon > bl_NetworkGun</b> 检视面板中填写自定义动画信息。打开一个玩家预制体 <i>你使用的每个玩家预制体都要做一次</i> ➔ 选中预制体内的第三人称武器 ➔ 在检视面板勾选 <b>Use Custom Player Animations</b> ➔ 填写以下字段：");
                 Space(10);
                 if (string.IsNullOrEmpty(customAnimationFireName))
                 {
                     var weaponInfo = bl_GameData.Instance.GetWeapon(customWeaponID);
                     customAnimationFireName = weaponInfo.Name;
                 }
-                DrawHorizontalColumn("Custom Animator State ID", (20 + customWeaponID).ToString(), 175);
-                DrawHorizontalColumn("Custom Fire Animation Name", customAnimationFireName + "Fire", 175);
+                DrawHorizontalColumn("自定义动画状态 ID", (20 + customWeaponID).ToString(), 175);
+                DrawHorizontalColumn("自定义开火动画名称", customAnimationFireName + "Fire", 175);
                 DrawServerImage("img-44.png");
                 DrawText("That's");
             }
@@ -677,7 +677,7 @@ public class MFPSGeneralDoc : TutorialWizard
         }
         else if (subStep == 3)
         {
-            DrawText("In case you are looking for player animations to replace the default ones in the game, below you will find a hand-picked collection of assets that you can acquire from the Asset Store");
+            DrawText("如果你想寻找玩家动画来替换游戏内的默认动画，下面是一份人工筛选的资源合集，可在资源商店获取");
             Space(20);
             if (playerAnimationAssets == null)
             {
@@ -697,7 +697,7 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (stateMachine == null)
         {
-            Debug.LogWarning($"The StateMachine couldn't be found in this Animator Controller.");
+            Debug.LogWarning($"在该动画控制器中找不到该状态机。");
             return false;
         }
 
@@ -708,7 +708,7 @@ public class MFPSGeneralDoc : TutorialWizard
 
         if (equipState == null)
         {
-            Debug.LogWarning($"The Equip animation state couldn't be found in the animator controller.");
+            Debug.LogWarning($"在动画控制器中找不到装备动画状态。");
             return false;
         }
 
@@ -719,7 +719,7 @@ public class MFPSGeneralDoc : TutorialWizard
 
         if (idleState.state == null)
         {
-            Debug.LogWarning($"The Idle animation state couldn't be found in the animator controller.");
+            Debug.LogWarning($"在动画控制器中找不到待机动画状态。");
             return false;
         }
 
@@ -763,141 +763,141 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void NamePlatesDoc()
     {
-        DrawSuperText("Name Plates = <b>Above Head Player Name</b>, is the GUI Text that appears on teammates players in-game,\nit's a pretty basic feature in all multiplayer games, in MFPS this GUI is rendering using the Unity legacy OnGUI system for its simplicity for the required purpose.\n \nCustomize the design of this GUI is quite simply:\n \nIn each player prefab you will found the script <?underline=>bl_NamePlateDrawer.cs</underline> attached to it, now in order to make easier to modify the look of the name plate UI you can preview it in the editor <i>(in edit mode)</i> by instance the player prefab in a scene ➔ select the player prefab instance ➔ bl_NamePlaterDrawer ➔ Click on the button <b>Simulate [OFF]</b>.");
+        DrawSuperText("名称牌即 <b>头顶玩家名</b>，是游戏中显示在队友头顶的 GUI 文本。这是所有多人游戏里的基础功能。MFPS 中该 GUI 使用 Unity 旧版 OnGUI 系统渲染，因为对该用途而言它足够简单。\n \n自定义这个 GUI 的设计相当简单：\n \n每个玩家预制体上都挂有 <?underline=>bl_NamePlateDrawer.cs</underline> 脚本。为了方便调整名称牌 UI 的外观，你可以在编辑器 <i>编辑模式</i> 下预览：把玩家预制体拖入场景 ➔ 选中该实例 ➔ bl_NamePlaterDrawer ➔ 点击 <b>Simulate [OFF]</b> 按钮。");
         DrawServerImage("img-30.png");
-        DrawText("Now with the preview On, you can edit the design with the frontend properties, for it on the inspector window of bl_NamePlateDrawer ➔ click on the button Edit Present ➔ this will open the GUI style properties of the name plate.");
+        DrawText("预览开启后即可通过前端属性编辑外观：在 bl_NamePlateDrawer 的检视面板中 ➔ 点击 Edit Present 按钮 ➔ 会打开名称牌的 GUI 样式属性。");
         DrawServerImage("img-31.png");
-        DrawText("Customize the properties as you desire and preview the change in realtime in the Scene View window ➔ Once you're done, turn off the Simulation by clicking again in the <b>Simulation [On]</b> button ➔ Apply the changes to the player prefab.");
+        DrawText("按需调整属性，改动会在 Scene 视图中实时预览 ➔ 完成后再次点击 <b>Simulation [On]</b> 按钮关闭模拟 ➔ 把改动应用到玩家预制体。");
         DownArrow();
-        DrawHyperlinkText("<b><size=16>Hide Health Bar</size></b>\n\nIf you want to hide the health bar from the name plate of teammates and only show the player name, you can do it by turn off the toggle <b>Show Teammates Health Bar</b> in <link=asset:Assets/Resources/GameData.asset>GameData</link>.");
+        DrawHyperlinkText("<b><size=16>隐藏血条</size></b>\n\n若想隐藏队友名称牌上的血条，只显示玩家名，关闭 <link=asset:Assets/Resources/GameData.asset>GameData</link> 中的 <b>Show Teammates Health Bar</b> 开关即可。");
     }
 
     void PlayerPrefabsDoc()
     {
-        DrawHyperlinkText("We called <b>Player Prefabs</b> to the unity prefab that contain all the required scripts, objects, and structure that make up the player controller.\n\nThe MFPS player prefabs are located in a special Unity folder called <b>'Resources'</b> <i>(you can find it inside the project Resources folder)</i>, if you wanna change anything related to one of the players like, modify a weapon position, animation, a script property, etc... you have to apply the change to these prefabs.\n\n<b>By default, MFPS uses 2 player prefabs</b> which are assigned in the <b><link=asset:Assets/Resources/GameData.asset>GameData</link></b> ➔ <b>Player1</b> and <b>Player2</b>, Player1 is used for Team 1 and Player2 for Team 2, in case the game mode is not a team-based mode like the Free For All game mode, the Player1 is used.\n\nSince version 1.8 you can also override the Player1 and Player2 per scene, which means that you can use different player prefabs for each team in each map, to do that you simply have to attach the script <b>bl_OverridePlayerPrefab.cs</b> in any object of your map scene ➔ then in the inspector of this script you will see the fields to assign the player prefabs and that's all.");
+        DrawHyperlinkText("<b>玩家预制体</b> 指包含玩家控制器所需的全部脚本、对象与结构的 Unity 预制体。\n\nMFPS 的玩家预制体放在名为 <b>Resources</b> 的 Unity 特殊文件夹中 <i>位于项目的 Resources 文件夹内</i>。若要修改与玩家相关的任何内容，例如武器位置、动画、脚本属性等，都必须改动这些预制体。\n\n<b>MFPS 默认使用 2 个玩家预制体</b>，在 <b><link=asset:Assets/Resources/GameData.asset>GameData</link></b> 中指定，即 <b>Player1</b> 与 <b>Player2</b>。Player1 用于阵营 1，Player2 用于阵营 2；若游戏模式不是阵营制，例如自由混战，则使用 Player1。\n\n自 1.8 版本起，你还可以按场景覆盖 Player1 与 Player2，也就是说可以给每张地图的每个阵营指定不同的玩家预制体。做法是在地图场景的任意对象上挂载 <b>bl_OverridePlayerPrefab.cs</b> 脚本 ➔ 在该脚本的检视面板中指定玩家预制体即可。");
         DownArrow();
-        DrawHyperlinkText("In case you are looking for a more advanced solution for the player selection or want to add more player prefabs where the players can select in-game their character, you should take a look at the <link=https://www.lovattostudio.com/en/shop/addons/player-selector/>Player Selector</link> addon.\n");
+        DrawHyperlinkText("如果你需要更进阶的玩家选择方案，或想加入更多玩家预制体让玩家在游戏内选择角色，可以看看 <link=https://www.lovattostudio.com/en/shop/addons/player-selector/>Player Selector</link> 插件。\n");
     }
 
     void DrawBullets()
     {
         if (subStep == 0)
         {
-            DrawText("in MFPS bullets are pooled and like all other pooled objects in MFPS they are listed in <b>bl_ObjectPooling</b> script, which is attached in the <b>GameManager</b> on each map scene.\nin <b>bl_Gun</b> you assign only the \"Pooled Name\".\n\n\nYou may want to add a new bullet for a specific weapon, let's say you want add a different Trail Render, well for do it you can do this:\n\n<size=18>Duplicated a bullet prefab:</size>\n\nSelect one of the existing prefab located at MFPS ➔ Content ➔ Prefabs ➔ Weapon ➔ Projectiles ➔ *, select the prefab and Ctrl + D to Duplicated, or Command + D on Mac.\n\nThen make the changes that you want to this duplicated prefab and after this, add a new field in <b>bl_ObjectPooling</b> <i>(it is attached in GameManager object in room scenes)</i>, in the new field drag the bullet prefab and change the pooled name:");
+            DrawText("MFPS 中的子弹使用对象池。与 MFPS 其他池化对象一样，它们登记在 <b>bl_ObjectPooling</b> 脚本中，该脚本挂在每张地图场景的 <b>GameManager</b> 上。\n在 <b>bl_Gun</b> 中你只需填写池化名称。\n\n\n你可能想为某把武器添加新子弹，例如想要不同的拖尾效果，做法如下：\n\n<size=18>复制子弹预制体：</size>\n\n在 MFPS ➔ Content ➔ Prefabs ➔ Weapon ➔ Projectiles ➔ * 中选中某个已有预制体，按 Ctrl + D 复制，Mac 上为 Command + D。\n\n然后在复制出的预制体上做你想要的修改，之后在 <b>bl_ObjectPooling</b> <i>该脚本挂在房间场景的 GameManager 对象上</i> 中新增一个列表项，把该子弹预制体拖入并设置池化名称：");
             DrawServerImage(17);
-            DrawText("then open a player prefab and select the <b>FPWeapon</b> that you want assign the bullet, in the bl_Gun script of that weapon, write the pooled name of the bullet in the field \"Bullet\".\n");
+            DrawText("然后打开玩家预制体，选中要指定子弹的 <b>第一人称武器</b>，在该武器的 bl_Gun 脚本中把子弹的池化名称填入 Bullet 字段。\n");
             DrawServerImage(18);
-            DrawText("Apply changes to the player prefab and ready.");
+            DrawText("把改动应用到玩家预制体即可。");
         }
         else if (subStep == 1)
         {
-            DrawSuperText("The bullet decals are pooled and automatically placed when a bullet hits a collider, the decal material will be selected based on the collider tag, you can define as many decals as you want.\n \nThe <b>Bullet Decal Manager</b> is located under the <b>GameManager</b> object in each map scene, <i><b>GameManager ➔ Bullet Decal Manager ➔ bl_BulletDecalManager</b></i>.\n \n<?title=18>In order to modify, add or remove a decal:</title>\n \n<?list=■>Create a new material with a simple alpha shader\nAssign the decal texture to this material.\nIn the<b>Bullet Decal Manager ➔ Decal List ➔ Surface Decals</b>, add a new tag field if the decal is for a new Tag, or if it is for an existing one, simply unfold the field.\nAdd the Decal material to the <b>Decal Materials</b> list.\nThat's.</list>");
+            DrawSuperText("子弹弹痕同样使用对象池，在子弹击中碰撞体时自动放置，弹痕材质会根据碰撞体的标签选择。弹痕数量不限。\n \n<b>Bullet Decal Manager</b> 位于每张地图场景的 <b>GameManager</b> 对象下，即 <i><b>GameManager ➔ Bullet Decal Manager ➔ bl_BulletDecalManager</b></i>。\n \n<?title=18>修改、新增或移除弹痕：</title>\n \n<?list=■>用简单的 alpha 着色器新建一个材质\n把弹痕贴图指定给该材质。\n在 <b>Bullet Decal Manager ➔ Decal List ➔ Surface Decals</b> 中，若弹痕对应新的标签则新增一个标签项，若对应已有标签直接展开该项即可。\n把弹痕材质加入 <b>Decal Materials</b> 列表。\n完成。</list>");
             DrawServerImage("img-39.png");
         }
         else if (subStep == 2)
         {
-            DrawText("If you need to create a different type of bullet, not just a trail renderer change but a different ballistic or a different hit detection, this is possible to do without breaking changes.\n \nThe bullet or projectiles can be extended and/or a custom class can be used, <b>you should not modify the default bullets/projectiles scripts</b>,\ninstead, create a new class and inherit it from the <color=#FFCC2AFF>bl_ProjectileBase</color> class, override the required functions and use the default scripts as reference only and code the logic of your bullet/projectile as needed.\n \nAttach your custom script to a game object and create a prefab of it, then add this prefab in the pooled list and you are ready to go.");
+            DrawText("若你需要另一种类型的子弹，不只是换拖尾，而是不同的弹道或命中判定，也可以在不破坏原有功能的前提下实现。\n \n子弹与投射物支持继承扩展，可自定义类。<b>不要直接修改默认的子弹与投射物脚本</b>，\n而是新建一个类继承自 <color=#FFCC2AFF>bl_ProjectileBase</color>，重写所需函数，把默认脚本仅作参考，按需实现你自己的子弹或投射物逻辑。\n \n把自定义脚本挂到 GameObject 上并做成预制体，再把这个预制体加入池化列表即可使用。");
         }
     }
 
     void DrawKitsSystem()
     {
-        DrawText("MFPS have a simple but functional Kit System where players can throw and pick up Ammunition or Medic kits in the map during the game, by default player can throw these kits with the <b>'H'</b> key, the type of kit <i>(ammo or medic)</i> depend of the player class.");
+        DrawText("MFPS 有一套简单但实用的补给包系统，玩家可以在对局中投掷和拾取弹药包或医疗包。默认使用 <b>H</b> 键投掷，投出的是弹药包还是医疗包 <i>取决于玩家兵种</i>。");
         DrawServerImage(7);
         DownArrow();
 
-        DrawTitleText("Change the Key to throw kits");
-        DrawText("- in the root of Player prefabs you have a script called <b>bl_ThrowKits</b>, in this one you have the property called <b>Throw Key</b>, there you can set the Key code for throw the kits.\n");
+        DrawTitleText("修改投掷补给包的按键");
+        DrawText("- 玩家预制体根节点上有一个脚本 <b>bl_ThrowKits</b>，其中有 <b>Throw Key</b> 属性，在此设置投掷补给包的按键。\n");
         DownArrow();
-        DrawTitleText("Change the model of the kits");
+        DrawTitleText("修改补给包的模型");
         DrawServerImage(19);
-        DrawText("•  You can find the kits prefabs in: <i>Assets -> Prefabs -> Level -> Items->*</i>\n\n•  Select the kit that you want to change the model (MedKit or AmmoKit) and drag to the scene hierarchy.\n\n•  Replace the mesh with you new model, apply the changes and save the prefab.\n\n");
+        DrawText("•  补给包预制体位于 <i>Assets -> Prefabs -> Level -> Items->*</i>\n\n•  选中要换模型的补给包，即 MedKit 或 AmmoKit，拖入场景层级。\n\n•  用你的新模型替换网格，应用改动并保存预制体。\n\n");
         DownArrow();
-        DrawTitleText("Change the model of Kit deploy indicator");
+        DrawTitleText("修改补给包投放指示器模型");
         DrawServerImage(20);
-        DrawText("You can find the prefab in <i>Assets -> Prefabs -> Level -> AirDrop->*</i>\n");
+        DrawText("预制体位于 <i>Assets -> Prefabs -> Level -> AirDrop->*</i>\n");
     }
 
     void DrawKillZones()
     {
-        DrawText("may be the case that there are limits in your map that you want to the players don't go any further, a solution that MFPS have for these cases is the <b>Kill Zones</b> where if the player enter, a warning will appear with a count down timer, if the player not leave this zone before the timer reach 0, he will automatically killed by the game and returning to a spawnpoint.\n");
+        DrawText("你的地图可能存在不希望玩家越过的边界。MFPS 为此提供的方案是 <b>击杀区</b>：玩家进入后会弹出带倒计时的警告，若在计时归零前没有离开该区域，游戏会自动将其击杀并送回出生点。\n");
         DrawServerImage(21);
-        DrawText("to add a kill zone simple add a object with a <b>Box Collider</b> <i>(the Box Collider represent the zone)</i>, then add the script bl_DeathZone.cs script, setup the time that the player have to leave this zone and the string message that will appear in screen while player is in kill zone.\n");
+        DrawText("添加击杀区的方法：创建一个带 <b>Box Collider</b> 的对象 <i>该碰撞体即代表区域范围</i>，然后挂载 bl_DeathZone.cs 脚本，设置玩家离开该区域的时限，以及玩家位于区域内时屏幕上显示的提示文本。\n");
     }
 
     void DrawGameSettings()
     {
-        DrawText("MFPS allows players to modify some game settings of the game in-runtime like graphics quality and control settings, you as the developer are in charge to set the default values for these settings, the value that the player will have the first time that they play the game.");
+        DrawText("MFPS 允许玩家在运行时修改部分游戏设置，例如画质与控制设置。作为开发者，你需要为这些设置指定默认值，也就是玩家首次进入游戏时采用的值。");
 
-        DrawHyperlinkText("To set the default values go to <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Default Settings ➔ Setting Values ➔ *");
+        DrawHyperlinkText("设置默认值的路径：<link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Default Settings ➔ Setting Values ➔ *");
         DrawServerImage(28);
-        DrawText("In this list, you will have all the available values, simply unfold the setting that you want to modify and set the desired value.");
+        DrawText("该列表包含全部可配置项，展开要修改的设置并设定所需的值即可。");
         DownArrow();
-        DrawTitleText("Add a new setting");
-        DrawText("Add a new setting is really simple, in the same list <i><b>(Setting Values)</b></i> add a new field, set a unique name to the to identify the setting ➔ set the type of setting <i>(float, integer, bool, or string)</i> then set the default value.\n\nNow to use this value in-game you can load it with:");
+        DrawTitleText("新增设置项");
+        DrawText("新增设置项很简单：在同一个列表 <i><b>Setting Values</b></i> 中新增一项，设置一个唯一名称用于标识该设置 ➔ 选择设置类型 <i>float、integer、bool 或 string</i> ➔ 设定默认值。\n\n在游戏内读取该值的方式：");
         DrawCodeText("var val = bl_MFPS.Settings.GetSettingOf('THE_SETTING_NAME');");
-        DrawText("once the setting is added in the list, it will automatically be saved when the player applies the settings in-game <i>(click on the <b>Save</b> button)</i>, but if you want to save the setting with your own rules you can do it with:");
+        DrawText("设置项加入列表后，玩家在游戏内应用设置时 <i>点击 <b>Save</b> 按钮</i> 会自动保存。若想按自己的规则保存，可用：");
         DrawCodeText("bl_MFPS.Settings.SetSettingOf('THE_SETTING_NAME', THE_SETTING_VALUE);");
-        DrawText("As a reference of how you can use it in-game you can inspect the script <b><color=#00E9FFFF>bl_SingleSettingsBinding.cs</color></b>\n");
+        DrawText("想了解在游戏内的实际用法，可参考脚本 <b><color=#00E9FFFF>bl_SingleSettingsBinding.cs</color></b>\n");
     }
 
     void MouseLookDoc()
     {
-        DrawHyperlinkText("The Mouse Look/Camera controller is a key feature in shooter games or any fast-paced action game.\n \nIn MFPS a few techniques are used to improve the accuracy and smoothness of the look movement like <b>Frame Smoothing</b> and <b>Movement Smoothness</b>.\n \nIf you want to personalize the movement, there're some properties that you can modify in the inspector:\n \nFor the general setup, you can find the properties in <link=asset:Assets/Resources/GameData.asset>GameData</link> -> Mouse Look Settings.");
-        DrawPropertieInfo("Use Smoothing", "bool", "Use Frame Smoothing?, a technique that allows achieving a more fluid movement by using the average mouse movement calculated from a certain number of past frames.");
-        DrawPropertieInfo("Frame Of Smoothing", "int", "The number of frames that will be buffer to calculate the average movement, more means more smooth but less precise.");
-        DrawPropertieInfo("Lerp Movement", "bool", "Apply an extra smooth layer to the movement? good for touch devices, not recommended for mouse/gamepad controllers.");
-        DrawPropertieInfo("Aim Sensitivity Adjust", "enum", "Determine how the mouse sensitivity will transition to the Aim sensitivity, <b>Fixed</b> = To the exact Aim sensitivity value, <b>Relative</b> = by calculating the Camera Field Of View change.");
+        DrawHyperlinkText("视角控制即鼠标视角与相机控制是射击游戏或任何快节奏动作游戏的核心功能。\n \nMFPS 采用了几种技术来提升视角移动的精准度与顺滑度，例如 <b>帧平滑</b> 与 <b>移动平滑</b>。\n \n若要个性化该运动，可在检视面板中修改若干属性：\n \n通用设置位于 <link=asset:Assets/Resources/GameData.asset>GameData</link> -> Mouse Look Settings。");
+        DrawPropertieInfo("Use Smoothing", "bool", "是否启用帧平滑。该技术通过计算过去若干帧鼠标移动的平均值，让视角移动更顺滑。");
+        DrawPropertieInfo("平滑帧数", "int", "参与平均值计算的缓冲帧数。数值越大越顺滑，但精度越低。");
+        DrawPropertieInfo("Lerp Movement", "bool", "是否为移动额外叠加一层平滑。适合触屏设备，不推荐用于鼠标或手柄操作。");
+        DrawPropertieInfo("瞄准灵敏度调整方式", "enum", "决定鼠标灵敏度如何过渡到瞄准灵敏度。<b>Fixed</b> 表示直接采用瞄准灵敏度的确切值，<b>Relative</b> 表示按相机视野变化量换算。");
         DrawHorizontalSeparator();
-        DrawText("<b><size=22>PER PLAYER PROPERTIES</size></b>\n\nThere're some properties that you can modify per player, you can find them in the Player prefabs ➔ bl_FirstPersonController ➔ Mouse Look ➔ *,");
+        DrawText("<b><size=22>逐玩家属性</size></b>\n\n还有一些属性可以按玩家分别设置，位置为玩家预制体 ➔ bl_FirstPersonController ➔ Mouse Look ➔ *，");
         DrawHorizontalSeparator();
-        DrawHyperlinkText("<b><size=22>SENSITIVITY</size></b>\n\nPlayers can change the mouse/pad sensitivity in-game, but you can set up the default sensitivity in <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Default Settings ➔ Settings Values ➔ <b>Sensitivity</b> and <b>Aim Sensitivity</b>.");
+        DrawHyperlinkText("<b><size=22>灵敏度</size></b>\n\n玩家可以在游戏内调整鼠标或手柄灵敏度，但默认值由你设定，位置为 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Default Settings ➔ Settings Values ➔ <b>Sensitivity</b> 与 <b>Aim Sensitivity</b>。");
     }
 
     void DrawObjectPooling()
     {
-        DrawText("<b><size=15>What is Object Pooling?</size></b>\n\n<b>Instantiate()</b> and <b>Destroy()</b> are useful and necessary methods during gameplay. Each generally requires minimal CPU time.\n\nHowever, for objects created during gameplay that have a short lifespan and get destroyed in vast numbers per second like Bullets per example, the CPU needs to allocate considerably more time.\n\nThere is when Object Pooling is enter, <b>Object pooling</b> is where you pre-instantiate all the objects you’ll need at any specific moment before gameplay, in MFPS bullets, decals and hit particles are pooled.\n\nThe bl_ObjectPooling.cs class is really easy to use, all what you need to do to add a new object to pooled is listed the prefab in the <b>'pooledPrefabs'</b> list of bl_ObjectPooling inspector which is attached in the <b>GameManager</b> object in the map scenes, once you add the prefab simply set a key name and how many instances of this prefab you think will be enough and that's.\n\nNow for instance this prefab from a script, before you normally will use something like:\n\n");
+        DrawText("<b><size=15>什么是对象池？</size></b>\n\n<b>Instantiate()</b> 与 <b>Destroy()</b> 是游戏运行中常用且必要的方法，单次调用消耗的 CPU 时间通常很少。\n\n但对于运行期创建、生命周期短、每秒销毁数量巨大的对象，例如子弹，CPU 需要花费的时间就相当可观。\n\n这正是对象池发挥作用的地方。<b>对象池</b> 指在游戏开始前预先实例化所有可能用到的对象。MFPS 中子弹、弹痕和命中粒子都使用对象池。\n\nbl_ObjectPooling.cs 使用起来很简单。把对象加入池中只需在 bl_ObjectPooling 检视面板的 <b>pooledPrefabs</b> 列表中登记该预制体，该脚本挂在各地图场景的 <b>GameManager</b> 对象上。加入预制体后设置一个池化名称，再估计需要多少个实例即可。\n\n在脚本中取用该预制体时，原先通常写法如下：\n\n");
         DrawCodeText("GameObject ob = Instantiate(MyPrefab, position, rotation);");
-        DrawText("with bl_ObjectPooling script you simply has to replace that with:");
+        DrawText("使用 bl_ObjectPooling 后，替换为：");
         DrawCodeText("GameObject ob = bl_ObjectPooling.Instance.Instantiate(\"PrefabKey\", position, rotation);");
     }
 
     void AddNewMenu()
     {
-        DrawText("If you want add a new menu/window in the Lobby UI, follow this:\n\n1 - Create the menu/window UI: make the design of UI with what you need, but make all the design as child of a parent under canvas, example \"<i>MyNewWindow</i>\" (this is a empty game object under canvas) put all the buttons, text, images, etc.. of your new menu/window under this object.\n\n");
+        DrawText("若想在大厅 UI 中新增菜单或窗口，按以下步骤操作：\n\n1 - 制作菜单或窗口 UI：按需求设计界面，但要把全部内容放在 Canvas 下的一个父对象之下。例如新建一个空 GameObject 命名为 <i>MyNewWindow</i>，置于 Canvas 下，把新菜单或窗口的所有按钮、文本、图片等放到该对象下。\n\n");
         DrawAnimatedImage(0);
-        DrawText("2 - Add a new field in the <b>Windows</b> list in Lobby -> Canvas [Default Menu] -> bl_LobbyUI -> Windows, in the new field in this list and add the \"<i>MyNewWindow</i>\" object in the field and assign an unique name.\n");
+        DrawText("2 - 在 Lobby -> Canvas [Default Menu] -> bl_LobbyUI -> Windows 的 <b>Windows</b> 列表中新增一项，把 <i>MyNewWindow</i> 对象填入该字段并指定一个唯一名称。\n");
         DrawAnimatedImage(1);
-        DrawText("3 - Create a menu button: add a new button that will open the new menu/window, all the other buttons are in: Lobby -> Canvas -> Lobby -> Content -> Top Menu -> Buttons -> *, so you can duplicate one of these buttons and change the title text.\n\nin this new button add as listener the function of bl_Lobby -> ChangeWindow(string) -> and set the name of new window in the list \"Windows\".That's.\n");
+        DrawText("3 - 创建菜单按钮：新增一个用于打开该菜单或窗口的按钮。其他按钮都位于 Lobby -> Canvas -> Lobby -> Content -> Top Menu -> Buttons -> *，可以复制其中一个并修改标题文本。\n\n在新按钮上把 bl_Lobby -> ChangeWindow(string) 函数注册为监听，并把 Windows 列表中新窗口的名称作为参数传入即可。\n");
         DrawAnimatedImage(2);
     }
 
     void DrawAddonsDoc()
     {
-        DrawText("Game Framework is designed with a robust set of core functionalities, yet you might notice it doesn't include certain standard features commonly found in FPS games, such as Mini Map, Login System, Level System, Vehicles, Shop, etc... This isn't an oversight; MFPS indeed offers many of those features, but as extensions/add-ons, allowing you to select the system to your specific needs.\n \nYou might wonder why these aren't part of the default setup. Let's rationale:\n \nThe decision to separate these features as optional add-ons is twofold, benefiting both us (the MFPS devs) and you the end game developer. Primarily, it's about affordability and flexibility. Including every possible feature in the core package would unavoidably inflate its price, potentially pushing it beyond an accessible range for many — we're talking about a jump to at least $500 or more. By offering a lean core package, we keep the entry price low, ensuring accessibility for a wider range of developers, from hobbyists to professionals.\n \nSecondly, this modular approach respects the unique needs and constraints of different projects. Not every game requires a complex Account Systems, Vehicles, or Kill Streaks support. By allowing developers to select and integrate only the features they need, we ensure that you don't pay for, or wade through, unnecessary functionalities. This not only makes MFPS more customizable but also more efficient and lighter to work with.\n\n<b>It's important to note that the core package is entirely functional on its own, and the add-ons are optional.</b>\n \nDespite being optional, these add-ons are meticulously crafted to blend seamlessly with the core system. Most feature automatic integration, meaning you're spared the technical hassle of manual coding or configuration. Simply choose what you need, and the system integrates it smoothly into your project.\n \nTo make your development journey smoother and to explore the range of functionalities you can incorporate, check out the '<b>Addon Manager</b>' window. You can access it in MFPS by navigating to <b>MFPS ➔ Addons ➔ Addons Manager.</b> Here, you'll find a suite of add-ons designed to elevate your game vision, all while maintaining the balance between complexity, performance, and budget.");
+        DrawText("Game Framework 的核心功能设计得相当完整，但你可能会发现它并不包含 FPS 游戏常见的一些标准功能，例如小地图、登录系统、等级系统、载具、商店等。这并非疏漏，MFPS 确实提供其中许多功能，只是以扩展或插件形式提供，让你按需选择。\n \n你可能会问为什么这些不放进默认配置。理由如下：\n \n把这些功能拆分为可选插件是双向考虑，对 MFPS 开发团队和作为游戏开发者的你都有好处。首先关乎价格与灵活性。若把所有可能的功能都塞进核心包，价格必然被推高，可能超出很多人的承受范围，至少要涨到 500 美元以上。提供精简的核心包可以把入门价格控制在低位，让从爱好者到专业开发者的更广泛人群都能负担。\n \n其次，这种模块化方式尊重不同项目的独特需求与限制。并非每个游戏都需要复杂的账号系统、载具或连杀奖励。让开发者只挑选并集成自己需要的功能，可以避免为不需要的东西付费或耗费精力。这让 MFPS 不仅更可定制，也更轻量高效。\n\n<b>需要说明的是，核心包本身功能完整，插件全部可选。</b>\n \n尽管是可选的，这些插件都经过细致设计，能与核心系统无缝衔接。大多数支持自动集成，无需手动编码或配置。你只需选择需要的功能，系统会平滑接入你的项目。\n \n为让你的开发过程更顺畅，也便于了解可引入的功能范围，请查看k out the '<b>Addon Manager</b>' window. You can access it in MFPS by navigating to <b>MFPS ➔ Addons ➔ Addons Manager.</b> Here, you'll find a suite of add-ons designed to elevate your game vision, all while maintaining the balance between complexity, performance, and budget.");
 
-        DrawNote("Due to Asset Store guidelines, I'm not allowed to list the links to the addons directly, but you can find all the available addons in my website <b>lovattostudio.com</b>");
+        DrawNote("受资源商店规则限制，我无法直接列出插件链接，但所有可用插件都可以在官网 <b>lovattostudio.com</b> 找到");
 
         /*using (new CenteredScope())
-            if (Buttons.OutlineButton("Open Addons Manager", Color.yellow, GUILayout.Height(32)))
+            if (Buttons.OutlineButton("打开插件管理器", Color.yellow, GUILayout.Height(32)))
             {
                 GetWindow<MFPSEditor.Addons.MFPSAddonsWindow>("Addons Manager");
             }*/
-        DrawText("<b><size=22>How Integrate Addons?</size></b>\n\nAll addons comes with a <b>ReadMe.txt</b> on the root folder of the addon with the instructions, but pretty much <b>all Addons comes with an Automatically integration</b>, you only have to enable and click on the Integrate MenuItem:\n");
+        DrawText("<b><size=22>如何集成插件？</size></b>\n\n所有插件的根目录下都有 <b>ReadMe.txt</b> 说明文件，而且几乎所有插件都<b>支持自动集成</b>，你只需启用插件并点击 Integrate 菜单项：\n");
         DrawAnimatedImage(3);
     }
 
     void EditorMenusDoc()
     {
-        DrawText("MFPS comes with a series of uniqueness <b>Editor windows</b> that you can found in the Unity Editor top menu under the <b>MFPS</b> root menu:");
+        DrawText("MFPS 提供了一系列独立的 <b>编辑器窗口</b>，位于 Unity 编辑器顶部菜单的 <b>MFPS</b> 根菜单下：");
         DrawServerImage("img-26.png");
-        DrawText("Here is a brief explaination of what each one of them is for:\n \n<b><size=18>MFPS ➔ Addons ➔ *</size></b>\n \n- In the submenu of this, you will find all the <i>quick actions</i> for all the addons in your project, listed by the addon name you will find the button for quick actions like enable or disable the addon, run the auto-integration and the documentation link.\n \n<b><size=18>MFPS ➔ Addons ➔ Addons Manager</size></b>\n \n- This will open the Addons Manager window, with which you can see the register of all the Game Framework available add-ons,\nwith information as the latest update of each addon, the changelogs, last versions, addons description, enable/disable addons, addons links, and in-project addons status.\n \n<b><size=18>MFPS ➔ Tutorials</size></b>\n \n- In the submenu of this, you will find listed all the build-in editor documentation and tutorials for MFPS and all the addons in your project, being the <b>Tutorials ➔ Documentation</b> the main or general documentation of MFPS.\n \n<b><size=18>MFPS ➔ Tools</size></b>\n \n- In the submenu of this, you will find various actions and helpers windows that provide useful automated operations for MFPS and or specific addons.");
-        DrawText("<b><size=18>MFPS ➔ Manager</size></b>\n \n- This will open the MFPS Manager window with which you can find the front-end settings of MFPS and all the addons in your project, also, in this window you have a range of utility windows with you can manage some of the MFPS main settings as the default player weapons load-outs, weapons information, levels, etc...\n \n<b><size=18>MFPS ➔ Store</size></b>\n \n- This will open the MFPS Store window, in this window you can find listed all the available MFPS addons with their respective informations, preview images and links to acquire them.\n \n<b><size=18>MFPS ➔ MFPS</size></b>\n \n- This will open the MFPS window, which is the same window that appears automatically when you import MFPS for the first time, this window contains useful information about your current MFPS project as the MFPS version you are using, the changelog of the version, addons information, links for tutorials and contact information.\n \n<b><size=18>MFPS ➔ MFPS News</size></b>\n \n- This will open the MFPS News window, in which as the name says, you will find news about MFPS and the add-ons,\nlatest add-ons updates, third-party assets from the Asset Store that you may find interesting for shooter projects.\n \nThis information of this window is fetched from our server so you may want to check it regularly so you don't miss anything about MFPS.");
+        DrawText("以下简要说明各项用途：\n \n<b><size=18>MFPS ➔ Addons ➔ *</size></b>\n \n- 该子菜单下是项目中所有插件的<i>快捷操作</i>，按插件名列出，包含启用或禁用插件、执行自动集成、以及文档链接等按钮。\n \n<b><size=18>MFPS ➔ Addons ➔ Addons Manager</size></b>\n \n- 打开插件管理器窗口，可查看 Game Framework 全部可用插件的名录，\n包括各插件的最新更新时间、更新日志、最新版本、插件说明、启用或禁用、插件链接，以及项目内插件的当前状态。\n \n<b><size=18>MFPS ➔ Tutorials</size></b>\n \n- 该子菜单列出了 MFPS 与项目中所有插件的内置编辑器文档与教程，其中 <b>Tutorials ➔ Documentation</b> 是 MFPS 的主文档。\n \n<b><size=18>MFPS ➔ Tools</size></b>\n \n- 该子菜单提供多种操作与辅助窗口，为 MFPS 及特定插件提供实用的自动化操作。");
+        DrawText("<b><size=18>MFPS ➔ Manager</size></b>\n \n- 打开 MFPS 管理器窗口，可查看 MFPS 与项目中所有插件的前端设置。该窗口还包含一组实用工具窗口，可管理 MFPS 的一些主要设置，例如玩家默认武器配置、武器信息、关卡等。\n \n<b><size=18>MFPS ➔ Store</size></b>\n \n- 打开 MFPS 商店窗口，其中列出所有可用的 MFPS 插件及其说明、预览图和购买链接。\n \n<b><size=18>MFPS ➔ MFPS</size></b>\n \n- 打开 MFPS 窗口，也就是首次导入 MFPS 时自动弹出的那个窗口。其中包含当前 MFPS 项目的实用信息，例如所用 MFPS 版本、该版本的更新日志、插件信息、教程链接与联系方式。\n \n<b><size=18>MFPS ➔ MFPS News</size></b>\n \n- 打开 MFPS 新闻窗口，顾名思义，其中包含 MFPS 与各插件的动态、\n插件最新更新，以及你可能感兴趣的射击类项目第三方资源商店素材。\n \n该窗口的信息从服务器获取，建议定期查看以免错过 MFPS 的相关内容。");
     }
 
     void DrawGameTexts()
     {
-        DrawText("If you want to change some text in the game or maybe just change the text grammar, most part of the text is directly assigned in the UI Text's components which are located inside the canvas objects in each scene of the game, but also, there is some text that is set/modified in runtime by code, to make easy for you to find all this text we have placed all those in a single script which is <b>bl_GameTexts.cs</b>\n \nin this script you will find all the text that assigned by code in runtime, you can modify them from that script, this facilitates the work of for example adding your own localization system.");
+        DrawText("若要修改游戏中的某些文本，或仅调整文字表述，大部分文本直接设置在 UI Text 组件中，这些组件位于各场景的 Canvas 对象内。同时还有一部分文本由代码在运行时设置或修改。为方便你查找，我们把这些文本统一放在 <b>bl_GameTexts.cs</b> 这一个脚本中。\n \n该脚本集中了所有由代码在运行时赋值的文本，可直接在此修改，也便于你接入自己的本地化系统。");
         DrawServerImage("img-22.png");
     }
 
@@ -905,51 +905,51 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("A critical aspect of shooter games <b><size=8>(or all games in general)</size></b> is the user control, but this is kinda special in action games since players usually have their own way to set up the inputs with which they feel comfortable playing, MFPS by default have the \"standard\" input set up which is set in the most fps games.\n \nSince version 1.9, MFPS comes with a custom Input Manager that allows rebinding the input keys in runtime through a menu in the settings window, you can define the default inputs in the \"Input Mapped\" and let the players decide if they wanna change in-game.\n \nAlternatively, if you want to use a third-party Input Manager system, MFPS also facilitates this, all the in-game used inputs are defined in the script bl_GameInput.cs, you can change the code of the functions to point to your custom input system.\n \nYou can identify which input is for what game action by the function name <i>(Fire, Reload, Jump, etc...)</i>");
+            DrawText("射击游戏 <b><size=8>或者说所有游戏</size></b> 的一个关键要素是操作控制。在动作游戏中这一点尤其特殊，因为玩家往往有自己习惯的按键设置。MFPS 默认采用多数 FPS 游戏通用的标准按键方案。\n \n自 1.9 版本起，MFPS 内置了自定义输入管理器，可在运行时通过设置窗口中的菜单重新绑定按键。你可以在 <i>Input Mapped</i> 中定义默认按键，是否允许玩家在游戏内修改由你决定。\n \n如果你想使用第三方输入管理器，MFPS 同样支持。游戏中使用的全部输入都定义在 bl_GameInput.cs 脚本中，修改这些函数中的代码即可指向你自己的输入系统。\n \n通过函数名即可判断某个输入对应哪个游戏动作 <i>开火、装弹、跳跃等</i>。");
         }
         else if (subStep == 1)
         {
-            DrawText("If you want change the default input mapped of the keyboard or gamepad you simple have to modify the mapped object.\n\nSelected the input mapped scriptable object, if you are using one of the default ones, they are located at: <i>Assets ➔ Prefabs ➔ Presents ➔ Input Mappeds➔*</i>, select it and in the inspector you will have the list of all the setup inputs, fold out the input that you want to modify and edit the info <i>(keycode, axis name, description, etc..)</i>\n");
+            DrawText("要修改键盘或手柄的默认按键映射，只需改动对应的映射资源。\n\n选中该映射 ScriptableObject，若使用的是默认资源，其位置为 <i>Assets ➔ Prefabs ➔ Presents ➔ Input Mappeds➔*</i>。选中后在检视面板中可看到全部已配置的输入项，展开要修改的项并编辑其中的信息 <i>按键码、轴名称、描述等</i>。\n");
             DrawServerImage("img-40.png");
             DownArrow();
-            DrawText("Also you can reorder the input order, the same order in this list is the order that will be displayed in game.");
+            DrawText("你还可以调整输入项的排列顺序，列表顺序即游戏内的显示顺序。");
         }
         else if (subStep == 2)
         {
-            DrawText("Add a new input is really simple, basically you only have to add a new field in the input mapped and set the keycode of the input.\n\n1 - Select the Input Mapped in which you want to add the input, by default there're only 2: Keyboard and Xbox Controller, so select the one that you want edit, these mappeds are located at: <i>Assets ➔ Prefabs ➔ Presents ➔ Input Mappeds➔*</i>\n\n2 - In the inspector of the mapped you will see the list called<b> Button Map</b> with all the current inputs, add a new field in this list and fill the info of it:");
+            DrawText("新增输入很简单，基本只需在输入映射中加一项并设置按键码。\n\n1 - 选中要新增输入的映射资源。默认只有两个：Keyboard 与 Xbox Controller，选择你要修改的那个，其位置为 <i>Assets ➔ Prefabs ➔ Presents ➔ Input Mappeds➔*</i>。\n\n2 - 在该映射的检视面板中会看到名为 <b>Button Map</b> 的列表，其中是当前全部输入项。在列表中新增一项并填写信息：");
 
-            DrawPropertieInfo("KeyName", "string", "The custom key name of this input");
-            DrawPropertieInfo("PrimaryKey", "KeyCode", "The Unity Keycode of this input");
-            DrawPropertieInfo("PrimaryAxis", "string", "if this input is not a key but a axis, set the name here.");
+            DrawPropertieInfo("KeyName", "string", "该输入的自定义按键名称");
+            DrawPropertieInfo("PrimaryKey", "KeyCode", "该输入对应的 Unity 按键码");
+            DrawPropertieInfo("PrimaryAxis", "string", "若该输入对应的是轴而非按键，在此填写轴名称。");
 
             DownArrow();
 
-            DrawText("Once you have configured the key, now you can use it in your code, the usage is pretty similar to the default Unity Input, instead of:\n");
+            DrawText("按键配置完成后即可在代码中使用，用法与 Unity 默认 Input 非常接近。原先写法为：\n");
             DrawCodeText("Input.GetKeyDown('keyName'){...}");
-            DrawText("You have to use:");
+            DrawText("现在改用：");
             DrawCodeText("bl_Input.isButtonDown('keyName'){...}");
             DrawText("or");
             DrawCodeText("bl_Input.isButton('keyName'){...}\nbl_Input.isButtonUp('keyName'){...}");
-            DrawText("Where the <i>'keyName'</i> value is the <b>KeyName</b> of your setup input in the Input Mapped.\n");
+            DrawText("其中 <i>keyName</i> 的值是你为该输入在 Input Mapped 中设置的 <b>KeyName</b>。\n");
         }
         else if (subStep == 3)
         {
-            DrawText("In order to use a GamePad/Controler with MFPS and Input Manager you have to do some extra steps.\n \n- First, if you did not override the Input Settings when install MFPS <i>(using the installer window)</i> you have to modify the Unity Input Settings to add the required control axis, Input Manager comes with a prepared <b>Input Settings.asset</b> with all this already set up, so you only have to click the button below.");
+            DrawText("要在 MFPS 与输入管理器中用手柄，需要额外几步操作。\n \n- 首先，若安装 MFPS 时 <i>在安装窗口里</i> 没有覆盖输入设置，你需要修改 Unity 输入设置以添加所需的控制轴。输入管理器附带了一份已配置好的 <b>Input Settings.asset</b>，点击下方按钮即可应用。");
 
             if (!File.Exists("ProjectSettings/InputManager-backup.asset"))
             {
-                if (Buttons.FlowButton("Setup Unity Input Manager"))
+                if (Buttons.FlowButton("配置 Unity 输入管理器"))
                 {
                     string sourcePath = "Assets/Prefabs/Presents/Input Mappeds/InputManager.txt";
                     if (!File.Exists(sourcePath))
                     {
-                        Debug.LogWarning("The MFPS InputSettings data couldn't be found.");
+                        Debug.LogWarning("未找到 MFPS InputSettings 数据。");
                         return;
                     }
                     string imFile = "ProjectSettings/InputManager.asset";
                     if (!File.Exists(imFile))
                     {
-                        Debug.LogWarning("The InputManager data couldn't be found.");
+                        Debug.LogWarning("未找到 InputManager 数据。");
                         return;
                     }
                     File.Move(imFile, imFile.Replace("InputManager", "InputManager-backup"));
@@ -959,19 +959,19 @@ public class MFPSGeneralDoc : TutorialWizard
             }
             else
             {
-                GUILayout.Label("MFPS input settings has been integrated already.");
+                GUILayout.Label("MFPS 输入设置已集成完成。");
             }
 
             DownArrow();
 
-            DrawSuperText("Now in the <?link=asset:Assets/Resources/InputManager.asset>InputManager</link> in the field <b>Mapped</b> set the input mapped for your controller, by default the addon comes with the InputManager mapped for xbox controller, drag this or your created one in the <b>Mapped</b> field");
+            DrawSuperText("在 <?link=asset:Assets/Resources/InputManager.asset>InputManager</link> 的 <b>Mapped</b> 字段中指定你的手柄对应的输入映射。默认附带 Xbox 手柄的映射，把该映射或你自建的映射拖入 <b>Mapped</b> 字段即可");
             DrawServerImage("img-41.png");
         }
         else if (subStep == 4)
         {
-            DrawText("To create a new input Mapped simply go to the folder where you want to create it <i>(in the Project View window)</i> -> Right Mouse Click -> Create -> MFPS -> Input -> Input Mapped, now you will see the new created object, select it and setup all the inputs of your controller keyboard.");
+            DrawText("新建输入映射的方法：在 <i>Project 视图</i> 中进入目标文件夹 -> 右键 -> Create -> MFPS -> Input -> Input Mapped，随后即可看到新建的资源对象，选中它并配置你的手柄或键盘的全部输入。");
             DrawServerImage("img-42.png");
-            DrawText("Optionally you can just duplicate one of default mappeds and edit the inputs.");
+            DrawText("也可以直接复制一个默认映射再修改其中的输入项。");
         }
     }
 
@@ -980,16 +980,16 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawSuperText("An important modification and most of the time skipped or not much time invested in is the redesign of the user interface, it's extremely important that you modify the default UI and not just the color but the actual layout and if possible the sprites and the overall design since it not only will make your game seem more unique but also will make your game not just another quick copycat game and avoid bad reviews of players because of this.\n \nThere are no special steps in MFPS to modify the UI, you can modify it as you would do in any other Unity project that uses UGUI, all the UI is structured and designed inside the Canvas's in each scene, there you can change the images, text, font, sprites, layout, etc... if you are not familiar with the Unity UI system, check this tutorial first:\n<?link=https://learn.unity.com/tutorial/ui-components#>https://learn.unity.com/tutorial/ui-components#</link>");
+            DrawSuperText("界面重设计是一项重要改动，但常常被跳过或投入不足。修改默认 UI 极为重要，不只是换颜色，还要改实际布局，条件允许的话连精灵图和整体设计一起改。这不仅让游戏看起来更独特，也能避免成为又一个快速拼凑的仿制品，进而规避由此带来的差评。\n \nMFPS 中修改 UI 没有特殊步骤，与任何使用 UGUI 的 Unity 项目一样操作即可。全部 UI 都在各场景的 Canvas 中组织与设计，可在此修改图片、文本、字体、精灵图、布局等。若你不熟悉 Unity UI 系统，先看看这个教程：\n<?link=https://learn.unity.com/tutorial/ui-components#>https://learn.unity.com/tutorial/ui-components#</link>");
 
-            DrawText("If you are already familiar with Unity's UI system then you can modify pretty much anything of the default UI, you simply have to <b>make sure to not delete components that are referenced/required by a script</b>, if you aren't sure if you can delete a UI object and you want to hide it then you can simply disable it instead.");
-            DrawText("<b><size=18>Lobby UI</size></b>\n \nAll the lobby UI can be found in the <b>MainMenu</b> scene hierarchy <b>Canvas</b>, a common question I receive is:\n \n<b><size=14>Where to change the background image?</size></b>\n \nYou can change the lobby background image in the inspector of this image component attached to this object in the hierarchy:");
+            DrawText("若你已熟悉 Unity 的 UI 系统，默认 UI 几乎任何部分都可以改。只需注意 <b>不要删除被脚本引用或依赖的组件</b>。如果不确定某个 UI 对象能否删除，而你的目的只是隐藏它，那直接禁用即可。");
+            DrawText("<b><size=18>大厅 UI</size></b>\n \n大厅的全部 UI 都在 <b>MainMenu</b> 场景层级中的 <b>Canvas</b> 里。常被问到的一个问题是：\n \n<b><size=14>在哪里更换背景图？</size></b>\n \n大厅背景图可在层级中该对象上挂载的图片组件的检视面板中更换：");
             DrawServerImage("img-48.png");
-            DrawText("<b><size=18>Maps UI</size></b>\n \nWhen you make a modification to the UI of a map scene, you don't have to do it again for your other map scenes you just have to apply the changes to the UI prefab and it will be synced in all the other scenes.");
+            DrawText("<b><size=18>地图 UI</size></b>\n \n修改某张地图场景的 UI 后，无需在其他地图场景重复操作。只要把改动应用到 UI 预制体，其他所有场景会同步生效。");
         }
         else if (subStep == 1)
         {
-            DrawText("In case you are looking for UI kits to replace the default UI of the game, below you will find a hand-picked collection of assets that you can acquire from the Asset Store");
+            DrawText("如果你想寻找 UI 套件来替换游戏的默认 UI，下面是一份人工筛选的资源合集，可在资源商店获取");
             Space(20);
             if (uiAssets == null)
             {
@@ -1007,76 +1007,76 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void DrawFriendListDoc()
     {
-        DrawText("Photon have a <b>Friend List</b> feature which allow players to check the status of other users connected in the same server, you only have to send the UserIDs of the players that you wanna check the status, the system is pretty limited since you only can know when a player is \"Online\" or not, and only allows you join to the player room if this is in one.\n\nMFPS comes with this Photon feature added, in the Main Menu scene you can add friends and save it locally <i>(or in database if you are using ULogin Pro)</i>, once you added you'll be able to see when this player is online and also you will be able to join to the same room when the player is in one room.\n\nAdded a friend doesn't require confirmation of the other player, you simple set the exact player name and ready.\n\nIn order to add a friend simply click in the top right button (in the lobby) with the person icon:\n\n");
+        DrawText("Photon 提供 <b>好友列表</b> 功能，可查询同一服务器上其他用户的状态。你只需提交要查询玩家的 UserID。该系统能力有限，只能知道玩家是否在线，并且只有当对方在某个房间中时才能加入其房间。\n\nMFPS 已集成该 Photon 功能。在主菜单场景中可以添加好友并保存在本地 <i>若使用 ULogin Pro 则存入库中</i>。添加后即可看到对方是否在线，并在对方处于某房间时加入该房间。\n\n添加好友无需对方确认，只要准确填写玩家名即可。\n\n添加好友的方式是点击大厅右上角带人物图标的按钮：\n\n");
         DrawServerImage(10);
-        DrawText("The friend list have a limit number of friends that can be added (by default is 25) this only make sense if you are saving the friends in a database (using ULogin Pro for example) since the more friends they add per player more will be the size of the player data in the database.\n\nYou can change this limit in GameData -> MaxFriendsAdded.\n");
+        DrawText("好友列表有可添加好友数上限，默认为 25。这个限制只在把好友保存到数据库时才真正有意义 <i>例如使用 ULogin Pro</i>，因为每个玩家添加的好友越多，其数据在库中占用的体积越大。\n\n上限可在 GameData -> MaxFriendsAdded 中修改。\n");
     }
 
     void CrosshairDoc()
     {
-        DrawText("The Crosshair or reticle is a basic feature in most shooter games, in MFPS you can easily change the shape, color, and size of the crosshair, also you can use different crosshair for each type of weapon.");
+        DrawText("准星是多数射击游戏的基础功能。MFPS 中可以方便地修改准星形状、颜色和大小，还能为每类武器使用不同准星。");
         DownArrow();
         DrawTitleText("Modify crosshair");
-        DrawText("Open one of your map scenes ➔ go to <i>(in the Hierarchy window)</i> <b>UI ➔ PlayerUI ➔ Crosshair ➔ Crosshairs ➔ *</b>, there you will see all the available crosshairs setups, by default each one of them is used for different kind of weapons <i>(machineguns, shotguns, knife, etc...)</i>.\n\nSo what you have to do here is Open one of the crosshair setup/styles and apply any kind of modification that you want, you can remove or add any UI component that you want, just make sure everything is under the crosshair style root object.");
+        DrawText("打开任意地图场景 ➔ 在层级窗口中进入 <b>UI ➔ PlayerUI ➔ Crosshair ➔ Crosshairs ➔ *</b>，这里可以看到全部准星配置，默认每种用于不同类别武器 <i>机枪、霰弹枪、匕首等</i>。\n\n在此打开某个准星配置或样式，按需任意修改即可，UI 组件可增可删，只要确保所有内容都位于该准星样式的根对象之下。");
         DrawServerImage(32);
         DownArrow();
         DrawTitleText("Hit Marker");
-        DrawText("The <b>hit marker</b> is a small cross that shows up when the local player hit an enemy.\n\nYou can customize the design of this on <b>UI ➔ PlayerUI ➔ Crosshair ➔ Crosshairs ➔ Hitmarker</b>.\n\nThe hit marker appears with simple scale-up animation, you can define the final size of the animation in <b>bl_UCrosshair ➔ Increase Amount</b>.");
+        DrawText("<b>命中标记</b> 是本地玩家击中敌人时出现的小十字。\n\n其外观可在 <b>UI ➔ PlayerUI ➔ Crosshair ➔ Crosshairs ➔ Hitmarker</b> 中自定义。\n\n命中标记以简单的放大动画出现，动画的最终尺寸可在 <b>bl_UCrosshair ➔ Increase Amount</b> 中设定。");
     }
 
     void FootStepsDoc()
     {
-        DrawText("The footstep sound in MFPS is driven by the surface Tag, there're some predefined tags like <i>Metal, Concrete, Dirt, Wood, and Water</i>, when a player moves a footstep sound will play depending on the surface where the player is over, of course, you can change these sounds or add more surface tags, also you can change the sounds per player prefab so you can have different sounds for different player models.");
+        DrawText("MFPS 的脚步声由地表标签驱动，预定义标签包括 <i>金属、混凝土、泥土、木头和水面</i>。玩家移动时会根据脚下的地表播放对应脚步声。这些音效可以更换，也可以新增地表标签。脚步声还能按玩家预制体分别设置，从而让不同玩家模型有不同音效。");
         DrawTitleText("Change Sounds");
-        DrawHyperlinkText("In order to change the default, MFPS footstep sounds you can simply replace the AudioClips in the default <link=asset:Assets/Prefabs/Presents/Audio/FootStepsLibrary.asset>FootStepLibrary</link>, unfold the <b>Groups</b> list ➔ unfold the tag group field ➔ replace the AudioClips in the list.");
+        DrawHyperlinkText("更换 MFPS 默认脚步声的方式：直接替换默认 <link=asset:Assets/Prefabs/Presents/Audio/FootStepsLibrary.asset>FootStepLibrary</link> 中的音频片段。展开 <b>Groups</b> 列表 ➔ 展开对应标签组 ➔ 替换其中的音频片段。");
         DrawServerImage(29);
         DownArrow();
         DrawTitleText("Add Surfaces");
-        DrawHyperlinkText("If you wanna add a new surface <i>(identified by a different tag)</i> and you wanna play a specific footstep sound for it, you can do it by simply add a new field in the Groups list of the <link=asset:Assets/Prefabs/Presents/Audio/FootStepsLibrary.asset>FootStepLibrary</link>, in that new field, in the propertie <b>Tag</b> set the tag identifier for that surface.");
+        DrawHyperlinkText("若要新增一种地表 <i>用不同的标签区分</i> 并为其指定专属脚步声，只需在 <link=asset:Assets/Prefabs/Presents/Audio/FootStepsLibrary.asset>FootStepLibrary</link> 的 Groups 列表中新增一项，在其中的 <b>Tag</b> 属性里填写该地表对应的标签。");
         DownArrow();
         DrawTitleText("Terrain Surfaces");
-        DrawText("Since the footstep system is driven by <b>Tags</b> you can only set a tag per object/mesh, this comes with a problem for the <b>Unity Terrain system</b>, since the terrain is a single object/mesh, you can set only one tag for it, that is inconvenient because terrains usually have various layers with different textures that simulate different surfaces, so in order to make the footstep system work correctly with the Unity Terrain system <i>(play different sounds depending on the terrain layer)</i> you need to set up your terrain layers as follow.\n\n•  First, select the Terrain object in your scene hierarchy and add the script <color=#00E9FFFF><b>bl_TerrainSurfaces.cs</b></color>\n\n•  Once you add the script you will notice in the inspector of the script that the list <b>TerrainSurfaces</b> have various fields, each of these fields represent one of the layers <i>(textures)</i> in the <b>Terrain</b>, what you have to do is set the <b>Tag</b> name to each layer, if you fold out one of the fields you will see the texture of the layer, so depending on the texture you can set which <b>tag</b> should be assigned in the property <b>Tag</b>.");
+        DrawText("由于脚步声系统由 <b>标签</b> 驱动，每个对象或网格只能设置一个标签，这对 <b>Unity 地形系统</b> 会造成问题：地形是单一对象与网格，只能设一个标签。但地形通常由多个图层构成，各图层用不同贴图模拟不同地表，因此不够用。要让脚步声系统与 Unity 地形正确配合 <i>按地形图层播放不同音效</i>，需要按以下方式设置地形图层。\n\n•  首先，在场景层级中选中 Terrain 对象，挂载 <color=#00E9FFFF><b>bl_TerrainSurfaces.cs</b></color> 脚本\n\n•  挂载后会看到该脚本检视面板中的 <b>TerrainSurfaces</b> 列表有若干项，每一项对应 <b>Terrain</b> 中的一个图层 <i>贴图</i>。你需要为每个图层设置 <b>Tag</b> 名称。展开某项即可看到该图层的贴图，据此在 <b>Tag</b> 属性中指定应使用的标签。");
         DrawServerImage(30);
     }
 
     void DoorsDoc()
     {
-        DrawSuperText("MFPS includes an optimized door system that can be used to add dynamism to your maps.\n \nThe system is designed to perform well with a high amount of doors per map, of course, synchronized over the network, and really simple to use.\n \n<?title=18>HOW TO ADD DOORS?</title>\n \n- In order to add a door to your map, you only need 2 steps:\n \n<b>1. Place the door on your map:</b> Drag and drop the door prefab in your scene hierarchy and placed it in your map design, you can find the <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default door prefab</link> located in: <i>Assets ➔ Prefabs ➔ Level ➔ Items ➔ Door</i>\n \n<b>2. Register the new door:</b> In the map scene hierarchy, go to ItemManager ➔ bl_DoorManager ➔ click on the button '<b>Collect all active doors in scene</b>' ➔ that's.");
+        DrawSuperText("MFPS 内置一套经过优化的门系统，可为地图增添动态元素。\n \n该系统针对单张地图门数量较多的情况做了性能优化，支持网络同步，使用也很简单。\n \n<?title=18>如何添加门？</title>\n \n- 给地图添加一扇门只需两步：\n \n<b>1. 在地图中放置门：</b> 把门预制体拖入场景层级并按设计摆放。默认门预制体为 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default door prefab</link>，位于 <i>Assets ➔ Prefabs ➔ Level ➔ Items ➔ Door</i>。\n \n<b>2. 注册新门：</b> 在地图场景层级中进入 ItemManager ➔ bl_DoorManager ➔ 点击 <b>Collect all active doors in scene</b> 按钮即可。");
         DrawServerImage("img-32.png");
         Space(20);
-        DrawSuperText("<?title=18>HOW TO CREATE A NEW DOOR?</title>\n \n- If you want to create a door with your custom door model, you simply have to use the <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default MFPS door</link> prefab and replace its model.\n \n1. Instance the <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default MFPS door</link> prefab in any scene and Unpack the prefab instance <i>(right-click on the door instance ➔ Unpack Prefab Completely)</i>\n \n2. Drag your custom door model on the door instance under Door ➔ Door Model ➔ *, and manually place the new door model in the same position, rotation, and scale as the default model.\n \n3. Select the root of the door instance ➔ <b>bl_BasicDoor</b> ➔ in the <b>Door Pivot</b> field, drag the transform of your new door model that will be the point where the door will rotate around (pivot point).\n \n4. Delete the default model <i>(Door ➔ Door Model ➔ <b>Default Door Model</b>)</i> and save the door as a new prefab by dragging it in any folder of the project view.\n \nIf your door model rotation is not right, simply create a new Door Settings <i>(Project View ➔ Right Click ➔ MFPS ➔ Level ➔ Door Settings)</i> ➔ assign it to the door prefab ➔ bl_BasicDoor ➔ <b>Door Settings</b> and assign your new door model pivot rotation values.");
+        DrawSuperText("<?title=18>如何创建新门？</title>\n \n- 若想使用自定义门模型，只需在 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default MFPS door</link> 预制体基础上替换模型。\n \n1. 在任意场景中实例化 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default MFPS door</link> 预制体，并解除该实例的预制体关联 <i>右键该门的实例 ➔ Unpack Prefab Completely</i>。\n \n2. 把自定义门模型拖入该实例的 Door ➔ Door Model ➔ * 下，并手动把新门模型的位置、旋转和缩放调整到与默认模型一致。\n \n3. 选中该门实例的根节点 ➔ <b>bl_BasicDoor</b> ➔ 在 <b>Door Pivot</b> 字段中拖入你新门模型的 Transform，该点将作为门的旋转轴心。\n \n4. 删除默认模型 <i>Door ➔ Door Model ➔ <b>Default Door Model</b></i>，然后把门拖到 Project 视图的任意文件夹中保存为新预制体。\n \n若门模型旋转不正确，新建一份 Door Settings <i>Project 视图 ➔ 右键 ➔ MFPS ➔ Level ➔ Door Settings</i> ➔ 把它指定给门预制体的 bl_BasicDoor ➔ <b>Door Settings</b>，并在其中设置新门模型轴心的旋转值。");
     }
 
     void GameStaffDoc()
     {
-        DrawText("You may want to highlight working game development members with a badge on their behalf for example<b> Lovatto <color=#FF0000FF>[Admin]</color></b> with a different color that normal players, so other users can see that is a staff member on the game, on Game Framework there are a simple way to do this and you can set up right on the inspector.\n\nGo to <b>Game Data</b> and find the \"Game Team\" section at the bottom of the inspector:\n");
+        DrawText("你可能想为参与开发的人员加上身份标识，例如让 <b>Lovatto <color=#FF0000FF>[Admin]</color></b> 以不同于普通玩家的颜色显示，让其他用户看出这是游戏的工作人员。Game Framework 提供了简单的做法，直接在检视面板中配置即可。\n\n进入 <b>Game Data</b>，在检视面板底部找到 Game Team 区域：\n");
         DrawServerImage(23);
-        DrawText("in this list you can add much member as you want, with a simple settings to set up:\n");
-        DrawHorizontalColumn("UserName", "The name that the staff member need write to access to this account.");
-        DrawHorizontalColumn("Role", "The staff rank / role on the team.");
-        DrawHorizontalColumn("Password", "When try to sing in with this account name a password window will appear to write the password (with other names will not appear), so normal player can't fake identity.");
-        DrawHorizontalColumn("Color", "The color with the name text will appear in the game.");
+        DrawText("该列表可添加任意数量的成员，每项设置都很简单：\n");
+        DrawHorizontalColumn("UserName", "工作人员登录该账号时需要输入的名称。");
+        DrawHorizontalColumn("Role", "该成员在团队中的职级或角色。");
+        DrawHorizontalColumn("Password", "使用该账号名称登录时会弹出密码窗口要求输入密码 <i>其他名称不会弹出</i>，因此普通玩家无法冒充身份。");
+        DrawHorizontalColumn("Color", "该名称在游戏中显示的文本颜色。");
     }
 
     void DrawMobileDoc()
     {
-        DrawText("If you are build targeting to a mobile platforms e.g: Android or iOS, keep in mind that although MFPS does work on mobile platforms, there are some things that you have to do before to build, since by default Game Framework is setup with high quality graphics for high-end devices for demonstration purposes, so by default it's not optimized for mobile platforms, also the main core package doesn't include any mobile control/input.");
+        DrawText("如果你的目标平台是移动端，例如 Android 或 iOS，需要注意：MFPS 虽然能在移动平台运行，但构建前还有一些准备工作。Game Framework 默认为了演示效果，按高端设备的高画质来配置，因此默认并未针对移动端优化，而且核心包也不包含任何移动端操作方案。");
 
-        DrawHyperlinkText("So first thing you need is to integrate a mobile input control, for this, there a in-house addon solution specifically for Game Framework which is: <link=https://www.lovattostudio.com/en/shop/addons/mfps-mobile-control/>Mobile Control</link>, which contains all the necessary buttons/inputs to work in mobile/touch devices and the integration is automatically, but alternatively you can integrate your preferred third-party system if you want.");
+        DrawHyperlinkText("因此首先需要接入移动端操作方案。官方为 Game Framework 专门提供了插件 <link=https://www.lovattostudio.com/en/shop/addons/mfps-mobile-control/>Mobile Control</link>，其中包含移动端与触屏设备所需的全部按钮与输入，集成是自动的。当然你也可以改用自己偏好的第三方方案。");
 
-        DrawText("Secondly, you have to made some manual optimization work, the same that you would do in any other mobile project, starting by removing the Post-Process effects <b><size=8><i>(you can do this by removing the Post Processing Stack package from the Unity Package Manager)</i></size></b>, Change the Standard Shaders to mobile friendly ones, reducing the textures quality and resolution, and of course your new levels/maps/models have to be mobile friendly, etc... <b>You don't have to do any code change</b>, MFPS code is mobile ready and optimized for low-end platforms.\n");
-        DrawText("So basically, to build for mobile what you have to do is some graphic optimization, below I will leave you some useful links to tutorials that will help you with graphic optimization and things to keep in consideration:");
+        DrawText("其次需要做一些手动优化，与任何移动端项目一样：先移除后处理效果 <b><size=8><i>可在 Unity 包管理器中移除 Post Processing Stack 包</i></size></b>，把 Standard 着色器换成移动端友好的着色器，降低贴图质量与分辨率，当然你新增的关卡、地图、模型也要适配移动端，等等。<b>无需改动任何代码</b>，MFPS 的代码本身已适配移动端并针对低端平台优化过。\n");
+        DrawText("总的来说，构建移动端版本需要做的主要是图形优化。下面给出一些有用的教程链接，帮助了解图形优化及相关注意事项：");
         DrawLinkText("https://docs.unity3d.com/2020.1/Documentation/Manual/MobileOptimizationPracticalGuide.html", true);
         DrawLinkText("https://learn.unity.com/search/?k=%5B%22tag%3A5816095d0909150016dc7b17%22%2C%22lang%3Aen%22%2C%22q%3Aoptimization%22%5D", true);
         DrawLinkText("https://cgcookie.com/articles/maximizing-your-unity-games-performance", true);
         DrawLinkText("http://www.theappguruz.com/blog/graphics-optimization-in-unity", true);
 
-        DrawSuperText("If you are just starting with mobile development and want to save some time, there's also an <b>MFPS Mobile</b> asset which is ready to use for mobile platforms, it comes with the Mobile Input Controller already integrated and the game optimization is already done, if you are interested, check it out here: <?link=https://www.lovattostudio.com/en/shop/mobile/mfps-mobile/>MFPS Mobile</link>");
+        DrawSuperText("如果你刚开始做移动端开发并希望省些时间，还有一个可直接用于移动平台的 <b>MFPS Mobile</b> 资源，已集成移动端输入控制器，游戏优化也已做好。感兴趣可在此了解：<?link=https://www.lovattostudio.com/en/shop/mobile/mfps-mobile/>MFPS Mobile</link>");
     }
 
     void PlayerIKDoc()
     {
-        DrawText("The Third-person/Remote player upper-body poses are defined by the animations clips in the Animator Controller, but some bones of the model rig are override controlled by Inverse Kinematic aka IK, this to achieve multiple things, one of them is so that <b>you don't have to have a custom player animation for each one of the weapons</b> since normally the left arm goes in different parts depending on the weapon.\n \nSo MFPS solves this using IK in these specific bones that you can easily modify per weapon.\n \nIn order to edit the left arm position/pose of one of the TPWeapons do the following:\n \n1. In the Editor <i>(in edit mode)</i> drag one of the player prefabs in a scene <i>(preferable a clean scene so you can focus)</i>.\n \n2. Go to the Remote Weapons which are located under the right hand of your player model in the hierarchy -> select the TPWeapon to edit the pose and active it.\n \n3. With the weapon selected -> In the inspector window you will see a button called \"<b>Edit Hand Position</b>\" -> click it and move/rotate the IK target in the scene view until you get the desired position.");
+        DrawText("第三人称或远程玩家的上半身姿态由动画控制器中的动画片段决定，但模型骨骼中有一部分由反向动力学即 IK 额外控制。这样做有多重目的，其中之一是 <b>让你不必为每把武器单独制作玩家动画</b>，因为左手的位置通常随武器不同而变化。\n \nMFPS 通过对这些特定骨骼使用 IK 来解决，且这些骨骼可以按武器逐个调整。\n \n编辑某把第三人称武器的左臂位置或姿态，步骤如下：\n \n1. 在编辑器 <i>编辑模式</i> 下把任一玩家预制体拖入场景 <i>最好是干净场景以便专注</i>。\n \n2. 在层级中找到位于玩家模型右手下的远程武器组 -> 选中要调整姿态的第三人称武器并启用它。\n \n3. 选中该武器后 -> 在检视面板中会看到 <b>Edit Hand Position</b> 按钮 -> 点击它，在 Scene 视图中移动或旋转 IK 目标，直到得到想要的位置。");
         DrawAnimatedImage(5);
     }
 
@@ -1084,18 +1084,18 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("By default MFPS use the Unity <b>Post-Processing stack v2</b>, which is a collection of effects and image filters that apply to the cameras to improve the visual of the game.\n\nAlthough the image effects really improve the visual aspect of the game, that also carries a cost in the performance of the game, that is why you should use this only for high-end platforms like PC or Consoles, you definitely <b>should NOT use for Mobile Platforms</b>, if you are targeting for a mobile platform you should delete this package.\n\nThis system is automatically imported from the Unity Package Manager (UPM) when you import MFPS for the first time in the project, if you want to <b>DELETE</b> it, you can do it clicking on this context menu:");
+            DrawText("MFPS 默认使用 Unity 的 <b>Post-Processing Stack v2</b>，这是一组作用于相机、用于提升画面效果的滤镜与图像特效。\n\n图像特效确实能显著改善画面观感，但也会带来性能开销。因此建议只在 PC 或主机这类高端平台使用，<b>不要用于移动平台</b>。若目标平台是移动端，应当删除这个包。\n\n首次在项目中导入 MFPS 时，该系统会自动从 Unity 包管理器 UPM 导入。若要 <b>删除</b>，点击以下右键菜单即可：");
             DrawServerImage(11);
-            DrawText("You can find the Post-Processing Stack official documentation here:");
+            DrawText("Post-Processing Stack 官方文档见：");
             DrawLinkText("https://docs.unity3d.com/Packages/com.unity.postprocessing@2.3/manual/index.html", true);
         }
         else if (subStep == 1)
         {
-            DrawSuperText("Since version 1.9, you can easily define custom <b>Post Processing Profiles per map scene</b>,\nPost Process Profile is the configuration file where you define the image effects that will be rendering in the Post Process Volume, if you need more details or you don't know how to create or use them, check the official documentation for it here: <?link=https://docs.unity3d.com/Packages/com.unity.postprocessing@3.1/manual/Quick-start.html>Post-Process Quick Start</link>\n\n<?title=18>DEFINE PROFILE IN MAP SCENE</title>\n\nTo use a custom PP Profile in a specific map scene: open the map scene in the Editor ➔ in the Hierarchy window, go to: GameManager ➔ Post Process Volume ➔ in the inspector window of bl_PostProcessEffects ➔ Assign your custom Post Process Profile in the \"Process Profile\" field and you are all set.");
+            DrawSuperText("自 1.9 版本起，可以方便地 <b>为每张地图场景定义后处理配置</b>。\nPost Process Profile 是配置文件，其中定义后处理 Volume 中要渲染的图像特效。若需更多细节，或不清楚如何创建与使用，可参阅官方文档：<?link=https://docs.unity3d.com/Packages/com.unity.postprocessing@3.1/manual/Quick-start.html>后处理快速上手</link>\n\n<?title=18>在地图场景中指定配置</title>\n\n在特定地图场景使用自定义后处理配置：在编辑器中打开该地图场景 ➔ 在层级窗口中进入 GameManager ➔ Post Process Volume ➔ 在 bl_PostProcessEffects 的检视面板中 ➔ 把你自定义的 Post Process Profile 指定到 Process Profile 字段即可。");
         }
         else
         {
-            DrawSuperText("There are some common problems related to the Post Processing package, that cause errors in the console due to the Post Processing package missing, here is how to handle them:\n \n<?title=18>DON'T WANT TO USE:</title>\n \nIf you don't intend to use the Post Processing package but you still receive errors due to missing references to the package, you have to remove the package script definition symbols, for it, go to Unity Player Settings ➔ Other Settings ➔ Script Define Symbols ➔ find and remove this part from the input field <?underline=><b>UNITY_POST_PROCESSING_STACK_V2;</b></underline> ➔ hit enter and wait for the compilation.\n \n \n<?title=18>WANT TO USE:</title>\n \nIf you want to use the Post Processing features, but receive errors due to missing references to the package, it means that the package hasn't been imported yet.\n \nTo import the package, go to Window ➔ Package Manager ➔ in the left panel find the <?underline=>Post Processing</underline> package ➔ Click in the Import button on the bottom right corner of the window.");
+            DrawSuperText("与后处理包相关的若干常见问题会在控制台报错，原因是缺少对该包的引用。处理方式如下：\n \n<?title=18>不想使用该包：</title>\n \n如果你不打算使用后处理包，却仍因缺少引用而报错，需要移除该包的脚本定义符号。进入 Unity Player Settings ➔ Other Settings ➔ Script Define Symbols ➔ 在输入框中找到并删除 <?underline=><b>UNITY_POST_PROCESSING_STACK_V2;</b></underline> 这一段 ➔ 回车并等待编译。\n \n \n<?title=18>想使用该包：</title>\n \n如果你想使用后处理功能，却因缺少引用而报错，说明该包尚未导入。\n \n导入方式：Window ➔ Package Manager ➔ 在左侧面板找到 <?underline=>Post Processing</underline> 包 ➔ 点击窗口右下角的 Import 按钮。");
         }
     }
 
@@ -1104,14 +1104,14 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawHyperlinkText("<b><size=22>PARTICLES</size></b>\n\nOne important part of making a good looking game are the particle effects, although MFPS use them just in few events, they show frequently, so use good looking particles is not enough, they have to be optimized, the default particles in MFPS are very much just placeholders, and even tho its not necessary is recommended to replace with better ones.\n \nIn order to replace/modify a specific particle you simply have to modify their prefab, MFPS use <b>Particle System</b> for the following game effects:\n \n•  Muzzleflash\n•  Explosions\n•  Bullet hit\n•  <link=asset:Assets/Prefabs/Level/Particles/Prefabs/Impacts/BloodFast.prefab>Blood</link>\n•  Fire\n \n \nAside from the <b>Muzzleflash</b> particle which is located inside each FPWeapon, all the other particles can be found in or under the project Assets folder at <i>Assets -> Prefabs -> Level -> Particles->*</i>");
-            DrawNote("When you modify a particle prefab, make sure to use the default prefab as a reference since these have attached custom scripts attached aside from the Particle System components which are necessary to the game work correctly.");
+            DrawHyperlinkText("<b><size=22>粒子</size></b>\n\n粒子效果是让游戏画面出彩的重要一环。MFPS 虽然只在少数事件中使用粒子，但出现频率高，所以光好看还不够，还必须经过优化。MFPS 的默认粒子基本只是占位，虽非必须，但推荐替换成更好的效果。\n \n替换或修改特定粒子只需改动其预制体。MFPS 在以下游戏效果中使用 <b>Particle System</b>：\n \n•  枪口火焰\n•  爆炸\n•  子弹命中\n•  <link=asset:Assets/Prefabs/Level/Particles/Prefabs/Impacts/BloodFast.prefab>血液</link>\n•  火焰\n \n \n除位于各第一人称武器内部的 <b>枪口火焰</b> 粒子外，其余粒子都可在项目 Assets 文件夹的 <i>Assets -> Prefabs -> Level -> Particles->*</i> 中找到。");
+            DrawNote("修改粒子预制体时请以默认预制体为参照。除 Particle System 组件外，它们还挂有自定义脚本，这些脚本是游戏正常运行所必需的。");
             Space(50);
-            DrawText("<b><size=22>DECALS</size></b>\n \nMFPS doesn't use a custom decal system, since they are only used for the bullets marks, and since these are instanced too frequently it just adds a non-needed performance cost to the game, due to that, MFPS uses a simple Quad mesh with a simple transparent shader as decals.\n \nAs I mentioned the only decals that MFPS uses are for the <b>Bullet Marks</b>, these are instanced when a bullet hit a collider, the mark that will appear depending on the hit collider tag, by default MFPS use 5 different bullet marks that simulate the impact in different surfaces (metal, wood, sand, concrete and a generic one), you can change these marks textures by modifying the bullet impacts prefab material, these prefabs are located in <i>Assets -> Prefabs -> Level -> Particles -> WeaponEffects -> Prefabs->*</i>");
+            DrawText("<b><size=22>弹痕</size></b>\n \nMFPS 没有使用专门的自定义弹痕系统。因为弹痕仅用于子弹痕迹，且实例化极为频繁，专用系统只会带来不必要的性能开销。因此 MFPS 使用简单的 Quad 网格配合简单的透明着色器作为弹痕。\n \n如前所述，MFPS 唯一的弹痕用途是 <b>子弹痕迹</b>。子弹击中碰撞体时生成，显示哪种痕迹取决于被击中碰撞体的标签。MFPS 默认使用 5 种子弹痕迹，对应不同地表 <i>金属、木头、沙地、混凝土以及一种通用痕迹</i>。更换痕迹贴图的方式是修改子弹命中预制体的材质，这些预制体位于 <i>Assets -> Prefabs -> Level -> Particles -> WeaponEffects -> Prefabs->*</i>。");
         }
         else if (subStep == 1)
         {
-            DrawText("In case you are looking for particles or decals to replace the default ones in the game, below you will find a hand-picked collection of assets that you can acquire from the Asset Store");
+            DrawText("如果你想寻找粒子或弹痕来替换游戏内的默认效果，下面是一份人工筛选的资源合集，可在资源商店获取");
             Space(20);
             if (fxAssets == null)
             {
@@ -1129,145 +1129,145 @@ public class MFPSGeneralDoc : TutorialWizard
 
     void InGameChatDoc()
     {
-        DrawText("A way of user-to-user communication in-game of course is the text chat, for sure MFPS implements that.\n \nIn-game, when players are on a map, they can open the text chat input field to start writing with the <b>Enter/Submit key input</b>, and with the same key or the button next to the input field can send the message which will appear <i>(by default)</i> on the bottom left corner of the screen, pretty basic, but that isn't all, the chat support team only chat so players can communicate only with teammates, for that they simply have to open the chate with a custom key by default <b>T key</b> and that is it.\n \nFor some or other reason you may <b>not want to allow user-to-user communication</b> in-game, if that the case you can simply disable the text chat by deleting or just disabling the Chat UI which is located in the Map scenes UI canvas at UI -> MenuUI -> <b>Chat</b>.");
+        DrawText("游戏中玩家彼此交流的方式之一自然是文字聊天，MFPS 自然也实现了这一功能。\n \n在对局中玩家进入地图后，按 <b>回车或提交键</b> 即可打开文本输入框开始输入，再用同一个键或输入框旁的按钮发送消息。消息默认显示在屏幕左下角。这是基础功能，但不止于此：聊天还支持队伍频道，玩家只能与队友交流，按默认的 <b>T 键</b> 打开对应聊天框即可。\n \n出于某些原因，你可能 <b>不希望开放玩家之间的交流</b>。这种情况下直接删除或禁用 Chat UI 即可关闭文字聊天，该 UI 位于地图场景的 UI Canvas 中，路径为 UI -> MenuUI -> <b>Chat</b>。");
         DrawHorizontalSeparator();
         Space(10);
-        DrawText("If you want to show a custom text in the chat panel for all the players in the room by code,  you can do so like this:");
+        DrawText("若想通过代码在聊天面板向房间内所有玩家显示自定义文本，可以这样写：");
         DrawCodeText("bl_ChatRoom.Instance.SetChat('YOU TEXT HERE');");
     }
 
     void LadderDoc()
     {
-        DrawText("The package includes a drag and drops ladder system that you can use to add more dynamic navigation to your maps.\n \nAll you have to do to add a new ladder to your map is drag the ladder prefab by default located in <i>Assets ➔ Prefabs ➔ Level ➔ Items ➔ <b>Ladder</b></i> > drop in your map scene hierarchy > positioned it where you want and that's.");
+        DrawText("该资源包内置一套即拖即用的梯子系统，可为地图增添更灵活的移动路线。\n \n给地图添加梯子只需把梯子预制体 <i>默认位于 Assets ➔ Prefabs ➔ Level ➔ Items ➔ <b>Ladder</b></i> 拖入地图场景层级，摆放到目标位置即可。");
         DrawHorizontalSeparator();
-        DrawText("<b><size=16>Replace the Ladder model</size></b>\n \nIf you want to replace or add a new ladder model, all you have to do is use the default ladder prefab > delete the default model and replace it with your own.\n \n1. Drag the default ladder prefab locate at <i>Assets ➔ Prefabs ➔ Level ➔ Items ➔ <b>Ladder</b></i> in any scene hierarchy.\n2. Drag your new ladder model inside the prefab instance and positioned it in the same position as the default ladder model in Ladder > Model > *.\n3. Delete the model inside the prefab instanced.\n4. Save the new prefab so you can use it in your map scenes.");
+        DrawText("<b><size=16>替换梯子模型</size></b>\n \n若要替换或新增梯子模型，使用默认梯子预制体并删掉默认模型、换成自己的模型即可。\n \n1. 把默认梯子预制体 <i>位于 Assets ➔ Prefabs ➔ Level ➔ Items ➔ <b>Ladder</b></i> 拖入任意场景层级。\n2. 把新梯子模型拖入该预制体实例中，并调整到与默认模型相同的位置，即 Ladder > Model > * 下。\n3. 删除该预制体实例内的原模型。\n4. 保存为新预制体，即可在地图场景中使用。");
         DrawServerImage("img-46.png");
     }
 
     void MFPSEventsDoc()
     {
-        DrawText("There're some special events that you can use if you wanna implement a custom feature or modification in your own scripts, e.g: when the local player spawn, when the local player dies, when receiving damage, etc...\n\nUse these events are really simple, all you have to do is subscribe a function from your script that will listen to the callback of these events when they are dispatched in runtime.\n\nYou subscribe to these events on <b>OnEnable()</b> and unsubscribe on <b>OnDisable()</b> functions:");
+        DrawText("如果你想在自己的脚本中实现自定义功能或改动，可以使用一组特殊事件，例如本地玩家出生、本地玩家死亡、受到伤害等。\n\n使用这些事件很简单，只需在脚本中订阅一个函数，运行时事件派发时即可收到回调。\n\n订阅写在 <b>OnEnable()</b> 中，取消订阅写在 <b>OnDisable()</b> 中：");
         DrawCodeText("void OnEnable()\n{\nbl_EventHandler.onLocalPlayerSpawn += OnLocalPlayerSpawn;\n}\n\nprivate void OnDisable()\n{\nbl_EventHandler.onLocalPlayerSpawn -= OnLocalPlayerSpawn;\n}\n\nvoid OnLocalPlayerSpawn()\n{\n//execute your code\n}");
         DownArrow();
-        DrawText("Below you will have the list of all the available events with a short description\n");
+        DrawText("以下是全部可用事件及其简要说明\n");
         DownArrow();
 
         DrawCodeText("bl_EventHandler.onLocalPlayerDeath");
-        DrawText("Event called when the LOCAL player die in game");
+        DrawText("本地玩家在游戏中死亡时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onLocalPlayerSpawn");
-        DrawText("Event called when the LOCAL player spawn");
+        DrawText("本地玩家出生时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onPickUpGun");
-        DrawText("Event called when the local player pick up a weapon");
+        DrawText("本地玩家拾取武器时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onChangeWeapon");
-        DrawText("Event Called when the LOCAL player change of weapon");
+        DrawText("本地玩家切换武器时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onLocalAimChanged");
-        DrawText("Event Called when the local player change their Aim state");
+        DrawText("本地玩家切换瞄准状态时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onMatchStart");
-        DrawText("Event Called when the room match start");
+        DrawText("房间对局开始时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onFall");
-        DrawText("Event Called when the LOCAL player fall/land in a surface");
+        DrawText("本地玩家从空中坠落或落地时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onPickUpHealth");
-        DrawText("Event called when the LOCAL player pick up a health in game");
+        DrawText("本地玩家在游戏中拾取生命值时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onAirKit");
-        DrawText("Event called when the LOCAL player call an air drop");
+        DrawText("本地玩家呼叫空投时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onAmmoPickUp");
-        DrawText("Event called when the LOCAL player pick up ammo in game");
+        DrawText("本地玩家在游戏中拾取弹药时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onLocalKill");
-        DrawText("Event called when the Local player get a kill or get killed in game.");
+        DrawText("本地玩家在游戏中击杀或被击杀时调用。");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.OnRoundEnd");
-        DrawText("Event called when a game round finish");
+        DrawText("游戏回合结束时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onPlayerLand");
-        DrawText("Event called when the LOCAL player land a surface after falling");
+        DrawText("本地玩家坠落后落到地面时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onRemoteActorChange");
-        DrawText("Event called when a player that is not the local player spawn or die");
+        DrawText("非本地玩家的其他玩家出生或死亡时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onGameSettingsChange");
-        DrawText("Event called when the local player change an in-game setting/option");
+        DrawText("本地玩家修改游戏内设置或选项时调用");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onEffectChange");
-        DrawText("Event called when the local player change one or more post-process effect option in game.");
+        DrawText("本地玩家在游戏中修改一项或多项后处理效果选项时调用。");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onGameSettingsChange");
-        DrawText("Event called when the LOCAL player change their game settings from the settings in-game menu.");
+        DrawText("本地玩家通过游戏内设置菜单修改游戏设置时调用。");
         DrawHorizontalSeparator();
 
         DrawCodeText("bl_EventHandler.onGamePause");
-        DrawText("Event called when the LOCAL player pause or resume the game.");
+        DrawText("本地玩家暂停或恢复游戏时调用。");
         DrawHorizontalSeparator();
     }
 
     void UpdateMFPSDoc()
     {
-        DrawText("MFPS get mayor version update approximately every 3-4 months, these updates comes with new features, fixes, and improvements, if you were already using MFPS you most likely will want to apply all those improves and fixes to your started project, unfortunately, due to the nature of the asset you can't just import the new update package over your existing project with the older version because that will override all your changes, making you lost all the work and progress that you have done until that moment.\n\nThe work required to update an old MFPS version project to a new MFPS version depends on various factors, like how much changes have you done, the MFPS version of your project compared to the new version, the number of changes in the new update, etc...\n\nBut would give you some method to update your MFPS version in different scenarios:");
+        DrawText("MFPS 大约每 3 到 4 个月发布一次大版本更新，这些更新带来新功能、修复与改进。如果你已在使用 MFPS，多半会希望把改进与修复同步到自己的项目中。遗憾的是，受资源本身的性质限制，直接把新版本包导入到旧版本项目上会覆盖你所有的改动，导致此前的工作与进度全部丢失。\n\n把旧版 MFPS 项目更新到新版本所需的工作量取决于多个因素，例如你改动了多少内容、项目所用版本与新版本的差距、新版本中变更的数量等。\n\n下面针对不同情况给出更新 MFPS 版本的方法：");
         Space(10);
-        DrawNote("<b><color=#FF0002FF>IMPORTANT:</color> BEFORE TRY ANY OF THE BELOW METHODS OR TRY UPDATE YOUR PROJECT IN GENERAL MAKE SURE TO CREATE A BACKUP COPY OF YOUR PROJECT </b>");
+        DrawNote("<b><color=#FF0002FF>重要提示：</color>在尝试以下任何方法或对项目做任何更新操作之前，务必先备份整个项目</b>");
         Space(10);
-        DrawTitleText("Front-end changes");
-        DrawText("- If you only have made frontend changes like, replace the <i>player models, tweak properties, add maps, add weapons, change UI, etc...</i> but not backend changes (code changes), then update is simpler, you can import the new MFPS package over your project and just <b>unselect</b> some assets mentioned below:\n\nFirst, import the MFPS update package from the Asset Store or your disk.\n\nIn the <b>Unity Package Import window</b>, you can select which assets import and which not, by default, all assets are selected, you simply have to <b>unselect</b> the following to not override your changes:\n\n•  The <b>Resources</b> folder <i>(with all the prefabs inside and GameData)</i>\n•  MainMenu scene <i>(in case you changed the UI)</i>\n•  Any prefab that you change.\n\nDo import the ExampleLevel scene, since it almost sure that it will contain changes, and you can use as reference for your other maps scenes.\n");
+        DrawTitleText("前端改动");
+        DrawText("- 如果你只做了前端改动，例如替换 <i>玩家模型、调整属性、添加地图、添加武器、修改 UI 等</i>，而未改动后端代码，更新就简单些：可以在现有项目上导入新版 MFPS 包，只是需要 <b>取消勾选</b> 下列资源。\n\n首先从资源商店或本地磁盘导入 MFPS 更新包。\n\n在 <b>Unity 包导入窗口</b> 中可以勾选要导入的资源，默认全部选中。为避免覆盖你的改动，只需 <b>取消勾选</b> 以下内容：\n\n•  <b>Resources</b> 文件夹 <i>包含其中全部预制体与 GameData</i>\n•  MainMenu 场景 <i>若你修改过 UI</i>\n•  任何你改动过的预制体。\n\nExampleLevel 场景则要导入，因为它几乎肯定包含变更，可以作为你其他地图场景的参照。\n");
         DrawServerImage(12);
         DownArrow();
-        DrawTitleText("Back-end changes");
-        DrawText("If you have made <b>code changes</b> to the MFPS to core scripts or modifications to the main prefabs like <b>GameManager, GameModes, Lobby, etc...</b> the update process is more complicated.\n\nFor start, it is not possible to import the new version on your current project since this would revert all your changes losing all the work done by you, to apply the changes of the new version you must merge the changes manually, checking the scripts and prefabricated modifications of the new version and comparing them with those of your project.\n\nThis process may take some time to be done and there're high chances that a wrong merger cause errors in your game, so I will give you a method that will facilitate and reduce the work to do in this case:\n\n•  First, create a new clean Unity project, in it, import the new MFPS version package as you will normally do <i>(importing Photon PUN as well)</i>, you will use this project as reference to see the frontend changes in scenes, prefabs, properties, etc...\n\n•  Then, you will <b>simulate</b> import the new MFPS version package in your started project <i>(the project with the old version of MFPS that you have modified)</i>, note that I said <b>simulate</b> because <b>you won't import it</b>, you only need that the Unity Package Import Windows show up so you can check the changed files, this window shows all the assets that the package contains and will be imported but also if one of the files already exist in the project, it shows if the file from the package is different with respect at the file in the project, you can differentiate hthose modify files with a \"Refresh\" icon at the right side of the file name:\n");
+        DrawTitleText("后端改动");
+        DrawText("如果你对 MFPS 核心脚本做过 <b>代码改动</b>，或修改过 <b>GameManager、GameModes、Lobby 等</b> 主要预制体，更新流程就更复杂。\n\n首先，无法直接在当前项目上导入新版本，因为这会还原你所有的改动、丢掉全部工作。要应用新版本的变更，必须手动合并：查看新版本中脚本与预制体的改动，再与自己的项目逐一比对。\n\n这个过程耗时较长，而且合并失误很容易导致游戏报错。因此我给出一个能减少工作量的方法：\n\n•  首先新建一个干净的 Unity 项目，在其中按常规方式导入新版 MFPS 包 <i>同时导入 Photon PUN</i>。这个项目作为参照，用来查看场景、预制体、属性等前端层面的改动。\n\n•  然后在你的既有项目 <i>即修改过的旧版 MFPS 项目</i> 中 <b>模拟</b> 导入新版 MFPS 包。注意是 <b>模拟</b>，<b>不要真正导入</b>。你只需要让 Unity 包导入窗口弹出来，以便查看有哪些文件发生变化。该窗口会列出包中所有将导入的资源，若某个文件在项目中已存在，还会标明包内文件与项目内文件是否不同，这些有改动的文件右侧会显示一个 Refresh 图标：\n");
         DrawServerImage(26);
-        DrawText("Now what you have to do is take note of the modified files, write their name in a simple text file so you can find later by their name as explained below.\n\nOnce you have all the changed file names collected, is time merge those files, unfortunatelly there's not a automated way to do this, you have to manually do this, check the changes on scripts, prefabs, etc...  but don't worry you don't have to check line by line, you can use some tools to automatically detect the changes in two files.\n\nFor check changes on scripts you can use these tools:\n");
+        DrawText("接下来要做的是记录这些变动过的文件，把文件名写在一个简单的文本文件里，方便后面按名称查找。\n\n收集好全部变动文件名之后就要开始合并。遗憾的是没有自动化方式，只能手动处理，逐一查看脚本、预制体等内容的改动。不过不必逐行核对，可以借助工具自动比对两个文件的差异。\n\n比对脚本改动可以使用以下工具：\n");
         DrawHyperlinkText("Standalone program: <link=https://sourcegear.com/diffmerge/>Diffmerge</link>\nOnline System: <link=https://www.diffchecker.com/>Diffchecker</link>\n");
-        DrawText("Both systems are really straight forward to use, you have two boxes, in one you assign the script and or code of the old file/script and in the other you assing the new file, then the program will analyze and highlight you the changed lines:\n");
+        DrawText("这两个工具用起来都很直接：有两个文本框，一个放入旧文件的内容，另一个放入新文件，程序会分析并高亮出有差异的行：\n");
         DrawServerImage(27);
-        DrawText("You will assign the original file <i>(the one from your project)</i> in the left side and the file from the new MFPS version <i>(from the project that you create before)</i> in the right side.\n\nNow with the changes highlighted in the program you simple have to merge the changes in your project file <i>(the file of the old MFPS version)</i>\n\nWith the standalone program <b>Diffmerge</b> you can compare the whole MFPS folder and analyze all the files, by simple selecting the option: File -> Open Folder Diff... -> Set the path to the old version MFPS folder in the first box and set the path to the new version MFPS folder in the second box.\n");
+        DrawText("把原始文件 <i>即你项目中的那个</i> 放在左侧，新版 MFPS 的文件 <i>即你之前新建项目中的那个</i> 放在右侧。\n\n差异高亮出来后，只需把这些改动合并进你的项目文件 <i>即旧版 MFPS 的文件</i>。\n\n使用独立程序 <b>Diffmerge</b> 还可以比对整个 MFPS 文件夹、分析所有文件，操作为选择 File -> Open Folder Diff... -> 在第一个框中填入旧版 MFPS 文件夹路径，第二个框中填入新版 MFPS 文件夹路径。\n");
         DownArrow();
-        DrawText("Now that method works efficiently for text files like scripts, but for check the differences between prefabs and scenes you will have to do it differently, for check the difference between prefabs and scenes you will have to compare both projects, Fortunately, Unity allows you to open more than one instance of the editor, so you can open the old version project and the new MFPS version project in different editor windows and inspect the differences between the prefabs and or scenes in both projects.\n");
+        DrawText("上述方法对脚本这类文本文件很高效，但比对预制体与场景的差异需要另想办法，得同时打开两个项目对比。好在 Unity 允许同时打开多个编辑器实例，因此可以把旧版项目与新版 MFPS 项目分别在不同编辑器窗口中打开，逐一检视两个项目中预制体与场景的差异。\n");
 
 
     }
 
     void ServerRegionDoc()
     {
-        DrawText("Photon PUN offers <b>multiple server regions to connect</b>, MFPS implements all the available servers, and let decide the players if they what to connect to a specific region.\n \nBy default, Photon PUN selects the <b><i>Best Region</i></b> to connect from the player connection, which drives to a problem for games with not a lot of concurrent players that is that players are divided into different regions making it even harder to find games, so MFPS define a <b>Fixed Region</b>, which is the region where all players will connect by default and then if they want to, they can connect to a specific server manually in-game.\n \n<b><b><size=18>Define the Fixed Region</size></b></b>\n \nGo to the MainMenu scene -> Lobby -> Lobby -> <i>(Inspector window)</i> <b>Default Server</b> -> select the region code that will be the fixed/default region to connect.\n \n<b><b><size=18>Change Server Region in Runtime</size></b></b>\n \nPlayers can change the server region in-game with the bottom right dropdown in the lobby menu.");
+        DrawText("Photon PUN 支持 <b>连接多个服务器区域</b>。MFPS 实现了全部可用服务器，并让玩家自行决定是否连接特定区域。\n \n默认情况下，Photon PUN 会根据玩家网络选择 <b><i>最佳区域</i></b> 连接。这对同时在线人数不多的游戏会造成问题：玩家被分散到不同区域，更难匹配到对局。因此 MFPS 定义了 <b>固定区域</b>，即所有玩家默认连接的区域，玩家如有需要也可以在游戏内手动切换到其他服务器。\n \n<b><b><size=18>定义固定区域</size></b></b>\n \n进入 MainMenu 场景 -> Lobby -> Lobby -> 在检视面板中找到 <b>Default Server</b> -> 选择作为默认连接区域的区域代码。\n \n<b><b><size=18>运行时更换服务器区域</size></b></b>\n \n玩家可在游戏内通过大厅菜单右下角的下拉框更换服务器区域。");
         DrawServerImage("img-23.png");
     }
 
     void LocalNotificationsDoc()
     {
-        DrawText("There are some in-game local notification in MFPS that appear after a certain event happens in game e.g: <i>after a kill, pick up an item, etc...</i> these notifications are the <b>Who-Kill-Who</b> on the top right corner, the <b>local kills notification</b> on the center of the screen and the left side notifications for \"<i>non-important</i>\" notifications.\n \nFor the Who-Kill-Who or Killfeed notifications, you can check their respective section in this tutorial for more details about it.\n \n<b><size=16>LOCAL KILL NOTIFICATIONS</size></b>\n \n- Is the notification that appears in the center of the screen after the local player terminates an enemy in-game, MFPS comes with two options for how to display these notifications:\n \n1. <b>QUEQE:</b> show one kill at the time, in case multiple kills happens in a row, one will show ➔ wait for the animation and a delay time ➔ hide ➔ show the next kill until no more kills to show.\n \n2. <b>LIST:</b> Show all the kills on demand, showing in a list, a new kill will be added and showed in the screen as it happens.\n \nBy default the <i>QUEQE</i> mode is used but you can change this in the <b>GameData ➔ Local Kills Show Mode</b>.\n\nThis system is modular and event based hence you can use your own system and stop using this by simply remove/disactive the Center Local Notifier object from the <b>UI ➔ MenuUI ➔ Local Notifications ➔ Center Local Notifier.</b>");
+        DrawText("MFPS 中有一些游戏内本地提示，会在特定事件发生后出现，例如 <i>完成击杀、拾取物品之后等</i>。这些提示包括右上角的 <b>谁击杀了谁</b>、屏幕中央的 <b>本地击杀提示</b>，以及左侧用于非重要信息的提示。\n \n关于击杀提示的详细说明，见本教程对应章节。\n \n<b><size=16>本地击杀提示</size></b>\n \n- 即本地玩家在游戏中淘汰敌人后出现在屏幕中央的提示。MFPS 提供两种显示方式：\n \n1. <b>队列：</b> 一次显示一条。若连续发生多次击杀，先显示其中一条 ➔ 等待动画与延迟时间 ➔ 隐藏 ➔ 再显示下一条，直到没有待显示的击杀。\n \n2. <b>列表：</b> 按需全部显示，以列表形式呈现，新的击杀会在发生时追加并显示在屏幕上。\n \n默认使用 <i>队列</i> 模式，可在 <b>GameData ➔ Local Kills Show Mode</b> 中修改。\n\n该系统是模块化且基于事件的，因此你也可以改用自建系统，只需从 <b>UI ➔ MenuUI ➔ Local Notifications ➔ Center Local Notifier</b> 中删除或禁用 Center Local Notifier 对象即可。");
         Space(10);
-        DrawText("<b><size=16>LEFT SIDE NOTIFICATIONS</size></b>\n \n- Normally used for non-important events e.g after pick up ammo, pick up a weapon, change weapon fire type, etc...\n\nThis notification system is also modular so you can remove or replace with you own system by simpling removing the Left Local Notifier from <i>UI ➔ MenuUI ➔ Local Notifications ➔ <b>Left Local Notifier</b></i>\n\nYou can invoke your own notifications with this code:");
+        DrawText("<b><size=16>左侧提示</size></b>\n \n- 通常用于非重要事件，例如拾取弹药、拾取武器、切换武器开火模式等。\n\n该系统同样是模块化的，你也可以移除或替换成自建系统，只需从 <i>UI ➔ MenuUI ➔ Local Notifications ➔ <b>Left Local Notifier</b></i> 中移除 Left Local Notifier 即可。\n\n调用自定义提示的代码如下：");
         DrawCodeText("using MFPS.Runtime.UI;\n            ...\n            void ShowNotificationSample()\n            {\n                new MFPSLocalNotification(\"MY NOTIFICATION TEXT HERE\");\n            }");
     }
 
     void NetworkStats()
     {
-        DrawText("MFPS network framework can broadcast application and lobby network statistics to clients. You can make use of this data to debug your game network. You can also brag about these statistics in your game to show how popular it is. :]\n \nThere are two types of network data that you can see on MFPS:\n \n<b><size=22>NETWORK TRANSPORT STATS</size></b>\n \nThis can be used to display some basic but useful information about the current network outgoing and incoming network packages along with the local player ping, the information is displayed in the top left corner of the screen.\n \nThis feature is turned off by default but you can easily enable it from the GameData -> Show Network Stats");
+        DrawText("MFPS 网络框架可以向客户端广播应用与大厅的网络统计数据，可用于调试游戏网络，也可以把这些数据展示出来以体现游戏的活跃度。\n \nMFPS 中可以查看两类网络数据：\n \n<b><size=22>网络传输统计</size></b>\n \n用于显示当前网络收发数据包以及本地玩家延迟等基础但实用的信息，显示在屏幕左上角。\n \n该功能默认关闭，可在 GameData -> Show Network Stats 中方便地开启。");
         DrawServerImage("img-25.png");
-        DrawText("<b><size=22>LOBBY STATS</size></b>\n \nLobby statistics can be useful if you want to show the activity of your game. Lobby statistics are per region so you will only see the stats from the server region where you are connected.\n \nYou can get information about:\n \nNumber of live rooms\nTotal number of players joined to the lobby or joined to the lobby's rooms\n \nThis feature is enabled by default but you can turn it off in the MainMenu scene -> Lobby -> bl_Lobby -> Show Photon Statistics.");
+        DrawText("<b><size=22>大厅统计</size></b>\n \n大厅统计可用于展示游戏的活跃度。统计按区域区分，因此你只能看到自己所在服务器区域的统计。\n \n可获取的信息包括：\n \n活跃房间数量\n加入大厅或大厅内各房间的玩家总数\n \n该功能默认开启，可在 MainMenu 场景 -> Lobby -> bl_Lobby -> Show Photon Statistics 中关闭。");
         DrawServerImage("img-24.png");
     }
 
@@ -1275,15 +1275,15 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("A hitbox is a basic shape collider that detects when something collides with the player, those colliders essentially are simple shapes like boxes, spheres, or capsules, in MFPS they can be found in each of the standard humanoids bones of the player models in player prefabs.\n \nThese hitboxes are automatically set up when you create a new player with '<b>Add Player Tutorial</b>' but there may be the case that these colliders don't shape well to the player model bones, the collider may be too big, too small, or off position, for these cases, a manually retouch is needed, you will have to manually adjust the collider bounds to the bone, you can do this by simply selecting the bone transform that contains the Collider component and adjusts the center and size properties from the inspector.\n \n<b>The goal is that each hitbox collider fits as much as possible to the model.</b>");
+            DrawText("受击盒是用于检测外部物体与玩家碰撞的基础形状碰撞体，通常为长方体、球体或胶囊这类简单形状。MFPS 中它们位于玩家预制体模型的标准人形骨骼上。\n \n使用 <b>Add Player Tutorial</b> 创建新玩家时会自动配置这些受击盒，但有时碰撞体与玩家模型骨骼并不贴合，可能过大、过小或位置偏移。遇到这种情况需要手动微调，把碰撞体范围调整到贴合骨骼：选中带有 Collider 组件的骨骼 Transform，在检视面板中调整 center 与 size 属性即可。\n \n<b>目标是让每个受击盒碰撞体尽可能贴合模型。</b>");
             DrawServerImage("img-33.png");
         }
         else if (subStep == 1)
         {
-            DrawText("The main purpose of the player hitboxes is to <b>detect when a bullet hit the player</b>, in MFPS you can have a different damage base for each hitbox in order to cause more or less damage depending on which part of the body the bullet hit.\n \nFor this, you can use the <b>bl_HitboxManager</b> script which is attached in each player prefab and bots prefabs, in the player prefabs you can find attached the '<b>Remote</b>' child, when you select this child, in the inspector window of the <i>bl_HitboxManager</i> script, you will have different damage multipliers which you can modify to cause more or less damage in certain body parts, by default these multiplier values are applied per segment <i>(Head, Chest, Arms, and Legs)</i>:");
+            DrawText("玩家受击盒的主要用途是 <b>检测子弹命中玩家</b>。MFPS 中可以为每个受击盒设置不同的伤害基数，从而根据命中部位产生不同伤害。\n \n为此可使用 <b>bl_HitboxManager</b> 脚本，该脚本挂在所有玩家与机器人预制体上。玩家预制体中有个名为 <b>Remote</b> 的子对象，选中它后，<i>bl_HitboxManager</i> 脚本的检视面板中会显示若干伤害倍率，可用来调整特定身体部位受到的伤害大小。默认这些倍率按部位分组应用 <i>头部、胸部、手臂和腿部</i>：");
             DrawServerImage("img-34.png");
             DownArrow();
-            DrawText("Optionally, if you want to assign a damage multiplier per hitbox instead of per segment, simply turn off the '<b>Multiply value per segment?</b>' toggle in the inspector ➔ foldout the hitbox by clicking in its name ➔ set the damage multiplier.");
+            DrawText("若想为每个受击盒单独设置伤害倍率而非按部位分组，关闭检视面板中的 <b>Multiply value per segment?</b> 开关 ➔ 点击受击盒名称展开它 ➔ 设置伤害倍率。");
             DrawServerImage("img-35.png");
         }
     }
@@ -1292,55 +1292,55 @@ public class MFPSGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawSuperText("Players by default can receive damage from weapons, fall damage, and vehicle collisions, this damage is received by the player hitboxes or in the bl_PlayerHealthManagerBase script.\n \nIf you want to deal damage to a player here is how you can do it:\n \n<?background=#D1D1D1FF><b><size=16>Deal damage to a local player</size></b></background>\n \n- Dealing damage to a local player can be done by calling the <b>DoDamage(...)</b> function of the <b>bl_PlayerHealthManagerBase</b> script which is attached at the root of the player instance\n \nThat function expects <b>DamageData</b> parameter which contains all the information regarding the damage that is given.\n \nWhat you need is a reference to the player that you want to apply the damage, how you get that player reference depends on how your damage is executed, e.g let's say you do it with a Raycast, then if your Raycast detects a local player > you get the <i>bl_PlayerHealthManagerBase</i> reference from that player > call the <b>DoDamage(...)</b>and pass the <b>DamageData</b>, e.g:");
+            DrawSuperText("玩家默认会受到武器伤害、坠落伤害和载具碰撞伤害，这些伤害由玩家受击盒接收，或由 bl_PlayerHealthManagerBase 脚本处理。\n \n若要向玩家造成伤害，做法如下：\n \n<?background=#D1D1D1FF><b><size=16>对本地玩家造成伤害</size></b></background>\n \n- 对本地玩家造成伤害可调用 <b>bl_PlayerHealthManagerBase</b> 脚本的 <b>DoDamage(...)</b> 函数，该脚本挂在玩家实例的根节点上。\n \n该函数需要 <b>DamageData</b> 参数，其中包含本次伤害的全部信息。\n \n你还需要拿到目标玩家的引用。获取方式取决于你的伤害是如何触发的。例如用射线检测时，射线命中本地玩家后即可从该玩家取得 <i>bl_PlayerHealthManagerBase</i> 引用，再调用 <b>DoDamage(...)</b> 并传入 <b>DamageData</b>，例如：");
             DrawCodeText("void DealDamageFunction()\n    {\n        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit raycast, 10))\n        {\n            if (raycast.collider.isLocalPlayerCollider())\n            {\n                var playerReferences = raycast.transform.GetComponent<bl_PlayerReferences>();\n \n                DamageData damageData = new DamageData()\n                {\n                    Damage = 20, // base damage to apply\n                    Direction = transform.position,\n                    Cause = DamageCause.Player,\n                    MFPSActor = bl_MFPS.LocalPlayer.MFPSActor, // MFPS actor that cause this damage\n                    // Check the other DamageData properties\n                };\n \n                playerReferences.playerHealthManager.DoDamage(damageData);\n            }\n        }\n    }");
-            DrawText("And that will do it, the example above will deal 20 damage to the target player.\n \nIf you just want to instantly kill the local player then you can just call the <b>Suicide()</b> function in <b>bl_MFPS.LocalPlayer</b> like this:");
+            DrawText("这样就完成了，上例会向目标玩家造成 20 点伤害。\n \n如果你只是想立刻杀死本地玩家，直接调用 <b>bl_MFPS.LocalPlayer</b> 中的 <b>Suicide()</b> 函数即可：");
             DrawCodeText("bl_MFPS.LocalPlayer.Suicide();");
             DrawHorizontalSeparator();
-            DrawSuperText("Now, the above will only work for the local player, if you want to deal damage to a remote player <i>(a player not controlled by the local client)</i> this is how you can do it\n\n<?background=#D1D1D1FF><b><size=16>Deal damage to a remote player</size></b></background>");
-            DrawSuperText("You can only deal damage to a remote player through a hitbox reference of the player, these hitboxes are the colliders that wrap the player model, these have attached the <b>bl_HitBoxBase</b> inherited script which contains the function <b>ReceiveDamage(...)</b> which is what you have to call to give damage.\n \nWhat you need is a reference to the hitbox of the remote player that you want to apply the damage, how you get that reference depends on how you want to apply the damage, let's say you what to apply the damage by an explosion for which you detect the colliders in a certain radius of the explosion origin, this is how you can implement the damage function:");
+            DrawSuperText("以上方式只适用于本地玩家。若要对远程玩家 <i>即不由本地客户端控制的玩家</i> 造成伤害，做法如下\n\n<?background=#D1D1D1FF><b><size=16>对远程玩家造成伤害</size></b></background>");
+            DrawSuperText("对远程玩家造成伤害只能通过其受击盒引用。受击盒是包裹玩家模型的碰撞体，上面挂有继承自 <b>bl_HitBoxBase</b> 的脚本，其中包含 <b>ReceiveDamage(...)</b> 函数，调用它即可造成伤害。\n \n你需要拿到目标远程玩家的受击盒引用。获取方式取决于你希望如何施加伤害。例如通过爆炸造成伤害时，检测爆炸原点一定半径内的碰撞体，伤害函数可以这样实现：");
             DrawCodeText("void DealDamageFunction()\n    {\n        Collider[] hittedColliders = Physics.OverlapSphere(transform.position, 10);\n        foreach (Collider collider in hittedColliders)\n        {\n            // if you want to apply the damage only to players\n            // if (!collider.CompareTag(bl_MFPS.HITBOX_TAG)) continue;\n \n            var damageable = collider.GetComponent<IMFPSDamageable>();\n            if (damageable == null) continue;\n \n            DamageData damageData = new DamageData()\n            {\n                Damage = 50,\n                Direction = transform.position,\n                MFPSActor = bl_MFPS.LocalPlayer.MFPSActor,\n                Cause = DamageCause.Explosion\n                // see the other DamageData properties that you can use.\n            };\n \n            // send the damage to the hit box.\n            damageable.ReceiveDamage(damageData);\n        }\n    }");
         }
         else if (subStep == 1)
         {
-            DrawSuperText("<b><?background=#D1D1D1FF><b><size=16>Deal damage to objects</size></b></background></b>\n \nIf you want to apply damage to a game object other than a player or bot you can do it by simply implementing the <b>IMFPSDamageable</b> interface in your custom script.\n \nLet's say you have a barrel that you want to apply damage when a bullet hit it, you don't have to made any change to the MFPS Core scripts, you simply have to implement the <b>IMFPSDamageable</b> interface and override the <b>ReceiveDamage(...)</b> function in your custom script, e.g:\n \nYour custom script could look like this by default:");
+            DrawSuperText("<b><?background=#D1D1D1FF><b><size=16>对物体造成伤害</size></b></background></b>\n \n若要对玩家或机器人以外的 GameObject 造成伤害，只需在你的自定义脚本中实现 <b>IMFPSDamageable</b> 接口即可。\n \n假设你有一个油桶，希望被子弹击中时受损，无需改动 MFPS 核心脚本，只要在自定义脚本中实现 <b>IMFPSDamageable</b> 接口并重写 <b>ReceiveDamage(...)</b> 函数，例如：\n \n你的自定义脚本原本可能长这样：");
             DrawCodeText("public class bl_Test : MonoBehaviour\n{\n    public int Health = 100;\n \n    public void ReduceHealth(int damage)\n    {\n        Health -= damage;\n \n        if(Health <= 0)\n        {\n            // Destroy or wherever happens when run out of health\n        }\n    }\n}");
-            DrawText("You have to implement the <b>IMFPSDamageable</b> interface and override the interface function <b>ReceiveDamage()</b> like this:");
+            DrawText("你需要实现 <b>IMFPSDamageable</b> 接口并重写接口函数 <b>ReceiveDamage()</b>，如下所示：");
             DrawCodeText("public class bl_Test : MonoBehaviour, IMFPSDamageable\n{\n\n    public int Health = 100;\n \n    void IMFPSDamageable.ReceiveDamage(DamageData damageData)\n    {\n        ReduceHealth(damageData.Damage);\n    }\n \n    public void ReduceHealth(int damage)\n    {\n        Health -= damage;\n \n        if(Health <= 0)\n        {\n            // Destroy or wherever happens when run out of health\n        }\n    }\n}");
-            DrawText("And that will do it, keep in mind that your object must have a collider in order to be hit by the bullets.");
+            DrawText("这样就完成了。注意该对象必须带有碰撞体，才能被子弹命中。");
         }
     }
 
     void CommonQADoc()
     {
-        DrawSpoilerBox("Bots walk trough walls and objects", "You have to bake the <b>Navmesh</b> in your map scenes in order to let the bots know where they can navigate in your map.\n\nIf you don't know what Navmesh is or how to bake it, check this: <link=https://docs.unity3d.com/Manual/nav-BuildingNavMesh.html>https://docs.unity3d.com/Manual/nav-BuildingNavMesh.html</link>");
+        DrawSpoilerBox("机器人会穿墙或穿过物体", "需要在地图场景中烘焙 <b>Navmesh</b>，机器人才知道地图中哪些位置可以通行。\n\n如果你不了解 Navmesh 或不知道如何烘焙，可参考：<link=https://docs.unity3d.com/Manual/nav-BuildingNavMesh.html>https://docs.unity3d.com/Manual/nav-BuildingNavMesh.html</link>");
 
-        DrawSpoilerBox("Map objects randomly disappear in certain areas.", "This is caused you are using <b>Occlusion Culling</b> and you haven't Bake it in your map scene, for more info about Occlusion Culling, check this: <link=https://docs.unity3d.com/Manual/OcclusionCulling.html>https://docs.unity3d.com/Manual/OcclusionCulling.html</link>\n\nHow to bake it, check this:\n<link=https://docs.unity3d.com/Manual/occlusion-culling-getting-started.html>https://docs.unity3d.com/Manual/occlusion-culling-getting-started.html</link>");
+        DrawSpoilerBox("地图物件在特定区域随机消失。", "原因是你启用了 <b>遮挡剔除</b> 但未在地图场景中烘焙。关于遮挡剔除的更多信息见：<link=https://docs.unity3d.com/Manual/OcclusionCulling.html>https://docs.unity3d.com/Manual/OcclusionCulling.html</link>\n\n烘焙方法见：\n<link=https://docs.unity3d.com/Manual/occlusion-culling-getting-started.html>https://docs.unity3d.com/Manual/occlusion-culling-getting-started.html</link>");
 
-        DrawSpoilerBox("Is there a max limit of players per room?", "There's not a fixed number of players that can join in the same room at the same time, but since each player add an extra stress to the server and consume resources for the local client device after certain amount of players the game will start to feel 'Laggy' both in refresh rate (FPS) as in the network latency (Ping).\n\nThe number of players before the game start experimenting this performance issue depend on various factors like the runtime platform, device specs, network connection, etc...\n\nWe have done our own tests with the default MFPS (1.5) to have some benchmarks, these are the result:\n\nFor <b>PC</b> with these specs:\n<i>Intel i7 3.70GHz\n16Gb Ram\nNvidia GTX 1070</i>\n\n18 players in the same room\nMedium graphic quality\nRun with a average of 60-80 FPS\n\nFor <b>Mobile</b>:\nusing a Samsung S8 Plus\n\n12 Players in the same room\nWith MFPS optimized for mobile <i>(not the default scenes)</i>\nRun with a average of 60-75 FPS\n\nYou can use these statistics as a reference but keep in mind that there are many factors which can influence the result, so it is recommended that you do your own tests.");
+        DrawSpoilerBox("每个房间有玩家数上限吗？", "同一房间能容纳的玩家数没有固定上限。但每增加一名玩家都会增加服务端压力，也会占用本地客户端设备资源。超过一定人数后，游戏会开始出现卡顿，表现为帧率下降和网络延迟升高。\n\n出现性能问题的人数阈值取决于多种因素，例如运行平台、设备配置、网络状况等。\n\n我们用默认的 MFPS 1.5 做过测试以取得参考基准，结果如下：\n\n<b>PC</b> 配置为：\n<i>Intel i7 3.70GHz\n16Gb 内存\nNvidia GTX 1070</i>\n\n同房间 18 名玩家\n中等画质\n平均 60 到 80 帧\n\n<b>移动端</b>：\n使用三星 S8 Plus\n\n同房间 12 名玩家\n使用针对移动端优化过的 MFPS <i>非默认场景</i>\n平均 60 到 75 帧\n\n这些数据可供参考，但影响结果的因素很多，建议自行测试。");
 
-        DrawSpoilerBox("Alternative network solution than Photon?", "Since MFPS comes with full source code you can make any change that you want, that includes integrate other network solution.\n\nBut by default this is not possible from a front-end option <i>(like a toggle to switch between libraries)</i>,\nintegration other network library will require a lot of code changes to switch from the Photon syntax to your network sdk syntax, and there is the possibility that some methods or features of Photon do not exist or are done differently in your network library.\n");
+        DrawSpoilerBox("有 Photon 之外的网络方案吗？", "MFPS 提供完整源码，你可以做任何改动，包括接入其他网络方案。\n\n但默认并不存在前端开关 <i>例如一键切换不同库</i> 来实现这件事。\n接入其他网络库需要大量代码改动，把 Photon 的写法替换为对应 SDK 的写法，而且 Photon 的部分方法或功能在你的网络库中可能并不存在，或实现方式不同。\n");
 
-        DrawSpoilerBox("Can I host my own dedicated server?", "Yes, Photon offers a solution for host your own server using their <b>Photon OnPremise</b> <i>(a.k.a Photon Server)</i> switch to this from the default Photon PUN (Cloud) doesn't require code changes, all that you have to do is setup the Photon Server SDK and set the IP in your PhotonServerSettings.\n\nInfo: <link=https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-in-5min>Photon Server Information</link>\n");
+        DrawSpoilerBox("我可以自建独立服务器吗？", "可以。Photon 提供自建服务器方案 <b>Photon OnPremise</b> <i>即 Photon Server</i>。从默认的 Photon PUN 云端切换到它无需改动代码，只需搭建 Photon Server SDK 并在 PhotonServerSettings 中填写 IP。\n\n详见：<link=https://doc.photonengine.com/en-us/server/current/getting-started/photon-server-in-5min>Photon Server 资料</link>\n");
 
-        DrawSpoilerBox("Rooms doesn't show up for other players?", "Sometimes when you testing your game with other players you may find out that the rooms that you or one of the testers created doesn't appear in the Room/Server list, the most common cause of this is that you and your tester <b>are not in the same server region</b>.\n\nIn the MainMenu/Lobby scene, in the bottom right corner you will see a drop-down with a region name, you can use it to select and change of server, so make sure you and your testers are connected to the same server region.");
+        DrawSpoilerBox("房间对其他玩家不显示？", "与他人联机测试时，你或某位测试者创建的房间有时不会出现在房间或服务器列表中，最常见的原因是你与测试者 <b>不在同一服务器区域</b>。\n\n在 MainMenu 或大厅场景的右下角有一个显示区域名称的下拉框，可用它选择并切换服务器。请确认你与所有测试者连接的是同一服务器区域。");
     }
 
     void KnownIssuesDoc()
     {
-        DrawText("On this page, we will list known issues with MFPS. The focus here is on issues that we can't fix or workaround at the moment but not just bugs or errors, but also <b>problems that affect the development workflow with MFPS</b>, the answers you gonna get here are more personal than professional <b>from the main developer Lovatto</b>.");
+        DrawText("本页列出 MFPS 的已知问题。这里关注的不只是缺陷或错误，也包括我们目前无法修复或规避的问题，以及 <b>影响 MFPS 开发流程的问题</b>。以下回答更偏向个人视角而非官方口径，<b>出自主要开发者 Lovatto</b>。");
         DownArrow();
 
-        DrawText("<b><size=22>ABSTRACTION</size></b>\n \nFor experienced programmers, one of the things that probably will quickly notice after look at the MFPS source code is their level of abstraction in most of the classes, which is basically none, this is especially a problem when the goal is to implement or modifying features to the game since the only way to do it is modifying the original scripts which derive to another problem = you no longer able to update MFPS to new versions since these will override the changed you did.\n \nSo, why is that? why not implement a cleaner code that can be maintainable, scalable, and easy to inherence?\nWell the answer requires some context but I'll try to explain it shortly:\n \n- MFPS originally was not created as a game template to be distributed for other developers, MFPS was a personal game, it wasn't even a game, it was a learning project, so the goal was to get things done and then worry about nicer code, wasn't until MFPS was released as a game template back in 2018 that the core rebuilding start and still continues, with each new update MFPS is improved not just with new features but also the features that already exist improved with more cleaner code that allows abstraction to make the template more modular and easier to modify for programmers.\n \nBut of course, the work is not done yet, I know that but MFPS has so many features, and in order to have better implementations of the current features or at least the same but with more inference able code is hard work, and pretty much, I'm the only person working on the code, so it will take some time to rewrite everything and even more when you take in account that I don't work full time in MFPS.");
+        DrawText("<b><size=22>抽象层</size></b>\n \n对经验丰富的程序员来说，翻阅 MFPS 源码后很快会注意到的一点是，大多类几乎没有抽象层。这在实现或修改游戏功能时尤其成问题，因为唯一的办法是改动原始脚本，于是又引出另一个问题：你再也无法把 MFPS 升级到新版本，因为升级会覆盖你的改动。\n \n那为什么会这样？为什么不写更整洁、可维护、可扩展、便于继承的代码？\n这个问题需要一些背景，我尽量简短说明：\n \n- MFPS 最初并非作为分发给其他开发者的游戏模板，它原本是一个个人项目，甚至算不上游戏，而是一个学习项目。当时的目标是先跑通功能，代码整洁度往后放。直到 2018 年作为游戏模板发布，核心代码的重构才开始，并且至今仍在进行。每次更新不仅加入新功能，也在用更整洁、支持抽象的代码改善既有功能，让模板更模块化、更便于程序员修改。\n \n当然，这项工作远未结束。我很清楚这一点，但 MFPS 功能太多，要为现有功能提供更好的实现，或者至少在不改变行为的前提下让代码更易推断，工作量很大。而且几乎只有我一个人在写代码，因此重写全部内容需要时间，考虑到我并非全职投入 MFPS，所需时间会更长。");
         Space(10);
-        DrawText("<b><size=22>URP, HDRP, TMP, INPUT SYSTEM SUPPORT</size></b>\n \nUnity is constantly improved and we try to use their latest technologies as possible, Unity release their new improved features that in the future will replace their current ones like the new Render Pipelines URP and HDRP, Text Mesh Pro, New Input System, etc...\n \nBut pretty much these features left the Preview/Beta phase mid last year <i><size=8><color=#76767694>(2020)</color></size></i>, before that they were not recommended for production, due to that, they were not implemented in MFPS, now that they are production-ready is the time to start using them, but of course, require some work, and due I was already working on Game Framework Next I started implementing these new features in it <i><size=8><color=#76767694>(Game Framework Next)</color></size></i>, but I'm here to talk about Game Framework, will these features implement in Game Framework as well? well, I won't promise all of them, but Text Mesh Pro and the New Input System support are planned to be added in a future update.\n \nWhat about URP and HDRP?\nWell, Game Framework already supports them, just not by default, you have to convert the project manually, check the Universal RP section in this documentation for more info.");
+        DrawText("<b><size=22>URP、HDRP、TMP、输入系统支持</size></b>\n \nUnity 在不断改进，我们也尽量采用其最新技术。Unity 发布的新特性会在将来取代现有方案，例如新的渲染管线 URP 与 HDRP、Text Mesh Pro、新版输入系统等。\n \n但这些特性大多是在去年年中 <i><size=8><color=#76767694>2020 年</color></size></i> 才脱离预览或测试阶段的。在此之前它们不推荐用于正式项目，因此 MFPS 并未采用。如今它们已可用于生产，正是开始使用的时机，当然这需要一定工作量。由于我当时已在开发 Game Framework Next，就先把这些新特性实现在了它里面 <i><size=8><color=#76767694>指 Game Framework Next</color></size></i>。不过这里讨论的是 Game Framework，这些特性是否也会加入它？我不会承诺全部，但 Text Mesh Pro 与新版输入系统的支持已列入后续更新计划。\n \n那 URP 和 HDRP 呢？\nGame Framework 已经支持它们，只是并非默认，需要手动转换项目。更多信息见本文档的通用渲染管线章节。");
         Space(10);
-        DrawText("<b><size=22>SUPPORT BOTS IN ALL GAME MODES</size></b>\n \nAnother frequent question from MFPS users is <b>why there's not support for the bots in all the game modes?</b>\n \nThe answer may disappoint you, it's simply because is too much work,\nyep :/, Artificial Intelligence is a tricky area and even more when you add multiplayer to it, even for dummy bots like the MFPS ones is a hard time developing, however, MFPS include a multiplayer AI Shooter system in the core package with support for two of the most played game modes, the problem is that all the other game modes require a custom behave of the bots to play with the game mode rules, there's when things get complicated and require a lot of work, but that puts me in a dilemma, of course as you may understand in order to keep developing and working in MFPS I need to get an income from it that is reasonable and according to the work and time that I putting on it, well, as I mentioned before AI development is one of the areas that I personally find more frustrating and that more time requires to see some progress so in order to pay off the work that I have to put it on I will have to sell it <i><size=8><color=#76767694>(the AI support for other game modes)</color></size></i> as an Addon,\nbut I rather prefer to work in other features at the time that I consider more suitable.\n \nDoes this mean there will be not supported for the bots in the other game modes?\nNo, it just means I don't have planned yet.");
+        DrawText("<b><size=22>所有游戏模式支持机器人</size></b>\n \nMFPS 用户另一个常问的问题是 <b>为什么机器人不是所有游戏模式都支持？</b>\n \n答案可能让你失望：单纯因为工作量太大。\n是的。人工智能本就是棘手的领域，再加上多人联机就更复杂。即便是 MFPS 这类基础机器人，开发也很费功夫。不过 MFPS 核心包确实内置了多人 AI 射击系统，支持两个最常玩的游戏模式。问题在于其余模式都要求机器人按该模式的规则做出定制化行为，这才是复杂且工作量巨大的部分。这让我陷入两难：你可能也能理解，为了持续开发和维护 MFPS，我需要有与投入的工作量和时间相称的收入。而如前所述，AI 开发是我个人觉得最令人沮丧、也最需要时间才能看到进展的方向之一。因此为了收回投入，我只能把它作为插件出售 <i><size=8><color=#76767694>指其他游戏模式的 AI 支持</color></size></i>。\n相比之下，我更愿意把时间放在我认为更合适的其他功能上。\n \n这是否意味着其他游戏模式永远不会支持机器人？\n不是，只是目前还没有排期。");
         Space(10);
-        DrawText("<b><size=22>GRAMMAR</size></b>\n \nMay you excuse me? D:\nis evident by seeing the documentation, code, comments, etc... that English grammar is not my strength... how about that,\nwell, this is simply explained because I'm not a native English speaker BUT that's not an excuse because most of people is not but doesn't have that many mistakes, I know that but as you may already know <i>(or more likely not)</i> I'm from El Salvador, a really tiny country that you won't notice unless zooming in on Google map in Central America, here my friend, are not too many places where you can improve other languages skills, but I try my best so please don hate me :[\n \nIn meantime feel free to give me your feedback for any grammar error you saw, I'll highly appreciate it!");
+        DrawText("<b><size=22>语法</size></b>\n \n容我解释一下。\n从文档、代码和注释中不难看出，英语语法并非我的强项。\n原因很简单：我不是英语母语者。但这不是借口，因为大多数人也不是母语者，出错却没这么多，我明白这一点。不过你可能已经知道 <i>更可能不知道</i>，我来自萨尔瓦多，一个不去谷歌地图上放大中美洲就注意不到的小国。在这里，能提升外语能力的地方实在不多。我已经尽力了，请别怪我。\n \n同时，如果你发现任何语法错误，欢迎反馈，我会非常感激。");
     }
 
-    [MenuItem("Game Framework/Tutorials/Documentation", false, 111)]
+    [MenuItem("游戏框架/教程/文档", false, 111)]
     private static void ShowWindowMFPS()
     {
         EditorWindow.GetWindow(typeof(MFPSGeneralDoc));

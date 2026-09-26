@@ -15,7 +15,7 @@ public class IntegratePVoiceTutorial : TutorialWizard
 
     };
     private Steps[] AllSteps = new Steps[] {
-     new Steps { Name = "Photon Voice", StepsLenght = 3 },
+     new Steps { Name = "Photon 语音", StepsLenght = 3 },
     };
     //final required////////////////////////////////////////////////
 
@@ -42,16 +42,16 @@ public class IntegratePVoiceTutorial : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("MFPS comes with support for the Photon Voice plugin, which is another Photon Cloud service specifically for Voice chat in multiplayer games, allowing the players to talk with teammates in-realtime inside the game.\n \nThis feature is NOT supported on all platforms, these are the platforms where you can use Photon Voice:\n\n■ Windows\n■ UWP\n■ macOS\n■ Linux\n■ Android (for 64-bit support read this)\n■ iOS\n■ PlayStation 4 (requires a special add-on)\n■ PlayStation 5 (requires a special add-on)\n■ Nintendo Switch (requires a special add-on)\n■ MagicLeap (Lumin OS, requires a special add-on)\n■ HoloLens 2 (ARM64 requires a special add-on)\n■ Xbox One (requires a special add-on)\n■ Xbox Series X and Xbox Series S (requires a special add-on)");
+            DrawText("MFPS 已支持 Photon Voice 插件，这是 Photon Cloud 专为多人游戏语音聊天提供的另一项服务，可让玩家在游戏内与队友实时通话。\n \n该功能并非支持所有平台，可使用 Photon Voice 的平台如下：\n\n■ Windows\n■ UWP\n■ macOS\n■ Linux\n■ Android（64 位支持请查阅相关说明）\n■ iOS\n■ PlayStation 4（需额外组件）\n■ PlayStation 5（需额外组件）\n■ Nintendo Switch（需额外组件）\n■ MagicLeap（Lumin OS，需额外组件）\n■ HoloLens 2（ARM64 需额外组件）\n■ Xbox One（需额外组件）\n■ Xbox Series X 与 Xbox Series S（需额外组件）");
             DrawImage(GetServerImage(0), TextAlignment.Center);
-            DrawText("In order to use this feature, you need to import the Photon Voice 2 package, you can get it for free on the Asset Store, click on the button below to redirect to the package page:");
+            DrawText("要使用该功能，需要先导入 Photon Voice 2 包，可在资源商店免费获取，点击下方按钮跳转到该包页面：");
             GUILayout.Space(5);
-            if (DrawButton("<color=yellow>Open Photon Voice 2</color>"))
+            if (DrawButton("<color=yellow>打开 Photon Voice 2</color>"))
             {
                 AssetStore.Open("content/130518");
                 NextStep();
             }
-            if (DrawButton("<color=yellow>Open Photon Voice 2 On Browser</color>"))
+            if (DrawButton("<color=yellow>在浏览器中打开 Photon Voice 2</color>"))
             {
                 Application.OpenURL("https://assetstore.unity.com/packages/tools/audio/photon-voice-2-130518");
                 NextStep();
@@ -59,24 +59,24 @@ public class IntegratePVoiceTutorial : TutorialWizard
         }
         else if (subStep == 1)
         {
-            DrawText("Now download and import the package from the asset store page and wait until process finish.");
+            DrawText("在资源商店页面下载并导入该包，等待导入完成。");
             DownArrow();
-            DrawText("Then, you need enable the integrated code, for it Go to (Toolbar) MFPS -> Addons -> Voice -> <b>Enable</b> and wait until script compilation finish.");
+            DrawText("接着需要启用集成代码，前往顶部菜单 游戏框架 -> 扩展 -> 语音 -> <b>启用</b>，等待脚本编译完成。");
             DrawImage(GetServerImage(1));
             DownArrow();
-            DrawText("After compilation finish do the same but click on the 'Integrate' button MFPS -> Addons -> Voice -> <b>Integrate</b>");
+            DrawText("编译完成后重复上述步骤，但这次点击 游戏框架 -> 扩展 -> 语音 -> <b>集成</b> 按钮。");
             DownArrow();
-            DrawText("Ok, it's all, now Photon Voice is integrated");
+            DrawText("完成，Photon 语音已集成完毕。");
         }
         else if (subStep == 2)
         {
-            DrawText("For default Voice is set up to transmit only when push a key (Push to Talk) and is recommended use that way, you can change the key in bl_PlayerVoice.cs" +
-                " which is attached in the root of each Player prefab in Resources folder");
+            DrawText("默认语音设置为按键才传输，即按住说话，推荐保持该方式，可在 bl_PlayerVoice.cs 中修改按键" +
+                "，该脚本挂载于 Resources 文件夹中每个玩家预制体的根节点");
             DrawImage(GetServerImage(2));
         }
     }
 
-    [MenuItem("Game Framework/Tutorials/Photon Voice")]
+    [MenuItem("游戏框架/教程/Photon 语音")]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(IntegratePVoiceTutorial));

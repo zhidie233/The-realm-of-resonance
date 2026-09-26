@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using MFPSEditor;
@@ -45,9 +45,9 @@ public class bl_PlayerIKEditor : Editor
         GUILayout.Space(6);
         if(script.editor_previewMode == 1)
         {
-            script.editor_weight = EditorGUILayout.Slider("Preview IK Weight", script.editor_weight, 0, 1);
+            script.editor_weight = EditorGUILayout.Slider("预览 IK 权重", script.editor_weight, 0, 1);
         }
-        if (GUILayout.Button("Preview Aim Position"))
+        if (GUILayout.Button("预览瞄准位置"))
         {
             AnimatorRunner window = (AnimatorRunner)EditorWindow.GetWindow(typeof(AnimatorRunner));
             window.Show();
@@ -72,7 +72,7 @@ public class bl_PlayerIKEditor : Editor
             }
             else
             {
-                Debug.LogWarning("No TPWeapons was found active in this player, can't preview the arms IK without a weapon active!");
+                Debug.LogWarning("该玩家没有启用中的第三人称武器，武器未启用时无法预览手臂 IK！");
             }
             var anim = script.GetComponent<Animator>();
             if (anim != null)
@@ -84,7 +84,7 @@ public class bl_PlayerIKEditor : Editor
                 script.editor_previewMode = 1;
                 script.editor_weight = 1;
             }
-            else { Debug.Log("Can't preview without an animator attached"); }
+            else { Debug.Log("未挂载动画器，无法预览"); }
         }
     }
 

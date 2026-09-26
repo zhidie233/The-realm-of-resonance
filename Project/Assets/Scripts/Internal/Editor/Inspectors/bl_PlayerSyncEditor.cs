@@ -20,23 +20,23 @@ public class bl_PlayerSyncEditor : Editor
     private const int EDITOR_LINE_HEIGHT = 20;
 
     private const string INTERPOLATE_TOOLTIP =
-        "Choose between synchronizing the value directly (by disabling interpolation) or smoothly move it towards the newest update.";
+        "可选择直接同步数值 即禁用插值，或将其平滑过渡到最新数据。";
 
     private const string INTERPOLATE_HELP =
-        "You can use interpolation to smoothly move your GameObject towards a new position that is received via the network. "
-        + "This helps to reduce the stuttering movement that results because the network updates only arrive 10 times per second.\n"
-        + "As a side effect, the GameObject is always lagging behind the actual position a little bit. This can be addressed with extrapolation.";
+        "可以使用插值把 GameObject 平滑移动到网络收到的新位置。"
+        + "这有助于减轻因网络每秒仅更新 10 次而产生的移动卡顿。\n"
+        + "副作用是 GameObject 总会略微滞后于真实位置，这可以通过外推来改善。";
 
-    private const string EXTRAPOLATE_TOOLTIP = "Extrapolation is used to predict where the GameObject actually is";
+    private const string EXTRAPOLATE_TOOLTIP = "外推用于预测 GameObject 的真实位置";
 
     private const string EXTRAPOLATE_HELP =
-        "Whenever you deal with network values, all values you receive will be a little bit out of date since that data needs "
-        + "to reach you first. You can use extrapolation to try to predict where the player actually is, based on the movement data you have received.\n"
+        "处理网络数值时，收到的所有数据都略微滞后，因为这些数据需要时间 "
+        + "才能到达你这里。可以基于已收到的移动数据，用外推来预测玩家的真实位置。\n"
         +
-        "This has to be tweaked carefully for each specific game in order to insure the optimal prediction. Sometimes it is very easy to extrapolate states, because "
+        "为保证预测效果最优，需针对每个具体游戏仔细调校。有时状态很容易外推，因为 "
         +
-        "the GameObject behaves very predictable (for example for vehicles). Other times it can be very hard because the user input is translated directly to the game "
-        + "and you cannot really predict what the user is going to do (for example in fighting games)";
+        "GameObject 的行为高度可预测，例如载具。有时则很难，因为用户输入会直接作用于游戏，"
+        + "你无法真正预测用户接下来的操作，例如格斗游戏。";
 
     private const string INTERPOLATE_HELP_URL = "http://doc.exitgames.com/en/pun/current/tutorials/rpg-movement";
     private const string EXTRAPOLATE_HELP_URL = "http://doc.exitgames.com/en/pun/current/tutorials/rpg-movement";
@@ -56,7 +56,7 @@ public class bl_PlayerSyncEditor : Editor
 
         GUI.enabled = false;
         GUILayout.BeginVertical("box");
-        m_Target.FPState = (PlayerFPState)EditorGUILayout.EnumPopup("FPState", m_Target.FPState, EditorStyles.toolbarDropDown);
+        m_Target.FPState = (PlayerFPState)EditorGUILayout.EnumPopup("第一人称状态", m_Target.FPState, EditorStyles.toolbarDropDown);
         GUILayout.EndVertical();
         GUI.enabled = true;
         if (m_Target.NetworkGuns == null)
@@ -88,10 +88,10 @@ public class bl_PlayerSyncEditor : Editor
         GUI.enabled = true;
         DrawNetworkGunsList();
         EditorGUILayout.BeginVertical("box");
-        m_Target.HeadTarget = EditorGUILayout.ObjectField("Head Target", m_Target.HeadTarget, typeof(Transform), isProjectPrefab) as Transform;
+        m_Target.HeadTarget = EditorGUILayout.ObjectField("头部目标", m_Target.HeadTarget, typeof(Transform), isProjectPrefab) as Transform;
 
         GUILayout.Space(10);
-        if(GUILayout.Button("Ping Current FPWeapon", EditorStyles.toolbarButton))
+        if(GUILayout.Button("定位当前第一人称武器", EditorStyles.toolbarButton))
         {
             bl_GunManager gm = m_Target.transform.GetComponentInChildren<bl_GunManager>(true);
             if (Application.isPlaying)
@@ -105,7 +105,7 @@ public class bl_PlayerSyncEditor : Editor
                 EditorGUIUtility.PingObject(gm);
             }
         }
-        if (GUILayout.Button("Ping Current TPWeapon", EditorStyles.toolbarButton))
+        if (GUILayout.Button("定位当前第三人称武器", EditorStyles.toolbarButton))
         {
 
             if (Application.isPlaying)
@@ -155,7 +155,7 @@ public class bl_PlayerSyncEditor : Editor
         float containerElementHeight = 22;
         float containerHeight = listProperty.arraySize * containerElementHeight;
 
-        bool isOpen = MFPSEditorStyles.ContainerHeaderFoldout("Network Guns (" + GetGunsCount() + ")", gunListProp.isExpanded);
+        bool isOpen = MFPSEditorStyles.ContainerHeaderFoldout("网络武器 (" + GetGunsCount() + ")", gunListProp.isExpanded);
         gunListProp.isExpanded = isOpen;
 
         if (isOpen == false)
@@ -213,7 +213,7 @@ public class bl_PlayerSyncEditor : Editor
 
         GUILayout.BeginVertical(GUI.skin.box);
         {
-            GUILayout.Label("Editing is disabled in play mode so the two objects don't go out of sync");
+            GUILayout.Label("播放模式下禁用编辑，避免两个对象失去同步");
         }
         GUILayout.EndVertical();
     }
@@ -228,7 +228,7 @@ public class bl_PlayerSyncEditor : Editor
 
     private void DrawSynchronizePositionHeader()
     {
-        DrawHeader("Synchronize Position", this.m_SynchronizePositionProperty);
+        DrawHeader("同步位置", this.m_SynchronizePositionProperty);
     }
 
     private void DrawSynchronizePositionData()
@@ -318,7 +318,7 @@ public class bl_PlayerSyncEditor : Editor
         GUI.enabled = true;
 
         /* EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.DrawErrorGizmo"),
-             new GUIContent("Draw synchronized position error"));
+             new GUIContent("绘制同步位置误差"));
          propertyRect.y += EDITOR_LINE_HEIGHT;*/
     }
 
@@ -329,7 +329,7 @@ public class bl_PlayerSyncEditor : Editor
             Rect helpRect = new Rect(propertyRect.xMin, propertyRect.yMin, propertyRect.width, height - 5);
             GUI.BeginGroup(helpRect, GUI.skin.box);
             GUI.Label(new Rect(5, 5, propertyRect.width - 10, height - 30), helpText, PhotonGUI.RichLabel);
-            if (GUI.Button(new Rect(5, height - 30, propertyRect.width - 10, 20), "Read more in our documentation"))
+            if (GUI.Button(new Rect(5, height - 30, propertyRect.width - 10, 20), "详见我们的文档"))
             {
                 Application.OpenURL(url);
             }
@@ -374,11 +374,11 @@ public class bl_PlayerSyncEditor : Editor
     private void DrawTeleport(ref Rect propertyRect)
     {
         EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.TeleportEnabled"),
-            new GUIContent("Enable teleport for great distances"));
+            new GUIContent("允许长距离传送"));
         propertyRect.y += EDITOR_LINE_HEIGHT;
 
         EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.TeleportIfDistanceGreaterThan"),
-            new GUIContent("Teleport if distance greater than"));
+            new GUIContent("距离超过该值时传送"));
         propertyRect.y += EDITOR_LINE_HEIGHT;
     }
 
@@ -392,12 +392,12 @@ public class bl_PlayerSyncEditor : Editor
         {
             case PhotonTransformViewPositionModel.InterpolateOptions.FixedSpeed:
                 EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.InterpolateMoveTowardsSpeed"),
-                    new GUIContent("MoveTowards Speed"));
+                    new GUIContent("MoveTowards 速度"));
                 propertyRect.y += EDITOR_LINE_HEIGHT;
                 break;
 
             case PhotonTransformViewPositionModel.InterpolateOptions.Lerp:
-                EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.InterpolateLerpSpeed"), new GUIContent("Lerp Speed"));
+                EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.InterpolateLerpSpeed"), new GUIContent("Lerp 速度"));
                 propertyRect.y += EDITOR_LINE_HEIGHT;
                 break;
 
@@ -406,7 +406,7 @@ public class bl_PlayerSyncEditor : Editor
 
     private void DrawSynchronizeRotationHeader()
     {
-        DrawHeader("Synchronize Rotation", this.m_SynchronizeRotationProperty);
+        DrawHeader("同步旋转", this.m_SynchronizeRotationProperty);
     }
 
     private void DrawSynchronizeRotationData()
@@ -445,17 +445,17 @@ public class bl_PlayerSyncEditor : Editor
         {
             case PhotonTransformViewRotationModel.InterpolateOptions.RotateTowards:
                 EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_RotationModel.InterpolateRotateTowardsSpeed"),
-                    new GUIContent("RotateTowards Speed"));
+                    new GUIContent("RotateTowards 速度"));
                 break;
             case PhotonTransformViewRotationModel.InterpolateOptions.Lerp:
-                EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_RotationModel.InterpolateLerpSpeed"), new GUIContent("Lerp Speed"));
+                EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_RotationModel.InterpolateLerpSpeed"), new GUIContent("Lerp 速度"));
                 break;
         }
     }
 
     private void DrawSynchronizeScaleHeader()
     {
-        DrawHeader("Synchronize Scale", this.m_SynchronizeScaleProperty);
+        DrawHeader("同步缩放", this.m_SynchronizeScaleProperty);
     }
 
     private void DrawSynchronizeScaleData()
@@ -493,10 +493,10 @@ public class bl_PlayerSyncEditor : Editor
         {
             case PhotonTransformViewScaleModel.InterpolateOptions.MoveTowards:
                 EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_ScaleModel.InterpolateMoveTowardsSpeed"),
-                    new GUIContent("MoveTowards Speed"));
+                    new GUIContent("MoveTowards 速度"));
                 break;
             case PhotonTransformViewScaleModel.InterpolateOptions.Lerp:
-                EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_ScaleModel.InterpolateLerpSpeed"), new GUIContent("Lerp Speed"));
+                EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_ScaleModel.InterpolateLerpSpeed"), new GUIContent("Lerp 速度"));
                 break;
         }
     }

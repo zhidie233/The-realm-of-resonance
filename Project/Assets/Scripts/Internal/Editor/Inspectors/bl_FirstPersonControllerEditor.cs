@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using MFPSEditor;
@@ -73,13 +73,13 @@ public class bl_FirstPersonControllerEditor : Editor
         {
             EditorGUI.BeginChangeCheck();
             EditorGUILayout.BeginVertical("box");
-            script.WalkSpeed = EditorGUILayout.Slider("Walk Speed", script.WalkSpeed, 2, 12);
-            script.runSpeed = EditorGUILayout.Slider("Run Speed", script.runSpeed, script.WalkSpeed, 16);
-            script.stealthSpeed = EditorGUILayout.Slider("Stealth Speed", script.stealthSpeed, 1, 3);
+            script.WalkSpeed = EditorGUILayout.Slider("行走速度", script.WalkSpeed, 2, 12);
+            script.runSpeed = EditorGUILayout.Slider("奔跑速度", script.runSpeed, script.WalkSpeed, 16);
+            script.stealthSpeed = EditorGUILayout.Slider("潜行速度", script.stealthSpeed, 1, 3);
             script.acceleration = EditorGUILayout.Slider("Acceleration", script.acceleration, 1, 30);
-            script.crouchSpeed = EditorGUILayout.Slider("Crouch Speed", script.crouchSpeed, 1, 8);
-            script.crouchTransitionSpeed = EditorGUILayout.Slider("Crouch Transition Speed", script.crouchTransitionSpeed, 0.01f, 0.5f);
-            script.slideSpeed = EditorGUILayout.Slider("Slide Speed", script.slideSpeed, 10, 20);
+            script.crouchSpeed = EditorGUILayout.Slider("蹲行速度", script.crouchSpeed, 1, 8);
+            script.crouchTransitionSpeed = EditorGUILayout.Slider("蹲下过渡速度", script.crouchTransitionSpeed, 0.01f, 0.5f);
+            script.slideSpeed = EditorGUILayout.Slider("滑铲速度", script.slideSpeed, 10, 20);
             EditorGUILayout.EndVertical();
             EndChangeCheck();
         }
@@ -96,12 +96,12 @@ public class bl_FirstPersonControllerEditor : Editor
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
-            script.jumpSpeed = EditorGUILayout.Slider("Jump Force", script.jumpSpeed, -30, 30);
-            script.JumpMinRate = EditorGUILayout.Slider("Jump Rate", script.JumpMinRate, 0.2f, 1.5f);
-            script.jumpMomentumBooster = EditorGUILayout.Slider("Jump Momentum Booster", script.jumpMomentumBooster, 0.2f, 4.5f);
-            script.momentunDecaySpeed = EditorGUILayout.Slider("Momentum Decay Speed", script.momentunDecaySpeed, 0.2f, 12f);
-            script.m_GravityMultiplier = EditorGUILayout.Slider("Gravity Multiplier", script.m_GravityMultiplier, 0.1f, 5);
-            script.m_StickToGroundForce = EditorGUILayout.Slider("Stick To Ground Force", script.m_StickToGroundForce, 4, 12);
+            script.jumpSpeed = EditorGUILayout.Slider("跳跃力度", script.jumpSpeed, -30, 30);
+            script.JumpMinRate = EditorGUILayout.Slider("跳跃间隔", script.JumpMinRate, 0.2f, 1.5f);
+            script.jumpMomentumBooster = EditorGUILayout.Slider("跳跃动量增幅", script.jumpMomentumBooster, 0.2f, 4.5f);
+            script.momentunDecaySpeed = EditorGUILayout.Slider("动量衰减速度", script.momentunDecaySpeed, 0.2f, 12f);
+            script.m_GravityMultiplier = EditorGUILayout.Slider("重力倍率", script.m_GravityMultiplier, 0.1f, 5);
+            script.m_StickToGroundForce = EditorGUILayout.Slider("贴地力", script.m_StickToGroundForce, 4, 12);
             EndChangeCheck();
             EditorGUILayout.EndVertical();
         }
@@ -119,11 +119,11 @@ public class bl_FirstPersonControllerEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.canSlide = MFPSEditorStyles.FeatureToogle(r, script.canSlide, "Player Can Slide");
-            script.slideTime = EditorGUILayout.Slider("Slide Time", script.slideTime, 0.2f, 1.5f);
-            script.slideCoolDown = EditorGUILayout.Slider("Slide Cool-down", script.slideCoolDown, 0.1f, 2.5f);
-            script.slideFriction = EditorGUILayout.Slider("Slide Friction", script.slideFriction, 1, 12);
-            script.slideCameraTiltAngle = EditorGUILayout.Slider("Camera Tilt Angle", script.slideCameraTiltAngle, -35, 35);
+            script.canSlide = MFPSEditorStyles.FeatureToogle(r, script.canSlide, "玩家可滑铲");
+            script.slideTime = EditorGUILayout.Slider("滑铲时长", script.slideTime, 0.2f, 1.5f);
+            script.slideCoolDown = EditorGUILayout.Slider("滑铲冷却", script.slideCoolDown, 0.1f, 2.5f);
+            script.slideFriction = EditorGUILayout.Slider("滑铲摩擦", script.slideFriction, 1, 12);
+            script.slideCameraTiltAngle = EditorGUILayout.Slider("相机倾斜角度", script.slideCameraTiltAngle, -35, 35);
             EndChangeCheck();
             EditorGUILayout.EndVertical();
         }
@@ -141,14 +141,14 @@ public class bl_FirstPersonControllerEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.FallDamage = MFPSEditorStyles.FeatureToogle(r, script.FallDamage, "Fall Damage");
-            script.SafeFallDistance = EditorGUILayout.Slider("Safe Distance", script.SafeFallDistance, 0.1f, 7f);
-            script.DeathFallDistance = EditorGUILayout.Slider("Deathly Distance", script.DeathFallDistance, script.SafeFallDistance, 25);
-            script.AirControlMultiplier = EditorGUILayout.Slider("Air Control Multiplier", script.AirControlMultiplier, 0, 2);
+            script.FallDamage = MFPSEditorStyles.FeatureToogle(r, script.FallDamage, "坠落伤害");
+            script.SafeFallDistance = EditorGUILayout.Slider("安全高度", script.SafeFallDistance, 0.1f, 7f);
+            script.DeathFallDistance = EditorGUILayout.Slider("致死高度", script.DeathFallDistance, script.SafeFallDistance, 25);
+            script.AirControlMultiplier = EditorGUILayout.Slider("空中控制倍率", script.AirControlMultiplier, 0, 2);
             GUILayout.Space(10);
-            GUILayout.Label("Dropping", EditorStyles.boldLabel);
-            script.dropControlSpeed = EditorGUILayout.Slider("Drop Control Speed", script.dropControlSpeed, 15, 40);
-            EditorGUILayout.MinMaxSlider("Drop Angle Speed Range", ref script.dropTiltSpeedRange.x, ref script.dropTiltSpeedRange.y, 10, 75);
+            GUILayout.Label("掉落", EditorStyles.boldLabel);
+            script.dropControlSpeed = EditorGUILayout.Slider("下坠控制速度", script.dropControlSpeed, 15, 40);
+            EditorGUILayout.MinMaxSlider("下坠角度速度范围", ref script.dropTiltSpeedRange.x, ref script.dropTiltSpeedRange.y, 10, 75);
             EndChangeCheck();
             EditorGUILayout.EndVertical();
         }
@@ -160,28 +160,28 @@ public class bl_FirstPersonControllerEditor : Editor
     /// </summary>
     void MouseLookBox()
     {
-        mouseProp.isExpanded = animatedBools["mouse"].target = MFPSEditorStyles.ContainerHeaderFoldout("Mouse Look", mouseProp.isExpanded);
+        mouseProp.isExpanded = animatedBools["mouse"].target = MFPSEditorStyles.ContainerHeaderFoldout("视角控制", mouseProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["mouse"].faded))
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             if (script.mouseLook == null) script.mouseLook = new MFPS.PlayerController.MouseLook();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.mouseLook.clampVerticalRotation = MFPSEditorStyles.FeatureToogle(r, script.mouseLook.clampVerticalRotation, "Clamp Vertical Rotation");
+            script.mouseLook.clampVerticalRotation = MFPSEditorStyles.FeatureToogle(r, script.mouseLook.clampVerticalRotation, "限制垂直旋转");
             if (script.mouseLook.clampVerticalRotation)
             {
-                EditorGUILayout.LabelField($"Vertical Rotation Clamp ({script.mouseLook.MinimumX.ToString("0.0")},{script.mouseLook.MaximumX.ToString("0.0")})");
+                EditorGUILayout.LabelField($"垂直旋转限制 ({script.mouseLook.MinimumX.ToString("0.0")},{script.mouseLook.MaximumX.ToString("0.0")})");
                 EditorGUILayout.MinMaxSlider(ref script.mouseLook.MinimumX, ref script.mouseLook.MaximumX, -180, 180);
             }
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            GUILayout.Label("You can modify the default sensitivity settings in GameData -> Default Settings.", EditorStyles.helpBox);
+            GUILayout.Label("默认灵敏度可在 游戏数据 -> 默认设置 中修改。", EditorStyles.helpBox);
             var prop = serializedObject.FindProperty("headRoot");
             EditorGUI.indentLevel++;
             prop.isExpanded = EditorGUILayout.Foldout(prop.isExpanded, "References");
             if (prop.isExpanded)
             {
                 EditorGUILayout.PropertyField(prop);
-                script.CameraRoot = EditorGUILayout.ObjectField("Camera Root", script.CameraRoot, typeof(Transform), true) as Transform;
+                script.CameraRoot = EditorGUILayout.ObjectField("相机根节点", script.CameraRoot, typeof(Transform), true) as Transform;
             }
             EditorGUI.indentLevel--;
             EndChangeCheck();
@@ -195,19 +195,19 @@ public class bl_FirstPersonControllerEditor : Editor
     /// </summary>
     void HeadBobBox()
     {
-        bobProp.isExpanded = animatedBools["bob"].target = MFPSEditorStyles.ContainerHeaderFoldout("Head Bob", bobProp.isExpanded);
+        bobProp.isExpanded = animatedBools["bob"].target = MFPSEditorStyles.ContainerHeaderFoldout("头部晃动", bobProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["bob"].faded))
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
-            script.headBobMagnitude = EditorGUILayout.Slider("Head Bob Magnitude", script.headBobMagnitude, 0, 1.2f);
-            script.headVerticalBobMagnitude = EditorGUILayout.Slider("Vertical Bob Magnitude", script.headVerticalBobMagnitude, 0, 1f);
+            script.headBobMagnitude = EditorGUILayout.Slider("头部晃动幅度", script.headBobMagnitude, 0, 1.2f);
+            script.headVerticalBobMagnitude = EditorGUILayout.Slider("垂直晃动幅度", script.headVerticalBobMagnitude, 0, 1f);
             if (script.m_JumpBob == null) script.m_JumpBob = new bl_FirstPersonController.LerpControlledBob();
-            script.m_JumpBob.BobAmount = EditorGUILayout.Slider("Jump Bob Magnitude", script.m_JumpBob.BobAmount, 0.1f, 1);
-            script.m_JumpBob.BobDuration = EditorGUILayout.Slider("Jump Bob Duration", script.m_JumpBob.BobDuration, 0.1f, 1);
+            script.m_JumpBob.BobAmount = EditorGUILayout.Slider("跳跃晃动幅度", script.m_JumpBob.BobAmount, 0.1f, 1);
+            script.m_JumpBob.BobDuration = EditorGUILayout.Slider("跳跃晃动时长", script.m_JumpBob.BobDuration, 0.1f, 1);
 
-            GUILayout.Label("You can modify the Head Bob properties in bl_WeaponBob.", EditorStyles.helpBox);
-            if (GUILayout.Button("Ping bl_WeaponBob.cs", EditorStyles.toolbarButton))
+            GUILayout.Label("头部晃动参数可在 bl_WeaponBob 中修改。", EditorStyles.helpBox);
+            if (GUILayout.Button("定位 bl_WeaponBob.cs", EditorStyles.toolbarButton))
             {
                 var wb = script.transform.GetComponentInChildren<bl_WeaponBobBase>(true);
                 if (wb != null)
@@ -232,10 +232,10 @@ public class bl_FirstPersonControllerEditor : Editor
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
-            script.footstep = EditorGUILayout.ObjectField("FootStep Controller", script.footstep, typeof(bl_Footstep), true) as bl_Footstep;
-            script.jumpSound = EditorGUILayout.ObjectField("Jump Sound", script.jumpSound, typeof(AudioClip), true) as AudioClip;
-            script.landSound = EditorGUILayout.ObjectField("Land Sound", script.landSound, typeof(AudioClip), true) as AudioClip;
-            script.slideSound = EditorGUILayout.ObjectField("Slide Sound", script.slideSound, typeof(AudioClip), true) as AudioClip;
+            script.footstep = EditorGUILayout.ObjectField("脚步声控制器", script.footstep, typeof(bl_Footstep), true) as bl_Footstep;
+            script.jumpSound = EditorGUILayout.ObjectField("跳跃音效", script.jumpSound, typeof(AudioClip), true) as AudioClip;
+            script.landSound = EditorGUILayout.ObjectField("落地音效", script.landSound, typeof(AudioClip), true) as AudioClip;
+            script.slideSound = EditorGUILayout.ObjectField("滑铲音效", script.slideSound, typeof(AudioClip), true) as AudioClip;
             EndChangeCheck();
             EditorGUILayout.EndVertical();
         }
@@ -252,24 +252,24 @@ public class bl_FirstPersonControllerEditor : Editor
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
-            script.runToAimBehave = (PlayerRunToAimBehave)EditorGUILayout.EnumPopup("Aim While Running Behave", script.runToAimBehave);
+            script.runToAimBehave = (PlayerRunToAimBehave)EditorGUILayout.EnumPopup("奔跑瞄准行为", script.runToAimBehave);
 
             var r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.KeepToCrouch = MFPSEditorStyles.FeatureToogle(r, script.KeepToCrouch, "Toggle Crouch");
+            script.KeepToCrouch = MFPSEditorStyles.FeatureToogle(r, script.KeepToCrouch, "切换蹲下");
 
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.canStealthMode = MFPSEditorStyles.FeatureToogle(r, script.canStealthMode, "Can Use Stealth Mode");
+            script.canStealthMode = MFPSEditorStyles.FeatureToogle(r, script.canStealthMode, "可使用潜行模式");
 
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.RunFovEffect = MFPSEditorStyles.FeatureToogle(r, script.RunFovEffect, "Sprint FoV Effect");
+            script.RunFovEffect = MFPSEditorStyles.FeatureToogle(r, script.RunFovEffect, "冲刺视野效果");
 
-            script.crouchHeight = EditorGUILayout.Slider("Crouch Height", script.crouchHeight, 0.2f, 3);
+            script.crouchHeight = EditorGUILayout.Slider("蹲下高度", script.crouchHeight, 0.2f, 3);
             if (script.RunFovEffect)
             {
-                script.runFOVAmount = EditorGUILayout.Slider("Run FOV Amount", script.runFOVAmount, 0, 12);
+                script.runFOVAmount = EditorGUILayout.Slider("奔跑视野变化量", script.runFOVAmount, 0, 12);
             }
-            script.StandIcon = EditorGUILayout.ObjectField("Stand Icon", script.StandIcon, typeof(Sprite), false) as Sprite;
-            script.CrouchIcon = EditorGUILayout.ObjectField("Crouch Icon", script.CrouchIcon, typeof(Sprite), false) as Sprite;
+            script.StandIcon = EditorGUILayout.ObjectField("站立图标", script.StandIcon, typeof(Sprite), false) as Sprite;
+            script.CrouchIcon = EditorGUILayout.ObjectField("蹲下图标", script.CrouchIcon, typeof(Sprite), false) as Sprite;
             EndChangeCheck();
             EditorGUILayout.EndVertical();
         }

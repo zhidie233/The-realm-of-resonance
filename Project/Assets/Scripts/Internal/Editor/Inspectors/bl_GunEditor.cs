@@ -27,7 +27,7 @@ public class bl_GunEditor : Editor
             rect.y += 2;
             EditorGUI.PropertyField(new Rect(rect.x, rect.y, rect.width, EditorGUIUtility.singleLineHeight), element, GUIContent.none);
         };
-        list.drawHeaderCallback = (Rect rect) => { EditorGUI.LabelField(rect, "On No Ammo Desactive"); };
+        list.drawHeaderCallback = (Rect rect) => { EditorGUI.LabelField(rect, "无弹药时禁用"); };
         GameData = bl_GameData.Instance;
         script = (bl_Gun)target;
         playerReferences = script.transform.GetComponentInParent<bl_PlayerReferences>();
@@ -58,27 +58,27 @@ public class bl_GunEditor : Editor
         EditorGUILayout.BeginVertical("box");
         if (script.Info.Type == GunType.Machinegun || script.Info.Type == GunType.Pistol || script.Info.Type == GunType.Sniper)
         {
-            DrawSeparator("Aim Settings");
+            DrawSeparator("瞄准设置");
             DrawAimSettings();
             EditorGUILayout.Space();
             DrawSeparator("References");
             EditorGUILayout.BeginVertical("box");
-            script.muzzlePoint = EditorGUILayout.ObjectField("Fire Point", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("Weapon FX", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
+            script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
             if (script.weaponFX == null)
             {
-                script.muzzleFlash = EditorGUILayout.ObjectField("Muzzle Flash", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as UnityEngine.ParticleSystem;
-                script.shell = EditorGUILayout.ObjectField("Shell", script.shell, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
+                script.muzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as UnityEngine.ParticleSystem;
+                script.shell = EditorGUILayout.ObjectField("弹壳", script.shell, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
             }
             EditorGUILayout.EndVertical();
 
             DrawSeparator("Settings");
             EditorGUILayout.BeginVertical("box");
-            script.BulletName = EditorGUILayout.TextField("Bullet", script.BulletName, EditorStyles.helpBox);
-            script.bulletSpeed = EditorGUILayout.FloatField("Bullet Speed", script.bulletSpeed);
-            script.bulletDropFactor = EditorGUILayout.Slider("Bullet Drop Factor", script.bulletDropFactor, 0, 10);
-            script.impactForce = EditorGUILayout.IntSlider("Impact Force", script.impactForce, 0, 30);
-            script.delayFireOnSprinting = EditorGUILayout.Slider("First Shot Delay On Sprint", script.delayFireOnSprinting, 0, 1);
+            script.BulletName = EditorGUILayout.TextField("子弹", script.BulletName, EditorStyles.helpBox);
+            script.bulletSpeed = EditorGUILayout.FloatField("子弹速度", script.bulletSpeed);
+            script.bulletDropFactor = EditorGUILayout.Slider("子弹下坠系数", script.bulletDropFactor, 0, 10);
+            script.impactForce = EditorGUILayout.IntSlider("冲击力", script.impactForce, 0, 30);
+            script.delayFireOnSprinting = EditorGUILayout.Slider("冲刺后首发延迟", script.delayFireOnSprinting, 0, 1);
             EditorGUILayout.Space();
             DrawRecoil();
             EditorGUILayout.Space();
@@ -93,24 +93,24 @@ public class bl_GunEditor : Editor
         else
         if (script.Info.Type == GunType.Burst)
         {
-            DrawSeparator("Gun Settings");
+            DrawSeparator("枪械设置");
             DrawAimSettings();
             DrawSeparator("References");
-            script.muzzlePoint = EditorGUILayout.ObjectField("Fire Point", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("Weapon FX", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
+            script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
             if (script.weaponFX == null)
             {
-                script.muzzleFlash = EditorGUILayout.ObjectField("Muzzle Flash", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
-                script.shell = EditorGUILayout.ObjectField("Shell", script.shell, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
+                script.muzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
+                script.shell = EditorGUILayout.ObjectField("弹壳", script.shell, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
             }
             DrawSeparator("Settings");
-            script.BulletName = EditorGUILayout.TextField("Bullet", script.BulletName, EditorStyles.helpBox);
-            script.roundsPerBurst = EditorGUILayout.IntSlider("Rounds Per Burst", script.roundsPerBurst, 1, 10);
-            script.lagBetweenBurst = EditorGUILayout.Slider("Lag Between Burst", script.lagBetweenBurst, 0.01f, 5.0f);
-            script.bulletSpeed = EditorGUILayout.FloatField("Bullet Speed", script.bulletSpeed);
-            script.bulletDropFactor = EditorGUILayout.Slider("Bullet Drop Factor", script.bulletDropFactor, 0, 10);
-            script.impactForce = EditorGUILayout.IntField("Impact Force", script.impactForce);
-            script.delayFireOnSprinting = EditorGUILayout.Slider("First Shot Delay On Sprint", script.delayFireOnSprinting, 0, 1);
+            script.BulletName = EditorGUILayout.TextField("子弹", script.BulletName, EditorStyles.helpBox);
+            script.roundsPerBurst = EditorGUILayout.IntSlider("每轮点射发数", script.roundsPerBurst, 1, 10);
+            script.lagBetweenBurst = EditorGUILayout.Slider("点射间隔", script.lagBetweenBurst, 0.01f, 5.0f);
+            script.bulletSpeed = EditorGUILayout.FloatField("子弹速度", script.bulletSpeed);
+            script.bulletDropFactor = EditorGUILayout.Slider("子弹下坠系数", script.bulletDropFactor, 0, 10);
+            script.impactForce = EditorGUILayout.IntField("冲击力", script.impactForce);
+            script.delayFireOnSprinting = EditorGUILayout.Slider("冲刺后首发延迟", script.delayFireOnSprinting, 0, 1);
             EditorGUILayout.Space();
             DrawRecoil();
             EditorGUILayout.Space();
@@ -122,22 +122,22 @@ public class bl_GunEditor : Editor
         else
         if (script.Info.Type == GunType.Shotgun)
         {
-            DrawSeparator("Shotgun Settings");
+            DrawSeparator("霰弹枪设置");
             DrawAimSettings();
             DrawSeparator("References");
-            script.muzzlePoint = EditorGUILayout.ObjectField("Fire Point", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("Weapon FX", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
+            script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
             if (script.weaponFX == null)
             {
-                script.muzzleFlash = EditorGUILayout.ObjectField("Muzzle Flash", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
-                script.shell = EditorGUILayout.ObjectField("Shell", script.shell, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
+                script.muzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
+                script.shell = EditorGUILayout.ObjectField("弹壳", script.shell, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
             }
             DrawSeparator("Settings");
-            script.BulletName = EditorGUILayout.TextField("Bullet", script.BulletName, EditorStyles.helpBox);
-            script.pelletsPerShot = EditorGUILayout.IntSlider("Bullets Per Shots", script.pelletsPerShot, 1, 10);
-            script.bulletSpeed = EditorGUILayout.FloatField("Bullet Speed", script.bulletSpeed);
-            script.impactForce = EditorGUILayout.IntField("Impact Force", script.impactForce);
-            script.delayFireOnSprinting = EditorGUILayout.Slider("First Shot Delay On Sprint", script.delayFireOnSprinting, 0, 1);
+            script.BulletName = EditorGUILayout.TextField("子弹", script.BulletName, EditorStyles.helpBox);
+            script.pelletsPerShot = EditorGUILayout.IntSlider("每次射击弹丸数", script.pelletsPerShot, 1, 10);
+            script.bulletSpeed = EditorGUILayout.FloatField("子弹速度", script.bulletSpeed);
+            script.impactForce = EditorGUILayout.IntField("冲击力", script.impactForce);
+            script.delayFireOnSprinting = EditorGUILayout.Slider("冲刺后首发延迟", script.delayFireOnSprinting, 0, 1);
             EditorGUILayout.Space();
             DrawRecoil();
             EditorGUILayout.Space();
@@ -149,22 +149,22 @@ public class bl_GunEditor : Editor
         else
         if (script.Info.Type == GunType.Grenade)
         {
-            DrawSeparator("Grenade Settings");
+            DrawSeparator("手雷设置");
             EditorGUILayout.Space();
-            script.grenade = EditorGUILayout.ObjectField("Grenade", script.grenade, typeof(UnityEngine.GameObject), allowSceneObjects) as UnityEngine.GameObject;
-            script.muzzlePoint = EditorGUILayout.ObjectField("Fire Point", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
+            script.grenade = EditorGUILayout.ObjectField("手雷", script.grenade, typeof(UnityEngine.GameObject), allowSceneObjects) as UnityEngine.GameObject;
+            script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
             DrawSeparator("Settings");
-            script.ThrowByAnimation = EditorGUILayout.ToggleLeft("Throw By Animation Event", script.ThrowByAnimation, EditorStyles.toolbarButton);
-            script.canBeTakenWhenIsEmpty = EditorGUILayout.ToggleLeft("Can Be Taken When is Empty", script.canBeTakenWhenIsEmpty, EditorStyles.toolbarButton);
+            script.ThrowByAnimation = EditorGUILayout.ToggleLeft("按动画事件投掷", script.ThrowByAnimation, EditorStyles.toolbarButton);
+            script.canBeTakenWhenIsEmpty = EditorGUILayout.ToggleLeft("空仓时可被拾取", script.canBeTakenWhenIsEmpty, EditorStyles.toolbarButton);
             GUILayout.Space(2);
             if (!script.ThrowByAnimation)
             {
-                script.DelayFire = EditorGUILayout.FloatField("Delay Fire", script.DelayFire);
+                script.DelayFire = EditorGUILayout.FloatField("开火延迟", script.DelayFire);
             }
-            script.bulletSpeed = EditorGUILayout.FloatField("Projectile Speed", script.bulletSpeed);
-            script.bulletDropFactor = EditorGUILayout.FloatField("Upward Force", script.bulletDropFactor);
-            script.impactForce = EditorGUILayout.IntField("Impact Force", script.impactForce);
-            script.m_AllowQuickFire = EditorGUILayout.ToggleLeft("Allow Quick Fire", script.m_AllowQuickFire, EditorStyles.toolbarButton);
+            script.bulletSpeed = EditorGUILayout.FloatField("投射物速度", script.bulletSpeed);
+            script.bulletDropFactor = EditorGUILayout.FloatField("向上力度", script.bulletDropFactor);
+            script.impactForce = EditorGUILayout.IntField("冲击力", script.impactForce);
+            script.m_AllowQuickFire = EditorGUILayout.ToggleLeft("允许快速开火", script.m_AllowQuickFire, EditorStyles.toolbarButton);
             EditorGUILayout.Space();
             DrawRecoil();
             EditorGUILayout.Space();
@@ -177,20 +177,20 @@ public class bl_GunEditor : Editor
         else if (script.Info.Type == GunType.Launcher)
         {
             DrawAimSettings();
-            DrawSeparator("Launcher Settings");
+            DrawSeparator("发射器设置");
             DrawWeaponBinding();
             EditorGUILayout.Space();
             DrawBullet();
-            script.muzzlePoint = EditorGUILayout.ObjectField("Fire Point", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("Weapon FX", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
+            script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(bl_WeaponFXBase), true) as bl_WeaponFXBase;
             if (script.weaponFX == null)
             {
-                script.muzzleFlash = EditorGUILayout.ObjectField("Fire Effect", script.muzzleFlash, typeof(ParticleSystem), true) as ParticleSystem;
+                script.muzzleFlash = EditorGUILayout.ObjectField("开火特效", script.muzzleFlash, typeof(ParticleSystem), true) as ParticleSystem;
             }
-            script.bulletSpeed = EditorGUILayout.FloatField("Projectile Force", script.bulletSpeed);
-            script.impactForce = EditorGUILayout.IntField("Impact Force", script.impactForce);
-            script.delayFireOnSprinting = EditorGUILayout.Slider("First Shot Delay On Sprint", script.delayFireOnSprinting, 0, 1);
-            script.m_AllowQuickFire = EditorGUILayout.ToggleLeft("Allow Quick Fire", script.m_AllowQuickFire, EditorStyles.toolbarButton);
+            script.bulletSpeed = EditorGUILayout.FloatField("投射物力度", script.bulletSpeed);
+            script.impactForce = EditorGUILayout.IntField("冲击力", script.impactForce);
+            script.delayFireOnSprinting = EditorGUILayout.Slider("冲刺后首发延迟", script.delayFireOnSprinting, 0, 1);
+            script.m_AllowQuickFire = EditorGUILayout.ToggleLeft("允许快速开火", script.m_AllowQuickFire, EditorStyles.toolbarButton);
             EditorGUILayout.Space();
             DrawAmmoSettings();
             EditorGUILayout.Space();
@@ -200,19 +200,19 @@ public class bl_GunEditor : Editor
         }
         if (script.Info.Type == GunType.Knife)
         {
-            DrawSeparator("Knife Settings");
+            DrawSeparator("匕首设置");
             EditorGUILayout.Space();
-            script.BulletName = EditorGUILayout.TextField("Bullet", script.BulletName, EditorStyles.helpBox);
-            script.impactEffect = EditorGUILayout.ObjectField("Impact Effect", script.impactEffect, typeof(UnityEngine.GameObject), allowSceneObjects) as UnityEngine.GameObject;
+            script.BulletName = EditorGUILayout.TextField("子弹", script.BulletName, EditorStyles.helpBox);
+            script.impactEffect = EditorGUILayout.ObjectField("命中特效", script.impactEffect, typeof(UnityEngine.GameObject), allowSceneObjects) as UnityEngine.GameObject;
             DrawSeparator("Settings");
-            script.bulletSpeed = EditorGUILayout.FloatField("Ray Speed", script.bulletSpeed);
-            script.impactForce = EditorGUILayout.IntSlider("Impact Force", script.impactForce, 0, 30);
-            script.m_AllowQuickFire = EditorGUILayout.ToggleLeft("Allow Quick Fire", script.m_AllowQuickFire, EditorStyles.toolbarButton);
+            script.bulletSpeed = EditorGUILayout.FloatField("射线速度", script.bulletSpeed);
+            script.impactForce = EditorGUILayout.IntSlider("冲击力", script.impactForce, 0, 30);
+            script.m_AllowQuickFire = EditorGUILayout.ToggleLeft("允许快速开火", script.m_AllowQuickFire, EditorStyles.toolbarButton);
             EditorGUILayout.Space();
-            DrawSeparator("Audio Settings");
+            DrawSeparator("音频设置");
             EditorGUILayout.BeginVertical("box");
-            script.FireSound = EditorGUILayout.ObjectField("Fire Sound", script.FireSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
-            script.TakeSound = EditorGUILayout.ObjectField("Take Sound", script.TakeSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+            script.FireSound = EditorGUILayout.ObjectField("开火音效", script.FireSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+            script.TakeSound = EditorGUILayout.ObjectField("拾取音效", script.TakeSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
             EditorGUILayout.EndVertical();
         }
         EditorGUILayout.EndVertical();
@@ -220,10 +220,10 @@ public class bl_GunEditor : Editor
         if (GunManager != null && !GunManager.AllGuns.Contains(script))
         {
             EditorGUILayout.BeginVertical();
-            EditorGUILayout.HelpBox("This weapon is not listed in bl_GunManager list yet, you wanna add now?", MessageType.Info);
+            EditorGUILayout.HelpBox("这把武器尚未加入 bl_GunManager 列表，现在添加？", MessageType.Info);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Add to list", EditorStyles.toolbarButton))
+            if (GUILayout.Button("添加到列表", EditorStyles.toolbarButton))
             {
                 if (GunManager != null)
                 {
@@ -247,25 +247,25 @@ public class bl_GunEditor : Editor
     {
         EditorGUILayout.BeginVertical("box");
         GUILayout.BeginHorizontal();
-        GUILayout.Label("Weapon Info", EditorStyles.toolbarButton);
+        GUILayout.Label("武器信息", EditorStyles.toolbarButton);
         if (playerReferences != null)
         {
             GUILayout.Space(2);
-            if (GUILayout.Button("GameData", EditorStyles.toolbarButton, GUILayout.Width(70)))
+            if (GUILayout.Button("游戏数据", EditorStyles.toolbarButton, GUILayout.Width(70)))
             {
                 Selection.activeObject = bl_GameData.Instance;
                 EditorGUIUtility.PingObject(bl_GameData.Instance);
             }
             GUILayout.Space(2);
-            if (GUILayout.Button("Export", EditorStyles.toolbarButton, GUILayout.Width(50)))
+            if (GUILayout.Button("导出", EditorStyles.toolbarButton, GUILayout.Width(50)))
             {
-                EditorWindow.GetWindow<bl_ImportExportWeapon>("Export", true).PrepareToExport(script, playerReferences.playerNetwork);
+                EditorWindow.GetWindow<bl_ImportExportWeapon>("导出", true).PrepareToExport(script, playerReferences.playerNetwork);
             }
         }
         GUILayout.EndHorizontal();
 
         EditorGUILayout.Space();
-        script.GunID = EditorGUILayout.Popup("Gun ID ", script.GunID, GameData.AllWeaponStringList());
+        script.GunID = EditorGUILayout.Popup("枪械 ID ", script.GunID, GameData.AllWeaponStringList());
         if (oldID != script.GunID)
         {
             script.Info = null;
@@ -286,7 +286,7 @@ public class bl_GunEditor : Editor
             GUI.enabled = true;
             EditorGUILayout.EndHorizontal();
         }
-        script.CrossHairScale = EditorGUILayout.Slider("CrossHair Scale: ", script.CrossHairScale, 1, 30);
+        script.CrossHairScale = EditorGUILayout.Slider("准星缩放： ", script.CrossHairScale, 1, 30);
         EditorGUILayout.EndVertical();
     }
 
@@ -297,13 +297,13 @@ public class bl_GunEditor : Editor
     {
         EditorGUILayout.BeginVertical("box");
         GUILayout.BeginHorizontal();
-        script.AimPosition = EditorGUILayout.Vector3Field("Aim Position", script.AimPosition);
+        script.AimPosition = EditorGUILayout.Vector3Field("瞄准位置", script.AimPosition);
         if (AimReference != null && script.gameObject.activeSelf)
         {
             EditorStyles.toolbarButton.richText = true;
             Color ac = (AimReference.activeSelf) ? Color.red : Color.yellow;
             GUI.color = ac;
-            if (GUILayout.Button(new GUIContent(aimIcon, "Simulate Aim"), EditorStyles.toolbarButton, GUILayout.Width(25)))
+            if (GUILayout.Button(new GUIContent(aimIcon, "模拟瞄准"), EditorStyles.toolbarButton, GUILayout.Width(25)))
             {
                 AimReference.SetActive(!AimReference.activeSelf);
                 if (AimReference.activeSelf)
@@ -330,12 +330,12 @@ public class bl_GunEditor : Editor
         }
         GUI.color = Color.white;
         GUILayout.EndHorizontal();
-        script.aimRotation = EditorGUILayout.Vector3Field("Aim Rotation", script.aimRotation);
+        script.aimRotation = EditorGUILayout.Vector3Field("瞄准旋转", script.aimRotation);
         GUILayout.Space(2);
-        script.useSmooth = EditorGUILayout.ToggleLeft("Smoothed Aim", script.useSmooth, EditorStyles.toolbarButton);
+        script.useSmooth = EditorGUILayout.ToggleLeft("平滑瞄准", script.useSmooth, EditorStyles.toolbarButton);
         GUILayout.Space(2);
-        script.aimZoom = EditorGUILayout.Slider("Aim FoV (Zoom)", script.aimZoom, 0.0f, 179);
-        script.AimSmooth = EditorGUILayout.Slider("Aim Smooth", script.AimSmooth, 0.01f, 30f);
+        script.aimZoom = EditorGUILayout.Slider("瞄准视野 变焦", script.aimZoom, 0.0f, 179);
+        script.AimSmooth = EditorGUILayout.Slider("瞄准平滑", script.AimSmooth, 0.01f, 30f);
         EditorGUILayout.EndVertical();
     }
 
@@ -345,7 +345,7 @@ public class bl_GunEditor : Editor
     void DrawWeaponBinding()
     {
         GUILayout.BeginVertical("box");
-        script.customWeapon = EditorGUILayout.ObjectField("Custom Weapon Logic", script.customWeapon, typeof(bl_CustomGunBase), true) as bl_CustomGunBase;
+        script.customWeapon = EditorGUILayout.ObjectField("自定义武器逻辑", script.customWeapon, typeof(bl_CustomGunBase), true) as bl_CustomGunBase;
         GUILayout.EndVertical();
     }
 
@@ -354,78 +354,78 @@ public class bl_GunEditor : Editor
     /// </summary>
     void DrawBullet()
     {
-        script.bulletInstanceMethod = (bl_Gun.BulletInstanceMethod)EditorGUILayout.EnumPopup("Projectile Instance Method", script.bulletInstanceMethod, EditorStyles.toolbarDropDown);
+        script.bulletInstanceMethod = (bl_Gun.BulletInstanceMethod)EditorGUILayout.EnumPopup("投射物实例化方式", script.bulletInstanceMethod, EditorStyles.toolbarDropDown);
         GUILayout.Space(2);
         if (script.bulletInstanceMethod == bl_Gun.BulletInstanceMethod.Pooled)
         {
-            script.BulletName = EditorGUILayout.TextField("Bullet", script.BulletName, EditorStyles.helpBox);
+            script.BulletName = EditorGUILayout.TextField("子弹", script.BulletName, EditorStyles.helpBox);
         }
         else
         {
-            script.bulletPrefab = EditorGUILayout.ObjectField("Bullet Prefab", script.bulletPrefab, typeof(GameObject), false) as GameObject;
+            script.bulletPrefab = EditorGUILayout.ObjectField("子弹预制体", script.bulletPrefab, typeof(GameObject), false) as GameObject;
         }
     }
 
     void DrawAmmoSettings()
     {
-        script.AutoReload = EditorGUILayout.ToggleLeft("Auto Reload", script.AutoReload, EditorStyles.toolbarButton);
+        script.AutoReload = EditorGUILayout.ToggleLeft("自动装弹", script.AutoReload, EditorStyles.toolbarButton);
         GUILayout.Space(2);
         if (script.Info.Type == GunType.Sniper || script.Info.Type == GunType.Shotgun)
         {
-            script.reloadPer = (bl_Gun.ReloadPer)EditorGUILayout.EnumPopup("Reload Per", script.reloadPer, EditorStyles.toolbarPopup);
+            script.reloadPer = (bl_Gun.ReloadPer)EditorGUILayout.EnumPopup("换弹间隔", script.reloadPer, EditorStyles.toolbarPopup);
             GUILayout.Space(2);
         }
         else
         {
             script.reloadPer = bl_Gun.ReloadPer.Magazine;
         }
-        script.bulletsPerClip = EditorGUILayout.IntField("Ammo Per Clip", script.bulletsPerClip);
-        script.numberOfClips = EditorGUILayout.IntSlider("Number Of Clips", script.numberOfClips, 0, script.maxNumberOfClips);
-        script.maxNumberOfClips = EditorGUILayout.IntField("Max Number Of Clips", script.maxNumberOfClips);
+        script.bulletsPerClip = EditorGUILayout.IntField("每弹匣弹药", script.bulletsPerClip);
+        script.numberOfClips = EditorGUILayout.IntSlider("弹匣数量", script.numberOfClips, 0, script.maxNumberOfClips);
+        script.maxNumberOfClips = EditorGUILayout.IntField("最大弹匣数", script.maxNumberOfClips);
     }
 
     void DrawRecoil()
     {
-        script.shakerPresent = EditorGUILayout.ObjectField("Shake Present", script.shakerPresent, typeof(ShakerPresent), false) as ShakerPresent;
+        script.shakerPresent = EditorGUILayout.ObjectField("震动程度", script.shakerPresent, typeof(ShakerPresent), false) as ShakerPresent;
         script.RecoilAmount = EditorGUILayout.Slider("Recoil", script.RecoilAmount, 0.1f, 10);
-        script.RecoilSpeed = EditorGUILayout.Slider("Recoil Speed", script.RecoilSpeed, 1, 10);
+        script.RecoilSpeed = EditorGUILayout.Slider("后坐力速度", script.RecoilSpeed, 1, 10);
     }
 
     void DrawSpreadSettings()
     {
         using (new EditorGUILayout.HorizontalScope())
         {
-            GUILayout.Label("Spread Range", GUILayout.Width(EditorGUIUtility.labelWidth - 10));
+            GUILayout.Label("散布范围", GUILayout.Width(EditorGUIUtility.labelWidth - 10));
             script.spreadMinMax.x = EditorGUILayout.FloatField(script.spreadMinMax.x, GUILayout.Width(30));
             EditorGUILayout.MinMaxSlider(ref script.spreadMinMax.x, ref script.spreadMinMax.y, 0, 7);
             script.spreadMinMax.y = EditorGUILayout.FloatField(script.spreadMinMax.y, GUILayout.Width(30));
         }
-        script.spreadAimMultiplier = EditorGUILayout.Slider("Aim Spread Multiplier", script.spreadAimMultiplier, 0, 1);
-        script.spreadPerSecond = EditorGUILayout.Slider("Spread Per Seconds", script.spreadPerSecond, 0, 1);
-        script.decreaseSpreadPerSec = EditorGUILayout.Slider("Decrease Spread Per Sec", script.decreaseSpreadPerSec, 0, 1);
+        script.spreadAimMultiplier = EditorGUILayout.Slider("瞄准散布倍率", script.spreadAimMultiplier, 0, 1);
+        script.spreadPerSecond = EditorGUILayout.Slider("每秒散布增量", script.spreadPerSecond, 0, 1);
+        script.decreaseSpreadPerSec = EditorGUILayout.Slider("每秒散布衰减", script.decreaseSpreadPerSec, 0, 1);
     }
 
     void DrawAudioSettings()
     {
-        DrawSeparator("Audio Settings");
+        DrawSeparator("音频设置");
         EditorGUILayout.BeginVertical("box");
-        script.FireSound = EditorGUILayout.ObjectField("Fire Sound", script.FireSound, typeof(AudioClip), allowSceneObjects) as AudioClip;
+        script.FireSound = EditorGUILayout.ObjectField("开火音效", script.FireSound, typeof(AudioClip), allowSceneObjects) as AudioClip;
         if (script.Info.Type != GunType.Grenade)
         {
-            script.DryFireSound = EditorGUILayout.ObjectField("Empty Fire Sound", script.DryFireSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+            script.DryFireSound = EditorGUILayout.ObjectField("空仓开火音效", script.DryFireSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
         }
         if (script.Info.Type == GunType.Sniper)
         {
-            script.delayForSecondFireSound = EditorGUILayout.Slider("Delay Second Fire Sound", script.delayForSecondFireSound, 0.0f, 2.0f);
-            script.DelaySource = EditorGUILayout.ObjectField("Second Source", script.DelaySource, typeof(UnityEngine.AudioSource), allowSceneObjects) as UnityEngine.AudioSource;
+            script.delayForSecondFireSound = EditorGUILayout.Slider("二次开火音效延迟", script.delayForSecondFireSound, 0.0f, 2.0f);
+            script.DelaySource = EditorGUILayout.ObjectField("第二音源", script.DelaySource, typeof(UnityEngine.AudioSource), allowSceneObjects) as UnityEngine.AudioSource;
         }
-        script.TakeSound = EditorGUILayout.ObjectField("Take Weapon Sound", script.TakeSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
-        script.SoundReloadByAnim = EditorGUILayout.ToggleLeft("Sounds Reload By Animation", script.SoundReloadByAnim, EditorStyles.toolbarButton);
+        script.TakeSound = EditorGUILayout.ObjectField("拾取武器音效", script.TakeSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+        script.SoundReloadByAnim = EditorGUILayout.ToggleLeft("按动画播放装弹音效", script.SoundReloadByAnim, EditorStyles.toolbarButton);
         if (!script.SoundReloadByAnim)
         {
-            script.ReloadSound = EditorGUILayout.ObjectField("Reload Begin", script.ReloadSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
-            script.ReloadSound2 = EditorGUILayout.ObjectField("Reload Middle", script.ReloadSound2, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
-            script.ReloadSound3 = EditorGUILayout.ObjectField("Reload End", script.ReloadSound3, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+            script.ReloadSound = EditorGUILayout.ObjectField("换弹开始", script.ReloadSound, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+            script.ReloadSound2 = EditorGUILayout.ObjectField("换弹中段", script.ReloadSound2, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
+            script.ReloadSound3 = EditorGUILayout.ObjectField("换弹结束", script.ReloadSound3, typeof(UnityEngine.AudioClip), allowSceneObjects) as UnityEngine.AudioClip;
         }
         EditorGUILayout.EndVertical();
     }

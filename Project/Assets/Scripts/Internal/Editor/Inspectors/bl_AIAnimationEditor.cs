@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using MFPSEditor;
@@ -26,11 +26,11 @@ public class bl_AIAnimationEditor : Editor
         base.OnInspectorGUI();
 
         GUILayout.Space(10);
-        if(GUILayout.Button("Refresh Rigidbody list"))
+        if(GUILayout.Button("刷新刚体列表"))
         {
             script.GetRigidBodys();
         }
-        if (GUILayout.Button("Run Animator"))
+        if (GUILayout.Button("运行动画器"))
         {
             var window = (AnimatorRunner)EditorWindow.GetWindow(typeof(AnimatorRunner));
             window.Show();

@@ -16,10 +16,10 @@ public class TutorialBots : TutorialWizard
         new NetworkImages{Name = "img-4.jpg", Image = null},
     };
     private Steps[] AllSteps = new Steps[] {
-     new Steps { Name = "Replace Bot Model", StepsLenght = 3 },
-     new Steps { Name = "Cover Points", StepsLenght = 0 },
+     new Steps { Name = "替换机器人模型", StepsLenght = 3 },
+     new Steps { Name = "掩体点", StepsLenght = 0 },
      new Steps { Name = "bl_AICoverPointManager", StepsLenght = 0 },
-     new Steps { Name = "Bots Names", StepsLenght = 0 },
+     new Steps { Name = "机器人名称", StepsLenght = 0 },
     };
     //final required////////////////////////////////////////////////
 
@@ -44,24 +44,24 @@ public class TutorialBots : TutorialWizard
 
     void CoverPointDoc()
     {
-        DrawSuperText("The MFPS AI system comes with support for Cover Points, in essence, <b>are points strategically placed around the map which improves the AI navigation path maker</b>, based on some conditions in the battlefield, bots used these points to add some sort of randomness to their behavior when they are in battle, bots used these points to cover from enemies or as a random navigation target.\n \nThe usage of these points is recommended but not obligatory, more Cover Points you add to your map, more randomness, and realistic bot navigation you will get.\n \n<?title=18>ADD A NEW COVER POINT</title>\n \nAdd a new Cover Points is simply as duplicate one of the existing ones and manually placed in your map.\n \nIn order to easily preview all your Cover Points, you can turn on the gizmos for it in <i><b>(Your Map scene hierarchy) ➔ AIManager ➔ bl_AICoverPointManager ➔ Show Gizmos.</b></i>");
+        DrawSuperText("MFPS 的 AI 系统支持掩体点。<b>掩体点是按策略分布在地图中的点位，可优化 AI 的导航寻路</b>。机器人会根据战场情况利用这些点，为自身行为增加随机性，用于躲避敌人或作为随机移动目标。\n \n这些点位推荐使用但并非必需。地图中掩体点越多，机器人的行为就越随机、导航也越自然。\n \n<?title=18>添加新的掩体点</title>\n \n添加掩体点只需复制一个现有点位，再手动摆放到地图中。\n \n为便于预览所有掩体点，可在 <i><b>地图场景层级 ➔ AIManager ➔ bl_AICoverPointManager ➔ Show Gizmos</b></i> 中开启辅助显示。");
         DrawServerImage("img-5.png");
         DownArrow();
-        DrawText("Each Cover Point reference must have attached the script <b>bl_AICoverPoint</b>, otherwise it wont work as a cover point, this scripts have a few public properties in the inspector:");
+        DrawText("每个掩体点都必须挂载 <b>bl_AICoverPoint</b> 脚本，否则不会作为掩体点生效，该脚本在检视面板中有几个公开属性：");
         DrawServerImage("img-6.png");
-        DrawPropertieInfo("Crouch", "bool", "Tell is the bot should crouch (or stand up) while is using this cover point");
-        DrawPropertieInfo("Neighbord Points", "List", "List with near by cover points that will be used as fallback in case this cover point is being used.");
+        DrawPropertieInfo("下蹲", "bool", "机器人使用该掩体点时是否下蹲或起身");
+        DrawPropertieInfo("邻近掩体点", "List", "邻近的掩体点列表，当该掩体点被占用时作为备用。");
     }
 
     void AICoverPointManagerDoc()
     {
-        DrawText("The script <b>bl_AICoverPointManager.cs</b> is attached in each <i><b>map scene ➔ AIManager ➔ bl_AICoverPointManager</b></i>, this script handle the logic behind the cover point selection, when a bot request a cover point, this script is responsible for determine which cover point in the scene should be used based on the requester bot conditions.\n\nThis script has some public properties in the inspector that you can tweak:");
+        DrawText("脚本 <b>bl_AICoverPointManager.cs</b> 挂载于每个 <i><b>地图场景 ➔ AIManager ➔ bl_AICoverPointManager</b></i> 下，负责掩体点的选择逻辑，当机器人请求掩体点时，该脚本会根据请求机器人的状态决定场景中使用哪个掩体点。\n\n该脚本在检视面板中有若干可调公开属性：");
         DrawServerImage("img-7.png");
-        DrawPropertieInfo("Max Distance", "float", "The max distance for which a cover point is consider a neighbor from another cover point.");
-        DrawPropertieInfo("Usage Time", "float", "The 'cooldown' time that takes for the cover point to be used again after being used.");
-        DrawPropertieInfo("Show Gizmos", "bool", "Show gizmos for each cover point in the map.");
-        DrawPropertieInfo("Bake Neighbors Points", "Button", "Automatically calculate the neighbord cover points for each cover point in the scene, you should use this everytime you edit the cover points in your scene.");
-        DrawPropertieInfo("Align point to floor", "Button", "Automatically vertical re-positione the cover point in the scene so it is right above the floor below the point (and not floating)");
+        DrawPropertieInfo("最大距离", "float", "达成邻近关系的掩体点之间的最大距离。");
+        DrawPropertieInfo("占用时间", "float", "掩体点被使用后再次可用的冷却时间。");
+        DrawPropertieInfo("显示辅助线", "bool", "在地图中显示每个掩体点的辅助线框。");
+        DrawPropertieInfo("烘焙邻近点", "Button", "自动计算场景中每个掩体点的邻近掩体点，每次编辑场景掩体点后都应执行一次。");
+        DrawPropertieInfo("对齐到地面", "Button", "自动调整掩体点的垂直位置，使其紧贴正下方地面而不悬空。");
     }
 
     GameObject ModelPrefab = null;
@@ -69,19 +69,19 @@ public class TutorialBots : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("In order to replace the human model in one of the bots prefabs, you need a Humanoid rigged model.\n \n" +
-                "your model has to be set up in <b>Humanoid</b> rigged in the model import settings:");
+            DrawText("要替换某个机器人预制体中的人形模型，需要一个人形骨骼模型。\n \n" +
+                "模型需在导入设置中配置为 <b>Humanoid</b> 骨骼类型：");
             Space(2);
             DrawImage(GetServerImage(0));
             DownArrow();
-            DrawText("Then, drag the player model in the empty field below and click on <b>Create</b> button");
+            DrawText("然后把玩家模型拖入下方空槽，点击 <b>创建</b> 按钮");
             Space(2);
             GUILayout.BeginVertical("box");
-            ModelPrefab = EditorGUILayout.ObjectField("Human Model", ModelPrefab, typeof(GameObject), true) as GameObject;
+            ModelPrefab = EditorGUILayout.ObjectField("人形模型", ModelPrefab, typeof(GameObject), true) as GameObject;
             if (ModelPrefab != null)
             {
                 Space(4);
-                if (DrawButton("Create"))
+                if (DrawButton("创建"))
                 {
                     ReplaceBotModel();
                     NextStep();
@@ -90,13 +90,13 @@ public class TutorialBots : TutorialWizard
             GUILayout.EndVertical();
         }else if(subStep == 1)
         {
-            DrawText("Ok, now if all work correctly you should see a prefab in the scene hierarchy called <b>AISoldier [NEW]</b> with your human model integrated, that's the bot prefab," +
-                "your model has been integrated and setup automatically, even though there is a fix that you have to do manually, the weapons model has been move to the new model right hand transform " +
-                "but the position of these could be wrong, so you have to positioned it right.");
+            DrawText("如果一切正常，场景层级中会出现名为 <b>AISoldier [NEW]</b> 的预制体，其中已集成你的人形模型，这就是机器人预制体。" +
+                "模型已自动集成并配置完成，但仍有一处需要手动修正，武器模型已移动到新模型的右手骨骼下，" +
+                "但其位置可能有偏差，需要自行调整到位。");
             DrawImage(GetServerImage(1));
-            DrawText("Click the button below to select the weapon parent transform automatically.");
+            DrawText("点击下方按钮可自动选中武器父节点。");
             Space(2);
-            if(DrawButton("Select bot weapons parent"))
+            if(DrawButton("选择机器人武器父节点"))
             {
                 var asw = FindObjectOfType<bl_AIShooterAttack>();
                 Transform wr = asw.aiWeapons[0].transform.parent;
@@ -104,21 +104,21 @@ public class TutorialBots : TutorialWizard
                 EditorGUIUtility.PingObject(wr);
             }
             DownArrow();
-            DrawText("Now positioned the weapons (moving the selected transform) to simulate that the human models is holding it:");
+            DrawText("现在调整武器位置，即移动已选中的节点，使其看起来像被模型握持：");
             DrawImage(GetServerImage(2));
         }else if(subStep == 2)
         {
-            DrawText("Good, all is ready, now you have to create a prefab of this or replace one of the current bots prefabs," +
-                "for it drag the <b>AISoldier [NEW]</b> from hierarchy to a <b>Resources</b> folder, for default you can drag it to <i>MFPS -> Resources</i>, in this folder you can create a prefab" +
-                " or replace one of the default bots prefabs (AISoldier or AISoldier2), in case you create a new prefab you also have to assign this prefab in GameData -> BotTeam1 or BotTeam2.");
+            DrawText("一切就绪，现在需要为其创建预制体，或替换现有的机器人预制体。" +
+                "将层级中的 <b>AISoldier [NEW]</b> 拖入 <b>Resources</b> 文件夹，默认可拖到 <i>MFPS -> Resources</i>，在该文件夹中可创建预制体" +
+                "或替换默认的机器人预制体（AISoldier 或 AISoldier2）。若创建了新预制体，还需在 游戏数据 -> BotTeam1 或 BotTeam2 中指定该预制体。");
             DrawImage(GetServerImage(3));
-            DrawText("That's :)");
+            DrawText("就这些 :)");
         }
     }
 
     void BotsNameDoc()
     {
-        DrawHyperlinkText("The bots are named randomly from a predefined list of names that you as the developer can easily modify.\n \nFirst, you can define the prefix that goes before the random name, this by default is <b>BOT</b>, you can change it to whatever you want in <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ <b>Bots Name Prefix</b>.\n \nTo modify the list of the random names, open the script <b>bl_GameTexts.cs</b> ➔ <b>RandomNames</b>, in this list, add, remove or edit any element of the list.");
+        DrawHyperlinkText("机器人名称从一份预设名称列表中随机选取，作为开发者你可以方便地修改。\n \n首先可以定义随机名称的前缀，默认为 <b>BOT</b>，可在 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ <b>Bots Name Prefix</b> 中改成任意内容。\n \n要修改随机名称列表，打开脚本 <b>bl_GameTexts.cs</b> ➔ <b>RandomNames</b>，在该列表中增删或编辑任意一项即可。");
         DrawServerImage("img-8.png");
     }
 
@@ -138,7 +138,7 @@ public class TutorialBots : TutorialWizard
 #if UNITY_2018_3_OR_NEWER
         PrefabUtility.UnpackPrefabInstance(botPrefab, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
 #endif
-        botPrefab.name = "AISoldier [NEW]";
+        botPrefab.name = "AISoldier 新建";
         var oldModel = botPrefab.GetComponentInChildren<bl_AIAnimationBase>();
         oldModel.name += " [OLD]";
         Animator modelAnimator = model.GetComponent<Animator>();
@@ -146,7 +146,7 @@ public class TutorialBots : TutorialWizard
         modelAnimator.runtimeAnimatorController = oldModel.GetComponent<Animator>().runtimeAnimatorController;
         if (!AutoRagdoller.Build(modelAnimator))
         {
-            Debug.LogError("Could not build a ragdoll for this model");
+            Debug.LogError("无法为该模型创建布娃娃");
             return;
         }
 
@@ -184,7 +184,7 @@ public class TutorialBots : TutorialWizard
         Selection.activeTransform = botPrefab.transform;
     }
 
-    [MenuItem("Game Framework/Tutorials/ Change Bots", false, 501)]
+    [MenuItem("游戏框架/教程/更换机器人", false, 501)]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(TutorialBots));

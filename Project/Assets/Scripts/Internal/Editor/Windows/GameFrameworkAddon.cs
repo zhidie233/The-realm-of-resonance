@@ -6,7 +6,7 @@ using MFPSEditor;
 
 namespace MFPSEditor.Addons
 {
-    [CreateAssetMenu(fileName = "Game Framework Addon", menuName = "Game Framework/Addon Info", order = 300)]
+    [CreateAssetMenu(fileName = "Game Framework 插件", menuName = "游戏框架/扩展信息", order = 300)]
     public class MFPSAddon : ScriptableObject
     {
         public string Name;
@@ -68,14 +68,14 @@ namespace MFPSEditor.Addons
                         GUILayout.FlexibleSpace();
                         EditorGUILayout.EndHorizontal();
                         EditorGUILayout.BeginHorizontal();
-                        EditorGUILayout.LabelField(string.Format("<size=14>VERSION: <b>{0}</b></size>", script.Version), TextStyleFlat);
+                        EditorGUILayout.LabelField(string.Format("<size=14>版本： <b>{0}</b></size>", script.Version), TextStyleFlat);
                         GUILayout.Space(10);
-                        EditorGUILayout.LabelField(string.Format("<size=14>MIN MFPS: <b>{0}</b></size>", script.MinMFPSVersion), TextStyleFlat);
+                        EditorGUILayout.LabelField(string.Format("<size=14>最低 MFPS 版本： <b>{0}</b></size>", script.MinMFPSVersion), TextStyleFlat);
                         EditorGUILayout.EndHorizontal();
                         if (!string.IsNullOrEmpty(script.TutorialScript))
                         {
                             GUILayout.Space(5);
-                            if (MFPSEditorStyles.ButtonOutline("DOCUMENTATION", MFPSEditorStyles.LovattoEditorPalette.GetHighlightColor(true)))
+                            if (MFPSEditorStyles.ButtonOutline("文档", MFPSEditorStyles.LovattoEditorPalette.GetHighlightColor(true)))
                             {
                                 EditorWindow.GetWindow(System.Type.GetType(string.Format("{0}, Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null", script.TutorialScript)));
                             }
@@ -97,7 +97,7 @@ namespace MFPSEditor.Addons
                     DrawDefaultInspector();
                 }
                 GUILayout.Space(25);
-                if (TutorialWizard.Buttons.GlowButton("ADDONS MANAGER", MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
+                if (TutorialWizard.Buttons.GlowButton("扩展管理器", MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true), GUILayout.Height(EditorGUIUtility.singleLineHeight)))
                 {
                     EditorWindow.GetWindow<MFPSAddonsWindow>().OpenAddonPage(script.Name);
                 }

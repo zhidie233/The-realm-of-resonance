@@ -26,7 +26,7 @@ namespace MFPSEditor.Addons
         [Reorderable] public List<MFPSAddonsInfo> Addons = new List<MFPSAddonsInfo>();
         public bool AutoUpdate = false;
 
-        [ContextMenu("Get Version Json")]
+        [ContextMenu("获取版本信息")]
         void VersionJson()
         {
             AddonsVersionList avl = new AddonsVersionList();
@@ -148,18 +148,18 @@ namespace MFPSEditor.Addons
             GUILayout.Space(10);
             if (State == 0)
             {
-                GUILayout.Label("Data not update.");
+                GUILayout.Label("数据未更新。");
             }
             else if (State == 1)
             {
-                GUILayout.Label("Loading...");
+                GUILayout.Label("加载中...");
             }
             else
             {
-                GUILayout.Label("Last Check: " + lastCheckTime);
+                GUILayout.Label("上次检查： " + lastCheckTime);
             }
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Refresh", EditorStyles.toolbarButton, GUILayout.Width(100)))
+            if (GUILayout.Button("刷新", EditorStyles.toolbarButton, GUILayout.Width(100)))
             {
                 WWW.SendRequest(VersionURL, null, ReceiveInfo);
                 State = 1;
@@ -174,7 +174,7 @@ namespace MFPSEditor.Addons
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.EndVertical();
-            script.AutoUpdate = EditorGUILayout.ToggleLeft("Auto Update", script.AutoUpdate, EditorStyles.toolbarButton);
+            script.AutoUpdate = EditorGUILayout.ToggleLeft("自动更新", script.AutoUpdate, EditorStyles.toolbarButton);
             serializedObject.ApplyModifiedProperties();
             if (EditorGUI.EndChangeCheck())
             {
@@ -251,7 +251,7 @@ namespace MFPSEditor.Addons
                                 script.Addons.Add(info);
 
                                 EditorUtility.SetDirty(script);*/
-                                Debug.Log("New addon: " + pack.NiceName);
+                                Debug.Log("新插件： " + pack.NiceName);
                             }
                         }
                     }
@@ -456,18 +456,18 @@ namespace MFPSEditor.Addons
             EditorGUI.DrawRect(r, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
             GUILayout.Space(4);
             var bt = MFPSEditorStyles.EditorSkin.customStyles[11];
-            if (GUILayout.Button("Home", bt))
+            if (GUILayout.Button("首页", bt))
             {
                 contentWindow = CustomWindows.Addons;
                 addonID = -1;
             }
             GUILayout.Space(4);
-            if (GUILayout.Button("Store", bt))
+            if (GUILayout.Button("商店", bt))
             {
                 Application.OpenURL("https://www.lovattostudio.com/en/shop/");
             }
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("Downloads", bt))
+            if (GUILayout.Button("下载", bt))
             {
                 contentWindow = CustomWindows.Auth;
                 if (!string.IsNullOrEmpty(userName) && accountAddons == null && lsAccount.AccountStatus != LovattoStudioAccount.Status.AuthFailed)
@@ -476,19 +476,19 @@ namespace MFPSEditor.Addons
                 }
             }
             GUILayout.Space(4);
-            if (GUILayout.Button("Help", bt))
+            if (GUILayout.Button("帮助", bt))
             {
                 contentWindow = CustomWindows.Help;
             }
             GUILayout.Space(4);
-            if (GUILayout.Button(TutorialWizard.CustomImages.GetUnityIcon("Refresh"), bt))
+            if (GUILayout.Button(TutorialWizard.CustomImages.GetUnityIcon("刷新"), bt))
             {
                 WWW.SendRequest(MFPSAddonsDataEditor.VersionURL, null, ReceiveInfo);
                 WindowState = 1;
             }
             GUI.color = MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true);
             var rbtmr = GUILayoutUtility.GetLastRect();
-            GUI.Label(rbtmr, TutorialWizard.CustomImages.GetUnityIcon("Refresh"));
+            GUI.Label(rbtmr, TutorialWizard.CustomImages.GetUnityIcon("刷新"));
             GUI.color = Color.white;
 
             GUILayout.Space(4);
@@ -565,7 +565,7 @@ namespace MFPSEditor.Addons
                     rr.x += 14;
                     rr.width = 40;
                     rr.y += 1;
-                    GUI.Label(rr, new GUIContent(downloadIcon, "Update Available"));
+                    GUI.Label(rr, new GUIContent(downloadIcon, "有可用更新"));
                 }
                 GUILayout.Space(2);
             }
@@ -595,7 +595,7 @@ namespace MFPSEditor.Addons
             if (contentWindow != CustomWindows.Addons)
             {
                 GUILayout.FlexibleSpace();
-                if (GUILayout.Button("BACK", EditorStyles.toolbarButton, GUILayout.Width(50)))
+                if (GUILayout.Button("返回", EditorStyles.toolbarButton, GUILayout.Width(50)))
                 {
                     contentWindow = CustomWindows.Addons;
                 }
@@ -611,7 +611,7 @@ namespace MFPSEditor.Addons
                 GUILayout.BeginHorizontal();
                 GUILayout.Space(20);
                 GUILayout.Label(string.Format("<size=22><color=white>{0}</color></size> ", addon.NiceName.ToUpper()), EditorStyles.boldLabel);
-                string it = addon.isIntegrated ? "<color=#BAFF00FF>ENABLED</color>" : "<color=red>DISABLED</color>";
+                string it = addon.isIntegrated ? "<color=#BAFF00FF>已启用</color>" : "<color=red>已禁用</color>";
                 Color ic = addon.isIntegrated ? Color.green : Color.red;
                 Rect rt = GUILayoutUtility.GetRect(outlineOrange.CalcSize(new GUIContent(it)).x, 20);
                 rt.y += 5;
@@ -627,9 +627,9 @@ namespace MFPSEditor.Addons
                 GUILayout.Space(5);
                 GUILayout.BeginHorizontal();
                 string currentVersion = addon.Info == null ? addon.CurrentVersion : addon.Info.Version;
-                GUILayout.Label(string.Format("<size=14>Version <b>{0}</b></size>", currentVersion), TextStyleFlat);
+                GUILayout.Label(string.Format("<size=14>版本 <b>{0}</b></size>", currentVersion), TextStyleFlat);
                 GUILayout.Space(20);
-                GUILayout.Label(string.Format("<size=14>Last Version <b>{0}</b></size>", addon.LastVersion), TextStyleFlat);
+                GUILayout.Label(string.Format("<size=14>最新版本 <b>{0}</b></size>", addon.LastVersion), TextStyleFlat);
                 bool notKnowVersion = false;
                 //check version
                 Version nv;
@@ -648,14 +648,14 @@ namespace MFPSEditor.Addons
                 {
                     GUILayout.Space(10);
                     GUI.color = new Color(0, 0.8256686f, 1, 1);
-                    GUILayout.Label($"<size=8>NEW VERSION AVAILABLE</size>", outlineOrange);
+                    GUILayout.Label($"<size=8>有新版本可用</size>", outlineOrange);
                     GUI.color = Color.white;
                 }
                 GUILayout.Space(10);
                 if (addon.Info != null && !string.IsNullOrEmpty(addon.Info.TutorialScript))
                 {
                     GUI.color = new Color(1, 0.6938923f, 0, 1);
-                    if (GUILayout.Button("DOCUMENTATION", outlineOrange))
+                    if (GUILayout.Button("文档", outlineOrange))
                     {
                         EditorWindow.GetWindow(System.Type.GetType(string.Format("{0}, Assembly-CSharp-Editor, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null", addon.Info.TutorialScript)));
                     }
@@ -670,7 +670,7 @@ namespace MFPSEditor.Addons
                     br.y -= 20;
                     br.height += 30;
                     GUI.color = new Color(0, 0.8256686f, 1, 1);
-                    if (GUI.Button(br, new GUIContent("<b>GET</b>", bl_MFPSManagerWindow.GetUnityIcon("Favorite Icon")), MFPSEditorStyles.OutlineButtonStyle))
+                    if (GUI.Button(br, new GUIContent("<b>GET</b>", bl_MFPSManagerWindow.GetUnityIcon("收藏图标")), MFPSEditorStyles.OutlineButtonStyle))
                     {
                         Application.OpenURL(sp.Url);
                     }
@@ -687,16 +687,16 @@ namespace MFPSEditor.Addons
                     GUILayout.Space(20);
                     if (addon.isInProject)
                     {
-                        string ct = addon.CompatibleWithThisMFPS ? "Compatible with <b>MFPS" : "No Compatible with <b>MFPS";
+                        string ct = addon.CompatibleWithThisMFPS ? "兼容 <b>MFPS" : "不兼容 <b>MFPS";
                         GUILayout.Label(string.Format("■  {0} {1}</b>", ct, AssetData.Version), miniLabel);
                         if (string.IsNullOrEmpty(addon.KeyName) || addon.DoNotRequireEnabled)
                         {
-                            GUILayout.Label(" ■  This addon does not require to be enabled", miniLabel);
+                            GUILayout.Label(" ■  该插件无需启用", miniLabel);
                         }
                     }
                     else
                     {
-                        GUILayout.Label("This Addons is not present in this project.");
+                        GUILayout.Label("当前项目中不存在该扩展。");
                     }
                 }
                 GUILayout.FlexibleSpace();
@@ -709,7 +709,7 @@ namespace MFPSEditor.Addons
                         GUILayout.Space(20);
                         string path = $"Assets/Addons/{addon.FolderName}";
                         path = path.Replace("/", " > ");
-                        string location = $"■  <b>Location:</b> {path}";
+                        string location = $"■  <b>位置：</b> {path}";
                         GUILayout.Label(location, miniLabel);
                     }
                     GUILayout.FlexibleSpace();
@@ -725,7 +725,7 @@ namespace MFPSEditor.Addons
                     {
                         Rect r = EditorGUILayout.BeginVertical(styles["borders"]);
                         EditorGUI.DrawRect(r, new Color(1, 1, 1, 0.02f));
-                        GUILayout.Label("<b>Description</b>", TextStyleFlat);
+                        GUILayout.Label("<b>说明</b>", TextStyleFlat);
                         GUILayout.Label(sp.Description, TextStyleFlat);
                         EditorGUILayout.EndVertical();
                         GUILayout.Space(20);
@@ -750,7 +750,7 @@ namespace MFPSEditor.Addons
                             GUILayout.Space(20);
                             Rect r = EditorGUILayout.BeginVertical(styles["borders"]);
                             EditorGUI.DrawRect(r, new Color(1, 1, 1, 0.02f));
-                            GUILayout.Label("<size=18><b>CHANGE LOG</b></size>", TextStyleFlat);
+                            GUILayout.Label("<size=18><b>更新日志</b></size>", TextStyleFlat);
                             GUILayout.Space(10);
                             for (int i = changesOfThisAddon.Count - 1; i >= 0; i--)
                             {
@@ -777,12 +777,12 @@ namespace MFPSEditor.Addons
                 EditorGUI.DrawRect(fr, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
 
                 GUILayout.FlexibleSpace();
-                string ipt = addon.isInProject ? "Addon is present in the project" : "Addon is not present in the Project";
+                string ipt = addon.isInProject ? "插件已存在于项目中" : "插件不存在于项目中";
                 GUILayout.Label(ipt, miniLabel, GUILayout.ExpandHeight(true));
                 if (!addon.isInProject)
                 {
                     GUILayout.Space(4);
-                    if (GUILayout.Button("GET THIS ADDON", MFPSEditorStyles.EditorSkin.customStyles[12]))
+                    if (GUILayout.Button("获取此扩展", MFPSEditorStyles.EditorSkin.customStyles[12]))
                     {
                         if (sp != null)
                         {
@@ -825,7 +825,7 @@ namespace MFPSEditor.Addons
             {
                 GUILayout.Space(10);
                 GUILayout.BeginVertical();
-                GUILayout.Label("<size=20>ADDONS UPDATES</size>", mfpsSkin.customStyles[4]);
+                GUILayout.Label("<size=20>扩展更新</size>", mfpsSkin.customStyles[4]);
                 GUILayout.Space(10);
 
                 int pages = changeLogsCount / showPerPage;
@@ -872,19 +872,19 @@ namespace MFPSEditor.Addons
                 GUILayout.Space(4);
                 EditorGUI.DrawRect(accr, MFPSEditorStyles.LovattoEditorPalette.GetBackgroundColor(true));
                 if (lsAccount.AccountStatus != LovattoStudioAccount.Status.Authenticated)
-                    DrawText("Login with your <b>lovattostudio.com</b> account to access to your owned addons.", GUILayout.Height(22));
+                    DrawText("使用你的 <b>lovattostudio.com</b> 账号登录，以访问你已购买的插件。", GUILayout.Height(22));
                 EditorGUILayout.BeginHorizontal(GUILayout.Height(22));
                 GUILayout.Space(10);
                 if (lsAccount.AccountStatus != LovattoStudioAccount.Status.Authenticated)
                 {
                     GUI.enabled = lsAccount.AccountStatus != LovattoStudioAccount.Status.Authenticating;
-                    userEmail = EditorGUILayout.TextField("<color=#white>Email</color>", userEmail, inputFieldStyle, GUILayout.Width(275));
+                    userEmail = EditorGUILayout.TextField("<color=#white>邮箱</color>", userEmail, inputFieldStyle, GUILayout.Width(275));
                     GUILayout.Space(10);
-                    userPass = EditorGUILayout.PasswordField("<color=#white>Password</color>", userPass, inputFieldStyle, GUILayout.Width(200));
+                    userPass = EditorGUILayout.PasswordField("<color=#white>密码</color>", userPass, inputFieldStyle, GUILayout.Width(200));
                     EditorGUIUtility.labelWidth = lw;
                     GUILayout.Space(30);
                     GUI.enabled = GUI.enabled && !string.IsNullOrEmpty(userEmail) && !string.IsNullOrEmpty(userPass);
-                    if (GUILayout.Button("Auth", MFPSEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
+                    if (GUILayout.Button("登录", MFPSEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
                     {
                         AuthWithAccount();
                     }
@@ -892,9 +892,9 @@ namespace MFPSEditor.Addons
                 }
                 else
                 {
-                    DrawText($"Logged as: <b>{userName}</b>", GUILayout.Height(22));
+                    DrawText($"已登录：<b>{userName}</b>", GUILayout.Height(22));
                     GUILayout.Space(30);
-                    if (GUILayout.Button("Log Out", MFPSEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
+                    if (GUILayout.Button("退出登录", MFPSEditorStyles.EditorSkin.customStyles[12], GUILayout.Width(100)))
                     {
                         userName = userEmail = userPass = "";
                         lsAccount.Logout();
@@ -914,9 +914,9 @@ namespace MFPSEditor.Addons
             GUILayout.Space(30);
 
             EditorGUILayout.BeginHorizontal();
-            DrawText($"Addons available to download ({accountAddons.data.Count})");
+            DrawText($"可下载的插件 {accountAddons.data.Count}");
             GUILayout.FlexibleSpace();
-            if (DrawButton("Refresh", GUILayout.Width(100)))
+            if (DrawButton("刷新", GUILayout.Width(100)))
             {
                 AuthWithAccount();
             }
@@ -951,7 +951,7 @@ namespace MFPSEditor.Addons
                         GUILayout.Space(20);
                         GUI.enabled = !lsAccount.IsLoading;
 
-                        string btnName = link._isCached ? "Import" : $"Download <size=10>({link.GetFileLength()})</size>";
+                        string btnName = link._isCached ? "Import" : $"下载 <size=10>({link.GetFileLength()})</size>";
                         if (DrawButton(btnName, GUILayout.MinWidth(120)))
                         {
                             if (link._isCached)
@@ -969,7 +969,7 @@ namespace MFPSEditor.Addons
 
                         if (link._isCached)
                         {
-                            if (DrawButton("Download again", GUILayout.MinWidth(120)))
+                            if (DrawButton("重新下载", GUILayout.MinWidth(120)))
                             {
                                 lsAccount.DownloadAddon(addon, i, OnDownloadingAddon, () =>
                                 {
@@ -1081,58 +1081,58 @@ namespace MFPSEditor.Addons
             EditorStyles.foldout.richText = true;
             GUILayout.Space(20);
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[0] = EditorGUILayout.Foldout(questionFoulds[0], "<i>How to report a bug/error with an addon?</i>", EditorStyles.foldout);
+            questionFoulds[0] = EditorGUILayout.Foldout(questionFoulds[0], "<i>如何反馈插件的问题或错误？</i>", EditorStyles.foldout);
             if (questionFoulds[0])
             {
-                EditorGUILayout.TextArea("If you have a problem with one of the addons or any relate question, you can get in touch with us in multiple ways:", TextStyleFlat);
+                EditorGUILayout.TextArea("如果你遇到某个插件的问题或有相关疑问，可以通过多种方式联系我们：", TextStyleFlat);
                 GUILayout.Space(10);
-                if (GUILayout.Button("<color=yellow>Forum</color>", TextStyleFlat)) { Application.OpenURL("https://www.lovattostudio.com/forum/index.php"); }
-                if (GUILayout.Button("<color=yellow>Email Form</color>", TextStyleFlat)) { Application.OpenURL("https://www.lovattostudio.com/en/select-support/"); }
-                if (GUILayout.Button("<color=yellow>Direct Email</color>", TextStyleFlat)) { Application.OpenURL("mailto:contact.lovattostudio@gmail.com"); }
+                if (GUILayout.Button("<color=yellow>论坛</color>", TextStyleFlat)) { Application.OpenURL("https://www.lovattostudio.com/forum/index.php"); }
+                if (GUILayout.Button("<color=yellow>邮件表单</color>", TextStyleFlat)) { Application.OpenURL("https://www.lovattostudio.com/en/select-support/"); }
+                if (GUILayout.Button("<color=yellow>直接邮件</color>", TextStyleFlat)) { Application.OpenURL("mailto:contact.lovattostudio@gmail.com"); }
             }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[1] = EditorGUILayout.Foldout(questionFoulds[1], "<i>Where I can get these addons?</i>", EditorStyles.foldout);
+            questionFoulds[1] = EditorGUILayout.Foldout(questionFoulds[1], "<i>在哪里可以获取这些插件？</i>", EditorStyles.foldout);
             if (questionFoulds[1])
             {
-                EditorGUILayout.TextArea("All addons listed here are available at lovattostudio.com store:", TextStyleFlat);
+                EditorGUILayout.TextArea("此处列出的所有插件均可在 lovattostudio.com 商店获取：", TextStyleFlat);
                 GUILayout.Space(10);
-                if (GUILayout.Button("Addons Shop", EditorStyles.toolbarButton)) { Application.OpenURL("https://www.lovattostudio.com/en/shop/"); }
+                if (GUILayout.Button("扩展商店", EditorStyles.toolbarButton)) { Application.OpenURL("https://www.lovattostudio.com/en/shop/"); }
             }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[2] = EditorGUILayout.Foldout(questionFoulds[2], "<i>Why addons are not include in the package?</i>", EditorStyles.foldout);
+            questionFoulds[2] = EditorGUILayout.Foldout(questionFoulds[2], "<i>为什么插件不包含在资源包中？</i>", EditorStyles.foldout);
             if (questionFoulds[2])
             {
-                EditorGUILayout.TextArea("basically it is to maintain a relatively low price for the main core package, if all the addons are added by default, the price of the package would rise to at least $250.00 or more for being a complete set," +
-                    "so we decided to add the essential features to the core and let developers choose which extra extensions they want to integrate, that way developers just pay for what they want and we can keep improve the template and addons.", TextStyleFlat);
+                EditorGUILayout.TextArea("主要是为了把核心包的价格维持在相对低位。若默认包含全部插件，作为一套完整方案，资源包价格至少要涨到 250 美元以上，" +
+                    "因此我们决定只把核心功能放入核心包，由开发者自行选择要集成的额外扩展。这样开发者只为需要的内容付费，我们也能持续改进模板与插件。", TextStyleFlat);
             }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[3] = EditorGUILayout.Foldout(questionFoulds[3], "<i>How I can get a bundle of addons already integrated?</i>", EditorStyles.foldout);
+            questionFoulds[3] = EditorGUILayout.Foldout(questionFoulds[3], "<i>如何购买已集成好的插件组合包？</i>", EditorStyles.foldout);
             if (questionFoulds[3])
             {
-                EditorGUILayout.TextArea("If you precise of certain addons and you wanna pay for all once and get all of them integrated in one package, you can contact us and request a price for that.", TextStyleFlat);
+                EditorGUILayout.TextArea("如果你确定需要某些插件，希望一次性付费并获得集成好的完整包，可以联系我们询价。", TextStyleFlat);
             }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[4] = EditorGUILayout.Foldout(questionFoulds[4], "<i>How to know when there's an update of my addons?</i>", EditorStyles.foldout);
+            questionFoulds[4] = EditorGUILayout.Foldout(questionFoulds[4], "<i>如何知道我的插件有更新？</i>", EditorStyles.foldout);
             if (questionFoulds[4])
             {
-                EditorGUILayout.TextArea("If you purchase the addon in lovattostudio.com store, you should receive a email notifying about the update, as alternative you can check MFPS News in the Unity Editor <i>(MFPS -> News)</i> or " +
-                    "check the forum addon page.", TextStyleFlat);
+                EditorGUILayout.TextArea("若你在 lovattostudio.com 商店购买插件，更新时会收到邮件通知。也可以查看 Unity 编辑器中的 MFPS News <i>MFPS -> News</i>，或 " +
+                    "查看论坛的插件页面。", TextStyleFlat);
             }
             EditorGUILayout.EndVertical();
 
             EditorGUILayout.BeginVertical(EditorStyles.helpBox);
-            questionFoulds[5] = EditorGUILayout.Foldout(questionFoulds[5], "<i>Is Lovatto an Alien?</i>", EditorStyles.foldout);
+            questionFoulds[5] = EditorGUILayout.Foldout(questionFoulds[5], "<i>Lovatto 是外星人吗？</i>", EditorStyles.foldout);
             if (questionFoulds[5])
             {
-                EditorGUILayout.TextArea("Yes indeed.", TextStyleFlat);
+                EditorGUILayout.TextArea("确实是。", TextStyleFlat);
             }
             EditorGUILayout.EndVertical();
         }
@@ -1278,7 +1278,7 @@ namespace MFPSEditor.Addons
                                 info.MinVersion = pack.MinVersion;
                                 info.FolderName = pack.FolderName;
                                 MFPSAddonsData.Instance.Addons.Add(info);
-                                // Debug.Log($"New Addon <b>{info.NiceName}</b>");
+                                // Debug.Log($"新插件 <b>{info.NiceName}</b>");
                                 EditorUtility.SetDirty(MFPSAddonsData.Instance);
                             }
                         }
@@ -1439,10 +1439,10 @@ namespace MFPSEditor.Addons
         private GUIStyle GetStyle(string name, TutorialWizard.Style.OnCreateStyleOp onCreate, string overlap = "") => TutorialWizard.Style.GetUnityStyle(name, onCreate, overlap);
 
 #if !ASCOMPLIANCE
-        [MenuItem("Game Framework/Addons/Addons Manager", false, -1000)]
+        [MenuItem("游戏框架/扩展/扩展管理器", false, -1000)]
         public static void Open()
         {
-            GetWindow<MFPSAddonsWindow>(true, "Addons");
+            GetWindow<MFPSAddonsWindow>(true, "扩展");
         }
 #endif
 

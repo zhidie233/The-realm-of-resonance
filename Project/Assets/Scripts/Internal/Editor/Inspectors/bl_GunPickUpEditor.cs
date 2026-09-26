@@ -63,8 +63,8 @@ public class bl_GunPickUpEditor : Editor
             EditorGUILayout.BeginHorizontal("box");
             float dw = EditorGUIUtility.labelWidth;
             EditorGUIUtility.labelWidth = 90;
-            script.Ammunition.Bullets = EditorGUILayout.IntField("Bullets", script.Ammunition.Bullets);
-            script.Ammunition.Clips = EditorGUILayout.IntField("Clips", script.Ammunition.Clips);
+            script.Ammunition.Bullets = EditorGUILayout.IntField("子弹数", script.Ammunition.Bullets);
+            script.Ammunition.Clips = EditorGUILayout.IntField("弹匣数", script.Ammunition.Clips);
             int bullets = script.Ammunition.Bullets * script.Ammunition.Clips;
             EditorGUILayout.LabelField(" = " + bullets + " Bullets");
             EditorGUIUtility.labelWidth = dw;
@@ -76,7 +76,7 @@ public class bl_GunPickUpEditor : Editor
         }
 
         EditorGUILayout.BeginVertical("box");
-        script.m_DetectMode = (bl_GunPickUp.DetectMode)EditorGUILayout.EnumPopup("Detect Mode", script.m_DetectMode, EditorStyles.toolbarDropDown);
+        script.m_DetectMode = (bl_GunPickUp.DetectMode)EditorGUILayout.EnumPopup("检测模式", script.m_DetectMode, EditorStyles.toolbarDropDown);
         script.AutoDestroy = EditorGUILayout.ToggleLeft("Destroy After Time", script.AutoDestroy, EditorStyles.toolbarButton);
         if (script.AutoDestroy)
         {
@@ -86,7 +86,7 @@ public class bl_GunPickUpEditor : Editor
         if (!isSetUp)
         {
             GUILayout.BeginHorizontal("box");
-            if (GUILayout.Button("Add require components", EditorStyles.toolbarButton))
+            if (GUILayout.Button("添加所需组件", EditorStyles.toolbarButton))
             {
                 if (script.GetComponent<SphereCollider>() == null)
                 {

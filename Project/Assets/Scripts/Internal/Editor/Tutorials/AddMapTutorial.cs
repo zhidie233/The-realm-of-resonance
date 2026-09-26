@@ -25,10 +25,10 @@ public class AddMapTutorial : TutorialWizard
         new NetworkImages{Name = "img-12.jpg", Image = null},
     };
     private Steps[] AllSteps = new Steps[] {
-     new Steps { Name = "Get Started", StepsLenght = 0 },
-    new Steps { Name = "Set Up Scene", StepsLenght = 6 },
-    new Steps { Name = "Tips", StepsLenght = 0 },
-    new Steps { Name = "Maps Assets", StepsLenght = 0 },
+     new Steps { Name = "开始使用", StepsLenght = 0 },
+    new Steps { Name = "设置场景", StepsLenght = 6 },
+    new Steps { Name = "提示", StepsLenght = 0 },
+    new Steps { Name = "地图资源", StepsLenght = 0 },
     };
     //final required////////////////////////////////////////////////
     private Object m_SceneReference;
@@ -71,26 +71,26 @@ public class AddMapTutorial : TutorialWizard
 
     void DrawStarted()
     {
-        DrawNote("This tutorial will teach you how to add new maps to your MFPS game step by step.");
+        DrawNote("本教程将逐步讲解如何为 MFPS 游戏添加新地图。");
         DownArrow();
-        DrawText("First, what you need is, of course, a map. By map, I mean a level environment design with all the art content models, prefabs, lights, sky, etc... placed in a way that looks like a battlefield.");
-        DrawSuperText("There are some basic requirements for the map that all Unity users should know that applies for all games, not just MFPS:\n\n-<b>The map models/meshes must have colliders</b>, except for the models that are used only as decoration. All the models/meshes in your scene that the player is not supposed to go through must have a collider.\n\n-<b>Lighting</b>, lighting is a important part of map, but affects the performance of game in a big way. There a tons of tutorials out there on how to build a good scene lighting and bake your scene lightmap, e.g:\n<?link=https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#>https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#</link>\n\n-<b>Optimized performance over good looking graphics</b> We all love good graphics in a game, but a poorly optimized level could kill your game. MFPS is pretty well optimized in the code-side. but more important than the code, at least in this case, is the graphic optimization. There is a good official Unity post for graphic optimization, check it out:\n<?link=https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html>https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html</link>");
+        DrawText("首先，你当然需要一张地图。这里的地图指的是关卡环境设计，包含所有美术内容，模型、预制体、灯光、天空等，摆放成战场的样子。");
+        DrawSuperText("地图有一些基本要求，是所有 Unity 用户都应了解的，适用于所有游戏而不仅是 MFPS：\n\n-<b>地图模型网格必须带碰撞体</b>，仅作装饰的模型除外。场景中玩家不该穿过的所有模型网格都必须有碰撞体。\n\n-<b>灯光</b>，灯光是地图的重要组成部分，但对游戏性能影响很大。网上有大量关于搭建场景灯光和烘焙光照贴图的教程，例如：\n<?link=https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#>https://learn.unity.com/tutorial/introduction-to-lighting-and-rendering#</link>\n\n-<b>性能优化优先于画面效果</b>。人人都喜欢游戏有好的画质，但优化不佳的关卡会毁掉你的游戏。MFPS 在代码层面已做了不错的优化，但比代码更重要的是图形优化。Unity 官方有一篇不错的图形优化文章，值得一看：\n<?link=https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html>https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html</link>");
         DownArrow();
-        DrawText("All right, if you have you map level design ready, lets continue");
+        DrawText("好，如果你的地图关卡设计已就绪，我们继续。");
     }
 
     void DrawSetup()
     {
         if (subStep == 0)
         {
-            DrawText("As mentioned before you need to have your new map design ready, but not just as a prefab, you need to have it <b>placed in a Unity Scene which contains nothing else but your map environment</b>, if you don't have it, create a new Scene in (top editor menu ➔ <b>File ➔ New Scene</b>) > then in the new empty opened scene place your map environment or design it from scratch in that scene.\n                 \nOnce you have it, save the scene in your Unity Project <b>(File ➔ Save)</b> and then continue below.");
-            DrawNote("<b>Make sure to delete all cameras in your map scene prior integrate with MFPS</b>. They are not needed as the required cameras will be created by MFPS.");
+            DrawText("如前所述，你需要准备好新地图设计，但不能只做成预制体，而要<b>放置在一个只包含地图环境的 Unity 场景中</b>。如果没有，请在编辑器顶部菜单 ➔ <b>File ➔ New Scene</b> 新建场景，然后在打开的空场景中放入地图环境或直接在其中设计。\n                 \n准备好后，在 Unity 工程中保存该场景<b>（File ➔ Save）</b>，然后继续下一步。");
+            DrawNote("<b>在接入 MFPS 之前，请务必删除地图场景中的所有相机</b>。这里不需要它们，MFPS 会创建所需的相机。");
             DrawImage(GetServerImage(0));
             DownArrow();
-            DrawText("Assign your Unity map scene <i>(.scene)</i> in the field below and <b>then click on the Continue</b> button to proceed with the scene validation.");
+            DrawText("在下方字段中指定你的 Unity 地图场景<i>（.scene）</i>，<b>然后点击继续</b>按钮进行场景校验。");
             Space(20);
             GUILayout.BeginHorizontal();
-            GUILayout.Label("Map Scene: ", GUILayout.Width(100));
+            GUILayout.Label("地图场景： ", GUILayout.Width(100));
             m_SceneReference = EditorGUILayout.ObjectField(m_SceneReference, typeof(SceneAsset), false) as SceneAsset;
             GUILayout.EndHorizontal();
             GUI.enabled = m_SceneReference != null;
@@ -114,9 +114,9 @@ public class AddMapTutorial : TutorialWizard
         else if (subStep == 1)
         {
             HideNextButton = isMissing();
-            DrawText("Ok, now with the map scene open, let's drag the objects needed for the scene to work with MFPS, but first let's check which assets you have in the scene already, click on the button below to auto-detect.");
+            DrawText("地图场景已打开，现在拖入 MFPS 所需的对象。先检查场景中已有的资源，点击下方按钮自动检测。");
             Space();
-            if (DrawButton("Check Scene"))
+            if (DrawButton("检查场景"))
             {
                 CheckScene();
             }
@@ -124,18 +124,18 @@ public class AddMapTutorial : TutorialWizard
             {
                 EditorStyles.helpBox.richText = true;
                 GUILayout.BeginVertical("box");
-                GUILayout.Label(string.Format("Game Manager: {0}", RequiredInstanced[0] ? "<color=green>YES</color>" : "<color=red>NO</color>"), EditorStyles.helpBox);
-                GUILayout.Label(string.Format("AI Manager: {0}", RequiredInstanced[1] ? "<color=green>YES</color>" : "<color=red>NO</color>"), EditorStyles.helpBox);
-                GUILayout.Label(string.Format("Item Manager: {0}", RequiredInstanced[2] ? "<color=green>YES</color>" : "<color=red>NO</color>"), EditorStyles.helpBox);
-                GUILayout.Label(string.Format("Game Mode Objects: {0}", RequiredInstanced[3] ? "<color=green>YES</color>" : "<color=red>NO</color>"), EditorStyles.helpBox);
-                GUILayout.Label(string.Format("UI: {0}", RequiredInstanced[4] ? "<color=green>YES</color>" : "<color=red>NO</color>"), EditorStyles.helpBox);
+                GUILayout.Label(string.Format("游戏管理器： {0}", RequiredInstanced[0] ? "<color=green>是</color>" : "<color=red>否</color>"), EditorStyles.helpBox);
+                GUILayout.Label(string.Format("AI 管理器： {0}", RequiredInstanced[1] ? "<color=green>是</color>" : "<color=red>否</color>"), EditorStyles.helpBox);
+                GUILayout.Label(string.Format("物品管理器： {0}", RequiredInstanced[2] ? "<color=green>是</color>" : "<color=red>否</color>"), EditorStyles.helpBox);
+                GUILayout.Label(string.Format("游戏模式对象： {0}", RequiredInstanced[3] ? "<color=green>是</color>" : "<color=red>否</color>"), EditorStyles.helpBox);
+                GUILayout.Label(string.Format("UI: {0}", RequiredInstanced[4] ? "<color=green>是</color>" : "<color=red>否</color>"), EditorStyles.helpBox);
                 GUILayout.EndVertical();
 
                 if (isMissing())
                 {
-                    DrawText("Your scene is not properly set up yet, click on the button below to automatically add the required components.");
+                    DrawText("场景尚未正确配置，点击下方按钮自动添加所需组件。");
                     Space();
-                    if (DrawButton("Setup scene"))
+                    if (DrawButton("设置场景"))
                     {
                         for (int i = 0; i < RequiredsPaths.Length; i++)
                         {
@@ -148,7 +148,7 @@ public class AddMapTutorial : TutorialWizard
                             }
                             else
                             {
-                                Debug.LogWarning("Could not find the prefab at: " + RequiredsPaths[i]);
+                                Debug.LogWarning("未找到预制体，路径： " + RequiredsPaths[i]);
                             }
                         }
                         CheckScene();
@@ -158,69 +158,69 @@ public class AddMapTutorial : TutorialWizard
                 }
                 else
                 {
-                    DrawText("All good, your scene have all require objects, continue with the next step.");
+                    DrawText("一切正常，场景已包含全部所需对象，继续下一步。");
                 }
             }
         }
         else if (subStep == 2)
         {
-            DrawText("Ok, now after instanced the MFPS objects you will see in the Game View that there is a camera render from the top, that's the camera view that displays an aerial view when a player enters the room to select the team to join, so position it as you please in a space where the camera has a good view of the map.\n \nThe camera is located in <i>(Hierarchy) <b>GameManager ➔ Room Camera</b></i>");
+            DrawText("实例化 MFPS 对象后，你会在 Game 视图中看到一个从顶部渲染的相机，这是玩家进入房间选择阵营时显示俯视角的相机。请将它摆放到能俯瞰地图全貌的位置。\n \n该相机位于<i>（层级面板）<b>GameManager ➔ Room Camera</b></i>。");
             DrawImage(GetServerImage(1));
             DownArrow();
-            DrawText("There are some objects that you need repositioned in your map, two of them are the Flags of CTF game mode, These are inside the object <b>GameModes -> CaptureOfFlag</b> in hierarchy," +
-                " so select them and position them where you want them to be.");
+            DrawText("地图中有一些对象需要重新摆位，其中两个是 CTF 模式的两面旗帜，位于层级面板中的 <b>GameModes -> CaptureOfFlag</b> 对象下，" +
+                " 选中它们并摆放到你想要的位置。");
             DrawImage(GetServerImage(2));
             DownArrow();
-            DrawText("Do the same with the objects under <b>ItemManager</b> Position them around the map, but these are optional. These items (med kits and ammo) can be used as permanent items around the map " +
-                "so player can use them during game, if you don't want to use them, simply delete them from the scene.");
+            DrawText("对 <b>ItemManager</b> 下的对象做同样处理，将它们分布到地图各处。这一步可选，这些物品（医疗包和弹药）可作为地图中的常驻补给品。" +
+                "这样玩家就能在游戏中使用它们。若不需要，直接从场景中删除即可。");
             DrawImage(GetServerImage(3));
         }
         else if (subStep == 3)
         {
-            DrawText("Now you need create some <b>Spawn Points</b> for each Team <i>(Team 1, Team 2 and For FFA)</i>. These spawn points are not specifically a static position, they are a <b>Spherical Area</b> where players can spawn, which means that the player will be instantiated in a random position inside of the radius of the area.\n \n<b><size=16>How create spawn points:</size></b>\n \nSimply create an empty game object in the scene and add the script <b>bl_SpawnPoint.cs</b> to it and assign the area and the team.\n \nBut to make it easier for you: Below you will have a button to create a spawn point, simply select the team and click on the button <b> Create Spawn Point.</b> ➔ A spawn point will be created and you can now select it in the scene view for position it on the map.");
+            DrawText("现在需要为每个阵营创建<b>出生点</b><i>（阵营 1、阵营 2 以及混战模式）</i>。出生点并不是固定位置，而是一个<b>球形区域</b>，玩家会在该区域半径内的随机位置出生。\n \n<b><size=16>如何创建出生点：</size></b>\n \n在场景中新建一个空物体，挂载 <b>bl_SpawnPoint.cs</b> 脚本，并指定区域和阵营。\n \n为方便操作，下方提供了一个创建出生点的按钮，选择阵营后点击 <b>创建出生点</b> 按钮 ➔ 即可创建出生点，然后在场景视图中选中它并摆放位置。");
             Space();
             GUILayout.BeginVertical();
-            DrawText("<color=yellow>CREATE SPAWN POINTS</color>");
+            DrawText("<color=yellow>创建出生点</color>");
             GUILayout.BeginHorizontal("box");
-            GUILayout.Label("Spawn Point For: ");
+            GUILayout.Label("出生点所属： ");
             SpawnTeam = (Team)EditorGUILayout.EnumPopup(SpawnTeam);
-            if (GUILayout.Button("Create Spawn Point", EditorStyles.toolbarButton, GUILayout.Width(150)))
+            if (GUILayout.Button("创建出生点", EditorStyles.toolbarButton, GUILayout.Width(150)))
             {
                 CreateSpawnPoint();
             }
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
             DownArrow();
-            DrawText("Once you create a spawn point and positioned it, you will have something similar to this:");
+            DrawText("创建并摆放好出生点后，效果大致如下：");
             DrawImage(GetServerImage(4));
-            DrawText("This is the spawn point area. You can preview the available area to spawn a player inside with the semi-sphere and the real player size <i>(represented with the centered gizmo)</i>.\n \n You can increase or decrease the area in the bl_Spawnpoint " +
-                "script attached to the object -> <b>Spawn Space</b>, Also, you can rotate it to set the default rotation (the direction spawned player will look).\n \nBe careful that the feet of the player gizmo and the sphere area are over the floor," +
-                " otherwise the players will fall when spawned.");
-            DrawText("\nCreate as many spawn points as you wish using the above button. Just make sure to create at least one spawn point for each team, once you finish, proceed with the next step.");
+            DrawText("这就是出生点区域。半球体与居中辅助线框表示的玩家实际尺寸可用来预览玩家的可出生范围。\n \n 可在 bl_Spawnpoint 中增大或减小该区域。" +
+                "脚本挂到该对象上 -> 在 <b>Spawn Space</b> 中设置。你还可以旋转它来设定默认朝向，即出生玩家面朝的方向。\n \n注意让玩家辅助图标的脚部与球形区域位于地面之上，" +
+                " 否则玩家出生后会掉落。");
+            DrawText("\n用上方按钮可创建任意数量的出生点。确保每个阵营至少有一个出生点，完成后继续下一步。");
         }
         else if (subStep == 4)
         {
-            DrawText("Now, in order for AI bots to work on this map, you need to set up and bake the <b>Navmesh Surface</b>, In simple terms, a navmesh surface is the allowed area where AI Agents can move, this area is calculated automatically by Unity when you bake it based in your map geometry, but you have to set up the meshes to bake, for more depth information about Unity's Navmesh and how to manually set up it, check their documentation here:");
-            if (DrawLinkText("Create Navmesh Documentation"))
+            DrawText("要让 AI 机器人在这张地图上工作，需要设置并烘焙 <b>导航网格表面</b>。简单来说，导航网格表面就是允许 AI 智能体移动的区域，Unity 烘焙时会根据地图几何结构自动计算该区域，但你需要设置参与烘焙的网格。关于 Unity 导航网格的深入说明和手动设置方法，请查阅官方文档：");
+            if (DrawLinkText("创建 Navmesh 文档"))
             {
                 Application.OpenURL("https://docs.unity3d.com/Packages/com.unity.ai.navigation@1.1/manual/CreateNavMesh.html");
             }
             DownArrow();
-            DrawText("If you want to automatically set up the Navmesh, simply click in the button below, keep in mind that this will generated the Navmesh based on all your maps colliders, you can later mdify the Navmesh in the <b>AI Navmesh</b> object.");
+            DrawText("若要自动设置导航网格，点击下方按钮即可。注意该操作会基于地图中所有碰撞体生成导航网格，之后可在 <b>AI Navmesh</b> 对象中修改。");
             Space(5);
-            if (DrawButton("Auto Navmesh set up"))
+            if (DrawButton("自动设置导航网格"))
             {
                 SetupNavmesh();
             }
 
-            DrawText("Once you bake your Navmesh you will have something like this:");
+            DrawText("烘焙导航网格后，效果大致如下：");
             DrawImage(GetServerImage(5));
-            DrawText("The designated areas where bots can move freely are indicated by blue overlaping mesh. for the optimal functioning of the bots, it's essential to strategically position the <b>AI Cover Points</b>. These cover points are empty game objects attached with a <b>bl_AICoverPoint</b> script. They serve as reference positions for the bots to take cover during gameplay.\n \nTo streamline this process, the AIManager object already includes a set of default AI Cover Points. You can easily locate them within the Unity editor by navigating to <b>AIManager ➔ *</b> in the hierarchy window. From there, you have the flexibility to fine-tune the positions or add more cover points to enhance the bots' ability to made tactical decisions while seeking cover.");
+            DrawText("机器人可自由移动的区域由蓝色叠加网格标识。要让机器人发挥最佳效果，必须策略性地摆放 <b>AI 掩体点</b>。掩体点是挂载 <b>bl_AICoverPoint</b> 脚本的空物体，作为机器人战斗时寻找掩体的参考位置。\n \n为简化流程，AIManager 对象已内置一组默认 AI 掩体点。在 Unity 编辑器的层级面板中展开 <b>AIManager ➔ *</b> 即可找到它们，可随意微调位置或增加掩体点，以提升机器人寻找掩体时的战术判断能力。");
             DrawImage(GetServerImage(6), TextAlignment.Center);
-            DrawText("You can use as many as you want, if you don't need that many, simply delete some of them. if you want more, simply duplicate them.\n \nSelect each individually and position them in a strategic point on the map; you can preview the area enabling <b>Show Gizmos</b> in <i>AIManager ➔ bl_AIManager ➔ <b>Show Gizmos</b></i>");
+            DrawText("数量可自行决定，不需要那么多就删掉一些，需要更多就复制。\n \n逐个选中并摆放到地图上的战术位置；在 <i>AIManager ➔ bl_AIManager ➔ <b>显示辅助线</b></i> 中开启后可预览区域范围。");
             DrawImage(GetServerImage(7));
-            DrawText("<i>For more information about the AI Cover points check this:</i>");
-            if (Buttons.OutlineButton("AI Cover Points"))
+            DrawText("<i>关于 AI 掩体点的更多信息请查看：</i>");
+            if (Buttons.OutlineButton("AI 掩体点"))
             {
                 var tut = GetWindow<TutorialBots>();
                 tut.windowID = 1;
@@ -228,16 +228,16 @@ public class AddMapTutorial : TutorialWizard
         }
         else if (subStep == 5)
         {
-            DrawText("Now you have your scene set up and ready!\n \nAll you have to do now is list it in the available scene list so that players can select your scene when creating a room. You can do it by manually adding a new field in the list <b>AllScenes</b> in GameData: <b><i>(Resources folder of MFPS) GameData ➔ AllScenes ➔ Add a new field</i></b> and fill in the required info\n\nor <b>you can do it automatically here</b>, Simply set a name for the map and a sprite preview below:");
+            DrawText("场景已设置完成！\n \n接下来只需将其登记到可用场景列表中，玩家创建房间时就能选择该场景。可以手动在 GameData 的 <b>AllScenes</b> 列表中新增一项：<b><i>（MFPS 的 Resources 文件夹）GameData ➔ AllScenes ➔ 新增一项</i></b>，并填写所需信息\n\n或者<b>在此处自动完成</b>，只需在下方为地图设置名称和预览图：");
             DrawImage(GetServerImage(8));
             DownArrow();
             GUILayout.BeginVertical("box");
-            sceneName = EditorGUILayout.TextField("Map Custom Name", sceneName);
-            scenePreview = EditorGUILayout.ObjectField("Map Preview", scenePreview, typeof(Sprite), false) as Sprite;
+            sceneName = EditorGUILayout.TextField("地图自定义名称", sceneName);
+            scenePreview = EditorGUILayout.ObjectField("地图预览", scenePreview, typeof(Sprite), false) as Sprite;
             GUI.enabled = m_SceneReference == null;
             m_SceneReference = EditorGUILayout.ObjectField("Scene", m_SceneReference, typeof(SceneAsset), false) as SceneAsset;
             GUI.enabled = !string.IsNullOrEmpty(sceneName) && m_SceneReference != null;
-            if (DrawButton("List Map"))
+            if (DrawButton("列出地图"))
             {
                 if (!bl_GameData.Instance.AllScenes.Exists(x => x.ShowName == sceneName))
                 {
@@ -260,7 +260,7 @@ public class AddMapTutorial : TutorialWizard
                 }
                 else
                 {
-                    Debug.LogWarning("A map with this name is already listed.");
+                    Debug.LogWarning("已存在同名地图。");
                 }
             }
             GUI.enabled = true;
@@ -268,7 +268,7 @@ public class AddMapTutorial : TutorialWizard
             if (sceneListed)
             {
                 DownArrow();
-                DrawText("Nice! That's it, you have added a new map to your game!, now you can select the map in the Main Menu / Lobby -> Create Room.\n \nRead the next section for some tips.");
+                DrawText("很好，你已成功为游戏添加了一张新地图，现在可在主菜单或大厅的创建房间中选择该地图。\n \n请阅读下一节获取一些提示。");
                 DrawImage(GetServerImage(9));
             }
         }
@@ -276,10 +276,10 @@ public class AddMapTutorial : TutorialWizard
 
     void DrawTips()
     {
-        DrawText("<b><size=16>Optimization</size></b>");
-        DrawText("As I mentioned at the beginning, if you want to your game to perform well, with a good frame rate when there are more than 8 players in the same map, " +
-                 "you'll need to optimize the graphic content of your map, Models, Textures, Shaders, etc... This is not as crucial in a single player game, but in multiplayer, the local client handles both the local info " +
-            "and the info received from remote players. So, the optimization is really, really important.\nBelow are some links you may find useful for Unity Graphic Optimization");
+        DrawText("<b><size=16>优化</size></b>");
+        DrawText("正如开头所说，若希望游戏在同一地图中超过 8 名玩家时仍保持良好帧率，" +
+                 "你需要优化地图的图形内容，包括模型、贴图、着色器等。这在单机游戏中不那么关键，但在多人游戏中，本地客户端既要处理本地信息，" +
+            "也要处理从远程玩家收到的信息。因此优化极其重要。\n以下是一些可能有用的 Unity 图形优化参考链接");
         if (DrawLinkText("https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html"))
         {
             Application.OpenURL("https://docs.unity3d.com/Manual/OptimizingGraphicsPerformance.html");
@@ -300,17 +300,17 @@ public class AddMapTutorial : TutorialWizard
             Application.OpenURL("https://cgcookie.com/articles/maximizing-your-unity-games-performance");
         }
         Space(20);
-        DrawText("<b><size=16>Level Design.</size></b>");
-        DrawText("Here you have some resources that you can use to learn or improve your level design skills from AAA or more experienced artists:");
-        if (DrawLinkText("Practical Guide on First Person Level Design"))
+        DrawText("<b><size=16>关卡设计</size></b>");
+        DrawText("以下资源可用于学习或提升关卡设计能力，来自 3A 项目或经验丰富的设计师：");
+        if (DrawLinkText("第一人称关卡设计实用指南"))
         {
             Application.OpenURL("https://medium.com/ironequal/practical-guide-on-first-person-level-design-e187e45c744c");
         }
-        if (DrawLinkText("Multiplayer Map Theory (Gears of War)"))
+        if (DrawLinkText("多人地图设计理论 战争机器"))
         {
             Application.OpenURL("https://docs.unrealengine.com/udk/Three/GearsMultiplayerMapTheory.html");
         }
-        if (DrawLinkText("Level Design Guidelines"))
+        if (DrawLinkText("关卡设计准则"))
         {
             Application.OpenURL("http://www.mikebarclay.co.uk/my-level-design-guidelines/");
         }
@@ -318,12 +318,12 @@ public class AddMapTutorial : TutorialWizard
 
     void MapAssetsDoc()
     {
-        DrawText("Here you will find two lists of assets available in the Asset Store picked by me that work for action-shooter games that you may find useful in case you are looking to add more maps to MFPS.\n \nThe two lists are separated into assets that work best for high-end platforms like <b>PC and Console</b> and the other list for <b>Mobile-Friendly</b> assets that you can use if you are looking for maps for your mobile game.");
+        DrawText("这里有两份资源商店素材清单，由我挑选，适用于动作射击游戏。若你想为 MFPS 添加更多地图，可作参考。\n \n两份清单分别面向高端平台如 <b>PC 与主机</b> 的最佳素材，以及适合 <b>移动端</b> 的素材，后者可用于移动端游戏的地图。");
 
         using (new GUILayout.HorizontalScope())
         {
             EditorGUILayout.BeginVertical();
-            DrawTitleText("High-Quality Maps");
+            DrawTitleText("高质量地图");
             if (pcMapsAssets == null)
             {
                 pcMapsAssets = new AssetStoreAffiliate();
@@ -334,7 +334,7 @@ public class AddMapTutorial : TutorialWizard
             else
                 pcMapsAssets.OnGUI();
             GUILayout.Space(20);
-            DrawTitleText("Mobile-Friendly Maps");
+            DrawTitleText("移动端友好地图");
             if (mobileMapsAssets == null)
             {
                 mobileMapsAssets = new AssetStoreAffiliate();
@@ -428,14 +428,14 @@ public class AddMapTutorial : TutorialWizard
 
     void SetupNavmesh()
     {
-        GameObject navmeshObject = GameObject.Find("AI Navemesh");
+        GameObject navmeshObject = GameObject.Find("AI Navmesh");
         if (navmeshObject != null)
         {
-            Debug.LogWarning("A Navmesh object is already present in this map, to setup a new one, disable or remove the existing one.");
+            Debug.LogWarning("该地图中已存在 Navmesh 对象。若要配置新的，请先禁用或移除现有的。");
             return;
         }
 
-        navmeshObject = new GameObject("AI Navemesh");
+        navmeshObject = new GameObject("AI Navmesh");
         navmeshObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
         navmeshObject.transform.localScale = Vector3.one;
 
@@ -456,7 +456,7 @@ public class AddMapTutorial : TutorialWizard
         return false;
     }
 
-    [MenuItem("Game Framework/Tutorials/Add Map", false, 500)]
+    [MenuItem("游戏框架/教程/添加地图", false, 500)]
     private static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(AddMapTutorial));

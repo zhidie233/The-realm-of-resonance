@@ -16,10 +16,10 @@ namespace MFPSEditor
         Texture[] stateIcons = new Texture[3];
         readonly string LAST_PATH = "last-path-ls";
 
-        [MenuItem("Game Framework/Tools/Import Weapon")]
+        [MenuItem("游戏框架/工具/导入武器")]
         static void OpenImport()
         {
-            GetWindow<bl_ImportExportWeapon>("Import").PrepareToImport(null, null);
+            GetWindow<bl_ImportExportWeapon>("导入").PrepareToImport(null, null);
         }
 
         /// <summary>
@@ -58,50 +58,50 @@ namespace MFPSEditor
             GUILayout.Space(10);
             if (FPWeapon == null)
             {
-                EditorGUILayout.HelpBox("Can't export because the FPWeapon is null", MessageType.Error);
+                EditorGUILayout.HelpBox("无法导出：第一人称武器为空", MessageType.Error);
             }
             else
             {
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                GUILayout.Label("EXPORT WEAPON");
+                GUILayout.Label("导出武器");
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
                 GUILayout.Space(10);
 
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("FPWeapon");
+                GUILayout.Label("第一人称武器");
                 GUILayout.Label(goodTexture, GUILayout.Height(15), GUILayout.Width(15));
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
             }
             if (Player == null)
             {
-                EditorGUILayout.HelpBox("Can't export because the Player is null", MessageType.Error);
+                EditorGUILayout.HelpBox("无法导出：玩家为空", MessageType.Error);
             }
             else
             {
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("Player Info");
+                GUILayout.Label("玩家信息");
                 GUILayout.Label(goodTexture, GUILayout.Height(15), GUILayout.Width(15));
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
             }
             if (NetworkGun == null)
             {
-                EditorGUILayout.HelpBox("Export will be incomplete because the TPWeapon was not found", MessageType.Warning);
+                EditorGUILayout.HelpBox("未找到第三人称武器，导出内容将不完整", MessageType.Warning);
             }
             else
             {
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("TPWeapon");
+                GUILayout.Label("第三人称武器");
                 GUILayout.Label(goodTexture, GUILayout.Height(15), GUILayout.Width(15));
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
             }
 
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("EXPORT WEAPON", GUILayout.Height(25)))
+            if (GUILayout.Button("导出武器", GUILayout.Height(25)))
             {
                 Export();
             }
@@ -118,8 +118,8 @@ namespace MFPSEditor
                 bool canImport = true;
                 if (WeaponToImport == null)
                 {
-                    EditorGUILayout.HelpBox("Assign the weapon exported prefab to import.", MessageType.Info);
-                    WeaponToImport = EditorGUILayout.ObjectField("Weapon To Import", WeaponToImport, typeof(bl_WeaponExported), true) as bl_WeaponExported;
+                    EditorGUILayout.HelpBox("请指定要导入的武器导出预制体。", MessageType.Info);
+                    WeaponToImport = EditorGUILayout.ObjectField("待导入武器", WeaponToImport, typeof(bl_WeaponExported), true) as bl_WeaponExported;
                     canImport = false;
                 }
                 else
@@ -127,22 +127,22 @@ namespace MFPSEditor
                     GUILayout.Space(10);
                     GUI.enabled = false;
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.ObjectField("Weapon To Import", WeaponToImport, typeof(bl_WeaponExported), true);
+                    EditorGUILayout.ObjectField("待导入武器", WeaponToImport, typeof(bl_WeaponExported), true);
                     GUILayout.Label(goodTexture, GUILayout.Width(15), GUILayout.Height(15));
                     GUILayout.EndHorizontal();
                     GUI.enabled = true;
                 }
                 if (Player == null)
                 {
-                    EditorGUILayout.HelpBox("Assign the player prefab where you wanna import this weapon.", MessageType.Info);
-                    Player = EditorGUILayout.ObjectField("Player", Player, typeof(bl_PlayerNetwork), true) as bl_PlayerNetwork;
+                    EditorGUILayout.HelpBox("请指定接收该武器的玩家预制体。", MessageType.Info);
+                    Player = EditorGUILayout.ObjectField("玩家", Player, typeof(bl_PlayerNetwork), true) as bl_PlayerNetwork;
                     canImport = false;
                 }
                 else
                 {
                     GUI.enabled = false;
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.ObjectField("Player", Player, typeof(bl_PlayerNetwork), true);
+                    EditorGUILayout.ObjectField("玩家", Player, typeof(bl_PlayerNetwork), true);
                     if (Player.gameObject.scene.name == null) { GUILayout.Label(EditorGUIUtility.IconContent("d_ToolHandleLocal").image, GUILayout.Width(15), GUILayout.Height(15)); }
                     else { GUILayout.Label(EditorGUIUtility.IconContent("PrefabModel Icon").image, GUILayout.Width(15), GUILayout.Height(15)); }
                     GUILayout.Label(goodTexture, GUILayout.Width(15), GUILayout.Height(15));
@@ -170,7 +170,7 @@ namespace MFPSEditor
                 }
                 GUI.enabled = canImport;
                 GUILayout.FlexibleSpace();
-                if (MFPSEditorStyles.ButtonOutline("IMPORT"))
+                if (MFPSEditorStyles.ButtonOutline("导入"))
                 {
                     Import();
                 }
@@ -183,25 +183,25 @@ namespace MFPSEditor
 
                 GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                GUILayout.Label("WEAPON IMPORTED!");
+                GUILayout.Label("武器已导入！");
                 GUILayout.FlexibleSpace();
                 GUILayout.EndHorizontal();
 
                 GUILayout.Space(10);
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("Weapon Info");
+                GUILayout.Label("武器信息");
                 Texture icon = stateIcons[results[0]];
                 GUILayout.Label(icon, GUILayout.Width(20));
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("FP Weapon");
+                GUILayout.Label("第一人称武器");
                 icon = stateIcons[results[1]];
                 GUILayout.Label(icon, GUILayout.Width(20));
                 GUILayout.EndHorizontal();
 
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("TP Weapon");
+                GUILayout.Label("第三人称武器");
                 icon = stateIcons[results[2]];
                 GUILayout.Label(icon, GUILayout.Width(20));
                 GUILayout.EndHorizontal();
@@ -365,7 +365,7 @@ namespace MFPSEditor
                 export.TPWRotation = NetworkGun.transform.localRotation;
             }
             string lastPath = EditorPrefs.GetString(LAST_PATH, "");
-            string path = EditorUtility.OpenFolderPanel("Select Folder to save prefab", lastPath, "");
+            string path = EditorUtility.OpenFolderPanel("选择预制体保存文件夹", lastPath, "");
             if (!string.IsNullOrEmpty(path))
             {
                 string subPath = path.Substring(Application.dataPath.Length);
@@ -387,7 +387,7 @@ namespace MFPSEditor
             }
             else
             {
-                Debug.LogWarning("Could not create a prefab automatically.");
+                Debug.LogWarning("无法自动创建预制体。");
                 Selection.activeGameObject = root;
                 EditorGUIUtility.PingObject(root);
             }

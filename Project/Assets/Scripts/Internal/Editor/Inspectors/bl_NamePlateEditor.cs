@@ -30,7 +30,7 @@ public class bl_NamePlateEditor : Editor
 
         EditorGUILayout.BeginVertical("box");
         GUI.enabled = script.StylePresent != null;
-        if (GUILayout.Button("Edit Present"))
+        if (GUILayout.Button("编辑外观"))
         {
             editPresent = !editPresent;
         }
@@ -55,7 +55,7 @@ public class bl_NamePlateEditor : Editor
         if (isSimulating)
         {
             simulatedHealth = EditorGUILayout.IntSlider("Simulated Health", simulatedHealth, 0, 100);
-            simulatedName = EditorGUILayout.TextField("Simulate Name", simulatedName);
+            simulatedName = EditorGUILayout.TextField("模拟名称", simulatedName);
         }
         GUI.enabled = true;
         EditorGUILayout.EndVertical();

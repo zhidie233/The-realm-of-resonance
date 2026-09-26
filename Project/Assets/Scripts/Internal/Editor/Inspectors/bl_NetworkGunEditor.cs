@@ -53,7 +53,7 @@ public class bl_NetworkGunEditor : Editor
         }
 
         EditorGUILayout.BeginVertical("box");
-        script.LocalGun = EditorGUILayout.ObjectField("Local Weapon", script.LocalGun, typeof(bl_Gun), allowSceneObjects) as bl_Gun;
+        script.LocalGun = EditorGUILayout.ObjectField("本地武器", script.LocalGun, typeof(bl_Gun), allowSceneObjects) as bl_Gun;
         EditorGUILayout.EndVertical();
 
         if (script.LocalGun != null)
@@ -68,23 +68,23 @@ public class bl_NetworkGunEditor : Editor
                 }
                 if (script.LocalGun.Info.Type != GunType.Grenade)
                 {
-                    script.MuzzleFlash = EditorGUILayout.ObjectField("MuzzleFlash", script.MuzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
+                    script.MuzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.MuzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
                 }
                 if (script.LocalGun.Info.Type == GunType.Grenade)
                 {
-                    script.DesactiveOnOffAmmo = EditorGUILayout.ObjectField("Desactive On No Ammo", script.DesactiveOnOffAmmo, typeof(GameObject), allowSceneObjects) as GameObject;
+                    script.DesactiveOnOffAmmo = EditorGUILayout.ObjectField("无弹药时禁用", script.DesactiveOnOffAmmo, typeof(GameObject), allowSceneObjects) as GameObject;
                 }
                 EditorGUILayout.EndVertical();
             }
 
             GUILayout.BeginVertical("box");
-            script.useCustomPlayerAnimations = EditorGUILayout.ToggleLeft("Use Custom Player Animations", script.useCustomPlayerAnimations, EditorStyles.toolbarButton);
+            script.useCustomPlayerAnimations = EditorGUILayout.ToggleLeft("使用自定义玩家动画", script.useCustomPlayerAnimations, EditorStyles.toolbarButton);
             if (script.useCustomPlayerAnimations)
             {
                 GUILayout.Space(2);
-                EditorGUILayout.HelpBox("Check the Player Animations > Weapon Animation, documentation for setup this.", MessageType.Info);
-                script.customUpperAnimationID = EditorGUILayout.IntField("Custom Animator State ID", script.customUpperAnimationID);
-                script.customFireAnimationName = EditorGUILayout.TextField("Custom Fire Animation Name", script.customFireAnimationName);
+                EditorGUILayout.HelpBox("请查阅 玩家动画 > 武器动画 文档进行设置。", MessageType.Info);
+                script.customUpperAnimationID = EditorGUILayout.IntField("自定义动画状态 ID", script.customUpperAnimationID);
+                script.customFireAnimationName = EditorGUILayout.TextField("自定义开火动画名", script.customFireAnimationName);
             }
             GUILayout.EndVertical();
 
@@ -93,14 +93,14 @@ public class bl_NetworkGunEditor : Editor
                 GUILayout.BeginVertical("box");
                 if (script.LeftHandPosition != null)
                 {
-                    if (GUILayout.Button("Edit Hand Position", EditorStyles.toolbarButton))
+                    if (GUILayout.Button("编辑手部位置", EditorStyles.toolbarButton))
                     {
                         OpenIKWindow(script);
                     }
                 }
                 else
                 {
-                    if (GUILayout.Button("SetUp Hand IK", EditorStyles.toolbarButton))
+                    if (GUILayout.Button("设置手部 IK", EditorStyles.toolbarButton))
                     {
 
                         GameObject gobject = new GameObject("LeftHandPoint");
@@ -113,7 +113,7 @@ public class bl_NetworkGunEditor : Editor
                 }
                 if (playerReferences != null && playerReferences.playerNetwork != null && !playerReferences.playerNetwork.NetworkGuns.Contains(script))
                 {
-                    if (GUILayout.Button("Enlist TPWeapon", EditorStyles.toolbarButton))
+                    if (GUILayout.Button("登记第三人称武器", EditorStyles.toolbarButton))
                     {
                         playerReferences.playerNetwork.NetworkGuns.Add(script);
                         EditorUtility.SetDirty(playerReferences.playerNetwork);
@@ -125,7 +125,7 @@ public class bl_NetworkGunEditor : Editor
             {
                 if (playerReferences != null && playerReferences.playerNetwork != null && !playerReferences.playerNetwork.NetworkGuns.Contains(script))
                 {
-                    if (GUILayout.Button("Enlist TPWeapon", EditorStyles.toolbarButton))
+                    if (GUILayout.Button("登记第三人称武器", EditorStyles.toolbarButton))
                     {
                         playerReferences.playerNetwork.NetworkGuns.Add(script);
                         EditorUtility.SetDirty(playerReferences.playerNetwork);
@@ -138,11 +138,11 @@ public class bl_NetworkGunEditor : Editor
             if (playerReferences != null && playerReferences.gunManager != null)
             {
                 GUILayout.BeginVertical("box");
-                GUILayout.Label("Select the local weapon of this TPWeapon");
+                GUILayout.Label("选择该第三人称武器对应的本地武器");
                 GUILayout.BeginHorizontal();
-                GUILayout.Label("FPWeapon:", GUILayout.Width(100));
+                GUILayout.Label("第一人称武器：", GUILayout.Width(100));
                 selectLG = EditorGUILayout.Popup(selectLG, FPWeaponsAvailable.ToArray());
-                if (GUILayout.Button("Select", EditorStyles.toolbarButton, GUILayout.Width(75)))
+                if (GUILayout.Button("选择", EditorStyles.toolbarButton, GUILayout.Width(75)))
                 {
                     script.LocalGun = LocalGuns[selectLG];
                 }
@@ -151,7 +151,7 @@ public class bl_NetworkGunEditor : Editor
             }
             else
             {
-                if (GUILayout.Button("Open FPWeapons", EditorStyles.toolbarButton))
+                if (GUILayout.Button("打开第一人称武器", EditorStyles.toolbarButton))
                 {
                     bl_GunManager gm = script.transform.root.GetComponentInChildren<bl_GunManager>();
                     Selection.activeObject = gm.transform.GetChild(0).gameObject;
@@ -189,7 +189,7 @@ public class bl_NetworkGunEditor : Editor
         var pis = pa.playerAnimations.GetComponentsInChildren<bl_PlayerIKBase>(true);
         if(pis == null || pis.Length == 0)
         {
-            Debug.LogWarning("Couldn't found the player IK script inside the player prefab!");
+            Debug.LogWarning("在玩家预制体中未找到玩家 IK 脚本！");
             return;
         }
 
