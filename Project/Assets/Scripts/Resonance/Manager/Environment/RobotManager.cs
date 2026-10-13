@@ -21,7 +21,7 @@ public class RobotManager : EnvironmentEffectManager
         if (currentMultiple > 0 && currentMultiple > lastTriggeredMultiple)
         {
             lastTriggeredMultiple = currentMultiple;
-            bl_AIMananger.Instance.SpawnBot(null, Team.Team3);
+            AIMananger.Instance.SpawnBot(null, Team.Team3);
         }
     }
 }

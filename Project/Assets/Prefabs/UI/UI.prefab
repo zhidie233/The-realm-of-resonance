@@ -23355,7 +23355,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6961162238300381029}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -35934,7 +35934,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 2462447241644371102}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -37899,7 +37899,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9187195275885564164}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -50626,7 +50626,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7888357549882012487}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -55505,7 +55505,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 7212457037349229711}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -62129,7 +62129,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 9143973189120292272}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.bl_SingleSettingsSlider,
+        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0

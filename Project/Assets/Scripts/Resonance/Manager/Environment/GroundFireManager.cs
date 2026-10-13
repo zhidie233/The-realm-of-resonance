@@ -64,7 +64,7 @@ public class GroundFireManager : EnvironmentEffectManager
         float damage = config.fireDamageCurve.Evaluate(currentResonance);
         foreach (var fire in activeFires)
         {
-            var fireComponent = fire.GetComponent<bl_DamageArea>();
+            var fireComponent = fire.GetComponent<DamageArea>();
             if (fireComponent != null)
                 fireComponent.Damage = (int)damage;
 

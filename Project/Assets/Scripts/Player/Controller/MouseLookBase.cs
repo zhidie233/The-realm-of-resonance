@@ -37,7 +37,7 @@ namespace GFWK.PlayerController
         /// <param name="character"></param>
         /// <param name="camera"></param>
         /// <param name="ladder"></param>
-        public abstract void UpdateLook(Transform character, Transform camera, bl_Ladder ladder = null);
+        public abstract void UpdateLook(Transform character, Transform camera, ClimbableLadder ladder = null);
 
         /// <summary>
         /// 

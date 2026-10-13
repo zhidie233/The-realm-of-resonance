@@ -52,7 +52,7 @@ public struct GFWKRoomInfo
     public MapInfo GetMapInfo()
     {
         var mapName = sceneName;
-        var map = bl_GameData.Instance.AllScenes.Find(x => x.RealSceneName == mapName);
+        var map = GameConfig.Instance.AllScenes.Find(x => x.RealSceneName == mapName);
         return map;
     }
 }

@@ -39,7 +39,7 @@ namespace GFWK.Internal.Structures
         public GFWKLocalNotification(string message)
         {
             Message = message;
-            bl_EventHandler.onLocalNotification?.Invoke(this);
+            GameEvents.onLocalNotification?.Invoke(this);
         }
     }
 }

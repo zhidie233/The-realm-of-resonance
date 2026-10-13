@@ -21,7 +21,7 @@ namespace GFWK.InputManager
             GUILayout.Space(10);
             base.OnInspectorGUI();
             GUILayout.Space(10);
-            string key = $"{bl_InputData.KEYS}.{(short)script.inputType}";
+            string key = $"{InputBindings.KEYS}.{(short)script.inputType}";
             if (PlayerPrefs.HasKey(key))
             {
                 if(GUILayout.Button("删除已保存的输入绑定"))

@@ -18,7 +18,7 @@ public class TutorialBots : TutorialWizard
     private Steps[] AllSteps = new Steps[] {
      new Steps { Name = "替换机器人模型", StepsLenght = 3 },
      new Steps { Name = "掩体点", StepsLenght = 0 },
-     new Steps { Name = "bl_AICoverPointManager", StepsLenght = 0 },
+     new Steps { Name = "AICoverPointManager", StepsLenght = 0 },
      new Steps { Name = "机器人名称", StepsLenght = 0 },
     };
     //final required////////////////////////////////////////////////
@@ -44,10 +44,10 @@ public class TutorialBots : TutorialWizard
 
     void CoverPointDoc()
     {
-        DrawSuperText("GFWK 的 AI 系统支持掩体点。<b>掩体点是按策略分布在地图中的点位，可优化 AI 的导航寻路</b>。机器人会根据战场情况利用这些点，为自身行为增加随机性，用于躲避敌人或作为随机移动目标。\n \n这些点位推荐使用但并非必需。地图中掩体点越多，机器人的行为就越随机、导航也越自然。\n \n<?title=18>添加新的掩体点</title>\n \n添加掩体点只需复制一个现有点位，再手动摆放到地图中。\n \n为便于预览所有掩体点，可在 <i><b>地图场景层级 ➔ AIManager ➔ bl_AICoverPointManager ➔ Show Gizmos</b></i> 中开启辅助显示。");
+        DrawSuperText("GFWK 的 AI 系统支持掩体点。<b>掩体点是按策略分布在地图中的点位，可优化 AI 的导航寻路</b>。机器人会根据战场情况利用这些点，为自身行为增加随机性，用于躲避敌人或作为随机移动目标。\n \n这些点位推荐使用但并非必需。地图中掩体点越多，机器人的行为就越随机、导航也越自然。\n \n<?title=18>添加新的掩体点</title>\n \n添加掩体点只需复制一个现有点位，再手动摆放到地图中。\n \n为便于预览所有掩体点，可在 <i><b>地图场景层级 ➔ AIManager ➔ AICoverPointManager ➔ Show Gizmos</b></i> 中开启辅助显示。");
         DrawServerImage("img-5.png");
         DownArrow();
-        DrawText("每个掩体点都必须挂载 <b>bl_AICoverPoint</b> 脚本，否则不会作为掩体点生效，该脚本在检视面板中有几个公开属性：");
+        DrawText("每个掩体点都必须挂载 <b>AICoverPoint</b> 脚本，否则不会作为掩体点生效，该脚本在检视面板中有几个公开属性：");
         DrawServerImage("img-6.png");
         DrawPropertieInfo("下蹲", "bool", "机器人使用该掩体点时是否下蹲或起身");
         DrawPropertieInfo("邻近掩体点", "List", "邻近的掩体点列表，当该掩体点被占用时作为备用。");
@@ -55,7 +55,7 @@ public class TutorialBots : TutorialWizard
 
     void AICoverPointManagerDoc()
     {
-        DrawText("脚本 <b>bl_AICoverPointManager.cs</b> 挂载于每个 <i><b>地图场景 ➔ AIManager ➔ bl_AICoverPointManager</b></i> 下，负责掩体点的选择逻辑，当机器人请求掩体点时，该脚本会根据请求机器人的状态决定场景中使用哪个掩体点。\n\n该脚本在检视面板中有若干可调公开属性：");
+        DrawText("脚本 <b>AICoverPointManager.cs</b> 挂载于每个 <i><b>地图场景 ➔ AIManager ➔ AICoverPointManager</b></i> 下，负责掩体点的选择逻辑，当机器人请求掩体点时，该脚本会根据请求机器人的状态决定场景中使用哪个掩体点。\n\n该脚本在检视面板中有若干可调公开属性：");
         DrawServerImage("img-7.png");
         DrawPropertieInfo("最大距离", "float", "达成邻近关系的掩体点之间的最大距离。");
         DrawPropertieInfo("占用时间", "float", "掩体点被使用后再次可用的冷却时间。");
@@ -98,7 +98,7 @@ public class TutorialBots : TutorialWizard
             Space(2);
             if(DrawButton("选择机器人武器父节点"))
             {
-                var asw = FindObjectOfType<bl_AIShooterAttack>();
+                var asw = FindObjectOfType<AIShooterAttack>();
                 Transform wr = asw.aiWeapons[0].transform.parent;
                 Selection.activeTransform = wr;
                 EditorGUIUtility.PingObject(wr);
@@ -118,7 +118,7 @@ public class TutorialBots : TutorialWizard
 
     void BotsNameDoc()
     {
-        DrawHyperlinkText("机器人名称从一份预设名称列表中随机选取，作为开发者你可以方便地修改。\n \n首先可以定义随机名称的前缀，默认为 <b>BOT</b>，可在 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ <b>Bots Name Prefix</b> 中改成任意内容。\n \n要修改随机名称列表，打开脚本 <b>bl_GameTexts.cs</b> ➔ <b>RandomNames</b>，在该列表中增删或编辑任意一项即可。");
+        DrawHyperlinkText("机器人名称从一份预设名称列表中随机选取，作为开发者你可以方便地修改。\n \n首先可以定义随机名称的前缀，默认为 <b>BOT</b>，可在 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ <b>Bots Name Prefix</b> 中改成任意内容。\n \n要修改随机名称列表，打开脚本 <b>GameTexts.cs</b> ➔ <b>RandomNames</b>，在该列表中增删或编辑任意一项即可。");
         DrawServerImage("img-8.png");
     }
 
@@ -134,12 +134,12 @@ public class TutorialBots : TutorialWizard
 #endif
         }
         model.name += " [NEW]";
-        GameObject botPrefab = PrefabUtility.InstantiatePrefab(bl_GameData.Instance.BotTeam1.gameObject) as GameObject;
+        GameObject botPrefab = PrefabUtility.InstantiatePrefab(GameConfig.Instance.BotTeam1.gameObject) as GameObject;
 #if UNITY_2018_3_OR_NEWER
         PrefabUtility.UnpackPrefabInstance(botPrefab, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
 #endif
         botPrefab.name = "AISoldier 新建";
-        var oldModel = botPrefab.GetComponentInChildren<bl_AIAnimationBase>();
+        var oldModel = botPrefab.GetComponentInChildren<AIAnimationBase>();
         oldModel.name += " [OLD]";
         Animator modelAnimator = model.GetComponent<Animator>();
         modelAnimator.applyRootMotion = false;
@@ -150,15 +150,15 @@ public class TutorialBots : TutorialWizard
             return;
         }
 
-        bl_AIShooterAgent aisa = botPrefab.GetComponent<bl_AIShooterAgent>();
+        AIShooterAgent aisa = botPrefab.GetComponent<AIShooterAgent>();
         if(aisa != null)
-        botPrefab.GetComponent<bl_AIShooterAgent>().aimTarget = modelAnimator.GetBoneTransform(HumanBodyBones.Spine);
-        var botReferences = botPrefab.GetComponent<bl_AIShooterReferences>();
+        botPrefab.GetComponent<AIShooterAgent>().aimTarget = modelAnimator.GetBoneTransform(HumanBodyBones.Spine);
+        var botReferences = botPrefab.GetComponent<AIShooterReferences>();
 
         model.transform.parent = oldModel.transform.parent;
         model.transform.localPosition = oldModel.transform.localPosition;
         model.transform.localRotation = oldModel.transform.localRotation;
-        var aia = model.AddComponent<bl_AIAnimation>();
+        var aia = model.AddComponent<AIAnimation>();
         botReferences.aiAnimation = aia;
         aia.mRigidBody.Clear();
         aia.mRigidBody.AddRange(model.transform.GetComponentsInChildren<Rigidbody>());
@@ -170,7 +170,7 @@ public class TutorialBots : TutorialWizard
         botReferences.hitBoxManager.SetupHitboxes(modelAnimator);
         botReferences.PlayerAnimator = modelAnimator;
         EditorUtility.SetDirty(botReferences.hitBoxManager);
-        Transform weaponRoot = botPrefab.GetComponent<bl_AIShooterAttack>().aiWeapons[0].transform.parent;
+        Transform weaponRoot = botPrefab.GetComponent<AIShooterAttack>().aiWeapons[0].transform.parent;
         Vector3 wrp = weaponRoot.localPosition;
         Quaternion wrr = weaponRoot.localRotation;
         weaponRoot.parent = modelAnimator.GetBoneTransform(HumanBodyBones.RightHand);

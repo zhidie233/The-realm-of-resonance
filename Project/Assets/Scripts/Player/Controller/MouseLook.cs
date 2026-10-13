@@ -28,7 +28,7 @@ namespace GFWK.PlayerController
         private float rotAverageY;
         private bool ClampHorizontal = false;
         private Vector2 horizontalClamp = new Vector2(-360, 360);
-        private bl_PlayerReferences playerReferences;
+        private PlayerReferencesHandler playerReferences;
         private MouseLookSettings lookSettings;
         private float tiltValue, tiltTarget = 0;
         private float verticalOffset = 0;
@@ -48,20 +48,20 @@ namespace GFWK.PlayerController
             m_CameraTargetRot = camera.localRotation;
             FetchSettings();
             CurrentSensitivity = sensitivity;
-            playerReferences = character.GetComponent<bl_PlayerReferences>();
-            lookSettings = bl_GameData.Instance.mouseLookSettings;
+            playerReferences = character.GetComponent<PlayerReferencesHandler>();
+            lookSettings = GameConfig.Instance.mouseLookSettings;
         }
 
         /// <summary>
         /// Updates the character and camera rotation based on the player input.
         /// </summary>
-        public override void UpdateLook(Transform character, Transform camera, bl_Ladder ladder = null)
+        public override void UpdateLook(Transform character, Transform camera, ClimbableLadder ladder = null)
         {
             // When use a mobile device or Unity Remote
-            if (bl_UtilityHelper.isMobile)
+            if (UtilityHelper.isMobile)
             {
 #if GFWKM
-                Vector2 input = bl_TouchPad.Instance.GetInput(CurrentSensitivity);
+                Vector2 input = TouchPad.Instance.GetInput(CurrentSensitivity);
                 input.x = !InvertHorizontal ? input.x : (input.x * -1f);
                 input.y = InvertVertical ? (input.y * -1f) : input.y;
 
@@ -70,17 +70,17 @@ namespace GFWK.PlayerController
             }
             else
             {
-                if (!bl_RoomMenu.Instance.isCursorLocked)
+                if (!RoomMenu.Instance.isCursorLocked)
                     return;
 
-                Move(bl_GameInput.MouseX, bl_GameInput.MouseY, character, camera, ladder);
+                Move(GameInput.MouseX, GameInput.MouseY, character, camera, ladder);
             }
         }
 
         /// <summary>
         /// 
         /// </summary>
-        public void Move(float inputX, float inputY, Transform character, Transform camera, bl_Ladder ladder)
+        public void Move(float inputX, float inputY, Transform character, Transform camera, ClimbableLadder ladder)
         {
             if (ladder == null)
             {
@@ -140,7 +140,7 @@ namespace GFWK.PlayerController
             if (ClampHorizontal)
             {
                 var re = m_CharacterTargetRot.eulerAngles;
-                re.y = bl_MathUtility.Clamp360Angle(re.y, horizontalClamp.x, horizontalClamp.y);
+                re.y = MathUtility.Clamp360Angle(re.y, horizontalClamp.x, horizontalClamp.y);
                 m_CharacterTargetRot = Quaternion.Euler(re);
             }
 
@@ -276,10 +276,10 @@ namespace GFWK.PlayerController
         /// </summary>
         public void FetchSettings()
         {
-            sensitivity = (float)bl_GFWK.Settings.GetSettingOf("灵敏度");
-            aimSensitivity = (float)bl_GFWK.Settings.GetSettingOf("瞄准灵敏度");
-            InvertHorizontal = (bool)bl_GFWK.Settings.GetSettingOf("倒置水平视角");
-            InvertVertical = (bool)bl_GFWK.Settings.GetSettingOf("倒置垂直视角");
+            sensitivity = (float)GFWKCore.Settings.GetSettingOf("灵敏度");
+            aimSensitivity = (float)GFWKCore.Settings.GetSettingOf("瞄准灵敏度");
+            InvertHorizontal = (bool)GFWKCore.Settings.GetSettingOf("倒置水平视角");
+            InvertVertical = (bool)GFWKCore.Settings.GetSettingOf("倒置垂直视角");
             CurrentSensitivity = sensitivity;
         }
 
@@ -321,8 +321,8 @@ namespace GFWK.PlayerController
 
         public float VerticalAngle => m_CameraTransform.localEulerAngles.x;
 
-        Quaternion ClampRotationAroundXAxis(Quaternion q) => bl_MathUtility.ClampRotationAroundAxis(q, MinimumX, MaximumX, UnityEngine.Animations.Axis.X);
-        Quaternion ClampRotationAroundYAxis(Quaternion q) => bl_MathUtility.ClampRotationAroundAxis(q, horizontalClamp.x, horizontalClamp.y, UnityEngine.Animations.Axis.Y);
+        Quaternion ClampRotationAroundXAxis(Quaternion q) => MathUtility.ClampRotationAroundAxis(q, MinimumX, MaximumX, UnityEngine.Animations.Axis.X);
+        Quaternion ClampRotationAroundYAxis(Quaternion q) => MathUtility.ClampRotationAroundAxis(q, horizontalClamp.x, horizontalClamp.y, UnityEngine.Animations.Axis.Y);
 
         public override Vector2 HorizontalLimits { get => horizontalClamp; set => horizontalClamp = value; }
         public override Vector2 VerticalLimits

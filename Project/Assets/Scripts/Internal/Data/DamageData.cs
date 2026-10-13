@@ -35,7 +35,7 @@ public class DamageData
     // <returns></returns>
     public ExitGames.Client.Photon.Hashtable GetAsHashtable()
     {
-        var data = bl_UtilityHelper.CreatePhotonHashTable();
+        var data = UtilityHelper.CreatePhotonHashTable();
         data.Add("d", Damage);
         data.Add("gi", GunID);
         data.Add("vi", ActorViewID);
@@ -56,7 +56,7 @@ public class DamageData
         From = (string)data["f"];
         if (data.ContainsKey("dr")) Direction = (Vector3)data["dr"];
 
-        GFWKActor = bl_GameManager.Instance.GetGFWKActor(ActorViewID);
+        GFWKActor = GameController.Instance.GetGFWKActor(ActorViewID);
     }
 
     public DamageData() { }

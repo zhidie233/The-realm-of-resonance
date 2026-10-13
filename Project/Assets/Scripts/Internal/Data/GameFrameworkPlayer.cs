@@ -47,7 +47,7 @@ public class GFWKPlayer
     // <returns></returns>
     public GFWKBotProperties GetBotStats()
     {
-        GFWKBotProperties botProps = bl_AIMananger.Instance.GetBotStatistics(Name);
+        GFWKBotProperties botProps = AIMananger.Instance.GetBotStatistics(Name);
         if (botProps == null)
         {
             Debug.LogWarning($"Bot {Name} not found in AI Manager, this could be a de-sync issue.");
@@ -64,7 +64,7 @@ public class GFWKPlayer
         if (ActorView != null) return ActorView.Owner;
         else
         {
-            var playerList = bl_PhotonNetwork.PlayerList;
+            var playerList = PhotonNetworkWrapper.PlayerList;
             for (int i = 0; i < playerList.Length; i++)
             {
                 if (playerList[i].NickName == Name) return playerList[i];

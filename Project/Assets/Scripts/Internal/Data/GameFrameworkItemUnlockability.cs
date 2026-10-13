@@ -42,7 +42,7 @@ namespace GFWK.Internal.Structures
 #if SHOP && ULSP
             if (CanBePurchased())
             {
-                isPurchased = bl_DataBase.IsItemPurchased((int)ItemType, itemID);
+                isPurchased = DataBase.IsItemPurchased((int)ItemType, itemID);
                 if (!isPurchased)
                 {
                     reason = LockReason.NoPurchased;
@@ -53,7 +53,7 @@ namespace GFWK.Internal.Structures
             if (CanBeUnlockedByLevel())
             {
                 // if the local player level doesn't meets the required level to unlock.
-                if ((bl_LevelManager.Instance.GetLevelID() + 1) < UnlockAtLevel)
+                if ((LevelManager.Instance.GetLevelID() + 1) < UnlockAtLevel)
                 {
                     if (reason == LockReason.NoPurchased) reason = LockReason.NoPurchasedAndLevel;
                     else
@@ -121,7 +121,7 @@ namespace GFWK.Internal.Structures
         /// <returns></returns>
         public List<GFWKCoin> GetAllowedCoins()
         {
-            var all = bl_GFWK.Coins.GetAllCoins();
+            var all = GFWKCore.Coins.GetAllCoins();
             var copy = new List<GFWKCoin>();
             foreach (var c in all)
             {

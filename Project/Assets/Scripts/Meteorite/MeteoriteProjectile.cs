@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class MeteoriteProjectile : bl_GrenadeLauncherProjectile
+public class MeteoriteProjectile : GrenadeLauncherProjectile
 {
     private Vector3 targetPosition;
     private bool hasTarget = false;

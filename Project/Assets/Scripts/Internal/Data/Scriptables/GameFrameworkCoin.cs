@@ -27,9 +27,9 @@ namespace GFWK.Internal.Scriptables
         public GFWKCoin Add(int coins, string forUser = "")
         {
 #if ULSP
-            if (!bl_DataBase.IsUserLogged) return this;
+            if (!DataBase.IsUserLogged) return this;
 
-            bl_DataBase.Instance.SaveNewCoins(coins, this);
+            DataBase.Instance.SaveNewCoins(coins, this);
 #else
             int savedCoins = GetCoins(forUser);
             savedCoins += coins;
@@ -47,9 +47,9 @@ namespace GFWK.Internal.Scriptables
         public GFWKCoin Deduct(int coins, string forUser = "")
         {
 #if ULSP
-            if (!bl_DataBase.IsUserLogged) return this;
+            if (!DataBase.IsUserLogged) return this;
 
-            bl_DataBase.Instance.SubtractCoins(coins, this);
+            DataBase.Instance.SubtractCoins(coins, this);
 #else
             int savedCoins = GetCoins(forUser);
             savedCoins -= coins;
@@ -76,13 +76,13 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
         public int GetCoins(string endPoint = "")
         {
 #if ULSP
-            if (!bl_DataBase.IsUserLogged)
+            if (!DataBase.IsUserLogged)
             {
                 // Debug.Log($"You need an account to accesses to the coins.");
                 return 0;
             }
-            int indexOfCoin = bl_GFWK.Coins.GetIndexOfCoin(this);
-            var userCoins = bl_DataBase.LocalUserInstance.Coins;
+            int indexOfCoin = GFWKCore.Coins.GetIndexOfCoin(this);
+            var userCoins = DataBase.LocalUserInstance.Coins;
             if(indexOfCoin >= userCoins.Length)
             {
                 Debug.LogWarning($"Local user doesn't have data for this coin '{CoinName} with ID {indexOfCoin}'.");
@@ -122,7 +122,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
             return k;
         }
 
-        public static implicit operator int(GFWKCoin coin) => bl_GFWK.Coins.GetIndexOfCoin(coin);
-        public static explicit operator GFWKCoin(int coinID) => bl_GFWK.Coins.GetAllCoins()[coinID];
+        public static implicit operator int(GFWKCoin coin) => GFWKCore.Coins.GetIndexOfCoin(coin);
+        public static explicit operator GFWKCoin(int coinID) => GFWKCore.Coins.GetAllCoins()[coinID];
     }
 }

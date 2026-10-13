@@ -233,7 +233,7 @@ namespace GFWKEditor.Addons
                 var r = w.SendWebRequest();
                 while (!r.isDone) yield return null;
 
-                if (!bl_UtilityHelper.IsNetworkError(w))
+                if (!UtilityHelper.IsNetworkError(w))
                 {
                     var packages = JsonUtility.FromJson<AddonsPackages>(w.downloadHandler.text);
                     if (packages != null)
@@ -361,7 +361,7 @@ namespace GFWKEditor.Addons
 
             loadingSpinner = new EditorSpinnerGUI();
             loadingSpinner.Initializated(this);
-            titleContent = new GUIContent("Addons", bl_GFWKManagerWindow.GetUnityIcon("d_PreMatCube"));
+            titleContent = new GUIContent("Addons", GFWKManagerWindow.GetUnityIcon("d_PreMatCube"));
             gfwkSkin = Resources.Load<GUISkin>("content/GameFrameworkEditorSkin") as GUISkin;
             initGUI = false;
             if (superText == null)
@@ -670,7 +670,7 @@ namespace GFWKEditor.Addons
                     br.y -= 20;
                     br.height += 30;
                     GUI.color = new Color(0, 0.8256686f, 1, 1);
-                    if (GUI.Button(br, new GUIContent("<b>GET</b>", bl_GFWKManagerWindow.GetUnityIcon("收藏图标")), GFWKEditorStyles.OutlineButtonStyle))
+                    if (GUI.Button(br, new GUIContent("<b>GET</b>", GFWKManagerWindow.GetUnityIcon("收藏图标")), GFWKEditorStyles.OutlineButtonStyle))
                     {
                         Application.OpenURL(sp.Url);
                     }
@@ -1262,7 +1262,7 @@ namespace GFWKEditor.Addons
                 var r = w.SendWebRequest();
                 while (!r.isDone) yield return null;
 
-                if (!bl_UtilityHelper.IsNetworkError(w))
+                if (!UtilityHelper.IsNetworkError(w))
                 {
                     var packages = JsonUtility.FromJson<AddonsPackages>(w.downloadHandler.text);
                     if (packages != null)

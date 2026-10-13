@@ -247,10 +247,10 @@ public class AddPlayerTutorial : TutorialWizard
                 GUILayout.FlexibleSpace();
                 EditorGUILayout.BeginVertical();
                 {
-                    DrawPlayerInstanceButton(bl_GameData.Instance.Player1.gameObject);
-                    DrawPlayerInstanceButton(bl_GameData.Instance.Player2.gameObject);
+                    DrawPlayerInstanceButton(GameConfig.Instance.Player1.gameObject);
+                    DrawPlayerInstanceButton(GameConfig.Instance.Player2.gameObject);
 #if PSELECTOR
-                    foreach (var p in bl_PlayerSelector.Data.AllPlayers)
+                    foreach (var p in PlayerSelector.Data.AllPlayers)
                     {
                         if (p == null || p.Prefab == null) continue;
                         DrawPlayerInstanceButton(p.Prefab);
@@ -309,7 +309,7 @@ public class AddPlayerTutorial : TutorialWizard
             {
                 if (PlayerInstantiated != null)
                 {
-                    Transform t = PlayerInstantiated.GetComponent<bl_PlayerNetwork>().NetworkGuns[0].transform.parent;
+                    Transform t = PlayerInstantiated.GetComponent<PlayerNetworkHandler>().NetworkGuns[0].transform.parent;
                     Selection.activeTransform = t;
                     EditorGUIUtility.PingObject(t);
                     if (t != null)
@@ -325,7 +325,7 @@ public class AddPlayerTutorial : TutorialWizard
             DrawImage(GetServerImage(5));
             DrawNote("你也可以在层级中启用某把第三人称武器 <i>位于 RemoteWeapons 的 Transform 下</i> 来查看其外观，并按新玩家逐把微调，使姿态更准确。");
             DownArrow();
-            DrawSuperText("<?background=#CCCCCCFF>瞄准位置</background>\n\n武器位置调整完成后，同样只保留一个第三人称武器处于激活状态以便预览姿势。\n \n手臂瞄准位置由 IK 控制，可在检视面板中自定义。选中玩家预制体中带 <b>(NEW)</b> 标记的玩家模型，它位于 RemotePlayer 对象内 ➔ 打开检视面板 ➔ bl_PlayerIK ➔ 在脚本检视面板底部 ➔ 点击 <b>预览瞄准位置</b> 按钮 ➔ 移动自动选中的轴心点，可看到手臂随之移动 ➔ 将轴心点放到你想要的瞄准位置 ➔ 确定后点击黄色的 <b>完成</b> 按钮即可。");
+            DrawSuperText("<?background=#CCCCCCFF>瞄准位置</background>\n\n武器位置调整完成后，同样只保留一个第三人称武器处于激活状态以便预览姿势。\n \n手臂瞄准位置由 IK 控制，可在检视面板中自定义。选中玩家预制体中带 <b>(NEW)</b> 标记的玩家模型，它位于 RemotePlayer 对象内 ➔ 打开检视面板 ➔ PlayerIK ➔ 在脚本检视面板底部 ➔ 点击 <b>预览瞄准位置</b> 按钮 ➔ 移动自动选中的轴心点，可看到手臂随之移动 ➔ 将轴心点放到你想要的瞄准位置 ➔ 确定后点击黄色的 <b>完成</b> 按钮即可。");
             DrawNote("请确保编辑器中已启用 <b>Gizmos</b>，否则无法移动轴心。");
             DrawAnimatedImage(0);
             DownArrow();
@@ -387,9 +387,9 @@ public class AddPlayerTutorial : TutorialWizard
         PlayerModel.name += " [NEW]";
 
         // get the current player model
-        GameObject RemoteChildPlayer = TempPlayerPrefab.GetComponentInChildren<bl_PlayerAnimationsBase>().gameObject;
-        GameObject ActualModel = TempPlayerPrefab.GetComponentInChildren<bl_PlayerIKBase>().gameObject;
-        Transform NetGunns = TempPlayerPrefab.GetComponent<bl_PlayerNetwork>().NetworkGuns[0].transform.parent;
+        GameObject RemoteChildPlayer = TempPlayerPrefab.GetComponentInChildren<PlayerAnimationsBase>().gameObject;
+        GameObject ActualModel = TempPlayerPrefab.GetComponentInChildren<PlayerIKBase>().gameObject;
+        Transform NetGunns = TempPlayerPrefab.GetComponent<PlayerNetworkHandler>().NetworkGuns[0].transform.parent;
 
         //set the new model to the same position as the current model
         TempPlayerModel.transform.parent = RemoteChildPlayer.transform;
@@ -397,13 +397,13 @@ public class AddPlayerTutorial : TutorialWizard
         TempPlayerModel.transform.localRotation = ActualModel.transform.localRotation;
 
         //add and copy components of actual player model
-        bl_PlayerIK ahl = ActualModel.GetComponent<bl_PlayerIK>();
+        PlayerIK ahl = ActualModel.GetComponent<PlayerIK>();
         if (TempPlayerModel.GetComponent<Animator>() == null) { TempPlayerModel.AddComponent<Animator>(); }
         Animator NewAnimator = TempPlayerModel.GetComponent<Animator>();
 
         if (ahl != null)
         {
-            bl_PlayerIK newht = TempPlayerModel.AddComponent<bl_PlayerIK>();
+            PlayerIK newht = TempPlayerModel.AddComponent<PlayerIK>();
             newht.Target = ahl.Target;
             newht.Body = ahl.Body;
             newht.Weight = ahl.Weight;
@@ -439,10 +439,10 @@ public class AddPlayerTutorial : TutorialWizard
             return;
         }
 
-        var tempPlayerReferences = TempPlayerPrefab.GetComponent<bl_PlayerReferences>();
+        var tempPlayerReferences = TempPlayerPrefab.GetComponent<PlayerReferencesHandler>();
         tempPlayerReferences.PlayerAnimator = NewAnimator;
-        var pa = TempPlayerPrefab.transform.GetComponentInChildren<bl_PlayerAnimationsBase>();
-        var tempRagdoll = TempPlayerPrefab.transform.GetComponentInChildren<bl_PlayerRagdoll>();
+        var pa = TempPlayerPrefab.transform.GetComponentInChildren<PlayerAnimationsBase>();
+        var tempRagdoll = TempPlayerPrefab.transform.GetComponentInChildren<PlayerRagdoll>();
         pa.Animator = NewAnimator;
         ActualModel.SetActive(false);
         tempRagdoll.SetUpHitBoxes();

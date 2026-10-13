@@ -203,12 +203,12 @@ public class GFWKGeneralDoc : TutorialWizard
         }
         else if (subStep == 1)
         {
-            DrawSuperText("<?background=#FFF>代码修改</background>\n\n从 GFWK 1.9 起，大部分默认脚本采用代码继承设计，<b>继承允许你或你的程序员基于游戏已有的类创建新类，在保持行为一致的前提下指定新的实现，实现代码复用，并独立扩展原有代码。</b>\n \n<b>以下举例说明这种设计如何工作、有何帮助：</b>\n \n在 GFWK 1.9 之前，若想修改武器拾取系统，必须直接改 <b>bl_GunPickUp.cs</b> <i>（默认脚本）</i>，这会导致该脚本无法再自动更新，否则你的改动就会丢失。\n而在 GFWK 1.9 中做同样的修改，无需直接改默认脚本，而是新建一个脚本并继承其基类（本例为 <b>bl_GunPickUpBase</b>）➔ 把默认脚本的代码复制到新脚本中，然后做想要的修改。由于所有引用都指向基类，无需担心引用问题，只需在原本挂载默认脚本的物体上换挂你的新脚本，并移除或卸载默认脚本即可。\n \n<?background=#FFF>如何继承脚本？</background>\n \n若你是有中高级经验的程序员，可能已熟悉这种编程设计，它不仅是优秀代码的应有之义，也让代码更易维护和扩展，并带来多态结构，从而以更少代价实现新功能或变体。\n \n若你不是程序员或不熟悉代码继承，做法很简单：以武器拾取为例新建一个脚本，假设该脚本用于修改武器拾取逻辑，创建后其结构大致如下：");
-            DrawCodeText("using UnityEngine;\n \npublic class bl_GunPickUp2 : MonoBehaviour\n{\n    ...\n}");
-            DrawText("接下来要修改基类<i>（紧随你的类名之后那个类名）</i>，此处原为 <color=#0E6148FF>MonoBeheaviour</color>，需改为 <i>bl_GunPickUp</i> 的基类 <color=#0E6148FF>bl_GunPickUpBase</color>，结果如下：");
-            DrawCodeText("using UnityEngine;\n \npublic class bl_GunPickUp2 : bl_GunPickUpBase\n{\n    ...\n}");
+            DrawSuperText("<?background=#FFF>代码修改</background>\n\n从 GFWK 1.9 起，大部分默认脚本采用代码继承设计，<b>继承允许你或你的程序员基于游戏已有的类创建新类，在保持行为一致的前提下指定新的实现，实现代码复用，并独立扩展原有代码。</b>\n \n<b>以下举例说明这种设计如何工作、有何帮助：</b>\n \n在 GFWK 1.9 之前，若想修改武器拾取系统，必须直接改 <b>GunPickUp.cs</b> <i>（默认脚本）</i>，这会导致该脚本无法再自动更新，否则你的改动就会丢失。\n而在 GFWK 1.9 中做同样的修改，无需直接改默认脚本，而是新建一个脚本并继承其基类（本例为 <b>GunPickUpBase</b>）➔ 把默认脚本的代码复制到新脚本中，然后做想要的修改。由于所有引用都指向基类，无需担心引用问题，只需在原本挂载默认脚本的物体上换挂你的新脚本，并移除或卸载默认脚本即可。\n \n<?background=#FFF>如何继承脚本？</background>\n \n若你是有中高级经验的程序员，可能已熟悉这种编程设计，它不仅是优秀代码的应有之义，也让代码更易维护和扩展，并带来多态结构，从而以更少代价实现新功能或变体。\n \n若你不是程序员或不熟悉代码继承，做法很简单：以武器拾取为例新建一个脚本，假设该脚本用于修改武器拾取逻辑，创建后其结构大致如下：");
+            DrawCodeText("using UnityEngine;\n \npublic class GunPickUp2 : MonoBehaviour\n{\n    ...\n}");
+            DrawText("接下来要修改基类<i>（紧随你的类名之后那个类名）</i>，此处原为 <color=#0E6148FF>MonoBeheaviour</color>，需改为 <i>GunPickUp</i> 的基类 <color=#0E6148FF>GunPickUpBase</color>，结果如下：");
+            DrawCodeText("using UnityEngine;\n \npublic class GunPickUp2 : GunPickUpBase\n{\n    ...\n}");
             DrawNote("几乎所有默认脚本的基类都遵循同样的命名规则，只是在名称末尾加上 \"Base\" 一词。不过要确认某个脚本的基类，最可靠的方法还是打开该默认脚本查看。");
-            DrawText("改好基类后，需要重写基类的函数或方法。若不知如何操作，直接把原类<i>（本例为 <b>bl_GunPickUp.cs</b>）</i>的代码复制粘贴到你的脚本中即可，\n这样就够了，之后便可在新脚本中做任意修改。");
+            DrawText("改好基类后，需要重写基类的函数或方法。若不知如何操作，直接把原类<i>（本例为 <b>GunPickUp.cs</b>）</i>的代码复制粘贴到你的脚本中即可，\n这样就够了，之后便可在新脚本中做任意修改。");
             DrawHorizontalSeparator();
             DrawText("如前所述，这并非修改代码的强制要求，而是推荐做法。GFWK 并非所有代码都支持继承，截至 1.9 版已有一半以上代码按此方式重做，但工作仍在进行，目标是让全部或至少大部分代码支持继承并在未来更新中保持模块化。");
         }
@@ -350,27 +350,27 @@ public class GFWKGeneralDoc : TutorialWizard
             DrawTitleText("创建击杀提示事件");
             DrawText("击杀提示系统支持多种事件类型，按你的需求选用：\n \n<b>击杀事件：</b>\n \n• 用于发生了涉及两名角色的击杀时 " +
                 "即击杀者与被击杀者，调用方式如下：");
-            DrawCodeText("bl_KillFeed.Instance.SendKillMessageEvent(string killer, string killed, int gunID, Team killerTeam, bool byHeadshot);");
+            DrawCodeText("KillFeedManager.Instance.SendKillMessageEvent(string killer, string killed, int gunID, Team killerTeam, bool byHeadshot);");
             DrawText("<b>消息：</b>\n \n• 若要显示一条不涉及特定玩家的简单文本事件，使用：");
-            DrawCodeText("bl_KillFeed.Instance.SendMessageEvent(string message);");
+            DrawCodeText("KillFeedManager.Instance.SendMessageEvent(string message);");
             DrawText("<b>阵营高亮：</b>\n \n• 若要显示一条主体为特定阵营的文本事件，并用阵营颜色高亮其中一部分文本，使用：");
-            DrawCodeText("bl_KillFeed.Instance.SendTeamHighlightMessage(string teamHighlightMessage, string normalMessage, Team playerTeam);");
+            DrawCodeText("KillFeedManager.Instance.SendTeamHighlightMessage(string teamHighlightMessage, string normalMessage, Team playerTeam);");
         }
     }
 
     void PlayerClassesDoc()
     {
-        DrawText("GFWK 使用 <b>兵种</b> 系统来丰富武器配置，兵种包括 <b>侦察兵、支援兵、突击兵和工程兵</b>，各自配备不同武器。\n\n每个玩家预制体各兵种的武器配置，可在玩家预制体内 <b>WeaponsManager</b> 对象上挂载的 <b>bl_GunManager</b> 脚本中设置。\n\n每个兵种需要 4 件武器 <i>主武器、副武器、技能和投掷物</i>。设置各兵种默认武器有两种方式：新建一个 Present 即 ScriptableObject，或直接编辑默认的那一个。只有在你需要保留当前兵种配置的备份，或想让某个玩家预制体使用不同配置时，才需要新建 ScriptableObject，否则直接编辑默认实例即可。\n\n无论新建还是编辑，都先打开玩家预制体，或你要修改兵种配置的那个玩家预制体，然后进入 <b>WeaponsManager</b> 对象 -> <b>bl_GunManager</b> 检视面板 -> 展开目标兵种 -> 为每个槽位设置武器。\n\n若想在编辑前新建一个 Present，直接点击 <b>New</b> 按钮");
+        DrawText("GFWK 使用 <b>兵种</b> 系统来丰富武器配置，兵种包括 <b>侦察兵、支援兵、突击兵和工程兵</b>，各自配备不同武器。\n\n每个玩家预制体各兵种的武器配置，可在玩家预制体内 <b>WeaponsManager</b> 对象上挂载的 <b>GunInventory</b> 脚本中设置。\n\n每个兵种需要 4 件武器 <i>主武器、副武器、技能和投掷物</i>。设置各兵种默认武器有两种方式：新建一个 Present 即 ScriptableObject，或直接编辑默认的那一个。只有在你需要保留当前兵种配置的备份，或想让某个玩家预制体使用不同配置时，才需要新建 ScriptableObject，否则直接编辑默认实例即可。\n\n无论新建还是编辑，都先打开玩家预制体，或你要修改兵种配置的那个玩家预制体，然后进入 <b>WeaponsManager</b> 对象 -> <b>GunInventory</b> 检视面板 -> 展开目标兵种 -> 为每个槽位设置武器。\n\n若想在编辑前新建一个 Present，直接点击 <b>New</b> 按钮");
         DrawServerImage(8);
         DrawText("你也可以在 Project 窗口的 <i>Assets->GFWK->Content->Prefabs->Weapons->Loadouts</i> 文件夹中编辑默认兵种武器配置。\n");
     }
 
     void HeadBobDoc()
     {
-        DrawText("<b>头部晃动</b> 是模拟玩家行走或奔跑时头部反应的相机运动。GFWK 中该运动由代码程序化生成，你可以调整数值得到想要的效果。\n\n为获得更真实的表现，GFWK 把武器晃动与头部晃动做了同步，因此设置会同时作用于两者。\n\n数值可在 bl_WeaponBob.cs 中修改<i>，该脚本挂载在玩家预制体内的 WeaponsManager 对象上</i>。你可以在运行时编辑并即时预览效果。\n");
+        DrawText("<b>头部晃动</b> 是模拟玩家行走或奔跑时头部反应的相机运动。GFWK 中该运动由代码程序化生成，你可以调整数值得到想要的效果。\n\n为获得更真实的表现，GFWK 把武器晃动与头部晃动做了同步，因此设置会同时作用于两者。\n\n数值可在 WeaponBob.cs 中修改<i>，该脚本挂载在玩家预制体内的 WeaponsManager 对象上</i>。你可以在运行时编辑并即时预览效果。\n");
         DrawServerImage(9);
         DownArrow();
-        DrawText("若想让不同玩家使用不同运动参数，或只是想备份当前运动设置，可以新建一份设置的 Present 并在脚本中替换原有的那份。\n\n新建 Present 的方式：在 <i>Project 视图</i> 中选中目标文件夹 -> 右键 -> GFWK -> Weapons -> Bob -> Settings -> 把生成的配置拖到 bl_WeaponBob 的 Settings 中 -> 然后按需修改。\n");
+        DrawText("若想让不同玩家使用不同运动参数，或只是想备份当前运动设置，可以新建一份设置的 Present 并在脚本中替换原有的那份。\n\n新建 Present 的方式：在 <i>Project 视图</i> 中选中目标文件夹 -> 右键 -> GFWK -> Weapons -> Bob -> Settings -> 把生成的配置拖到 WeaponBob 的 Settings 中 -> 然后按需修改。\n");
     }
 
     void AfkDoc()
@@ -387,11 +387,11 @@ public class GFWKGeneralDoc : TutorialWizard
         DrawTitleText("KICK VOTATION");
         DrawText("为了让玩家能以民主方式处理捣乱、作弊、违规的玩家，由一名玩家发起提议，房间内多数玩家 " +
             "表决是否将其移出或驳回提议，GFWK 内置了投票系统。\n \n在游戏中发起投票：玩家打开菜单 -> 在记分板上点击或触摸要表决的玩家 -> " +
-            "在弹出的菜单中选择 <b>Request Kick</b> 按钮。\n \n默认投票按键为 F1 表示同意、F2 表示反对，可在 <b>GameManager</b> 上挂载的 bl_KickVotation.cs 中修改 " +
+            "在弹出的菜单中选择 <b>Request Kick</b> 按钮。\n \n默认投票按键为 F1 表示同意、F2 表示反对，可在 <b>GameManager</b> 上挂载的 KickVotation.cs 中修改 " +
             "该脚本位于地图场景中。");
         DownArrow();
         DrawText("若想自行实现发起投票的方式，可调用：");
-        DrawCodeText("bl_KickVotation.Instance.RequestKick(Photon.Realtime.Player playerToKick);");
+        DrawCodeText("KickVotation.Instance.RequestKick(Photon.Realtime.Player playerToKick);");
     }
 
     private AssetStoreAffiliate soundsAssets;
@@ -399,16 +399,16 @@ public class GFWKGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("<b><size=22>背景音乐</size></b>\n \nGFWK 默认只在 <b>大厅与主菜单</b> 场景使用背景音乐。要更换或移除该音乐：\n \n■ 打开 <b>MainMenu</b> 场景 -> Lobby -> Scene -> AudioController -> 在检视面板中找到 bl_AudioController -> 在 <b>Background Clip</b> 字段中指定或移除音频片段");
+            DrawText("<b><size=22>背景音乐</size></b>\n \nGFWK 默认只在 <b>大厅与主菜单</b> 场景使用背景音乐。要更换或移除该音乐：\n \n■ 打开 <b>MainMenu</b> 场景 -> Lobby -> Scene -> AudioController -> 在检视面板中找到 AudioManager -> 在 <b>Background Clip</b> 字段中指定或移除音频片段");
             Space(20);
             DrawText("<b><size=22>子弹命中</size></b>\n \n子弹命中粒子生成时会播放一个命中音效。出于设计考虑该音量非常低，因为音量过大会让部分玩家感到不适。要更换这些命中音效或调整音量，<b>需要打开子弹命中粒子预制体</b>，其默认位置为 <i>Assets -> Prefabs -> Level -> Particles -> WeaponEffects -> Prefabs->*</i>。\n \n打开要修改的命中效果预制体 -> 在其上的 <b>Audio Source</b> 组件中指定或替换音频片段，并按需调整音量。");
             Space(20);
-            DrawText("<b><size=22>玩家受击</size></b>\n \n另一个会播放的受击音效是本地玩家被击中时。这里区分两种声音：被子弹击中，以及其他类型的受伤。\n \n这些音效可按玩家预制体分别设置。选中要修改的 <b>玩家预制体</b> -> bl_PlayerHealthManager -> 在以下列表中设置：\n \n<b>Hits Sounds：</b>子弹命中音效\n<b>Injure Sounds：</b>受伤音效");
+            DrawText("<b><size=22>玩家受击</size></b>\n \n另一个会播放的受击音效是本地玩家被击中时。这里区分两种声音：被子弹击中，以及其他类型的受伤。\n \n这些音效可按玩家预制体分别设置。选中要修改的 <b>玩家预制体</b> -> PlayerHealthManager -> 在以下列表中设置：\n \n<b>Hits Sounds：</b>子弹命中音效\n<b>Injure Sounds：</b>受伤音效");
         }
         else if (subStep == 1)
         {
             DrawText("你可能会遇到这种情况：在自定义地图中，远处玩家或机器人的枪声、脚步、爆炸等听起来像就在身边。原因是默认音频范围不适合你的地图尺寸，这个问题很容易调整。");
-            DrawText("<b><size=16>调整音频范围</size></b>\n \n在特定地图中调整音频范围：在编辑器中打开地图场景 -> 在层级窗口进入 <b>GameManager</b> > <b>Audio Manager</b> -> 在该对象的检视面板中找到 <b>bl_AudioController</b> -> 你会看到若干滑块参数，用于调整特定类型声音的范围。范围以米为单位，设为 50 表示玩家距离音源 50 米以内才能听到。\n \n音量会随距离从声源处向最大距离逐渐衰减。");
+            DrawText("<b><size=16>调整音频范围</size></b>\n \n在特定地图中调整音频范围：在编辑器中打开地图场景 -> 在层级窗口进入 <b>GameManager</b> > <b>Audio Manager</b> -> 在该对象的检视面板中找到 <b>AudioManager</b> -> 你会看到若干滑块参数，用于调整特定类型声音的范围。范围以米为单位，设为 50 表示玩家距离音源 50 米以内才能听到。\n \n音量会随距离从声源处向最大距离逐渐衰减。");
             DrawServerImage("img-47.png");
         }
         else if (subStep == 2)
@@ -483,9 +483,9 @@ public class GFWKGeneralDoc : TutorialWizard
         else if (subStep == 1)
         {
             DrawSuperText("若要对玩家钱包执行 <b>增加</b> 或 <b>扣减</b> 指定数量货币这类基础操作，一行代码即可完成：\n \n<?title=#20>增加货币</title>");
-            DrawCodeText("bl_GFWK.Coins.GetCoinData(0).Add(100);");
+            DrawCodeText("GFWKCore.Coins.GetCoinData(0).Add(100);");
             DrawSuperText("其中 0 表示该货币在 GameData ➔ GameCoins 列表中的索引。\n默认为 0 是经验货币，1 是金币。\n \n<?title=20>扣减货币</title>");
-            DrawCodeText("bl_GFWK.Coins.GetCoinData(0).Deduct(100);");
+            DrawCodeText("GFWKCore.Coins.GetCoinData(0).Deduct(100);");
             DrawText("若使用 ULogin Pro 插件，货币操作会在服务端执行并存入库中。若未使用，货币数据会通过 <b>PlayerPrefs 存储在本地，并不安全</b>。因此建议像 ULogin Pro 那样把货币数据保存到独立数据库中。");
         }
     }
@@ -517,11 +517,11 @@ public class GFWKGeneralDoc : TutorialWizard
             DrawCodeText("public enum GameMode\n{\n    TDM,\n    FFA,\n    CTF,\n    SND,\n    CP,\n    GR,\n    BR,\n    ELIM,\n    DM,\n    KC,\n    <color=#0D5400FF>MyCustomMode, </color>\n}");
             DrawText("上例中的 <i>MyCustomMode</i> 只是示意，你可以用任何名称，也可以像其他模式那样只取首字母缩写。");
             DownArrow();
-            DrawHyperlinkText("接下来要编写负责把 GFWK 与你的游戏模式对接的脚本。GFWK 通过 <color=#DFFF2AFF>IGameMode</color> 接口规定模式主脚本必须实现哪些函数。因此你需要在模式主脚本中 <link=https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces>实现该接口</link>，并重写其中要求的函数。为便于上手，可参考默认模式脚本 <i>bl_TeamDeathMatch.cs、bl_FreeForAll.cs 等</i> 的写法。\n \n实现 <b>IGameMode</b> 接口及其函数之后，还有一段必须编写的代码：在脚本 <i>即实现接口的那个</i> 的 Awake() 中调用 Initialize()，并在 Initialize() 中用枚举标识注册该模式，如下所示：\n");
-            DrawCodeText("if(bl_GameManager.Instance.IsGameMode(GameMode.MyCustomMode, this))\n        {\n            // 启用你的游戏模式\n            // 启用该模式专属的所有 GameObject、道具、UI 等\n            // 订阅该模式需要的游戏事件\n        }\n        else\n        {\n            // 禁用该模式专属的对象与 UI\n        }");
+            DrawHyperlinkText("接下来要编写负责把 GFWK 与你的游戏模式对接的脚本。GFWK 通过 <color=#DFFF2AFF>IGameMode</color> 接口规定模式主脚本必须实现哪些函数。因此你需要在模式主脚本中 <link=https://docs.microsoft.com/en-us/dotnet/csharp/fundamentals/types/interfaces>实现该接口</link>，并重写其中要求的函数。为便于上手，可参考默认模式脚本 <i>TeamDeathMatchMode.cs、FreeForAllMode.cs 等</i> 的写法。\n \n实现 <b>IGameMode</b> 接口及其函数之后，还有一段必须编写的代码：在脚本 <i>即实现接口的那个</i> 的 Awake() 中调用 Initialize()，并在 Initialize() 中用枚举标识注册该模式，如下所示：\n");
+            DrawCodeText("if(GameController.Instance.IsGameMode(GameMode.MyCustomMode, this))\n        {\n            // 启用你的游戏模式\n            // 启用该模式专属的所有 GameObject、道具、UI 等\n            // 订阅该模式需要的游戏事件\n        }\n        else\n        {\n            // 禁用该模式专属的对象与 UI\n        }");
             DownArrow();
             DrawText("下面是一份完整脚本，包含上述内容的默认骨架。你可以以此为基础，按你的模式需求进行改造：");
-            DrawCodeText("using Photon.Realtime;\nusing UnityEngine;\n \npublic class MyCustomModeScript : MonoBehaviour, IGameMode\n{\n \n    void Awake()\n    {\n        if (!bl_PhotonNetwork.IsConnected) return;\n \n        // 必须调用\n        Initialize();\n    }\n \n    #region Interface Overrides\n    public void Initialize()\n    {\n        if(bl_GameManager.Instance.IsGameMode(GameMode.MyCustomMode, this)) // 把 MyCustomMode 替换为你的模式标识\n        {\n            // 启用你的游戏模式\n            // 启用该模式专属的所有 GameObject、道具、UI 等\n            // 订阅该模式需要的游戏事件\n        }\n        else\n        {\n            // 禁用该模式专属的对象与 UI\n        }\n    }\n \n    // 依据你模式的逻辑判断本地玩家是否获胜\n    // 该代码在对局结束后调用。\n    public bool isLocalPlayerWinner => throw new System.NotImplementedException();\n \n    public void OnFinishTime(bool gameOver)\n    {\n        // 对局时间结束时自动调用。\n    }\n \n    public void OnLocalPlayerDeath()\n    {\n        // 本地玩家死亡时自动调用\n    }\n \n    public void OnLocalPlayerKill()\n    {\n        // 本地玩家击杀敌人时自动调用\n    }\n \n    public void OnLocalPoint(int points, Team teamToAddPoint)\n    {\n        // 当你通过以下方式为阵营加分时调用：\n        // bl_GameManager.Instance.SetPointFromLocalPlayer(1, GameMode.MyCustomMode);\n    }\n \n    public void OnOtherPlayerEnter(Player newPlayer)\n    {\n \n    }\n \n    public void OnOtherPlayerLeave(Player otherPlayer)\n    {\n \n    }\n \n    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)\n    {\n        // 房间属性变化时自动调用，如分数、目标、阵营人数等\n    }\n    #endregion\n}");
+            DrawCodeText("using Photon.Realtime;\nusing UnityEngine;\n \npublic class MyCustomModeScript : MonoBehaviour, IGameMode\n{\n \n    void Awake()\n    {\n        if (!PhotonNetworkWrapper.IsConnected) return;\n \n        // 必须调用\n        Initialize();\n    }\n \n    #region Interface Overrides\n    public void Initialize()\n    {\n        if(GameController.Instance.IsGameMode(GameMode.MyCustomMode, this)) // 把 MyCustomMode 替换为你的模式标识\n        {\n            // 启用你的游戏模式\n            // 启用该模式专属的所有 GameObject、道具、UI 等\n            // 订阅该模式需要的游戏事件\n        }\n        else\n        {\n            // 禁用该模式专属的对象与 UI\n        }\n    }\n \n    // 依据你模式的逻辑判断本地玩家是否获胜\n    // 该代码在对局结束后调用。\n    public bool isLocalPlayerWinner => throw new System.NotImplementedException();\n \n    public void OnFinishTime(bool gameOver)\n    {\n        // 对局时间结束时自动调用。\n    }\n \n    public void OnLocalPlayerDeath()\n    {\n        // 本地玩家死亡时自动调用\n    }\n \n    public void OnLocalPlayerKill()\n    {\n        // 本地玩家击杀敌人时自动调用\n    }\n \n    public void OnLocalPoint(int points, Team teamToAddPoint)\n    {\n        // 当你通过以下方式为阵营加分时调用：\n        // GameController.Instance.SetPointFromLocalPlayer(1, GameMode.MyCustomMode);\n    }\n \n    public void OnOtherPlayerEnter(Player newPlayer)\n    {\n \n    }\n \n    public void OnOtherPlayerLeave(Player otherPlayer)\n    {\n \n    }\n \n    public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)\n    {\n        // 房间属性变化时自动调用，如分数、目标、阵营人数等\n    }\n    #endregion\n}");
         }
         else if (subStep == 2)
         {
@@ -601,7 +601,7 @@ public class GFWKGeneralDoc : TutorialWizard
                 DrawText("在下方下拉框中选择要添加自定义动画的 <b>武器信息</b>，然后点击 <b>Select</b> 按钮。");
                 if (weaponNames == null)
                 {
-                    weaponNames = bl_GameData.Instance.AllWeaponStringList();
+                    weaponNames = GameConfig.Instance.AllWeaponStringList();
                 }
                 EditorGUILayout.BeginHorizontal("box");
                 Space(20);
@@ -660,11 +660,11 @@ public class GFWKGeneralDoc : TutorialWizard
                 DrawAnimatedImage(8);
                 DownArrow();
 
-                DrawText("动画指定完成后基本就绪，最后一步是在 <b>TPWeapon > bl_NetworkGun</b> 检视面板中填写自定义动画信息。打开一个玩家预制体 <i>你使用的每个玩家预制体都要做一次</i> ➔ 选中预制体内的第三人称武器 ➔ 在检视面板勾选 <b>Use Custom Player Animations</b> ➔ 填写以下字段：");
+                DrawText("动画指定完成后基本就绪，最后一步是在 <b>TPWeapon > RemoteGun</b> 检视面板中填写自定义动画信息。打开一个玩家预制体 <i>你使用的每个玩家预制体都要做一次</i> ➔ 选中预制体内的第三人称武器 ➔ 在检视面板勾选 <b>Use Custom Player Animations</b> ➔ 填写以下字段：");
                 Space(10);
                 if (string.IsNullOrEmpty(customAnimationFireName))
                 {
-                    var weaponInfo = bl_GameData.Instance.GetWeapon(customWeaponID);
+                    var weaponInfo = GameConfig.Instance.GetWeapon(customWeaponID);
                     customAnimationFireName = weaponInfo.Name;
                 }
                 DrawHorizontalColumn("自定义动画状态 ID", (20 + customWeaponID).ToString(), 175);
@@ -701,7 +701,7 @@ public class GFWKGeneralDoc : TutorialWizard
             return false;
         }
 
-        var weaponInfo = bl_GameData.Instance.GetWeapon(customWeaponID);
+        var weaponInfo = GameConfig.Instance.GetWeapon(customWeaponID);
         int upperID = 20 + customWeaponID;
         var rootStateMachine = animatorController.layers[1].stateMachine;
         var equipState = rootStateMachine.states.ToList().Find(x => x.state.name == "Equip").state;
@@ -763,9 +763,9 @@ public class GFWKGeneralDoc : TutorialWizard
 
     void NamePlatesDoc()
     {
-        DrawSuperText("名称牌即 <b>头顶玩家名</b>，是游戏中显示在队友头顶的 GUI 文本。这是所有多人游戏里的基础功能。GFWK 中该 GUI 使用 Unity 旧版 OnGUI 系统渲染，因为对该用途而言它足够简单。\n \n自定义这个 GUI 的设计相当简单：\n \n每个玩家预制体上都挂有 <?underline=>bl_NamePlateDrawer.cs</underline> 脚本。为了方便调整名称牌 UI 的外观，你可以在编辑器 <i>编辑模式</i> 下预览：把玩家预制体拖入场景 ➔ 选中该实例 ➔ bl_NamePlaterDrawer ➔ 点击 <b>Simulate [OFF]</b> 按钮。");
+        DrawSuperText("名称牌即 <b>头顶玩家名</b>，是游戏中显示在队友头顶的 GUI 文本。这是所有多人游戏里的基础功能。GFWK 中该 GUI 使用 Unity 旧版 OnGUI 系统渲染，因为对该用途而言它足够简单。\n \n自定义这个 GUI 的设计相当简单：\n \n每个玩家预制体上都挂有 <?underline=>NamePlateDrawer.cs</underline> 脚本。为了方便调整名称牌 UI 的外观，你可以在编辑器 <i>编辑模式</i> 下预览：把玩家预制体拖入场景 ➔ 选中该实例 ➔ NamePlaterDrawer ➔ 点击 <b>Simulate [OFF]</b> 按钮。");
         DrawServerImage("img-30.png");
-        DrawText("预览开启后即可通过前端属性编辑外观：在 bl_NamePlateDrawer 的检视面板中 ➔ 点击 Edit Present 按钮 ➔ 会打开名称牌的 GUI 样式属性。");
+        DrawText("预览开启后即可通过前端属性编辑外观：在 NamePlateDrawer 的检视面板中 ➔ 点击 Edit Present 按钮 ➔ 会打开名称牌的 GUI 样式属性。");
         DrawServerImage("img-31.png");
         DrawText("按需调整属性，改动会在 Scene 视图中实时预览 ➔ 完成后再次点击 <b>Simulation [On]</b> 按钮关闭模拟 ➔ 把改动应用到玩家预制体。");
         DownArrow();
@@ -774,7 +774,7 @@ public class GFWKGeneralDoc : TutorialWizard
 
     void PlayerPrefabsDoc()
     {
-        DrawHyperlinkText("<b>玩家预制体</b> 指包含玩家控制器所需的全部脚本、对象与结构的 Unity 预制体。\n\nGFWK 的玩家预制体放在名为 <b>Resources</b> 的 Unity 特殊文件夹中 <i>位于项目的 Resources 文件夹内</i>。若要修改与玩家相关的任何内容，例如武器位置、动画、脚本属性等，都必须改动这些预制体。\n\n<b>GFWK 默认使用 2 个玩家预制体</b>，在 <b><link=asset:Assets/Resources/GameData.asset>GameData</link></b> 中指定，即 <b>Player1</b> 与 <b>Player2</b>。Player1 用于阵营 1，Player2 用于阵营 2；若游戏模式不是阵营制，例如自由混战，则使用 Player1。\n\n自 1.8 版本起，你还可以按场景覆盖 Player1 与 Player2，也就是说可以给每张地图的每个阵营指定不同的玩家预制体。做法是在地图场景的任意对象上挂载 <b>bl_OverridePlayerPrefab.cs</b> 脚本 ➔ 在该脚本的检视面板中指定玩家预制体即可。");
+        DrawHyperlinkText("<b>玩家预制体</b> 指包含玩家控制器所需的全部脚本、对象与结构的 Unity 预制体。\n\nGFWK 的玩家预制体放在名为 <b>Resources</b> 的 Unity 特殊文件夹中 <i>位于项目的 Resources 文件夹内</i>。若要修改与玩家相关的任何内容，例如武器位置、动画、脚本属性等，都必须改动这些预制体。\n\n<b>GFWK 默认使用 2 个玩家预制体</b>，在 <b><link=asset:Assets/Resources/GameData.asset>GameData</link></b> 中指定，即 <b>Player1</b> 与 <b>Player2</b>。Player1 用于阵营 1，Player2 用于阵营 2；若游戏模式不是阵营制，例如自由混战，则使用 Player1。\n\n自 1.8 版本起，你还可以按场景覆盖 Player1 与 Player2，也就是说可以给每张地图的每个阵营指定不同的玩家预制体。做法是在地图场景的任意对象上挂载 <b>PrefabOverride.cs</b> 脚本 ➔ 在该脚本的检视面板中指定玩家预制体即可。");
         DownArrow();
         DrawHyperlinkText("如果你需要更进阶的玩家选择方案，或想加入更多玩家预制体让玩家在游戏内选择角色，可以看看 <link=https://www.gfworksstudio.com/en/shop/addons/player-selector/>Player Selector</link> 插件。\n");
     }
@@ -783,20 +783,20 @@ public class GFWKGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("GFWK 中的子弹使用对象池。与 GFWK 其他池化对象一样，它们登记在 <b>bl_ObjectPooling</b> 脚本中，该脚本挂在每张地图场景的 <b>GameManager</b> 上。\n在 <b>bl_Gun</b> 中你只需填写池化名称。\n\n\n你可能想为某把武器添加新子弹，例如想要不同的拖尾效果，做法如下：\n\n<size=18>复制子弹预制体：</size>\n\n在 GFWK ➔ Content ➔ Prefabs ➔ Weapon ➔ Projectiles ➔ * 中选中某个已有预制体，按 Ctrl + D 复制，Mac 上为 Command + D。\n\n然后在复制出的预制体上做你想要的修改，之后在 <b>bl_ObjectPooling</b> <i>该脚本挂在房间场景的 GameManager 对象上</i> 中新增一个列表项，把该子弹预制体拖入并设置池化名称：");
+            DrawText("GFWK 中的子弹使用对象池。与 GFWK 其他池化对象一样，它们登记在 <b>ObjectPooling</b> 脚本中，该脚本挂在每张地图场景的 <b>GameManager</b> 上。\n在 <b>GunController</b> 中你只需填写池化名称。\n\n\n你可能想为某把武器添加新子弹，例如想要不同的拖尾效果，做法如下：\n\n<size=18>复制子弹预制体：</size>\n\n在 GFWK ➔ Content ➔ Prefabs ➔ Weapon ➔ Projectiles ➔ * 中选中某个已有预制体，按 Ctrl + D 复制，Mac 上为 Command + D。\n\n然后在复制出的预制体上做你想要的修改，之后在 <b>ObjectPooling</b> <i>该脚本挂在房间场景的 GameManager 对象上</i> 中新增一个列表项，把该子弹预制体拖入并设置池化名称：");
             DrawServerImage(17);
-            DrawText("然后打开玩家预制体，选中要指定子弹的 <b>第一人称武器</b>，在该武器的 bl_Gun 脚本中把子弹的池化名称填入 Bullet 字段。\n");
+            DrawText("然后打开玩家预制体，选中要指定子弹的 <b>第一人称武器</b>，在该武器的 GunController 脚本中把子弹的池化名称填入 Bullet 字段。\n");
             DrawServerImage(18);
             DrawText("把改动应用到玩家预制体即可。");
         }
         else if (subStep == 1)
         {
-            DrawSuperText("子弹弹痕同样使用对象池，在子弹击中碰撞体时自动放置，弹痕材质会根据碰撞体的标签选择。弹痕数量不限。\n \n<b>Bullet Decal Manager</b> 位于每张地图场景的 <b>GameManager</b> 对象下，即 <i><b>GameManager ➔ Bullet Decal Manager ➔ bl_BulletDecalManager</b></i>。\n \n<?title=18>修改、新增或移除弹痕：</title>\n \n<?list=■>用简单的 alpha 着色器新建一个材质\n把弹痕贴图指定给该材质。\n在 <b>Bullet Decal Manager ➔ Decal List ➔ Surface Decals</b> 中，若弹痕对应新的标签则新增一个标签项，若对应已有标签直接展开该项即可。\n把弹痕材质加入 <b>Decal Materials</b> 列表。\n完成。</list>");
+            DrawSuperText("子弹弹痕同样使用对象池，在子弹击中碰撞体时自动放置，弹痕材质会根据碰撞体的标签选择。弹痕数量不限。\n \n<b>Bullet Decal Manager</b> 位于每张地图场景的 <b>GameManager</b> 对象下，即 <i><b>GameManager ➔ Bullet Decal Manager ➔ BulletDecalManager</b></i>。\n \n<?title=18>修改、新增或移除弹痕：</title>\n \n<?list=■>用简单的 alpha 着色器新建一个材质\n把弹痕贴图指定给该材质。\n在 <b>Bullet Decal Manager ➔ Decal List ➔ Surface Decals</b> 中，若弹痕对应新的标签则新增一个标签项，若对应已有标签直接展开该项即可。\n把弹痕材质加入 <b>Decal Materials</b> 列表。\n完成。</list>");
             DrawServerImage("img-39.png");
         }
         else if (subStep == 2)
         {
-            DrawText("若你需要另一种类型的子弹，不只是换拖尾，而是不同的弹道或命中判定，也可以在不破坏原有功能的前提下实现。\n \n子弹与投射物支持继承扩展，可自定义类。<b>不要直接修改默认的子弹与投射物脚本</b>，\n而是新建一个类继承自 <color=#FFCC2AFF>bl_ProjectileBase</color>，重写所需函数，把默认脚本仅作参考，按需实现你自己的子弹或投射物逻辑。\n \n把自定义脚本挂到 GameObject 上并做成预制体，再把这个预制体加入池化列表即可使用。");
+            DrawText("若你需要另一种类型的子弹，不只是换拖尾，而是不同的弹道或命中判定，也可以在不破坏原有功能的前提下实现。\n \n子弹与投射物支持继承扩展，可自定义类。<b>不要直接修改默认的子弹与投射物脚本</b>，\n而是新建一个类继承自 <color=#FFCC2AFF>ProjectileBase</color>，重写所需函数，把默认脚本仅作参考，按需实现你自己的子弹或投射物逻辑。\n \n把自定义脚本挂到 GameObject 上并做成预制体，再把这个预制体加入池化列表即可使用。");
         }
     }
 
@@ -807,7 +807,7 @@ public class GFWKGeneralDoc : TutorialWizard
         DownArrow();
 
         DrawTitleText("修改投掷补给包的按键");
-        DrawText("- 玩家预制体根节点上有一个脚本 <b>bl_ThrowKits</b>，其中有 <b>Throw Key</b> 属性，在此设置投掷补给包的按键。\n");
+        DrawText("- 玩家预制体根节点上有一个脚本 <b>ThrowKits</b>，其中有 <b>Throw Key</b> 属性，在此设置投掷补给包的按键。\n");
         DownArrow();
         DrawTitleText("修改补给包的模型");
         DrawServerImage(19);
@@ -822,7 +822,7 @@ public class GFWKGeneralDoc : TutorialWizard
     {
         DrawText("你的地图可能存在不希望玩家越过的边界。GFWK 为此提供的方案是 <b>击杀区</b>：玩家进入后会弹出带倒计时的警告，若在计时归零前没有离开该区域，游戏会自动将其击杀并送回出生点。\n");
         DrawServerImage(21);
-        DrawText("添加击杀区的方法：创建一个带 <b>Box Collider</b> 的对象 <i>该碰撞体即代表区域范围</i>，然后挂载 bl_DeathZone.cs 脚本，设置玩家离开该区域的时限，以及玩家位于区域内时屏幕上显示的提示文本。\n");
+        DrawText("添加击杀区的方法：创建一个带 <b>Box Collider</b> 的对象 <i>该碰撞体即代表区域范围</i>，然后挂载 DeathZone.cs 脚本，设置玩家离开该区域的时限，以及玩家位于区域内时屏幕上显示的提示文本。\n");
     }
 
     void DrawGameSettings()
@@ -835,10 +835,10 @@ public class GFWKGeneralDoc : TutorialWizard
         DownArrow();
         DrawTitleText("新增设置项");
         DrawText("新增设置项很简单：在同一个列表 <i><b>Setting Values</b></i> 中新增一项，设置一个唯一名称用于标识该设置 ➔ 选择设置类型 <i>float、integer、bool 或 string</i> ➔ 设定默认值。\n\n在游戏内读取该值的方式：");
-        DrawCodeText("var val = bl_GFWK.Settings.GetSettingOf('THE_SETTING_NAME');");
+        DrawCodeText("var val = GFWKCore.Settings.GetSettingOf('THE_SETTING_NAME');");
         DrawText("设置项加入列表后，玩家在游戏内应用设置时 <i>点击 <b>Save</b> 按钮</i> 会自动保存。若想按自己的规则保存，可用：");
-        DrawCodeText("bl_GFWK.Settings.SetSettingOf('THE_SETTING_NAME', THE_SETTING_VALUE);");
-        DrawText("想了解在游戏内的实际用法，可参考脚本 <b><color=#00E9FFFF>bl_SingleSettingsBinding.cs</color></b>\n");
+        DrawCodeText("GFWKCore.Settings.SetSettingOf('THE_SETTING_NAME', THE_SETTING_VALUE);");
+        DrawText("想了解在游戏内的实际用法，可参考脚本 <b><color=#00E9FFFF>SingleSettingsBinding.cs</color></b>\n");
     }
 
     void MouseLookDoc()
@@ -849,26 +849,26 @@ public class GFWKGeneralDoc : TutorialWizard
         DrawPropertieInfo("Lerp Movement", "bool", "是否为移动额外叠加一层平滑。适合触屏设备，不推荐用于鼠标或手柄操作。");
         DrawPropertieInfo("瞄准灵敏度调整方式", "enum", "决定鼠标灵敏度如何过渡到瞄准灵敏度。<b>Fixed</b> 表示直接采用瞄准灵敏度的确切值，<b>Relative</b> 表示按相机视野变化量换算。");
         DrawHorizontalSeparator();
-        DrawText("<b><size=22>逐玩家属性</size></b>\n\n还有一些属性可以按玩家分别设置，位置为玩家预制体 ➔ bl_FirstPersonController ➔ Mouse Look ➔ *，");
+        DrawText("<b><size=22>逐玩家属性</size></b>\n\n还有一些属性可以按玩家分别设置，位置为玩家预制体 ➔ FirstPersonController ➔ Mouse Look ➔ *，");
         DrawHorizontalSeparator();
         DrawHyperlinkText("<b><size=22>灵敏度</size></b>\n\n玩家可以在游戏内调整鼠标或手柄灵敏度，但默认值由你设定，位置为 <link=asset:Assets/Resources/GameData.asset>GameData</link> ➔ Default Settings ➔ Settings Values ➔ <b>Sensitivity</b> 与 <b>Aim Sensitivity</b>。");
     }
 
     void DrawObjectPooling()
     {
-        DrawText("<b><size=15>什么是对象池？</size></b>\n\n<b>Instantiate()</b> 与 <b>Destroy()</b> 是游戏运行中常用且必要的方法，单次调用消耗的 CPU 时间通常很少。\n\n但对于运行期创建、生命周期短、每秒销毁数量巨大的对象，例如子弹，CPU 需要花费的时间就相当可观。\n\n这正是对象池发挥作用的地方。<b>对象池</b> 指在游戏开始前预先实例化所有可能用到的对象。GFWK 中子弹、弹痕和命中粒子都使用对象池。\n\nbl_ObjectPooling.cs 使用起来很简单。把对象加入池中只需在 bl_ObjectPooling 检视面板的 <b>pooledPrefabs</b> 列表中登记该预制体，该脚本挂在各地图场景的 <b>GameManager</b> 对象上。加入预制体后设置一个池化名称，再估计需要多少个实例即可。\n\n在脚本中取用该预制体时，原先通常写法如下：\n\n");
+        DrawText("<b><size=15>什么是对象池？</size></b>\n\n<b>Instantiate()</b> 与 <b>Destroy()</b> 是游戏运行中常用且必要的方法，单次调用消耗的 CPU 时间通常很少。\n\n但对于运行期创建、生命周期短、每秒销毁数量巨大的对象，例如子弹，CPU 需要花费的时间就相当可观。\n\n这正是对象池发挥作用的地方。<b>对象池</b> 指在游戏开始前预先实例化所有可能用到的对象。GFWK 中子弹、弹痕和命中粒子都使用对象池。\n\nbl_ObjectPooling.cs 使用起来很简单。把对象加入池中只需在 ObjectPooling 检视面板的 <b>pooledPrefabs</b> 列表中登记该预制体，该脚本挂在各地图场景的 <b>GameManager</b> 对象上。加入预制体后设置一个池化名称，再估计需要多少个实例即可。\n\n在脚本中取用该预制体时，原先通常写法如下：\n\n");
         DrawCodeText("GameObject ob = Instantiate(MyPrefab, position, rotation);");
-        DrawText("使用 bl_ObjectPooling 后，替换为：");
-        DrawCodeText("GameObject ob = bl_ObjectPooling.Instance.Instantiate(\"PrefabKey\", position, rotation);");
+        DrawText("使用 ObjectPooling 后，替换为：");
+        DrawCodeText("GameObject ob = ObjectPooling.Instance.Instantiate(\"PrefabKey\", position, rotation);");
     }
 
     void AddNewMenu()
     {
         DrawText("若想在大厅 UI 中新增菜单或窗口，按以下步骤操作：\n\n1 - 制作菜单或窗口 UI：按需求设计界面，但要把全部内容放在 Canvas 下的一个父对象之下。例如新建一个空 GameObject 命名为 <i>MyNewWindow</i>，置于 Canvas 下，把新菜单或窗口的所有按钮、文本、图片等放到该对象下。\n\n");
         DrawAnimatedImage(0);
-        DrawText("2 - 在 Lobby -> Canvas [Default Menu] -> bl_LobbyUI -> Windows 的 <b>Windows</b> 列表中新增一项，把 <i>MyNewWindow</i> 对象填入该字段并指定一个唯一名称。\n");
+        DrawText("2 - 在 Lobby -> Canvas [Default Menu] -> LobbyUI -> Windows 的 <b>Windows</b> 列表中新增一项，把 <i>MyNewWindow</i> 对象填入该字段并指定一个唯一名称。\n");
         DrawAnimatedImage(1);
-        DrawText("3 - 创建菜单按钮：新增一个用于打开该菜单或窗口的按钮。其他按钮都位于 Lobby -> Canvas -> Lobby -> Content -> Top Menu -> Buttons -> *，可以复制其中一个并修改标题文本。\n\n在新按钮上把 bl_Lobby -> ChangeWindow(string) 函数注册为监听，并把 Windows 列表中新窗口的名称作为参数传入即可。\n");
+        DrawText("3 - 创建菜单按钮：新增一个用于打开该菜单或窗口的按钮。其他按钮都位于 Lobby -> Canvas -> Lobby -> Content -> Top Menu -> Buttons -> *，可以复制其中一个并修改标题文本。\n\n在新按钮上把 MatchLobby -> ChangeWindow(string) 函数注册为监听，并把 Windows 列表中新窗口的名称作为参数传入即可。\n");
         DrawAnimatedImage(2);
     }
 
@@ -890,7 +890,7 @@ public class GFWKGeneralDoc : TutorialWizard
 
     void DrawGameTexts()
     {
-        DrawText("若要修改游戏中的某些文本，或仅调整文字表述，大部分文本直接设置在 UI Text 组件中，这些组件位于各场景的 Canvas 对象内。同时还有一部分文本由代码在运行时设置或修改。为方便你查找，我们把这些文本统一放在 <b>bl_GameTexts.cs</b> 这一个脚本中。\n \n该脚本集中了所有由代码在运行时赋值的文本，可直接在此修改，也便于你接入自己的本地化系统。");
+        DrawText("若要修改游戏中的某些文本，或仅调整文字表述，大部分文本直接设置在 UI Text 组件中，这些组件位于各场景的 Canvas 对象内。同时还有一部分文本由代码在运行时设置或修改。为方便你查找，我们把这些文本统一放在 <b>GameTexts.cs</b> 这一个脚本中。\n \n该脚本集中了所有由代码在运行时赋值的文本，可直接在此修改，也便于你接入自己的本地化系统。");
         DrawServerImage("img-22.png");
     }
 
@@ -898,7 +898,7 @@ public class GFWKGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawText("射击游戏 <b><size=8>或者说所有游戏</size></b> 的一个关键要素是操作控制。在动作游戏中这一点尤其特殊，因为玩家往往有自己习惯的按键设置。GFWK 默认采用多数 FPS 游戏通用的标准按键方案。\n \n自 1.9 版本起，GFWK 内置了自定义输入管理器，可在运行时通过设置窗口中的菜单重新绑定按键。你可以在 <i>Input Mapped</i> 中定义默认按键，是否允许玩家在游戏内修改由你决定。\n \n如果你想使用第三方输入管理器，GFWK 同样支持。游戏中使用的全部输入都定义在 bl_GameInput.cs 脚本中，修改这些函数中的代码即可指向你自己的输入系统。\n \n通过函数名即可判断某个输入对应哪个游戏动作 <i>开火、装弹、跳跃等</i>。");
+            DrawText("射击游戏 <b><size=8>或者说所有游戏</size></b> 的一个关键要素是操作控制。在动作游戏中这一点尤其特殊，因为玩家往往有自己习惯的按键设置。GFWK 默认采用多数 FPS 游戏通用的标准按键方案。\n \n自 1.9 版本起，GFWK 内置了自定义输入管理器，可在运行时通过设置窗口中的菜单重新绑定按键。你可以在 <i>Input Mapped</i> 中定义默认按键，是否允许玩家在游戏内修改由你决定。\n \n如果你想使用第三方输入管理器，GFWK 同样支持。游戏中使用的全部输入都定义在 GameInput.cs 脚本中，修改这些函数中的代码即可指向你自己的输入系统。\n \n通过函数名即可判断某个输入对应哪个游戏动作 <i>开火、装弹、跳跃等</i>。");
         }
         else if (subStep == 1)
         {
@@ -920,9 +920,9 @@ public class GFWKGeneralDoc : TutorialWizard
             DrawText("按键配置完成后即可在代码中使用，用法与 Unity 默认 Input 非常接近。原先写法为：\n");
             DrawCodeText("Input.GetKeyDown('keyName'){...}");
             DrawText("现在改用：");
-            DrawCodeText("bl_Input.isButtonDown('keyName'){...}");
+            DrawCodeText("InputHandler.isButtonDown('keyName'){...}");
             DrawText("or");
-            DrawCodeText("bl_Input.isButton('keyName'){...}\nbl_Input.isButtonUp('keyName'){...}");
+            DrawCodeText("InputHandler.isButton('keyName'){...}\nbl_Input.isButtonUp('keyName'){...}");
             DrawText("其中 <i>keyName</i> 的值是你为该输入在 Input Mapped 中设置的 <b>KeyName</b>。\n");
         }
         else if (subStep == 3)
@@ -1014,7 +1014,7 @@ public class GFWKGeneralDoc : TutorialWizard
         DrawServerImage(32);
         DownArrow();
         DrawTitleText("Hit Marker");
-        DrawText("<b>命中标记</b> 是本地玩家击中敌人时出现的小十字。\n\n其外观可在 <b>UI ➔ PlayerUI ➔ Crosshair ➔ Crosshairs ➔ Hitmarker</b> 中自定义。\n\n命中标记以简单的放大动画出现，动画的最终尺寸可在 <b>bl_UCrosshair ➔ Increase Amount</b> 中设定。");
+        DrawText("<b>命中标记</b> 是本地玩家击中敌人时出现的小十字。\n\n其外观可在 <b>UI ➔ PlayerUI ➔ Crosshair ➔ Crosshairs ➔ Hitmarker</b> 中自定义。\n\n命中标记以简单的放大动画出现，动画的最终尺寸可在 <b>UCrosshair ➔ Increase Amount</b> 中设定。");
     }
 
     void FootStepsDoc()
@@ -1028,16 +1028,16 @@ public class GFWKGeneralDoc : TutorialWizard
         DrawHyperlinkText("若要新增一种地表 <i>用不同的标签区分</i> 并为其指定专属脚步声，只需在 <link=asset:Assets/Prefabs/Presents/Audio/FootStepsLibrary.asset>FootStepLibrary</link> 的 Groups 列表中新增一项，在其中的 <b>Tag</b> 属性里填写该地表对应的标签。");
         DownArrow();
         DrawTitleText("Terrain Surfaces");
-        DrawText("由于脚步声系统由 <b>标签</b> 驱动，每个对象或网格只能设置一个标签，这对 <b>Unity 地形系统</b> 会造成问题：地形是单一对象与网格，只能设一个标签。但地形通常由多个图层构成，各图层用不同贴图模拟不同地表，因此不够用。要让脚步声系统与 Unity 地形正确配合 <i>按地形图层播放不同音效</i>，需要按以下方式设置地形图层。\n\n•  首先，在场景层级中选中 Terrain 对象，挂载 <color=#00E9FFFF><b>bl_TerrainSurfaces.cs</b></color> 脚本\n\n•  挂载后会看到该脚本检视面板中的 <b>TerrainSurfaces</b> 列表有若干项，每一项对应 <b>Terrain</b> 中的一个图层 <i>贴图</i>。你需要为每个图层设置 <b>Tag</b> 名称。展开某项即可看到该图层的贴图，据此在 <b>Tag</b> 属性中指定应使用的标签。");
+        DrawText("由于脚步声系统由 <b>标签</b> 驱动，每个对象或网格只能设置一个标签，这对 <b>Unity 地形系统</b> 会造成问题：地形是单一对象与网格，只能设一个标签。但地形通常由多个图层构成，各图层用不同贴图模拟不同地表，因此不够用。要让脚步声系统与 Unity 地形正确配合 <i>按地形图层播放不同音效</i>，需要按以下方式设置地形图层。\n\n•  首先，在场景层级中选中 Terrain 对象，挂载 <color=#00E9FFFF><b>TerrainSurfaceSet.cs</b></color> 脚本\n\n•  挂载后会看到该脚本检视面板中的 <b>TerrainSurfaces</b> 列表有若干项，每一项对应 <b>Terrain</b> 中的一个图层 <i>贴图</i>。你需要为每个图层设置 <b>Tag</b> 名称。展开某项即可看到该图层的贴图，据此在 <b>Tag</b> 属性中指定应使用的标签。");
         DrawServerImage(30);
     }
 
     void DoorsDoc()
     {
-        DrawSuperText("GFWK 内置一套经过优化的门系统，可为地图增添动态元素。\n \n该系统针对单张地图门数量较多的情况做了性能优化，支持网络同步，使用也很简单。\n \n<?title=18>如何添加门？</title>\n \n- 给地图添加一扇门只需两步：\n \n<b>1. 在地图中放置门：</b> 把门预制体拖入场景层级并按设计摆放。默认门预制体为 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default door prefab</link>，位于 <i>Assets ➔ Prefabs ➔ Level ➔ Items ➔ Door</i>。\n \n<b>2. 注册新门：</b> 在地图场景层级中进入 ItemManager ➔ bl_DoorManager ➔ 点击 <b>Collect all active doors in scene</b> 按钮即可。");
+        DrawSuperText("GFWK 内置一套经过优化的门系统，可为地图增添动态元素。\n \n该系统针对单张地图门数量较多的情况做了性能优化，支持网络同步，使用也很简单。\n \n<?title=18>如何添加门？</title>\n \n- 给地图添加一扇门只需两步：\n \n<b>1. 在地图中放置门：</b> 把门预制体拖入场景层级并按设计摆放。默认门预制体为 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default door prefab</link>，位于 <i>Assets ➔ Prefabs ➔ Level ➔ Items ➔ Door</i>。\n \n<b>2. 注册新门：</b> 在地图场景层级中进入 ItemManager ➔ DoorManager ➔ 点击 <b>Collect all active doors in scene</b> 按钮即可。");
         DrawServerImage("img-32.png");
         Space(20);
-        DrawSuperText("<?title=18>如何创建新门？</title>\n \n- 若想使用自定义门模型，只需在 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default GFWK door</link> 预制体基础上替换模型。\n \n1. 在任意场景中实例化 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default GFWK door</link> 预制体，并解除该实例的预制体关联 <i>右键该门的实例 ➔ Unpack Prefab Completely</i>。\n \n2. 把自定义门模型拖入该实例的 Door ➔ Door Model ➔ * 下，并手动把新门模型的位置、旋转和缩放调整到与默认模型一致。\n \n3. 选中该门实例的根节点 ➔ <b>bl_BasicDoor</b> ➔ 在 <b>Door Pivot</b> 字段中拖入你新门模型的 Transform，该点将作为门的旋转轴心。\n \n4. 删除默认模型 <i>Door ➔ Door Model ➔ <b>Default Door Model</b></i>，然后把门拖到 Project 视图的任意文件夹中保存为新预制体。\n \n若门模型旋转不正确，新建一份 Door Settings <i>Project 视图 ➔ 右键 ➔ GFWK ➔ Level ➔ Door Settings</i> ➔ 把它指定给门预制体的 bl_BasicDoor ➔ <b>Door Settings</b>，并在其中设置新门模型轴心的旋转值。");
+        DrawSuperText("<?title=18>如何创建新门？</title>\n \n- 若想使用自定义门模型，只需在 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default GFWK door</link> 预制体基础上替换模型。\n \n1. 在任意场景中实例化 <?link=asset:Assets/Prefabs/Level/Items/Door.prefab>default GFWK door</link> 预制体，并解除该实例的预制体关联 <i>右键该门的实例 ➔ Unpack Prefab Completely</i>。\n \n2. 把自定义门模型拖入该实例的 Door ➔ Door Model ➔ * 下，并手动把新门模型的位置、旋转和缩放调整到与默认模型一致。\n \n3. 选中该门实例的根节点 ➔ <b>BasicDoor</b> ➔ 在 <b>Door Pivot</b> 字段中拖入你新门模型的 Transform，该点将作为门的旋转轴心。\n \n4. 删除默认模型 <i>Door ➔ Door Model ➔ <b>Default Door Model</b></i>，然后把门拖到 Project 视图的任意文件夹中保存为新预制体。\n \n若门模型旋转不正确，新建一份 Door Settings <i>Project 视图 ➔ 右键 ➔ GFWK ➔ Level ➔ Door Settings</i> ➔ 把它指定给门预制体的 BasicDoor ➔ <b>Door Settings</b>，并在其中设置新门模型轴心的旋转值。");
     }
 
     void GameStaffDoc()
@@ -1084,7 +1084,7 @@ public class GFWKGeneralDoc : TutorialWizard
         }
         else if (subStep == 1)
         {
-            DrawSuperText("自 1.9 版本起，可以方便地 <b>为每张地图场景定义后处理配置</b>。\nPost Process Profile 是配置文件，其中定义后处理 Volume 中要渲染的图像特效。若需更多细节，或不清楚如何创建与使用，可参阅官方文档：<?link=https://docs.unity3d.com/Packages/com.unity.postprocessing@3.1/manual/Quick-start.html>后处理快速上手</link>\n\n<?title=18>在地图场景中指定配置</title>\n\n在特定地图场景使用自定义后处理配置：在编辑器中打开该地图场景 ➔ 在层级窗口中进入 GameManager ➔ Post Process Volume ➔ 在 bl_PostProcessEffects 的检视面板中 ➔ 把你自定义的 Post Process Profile 指定到 Process Profile 字段即可。");
+            DrawSuperText("自 1.9 版本起，可以方便地 <b>为每张地图场景定义后处理配置</b>。\nPost Process Profile 是配置文件，其中定义后处理 Volume 中要渲染的图像特效。若需更多细节，或不清楚如何创建与使用，可参阅官方文档：<?link=https://docs.unity3d.com/Packages/com.unity.postprocessing@3.1/manual/Quick-start.html>后处理快速上手</link>\n\n<?title=18>在地图场景中指定配置</title>\n\n在特定地图场景使用自定义后处理配置：在编辑器中打开该地图场景 ➔ 在层级窗口中进入 GameManager ➔ Post Process Volume ➔ 在 PostProcessEffects 的检视面板中 ➔ 把你自定义的 Post Process Profile 指定到 Process Profile 字段即可。");
         }
         else
         {
@@ -1126,7 +1126,7 @@ public class GFWKGeneralDoc : TutorialWizard
         DrawHorizontalSeparator();
         Space(10);
         DrawText("若想通过代码在聊天面板向房间内所有玩家显示自定义文本，可以这样写：");
-        DrawCodeText("bl_ChatRoom.Instance.SetChat('YOU TEXT HERE');");
+        DrawCodeText("ChatRoom.Instance.SetChat('YOU TEXT HERE');");
     }
 
     void LadderDoc()
@@ -1145,75 +1145,75 @@ public class GFWKGeneralDoc : TutorialWizard
         DrawText("以下是全部可用事件及其简要说明\n");
         DownArrow();
 
-        DrawCodeText("bl_EventHandler.onLocalPlayerDeath");
+        DrawCodeText("GameEvents.onLocalPlayerDeath");
         DrawText("本地玩家在游戏中死亡时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onLocalPlayerSpawn");
+        DrawCodeText("GameEvents.onLocalPlayerSpawn");
         DrawText("本地玩家出生时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onPickUpGun");
+        DrawCodeText("GameEvents.onPickUpGun");
         DrawText("本地玩家拾取武器时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onChangeWeapon");
+        DrawCodeText("GameEvents.onChangeWeapon");
         DrawText("本地玩家切换武器时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onLocalAimChanged");
+        DrawCodeText("GameEvents.onLocalAimChanged");
         DrawText("本地玩家切换瞄准状态时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onMatchStart");
+        DrawCodeText("GameEvents.onMatchStart");
         DrawText("房间对局开始时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onFall");
+        DrawCodeText("GameEvents.onFall");
         DrawText("本地玩家从空中坠落或落地时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onPickUpHealth");
+        DrawCodeText("GameEvents.onPickUpHealth");
         DrawText("本地玩家在游戏中拾取生命值时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onAirKit");
+        DrawCodeText("GameEvents.onAirKit");
         DrawText("本地玩家呼叫空投时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onAmmoPickUp");
+        DrawCodeText("GameEvents.onAmmoPickUp");
         DrawText("本地玩家在游戏中拾取弹药时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onLocalKill");
+        DrawCodeText("GameEvents.onLocalKill");
         DrawText("本地玩家在游戏中击杀或被击杀时调用。");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.OnRoundEnd");
+        DrawCodeText("GameEvents.OnRoundEnd");
         DrawText("游戏回合结束时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onPlayerLand");
+        DrawCodeText("GameEvents.onPlayerLand");
         DrawText("本地玩家坠落后落到地面时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onRemoteActorChange");
+        DrawCodeText("GameEvents.onRemoteActorChange");
         DrawText("非本地玩家的其他玩家出生或死亡时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onGameSettingsChange");
+        DrawCodeText("GameEvents.onGameSettingsChange");
         DrawText("本地玩家修改游戏内设置或选项时调用");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onEffectChange");
+        DrawCodeText("GameEvents.onEffectChange");
         DrawText("本地玩家在游戏中修改一项或多项后处理效果选项时调用。");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onGameSettingsChange");
+        DrawCodeText("GameEvents.onGameSettingsChange");
         DrawText("本地玩家通过游戏内设置菜单修改游戏设置时调用。");
         DrawHorizontalSeparator();
 
-        DrawCodeText("bl_EventHandler.onGamePause");
+        DrawCodeText("GameEvents.onGamePause");
         DrawText("本地玩家暂停或恢复游戏时调用。");
         DrawHorizontalSeparator();
     }
@@ -1260,7 +1260,7 @@ public class GFWKGeneralDoc : TutorialWizard
     {
         DrawText("GFWK 网络框架可以向客户端广播应用与大厅的网络统计数据，可用于调试游戏网络，也可以把这些数据展示出来以体现游戏的活跃度。\n \nGFWK 中可以查看两类网络数据：\n \n<b><size=22>网络传输统计</size></b>\n \n用于显示当前网络收发数据包以及本地玩家延迟等基础但实用的信息，显示在屏幕左上角。\n \n该功能默认关闭，可在 GameData -> Show Network Stats 中方便地开启。");
         DrawServerImage("img-25.png");
-        DrawText("<b><size=22>大厅统计</size></b>\n \n大厅统计可用于展示游戏的活跃度。统计按区域区分，因此你只能看到自己所在服务器区域的统计。\n \n可获取的信息包括：\n \n活跃房间数量\n加入大厅或大厅内各房间的玩家总数\n \n该功能默认开启，可在 MainMenu 场景 -> Lobby -> bl_Lobby -> Show Photon Statistics 中关闭。");
+        DrawText("<b><size=22>大厅统计</size></b>\n \n大厅统计可用于展示游戏的活跃度。统计按区域区分，因此你只能看到自己所在服务器区域的统计。\n \n可获取的信息包括：\n \n活跃房间数量\n加入大厅或大厅内各房间的玩家总数\n \n该功能默认开启，可在 MainMenu 场景 -> Lobby -> MatchLobby -> Show Photon Statistics 中关闭。");
         DrawServerImage("img-24.png");
     }
 
@@ -1273,7 +1273,7 @@ public class GFWKGeneralDoc : TutorialWizard
         }
         else if (subStep == 1)
         {
-            DrawText("玩家受击盒的主要用途是 <b>检测子弹命中玩家</b>。GFWK 中可以为每个受击盒设置不同的伤害基数，从而根据命中部位产生不同伤害。\n \n为此可使用 <b>bl_HitboxManager</b> 脚本，该脚本挂在所有玩家与机器人预制体上。玩家预制体中有个名为 <b>Remote</b> 的子对象，选中它后，<i>bl_HitboxManager</i> 脚本的检视面板中会显示若干伤害倍率，可用来调整特定身体部位受到的伤害大小。默认这些倍率按部位分组应用 <i>头部、胸部、手臂和腿部</i>：");
+            DrawText("玩家受击盒的主要用途是 <b>检测子弹命中玩家</b>。GFWK 中可以为每个受击盒设置不同的伤害基数，从而根据命中部位产生不同伤害。\n \n为此可使用 <b>HitboxManager</b> 脚本，该脚本挂在所有玩家与机器人预制体上。玩家预制体中有个名为 <b>Remote</b> 的子对象，选中它后，<i>HitboxManager</i> 脚本的检视面板中会显示若干伤害倍率，可用来调整特定身体部位受到的伤害大小。默认这些倍率按部位分组应用 <i>头部、胸部、手臂和腿部</i>：");
             DrawServerImage("img-34.png");
             DownArrow();
             DrawText("若想为每个受击盒单独设置伤害倍率而非按部位分组，关闭检视面板中的 <b>Multiply value per segment?</b> 开关 ➔ 点击受击盒名称展开它 ➔ 设置伤害倍率。");
@@ -1285,21 +1285,21 @@ public class GFWKGeneralDoc : TutorialWizard
     {
         if (subStep == 0)
         {
-            DrawSuperText("玩家默认会受到武器伤害、坠落伤害和载具碰撞伤害，这些伤害由玩家受击盒接收，或由 bl_PlayerHealthManagerBase 脚本处理。\n \n若要向玩家造成伤害，做法如下：\n \n<?background=#D1D1D1FF><b><size=16>对本地玩家造成伤害</size></b></background>\n \n- 对本地玩家造成伤害可调用 <b>bl_PlayerHealthManagerBase</b> 脚本的 <b>DoDamage(...)</b> 函数，该脚本挂在玩家实例的根节点上。\n \n该函数需要 <b>DamageData</b> 参数，其中包含本次伤害的全部信息。\n \n你还需要拿到目标玩家的引用。获取方式取决于你的伤害是如何触发的。例如用射线检测时，射线命中本地玩家后即可从该玩家取得 <i>bl_PlayerHealthManagerBase</i> 引用，再调用 <b>DoDamage(...)</b> 并传入 <b>DamageData</b>，例如：");
-            DrawCodeText("void DealDamageFunction()\n    {\n        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit raycast, 10))\n        {\n            if (raycast.collider.isLocalPlayerCollider())\n            {\n                var playerReferences = raycast.transform.GetComponent<bl_PlayerReferences>();\n \n                DamageData damageData = new DamageData()\n                {\n                    Damage = 20, // base damage to apply\n                    Direction = transform.position,\n                    Cause = DamageCause.Player,\n                    GFWKActor = bl_GFWK.LocalPlayer.GFWKActor, // GFWK actor that cause this damage\n                    // Check the other DamageData properties\n                };\n \n                playerReferences.playerHealthManager.DoDamage(damageData);\n            }\n        }\n    }");
-            DrawText("这样就完成了，上例会向目标玩家造成 20 点伤害。\n \n如果你只是想立刻杀死本地玩家，直接调用 <b>bl_GFWK.LocalPlayer</b> 中的 <b>Suicide()</b> 函数即可：");
-            DrawCodeText("bl_GFWK.LocalPlayer.Suicide();");
+            DrawSuperText("玩家默认会受到武器伤害、坠落伤害和载具碰撞伤害，这些伤害由玩家受击盒接收，或由 PlayerHealthManagerBase 脚本处理。\n \n若要向玩家造成伤害，做法如下：\n \n<?background=#D1D1D1FF><b><size=16>对本地玩家造成伤害</size></b></background>\n \n- 对本地玩家造成伤害可调用 <b>PlayerHealthManagerBase</b> 脚本的 <b>DoDamage(...)</b> 函数，该脚本挂在玩家实例的根节点上。\n \n该函数需要 <b>DamageData</b> 参数，其中包含本次伤害的全部信息。\n \n你还需要拿到目标玩家的引用。获取方式取决于你的伤害是如何触发的。例如用射线检测时，射线命中本地玩家后即可从该玩家取得 <i>PlayerHealthManagerBase</i> 引用，再调用 <b>DoDamage(...)</b> 并传入 <b>DamageData</b>，例如：");
+            DrawCodeText("void DealDamageFunction()\n    {\n        if(Physics.Raycast(transform.position, transform.forward, out RaycastHit raycast, 10))\n        {\n            if (raycast.collider.isLocalPlayerCollider())\n            {\n                var playerReferences = raycast.transform.GetComponent<PlayerReferencesHandler>();\n \n                DamageData damageData = new DamageData()\n                {\n                    Damage = 20, // base damage to apply\n                    Direction = transform.position,\n                    Cause = DamageCause.Player,\n                    GFWKActor = GFWKCore.LocalPlayer.GFWKActor, // GFWK actor that cause this damage\n                    // Check the other DamageData properties\n                };\n \n                playerReferences.playerHealthManager.DoDamage(damageData);\n            }\n        }\n    }");
+            DrawText("这样就完成了，上例会向目标玩家造成 20 点伤害。\n \n如果你只是想立刻杀死本地玩家，直接调用 <b>GFWKCore.LocalPlayer</b> 中的 <b>Suicide()</b> 函数即可：");
+            DrawCodeText("GFWKCore.LocalPlayer.Suicide();");
             DrawHorizontalSeparator();
             DrawSuperText("以上方式只适用于本地玩家。若要对远程玩家 <i>即不由本地客户端控制的玩家</i> 造成伤害，做法如下\n\n<?background=#D1D1D1FF><b><size=16>对远程玩家造成伤害</size></b></background>");
-            DrawSuperText("对远程玩家造成伤害只能通过其受击盒引用。受击盒是包裹玩家模型的碰撞体，上面挂有继承自 <b>bl_HitBoxBase</b> 的脚本，其中包含 <b>ReceiveDamage(...)</b> 函数，调用它即可造成伤害。\n \n你需要拿到目标远程玩家的受击盒引用。获取方式取决于你希望如何施加伤害。例如通过爆炸造成伤害时，检测爆炸原点一定半径内的碰撞体，伤害函数可以这样实现：");
-            DrawCodeText("void DealDamageFunction()\n    {\n        Collider[] hittedColliders = Physics.OverlapSphere(transform.position, 10);\n        foreach (Collider collider in hittedColliders)\n        {\n            // if you want to apply the damage only to players\n            // if (!collider.CompareTag(bl_GFWK.HITBOX_TAG)) continue;\n \n            var damageable = collider.GetComponent<IGFWKDamageable>();\n            if (damageable == null) continue;\n \n            DamageData damageData = new DamageData()\n            {\n                Damage = 50,\n                Direction = transform.position,\n                GFWKActor = bl_GFWK.LocalPlayer.GFWKActor,\n                Cause = DamageCause.Explosion\n                // see the other DamageData properties that you can use.\n            };\n \n            // send the damage to the hit box.\n            damageable.ReceiveDamage(damageData);\n        }\n    }");
+            DrawSuperText("对远程玩家造成伤害只能通过其受击盒引用。受击盒是包裹玩家模型的碰撞体，上面挂有继承自 <b>HitBoxBase</b> 的脚本，其中包含 <b>ReceiveDamage(...)</b> 函数，调用它即可造成伤害。\n \n你需要拿到目标远程玩家的受击盒引用。获取方式取决于你希望如何施加伤害。例如通过爆炸造成伤害时，检测爆炸原点一定半径内的碰撞体，伤害函数可以这样实现：");
+            DrawCodeText("void DealDamageFunction()\n    {\n        Collider[] hittedColliders = Physics.OverlapSphere(transform.position, 10);\n        foreach (Collider collider in hittedColliders)\n        {\n            // if you want to apply the damage only to players\n            // if (!collider.CompareTag(GFWKCore.HITBOX_TAG)) continue;\n \n            var damageable = collider.GetComponent<IGFWKDamageable>();\n            if (damageable == null) continue;\n \n            DamageData damageData = new DamageData()\n            {\n                Damage = 50,\n                Direction = transform.position,\n                GFWKActor = GFWKCore.LocalPlayer.GFWKActor,\n                Cause = DamageCause.Explosion\n                // see the other DamageData properties that you can use.\n            };\n \n            // send the damage to the hit box.\n            damageable.ReceiveDamage(damageData);\n        }\n    }");
         }
         else if (subStep == 1)
         {
             DrawSuperText("<b><?background=#D1D1D1FF><b><size=16>对物体造成伤害</size></b></background></b>\n \n若要对玩家或机器人以外的 GameObject 造成伤害，只需在你的自定义脚本中实现 <b>IGFWKDamageable</b> 接口即可。\n \n假设你有一个油桶，希望被子弹击中时受损，无需改动 GFWK 核心脚本，只要在自定义脚本中实现 <b>IGFWKDamageable</b> 接口并重写 <b>ReceiveDamage(...)</b> 函数，例如：\n \n你的自定义脚本原本可能长这样：");
-            DrawCodeText("public class bl_Test : MonoBehaviour\n{\n    public int Health = 100;\n \n    public void ReduceHealth(int damage)\n    {\n        Health -= damage;\n \n        if(Health <= 0)\n        {\n            // Destroy or wherever happens when run out of health\n        }\n    }\n}");
+            DrawCodeText("public class TestHandler : MonoBehaviour\n{\n    public int Health = 100;\n \n    public void ReduceHealth(int damage)\n    {\n        Health -= damage;\n \n        if(Health <= 0)\n        {\n            // Destroy or wherever happens when run out of health\n        }\n    }\n}");
             DrawText("你需要实现 <b>IGFWKDamageable</b> 接口并重写接口函数 <b>ReceiveDamage()</b>，如下所示：");
-            DrawCodeText("public class bl_Test : MonoBehaviour, IGFWKDamageable\n{\n\n    public int Health = 100;\n \n    void IGFWKDamageable.ReceiveDamage(DamageData damageData)\n    {\n        ReduceHealth(damageData.Damage);\n    }\n \n    public void ReduceHealth(int damage)\n    {\n        Health -= damage;\n \n        if(Health <= 0)\n        {\n            // Destroy or wherever happens when run out of health\n        }\n    }\n}");
+            DrawCodeText("public class TestHandler : MonoBehaviour, IGFWKDamageable\n{\n\n    public int Health = 100;\n \n    void IGFWKDamageable.ReceiveDamage(DamageData damageData)\n    {\n        ReduceHealth(damageData.Damage);\n    }\n \n    public void ReduceHealth(int damage)\n    {\n        Health -= damage;\n \n        if(Health <= 0)\n        {\n            // Destroy or wherever happens when run out of health\n        }\n    }\n}");
             DrawText("这样就完成了。注意该对象必须带有碰撞体，才能被子弹命中。");
         }
     }

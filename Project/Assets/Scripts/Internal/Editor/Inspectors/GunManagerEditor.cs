@@ -1,0 +1,271 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+using GFWKEditor;
+using UnityEditor.AnimatedValues;
+using Photon.Pun;
+
+[CustomEditor(typeof(GunInventory))]
+public class GunManagerEditor : Editor
+{
+    private AnimBool AssaultAnim;
+    protected static bool ShowAssault;
+    private AnimBool EnginnerAnim;
+    protected static bool ShowEngi;
+    private AnimBool ReconAnim;
+    protected static bool ShowRecon;
+    private AnimBool SupportAnim;
+    protected static bool ShowSupport;
+
+    private void OnEnable()
+    {
+        GunInventory script = (GunInventory)target;
+
+        AssaultAnim = new AnimBool(ShowAssault);
+        AssaultAnim.valueChanged.AddListener(Repaint);
+        EnginnerAnim = new AnimBool(ShowEngi);
+        EnginnerAnim.valueChanged.AddListener(Repaint);
+        ReconAnim = new AnimBool(ShowRecon);
+        ReconAnim.valueChanged.AddListener(Repaint);
+        SupportAnim = new AnimBool(ShowSupport);
+        SupportAnim.valueChanged.AddListener(Repaint);
+    }
+
+    public override void OnInspectorGUI()
+    {
+        serializedObject.Update();
+        EditorGUI.BeginChangeCheck();
+        GunInventory script = (GunInventory)target;
+        bool allowSceneObjects = !EditorUtility.IsPersistent(script);
+
+        EditorGUILayout.BeginVertical("box");
+        DrawNetworkGunsList(script);
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.BeginVertical("box");
+        string[] weaponList = GameConfig.Instance.AllWeaponStringList();
+
+#if CLASS_CUSTOMIZER
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("已启用兵种自定义，在此设置默认武器： ", EditorStyles.miniLabel);
+        if (GUILayout.Button("兵种管理器")) { Selection.activeObject = ClassManager.Instance; EditorGUIUtility.PingObject(ClassManager.Instance); }
+        GUILayout.EndHorizontal();
+        GUI.enabled = false;
+#endif
+        EditorGUILayout.BeginVertical("box");
+        ShowAssault = PhotonGUI.ContainerHeaderFoldout("突击兵兵种", ShowAssault);
+        AssaultAnim.target = ShowAssault;
+        if (EditorGUILayout.BeginFadeGroup(AssaultAnim.faded))
+        {
+            var so = serializedObject.FindProperty("m_AssaultClass");
+            DrawLoadoutField(so);
+            DrawEditorOf(so);
+        }
+        EditorGUILayout.EndFadeGroup();
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.BeginVertical("box");
+        ShowEngi = PhotonGUI.ContainerHeaderFoldout("工程兵兵种", ShowEngi);
+        EnginnerAnim.target = ShowEngi;
+        if (EditorGUILayout.BeginFadeGroup(EnginnerAnim.faded))
+        {
+            var so = serializedObject.FindProperty("m_EngineerClass");
+            DrawLoadoutField(so);
+            DrawEditorOf(so);
+        }
+        EditorGUILayout.EndFadeGroup();
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.BeginVertical("box");
+        ShowRecon = PhotonGUI.ContainerHeaderFoldout("侦察兵兵种", ShowRecon);
+        ReconAnim.target = ShowRecon;
+        if (EditorGUILayout.BeginFadeGroup(ReconAnim.faded))
+        {
+            var so = serializedObject.FindProperty("m_ReconClass");
+            DrawLoadoutField(so);
+            DrawEditorOf(so);
+        }
+        EditorGUILayout.EndFadeGroup();
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.BeginVertical("box");
+        ShowSupport = PhotonGUI.ContainerHeaderFoldout("支援兵兵种", ShowSupport);
+        SupportAnim.target = ShowSupport;
+        if (EditorGUILayout.BeginFadeGroup(SupportAnim.faded))
+        {
+            var so = serializedObject.FindProperty("m_SupportClass");
+            DrawLoadoutField(so);
+            DrawEditorOf(so);
+        }
+        EditorGUILayout.EndFadeGroup();
+        EditorGUILayout.EndVertical();
+
+        EditorGUILayout.EndVertical();
+        GUI.enabled = true;
+
+        GUILayout.BeginVertical("box");
+        if (script.changeWeaponStyle == GunInventory.ChangeWeaponStyle.HideAndDraw)
+        {
+            script.SwichTime = EditorGUILayout.Slider("切换时间", script.SwichTime, 0.1f, 5);
+        }
+        script.PickUpTime = EditorGUILayout.Slider("拾取时间", script.PickUpTime, 0.1f, 5);
+        script.changeWeaponStyle = (GunInventory.ChangeWeaponStyle)EditorGUILayout.EnumPopup("切换武器样式", script.changeWeaponStyle, EditorStyles.toolbarPopup);
+        GUILayout.EndVertical();
+
+        GUILayout.BeginVertical("box");
+        script.HeadAnimator = EditorGUILayout.ObjectField("头部动画器", script.HeadAnimator, typeof(Animator), allowSceneObjects) as Animator;
+        script.SwitchFireAudioClip = EditorGUILayout.ObjectField("切换开火模式音效", script.SwitchFireAudioClip, typeof(AudioClip), allowSceneObjects) as AudioClip;
+        GUILayout.EndVertical();
+
+        if (EditorGUI.EndChangeCheck())
+        {
+            serializedObject.ApplyModifiedProperties();
+            EditorUtility.SetDirty(target);
+        }
+    }
+
+    void DrawEditorOf(SerializedProperty so)
+    {
+        if (so == null || so.objectReferenceValue == null) return;
+
+        var editor = Editor.CreateEditor(so.objectReferenceValue);
+        if (editor != null)
+        {
+            EditorGUILayout.BeginVertical("box");
+            editor.DrawDefaultInspector();
+            EditorGUILayout.EndVertical();
+        }
+    }
+
+    void DrawLoadoutField(SerializedProperty so)
+    {
+        EditorGUILayout.BeginHorizontal("box");
+        EditorGUILayout.PropertyField(so);
+        if (so.objectReferenceValue == null)
+        {
+            if (GUILayout.Button("Create", EditorStyles.toolbarButton, GUILayout.Width(60)))
+            {
+                string path = "Assets/Prefabs/Weapons/Loadouts";
+                if (!AssetDatabase.IsValidFolder(path))
+                {
+                    path = EditorUtility.OpenFolderPanel("保存文件夹", "Assets", "Assets");
+                }
+                path = UtilityHelper.CreateAsset<PlayerClassLoadout>(path, false, "玩家兵种武器配置");
+                PlayerClassLoadout pcl = AssetDatabase.LoadAssetAtPath(path, typeof(PlayerClassLoadout)) as PlayerClassLoadout;
+                so.objectReferenceValue = pcl;
+                EditorUtility.SetDirty(target);
+            }
+        }
+        else
+        {
+            if (GUILayout.Button("NEW", EditorStyles.toolbarButton, GUILayout.Width(50)))
+            {
+                PlayerClassLoadout old = so.objectReferenceValue as PlayerClassLoadout;
+                string path = "Assets/Prefabs/Weapons/Loadouts";
+                if (!AssetDatabase.IsValidFolder(path))
+                {
+                    path = EditorUtility.OpenFolderPanel("保存文件夹", "Assets", "Assets");
+                }
+                path = UtilityHelper.CreateAsset<PlayerClassLoadout>(path, false, $"{so.objectReferenceValue.name} 副本");
+                PlayerClassLoadout pcl = AssetDatabase.LoadAssetAtPath(path, typeof(PlayerClassLoadout)) as PlayerClassLoadout;
+                so.objectReferenceValue = pcl;
+                pcl.Primary = old.Primary;
+                pcl.Secondary = old.Primary;
+                pcl.Perks = old.Perks;
+                pcl.Letal = old.Letal;
+                EditorUtility.SetDirty(target);
+                EditorUtility.SetDirty(pcl);
+            }
+        }
+        EditorGUILayout.EndHorizontal();
+    }
+
+    void DrawNetworkGunsList(GunInventory script)
+    {
+        GUILayout.BeginHorizontal();
+        GUILayout.Label("武器管理器", EditorStyles.toolbarButton);
+        GUILayout.Space(5);
+        if (GUILayout.Button(new GUIContent("IMPORT", EditorGUIUtility.IconContent("ol plus").image), EditorStyles.toolbarButton, GUILayout.Width(70)))
+        {
+            EditorWindow.GetWindow<ImportExportWeapon>("Import", true).PrepareToImport(script.transform.root.GetComponent<PlayerNetworkHandler>(), null);
+        }
+        GUILayout.EndHorizontal();
+        SerializedProperty listProperty = serializedObject.FindProperty("AllGuns");
+        if (listProperty == null)
+        {
+            return;
+        }
+
+        float containerElementHeight = 22;
+        float containerHeight = listProperty.arraySize * containerElementHeight;
+
+        bool isOpen = PhotonGUI.ContainerHeaderFoldout("Gun List (" + script.AllGuns.Count + ")", serializedObject.FindProperty("ObservedComponentsFoldoutOpen").boolValue);
+        serializedObject.FindProperty("ObservedComponentsFoldoutOpen").boolValue = isOpen;
+
+        if (isOpen == false)
+        {
+            containerHeight = 0;
+        }
+
+        Rect containerRect = PhotonGUI.ContainerBody(containerHeight);
+        if (isOpen == true)
+        {
+            for (int i = 0; i < listProperty.arraySize; ++i)
+            {
+                Rect elementRect = new Rect(containerRect.xMin, containerRect.yMin + containerElementHeight * i, containerRect.width, containerElementHeight);
+                {
+                    Rect texturePosition = new Rect(elementRect.xMin + 6, elementRect.yMin + elementRect.height / 2f - 1, 9, 5);              
+                   // GFWKEditorUtils.DrawTexture(texturePosition, GFWKEditorUtils.texGrabHandle);
+                    Rect propertyPosition = new Rect(elementRect.xMin + 20, elementRect.yMin + 3, elementRect.width - 45, 16);
+                    EditorGUI.PropertyField(propertyPosition, listProperty.GetArrayElementAtIndex(i), new GUIContent());
+
+                    Rect removeButtonRect = new Rect(elementRect.xMax - PhotonGUI.DefaultRemoveButtonStyle.fixedWidth,
+                                                        elementRect.yMin + 2,
+                                                        PhotonGUI.DefaultRemoveButtonStyle.fixedWidth,
+                                                        PhotonGUI.DefaultRemoveButtonStyle.fixedHeight);
+
+                    GUI.enabled = listProperty.arraySize > 1;
+                    if (GUI.Button(removeButtonRect, new GUIContent(GFWKEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
+                    {
+                        listProperty.DeleteArrayElementAtIndex(i);
+                    }
+                    GUI.enabled = true;
+
+                    if (i < listProperty.arraySize - 1)
+                    {
+                        texturePosition = new Rect(elementRect.xMin + 2, elementRect.yMax, elementRect.width - 4, 1);
+                        PhotonGUI.DrawSplitter(texturePosition);
+                    }
+                }
+            }
+        }
+
+        if (PhotonGUI.AddButton())
+        {
+            listProperty.InsertArrayElementAtIndex(Mathf.Max(0, listProperty.arraySize - 1));
+        }
+
+        serializedObject.ApplyModifiedProperties();
+    }
+
+    GUIStyle FoldOutStyle
+    {
+        get
+        {
+            GUIStyle myFoldoutStyle = new GUIStyle(EditorStyles.foldout);
+            myFoldoutStyle.fontStyle = FontStyle.Bold;
+            myFoldoutStyle.fontSize = 14;
+            Color myStyleColor = Color.red;
+            myFoldoutStyle.normal.textColor = myStyleColor;
+            myFoldoutStyle.onNormal.textColor = myStyleColor;
+            myFoldoutStyle.hover.textColor = myStyleColor;
+            myFoldoutStyle.onHover.textColor = myStyleColor;
+            myFoldoutStyle.focused.textColor = myStyleColor;
+            myFoldoutStyle.onFocused.textColor = myStyleColor;
+            myFoldoutStyle.active.textColor = myStyleColor;
+            myFoldoutStyle.onActive.textColor = myStyleColor;
+            return myFoldoutStyle;
+        }
+    }
+}

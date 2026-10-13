@@ -177,7 +177,7 @@ public class AddMapTutorial : TutorialWizard
         }
         else if (subStep == 3)
         {
-            DrawText("现在需要为每个阵营创建<b>出生点</b><i>（阵营 1、阵营 2 以及混战模式）</i>。出生点并不是固定位置，而是一个<b>球形区域</b>，玩家会在该区域半径内的随机位置出生。\n \n<b><size=16>如何创建出生点：</size></b>\n \n在场景中新建一个空物体，挂载 <b>bl_SpawnPoint.cs</b> 脚本，并指定区域和阵营。\n \n为方便操作，下方提供了一个创建出生点的按钮，选择阵营后点击 <b>创建出生点</b> 按钮 ➔ 即可创建出生点，然后在场景视图中选中它并摆放位置。");
+            DrawText("现在需要为每个阵营创建<b>出生点</b><i>（阵营 1、阵营 2 以及混战模式）</i>。出生点并不是固定位置，而是一个<b>球形区域</b>，玩家会在该区域半径内的随机位置出生。\n \n<b><size=16>如何创建出生点：</size></b>\n \n在场景中新建一个空物体，挂载 <b>SpawnLocation.cs</b> 脚本，并指定区域和阵营。\n \n为方便操作，下方提供了一个创建出生点的按钮，选择阵营后点击 <b>创建出生点</b> 按钮 ➔ 即可创建出生点，然后在场景视图中选中它并摆放位置。");
             Space();
             GUILayout.BeginVertical();
             DrawText("<color=yellow>创建出生点</color>");
@@ -193,7 +193,7 @@ public class AddMapTutorial : TutorialWizard
             DownArrow();
             DrawText("创建并摆放好出生点后，效果大致如下：");
             DrawImage(GetServerImage(4));
-            DrawText("这就是出生点区域。半球体与居中辅助线框表示的玩家实际尺寸可用来预览玩家的可出生范围。\n \n 可在 bl_Spawnpoint 中增大或减小该区域。" +
+            DrawText("这就是出生点区域。半球体与居中辅助线框表示的玩家实际尺寸可用来预览玩家的可出生范围。\n \n 可在 SpawnpointVariant 中增大或减小该区域。" +
                 "脚本挂到该对象上 -> 在 <b>Spawn Space</b> 中设置。你还可以旋转它来设定默认朝向，即出生玩家面朝的方向。\n \n注意让玩家辅助图标的脚部与球形区域位于地面之上，" +
                 " 否则玩家出生后会掉落。");
             DrawText("\n用上方按钮可创建任意数量的出生点。确保每个阵营至少有一个出生点，完成后继续下一步。");
@@ -215,9 +215,9 @@ public class AddMapTutorial : TutorialWizard
 
             DrawText("烘焙导航网格后，效果大致如下：");
             DrawImage(GetServerImage(5));
-            DrawText("机器人可自由移动的区域由蓝色叠加网格标识。要让机器人发挥最佳效果，必须策略性地摆放 <b>AI 掩体点</b>。掩体点是挂载 <b>bl_AICoverPoint</b> 脚本的空物体，作为机器人战斗时寻找掩体的参考位置。\n \n为简化流程，AIManager 对象已内置一组默认 AI 掩体点。在 Unity 编辑器的层级面板中展开 <b>AIManager ➔ *</b> 即可找到它们，可随意微调位置或增加掩体点，以提升机器人寻找掩体时的战术判断能力。");
+            DrawText("机器人可自由移动的区域由蓝色叠加网格标识。要让机器人发挥最佳效果，必须策略性地摆放 <b>AI 掩体点</b>。掩体点是挂载 <b>AICoverPoint</b> 脚本的空物体，作为机器人战斗时寻找掩体的参考位置。\n \n为简化流程，AIManager 对象已内置一组默认 AI 掩体点。在 Unity 编辑器的层级面板中展开 <b>AIManager ➔ *</b> 即可找到它们，可随意微调位置或增加掩体点，以提升机器人寻找掩体时的战术判断能力。");
             DrawImage(GetServerImage(6), TextAlignment.Center);
-            DrawText("数量可自行决定，不需要那么多就删掉一些，需要更多就复制。\n \n逐个选中并摆放到地图上的战术位置；在 <i>AIManager ➔ bl_AIManager ➔ <b>显示辅助线</b></i> 中开启后可预览区域范围。");
+            DrawText("数量可自行决定，不需要那么多就删掉一些，需要更多就复制。\n \n逐个选中并摆放到地图上的战术位置；在 <i>AIManager ➔ AIManagerHandler ➔ <b>显示辅助线</b></i> 中开启后可预览区域范围。");
             DrawImage(GetServerImage(7));
             DrawText("<i>关于 AI 掩体点的更多信息请查看：</i>");
             if (Buttons.OutlineButton("AI 掩体点"))
@@ -239,14 +239,14 @@ public class AddMapTutorial : TutorialWizard
             GUI.enabled = !string.IsNullOrEmpty(sceneName) && m_SceneReference != null;
             if (DrawButton("列出地图"))
             {
-                if (!bl_GameData.Instance.AllScenes.Exists(x => x.ShowName == sceneName))
+                if (!GameConfig.Instance.AllScenes.Exists(x => x.ShowName == sceneName))
                 {
                     var si = new MapInfo();
                     si.ShowName = sceneName;
                     si.m_Scene = m_SceneReference;
                     si.Preview = scenePreview;
-                    bl_GameData.Instance.AllScenes.Add(si);
-                    EditorUtility.SetDirty(bl_GameData.Instance);
+                    GameConfig.Instance.AllScenes.Add(si);
+                    EditorUtility.SetDirty(GameConfig.Instance);
                     EditorSceneManager.MarkSceneDirty(EditorSceneManager.GetActiveScene());
                     EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo();
                     var original = EditorBuildSettings.scenes;
@@ -354,11 +354,11 @@ public class AddMapTutorial : TutorialWizard
     bool sceneListed = false;
     void CheckScene()
     {
-        RequiredInstanced[0] = FindObjectOfType<bl_GameManager>() != null;
-        RequiredInstanced[1] = FindObjectOfType<bl_AIMananger>() != null;
-        RequiredInstanced[2] = FindObjectOfType<bl_ItemManagerBase>() != null;
+        RequiredInstanced[0] = FindObjectOfType<GameController>() != null;
+        RequiredInstanced[1] = FindObjectOfType<AIMananger>() != null;
+        RequiredInstanced[2] = FindObjectOfType<ItemManagerBase>() != null;
         RequiredInstanced[3] = GameObject.Find("GameModes") != null;
-        RequiredInstanced[4] = FindObjectOfType<bl_UIReferences>() != null;
+        RequiredInstanced[4] = FindObjectOfType<UIReferences>() != null;
         sceneChecked = true;
     }
 
@@ -372,15 +372,15 @@ public class AddMapTutorial : TutorialWizard
         }
         if (SpawnTeam == Team.Team1)
         {
-            GameObject t1p = GameObject.Find(string.Format("{0} Spawnpoints", bl_GameData.Instance.Team1Name));
+            GameObject t1p = GameObject.Find(string.Format("{0} Spawnpoints", GameConfig.Instance.Team1Name));
             if (t1p == null)
             {
-                t1p = new GameObject(string.Format("{0} Spawnpoints", bl_GameData.Instance.Team1Name));
+                t1p = new GameObject(string.Format("{0} Spawnpoints", GameConfig.Instance.Team1Name));
                 t1p.transform.parent = parent.transform;
                 t1p.transform.localPosition = Vector3.zero;
             }
-            GameObject spawn = new GameObject(string.Format("SpawnPoint [{0}]", bl_GameData.Instance.Team1Name));
-            bl_SpawnPoint sp = spawn.AddComponent<bl_SpawnPoint>();
+            GameObject spawn = new GameObject(string.Format("SpawnPoint [{0}]", GameConfig.Instance.Team1Name));
+            SpawnLocation sp = spawn.AddComponent<SpawnLocation>();
             sp.team = SpawnTeam;
             spawn.transform.parent = t1p.transform;
             Selection.activeObject = spawn;
@@ -390,15 +390,15 @@ public class AddMapTutorial : TutorialWizard
         }
         else if (SpawnTeam == Team.Team2)
         {
-            GameObject t1p = GameObject.Find(string.Format("{0} Spawnpoints", bl_GameData.Instance.Team2Name));
+            GameObject t1p = GameObject.Find(string.Format("{0} Spawnpoints", GameConfig.Instance.Team2Name));
             if (t1p == null)
             {
-                t1p = new GameObject(string.Format("{0} Spawnpoints", bl_GameData.Instance.Team2Name));
+                t1p = new GameObject(string.Format("{0} Spawnpoints", GameConfig.Instance.Team2Name));
                 t1p.transform.parent = parent.transform;
                 t1p.transform.localPosition = Vector3.zero;
             }
-            GameObject spawn = new GameObject(string.Format("SpawnPoint [{0}]", bl_GameData.Instance.Team2Name));
-            bl_SpawnPoint sp = spawn.AddComponent<bl_SpawnPoint>();
+            GameObject spawn = new GameObject(string.Format("SpawnPoint [{0}]", GameConfig.Instance.Team2Name));
+            SpawnLocation sp = spawn.AddComponent<SpawnLocation>();
             sp.team = SpawnTeam;
             spawn.transform.parent = t1p.transform;
             Selection.activeObject = spawn;
@@ -416,7 +416,7 @@ public class AddMapTutorial : TutorialWizard
                 t1p.transform.localPosition = Vector3.zero;
             }
             GameObject spawn = new GameObject(string.Format("SpawnPoint [{0}]", "ALL"));
-            bl_SpawnPoint sp = spawn.AddComponent<bl_SpawnPoint>();
+            SpawnLocation sp = spawn.AddComponent<SpawnLocation>();
             sp.team = Team.All;
             spawn.transform.parent = t1p.transform;
             Selection.activeObject = spawn;

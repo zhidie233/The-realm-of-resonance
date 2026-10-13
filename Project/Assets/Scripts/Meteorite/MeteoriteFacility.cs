@@ -57,8 +57,8 @@ public class MeteoriteFacility : ResonanceFacility
     [PunRPC]
     private void RPC_TriggerMeteorite(string shooterName, string targetName, int shooterViewID)
     {
-        GFWKPlayer shooter = bl_GameManager.Instance.GetGFWKPlayer(shooterName);
-        GFWKPlayer target = bl_GameManager.Instance.GetGFWKPlayer(targetName);
+        GFWKPlayer shooter = GameController.Instance.GetGFWKPlayer(shooterName);
+        GFWKPlayer target = GameController.Instance.GetGFWKPlayer(targetName);
         if (shooter != null && target != null)
         {
             StartCoroutine(SpawnMeteorite(shooter, target, shooterViewID));
@@ -131,7 +131,7 @@ public class MeteoriteFacility : ResonanceFacility
     
     private GFWKPlayer GetRandomEnemyPlayer(Team enemyTeam)
     {
-        GFWKPlayer[] enemies = bl_GameManager.Instance.GetGFWKPlayerInTeam(enemyTeam, true);
+        GFWKPlayer[] enemies = GameController.Instance.GetGFWKPlayerInTeam(enemyTeam, true);
         return enemies.Length > 0 ? enemies[Random.Range(0, enemies.Length)] : null;
     }
     

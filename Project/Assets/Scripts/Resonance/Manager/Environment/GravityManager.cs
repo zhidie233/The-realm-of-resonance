@@ -10,7 +10,7 @@ public class GravityManager : EnvironmentEffectManager
     private AnimationCurve positionCurve = AnimationCurve.Linear(0, 0, 1, 1);
     
     // 受响应的物体
-    private bl_FirstPersonController _blFirstPersonControllers;
+    private FirstPersonController _blFirstPersonControllers;
     private List<GravityFacility> _gravityFacilities = new List<GravityFacility>();
     
     protected override void Start()
@@ -48,7 +48,7 @@ public class GravityManager : EnvironmentEffectManager
         }
     }
 
-    public void SetBlFirstPersonController(bl_FirstPersonController controller)
+    public void SetBlFirstPersonController(FirstPersonController controller)
     {
         this._blFirstPersonControllers = controller;
     }

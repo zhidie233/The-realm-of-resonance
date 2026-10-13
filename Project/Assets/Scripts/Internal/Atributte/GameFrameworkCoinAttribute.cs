@@ -26,7 +26,7 @@ namespace GFWKEditor
             }
             else
             {
-                var names = bl_GameData.Instance.gameCoins.Select(x =>
+                var names = GameConfig.Instance.gameCoins.Select(x =>
                 {
                     if (x == null) return "Empty";
 
