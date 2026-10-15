@@ -22870,7 +22870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.gfworksstudio.com/en/shop/network/ulogin-pro/
+  url: 
   activeIfChilds: 1
 --- !u!1 &5689433043643733372
 GameObject:
@@ -44362,7 +44362,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.gfworksstudio.com/en/shop/network/clan-system/
+  url: 
   activeIfChilds: 1
 --- !u!1 &6631396264231031580
 GameObject:
@@ -52275,7 +52275,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.gfworksstudio.com/en/shop/addons/level-system/
+  url: 
   activeIfChilds: 1
 --- !u!1 &6631396264868759010
 GameObject:
@@ -57908,7 +57908,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.gfworksstudio.com/en/shop/gui/emblems-and-calling-cards/
+  url: 
   activeIfChilds: 1
 --- !u!1 &6631396265398678568
 GameObject:
@@ -62702,7 +62702,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7065bc571b51cd74e87c164b083c119c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  url: https://www.gfworksstudio.com/en/shop/gui/emblems-and-calling-cards/
+  url: 
   activeIfChilds: 1
 --- !u!1 &6631396265809646397
 GameObject:
