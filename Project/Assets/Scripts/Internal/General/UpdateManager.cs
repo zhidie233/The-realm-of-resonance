@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Internal
+namespace Game.Internal
 {
     public class UpdateManager : MonoBehaviour
     {

@@ -1,4 +1,4 @@
-﻿using GFWK.InputManager;
+﻿﻿using Game.InputManager;
 using UnityEngine;
 
 public enum GameInputType
@@ -8,7 +8,7 @@ public enum GameInputType
     Hold,
 }
 
-public enum GFWKInputFocus
+public enum GameInputFocus
 {
     Player,
     Interface,
@@ -17,7 +17,7 @@ public enum GFWKInputFocus
 
 public class GameInput 
 {
-    public static GFWKInputFocus InputFocus = GFWKInputFocus.Player;
+    public static GameInputFocus InputFocus = GameInputFocus.Player;
 
     public static bool Fire(GameInputType inputType = GameInputType.Hold)
     {

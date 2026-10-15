@@ -1,12 +1,12 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public class AmmoBox : NetworkItem
     {
-        [GFWorksToogle] public bool isGlobal = true;
-        [GFWorksToogle] public bool autoRespawn = false;
+        [GameFwkToogle] public bool isGlobal = true;
+        [GameFwkToogle] public bool autoRespawn = false;
         [GunID] public int ForGun = 0;
 
         public int Bullets = 30;

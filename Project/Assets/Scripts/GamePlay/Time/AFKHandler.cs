@@ -1,7 +1,7 @@
 using UnityEngine;
 using TMPro;
 
-namespace GFWK.Runtime.Misc
+namespace Game.Runtime.Misc
 {
     public class AFKHandler : MonoBehaviourBase
     {

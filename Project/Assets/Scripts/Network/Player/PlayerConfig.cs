@@ -2,7 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
-using GFWKEditor;
+using GameEditor;
 
 public class PlayerConfig : PhotonHelper
 {
@@ -55,11 +55,11 @@ public class PlayerConfig : PhotonHelper
             }
         }
         LocalObjects.SetActive(false);
-        gameObject.tag = GFWKCore.REMOTE_PLAYER_TAG;
+        gameObject.tag = GameCore.REMOTE_PLAYER_TAG;
         gameObject.layer = (int)Mathf.Log(GameConfig.TagsAndLayerSettings.RemotePlayerRootLayer.value, 2);
 
         //Build Player Data
-        GFWKPlayer playerData = new GFWKPlayer()
+        GamePlayer playerData = new GamePlayer()
         {
             Name = photonView.Owner.NickName,
             Team = PlayerTeam,
@@ -73,7 +73,7 @@ public class PlayerConfig : PhotonHelper
         GameEvents.DispatchRemoteActorChange(new GameEvents.PlayerChangeData()
         {
             PlayerName = photonView.Owner.NickName,
-            GFWKActor = playerData,
+            GameActor = playerData,
             IsAlive = true,
             NetworkView = photonView
         });
@@ -93,7 +93,7 @@ public class PlayerConfig : PhotonHelper
             }
         }
         RemoteObjects.SetActive(false);
-        gameObject.tag = GFWKCore.LOCAL_PLAYER_TAG;
+        gameObject.tag = GameCore.LOCAL_PLAYER_TAG;
         gameObject.layer = GameConfig.TagsAndLayerSettings.GetLocalPlayerLayerIndex();
 
         armsMaterial?.SelectTeamMaterial(PlayerTeam);
@@ -101,7 +101,7 @@ public class PlayerConfig : PhotonHelper
         {
             StartCoroutine(DoSpawnLoop());
         }
-        playerReferences.DefaultCameraFOV = (float)GFWKCore.Settings.GetSettingOf("FOV");
+        playerReferences.DefaultCameraFOV = (float)GameCore.Settings.GetSettingOf("FOV");
         GameEvents.onGameSettingsChange += OnGameSettingsChanged;
 #if GR
         transform.GetComponentInChildren<GunInventory>().isGunRace = (GetGameMode == GameMode.GR);
@@ -130,7 +130,7 @@ public class PlayerConfig : PhotonHelper
             GameEvents.DispatchRemoteActorChange(new GameEvents.PlayerChangeData()
             {
                 PlayerName = gameObject.name,
-                GFWKActor = null,
+                GameActor = null,
                 IsAlive = false,
             });
         }
@@ -141,7 +141,7 @@ public class PlayerConfig : PhotonHelper
     /// </summary>
     void OnGameSettingsChanged()
     {
-        playerReferences.DefaultCameraFOV = (float)GFWKCore.Settings.GetSettingOf("FOV");
+        playerReferences.DefaultCameraFOV = (float)GameCore.Settings.GetSettingOf("FOV");
     }
 
 #if UNITY_EDITOR

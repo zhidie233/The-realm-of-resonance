@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 /// <summary>
-/// GFWK Default recoil movement
+/// Game Default recoil movement
 /// If you want to use your custom recoil script, inherited your script from RecoilBase.cs
 /// Use this as reference only.
 /// </summary>
@@ -30,7 +30,7 @@ public class RecoilHandler : RecoilBase
         m_Transform.localPosition = Vector3.zero;
         m_Transform.localEulerAngles = Vector3.zero;
         transform.parent = m_Transform;
-#if !GFWKTPV
+#if !GameTPV
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
 #endif
@@ -111,7 +111,7 @@ public class RecoilHandler : RecoilBase
     /// </summary>
     public override void SetRecoil(RecoilData data)
     {
-#if GFWKM
+#if GameM
         if (UtilityHelper.isMobile && MobileControlSettings.Instance.disableRecoil) return;
 #endif
         

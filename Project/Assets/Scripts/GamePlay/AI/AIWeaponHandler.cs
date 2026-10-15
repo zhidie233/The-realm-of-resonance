@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Runtime.AI
+namespace Game.Runtime.AI
 {
     public class AIWeaponHandler : MonoBehaviour
     {

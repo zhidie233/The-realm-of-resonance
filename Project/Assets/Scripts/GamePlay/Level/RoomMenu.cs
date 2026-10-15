@@ -77,7 +77,7 @@ public class RoomMenu : MonoBehaviourBase
     {
         GameEvents.onLocalPlayerSpawn += OnPlayerSpawn;
         GameEvents.onLocalPlayerDeath += OnPlayerLocalDeath;
-#if GFWKM
+#if GameM
         TouchHelper.OnPause += TogglePause;
 #endif
         PhotonCallbacks.LeftRoom += OnLeftRoom;
@@ -90,7 +90,7 @@ public class RoomMenu : MonoBehaviourBase
     {
         GameEvents.onLocalPlayerSpawn -= OnPlayerSpawn;
         GameEvents.onLocalPlayerDeath -= OnPlayerLocalDeath;
-#if GFWKM
+#if GameM
         TouchHelper.OnPause -= TogglePause;
 #endif
         PhotonCallbacks.LeftRoom -= OnLeftRoom;
@@ -241,7 +241,7 @@ public class RoomMenu : MonoBehaviourBase
         if (DataBase.IsUserLogged && save)
         {
             var p = PhotonNetworkWrapper.LocalPlayer;
-            ULoginGFWK.SaveLocalPlayerKDS();
+            ULoginGame.SaveLocalPlayerKDS();
             DataBase.Instance.StopAndSaveTime();
         }
 #endif

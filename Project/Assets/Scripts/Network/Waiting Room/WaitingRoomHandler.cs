@@ -69,7 +69,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     {
         var table = UtilityHelper.CreatePhotonHashTable();
         table.Add(PropertiesKeys.UserRole, GameConfig.Instance.RolePrefix);
-        table.Add(PropertiesKeys.PlayerTotalScore, GFWKCore.LocalPlayer.Stats.GetAllTimeScore());
+        table.Add(PropertiesKeys.PlayerTotalScore, GameCore.LocalPlayer.Stats.GetAllTimeScore());
         PhotonNetworkWrapper.LocalPlayer.SetCustomProperties(table);
     }
 
@@ -279,7 +279,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     public void OnJoinedRoom()
     {
-        if (GFWKCore.GameData.UsingWaitingRoom())
+        if (GameCore.GameData.UsingWaitingRoom())
         {
             StartCoroutine(WaitUntilFullyJoin());
         }

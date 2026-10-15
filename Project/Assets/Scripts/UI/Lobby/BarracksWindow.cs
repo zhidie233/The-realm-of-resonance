@@ -1,10 +1,10 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class BarracksWindow : MonoBehaviour
     {
@@ -84,7 +84,7 @@ namespace GFWK.Runtime.UI
             public string Name;
             public GameObject Window;
             public Button OpenButton;
-            [GFWorksToogle] public bool Active = true;
+            [GameFwkToogle] public bool Active = true;
             public GameEvents.UEvent onOpen;
 
             public void SetActive(bool active)

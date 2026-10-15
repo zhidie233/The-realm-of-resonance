@@ -1,24 +1,24 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
-using GFWK.Internal.Scriptables;
+using Game.Internal.Scriptables;
 using UnityEngine;
-using GFWKEditor;
+using GameEditor;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace GFWK.Internal.Structures
+namespace Game.Internal.Structures
 {
     [Serializable]
-    public class GFWKItemUnlockability
+    public class GameItemUnlockability
     {
         public UnlockabilityMethod UnlockMethod = UnlockabilityMethod.UnlockedByDefault;
         public ItemTypeEnum ItemType = ItemTypeEnum.Weapon;
         public int Price = 0;
         public int UnlockAtLevel = 0;
         [Tooltip("Coins with which can't purchase this item; leave empty if all coins are available.")]
-        [GFWKCoinID] public int[] NoAllowedCoins;
+        [GameCoinID] public int[] NoAllowedCoins;
 
         /// <summary>
         /// Is this item unlocked for the local player?
@@ -119,10 +119,10 @@ namespace GFWK.Internal.Structures
         /// </summary>
         /// <param name="originalCoins"></param>
         /// <returns></returns>
-        public List<GFWKCoin> GetAllowedCoins()
+        public List<GameCoin> GetAllowedCoins()
         {
-            var all = GFWKCore.Coins.GetAllCoins();
-            var copy = new List<GFWKCoin>();
+            var all = GameCore.Coins.GetAllCoins();
+            var copy = new List<GameCoin>();
             foreach (var c in all)
             {
                 copy.Add(c);
@@ -137,12 +137,12 @@ namespace GFWK.Internal.Structures
         /// 
         /// </summary>
         /// <returns></returns>
-        public List<GFWKCoin> GetNoAllowedCoins()
+        public List<GameCoin> GetNoAllowedCoins()
         {
-            var copy = new List<GFWKCoin>();
+            var copy = new List<GameCoin>();
             for (int i = 0; i < NoAllowedCoins.Length; i++)
             {
-                copy.Add((GFWKCoin)NoAllowedCoins[i]);
+                copy.Add((GameCoin)NoAllowedCoins[i]);
             }
             return copy;
         }
@@ -185,8 +185,8 @@ namespace GFWK.Internal.Structures
     }
 
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(GFWKItemUnlockability))]
-    public class GFWKItemUnlockabilityDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(GameItemUnlockability))]
+    public class GameItemUnlockabilityDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
@@ -214,21 +214,21 @@ namespace GFWK.Internal.Structures
                 var itemType = property.FindPropertyRelative("ItemType");
                 EditorGUI.PropertyField(r, itemType);
 
-                var um = (GFWKItemUnlockability.UnlockabilityMethod)unlockMethod.enumValueIndex;
-                GUI.enabled = um != GFWKItemUnlockability.UnlockabilityMethod.UnlockedByDefault;
-                if (um != GFWKItemUnlockability.UnlockabilityMethod.LevelUpOnly)
+                var um = (GameItemUnlockability.UnlockabilityMethod)unlockMethod.enumValueIndex;
+                GUI.enabled = um != GameItemUnlockability.UnlockabilityMethod.UnlockedByDefault;
+                if (um != GameItemUnlockability.UnlockabilityMethod.LevelUpOnly)
                 {
                     r.y += EditorGUIUtility.singleLineHeight;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("Price"));
                 }
 
-                if (um != GFWKItemUnlockability.UnlockabilityMethod.PurchasedOnly)
+                if (um != GameItemUnlockability.UnlockabilityMethod.PurchasedOnly)
                 {
                     r.y += EditorGUIUtility.singleLineHeight;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("UnlockAtLevel"));
                 }
 
-                if (um != GFWKItemUnlockability.UnlockabilityMethod.LevelUpOnly)
+                if (um != GameItemUnlockability.UnlockabilityMethod.LevelUpOnly)
                 {
                     r.y += EditorGUIUtility.singleLineHeight;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("NoAllowedCoins"), true);

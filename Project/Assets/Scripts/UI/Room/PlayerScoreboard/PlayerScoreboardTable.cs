@@ -1,8 +1,8 @@
-﻿using Photon.Realtime;
+﻿﻿using Photon.Realtime;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 public class PlayerScoreboardTable : PlayerScoreboardTableBase
 {
@@ -53,7 +53,7 @@ public class PlayerScoreboardTable : PlayerScoreboardTableBase
     /// <param name="player"></param>
     /// <param name="uiPrefab"></param>
     /// <returns></returns>
-    public override PlayerScoreboardUIBase InstanceBot(GFWKBotProperties player, GameObject uiPrefab)
+    public override PlayerScoreboardUIBase InstanceBot(GameBotProperties player, GameObject uiPrefab)
     {
         GameObject instance = Instantiate(uiPrefab) as GameObject;
         instance.transform.SetParent(panel, false);

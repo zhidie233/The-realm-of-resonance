@@ -488,7 +488,7 @@ public class MatchTimeManager : MatchTimeManagerBase
     [PunRPC]
     void RpcStartTime(int wait)
     {
-        if (GFWKCore.LocalPlayer.Team == Team.None) return;
+        if (GameCore.LocalPlayer.Team == Team.None) return;
 
         SetTimeState(RoomTimeState.Started, PhotonNetworkWrapper.IsMasterClient);
         UIReferences.Instance.SetWaitingPlayersText(GameTexts.StartingMatch, true);

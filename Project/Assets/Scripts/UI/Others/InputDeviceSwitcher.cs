@@ -1,7 +1,7 @@
-﻿using UnityEngine;
-using GFWK.Runtime.Settings;
+﻿﻿using UnityEngine;
+using Game.Runtime.Settings;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     public class InputDeviceSwitcher : MonoBehaviour
     {

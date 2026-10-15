@@ -3,11 +3,11 @@ using System.Collections;
 
 public class MeteoriteShooterMarker : MonoBehaviour
 {
-    private GFWKPlayer targetPlayer;
+    private GamePlayer targetPlayer;
     private float displayTime;
     private float timer;
     
-    public void Initialize(GFWKPlayer player, float time)
+    public void Initialize(GamePlayer player, float time)
     {
         targetPlayer = player;
         displayTime = time;

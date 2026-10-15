@@ -1,7 +1,7 @@
-﻿using GFWK.Audio;
-using GFWK.Runtime.FriendList;
-using GFWK.Runtime.Settings;
-using GFWK.Runtime.UI;
+﻿﻿using Game.Audio;
+using Game.Runtime.FriendList;
+using Game.Runtime.Settings;
+using Game.Runtime.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -169,7 +169,7 @@ public class LobbyUI : MonoBehaviour
     {
         if (PhotonNetworkWrapper.IsConnected && GameConfig.isDataCached)
         {
-            PlayerNameText.text = GFWKCore.LocalPlayer.FullNickName();
+            PlayerNameText.text = GameCore.LocalPlayer.FullNickName();
         }
     }
 
@@ -232,15 +232,15 @@ public class LobbyUI : MonoBehaviour
     /// </summary>
     void ApplyRuntimeSettings()
     {
-        if (GFWKCore.Settings != null)
+        if (GameCore.Settings != null)
         {
             var apm = ResolutionSettings.ResolutionHandler == null ? RuntimeSettingsProfile.ResolutionApplication.ApplyCurrent : RuntimeSettingsProfile.ResolutionApplication.NoApply;
-            GFWKCore.Settings.ApplySettings(apm, false);
-            Application.targetFrameRate = GFWKCore.Settings.RefreshRates[(int)GFWKCore.Settings.GetSettingOf("帧率上限")];
-            GFWKCore.MusicVolume = (float)GFWKCore.Settings.GetSettingOf("音乐音量");
+            GameCore.Settings.ApplySettings(apm, false);
+            Application.targetFrameRate = GameCore.Settings.RefreshRates[(int)GameCore.Settings.GetSettingOf("帧率上限")];
+            GameCore.MusicVolume = (float)GameCore.Settings.GetSettingOf("音乐音量");
             AudioManager.Instance.ForceStopAllFades();
-            AudioManager.Instance.BackgroundVolume = GFWKCore.MusicVolume;
-            AudioManager.Instance.MaxBackgroundVolume = GFWKCore.MusicVolume;
+            AudioManager.Instance.BackgroundVolume = GameCore.MusicVolume;
+            AudioManager.Instance.MaxBackgroundVolume = GameCore.MusicVolume;
         }
     }
 
@@ -405,14 +405,14 @@ public class LobbyUI : MonoBehaviour
     public void ShowBuyCoins()
     {
 #if SHOP
-        GFWK.Shop.CoinsWindow.Instance.SetActive(true);
+        Game.Shop.CoinsWindow.Instance.SetActive(true);
 #else
         Debug.Log("Require shop addon.");
 #endif
     }
 
 #if ULSP
-    void OnUpdateDataBaseInfo(GFWK.ULogin.LoginUserInfo info)
+    void OnUpdateDataBaseInfo(Game.ULogin.LoginUserInfo info)
     {
         GameEvents.DispatchCoinUpdate(null);
     }

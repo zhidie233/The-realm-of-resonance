@@ -1,7 +1,7 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 
-public abstract class HitBoxBase : MonoBehaviour, IGFWKDamageable
+public abstract class HitBoxBase : MonoBehaviour, IGameDamageable
 {
     public HitBoxInfo hitBoxInfo;
     public HitBoxManager hitBoxManager;

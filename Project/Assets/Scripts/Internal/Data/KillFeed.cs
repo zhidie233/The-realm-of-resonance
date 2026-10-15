@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Internal.Structures
+namespace Game.Internal.Structures
 {
     public class KillFeed
     {
@@ -32,11 +32,11 @@ namespace GFWK.Internal.Structures
     /// <summary>
     /// 
     /// </summary>
-    public struct GFWKLocalNotification
+    public struct GameLocalNotification
     {
         public string Message { get; private set; }
 
-        public GFWKLocalNotification(string message)
+        public GameLocalNotification(string message)
         {
             Message = message;
             GameEvents.onLocalNotification?.Invoke(this);

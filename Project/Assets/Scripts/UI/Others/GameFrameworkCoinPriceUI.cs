@@ -1,16 +1,16 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using GFWKEditor;
+using GameEditor;
 using TMPro;
 using UnityEngine.UI;
-using GFWK.Internal.Structures;
-using GFWK.Internal.Scriptables;
+using Game.Internal.Structures;
+using Game.Internal.Scriptables;
 using System.Linq;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
-    public class GFWKCoinPriceUI : MonoBehaviour
+    public class GameCoinPriceUI : MonoBehaviour
     {
         public CoinUI[] coins;
         public LayoutGroup layoutGroup;
@@ -19,7 +19,7 @@ namespace GFWK.Runtime.UI
         /// 
         /// </summary>
         /// <param name="realPrice"></param>
-        public GFWKCoinPriceUI SetPrice(int realPrice)
+        public GameCoinPriceUI SetPrice(int realPrice)
         {
             foreach (var item in coins)
             {
@@ -32,13 +32,13 @@ namespace GFWK.Runtime.UI
         /// 
         /// </summary>
         /// <param name="realPrice"></param>
-        public GFWKCoinPriceUI SetPrice(GFWKItemUnlockability unlockability)
+        public GameCoinPriceUI SetPrice(GameItemUnlockability unlockability)
         {
             var noallowedCoins = unlockability.NoAllowedCoins.ToList();
             foreach (var item in coins)
             {
                 item.ParsePrice(unlockability.Price);
-                if(item.PriceText != null && noallowedCoins.Contains(GFWKCore.Coins.GetCoinData(item.CoinID)))
+                if(item.PriceText != null && noallowedCoins.Contains(GameCore.Coins.GetCoinData(item.CoinID)))
                 {
                     item.PriceText.gameObject.SetActive(false);
                 }
@@ -63,13 +63,13 @@ namespace GFWK.Runtime.UI
         [Serializable]
         public class CoinUI
         {
-            [GFWKCoinID] public int CoinID;
+            [GameCoinID] public int CoinID;
             public TextMeshProUGUI PriceText;
             public Image CoinIcon;
 
             public void ParsePrice(int realPrice)
             {
-                var coin = GFWKCore.Coins.GetCoinData(CoinID);
+                var coin = GameCore.Coins.GetCoinData(CoinID);
                 if (coin == null) return;
 
                 if (CoinIcon != null) CoinIcon.sprite = coin.CoinIcon;

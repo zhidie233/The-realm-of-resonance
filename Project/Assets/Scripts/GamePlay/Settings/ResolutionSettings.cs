@@ -1,9 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace GFWK.Runtime.Settings
+namespace Game.Runtime.Settings
 {
     public class ResolutionSettings : MonoBehaviour
     {
@@ -112,7 +112,7 @@ namespace GFWK.Runtime.Settings
 
             settingsBinding.SetOptions(names, false);
 
-            int displayModeID = (int)GFWKCore.Settings.GetSettingOf("Display Mode");
+            int displayModeID = (int)GameCore.Settings.GetSettingOf("Display Mode");
             if (displayModeID == -1)
             {
                 settingsBinding.currentOption = (int)Screen.fullScreenMode;
@@ -146,7 +146,7 @@ namespace GFWK.Runtime.Settings
         /// <param name="id"></param>
         public void OnChangeDisplayMode(int id)
         {
-            GFWKCore.Settings.SetSettingOf("Display Mode", id, SettingsManager.Instance.autoSaveSettings);
+            GameCore.Settings.SetSettingOf("Display Mode", id, SettingsManager.Instance.autoSaveSettings);
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace GFWK.Runtime.Settings
 
             ResolutionHandler.CurrentResolutionRelativeID = id;
             ResolutionHandler.CurrentResolutionAbsoluteID = ResolutionHandler.resolutions[id].Index;
-            GFWKCore.Settings.SetSettingOf("Resolution", ResolutionHandler.CurrentResolutionAbsoluteID, SettingsManager.Instance.autoSaveSettings);
+            GameCore.Settings.SetSettingOf("Resolution", ResolutionHandler.CurrentResolutionAbsoluteID, SettingsManager.Instance.autoSaveSettings);
         }
 
         /// <summary>
@@ -171,9 +171,9 @@ namespace GFWK.Runtime.Settings
             var list = new List<ResolutionData>();
             var currentRes = Screen.currentResolution;
 
-            if (GFWKCore.Settings.HasSettingDefinedFor("Resolution"))
+            if (GameCore.Settings.HasSettingDefinedFor("Resolution"))
             {
-                int crid = (int)GFWKCore.Settings.GetSettingOf("Resolution");
+                int crid = (int)GameCore.Settings.GetSettingOf("Resolution");
                 if (crid != -1 && crid <= resolutions.Length - 1)
                 {
                     currentRes = resolutions[crid];

@@ -1,6 +1,6 @@
-using GFWK.Audio;
-using GFWK.Core.Motion;
-using GFWKEditor;
+using Game.Audio;
+using Game.Core.Motion;
+using GameEditor;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -96,7 +96,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         thisPlayerTeam = (Team)photonView.InstantiationData[0];
         if (isMine)
         {
-            GFWKCore.LocalPlayer.IsAlive = true;
+            GameCore.LocalPlayer.IsAlive = true;
             gameObject.name = PhotonNetwork.NickName;
             HealthTextUI = UIReferences.Instance.PlayerUI.HealthText;
             HealthBar = UIReferences.Instance.PlayerUI.HealthBar;
@@ -166,7 +166,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         if (!DamageEnabled)
         {
             //Fix: bots can't damage Master Client teammates.
-            if (e.GFWKActor != null && (e.GFWKActor.Team != thisPlayerTeam || RoomSettings.Instance.CurrentRoomInfo.friendlyFire)) { canDamage = true; }
+            if (e.GameActor != null && (e.GameActor.Team != thisPlayerTeam || RoomSettings.Instance.CurrentRoomInfo.friendlyFire)) { canDamage = true; }
             else canDamage = false;
         }
 
@@ -223,7 +223,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     {
                         CrosshairBase.Instance.OnHit();
                         AudioManager.Instance.PlayClip("body-hit");
-                        GameEvents.DispatchLocalPlayerHitEnemy(new GFWKHitData()
+                        GameEvents.DispatchLocalPlayerHitEnemy(new GameHitData()
                         {
                             HitTransform = transform,
                             HitPosition = transform.position,
@@ -268,7 +268,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
             if (isMine)
             {
-                GFWKCore.LocalPlayer.IsAlive = false;
+                GameCore.LocalPlayer.IsAlive = false;
                 GameEvents.DispatchPlayerLocalDeathEvent();
             }
 
@@ -286,7 +286,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         isDead = true;
         transform.parent = null;
         m_CharacterController.enabled = false;
-        GameController.Instance.GetGFWKPlayer(gameObject.name).isAlive = false;
+        GameController.Instance.GetGamePlayer(gameObject.name).isAlive = false;
         GunData gunInfo = GameConfig.Instance.GetWeapon(gunID);
         bool isExplosion = gunInfo.Type == GunType.Grenade || gunInfo.Type == GunType.Launcher;
         playerReferences.onDie?.Invoke();
@@ -342,7 +342,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 }
             }
 
-            var mplayer = new GFWKPlayer(photonView, true, false);
+            var mplayer = new GamePlayer(photonView, true, false);
             GameEvents.DispatchRemotePlayerDeath(mplayer);
         }
         else//when is local player who dies
@@ -357,7 +357,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             if (cause == DamageCause.Bot)
             {
                 // increase the deaths count for the local player
-                if (GameConfig.Instance.howConsiderBotsEliminations == GFWK.Runtime.AI.BotKillConsideration.SameAsRealPlayers)
+                if (GameConfig.Instance.howConsiderBotsEliminations == Game.Runtime.AI.BotKillConsideration.SameAsRealPlayers)
                     PhotonNetworkWrapper.LocalPlayer.PostDeaths(1);
             }
             else
@@ -584,7 +584,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// </summary>
     public override bool Suicide()
     {
-        if (!isMine || !GFWKCore.LocalPlayer.IsAlive) return false;
+        if (!isMine || !GameCore.LocalPlayer.IsAlive) return false;
         if (isProtectionEnable) return false;
 
         DamageData e = new DamageData();

@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     /// <summary>
-    /// GFWK door base class
+    /// Game door base class
     /// Inherited from this class your custom door system.
     /// </summary>
     public abstract class DoorBase : MonoBehaviour

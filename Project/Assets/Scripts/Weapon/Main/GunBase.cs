@@ -1,9 +1,9 @@
-﻿#if ACTK_IS_HERE
+﻿﻿#if ACTK_IS_HERE
 using CodeStage.AntiCheat.ObscuredTypes;
 #endif
 
 /// <summary>
-/// Base class for the default GFWK weapons
+/// Base class for the default Game weapons
 /// GunController.cs is a hard coded class not easy to extend, a modular weapon system is on the works
 /// At the moment, CustomGunBase.cs is the way to extended and create your own custom weapon script.
 /// </summary>

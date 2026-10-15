@@ -1,4 +1,4 @@
-﻿using GFWK.Runtime.AI;
+﻿﻿using Game.Runtime.AI;
 using Photon.Realtime;
 using UnityEngine;
 
@@ -7,7 +7,7 @@ public abstract class PlayerScoreboardUIBase : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public GFWKBotProperties Bot 
+    public GameBotProperties Bot 
     { 
         get; 
         set; 
@@ -36,7 +36,7 @@ public abstract class PlayerScoreboardUIBase : MonoBehaviour
     /// </summary>
     /// <param name="player"></param>
     /// <param name="bot"></param>
-    public abstract void Init(Player player, GFWKBotProperties bot = null);
+    public abstract void Init(Player player, GameBotProperties bot = null);
 
     /// <summary>
     /// Called each time the scoreboard is update (when the scoreboard is open)

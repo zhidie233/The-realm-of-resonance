@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     /// <summary>
     /// Default lobby connection loading screen

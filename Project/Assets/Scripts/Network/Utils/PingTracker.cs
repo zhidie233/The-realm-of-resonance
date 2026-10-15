@@ -1,7 +1,7 @@
-﻿using TMPro;
+﻿﻿using TMPro;
 using UnityEngine;
 
-namespace GFWK.Runtime.Network
+namespace Game.Runtime.Network
 {
     public class PingTracker : MonoBehaviour
     {
@@ -96,7 +96,7 @@ namespace GFWK.Runtime.Network
         {
             if (pingText != null)
             {
-                isShowingPing = (bool)GFWKCore.Settings.GetSettingOf("显示ping");
+                isShowingPing = (bool)GameCore.Settings.GetSettingOf("显示ping");
                 pingText.gameObject.SetActive(isShowingPing);
             }
         }

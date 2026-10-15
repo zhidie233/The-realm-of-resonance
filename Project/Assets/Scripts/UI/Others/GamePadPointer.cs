@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     public class GamePadPointer : MonoBehaviour
     {

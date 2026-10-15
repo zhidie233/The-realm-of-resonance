@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     [AddComponentMenu("UI/Letter Spacing", 14)]
     public class TextTheme : BaseMeshEffect

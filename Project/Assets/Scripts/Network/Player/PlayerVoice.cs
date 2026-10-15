@@ -36,9 +36,9 @@ public class PlayerVoice : MonoBehaviourBase
         {
             if(VoiceRecorder != null)
             VoiceRecorder.enabled = true;
-            PushToTalk = (bool)GFWKCore.Settings.GetSettingOf("Voice Chat");
+            PushToTalk = (bool)GameCore.Settings.GetSettingOf("Voice Chat");
             if (Speaker != null)
-            Speaker.enabled = (bool)GFWKCore.Settings.GetSettingOf("PushToTalk");
+            Speaker.enabled = (bool)GameCore.Settings.GetSettingOf("PushToTalk");
         }
         else
         {
@@ -56,7 +56,7 @@ public class PlayerVoice : MonoBehaviourBase
     protected override void OnEnable()
     {
         base.OnEnable();
-#if GFWKM
+#if GameM
         if (View.IsMine)
         {
             TouchHelper.OnTransmit += OnPushToTalkMobile;
@@ -67,7 +67,7 @@ public class PlayerVoice : MonoBehaviourBase
     protected override void OnDisable()
     {
         base.OnDisable();
-#if GFWKM
+#if GameM
         if (View.IsMine)
         {
             TouchHelper.OnTransmit -= OnPushToTalkMobile;
@@ -126,7 +126,7 @@ public class PlayerVoice : MonoBehaviourBase
 #if !UNITY_WEBGL && PVOICE
             PushToTalk = b;
 #endif
-#if GFWKM
+#if GameM
             if (TouchHelper.Instance != null)
             {
                 TouchHelper.Instance.OnPushToTalkChange(b);

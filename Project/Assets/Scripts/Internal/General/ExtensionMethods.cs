@@ -343,12 +343,12 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the current room info parsed in the custom GFWK class
+    /// Get the current room info parsed in the custom Game class
     /// </summary>
     /// <returns></returns>
-    public static GFWKRoomInfo GetRoomInfo(this Room room)
+    public static GameRoomInfo GetRoomInfo(this Room room)
     {
-        return new GFWKRoomInfo(room);
+        return new GameRoomInfo(room);
     }
 
     /// <summary>
@@ -430,7 +430,7 @@ public static class ExtensionMethods
     /// <returns></returns>
     public static bool isLocalPlayerCollider(this Collider collider)
     {
-        return collider.CompareTag(GFWKCore.LOCAL_PLAYER_TAG);
+        return collider.CompareTag(GameCore.LOCAL_PLAYER_TAG);
     }
 
     /// <summary>
@@ -485,13 +485,13 @@ public static class ExtensionMethods
     /// </summary>
     /// <param name="list"></param>
     /// <returns></returns>
-    public static GFWKPlayer[] ToGFWKPlayerList(this Player[] list)
+    public static GamePlayer[] ToGamePlayerList(this Player[] list)
     {
-        var gfwkList = new GFWKPlayer[list.Length];
+        var gameList = new GamePlayer[list.Length];
         for (int i = 0; i < list.Length; i++)
         {
-            gfwkList[i] = GameController.Instance.GetGFWKPlayer(list[i].NickName);
+            gameList[i] = GameController.Instance.GetGamePlayer(list[i].NickName);
         }
-        return gfwkList;
+        return gameList;
     }
 }

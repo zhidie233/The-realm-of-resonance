@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 [ExecuteInEditMode]
 public class AIAnimation : AIAnimationBase

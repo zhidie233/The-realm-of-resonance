@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+﻿﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,7 +8,7 @@ public class NamePlateEditor : Editor
     NamePlateDrawer script;
     public bool isSimulating = false;
     public int simulatedHealth = 100;
-    public string simulatedName = "GFWorks";
+    public string simulatedName = "GameFwk";
     public bool editPresent = false;
 
     /// <summary>

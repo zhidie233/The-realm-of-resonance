@@ -1,6 +1,6 @@
 using Photon.Realtime;
 using UnityEngine;
-using GFWK.GameModes.CaptureOfFlag;
+using Game.GameModes.CaptureOfFlag;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CaptureOfFlagController : PhotonHelper, IGameMode
@@ -9,7 +9,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
     public int scorePerCapture = 500;
     public int scorePerRecover = 100;
     public float captureAreaRange = 3;
-    [GFWorksToogle] public bool moveFlagWithCarrierMotion = true;
+    [GameFwkToogle] public bool moveFlagWithCarrierMotion = true;
 
     [Header("Events (For Local Only)")]
     public GameEvents.UEvent onPickUp;

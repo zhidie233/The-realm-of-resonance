@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-namespace GFWK.Tween
+namespace Game.Tween
 {
     public class TweenBase : MonoBehaviour
     {

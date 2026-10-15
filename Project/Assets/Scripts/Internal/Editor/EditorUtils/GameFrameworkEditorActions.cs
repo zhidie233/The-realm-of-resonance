@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEditor;
 
-public static class GFWKEditorActions
+public static class GameEditorActions
 {
  
     [MenuItem("游戏框架/操作/重置默认服务器")]

@@ -1,5 +1,5 @@
-using GFWK.Audio;
-using GFWK.Runtime.AI;
+using Game.Audio;
+using Game.Runtime.AI;
 using Photon.Pun;
 using UnityEngine;
 
@@ -50,7 +50,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
             }
         }
 
-        DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.GFWKActor.isRealPlayer, damageData.GFWKActor.Team, damageData.isHeadShot);
+        DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.GameActor.isRealPlayer, damageData.GameActor.Team, damageData.isHeadShot);
     }
 
     /// <summary>
@@ -108,7 +108,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
         {
             CrosshairBase.Instance.OnHit();
             AudioManager.Instance.PlayClip("body-hit");
-            GameEvents.DispatchLocalPlayerHitEnemy(new GFWKHitData()
+            GameEvents.DispatchLocalPlayerHitEnemy(new GameHitData()
             {
                 HitTransform = transform,
                 HitPosition = transform.position,
@@ -167,8 +167,8 @@ public class AIShooterHealth : PlayerHealthManagerBase
 
         if (PhotonNetworkWrapper.IsMasterClient && references.Agent.enabled) references.Agent.isStopped = true;
         GetComponent<NamePlateBase>().SetActive(false);
-        //update the GFWKPlayer data
-        GFWKPlayer player = GameController.Instance.GetGFWKPlayer(m_AIShooter.AIName);
+        //update the GamePlayer data
+        GamePlayer player = GameController.Instance.GetGamePlayer(m_AIShooter.AIName);
         if (player != null)
             player.isAlive = false;
 
@@ -204,7 +204,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
                     PhotonNetworkWrapper.LocalPlayer.PostKill(1);
                     RoomSettings.IncreaseMatchPersistData("bot-kills", 1);
                 }
-                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != GFWKCore.LocalPlayer.Team)
+                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != GameCore.LocalPlayer.Team)
                 {
                     PhotonNetworkWrapper.LocalPlayer.PostKill(1);
                     RoomSettings.IncreaseMatchPersistData("bot-kills", 1);
@@ -227,7 +227,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
                 }
 
                 if (isOneTeamMode) PhotonNetworkWrapper.LocalPlayer.PostScore(score);
-                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != GFWKCore.LocalPlayer.Team)
+                else if (shooterAgent.AITeam != Team.All && shooterAgent.AITeam != GameCore.LocalPlayer.Team)
                 {
                     PhotonNetworkWrapper.LocalPlayer.PostScore(score);
                 }
@@ -303,7 +303,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
             }
         }
 
-        var mplayer = new GFWKPlayer(photonView, false, false);
+        var mplayer = new GamePlayer(photonView, false, false);
         GameEvents.DispatchRemotePlayerDeath(mplayer);
 
         //update the bot deaths count.

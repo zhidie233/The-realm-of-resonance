@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.Runtime.Settings
+namespace Game.Runtime.Settings
 {
     public class SingleSettingsSlider : MonoBehaviour
     {
@@ -34,7 +34,7 @@ namespace GFWK.Runtime.Settings
         /// </summary>
         void Load()
         {
-            currentValue = (float)GFWKCore.Settings.GetSettingOf(SettingKeyName);
+            currentValue = (float)GameCore.Settings.GetSettingOf(SettingKeyName);
             slider.value = currentValue;
             ApplyCurrentValue();
         }
@@ -56,7 +56,7 @@ namespace GFWK.Runtime.Settings
         public void ApplySetting()
         {
             //Set the changed setting value to the instance settings group.
-            GFWKCore.Settings.SetSettingOf(SettingKeyName, currentValue, SettingsManager.Instance.autoSaveSettings);
+            GameCore.Settings.SetSettingOf(SettingKeyName, currentValue, SettingsManager.Instance.autoSaveSettings);
         }
 
         /// <summary>
@@ -73,7 +73,7 @@ namespace GFWK.Runtime.Settings
         /// </summary>
         public void SaveValue()
         {
-            GFWKCore.Settings.SaveSettings();
+            GameCore.Settings.SaveSettings();
         }
 
         /// <summary>

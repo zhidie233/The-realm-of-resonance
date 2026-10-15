@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 // Contains all the information about an instanced bullet
 public class BulletData 
@@ -40,14 +40,14 @@ public class BulletData
     // The Cached Network View
     public int ActorViewID { get; set; }
 
-    // The GFWK Actor who create this bullet
-    public GFWKPlayer GFWKActor { get; set; }
+    // The Game Actor who create this bullet
+    public GamePlayer GameActor { get; set; }
 
     // Create the bullet data and fetch info from the <see cref="DamageData"/>
     // <param name="data"></param>
     public BulletData(DamageData data)
     {
-        GFWKActor = data.GFWKActor;
+        GameActor = data.GameActor;
         Damage = data.Damage;
         ActorViewID = data.ActorViewID;
         WeaponID = data.GunID;

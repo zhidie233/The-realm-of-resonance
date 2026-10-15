@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     [CustomEditor(typeof(ButtonMapped))]
     public class InputMappedEditor : Editor

@@ -56,7 +56,7 @@ public class GunInventory : MonoBehaviourBase
         {
             GunRace = FindObjectOfType<GunRaceMode>();
             if (GunRace != null) { GunRace.SetGunManager(this); }
-            else { Debug.Log("Gun Race is not integrated in this map, just go to GFWK -> Addons -> Gun Race -> Integrate, with the map scene open)."); }
+            else { Debug.Log("Gun Race is not integrated in this map, just go to Game -> Addons -> Gun Race -> Integrate, with the map scene open)."); }
         }
 #endif
         //when player instance select player class select in RoomMenu
@@ -611,9 +611,9 @@ public class GunInventory : MonoBehaviourBase
     // Called when the game settings changed in runtime
     public void OnGameSettingsChanged()
     {
-        if (GFWKCore.Settings == null) return;
+        if (GameCore.Settings == null) return;
 
-        float fov = (float)GFWKCore.Settings.GetSettingOf("武器FOV");
+        float fov = (float)GameCore.Settings.GetSettingOf("武器FOV");
         foreach (var item in PlayerEquip)
         {
             if (item == null) continue;
@@ -651,7 +651,7 @@ public class GunInventory : MonoBehaviourBase
     // <returns></returns>
     private Vector3 GetThrowPosition()
     {
-#if GFWKTPV
+#if GameTPV
         if (CameraViewSettings.IsThirdPerson())
         {
             return transform.root.TransformPoint(new Vector3(0, 1, 1) * 0.55f);
@@ -663,7 +663,7 @@ public class GunInventory : MonoBehaviourBase
     // <returns></returns>
     private Vector3 GetThrowDirection()
     {
-#if GFWKTPV
+#if GameTPV
         if (CameraViewSettings.IsThirdPerson())
         {
             return transform.root.forward;
@@ -675,7 +675,7 @@ public class GunInventory : MonoBehaviourBase
     {
         if (HeadAnimator == null)
             return;
-#if GFWKTPV
+#if GameTPV
         if (CameraViewSettings.IsThirdPerson()) return;
 #endif
         switch (state)

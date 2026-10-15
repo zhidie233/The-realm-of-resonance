@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
-using GFWK.Internal.Structures;
+using Game.Internal.Structures;
 
 public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallbacks
 {
@@ -11,10 +11,10 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
     /// 
     /// </summary>
     /// <returns></returns>
-    public GFWKRoomInfo BuildRoomInfo()
+    public GameRoomInfo BuildRoomInfo()
     {
         var mode = GameModeInfo;
-        var room = new GFWKRoomInfo();
+        var room = new GameRoomInfo();
 
         room.roomName = RoomName;
         room.mapName = Map.ShowName;

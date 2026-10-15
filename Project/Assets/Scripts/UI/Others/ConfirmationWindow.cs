@@ -1,9 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class ConfirmationWindow : MonoBehaviour
     {

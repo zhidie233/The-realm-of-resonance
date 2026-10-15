@@ -6,7 +6,7 @@ public class RoomCamera : RoomCameraBase
 {
     #region Public members
     [Header("Auto Rotation")]
-    [GFWorksToogle] public bool autoRotation = true;
+    [GameFwkToogle] public bool autoRotation = true;
     public Axis rotationDirection = Axis.X;
     public float rotationSpeed = 4;
 

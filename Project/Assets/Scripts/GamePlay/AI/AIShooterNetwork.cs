@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.AI;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
 {
@@ -16,7 +16,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
     private Quaternion correctPlayerRot = Quaternion.identity; // We lerp towards this
     private Vector3 networkLookAtPosition = Vector3.zero;
 
-    private GFWKBotProperties BotStat = null;
+    private GameBotProperties BotStat = null;
 
     /// <summary>
     /// 
@@ -147,7 +147,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
     /// <summary>
     /// 
     /// </summary>
-    void OnMasterStatsReceived(List<GFWKBotProperties> stats)
+    void OnMasterStatsReceived(List<GameBotProperties> stats)
     {
         ApplyMasterInfo(stats);
     }
@@ -155,16 +155,16 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
     /// <summary>
     /// 
     /// </summary>
-    void ApplyMasterInfo(List<GFWKBotProperties> stats)
+    void ApplyMasterInfo(List<GameBotProperties> stats)
     {
         int viewID = photonView.ViewID;
-        GFWKBotProperties bs = stats.Find(x => x.ViewID == viewID);
+        GameBotProperties bs = stats.Find(x => x.ViewID == viewID);
         if (bs != null)
         {
             AIName = bs.Name;
             AITeam = bs.Team;
             gameObject.name = AIName;
-            BotStat = new GFWKBotProperties();
+            BotStat = new GameBotProperties();
             BotStat.Name = AIName;
             BotStat.Score = bs.Score;
             BotStat.Kills = bs.Kills;
@@ -181,7 +181,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
     /// 
     /// </summary>
     /// <param name="stat"></param>
-    void OnBotStatUpdate(GFWKBotProperties stat)
+    void OnBotStatUpdate(GameBotProperties stat)
     {
         if (stat.ViewID != photonView.ViewID) return;
 
@@ -202,7 +202,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         GameEvents.DispatchRemoteActorChange(new GameEvents.PlayerChangeData()
         {
             PlayerName = name,
-            GFWKActor = BuildPlayer(),
+            GameActor = BuildPlayer(),
             IsAlive = true,
             NetworkView = photonView
         });
@@ -212,9 +212,9 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
     /// 
     /// </summary>
     /// <returns></returns>
-    private GFWKPlayer BuildPlayer(bool isAlive = true)
+    private GamePlayer BuildPlayer(bool isAlive = true)
     {
-        GFWKPlayer player = new GFWKPlayer()
+        GamePlayer player = new GamePlayer()
         {
             Name = AIName,
             ActorView = photonView,
@@ -236,7 +236,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         GameEvents.DispatchRemoteActorChange(new GameEvents.PlayerChangeData()
         {
             PlayerName = AIName,
-            GFWKActor = BuildPlayer(false),
+            GameActor = BuildPlayer(false),
             IsAlive = false,
         });
     }
@@ -249,7 +249,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         References.namePlateDrawer.SetName(AIName);
         if (!isOneTeamMode && GameController.Instance.LocalPlayer != null && !References.aiShooter.isDeath)
         {
-            References.namePlateDrawer.SetActive(GFWKCore.LocalPlayer.Team == AITeam);
+            References.namePlateDrawer.SetActive(GameCore.LocalPlayer.Team == AITeam);
         }
         else
         {

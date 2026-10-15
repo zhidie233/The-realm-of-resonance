@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-namespace GFWK.Tween
+namespace Game.Tween
 {
     public static class Easing
     {

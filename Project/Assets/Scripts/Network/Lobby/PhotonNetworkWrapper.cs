@@ -17,7 +17,7 @@ public class PhotonNetworkWrapper : PhotonHelper
 
     private void Awake()
     {
-        gameObject.name = "GFWK Network";
+        gameObject.name = "Game Network";
         DontDestroyOnLoad(gameObject);
         EventsAll.Receivers = ReceiverGroup.All;
         PhotonNetwork.NetworkingClient.EventReceived += OnEventCustom;

@@ -1,11 +1,11 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using System.Collections.Generic;
 
-namespace GFWK.Runtime.FriendList
+namespace Game.Runtime.FriendList
 {
     public class FriendInfoUI : FriendInfoBase
     {

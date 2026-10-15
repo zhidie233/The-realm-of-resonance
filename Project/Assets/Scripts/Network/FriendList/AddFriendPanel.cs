@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.Runtime.FriendList
+namespace Game.Runtime.FriendList
 {
     public class AddFriendPanel : MonoBehaviour
     {

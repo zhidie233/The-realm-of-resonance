@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using GFWK.Runtime.AI;
-using GFWK.Audio;
+using Game.Runtime.AI;
+using Game.Audio;
 
 public class AIShooterAttack : AIShooterAttackBase
 {
     #region Public members
     [Header("Settings")]
-    [GFWorksToogle] public bool ForceFireWhenTargetClose = true;
+    [GameFwkToogle] public bool ForceFireWhenTargetClose = true;
     [Range(0, 5)] public int Grenades = 3;
     [SerializeField, Range(10, 100)] private float GrenadeSpeed = 50;
     [Range(10, 100)] public float MinumumDistanceForGranades = 20;
@@ -204,7 +204,7 @@ public class AIShooterAttack : AIShooterAttackBase
         m_BulletData.Range = Weapon.Info.Range;
         m_BulletData.WeaponName = Weapon.Info.Name;
         m_BulletData.ActorViewID = photonView.ViewID;
-        m_BulletData.GFWKActor = AI.BotGFWKActor;
+        m_BulletData.GameActor = AI.BotGameActor;
         bullet.GetComponent<ProjectileBase>().InitProjectile(m_BulletData);
     }
 
@@ -260,7 +260,7 @@ public class AIShooterAttack : AIShooterAttackBase
         m_BulletData.Range = 5;
         m_BulletData.WeaponName = "Grenade";
         m_BulletData.ActorViewID = photonView.ViewID;
-        m_BulletData.GFWKActor = new GFWKPlayer(photonView, false, true);
+        m_BulletData.GameActor = new GamePlayer(photonView, false, true);
         bullet.GetComponent<ProjectileBase>().InitProjectile(m_BulletData);//ProjectileBody.cs
 
         if (!network)

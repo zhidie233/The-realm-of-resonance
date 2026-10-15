@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Internal
+namespace Game.Internal
 {
     public class MissingAddonText : MonoBehaviour
     {

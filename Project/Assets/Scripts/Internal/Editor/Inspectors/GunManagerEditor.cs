@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GFWKEditor;
+using GameEditor;
 using UnityEditor.AnimatedValues;
 using Photon.Pun;
 
@@ -216,7 +216,7 @@ public class GunManagerEditor : Editor
                 Rect elementRect = new Rect(containerRect.xMin, containerRect.yMin + containerElementHeight * i, containerRect.width, containerElementHeight);
                 {
                     Rect texturePosition = new Rect(elementRect.xMin + 6, elementRect.yMin + elementRect.height / 2f - 1, 9, 5);              
-                   // GFWKEditorUtils.DrawTexture(texturePosition, GFWKEditorUtils.texGrabHandle);
+                   // GameEditorUtils.DrawTexture(texturePosition, GameEditorUtils.texGrabHandle);
                     Rect propertyPosition = new Rect(elementRect.xMin + 20, elementRect.yMin + 3, elementRect.width - 45, 16);
                     EditorGUI.PropertyField(propertyPosition, listProperty.GetArrayElementAtIndex(i), new GUIContent());
 
@@ -226,7 +226,7 @@ public class GunManagerEditor : Editor
                                                         PhotonGUI.DefaultRemoveButtonStyle.fixedHeight);
 
                     GUI.enabled = listProperty.arraySize > 1;
-                    if (GUI.Button(removeButtonRect, new GUIContent(GFWKEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
+                    if (GUI.Button(removeButtonRect, new GUIContent(GameEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
                     {
                         listProperty.DeleteArrayElementAtIndex(i);
                     }

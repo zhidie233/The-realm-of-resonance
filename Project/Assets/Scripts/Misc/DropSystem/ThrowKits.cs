@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 #if ACTK_IS_HERE
 using CodeStage.AntiCheat.ObscuredTypes;
 #endif
@@ -38,7 +38,7 @@ public class ThrowKits : MonoBehaviourBase
         remaingKits = AmountOfKits;
     }
 
-#if GFWKM
+#if GameM
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -107,7 +107,7 @@ public class ThrowKits : MonoBehaviourBase
             KitID = id,
             Delay = CallDelay
         });
-        kit.GetComponent<Rigidbody>().AddForce(GFWKCore.LocalPlayerReferences.PlayerCameraTransform.forward * ForceImpulse);
+        kit.GetComponent<Rigidbody>().AddForce(GameCore.LocalPlayerReferences.PlayerCameraTransform.forward * ForceImpulse);
         if (SpawnSound)
         {
             AudioSource.PlayClipAtPoint(SpawnSound, this.transform.position, 1.0f);

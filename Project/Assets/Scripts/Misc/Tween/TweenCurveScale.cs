@@ -1,15 +1,15 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine.Events;
 using UnityEngine;
 
-namespace GFWK.Tween
+namespace Game.Tween
 {
     public class TweenCurveScale : TweenBase, ITween
     {
 
         [Header("Settings")]
-        [GFWorksToogle] public bool OnStart = true;
-        [GFWorksToogle] public bool ApplyOnStart = true;
+        [GameFwkToogle] public bool OnStart = true;
+        [GameFwkToogle] public bool ApplyOnStart = true;
         [Range(0, 10)] public float Delay = 0;
         [Range(0.1f, 7)] public float Duration = 1;
         [Range(0.1f, 4)] public float Multiplier = 1;
@@ -172,13 +172,13 @@ namespace GFWK.Tween
         public override void PlayEditor()
         {
             InitInEditor();
-            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTween());
+            GameEditor.EditorCoroutines.StartBackgroundTask(DoTween());
         }
 
         public override void PlayReverseEditor()
         {
             InitInEditor();
-            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
+            GameEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
         }
 
         public override void InitInEditor()

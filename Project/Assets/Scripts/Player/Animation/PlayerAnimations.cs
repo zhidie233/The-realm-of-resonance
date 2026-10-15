@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using GFWK.Internal;
+using Game.Internal;
 
 public class PlayerAnimations : PlayerAnimationsBase
 {

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class EmptyPanelText : MonoBehaviour
     {

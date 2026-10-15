@@ -1,6 +1,6 @@
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
-using GFWK.Internal.Structures;
+using Game.Internal.Structures;
 using Photon.Realtime;
 
 public class KillFeedManager : KillFeedBase

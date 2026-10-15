@@ -8123,7 +8123,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5689433044499620945}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsBinding,
+        m_TargetAssemblyTypeName: Game.Runtime.Settings.SingleSettingsBinding,
           Assembly-CSharp
         m_MethodName: ChangeOption
         m_Mode: 6
@@ -21982,7 +21982,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 5689433044677356673}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
+        m_TargetAssemblyTypeName: Game.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -46864,7 +46864,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265000274209}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
+        m_TargetAssemblyTypeName: Game.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -53376,7 +53376,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265062668105}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
+        m_TargetAssemblyTypeName: Game.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -58442,7 +58442,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265116612752}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
+        m_TargetAssemblyTypeName: Game.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0
@@ -63493,7 +63493,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 6631396265908360366}
-        m_TargetAssemblyTypeName: GFWK.Runtime.Settings.SingleSettingsSlider,
+        m_TargetAssemblyTypeName: Game.Runtime.Settings.SingleSettingsSlider,
           Assembly-CSharp
         m_MethodName: UpdateValue
         m_Mode: 0

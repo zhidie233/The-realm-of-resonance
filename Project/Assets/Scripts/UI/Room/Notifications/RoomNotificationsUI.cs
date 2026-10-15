@@ -1,9 +1,9 @@
-﻿using UnityEngine;
-using GFWK.Internal;
-using GFWK.Internal.Structures;
-using GFWK.Runtime.UI.Bindings;
+﻿﻿using UnityEngine;
+using Game.Internal;
+using Game.Internal.Structures;
+using Game.Runtime.UI.Bindings;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class RoomNotificationsUI : MonoBehaviour
     {
@@ -30,7 +30,7 @@ namespace GFWK.Runtime.UI
         /// <summary>
         /// 
         /// </summary>
-        void OnLocalNotification(GFWKLocalNotification notification)
+        void OnLocalNotification(GameLocalNotification notification)
         {
             listHandler.Initialize();
             listHandler.InstatiateAndGet<UILeftNotifier>().SetInfo(notification.Message, showTime);

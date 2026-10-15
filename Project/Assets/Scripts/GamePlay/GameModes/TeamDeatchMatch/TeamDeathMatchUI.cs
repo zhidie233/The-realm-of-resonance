@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
-namespace GFWK.GameModes.TeamDeathMatch
+namespace Game.GameModes.TeamDeathMatch
 {
     public class TeamDeathMatchUI : MonoBehaviour
     {

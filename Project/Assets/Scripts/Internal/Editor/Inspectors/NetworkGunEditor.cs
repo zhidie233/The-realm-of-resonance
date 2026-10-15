@@ -1,7 +1,7 @@
-﻿using UnityEditor;
+﻿﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
-using GFWKEditor;
+using GameEditor;
 
 [CustomEditor(typeof(RemoteGun))]
 public class NetworkGunEditor : Editor

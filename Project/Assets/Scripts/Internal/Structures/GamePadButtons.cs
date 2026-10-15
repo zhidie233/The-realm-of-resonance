@@ -1,4 +1,4 @@
-﻿namespace GFWK.InputManager
+﻿﻿namespace Game.InputManager
 {
     using UnityEngine;
     using System.Collections.Generic;

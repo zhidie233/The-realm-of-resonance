@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class LoadoutDropdown : MonoBehaviour
     {

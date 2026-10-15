@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 public class GrenadeLauncherProjectile : ProjectileBase
 {
@@ -66,7 +66,7 @@ public class GrenadeLauncherProjectile : ProjectileBase
         {
             bulletData.Position = transform.position;
             blast.SetRadius(ExplosionRadius);
-            blast.InitExplosion(bulletData, GFWKCore.LocalPlayer.GFWKActor);
+            blast.InitExplosion(bulletData, GameCore.LocalPlayer.GameActor);
         }
         detecting = false;
         if (Pooled) { gameObject.SetActive(false); }

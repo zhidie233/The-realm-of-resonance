@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 /// <summary>
-/// GFWK Default IK implementation
+/// Game Default IK implementation
 /// In order to use your own IK control system, simply create a new script
 /// and inherited from PlayerIKBase.cs
 /// </summary>
@@ -22,13 +22,13 @@ public class PlayerIK : PlayerIKBase
     public Vector3 AimSightPosition = new Vector3(0.02f, 0.19f, 0.02f);
 
     [Header("FOOT IK")]
-    [GFWorksToogle] public bool useFootPlacement = true;
+    [GameFwkToogle] public bool useFootPlacement = true;
     public LayerMask FootLayers;
     [Range(0.1f, 1)] public float FootHeight = 0.43f;
     [Range(-0.5f, 0.5f)] public float TerrainOffset = 0.13f;
     public Vector3 leftKneeTarget, rightKneeTarget;
     public Vector3 leftFeetRotationOffset, rightFeetRotationOffset;
-    [GFWorksToogle] public bool debugFootGizmos = true;
+    [GameFwkToogle] public bool debugFootGizmos = true;
 
     public bool IsCustomHeadTarget { get; set; } = false;
     #endregion

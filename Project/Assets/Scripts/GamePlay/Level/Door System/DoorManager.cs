@@ -1,11 +1,11 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public class DoorManager : MonoBehaviourBase
     {

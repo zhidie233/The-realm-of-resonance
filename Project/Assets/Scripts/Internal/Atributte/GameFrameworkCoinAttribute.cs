@@ -1,21 +1,21 @@
-﻿using System.Linq;
+﻿﻿using System.Linq;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace GFWKEditor
+namespace GameEditor
 {
-    public class GFWKCoinIDAttribute : PropertyAttribute
+    public class GameCoinIDAttribute : PropertyAttribute
     {
-        public GFWKCoinIDAttribute()
+        public GameCoinIDAttribute()
         {
         }
     }
 
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(GFWKCoinIDAttribute))]
-    public class GFWKCoinIDAttributeDrawer : PropertyDrawer
+    [CustomPropertyDrawer(typeof(GameCoinIDAttribute))]
+    public class GameCoinIDAttributeDrawer : PropertyDrawer
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {

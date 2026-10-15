@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-namespace GFWK.Core.Motion
+namespace Game.Core.Motion
 {
     [CreateAssetMenu(fileName = "CameraMotionData", menuName = "Game Framework/Camera/MotionData")]
     public class FirstPersonMotionData : ScriptableObject

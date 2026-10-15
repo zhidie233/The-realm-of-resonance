@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 public class SpectatorMode : SpectatorModeBase
 {
-    [GFWorksToogle] public bool leaveSpectatorWithEscape = false;
+    [GameFwkToogle] public bool leaveSpectatorWithEscape = false;
     [SerializeField] private GameObject content = null;
 
     /// <summary>

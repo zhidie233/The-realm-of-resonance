@@ -1,12 +1,12 @@
-﻿//#define LOADING_SCREEN
-using GFWK.Internal.BaseClass;
+﻿﻿//#define LOADING_SCREEN
+using Game.Internal.BaseClass;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Default GFWK scene loader
+/// Default Game scene loader
 /// Use the default Unity Scene load method
-/// If you want to use your custom scene loader e.g: GFWorks Studio's Loading Screen
+/// If you want to use your custom scene loader e.g: GameFwk Studio's Loading Screen
 /// Create a new script and inherited from <see cref="SceneLoaderBase"/>
 /// </summary>
 [CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "Game Framework/Level/Simple Loader")]
@@ -22,7 +22,7 @@ public class SimpleSceneLoader : SceneLoaderBase
 #if !LOADING_SCREEN
         SceneManager.LoadScene(sceneName, loadSceneMode);
 #else
-        // IF YOU WANT TO USE GFWORKS STUDIO'S LOADING SCREEN
+        // IF YOU WANT TO USE AN EXTERNAL LOADING SCREEN
         // UNCOMMENT THE FIRST LINE OF THIS SCRIPT
         SceneLoaderManager.LoadScene(sceneName);
 #endif
@@ -37,7 +37,7 @@ public class SimpleSceneLoader : SceneLoaderBase
 #if !LOADING_SCREEN
         SceneManager.LoadScene(sceneID, loadSceneMode);
 #else
-        // IF YOU WANT TO USE GFWORKS STUDIO'S LOADING SCREEN
+        // IF YOU WANT TO USE AN EXTERNAL LOADING SCREEN
         // UNCOMMENT THE FIRST LINE OF THIS SCRIPT
         SceneLoaderManager.LoadSceneByBuildIndex(sceneID);
 #endif

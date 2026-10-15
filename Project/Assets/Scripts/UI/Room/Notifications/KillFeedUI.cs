@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using GFWK.Internal.Structures;
-using GFWK.Runtime.UI.Bindings;
+﻿﻿using UnityEngine;
+using Game.Internal.Structures;
+using Game.Runtime.UI.Bindings;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class KillFeedUI : KillFeedUIBase
     {

@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
 using TMPro;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class ScopeUI : ScopeUIBase
     {

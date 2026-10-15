@@ -1,4 +1,4 @@
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -14,7 +14,7 @@ public class AIMananger : PhotonHelper
     [HideInInspector] public List<Transform> AllBotsTransforms = new List<Transform>();
 
     // Information and stats of all the bots currently playing
-    [HideInInspector] public List<GFWKBotProperties> BotsStatistics = new List<GFWKBotProperties>();
+    [HideInInspector] public List<GameBotProperties> BotsStatistics = new List<GameBotProperties>();
 
     // Is this game using bots?
     public bool BotsActive { get; set; }
@@ -22,9 +22,9 @@ public class AIMananger : PhotonHelper
     // Is the bots information already synced by the Mater client?
     public bool HasMasterInfo { get; set; } = false;
 
-    public delegate void EEvent(List<GFWKBotProperties> stats);
+    public delegate void EEvent(List<GameBotProperties> stats);
     public static EEvent OnMaterStatsReceived;
-    public delegate void StatEvent(GFWKBotProperties stat);
+    public delegate void StatEvent(GameBotProperties stat);
     public static StatEvent OnBotStatUpdate;
 
     private GameController GameManager;
@@ -62,7 +62,7 @@ public class AIMananger : PhotonHelper
     private void Start()
     {
         FirstSpawn();
-        if (GFWKCore.GameData.UsingWaitingRoom() && PhotonNetworkWrapper.IsMasterClient)
+        if (GameCore.GameData.UsingWaitingRoom() && PhotonNetworkWrapper.IsMasterClient)
         {
             this.InvokeAfter(2, SyncBotsDataToAllOthers);
         }
@@ -137,7 +137,7 @@ public class AIMananger : PhotonHelper
         string line = string.Empty;
         for (int i = 0; i < BotsStatistics.Count; i++)
         {
-            GFWKBotProperties b = BotsStatistics[i];
+            GameBotProperties b = BotsStatistics[i];
             line += string.Format("{0},{1},{2},{3},{4},{5}|", b.Name, b.Kills, b.Deaths, b.Score, (int)b.Team, b.ViewID);
         }
         return line;
@@ -306,7 +306,7 @@ public class AIMananger : PhotonHelper
             newAgent.AITeam = _team;
             BotsNames.RemoveAt(rbn);
             //insert bot stats
-            var bs = new GFWKBotProperties();
+            var bs = new GameBotProperties();
             bs.Name = newAgent.AIName;
             bs.Team = _team;
             bs.ViewID = bot.GetComponent<PhotonView>().ViewID;
@@ -317,7 +317,7 @@ public class AIMananger : PhotonHelper
         newAgent.Init();
 
         //Build Player Data
-        GFWKPlayer playerData = new GFWKPlayer()
+        GamePlayer playerData = new GamePlayer()
         {
             Name = newAgent.AIName,
             Team = newAgent.AITeam,
@@ -330,7 +330,7 @@ public class AIMananger : PhotonHelper
         GameEvents.DispatchRemoteActorChange(new GameEvents.PlayerChangeData()
         {
             PlayerName = newAgent.AIName,
-            GFWKActor = playerData,
+            GameActor = playerData,
             IsAlive = true,
             NetworkView = newAgent.GetComponent<PhotonView>()
         });
@@ -376,9 +376,9 @@ public class AIMananger : PhotonHelper
             targetsLists.Add(all[i].Actor.GetComponent<PlayerReferencesCommon>());
         }
 
-        if (GFWKCore.LocalPlayerReferences != null)
+        if (GameCore.LocalPlayerReferences != null)
         {
-            targetsLists.Add(GFWKCore.LocalPlayerReferences);
+            targetsLists.Add(GameCore.LocalPlayerReferences);
         }
 
         // Update the targets for each bot
@@ -700,7 +700,7 @@ public class AIMananger : PhotonHelper
     [PunRPC]
     public void SyncBotStat(string data, int value, byte cmd)
     {
-        GFWKBotProperties bs = BotsStatistics.Find(x => x.Name == data);
+        GameBotProperties bs = BotsStatistics.Find(x => x.Name == data);
         if (bs == null && cmd != 5) return;
         if (cmd == 0)//add kill
         {
@@ -739,7 +739,7 @@ public class AIMananger : PhotonHelper
             list[value].Bot = dataSplit[1];
 
             //add the bot statistic
-            bs = new GFWKBotProperties();
+            bs = new GameBotProperties();
             bs.Name = dataSplit[1];
             bs.Team = team;
             bs.ViewID = int.Parse(dataSplit[2]);
@@ -760,7 +760,7 @@ public class AIMananger : PhotonHelper
             {
                 if (string.IsNullOrEmpty(split[i])) continue;
                 string[] info = split[i].Split(","[0]);
-                GFWKBotProperties bs = new GFWKBotProperties();
+                GameBotProperties bs = new GameBotProperties();
                 bs.Name = info[0];
                 bs.Kills = int.Parse(info[1]);
                 bs.Deaths = int.Parse(info[2]);
@@ -771,7 +771,7 @@ public class AIMananger : PhotonHelper
 
                 if (!GameController.Instance.OthersActorsInScene.Exists(x => x.Name == bs.Name))
                 {
-                    GameController.Instance.OthersActorsInScene.Add(new GFWKPlayer()
+                    GameController.Instance.OthersActorsInScene.Add(new GamePlayer()
                     {
                         Name = bs.Name,
                         isRealPlayer = false,
@@ -851,9 +851,9 @@ public class AIMananger : PhotonHelper
 
     // <param name="team"></param>
     // <returns></returns>
-    public List<GFWKPlayer> GetAllBotsInTeam(Team team)
+    public List<GamePlayer> GetAllBotsInTeam(Team team)
     {
-        List<GFWKPlayer> list = new List<GFWKPlayer>();
+        List<GamePlayer> list = new List<GamePlayer>();
         for (int i = 0; i < GameController.Instance.OthersActorsInScene.Count; i++)
         {
             if (GameController.Instance.OthersActorsInScene[i].isRealPlayer) continue;
@@ -907,7 +907,7 @@ public class AIMananger : PhotonHelper
 
     // <param name="botName"></param>
     // <returns></returns>
-    public GFWKBotProperties GetBotStatistics(string botName)
+    public GameBotProperties GetBotStatistics(string botName)
     {
         var id = BotsStatistics.FindIndex(x => x.Name == botName);
         if (id < 0) return null;
@@ -964,11 +964,11 @@ public class AIMananger : PhotonHelper
     }
 
     // <returns></returns>
-    public GFWKBotProperties GetBotWithMoreKills()
+    public GameBotProperties GetBotWithMoreKills()
     {
         if (BotsStatistics == null || BotsStatistics.Count <= 0)
         {
-            GFWKBotProperties bs = new GFWKBotProperties()
+            GameBotProperties bs = new GameBotProperties()
             {
                 Name = "None",
                 Kills = 0,

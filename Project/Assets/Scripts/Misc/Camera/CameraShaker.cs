@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using GFWK.Core.Motion;
+using Game.Core.Motion;
 
 public class CameraShaker : CameraShakerBase
 {

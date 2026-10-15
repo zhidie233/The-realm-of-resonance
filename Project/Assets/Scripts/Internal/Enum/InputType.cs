@@ -1,5 +1,5 @@
-﻿using System;
-namespace GFWK.InputManager
+﻿﻿using System;
+namespace Game.InputManager
 {
     [Flags]
     public enum InputType : short

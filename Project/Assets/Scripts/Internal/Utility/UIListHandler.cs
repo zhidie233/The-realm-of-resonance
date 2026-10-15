@@ -1,13 +1,13 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Internal
+namespace Game.Internal
 {
     [Serializable]
     public class UIListHandler
     {
-        [GFWorksToogle] public bool PoolList = true;
+        [GameFwkToogle] public bool PoolList = true;
         public int PoolCount = 10;
         public GameObject Prefab;
         public RectTransform Panel;

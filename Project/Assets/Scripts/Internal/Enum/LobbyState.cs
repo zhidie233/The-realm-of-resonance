@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Internal.Structures
+namespace Game.Internal.Structures
 {
     public enum LobbyState
     {

@@ -2,16 +2,16 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
-using GFWK.Core.Motion;
+using Game.Core.Motion;
 using UnityEngine.Serialization;
-using GFWK.Audio;
+using Game.Audio;
 using Photon.Pun;
 
 public class ExplosionDamage : ExplosionBase
 {
     [FormerlySerializedAs("m_Type")]
     public ExplosionType explosionType = ExplosionType.Normal;
-    [GFWorksToogle] public bool CheckRootsOnly = false;
+    [GameFwkToogle] public bool CheckRootsOnly = false;
     public float explosionDamage = 50f;
     public float explosionRadius = 50f;
     public float DisappearIn = 3f;
@@ -21,7 +21,7 @@ public class ExplosionDamage : ExplosionBase
 
     private RaycastHit hitInfo;
     private BulletData cachedData;
-    private GFWKPlayer creator;
+    private GamePlayer creator;
 
     // is not remote take damage
     void Start()
@@ -32,13 +32,13 @@ public class ExplosionDamage : ExplosionBase
             {
                 cachedData = new BulletData()
                 {
-                    GFWKActor = GameController.Instance.LocalActor,
+                    GameActor = GameController.Instance.LocalActor,
                     isNetwork = false,
                     Damage = explosionDamage,
                     Position = transform.position,
 
                 };
-                creator = GFWKCore.LocalPlayer.GFWKActor;
+                creator = GameCore.LocalPlayer.GameActor;
             }
             else
             {
@@ -56,7 +56,7 @@ public class ExplosionDamage : ExplosionBase
         StartCoroutine(Init());
     }
 
-    public override void InitExplosion(BulletData bulletData, GFWKPlayer fromPlayer)
+    public override void InitExplosion(BulletData bulletData, GamePlayer fromPlayer)
     {
         cachedData = bulletData;
         creator = fromPlayer;
@@ -158,10 +158,10 @@ public class ExplosionDamage : ExplosionBase
             //the damage to real players is handled separately
             if (c.isLocalPlayerCollider() || c.CompareTag("Untagged")) continue;
 
-            var damageable = c.transform.GetComponent<IGFWKDamageable>();
+            var damageable = c.transform.GetComponent<IGameDamageable>();
             if (damageable == null) continue;
 
-            if (c.CompareTag(GFWKCore.HITBOX_TAG) || c.CompareTag(GFWKCore.AI_TAG))
+            if (c.CompareTag(GameCore.HITBOX_TAG) || c.CompareTag(GameCore.AI_TAG))
             {
                 if (Hited.Contains(c.transform.root.name)) continue;
                 if (!ExplosionCanHitTarget(c.transform.root, new Vector3(0, 0.6f, 0)) && !ExplosionCanHitTarget(c.transform.root, new Vector3(0, 0.15f, 0))) continue;
@@ -178,14 +178,14 @@ public class ExplosionDamage : ExplosionBase
             {
                 Damage = (int)damage,
                 Direction = transform.position,
-                GFWKActor = creator,
+                GameActor = creator,
                 ActorViewID = creator.ActorViewID,
                 GunID = cachedData.WeaponID,
                 From = creator.Name,
             };
             damageData.Cause = (!creator.isRealPlayer) ? DamageCause.Bot : DamageCause.Explosion;
 
-            if(damageData.GFWKActor == null)
+            if(damageData.GameActor == null)
             {
                 Debug.Log($"Explosion actor '{creator.ActorViewID}' was not found in the scene, maybe left the match?");
                 return;

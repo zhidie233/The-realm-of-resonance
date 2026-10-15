@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -7,7 +7,7 @@ using UnityEditorInternal;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
-namespace GFWKEditor
+namespace GameEditor
 {
     [CustomEditor(typeof(Object), true, isFallback = true)]
     [CanEditMultipleObjects]

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon Bob Settings", menuName = "Game Framework/Weapons/Bob/Settings")]
 public class WeaponBobSettings : ScriptableObject
@@ -21,7 +21,7 @@ public class WeaponBobSettings : ScriptableObject
     public float idleBobbingSpeed = 0.1f;
     public float AimIntensity = 0.01f;
     public float aimRotationIntensity = 0.33f;
-    [GFWorksToogle] public bool pitchTowardUp = true;
+    [GameFwkToogle] public bool pitchTowardUp = true;
 
     public AnimationCurve rollCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     public AnimationCurve pitchCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);

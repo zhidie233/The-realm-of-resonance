@@ -1,8 +1,8 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Core.Motion
+namespace Game.Core.Motion
 {
     [System.Serializable, CreateAssetMenu(fileName = "Shaker Present", menuName = "Game Framework/Presents/Shaker", order = 302)]
     public class ShakerPresent : ScriptableObject
@@ -25,7 +25,7 @@ namespace GFWK.Core.Motion
         [Range(0, 5)]
         public int burstContrast = 2;
         [Range(0.01f, 1)] public float fadeInTime = 0.2f;
-        [GFWorksToogle] public bool Loop = false;
+        [GameFwkToogle] public bool Loop = false;
 
         [HideInInspector] public float currentTime = 1;
         [HideInInspector] public float influence = 1;

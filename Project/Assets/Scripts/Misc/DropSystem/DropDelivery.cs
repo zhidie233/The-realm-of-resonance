@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// This script handle the default GFWK drop/package delivery
+/// This script handle the default Game drop/package delivery
 /// If you want to create a custom drop delivery, create a new script and inherited from DropBase
 /// and use this ONLY as reference.
 /// </summary>
