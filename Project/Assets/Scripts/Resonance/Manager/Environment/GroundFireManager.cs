@@ -15,7 +15,14 @@ public class GroundFireManager : EnvironmentEffectManager
     protected override void Start()
     {
         base.Start();
-        groundFiresTransform=GameObject.FindGameObjectWithTag("GroundFire").transform;
+        GameObject groundFireRoot = GameObject.FindGameObjectWithTag("GroundFire");
+        if (groundFireRoot == null)
+        {
+            Debug.LogWarning("[GroundFireManager] 场景中不存在 GroundFire 标签物体，地面火效果已禁用。");
+            enabled = false;
+            return;
+        }
+        groundFiresTransform = groundFireRoot.transform;
         Transform[] tempTransform = groundFiresTransform.GetComponentsInChildren<Transform>();
         //剔除自身
         fireZones.AddRange(tempTransform);

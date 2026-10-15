@@ -8,6 +8,13 @@ public abstract class EnvironmentEffectManager : MonoBehaviour
     
     protected virtual void Start()
     {
+        if (ResonanceManager.Instance == null)
+        {
+            Debug.LogWarning($"[{GetType().Name}] 场景中不存在 ResonanceManager，共鸣环境效果已禁用。");
+            enabled = false;
+            return;
+        }
+
         ResonanceManager.Instance.OnResonanceChanged += OnResonanceChanged;
         currentResonance = ResonanceManager.Instance.GetCurrentResonance();
         UpdateEffect();

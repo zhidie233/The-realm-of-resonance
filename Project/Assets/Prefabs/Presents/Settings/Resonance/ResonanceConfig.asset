@@ -23,3 +23,9 @@ MonoBehaviour:
     magnification: -2
   - key: Meteorite
     magnification: 0
+  - key: FlagPickUp
+    magnification: 10
+  - key: FlagCapture
+    magnification: 20
+  - key: FlagRecover
+    magnification: -5

@@ -132,6 +132,8 @@ public class ExplosionDamage : ExplosionBase
     
     void NotifyMasterClientResonanceChange(string resonanceKey, float damage)
     {
+        if (ResonanceManager.Instance == null) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
             // 如果自己就是房主，直接修改

@@ -124,6 +124,32 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
                 flag.Recover(player);
                 break;
         }
+
+        // 夺旗模式共鸣值事件（ChangeResonance 内部仅房主生效，天然防止多端重复累加）
+        switch (newState)
+        {
+            case FlagPoint.FlagState.PickUp:
+                // 敌方夺走旗帜，战场激化，提升共鸣值
+                AddResonance("FlagPickUp");
+                break;
+            case FlagPoint.FlagState.Captured:
+                // 成功交旗，大幅提升共鸣值
+                AddResonance("FlagCapture");
+                break;
+            case FlagPoint.FlagState.InHome:
+                // 夺回己方旗帜，缓解战场激化，降低共鸣值
+                AddResonance("FlagRecover");
+                break;
+        }
+    }
+
+    /// <summary>
+    /// 由旗帜事件触发共鸣值变化（数值在 ResonanceConfig 中配置）
+    /// </summary>
+    private void AddResonance(string resonanceKey)
+    {
+        if (ResonanceManager.Instance == null) return;
+        ResonanceManager.Instance.ChangeResonance(resonanceKey);
     }
 
     /// <summary>

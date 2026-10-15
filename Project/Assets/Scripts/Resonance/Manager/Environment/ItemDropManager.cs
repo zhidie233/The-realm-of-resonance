@@ -17,7 +17,14 @@ public class ItemDropManager : EnvironmentEffectManager
     protected override void Start()
     {
         base.Start();
-        dropArea=GameObject.FindGameObjectWithTag("DropArea").GetComponent<BoxCollider>();
+        GameObject dropAreaObject = GameObject.FindGameObjectWithTag("DropArea");
+        if (dropAreaObject == null || dropAreaObject.GetComponent<BoxCollider>() == null)
+        {
+            Debug.LogWarning("[ItemDropManager] 场景中不存在 DropArea 标签物体，道具掉落效果已禁用。");
+            enabled = false;
+            return;
+        }
+        dropArea = dropAreaObject.GetComponent<BoxCollider>();
         itemDropPrefab=Resources.LoadAll<GameObject>("ItemDropPrefab");
         // 初始化上次触发倍数
         lastTriggeredMultiple = Mathf.FloorToInt(currentResonance / config.itemDropInterval);

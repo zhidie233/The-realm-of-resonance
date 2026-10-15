@@ -219,9 +219,14 @@ public class BulletController : ProjectileBase
             DamageData damageData = BuildBaseDamageData();
             // 检查是否是真人
             var playerRefs = hit.transform.root.GetComponent<PlayerReferencesHandler>();
-            if (playerRefs != null && !isOneTeamMode)//是真人
+            if (playerRefs != null)//是真人
             {
-                if (playerRefs.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
+                if (isOneTeamMode)
+                {
+                    // 自由混战：所有玩家互为敌人，命中即提升共鸣值
+                    NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
+                }
+                else if (playerRefs.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
                 {
                     if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                     {
@@ -306,9 +311,14 @@ public class BulletController : ProjectileBase
                 var damageData = BuildBaseDamageData();
                 //不是真人
                 var botRefs = hit.transform.root.GetComponent<AIShooterReferences>();//判断是不是人机
-                if (botRefs != null && !isOneTeamMode)//是人机
+                if (botRefs != null)//是人机
                 {
-                    if (botRefs.PlayerTeam == bulletData.GFWKActor.Team)//判断是不是队友
+                    if (isOneTeamMode)
+                    {
+                        // 自由混战：所有人机均为敌人，命中即提升共鸣值
+                        NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
+                    }
+                    else if (botRefs.PlayerTeam == bulletData.GFWKActor.Team)//判断是不是队友
                     {
                         if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                         {
@@ -348,26 +358,28 @@ public class BulletController : ProjectileBase
         if (pdm != null && bulletData.GFWKActor != null)
         {
             DamageData info = BuildBaseDamageData();
-            if (!isOneTeamMode)
+            if (isOneTeamMode)
             {
-                if (pdm.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
+                // 自由混战：所有玩家互为敌人，被击中即提升共鸣值
+                NotifyMasterClientResonanceChange("Enemy", info.Damage);
+            }
+            else if (pdm.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
+            {
+                if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                 {
-                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
-                    {
-                        Disable();
-                        return;
-                    }
-                    else
-                    {
-                        // 攻击友军，降低共鸣值
-                        NotifyMasterClientResonanceChange("Teammate", info.Damage);
-                    }
+                    Disable();
+                    return;
                 }
                 else
                 {
-                    // 攻击敌人，升高共鸣值
-                    NotifyMasterClientResonanceChange("Enemy", info.Damage);
+                    // 攻击友军，降低共鸣值
+                    NotifyMasterClientResonanceChange("Teammate", info.Damage);
                 }
+            }
+            else
+            {
+                // 攻击敌人，升高共鸣值
+                NotifyMasterClientResonanceChange("Enemy", info.Damage);
             }
             info.Actor = null;
             info.Cause = DamageCause.Bot;
@@ -392,6 +404,8 @@ public class BulletController : ProjectileBase
     
     void NotifyMasterClientResonanceChange(string resonanceKey, float damage)
     {
+        if (ResonanceManager.Instance == null) return;
+
         if (PhotonNetwork.IsMasterClient)
         {
             // 如果自己就是房主，直接修改

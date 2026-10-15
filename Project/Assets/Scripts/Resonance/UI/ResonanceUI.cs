@@ -8,6 +8,13 @@ public class ResonanceUI : MonoBehaviour
 
     private void Start()
     {
+        if (ResonanceManager.Instance == null)
+        {
+            Debug.LogWarning("[ResonanceUI] 场景中不存在 ResonanceManager，共鸣 UI 已禁用。");
+            enabled = false;
+            return;
+        }
+
         ResonanceManager.Instance.OnResonanceChanged += OnResonanceChanged;
         currentResonance = ResonanceManager.Instance.GetCurrentResonance();
     }

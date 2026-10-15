@@ -134247,8 +134247,8 @@ MonoBehaviour:
   playerCamera: {fileID: 4678118590170345371}
   weaponCamera: {fileID: 3552273761010838855}
   leftArmTarget: {fileID: 1313909187940047555}
-  m_playerAnimator: {fileID: 8288458203555576559}
-  m_botAimTarget: {fileID: 6489070901587766175}
+  _playerAnimator: {fileID: 0}
+  _botAimTarget: {fileID: 0}
   EditorSelectedGun: {fileID: 7205786764058559029}
 --- !u!1 &4737865597884561334
 GameObject:
