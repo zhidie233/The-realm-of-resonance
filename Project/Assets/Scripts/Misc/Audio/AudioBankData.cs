@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Audio
+namespace Game.Audio
 {
     [CreateAssetMenu(fileName = "Audio Bank", menuName = "Game Framework/Audio/Bank", order = 301)]
     public class AudioBankData : ScriptableObject

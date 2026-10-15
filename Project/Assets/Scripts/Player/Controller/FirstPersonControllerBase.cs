@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using GFWK.PlayerController;
+﻿﻿using UnityEngine;
+using Game.PlayerController;
 
 /// <summary>
 /// Base class for the player controller
@@ -60,16 +60,16 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Use to access to variables of the default GFWK controller
+    /// Use to access to variables of the default Game controller
     /// If you are using your own inherited class, you don't need this.
     /// </summary>
-    private FirstPersonController _gfwkController = null;
-    public FirstPersonController GFWKController
+    private FirstPersonController _gameController = null;
+    public FirstPersonController GameController
     {
         get
         {
-            if (_gfwkController == null) TryGetComponent(out _gfwkController);
-            return _gfwkController;
+            if (_gameController == null) TryGetComponent(out _gameController);
+            return _gameController;
         }
     }
 

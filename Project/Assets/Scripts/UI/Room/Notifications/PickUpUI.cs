@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Default GFWK PickUp UI handler
+/// Default Game PickUp UI handler
 /// This script take care of receive information about pick up weapon events and display to the player
 /// To modify the behave DO NOT modify this script, instead create your own and inherited from PickUpUIBase
 /// Use this as reference.

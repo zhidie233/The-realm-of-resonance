@@ -1,4 +1,4 @@
-﻿namespace GFWK.Runtime.AI
+﻿﻿namespace Game.Runtime.AI
 {
     /// <summary>
     /// The default bots states

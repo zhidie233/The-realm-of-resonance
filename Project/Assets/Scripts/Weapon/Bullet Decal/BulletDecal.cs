@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public class BulletDecal : BulletDecalBase
     {

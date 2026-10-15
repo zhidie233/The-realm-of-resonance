@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public abstract class LobbyLoadingScreenBase : MonoBehaviour
     {

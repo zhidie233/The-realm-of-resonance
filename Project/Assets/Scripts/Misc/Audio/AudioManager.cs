@@ -1,7 +1,7 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine;
 
-namespace GFWK.Audio
+namespace Game.Audio
 {
     public class AudioManager : MonoBehaviour
     {
@@ -32,7 +32,7 @@ namespace GFWK.Audio
         /// </summary>
         private void OnEnable()
         {
-            MaxBackgroundVolume = GFWKCore.MusicVolume;
+            MaxBackgroundVolume = GameCore.MusicVolume;
         }
 
         /// <summary>

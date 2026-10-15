@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public class ClimbableLadder : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace GFWK.Runtime.Level
             Detaching,
         }
 
-        [GFWorksToogle] public bool hideWeapons = true;
+        [GameFwkToogle] public bool hideWeapons = true;
         [Tooltip("Climbing position offset (x,z) relative to the ladder transform.")]
         public Vector3 climbOffset;
         [Tooltip("Direction where the player will look at when climbing, indicated by the yellow arrow gizmo.")]

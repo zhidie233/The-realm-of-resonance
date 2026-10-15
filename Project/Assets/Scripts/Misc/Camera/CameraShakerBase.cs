@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using GFWK.Core.Motion;
+﻿﻿using UnityEngine;
+using Game.Core.Motion;
 
 public abstract class CameraShakerBase : MonoBehaviour
 {

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Internal.Scriptables
+namespace Game.Internal.Scriptables
 {
     [CreateAssetMenu(fileName = "Door Setting", menuName = "Game Framework/Level/Door Setting")]
     public class DoorStateSettings : ScriptableObject

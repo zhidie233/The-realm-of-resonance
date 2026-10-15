@@ -1,16 +1,16 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using System.Linq;
 using TMPro;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 public class PlayerScoreboard : PlayerScoreboardBase
 {
     #region Public members
     [Header("Settings")]
-    [GFWorksToogle] public bool updateOnEnable = true;
-    [GFWorksToogle] public bool autoUpdate = true;
+    [GameFwkToogle] public bool updateOnEnable = true;
+    [GameFwkToogle] public bool autoUpdate = true;
 
     [Header("References")]
     public PlayerScoreboardTableBase[] TwoTeamScoreboards;
@@ -22,7 +22,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
 
     #region Private members
     Dictionary<int, PlayerScoreboardUIBase> cachedUIBindings = new Dictionary<int, PlayerScoreboardUIBase>();
-    Dictionary<GFWKBotProperties, PlayerScoreboardUIBase> cachedBotsUIBindings = new Dictionary<GFWKBotProperties, PlayerScoreboardUIBase>();
+    Dictionary<GameBotProperties, PlayerScoreboardUIBase> cachedBotsUIBindings = new Dictionary<GameBotProperties, PlayerScoreboardUIBase>();
     bool botsScoreInstance = false;
     private List<PlayerScoreboardUIBase> cachePlayerScoreboardSorted = new List<PlayerScoreboardUIBase>();
     private List<PlayerScoreboardUIBase> cachePlayerScoreboardSorted2 = new List<PlayerScoreboardUIBase>();
@@ -128,7 +128,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         int c = AIMananger.Instance.BotsStatistics.Count;
         for (int i = 0; i < c; i++)
         {
-            GFWKBotProperties stat = AIMananger.Instance.BotsStatistics[i];
+            GameBotProperties stat = AIMananger.Instance.BotsStatistics[i];
             if (botsScoreInstance)
             {
                 if (cachedBotsUIBindings.ContainsKey(stat))
@@ -152,7 +152,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
     /// 
     /// </summary>
     /// <param name="info"></param>
-    void InstanceBotUIBinding(GFWKBotProperties info)
+    void InstanceBotUIBinding(GameBotProperties info)
     {
         PlayerScoreboardUIBase script = null;
         if (!isOneTeamMode)

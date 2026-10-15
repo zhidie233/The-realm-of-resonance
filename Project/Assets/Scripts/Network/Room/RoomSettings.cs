@@ -1,7 +1,7 @@
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
-using GFWK.Runtime.Settings;
+using Game.Runtime.Settings;
 using System.Collections.Generic;
 
 /// <summary>
@@ -10,13 +10,13 @@ using System.Collections.Generic;
 /// </summary>
 public class RoomSettings : MonoBehaviourBase
 {
-    [GFWorksToogle] public bool canSuicide = true;
+    [GameFwkToogle] public bool canSuicide = true;
 
     #region Public properties
     public GameMode CurrentGameMode => CurrentRoomInfo.gameMode;
     public int GameGoal => CurrentRoomInfo.goal;
     public bool AutoTeamSelection => CurrentRoomInfo.autoTeamSelection;
-    public GFWKRoomInfo CurrentRoomInfo { get; set; }
+    public GameRoomInfo CurrentRoomInfo { get; set; }
     public bool RoomInfoFetched { get; set; } = false;
     #endregion
 
@@ -41,7 +41,7 @@ public class RoomSettings : MonoBehaviourBase
     IEnumerator Start()
     {
         while (!GameConfig.isDataCached) yield return null;
-        if (GFWKCore.Settings != null) GFWKCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.NoApply, true);
+        if (GameCore.Settings != null) GameCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.NoApply, true);
     }
 
     /// <summary>
@@ -59,7 +59,7 @@ public class RoomSettings : MonoBehaviourBase
         }
         table.Clear();
         //Initialize new properties where the information will stay Players
-        if (!GFWKCore.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
+        if (!GameCore.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
         {
             table.Add(PropertiesKeys.TeamKey, Team.None.ToString());
         }
@@ -67,7 +67,7 @@ public class RoomSettings : MonoBehaviourBase
         table.Add(PropertiesKeys.DeathsKey, 0);
         table.Add(PropertiesKeys.ScoreKey, 0);
         table.Add(PropertiesKeys.UserRole, GameConfig.Instance.RolePrefix);
-        table.Add(PropertiesKeys.PlayerTotalScore, GFWKCore.LocalPlayer.Stats.GetAllTimeScore());
+        table.Add(PropertiesKeys.PlayerTotalScore, GameCore.LocalPlayer.Stats.GetAllTimeScore());
 
         LocalPlayer.SetCustomProperties(table);
 
@@ -93,13 +93,13 @@ public class RoomSettings : MonoBehaviourBase
     /// </summary>
     public void CheckAutoSpawn()
     {
-        if (CurrentRoomInfo.autoTeamSelection && !GFWKCore.GameData.UsingWaitingRoom())
+        if (CurrentRoomInfo.autoTeamSelection && !GameCore.GameData.UsingWaitingRoom())
         {
             UIReferences.Instance.AutoTeam(true);
             UIReferences.Instance.ShowMenu(false);
             Invoke(nameof(SelectTeamAutomatically), 3);
         }
-        else if (GFWKCore.GameData.UsingWaitingRoom() && LocalPlayer.GetPlayerTeam() == Team.None)
+        else if (GameCore.GameData.UsingWaitingRoom() && LocalPlayer.GetPlayerTeam() == Team.None)
         {
             if (PhotonNetwork.OfflineMode && !CurrentRoomInfo.autoTeamSelection)
             {

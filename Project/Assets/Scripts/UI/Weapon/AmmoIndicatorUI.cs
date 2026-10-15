@@ -1,17 +1,17 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     /// <summary>
-    /// Default GFWK Ammo Indicator handler
+    /// Default Game Ammo Indicator handler
     /// The purpose of this script is to show a text that indicate of the current ammo state of the equipped weapon
     /// in order to let the player know if he need to reload, have low ammo remain or doesn't have any at all.
     /// This script is reference free, so if you want don't want to use or want to use your custom one, simply remove it from the UI instance.
     /// </summary>
     public class AmmoIndicatorUI : MonoBehaviour
     {
-        [GFWorksToogle] public bool forceUpperCase = true;
+        [GameFwkToogle] public bool forceUpperCase = true;
         public TextMeshProUGUI indicatorText;
 
         private readonly Color m_warninColor = Color.yellow;
@@ -25,7 +25,7 @@ namespace GFWK.Runtime.UI
             SetActive(false);
             GameEvents.onLocalPlayerAmmoUpdate += OnLocalAmmoChange;
             GameEvents.onChangeWeapon += onWeaponChanged;
-#if GFWK_VEHICLE
+#if Game_VEHICLE
             VehicleEvents.onLocalEnterInVehicle += OnEnterInVehicle;
 #endif
         }
@@ -37,7 +37,7 @@ namespace GFWK.Runtime.UI
         {
             GameEvents.onLocalPlayerAmmoUpdate -= OnLocalAmmoChange;
             GameEvents.onChangeWeapon -= onWeaponChanged;
-#if GFWK_VEHICLE
+#if Game_VEHICLE
             VehicleEvents.onLocalEnterInVehicle -= OnEnterInVehicle;
 #endif
         }
@@ -47,7 +47,7 @@ namespace GFWK.Runtime.UI
         /// </summary>
         void OnLocalAmmoChange(int ammoCount)
         {
-            var player = GFWKCore.LocalPlayerReferences;
+            var player = GameCore.LocalPlayerReferences;
             if (player == null) return;
 
             var weapon = player.gunManager.GetCurrentWeapon();
@@ -136,7 +136,7 @@ namespace GFWK.Runtime.UI
             indicatorText.gameObject.SetActive(active);
         }
 
-#if GFWK_VEHICLE
+#if Game_VEHICLE
         /// <summary>
         /// 
         /// </summary>

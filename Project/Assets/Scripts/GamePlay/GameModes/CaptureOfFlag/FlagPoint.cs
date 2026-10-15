@@ -2,7 +2,7 @@ using UnityEngine;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-namespace GFWK.GameModes.CaptureOfFlag
+namespace Game.GameModes.CaptureOfFlag
 {
     public class FlagPoint : PhotonHelper
     {
@@ -83,7 +83,7 @@ namespace GFWK.GameModes.CaptureOfFlag
                 return;
             }
 
-            var local = GFWKCore.LocalPlayerReferences;
+            var local = GameCore.LocalPlayerReferences;
             if (local == null) return;
 
             if (carriyingPlayer.View.ViewID == local.ViewID)
@@ -105,7 +105,7 @@ namespace GFWK.GameModes.CaptureOfFlag
             if (carriyingPlayer == null)
                 return;
 
-            if (carriyingPlayer.View.ViewID != GFWKCore.LocalPlayer.ViewID)
+            if (carriyingPlayer.View.ViewID != GameCore.LocalPlayer.ViewID)
             {
                 return;
             }
@@ -285,7 +285,7 @@ namespace GFWK.GameModes.CaptureOfFlag
         #region GUI
         void OnGUI()
         {
-            if (carriyingPlayer != null && carriyingPlayer.View.ViewID == GFWKCore.LocalPlayer.ViewID) return;
+            if (carriyingPlayer != null && carriyingPlayer.View.ViewID == GameCore.LocalPlayer.ViewID) return;
 
             GUI.color = IconColor;
             if (GameController.Instance.CameraRendered)

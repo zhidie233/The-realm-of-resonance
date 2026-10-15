@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class PlayerRagdoll : PlayerRagdollBase
 {
     #region Public members
-    [GFWorksToogle] public bool ApplyVelocityToRagdoll = true;
+    [GameFwkToogle] public bool ApplyVelocityToRagdoll = true;
     public PlayerReferencesHandler playerReferences;
     public Transform RightHand;
     public Transform PelvisBone;

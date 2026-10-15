@@ -1,13 +1,13 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using UnityEngine;
 
-namespace GFWK.Runtime.Misc
+namespace Game.Runtime.Misc
 {
     public class ParticleFader : MonoBehaviour
     {
-        [GFWorksToogle] public bool StartFadeEmit = false;
-        [GFWorksToogle] public bool DestroyAfterTime = false;
+        [GameFwkToogle] public bool StartFadeEmit = false;
+        [GameFwkToogle] public bool DestroyAfterTime = false;
         [Range(1, 20)] public float Emission = 12;
         [Range(1, 10)] public float DestroyTime = 7;
 

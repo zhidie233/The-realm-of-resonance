@@ -1,10 +1,10 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 /// <summary>
-/// Default GFWK pooling system
+/// Default Game pooling system
 /// If you want to use your custom pool system, simply inherited your script from ObjectPoolingBase.cs
 /// And make sure you served the default prefabs from the default pool system with the same key/identifiers.
 /// </summary>

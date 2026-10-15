@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -7,7 +7,7 @@ using System.Reflection;
 using System;
 using System.Collections;
 
-namespace GFWKEditor
+namespace GameEditor
 {
     public static class ReorderableListUtility
     {
@@ -211,7 +211,7 @@ namespace GFWKEditor
 
 
         #region Reflection based extensions
-        // http://answers.unity3d.com/questions/425012/get-the-instance-the-serializedproperty-belongs-to.html
+        // 获取 SerializedProperty 所属实例的思路参考自 Unity 社区旧帖
 
         /// <summary>
         /// Use reflection to get the actual data instance of a SerializedProperty

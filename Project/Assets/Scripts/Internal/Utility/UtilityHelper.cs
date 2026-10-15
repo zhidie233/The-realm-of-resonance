@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using GFWK.Runtime.Level;
+using Game.Runtime.Level;
 using System.Linq;
 using UnityEngine.Networking;
 #if UNITY_EDITOR
@@ -30,10 +30,10 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Sort Player by Kills,for more info watch this: http://answers.unity3d.com/questions/233917/custom-sorting-function-need-help.html
+    /// Sort Player by Kills
     /// </summary>
     /// <returns></returns>
-    public static int GetSortPlayerByKills(GFWKPlayer player1, GFWKPlayer player2)
+    public static int GetSortPlayerByKills(GamePlayer player1, GamePlayer player2)
     {
         if (player1 != null && player2 != null)
             return (int)player2.GetPlayerPropertie(PropertiesKeys.KillsKey) - (int)player1.GetPlayerPropertie(PropertiesKeys.KillsKey);
@@ -93,7 +93,7 @@ public static class UtilityHelper
 #if (UNITY_ANDROID || UNITY_IOS || UNITY_IPHONE) && !UNITY_EDITOR
             return true;
 #else
-#if GFWKM && UNITY_EDITOR
+#if GameM && UNITY_EDITOR
             if (EditorApplication.isRemoteConnected) return true;
 #endif
             return false;

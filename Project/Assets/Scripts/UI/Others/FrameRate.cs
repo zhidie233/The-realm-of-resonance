@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 
 public class FrameRate : MonoBehaviourBase
@@ -46,7 +46,7 @@ public class FrameRate : MonoBehaviourBase
     /// </summary>
     void OnSettingsChanged()
     {
-        countFPS = (bool)GFWKCore.Settings.GetSettingOf("显示帧率");
+        countFPS = (bool)GameCore.Settings.GetSettingOf("显示帧率");
         if (TextUI != null) TextUI.gameObject.SetActive(countFPS);
     }
 

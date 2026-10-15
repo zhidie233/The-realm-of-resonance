@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 
-namespace GFWK.Runtime.UI.Layout
+namespace Game.Runtime.UI.Layout
 {
     public class RoundFinishScreen : RoundFinishScreenBase
     {

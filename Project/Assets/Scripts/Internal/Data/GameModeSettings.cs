@@ -1,4 +1,4 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -41,24 +41,24 @@ public class GameModeSettings
     /// <summary>
     /// Is this mode enable in your game?
     /// </summary>
-    [GFWorksToogle] public bool isEnabled = true;
+    [GameFwkToogle] public bool isEnabled = true;
 
     /// <summary>
     /// Allow play with bots in this mode?
     /// </summary>
     [Header("Settings")]
-    [GFWorksToogle] public bool supportBots = false;
+    [GameFwkToogle] public bool supportBots = false;
 
     /// <summary>
     /// Force automatically assign the teams for this mode
     /// </summary>
-    [GFWorksToogle] public bool AutoTeamSelection = false;
+    [GameFwkToogle] public bool AutoTeamSelection = false;
 
     /// <summary>
     /// Unlist the room from the server list after the match has started?
     /// So new players can't join in the middle of the match
     /// </summary>
-    [GFWorksToogle] public bool UnlistGameAfterStarted = false;
+    [GameFwkToogle] public bool UnlistGameAfterStarted = false;
 
     /// <summary>
     /// The minimum number of players that have to be joined in the match
@@ -90,7 +90,7 @@ public class GameModeSettings
     /// <summary>
     /// Can players pick up weapons in this game mode?
     /// </summary>
-    [GFWorksToogle] public bool allowedPickupWeapons = true;
+    [GameFwkToogle] public bool allowedPickupWeapons = true;
 
     /// <summary>
     /// Max players options allowed for this game mode

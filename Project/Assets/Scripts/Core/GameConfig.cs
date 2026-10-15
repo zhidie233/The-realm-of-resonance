@@ -1,51 +1,51 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using GFWKEditor;
+using GameEditor;
 using UnityEngine.Serialization;
-using GFWK.Runtime.Settings;
-using GFWK.Internal.Structures;
-using GFWK.Internal.Scriptables;
-using GFWK.Internal.BaseClass;
-using GFWK.Runtime.AI;
+using Game.Runtime.Settings;
+using Game.Internal.Structures;
+using Game.Internal.Scriptables;
+using Game.Internal.BaseClass;
+using Game.Runtime.AI;
 
 public class GameConfig : ScriptableObject
 {
     #region Public members
     [Header("Game Settings")]
-    [GFWorksToogle] public bool offlineMode = false;
-    [GFWorksToogle] public bool verifySingleSession = true;
-    [GFWorksToogle] public bool UseLobbyChat = true;
-    [GFWorksToogle] public bool UseVoiceChat = false;
-    [GFWorksToogle] public bool BulletTracer = false;
-    [GFWorksToogle] public bool DropGunOnDeath = true;
-    [GFWorksToogle] public bool SelfGrenadeDamage = true;
-    [GFWorksToogle] public bool CanFireWhileRunning = true;
-    [GFWorksToogle] public bool HealthRegeneration = true;
-    [GFWorksToogle] public bool ShowTeamMateHealthBar = true;
-    [GFWorksToogle] public bool CanChangeTeam = false;
-    [GFWorksToogle] public bool ShowBlood = true;
-    [GFWorksToogle] public bool DetectAFK = false;
-    [GFWorksToogle] public bool MasterCanKickPlayers = true;
-    [GFWorksToogle] public bool ArriveKitsCauseDamage = true;
-    [GFWorksToogle] public bool CalculateNetworkFootSteps = false;
-    [GFWorksToogle] public bool ShowNetworkStats = false;
-    [GFWorksToogle] public bool RememberPlayerName = true;
-    [GFWorksToogle] public bool ShowWeaponLoadout = true;
-    [GFWorksToogle] public bool useCountDownOnStart = true;
-    [GFWorksToogle] public bool showCrosshair = true;
-    [GFWorksToogle] public bool showDamageIndicator = true;
-    [GFWorksToogle] public bool doSpawnHandMeshEffect = true;
-    [GFWorksToogle] public bool playerCameraWiggle = true;
-    [GFWorksToogle] public bool showDeathIcons = true;
-    [GFWorksToogle] public bool allowFallDamage = true;
-    [GFWorksToogle] public bool realisticBullets = true;
-    [GFWorksToogle] public bool bulletDecals = true;
-    [GFWorksToogle] public bool showProjectilesTrails = true;
-#if GFWKM
-    [GFWorksToogle] public bool AutoWeaponFire = false;
+    [GameFwkToogle] public bool offlineMode = false;
+    [GameFwkToogle] public bool verifySingleSession = true;
+    [GameFwkToogle] public bool UseLobbyChat = true;
+    [GameFwkToogle] public bool UseVoiceChat = false;
+    [GameFwkToogle] public bool BulletTracer = false;
+    [GameFwkToogle] public bool DropGunOnDeath = true;
+    [GameFwkToogle] public bool SelfGrenadeDamage = true;
+    [GameFwkToogle] public bool CanFireWhileRunning = true;
+    [GameFwkToogle] public bool HealthRegeneration = true;
+    [GameFwkToogle] public bool ShowTeamMateHealthBar = true;
+    [GameFwkToogle] public bool CanChangeTeam = false;
+    [GameFwkToogle] public bool ShowBlood = true;
+    [GameFwkToogle] public bool DetectAFK = false;
+    [GameFwkToogle] public bool MasterCanKickPlayers = true;
+    [GameFwkToogle] public bool ArriveKitsCauseDamage = true;
+    [GameFwkToogle] public bool CalculateNetworkFootSteps = false;
+    [GameFwkToogle] public bool ShowNetworkStats = false;
+    [GameFwkToogle] public bool RememberPlayerName = true;
+    [GameFwkToogle] public bool ShowWeaponLoadout = true;
+    [GameFwkToogle] public bool useCountDownOnStart = true;
+    [GameFwkToogle] public bool showCrosshair = true;
+    [GameFwkToogle] public bool showDamageIndicator = true;
+    [GameFwkToogle] public bool doSpawnHandMeshEffect = true;
+    [GameFwkToogle] public bool playerCameraWiggle = true;
+    [GameFwkToogle] public bool showDeathIcons = true;
+    [GameFwkToogle] public bool allowFallDamage = true;
+    [GameFwkToogle] public bool realisticBullets = true;
+    [GameFwkToogle] public bool bulletDecals = true;
+    [GameFwkToogle] public bool showProjectilesTrails = true;
+#if GameM
+    [GameFwkToogle] public bool AutoWeaponFire = false;
 #endif
     public AmmunitionType AmmoType = AmmunitionType.Bullets;
     public KillFeedWeaponShowMode killFeedWeaponShowMode = KillFeedWeaponShowMode.WeaponIcon;
@@ -66,7 +66,7 @@ public class GameConfig : ScriptableObject
 #if UNITY_2020_2_OR_NEWER
     [NonReorderable]
 #endif
-    [ScriptableDrawer] public List<GFWKCoin> gameCoins;
+    [ScriptableDrawer] public List<GameCoin> gameCoins;
 
     [Header("Settings")]
     public string GameVersion = "1.0";
@@ -132,8 +132,8 @@ public class GameConfig : ScriptableObject
     #region Private Members
     public GameTeamInfo CurrentTeamUser { get; set; } = null;
     [HideInInspector] public bool isChating = false;
-    [HideInInspector] public string _GFWKLicense = string.Empty;
-    [HideInInspector] public int _GFWKFromStore = 2;
+    [HideInInspector] public string _GameLicense = string.Empty;
+    [HideInInspector] public int _GameFromStore = 2;
     [HideInInspector] public string _keyToken = "";
     private static PhotonNetworkWrapper PhotonGameInstance = null;
     public static bool isDataCached = false;
@@ -402,14 +402,14 @@ public class GameConfig : ScriptableObject
     [Serializable]
     public class VirtualCoin
     {
-        [GFWKCoinID] public int XPCoin;
+        [GameCoinID] public int XPCoin;
         [Tooltip("how much score/xp worth one coin")]
         public int CoinScoreValue = 1000;//how much score/xp worth one coin
         public int InitialCoins
         {
             get
             {
-                var coin = GFWKCore.Coins.GetCoinData(XPCoin);
+                var coin = GameCore.Coins.GetCoinData(XPCoin);
                 return coin == null ? 0 : coin.InitialCoins;
             }
         }
@@ -418,7 +418,7 @@ public class GameConfig : ScriptableObject
         /// 
         /// </summary>
         /// <param name="newCoins"></param>
-        public void AddCoins(int newCoins, string endPoint = "") => GFWKCore.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
+        public void AddCoins(int newCoins, string endPoint = "") => GameCore.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
 
         /// <summary>
         /// 

@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     [RequireComponent(typeof(EventSystem))]
     public class GamePadPointerModuleHandler : PointerInputModule

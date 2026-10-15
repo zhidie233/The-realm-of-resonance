@@ -285,7 +285,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     public void ReplicateFire(GunType weaponType, Vector3 hitPosition, Vector3 inacuracity)
     {
         photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inacuracity);
-#if GFWKTPV
+#if GameTPV
         if (CameraViewSettings.IsThirdPerson())
             PlayerReferences.playerAnimations?.PlayFireAnimation(weaponType);
 #endif

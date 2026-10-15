@@ -1,5 +1,5 @@
-using GFWK.Core.Motion;
-using GFWK.Internal.Structures;
+using Game.Core.Motion;
+using Game.Internal.Structures;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -235,7 +235,7 @@ public class GunController : GunBase
 
     protected override void OnEnable()
     {
-#if GFWKM
+#if GameM
         if (UtilityHelper.isMobile)
         {
             TouchHelper.OnFireClick += OnFire;
@@ -265,7 +265,7 @@ public class GunController : GunBase
         EquippedWeaponUIBase.Instance.SetFireType(GetFireType());
         playerSettings?.DoSpawnWeaponRenderEffect(weaponRenders);
         OnAmmoLauncher.ForEach(x => { x?.SetActive(true); });
-#if GFWKTPV
+#if GameTPV
         var tpScript = PlayerReferences.GetComponent<PlayerCameraSwitcher>();
         if (tpScript != null)
         {
@@ -279,7 +279,7 @@ public class GunController : GunBase
         base.OnDisable();
         GameEvents.onAmmoPickUp -= this.OnPickUpAmmo;
         GameEvents.onRoundEnd -= this.OnRoundEnd;
-#if GFWKM
+#if GameM
         if (UtilityHelper.isMobile)
         {
             TouchHelper.OnFireClick -= OnFire;
@@ -315,7 +315,7 @@ public class GunController : GunBase
         defaultRotation = transform.localRotation;
         if (PlayerCamera == null) { PlayerCamera = PlayerReferences.playerCamera; }
         WeaponCamera = PlayerReferences.weaponCamera;
-        WeaponCamera.fieldOfView = GFWKCore.Settings != null ? (float)GFWKCore.Settings.GetSettingOf("武器FOV") : 55;
+        WeaponCamera.fieldOfView = GameCore.Settings != null ? (float)GameCore.Settings.GetSettingOf("武器FOV") : 55;
         CanAiming = true;
 
         // @TODO: Change this with more elaborated fire type system
@@ -367,7 +367,7 @@ public class GunController : GunBase
         bool fireDown = GameInput.Fire(GameInputType.Down);
         if (UtilityHelper.isMobile)
         {
-#if GFWKM
+#if GameM
             if (GameConfig.Instance.AutoWeaponFire && AutoFire.Instance != null)
                 HandleAutoFire();
             else
@@ -382,7 +382,7 @@ public class GunController : GunBase
         }
         else
         {
-#if GFWKM
+#if GameM
             if (GameConfig.Instance.AutoWeaponFire && AutoFire.Instance != null)
             {
                 HandleAutoFire();
@@ -419,7 +419,7 @@ public class GunController : GunBase
 
         if (UtilityHelper.isMobile)
         {
-#if GFWKM
+#if GameM
             isAiming = TouchHelper.Instance.isAim && CanAiming;
 #endif
         }
@@ -448,7 +448,7 @@ public class GunController : GunBase
         {
             if (UtilityHelper.isMobile)
             {
-#if GFWKM
+#if GameM
                 if (!GameConfig.Instance.AutoWeaponFire && TouchHelper.Instance != null)
                 {
                     isFiring = (TouchHelper.Instance.FireDown && CanFire);
@@ -531,7 +531,7 @@ public class GunController : GunBase
     {
         if (!CanFire) return;
 
-#if GFWKM
+#if GameM
         bool fireDown = AutoFire.Instance.Fire();
         isFiring = fireDown;
         if (fireDown)
@@ -636,7 +636,7 @@ public class GunController : GunBase
         float time = Time.time;
 
         if (nextFireTime > time) return;
-        nextFireTime = time + (Info.FireRate * 0.1f); // multiply by 0.1 just to add compatibility (keep the same fire rate) with older versions of GFWK.
+        nextFireTime = time + (Info.FireRate * 0.1f); // multiply by 0.1 just to add compatibility (keep the same fire rate) with older versions of Game.
 
         FireOneShot();
 
@@ -700,13 +700,13 @@ public class GunController : GunBase
             float range = PlayerReferences.cameraRay == null ? Info.Range : Info.Range + PlayerReferences.cameraRay.ExtraRayDistance;
             if (Physics.SphereCast(position, 0.2f, direction, out hit, range))
             {
-                if (hit.transform.CompareTag(GFWKCore.HITBOX_TAG))
+                if (hit.transform.CompareTag(GameCore.HITBOX_TAG))
                 {
-                    var bp = hit.transform.GetComponent<IGFWKDamageable>();
+                    var bp = hit.transform.GetComponent<IGameDamageable>();
                     var damageData = new DamageData();
                     damageData.Damage = Info.Damage;
                     damageData.Actor = LocalPlayer;
-                    damageData.GFWKActor = GameController.Instance.LocalActor;
+                    damageData.GameActor = GameController.Instance.LocalActor;
                     damageData.Cause = DamageCause.Player;
                     damageData.Direction = transform.position;
                     damageData.GunID = GunID;
@@ -718,14 +718,14 @@ public class GunController : GunBase
                 }
                 else
                 {
-                    var damageable = hit.transform.GetComponent<IGFWKDamageable>();
+                    var damageable = hit.transform.GetComponent<IGameDamageable>();
                     if (damageable != null)
                     {
                         DamageData damageData = new DamageData()
                         {
                             Damage = (int)Info.Damage,
                             Direction = _transform.position,
-                            GFWKActor = GameController.Instance.LocalActor,
+                            GameActor = GameController.Instance.LocalActor,
                             ActorViewID = GameController.LocalPlayerViewID,
                             GunID = GunID,
                             From = LocalPlayer.NickName,
@@ -850,7 +850,7 @@ public class GunController : GunBase
     public IEnumerator ThrowGrenade(bool fastFire = false, bool useDelay = true)
     {
         float t = 0;
-        // multiple these values to add compatibility with the default inspector values in older GFWK versions
+        // multiple these values to add compatibility with the default inspector values in older Game versions
         float throwForce = BulletSpeed * 22;
         float upwardForce = bulletDropFactor * 33;
 
@@ -1050,7 +1050,7 @@ public class GunController : GunBase
                         bulletInstanceData.ProjectedHitPoint = hit.point;
                         bulletInstanceData.Rotation = Quaternion.LookRotation(bulletInstanceData.ProjectedHitPoint - mp);
 
-#if GFWKTPV
+#if GameTPV
                         if (CameraViewSettings.IsThirdPerson())
                         {
                             // In third person view, we have to make sure the projected hit point is not behind the weapon fire point
@@ -1078,7 +1078,7 @@ public class GunController : GunBase
             }
             else
             {
-#if GFWKTPV
+#if GameTPV
                 // in third person we have to always get the direction from the camera
                 if (CameraViewSettings.IsThirdPerson())
                 {
@@ -1126,7 +1126,7 @@ public class GunController : GunBase
         BulletSettings.DropFactor = bulletDropFactor;
         BulletSettings.Range = Range;
         BulletSettings.ActorViewID = GameController.LocalPlayerViewID;
-        BulletSettings.GFWKActor = GameController.Instance.LocalActor;
+        BulletSettings.GameActor = GameController.Instance.LocalActor;
         BulletSettings.IsLocalPlayer = true;
     }
 
@@ -1504,7 +1504,7 @@ public class GunController : GunBase
             if (WeaponType == GunType.Grenade)
             {
                 _remainingClips += projectiles;
-                new GFWKLocalNotification(string.Format("+{0} {1}", projectiles.ToString(), Info.Name));
+                new GameLocalNotification(string.Format("+{0} {1}", projectiles.ToString(), Info.Name));
             }
             else
             {
@@ -1513,7 +1513,7 @@ public class GunController : GunBase
                 int oldCount = _remainingClips;
                 _remainingClips += bullets;
                 _remainingClips = Mathf.Clamp(_remainingClips, 0, BulletsPerMagazine * maxNumberOfClips);
-                new GFWKLocalNotification(string.Format("+{0} {1} Bullets", _remainingClips - oldCount, Info.Name));
+                new GameLocalNotification(string.Format("+{0} {1} Bullets", _remainingClips - oldCount, Info.Name));
             }
         }
         UpdateUI();

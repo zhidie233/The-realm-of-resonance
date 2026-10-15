@@ -1,11 +1,11 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace GFWKEditor
+namespace GameEditor
 {
     public class ScriptableDrawerAttribute : PropertyAttribute
     {
@@ -38,7 +38,7 @@ namespace GFWKEditor
                 {
                     name = property.objectReferenceValue.name;
                 }
-                property.isExpanded = GFWKEditorStyles.ContainerHeaderFoldout(name, property.isExpanded);
+                property.isExpanded = GameEditorStyles.ContainerHeaderFoldout(name, property.isExpanded);
                 if (property.isExpanded)
                 {
                     EditorGUILayout.BeginVertical("box");

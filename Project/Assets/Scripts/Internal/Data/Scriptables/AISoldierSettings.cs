@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.Runtime.AI
+namespace Game.Runtime.AI
 {
     [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "Game Framework/AI/Soldier Settings")]
     public class AISoldierSettings : ScriptableObject

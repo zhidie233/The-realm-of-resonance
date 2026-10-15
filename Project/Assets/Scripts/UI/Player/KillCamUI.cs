@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -36,7 +36,7 @@ public class KillCamUI :  KillCamUIBase
 
         levelIcon.gameObject.SetActive(false);
         StartCoroutine(RespawnCountDown());
-        GFWKPlayer actor = GameController.Instance.FindActor(killer);
+        GamePlayer actor = GameController.Instance.FindActor(killer);
         if(actor != null)
         {
 

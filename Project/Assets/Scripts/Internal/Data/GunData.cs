@@ -1,7 +1,7 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
-using GFWK.Internal.Structures;
-using GFWKEditor;
+using Game.Internal.Structures;
+using GameEditor;
 
 [Serializable]
 public class GunData
@@ -9,7 +9,7 @@ public class GunData
     [Header("Info")]
     public string Name;
     public GunType Type = GunType.Machinegun;
-    [GFWorksToogle] public bool Active = true;
+    [GameFwkToogle] public bool Active = true;
 
     [Header("Settings")]
     [Range(1, 100)] public int Damage;
@@ -18,7 +18,7 @@ public class GunData
     [Range(0, 1000)] public int Range;
     [Range(0.01f, 5)] public int Accuracy;
     [Range(0, 4)] public float Weight;
-    public GFWKItemUnlockability Unlockability;
+    public GameItemUnlockability Unlockability;
 
     [Header("References")]
     public GunPickUpBase PickUpPrefab;
@@ -30,6 +30,6 @@ public class GunData
     /// <returns></returns>
     public bool CanShowWeapon()
     {
-        return Active && Unlockability.UnlockMethod != GFWKItemUnlockability.UnlockabilityMethod.Hidden;
+        return Active && Unlockability.UnlockMethod != GameItemUnlockability.UnlockabilityMethod.Hidden;
     }
 }

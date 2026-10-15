@@ -1,7 +1,7 @@
 using Photon.Realtime;
 using TMPro;
 
-namespace GFWK.Runtime.FriendList
+namespace Game.Runtime.FriendList
 {
     public abstract class FriendListBase : PhotonHelper
     {

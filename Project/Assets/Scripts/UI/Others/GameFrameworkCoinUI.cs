@@ -1,15 +1,15 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using GFWK.Internal.Scriptables;
-using GFWKEditor;
+using Game.Internal.Scriptables;
+using GameEditor;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
-    public class GFWKCoinUI : MonoBehaviour
+    public class GameCoinUI : MonoBehaviour
     {
-        [GFWKCoinID] public int coin;
+        [GameCoinID] public int coin;
         [SerializeField] private TextMeshProUGUI coinText = null;
         [SerializeField] private Text coinTextUGUI = null;
         [SerializeField] private Image coinIconImg = null;
@@ -35,9 +35,9 @@ namespace GFWK.Runtime.UI
         /// 
         /// </summary>
         /// <param name="updatedCoin"></param>
-        void OnCoinUpdate(GFWKCoin updatedCoin)
+        void OnCoinUpdate(GameCoin updatedCoin)
         {
-            var coinData = GFWKCore.Coins.GetCoinData(coin);
+            var coinData = GameCore.Coins.GetCoinData(coin);
             if (coinData == null) return;
 
             if (coinText != null) coinText.text = coinData.GetCoins(PhotonNetworkWrapper.NickName).ToString();

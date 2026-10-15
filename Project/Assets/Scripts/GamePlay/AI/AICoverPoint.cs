@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class AICoverPoint : MonoBehaviour
 {
     [Tooltip("Should the bot crouch when reach this cover point?")]
-    [GFWorksToogle] public bool Crouch = false;
+    [GameFwkToogle] public bool Crouch = false;
     public float lastUseTime { get; set; } = 0;
     public List<AICoverPoint> NeighbordPoints = new List<AICoverPoint>();
 

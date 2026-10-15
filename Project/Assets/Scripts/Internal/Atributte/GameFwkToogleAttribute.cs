@@ -1,31 +1,31 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using GFWKEditor;
+using GameEditor;
 #endif
 
-public class GFWorksToogleAttribute : PropertyAttribute
+public class GameFwkToogleAttribute : PropertyAttribute
 {
     public readonly string title;
     public readonly float ExtraWidth = 0;
 
-    public GFWorksToogleAttribute(float extraWidth = 0)
+    public GameFwkToogleAttribute(float extraWidth = 0)
     {
         title = string.Empty;
         ExtraWidth = extraWidth;
     }
 
-    public GFWorksToogleAttribute(string toggleTitle)
+    public GameFwkToogleAttribute(string toggleTitle)
     {
         title = toggleTitle;
     }
 }
 
 #if UNITY_EDITOR
-[CustomPropertyDrawer(typeof(GFWorksToogleAttribute))]
-public class GFWorksToogleAttributteDrawer : PropertyDrawer
+[CustomPropertyDrawer(typeof(GameFwkToogleAttribute))]
+public class GameFwkToogleAttributteDrawer : PropertyDrawer
 {
-    GFWorksToogleAttribute script { get { return ((GFWorksToogleAttribute)attribute); } }
+    GameFwkToogleAttribute script { get { return ((GameFwkToogleAttribute)attribute); } }
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
@@ -34,7 +34,7 @@ public class GFWorksToogleAttributteDrawer : PropertyDrawer
         float lw = EditorGUIUtility.labelWidth;
         EditorGUIUtility.labelWidth += script.ExtraWidth;
         position.x += 15 * EditorGUI.indentLevel;
-        property.boolValue = GFWKEditorStyles.FeatureToogle(position, property.boolValue, t);
+        property.boolValue = GameEditorStyles.FeatureToogle(position, property.boolValue, t);
         EditorGUIUtility.labelWidth = lw;
     }
 }

@@ -1,13 +1,13 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 #if !UNITY_WEBGL && PVOICE
 using Photon.Voice.Unity;
 using Photon.Voice.PUN;
 #endif
 using UnityEngine.Serialization;
-using GFWK.Internal.BaseClass;
+using Game.Internal.BaseClass;
 
 /// <summary>
-/// Default GFWK Name Plate (Name above head) script
+/// Default Game Name Plate (Name above head) script
 /// If you want to make a different approach like use UGUI instead of OnGUI
 /// Create a custom script and inherited it from NamePlateBase.cs
 /// </summary>

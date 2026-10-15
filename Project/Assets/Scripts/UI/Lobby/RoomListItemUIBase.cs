@@ -1,7 +1,7 @@
 using Photon.Realtime;
 using UnityEngine;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public abstract class RoomListItemUIBase : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public abstract class BulletDecalBase : MonoBehaviour
     {

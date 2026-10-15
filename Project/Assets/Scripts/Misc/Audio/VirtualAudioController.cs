@@ -1,8 +1,8 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
-using GFWKEditor;
+using GameEditor;
 
-namespace GFWK.Audio
+namespace Game.Audio
 {
     [System.Serializable]
     public class VirtualAudioController

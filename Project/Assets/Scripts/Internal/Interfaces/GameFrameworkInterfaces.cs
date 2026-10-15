@@ -1,11 +1,11 @@
-﻿namespace GFWK.Internal.Interfaces
+﻿﻿namespace Game.Internal.Interfaces
 {
 
     /// <summary>
     /// Handle the UI window that appear after the finish of a match
     /// By default it collect the local player data and show it to the screen
     /// </summary>
-    public interface IGFWKResumeScreen
+    public interface IGameResumeScreen
     {
         void CollectData();
         void Show();

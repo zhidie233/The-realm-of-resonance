@@ -1,4 +1,4 @@
-﻿using GFWK.Internal.Structures;
+﻿﻿using Game.Internal.Structures;
 using UnityEngine;
 
 public abstract class KillFeedUIBase : MonoBehaviour

@@ -1,9 +1,9 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// GFWK default script to handle the FPWeapon animations.
+/// Game default script to handle the FPWeapon animations.
 /// You can use your own script to handle the animations if you inherit your script from WeaponAnimationBase.cs
 /// </summary>
 public class WeaponAnimationHandler : WeaponAnimationBase

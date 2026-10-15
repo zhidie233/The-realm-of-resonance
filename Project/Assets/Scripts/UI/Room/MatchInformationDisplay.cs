@@ -22,7 +22,7 @@ public class MatchInformationDisplay : MonoBehaviour
     /// </summary>
     public void DisplayInfo()
     {
-        GFWKRoomInfo props = PhotonNetwork.CurrentRoom.GetRoomInfo();
+        GameRoomInfo props = PhotonNetwork.CurrentRoom.GetRoomInfo();
         MapNameText.text = props.mapName.ToUpper();
         DateText.text = fakeDate;
         GameModeText.text = props.gameMode.GetName().ToUpper();

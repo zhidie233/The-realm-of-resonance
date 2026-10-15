@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-namespace GFWK.Runtime.FriendList
+namespace Game.Runtime.FriendList
 {
     public class FriendsManager : FriendListBase, IMatchmakingCallbacks, IConnectionCallbacks, ILobbyCallbacks
     {
@@ -126,7 +126,7 @@ namespace GFWK.Runtime.FriendList
 #if ULSP
             if (DataBase.IsUserLogged)
             {
-                ULoginGFWK.SaveFriendList(allfriends, () =>
+                ULoginGame.SaveFriendList(allfriends, () =>
                 {
                     Debug.Log("Friend list save in database!");
                     DataBase.LocalUserInstance.SetFriends(allfriends);
@@ -295,7 +295,7 @@ namespace GFWK.Runtime.FriendList
         {
             get
             {
-                return PropertiesKeys.GetUniqueKeyForPlayer("gfwk.friends", PhotonNetworkWrapper.NickName);
+                return PropertiesKeys.GetUniqueKeyForPlayer("game.friends", PhotonNetworkWrapper.NickName);
             }
         }
 

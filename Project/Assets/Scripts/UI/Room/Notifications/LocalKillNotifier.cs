@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections.Generic;
-using GFWK.Internal.Structures;
+using Game.Internal.Structures;
 
 public class LocalKillNotifier : MonoBehaviour
 {
@@ -52,7 +52,7 @@ public class LocalKillNotifier : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="notification"></param>
-    void OnLocalNotification(GFWKLocalNotification notification)
+    void OnLocalNotification(GameLocalNotification notification)
     {
 
     }

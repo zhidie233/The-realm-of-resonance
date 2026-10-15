@@ -379,6 +379,6 @@ MonoBehaviour:
     Password: www114514
     m_Color: {r: 1, g: 0, b: 0.1862073, a: 1}
   isChating: 0
-  _GFWKLicense: 
-  _GFWKFromStore: 0
+  _GameLicense: 
+  _GameFromStore: 0
   _keyToken: 

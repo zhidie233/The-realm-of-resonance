@@ -1,9 +1,9 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using GFWKEditor;
+using GameEditor;
 #endif
 
 public class HitBoxManager : MonoBehaviour
@@ -57,7 +57,7 @@ public class HitBoxManager : MonoBehaviour
         if (col == null) { Debug.LogWarning("The bone: " + bone.ToString() + " doesn't have a collider."); return; }
 
         col.gameObject.layer = LayerMask.NameToLayer("Player");
-        col.gameObject.tag = GFWKCore.HITBOX_TAG;
+        col.gameObject.tag = GameCore.HITBOX_TAG;
         box.Bone = bone;
         box.collider = col;
         if (bone == HumanBodyBones.Head) { box.DamageMultiplier = 5; }
@@ -104,7 +104,7 @@ public class BodyHitBoxManagerEditor: Editor
             EditorGUILayout.HelpBox("No Health Manager has been assigned, therefore none damage will be applied from the hitboxes", MessageType.Warning);
         }
         var rect = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.toolbarButton);
-        script.managerPerSegments = GFWKEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
+        script.managerPerSegments = GameEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
         DrawBodyMultiplier();
         DrawHitBoxesList();
 

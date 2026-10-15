@@ -1,16 +1,16 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
-namespace GFWK.Tween
+namespace Game.Tween
 {
     [RequireComponent(typeof(CanvasGroup))]
     public class TweenCurveAlpha : TweenBase, ITween
     {
         [Header("Settings")]
-        [GFWorksToogle] public bool OnStart = true;
-        [GFWorksToogle] public bool AlphaOnStart = true;
-        [GFWorksToogle] public bool Loop = false;
+        [GameFwkToogle] public bool OnStart = true;
+        [GameFwkToogle] public bool AlphaOnStart = true;
+        [GameFwkToogle] public bool Loop = false;
         [Range(0, 10)] public float Delay = 0;
         [Range(0.1f, 10)] public float Duration = 1;
         public AnimationCurve m_Curve = new AnimationCurve(new Keyframe(0, 0), new Keyframe(1, 1));
@@ -171,13 +171,13 @@ namespace GFWK.Tween
         public override void PlayEditor()
         {
             InitInEditor();
-            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTween());
+            GameEditor.EditorCoroutines.StartBackgroundTask(DoTween());
         }
 
         public override void PlayReverseEditor()
         {
             InitInEditor();
-            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
+            GameEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
         }
         public override void InitInEditor()
         {

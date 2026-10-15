@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace GFWKEditor
+namespace GameEditor
 {
     public class ImportExportWeapon : EditorWindow
     {
@@ -38,7 +38,7 @@ namespace GFWKEditor
         /// </summary>
         private void OnGUI()
         {
-            EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), GFWKEditorStyles.GFWorksEditorPalette.GetBackgroundColor());
+            EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), GameEditorStyles.GameFwkEditorPalette.GetBackgroundColor());
 
             if (isExport)
             {
@@ -170,7 +170,7 @@ namespace GFWKEditor
                 }
                 GUI.enabled = canImport;
                 GUILayout.FlexibleSpace();
-                if (GFWKEditorStyles.ButtonOutline("导入"))
+                if (GameEditorStyles.ButtonOutline("导入"))
                 {
                     Import();
                 }

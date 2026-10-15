@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class ClampIcon : MonoBehaviour
     {

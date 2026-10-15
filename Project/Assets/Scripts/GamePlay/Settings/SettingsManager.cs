@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.Runtime.Settings
+namespace Game.Runtime.Settings
 {
     public class SettingsManager : MonoBehaviour
     {
@@ -76,8 +76,8 @@ namespace GFWK.Runtime.Settings
         /// </summary>
         public void ApplySettings()
         {
-            GFWKCore.Settings.SaveSettings();
-            GFWKCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.ApplyUserSelected);
+            GameCore.Settings.SaveSettings();
+            GameCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.ApplyUserSelected);
 
             var im = transform.GetComponentInChildren<InputManager.InputUI>();
             if (im != null)

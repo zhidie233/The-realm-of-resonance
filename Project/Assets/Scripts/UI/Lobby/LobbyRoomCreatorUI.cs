@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using GFWK.Runtime.Settings;
+﻿﻿using UnityEngine;
+using Game.Runtime.Settings;
 using System.Linq;
 using TMPro;
 
@@ -18,7 +18,7 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     public SingleSettingsBinding TeamSelectionSelector;
     public TMP_InputField roomInputField;
     public TMP_InputField roomPasswordInputField;
-    public GFWKRoomPreview roomPreview;
+    public GameRoomPreview roomPreview;
 
     private GameModeSettings[] allModes;
     private string defaultRoomName = "Server";

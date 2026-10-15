@@ -1,10 +1,10 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
-using GFWKEditor;
+using GameEditor;
 using Object = UnityEngine.Object;
 
-namespace GFWK.Internal.Structures
+namespace Game.Internal.Structures
 {
     [Serializable]
     public class MapInfo

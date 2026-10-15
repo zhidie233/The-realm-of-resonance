@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using GFWK.Internal.BaseClass;
+using Game.Internal.BaseClass;
 
 public class SpawnPointManager : MonoBehaviour
 {
     public SpawnMode spawnMode = SpawnMode.Random;
-    [GFWorksToogle] public bool drawSpawnPoints = true;
+    [GameFwkToogle] public bool drawSpawnPoints = true;
 
     [Header("References")]
     public KillCamBase killCameraInstance;

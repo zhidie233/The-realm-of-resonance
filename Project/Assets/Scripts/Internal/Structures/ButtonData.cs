@@ -1,8 +1,8 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     [Serializable]
     public class ButtonData

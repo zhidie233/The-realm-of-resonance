@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace GFWK.GameModes.CaptureOfFlag
+namespace Game.GameModes.CaptureOfFlag
 {
     public class CaptureOfFlagUI : MonoBehaviour
     {

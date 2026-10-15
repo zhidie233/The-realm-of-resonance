@@ -1,14 +1,14 @@
 using UnityEngine;
-using GFWK.Internal.Interfaces;
+using Game.Internal.Interfaces;
 using TMPro;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 /// <summary>
-/// Default GFWK after match resume screen
-/// If you want to use your custom resume screen, simply append the IGFWKResumeScreen interface to your script
+/// Default Game after match resume screen
+/// If you want to use your custom resume screen, simply append the IGameResumeScreen interface to your script
 /// and handle the inherited functions.
 /// </summary>
-public class GameFinishHandler : PhotonHelper, IGFWKResumeScreen
+public class GameFinishHandler : PhotonHelper, IGameResumeScreen
 {
 
     [SerializeField] private TextMeshProUGUI PlayerNameText = null;
@@ -80,7 +80,7 @@ public class GameFinishHandler : PhotonHelper, IGFWKResumeScreen
         if (DataBase.Instance != null)
         {
             var p = PhotonNetworkWrapper.LocalPlayer;
-            ULoginGFWK.SaveLocalPlayerKDS();
+            ULoginGame.SaveLocalPlayerKDS();
             DataBase.Instance.StopAndSaveTime();
             if (coins > 0)
             {

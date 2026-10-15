@@ -1,18 +1,18 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
 using TMPro;
 
-namespace GFWK.Runtime.Settings
+namespace Game.Runtime.Settings
 {
     public class SingleSettingsBinding : MonoBehaviour
     {
         [Header("Settings")]
         public string SettingKeyName = "";
         public string[] optionsNames = new string[] { "禁用", "启用" };
-        [GFWorksToogle] public bool autoUpperCase = false;
+        [GameFwkToogle] public bool autoUpperCase = false;
 
         [Header("Listener")]
         public OnChange onChange;
@@ -71,7 +71,7 @@ namespace GFWK.Runtime.Settings
         /// </summary>
         public void Load()
         {
-            var val = GFWKCore.Settings.GetSettingOf(SettingKeyName);
+            var val = GameCore.Settings.GetSettingOf(SettingKeyName);
             int v = 0;
             if (val is bool) { v = (bool)val == true ? 1 : 0; }
             else if (val is int)
@@ -124,11 +124,11 @@ namespace GFWK.Runtime.Settings
             if (string.IsNullOrEmpty(SettingKeyName)) return;
 
             //Set the changed setting value to the instance settings group.
-            GFWKCore.Settings.SetSettingOf(SettingKeyName, currentOption, SettingsManager.Instance.autoSaveSettings);
+            GameCore.Settings.SetSettingOf(SettingKeyName, currentOption, SettingsManager.Instance.autoSaveSettings);
             if (SettingsManager.Instance.applySettingsOnChange)
             {
                 //call the listener that will apply the settings in game
-                GFWKCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.NoApply);
+                GameCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.NoApply);
             }
         }
 
@@ -160,7 +160,7 @@ namespace GFWK.Runtime.Settings
         /// </summary>
         public void SaveValue()
         {
-            GFWKCore.Settings.SaveSettings();
+            GameCore.Settings.SaveSettings();
         }
 
         /// <summary>

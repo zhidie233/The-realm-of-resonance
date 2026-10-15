@@ -2,12 +2,12 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using GFWK.Internal;
-using GFWK.Runtime.UI;
-using GFWK.Internal.Interfaces;
-using GFWK.Internal.Structures;
+using Game.Internal;
+using Game.Runtime.UI;
+using Game.Internal.Interfaces;
+using Game.Internal.Structures;
 using TMPro;
-using GFWK.InputManager;
+using Game.InputManager;
 
 public class UIReferences : PhotonHelper, IInRoomCallbacks
 {
@@ -18,7 +18,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         set => m_uiMask = value;
     }
 
-    public IGFWKResumeScreen ResumeScreen { get; set; }
+    public IGameResumeScreen ResumeScreen { get; set; }
 
     [Header("References")]
     public PlayerScoreboardBase playerScoreboards;
@@ -161,7 +161,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
 #if LMS
         if (GetGameMode == GameMode.BR) ShowMenu(false);
 #endif
-        if (GFWKCore.GameData.UsingWaitingRoom())
+        if (GameCore.GameData.UsingWaitingRoom())
         {
             if (PhotonNetworkWrapper.OfflineMode && !PhotonNetworkWrapper.CurrentRoom.GetRoomInfo().autoTeamSelection) return;
 
@@ -277,7 +277,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     /// </summary>
     public void Suicide()
     {
-        if (!GFWKCore.LocalPlayer.Suicide())
+        if (!GameCore.LocalPlayer.Suicide())
         {
             GameEvents.DispatchGamePauseEvent(false);
         }
@@ -375,7 +375,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     /// 
     /// </summary>
     /// <param name="t_amount"></param>
-    void OnPicUpMedKit(int Amount) => new GFWKLocalNotification(string.Format("+{0} 血量", Amount));
+    void OnPicUpMedKit(int Amount) => new GameLocalNotification(string.Format("+{0} 血量", Amount));
 
     /// <summary>
     /// 
@@ -447,7 +447,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     /// <returns></returns>
     private bool CanSelectTeamToJoin()
     {
-        return !inTeam && (!RoomSettings.Instance.AutoTeamSelection || !GFWKCore.GameData.UsingWaitingRoom());
+        return !inTeam && (!RoomSettings.Instance.AutoTeamSelection || !GameCore.GameData.UsingWaitingRoom());
     }
 
     #region Photon Callbacks

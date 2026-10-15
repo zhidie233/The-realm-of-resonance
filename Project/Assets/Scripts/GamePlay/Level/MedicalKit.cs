@@ -1,10 +1,10 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public class MedicalKit : NetworkItem
     {
-        [GFWorksToogle] public bool autoRespawn = false;
+        [GameFwkToogle] public bool autoRespawn = false;
         [Range(0, 100)]
         public int health = 25;
 

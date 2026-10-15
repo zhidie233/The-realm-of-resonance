@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace GFWK.Internal.Scriptables
+namespace Game.Internal.Scriptables
 {
     [CreateAssetMenu(fileName = "Bullet Decal List", menuName = "Game Framework/Weapons/Decal/List")]
     public class BulletDecalList : ScriptableObject

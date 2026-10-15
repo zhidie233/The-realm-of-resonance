@@ -88,7 +88,7 @@ public class KickVotation : MonoBehaviourBase
         data.Add("type", CallType.VoteStart);
         data.Add("player", player);
         data.Add("by", PhotonNetworkWrapper.LocalPlayer);
-        GFWKCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
+        GameCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public class KickVotation : MonoBehaviourBase
         var data = UtilityHelper.CreatePhotonHashTable();
         data.Add("type", CallType.Vote);
         data.Add("vote", yes);
-        GFWKCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
+        GameCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
 
         UI.OnSendLocalVote(yes);
     }
@@ -208,7 +208,7 @@ public class KickVotation : MonoBehaviourBase
         }
 
         data.Add("kick", kicked);
-        GFWKCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
+        GameCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
     }
 
     /// <summary>

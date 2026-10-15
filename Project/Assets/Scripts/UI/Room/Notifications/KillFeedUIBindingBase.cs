@@ -1,4 +1,4 @@
-﻿using GFWK.Internal.Structures;
+﻿﻿using Game.Internal.Structures;
 
 public abstract class KillFeedUIBindingBase : PhotonHelper
 {

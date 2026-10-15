@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
 using TMPro;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 public class PlayerScoreboardUI : PlayerScoreboardUIBase
 {
@@ -25,7 +25,7 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
     /// <summary>
     /// Called when the first time that this player appear in the scoreboard
     /// </summary>
-    public override void Init(Player player, GFWKBotProperties bot = null)
+    public override void Init(Player player, GameBotProperties bot = null)
     {
         Bot = bot;
         isBotBinding = bot != null;

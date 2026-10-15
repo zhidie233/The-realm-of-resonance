@@ -1,13 +1,13 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using GFWK.Runtime.Settings;
-using GFWK.Internal.Scriptables;
+using Game.Runtime.Settings;
+using Game.Internal.Scriptables;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using static CameraRayBase;
 
-public static class GFWKCore
+public static class GameCore
 {
     public static float MusicVolume = 1;
 
@@ -26,7 +26,7 @@ public static class GFWKCore
     public static class LocalPlayer
     {
         public static int ViewID => GameController.LocalPlayerViewID;
-        public static GFWKPlayer GFWKActor => GameController.Instance.LocalActor;
+        public static GamePlayer GameActor => GameController.Instance.LocalActor;
 
         /// <summary>
         /// The team of the local player
@@ -185,7 +185,7 @@ public static class GFWKCore
     }
 
     /// <summary>
-    /// Static functions for the GFWK coins
+    /// Static functions for the Game coins
     /// </summary>
     public static class Coins
     {
@@ -194,7 +194,7 @@ public static class GFWKCore
         /// </summary>
         /// <param name="coinID"></param>
         /// <returns></returns>
-        public static GFWKCoin GetCoinData(int coinID)
+        public static GameCoin GetCoinData(int coinID)
         {
             if (coinID >= GameConfig.Instance.gameCoins.Count) return null;
 
@@ -206,7 +206,7 @@ public static class GFWKCore
         /// </summary>
         /// <param name="coin"></param>
         /// <returns></returns>
-        public static int GetIndexOfCoin(GFWKCoin coin)
+        public static int GetIndexOfCoin(GameCoin coin)
         {
             return GetAllCoins().FindIndex(x => x.CoinName == coin.CoinName);
         }
@@ -215,7 +215,7 @@ public static class GFWKCore
         /// 
         /// </summary>
         /// <returns></returns>
-        public static List<GFWKCoin> GetAllCoins() => GameConfig.Instance.gameCoins;
+        public static List<GameCoin> GetAllCoins() => GameConfig.Instance.gameCoins;
     }
 
     /// <summary>
@@ -256,7 +256,7 @@ public static class GFWKCore
         /// <returns></returns>
         public static bool UsingWaitingRoom()
         {
-            return GameConfig.Instance.lobbyJoinMethod == GFWK.Internal.Structures.LobbyJoinMethod.WaitingRoom;
+            return GameConfig.Instance.lobbyJoinMethod == Game.Internal.Structures.LobbyJoinMethod.WaitingRoom;
         }
     }
 }

@@ -1,14 +1,14 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine.Events;
 using UnityEngine;
 
-namespace GFWK.Tween
+namespace Game.Tween
 {
     public class TweenPosition : TweenBase, ITween
     {
 
         [Header("Settings")]
-        [GFWorksToogle] public bool onEnable = true;
+        [GameFwkToogle] public bool onEnable = true;
         [Range(0, 10)] public float Delay = 0;
         [Range(0.1f, 7)] public float Duration = 1;
         public TweenOrigin tweenTarget = TweenOrigin.To;
@@ -157,13 +157,13 @@ namespace GFWK.Tween
         public override void PlayEditor()
         {
             InitInEditor();
-            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTween());
+            GameEditor.EditorCoroutines.StartBackgroundTask(DoTween());
         }
 
         public override void PlayReverseEditor()
         {
             InitInEditor();
-            GFWKEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
+            GameEditor.EditorCoroutines.StartBackgroundTask(DoTweenReverse(false));
         }
 
         public override void InitInEditor()

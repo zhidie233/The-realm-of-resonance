@@ -1,8 +1,8 @@
-﻿using UnityEngine;
-using GFWK.Internal.Scriptables;
-using GFWKEditor;
+﻿﻿using UnityEngine;
+using Game.Internal.Scriptables;
+using GameEditor;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     public class BulletDecalManager : BulletDecalManagerBase
     {

@@ -1,15 +1,15 @@
-﻿using System;
+﻿﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
 using System.Collections;
-using GFWK.Runtime.UI;
+using Game.Runtime.UI;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     public class InputUI : MonoBehaviour
     {
-        [GFWorksToogle] public bool autoHideOnMobile = true;
+        [GameFwkToogle] public bool autoHideOnMobile = true;
         public GameObject KeyBindingTemplate;
         public RectTransform ListPanel;
         public ConfirmationWindow confirmationWindow;

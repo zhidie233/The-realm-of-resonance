@@ -1,11 +1,11 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 
 [Serializable]
-public class GFWKPlayer
+public class GamePlayer
 {
     public string Name;
     public Transform Actor;
@@ -45,14 +45,14 @@ public class GFWKPlayer
     }
 
     // <returns></returns>
-    public GFWKBotProperties GetBotStats()
+    public GameBotProperties GetBotStats()
     {
-        GFWKBotProperties botProps = AIMananger.Instance.GetBotStatistics(Name);
+        GameBotProperties botProps = AIMananger.Instance.GetBotStatistics(Name);
         if (botProps == null)
         {
             Debug.LogWarning($"Bot {Name} not found in AI Manager, this could be a de-sync issue.");
             //return a empty container to prevent any error
-            botProps = new GFWKBotProperties();
+            botProps = new GameBotProperties();
             botProps.Name = Name;
         }
         return botProps;
@@ -96,14 +96,14 @@ public class GFWKPlayer
         }
     }
 
-    public GFWKPlayer() { }
+    public GamePlayer() { }
 
-    public GFWKPlayer(PhotonView view, bool realPlayer = true, bool alive = true)
+    public GamePlayer(PhotonView view, bool realPlayer = true, bool alive = true)
     {
         BuildFromView(view, realPlayer, alive);
     }
 
-    public GFWKPlayer BuildFromView(PhotonView view, bool realPlayer = true, bool alive = true)
+    public GamePlayer BuildFromView(PhotonView view, bool realPlayer = true, bool alive = true)
     {
         isRealPlayer = realPlayer;
         isAlive = alive;

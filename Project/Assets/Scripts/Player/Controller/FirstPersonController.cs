@@ -1,5 +1,5 @@
-using GFWK.PlayerController;
-using GFWK.Runtime.Level;
+using Game.PlayerController;
+using Game.Runtime.Level;
 using System;
 using System.Collections;
 using UnityEngine;
@@ -39,12 +39,12 @@ public class FirstPersonController : FirstPersonControllerBase
     public float m_StickToGroundForce;
     public float m_GravityMultiplier;
 
-    [GFWorksToogle] public bool RunFovEffect = true;
+    [GameFwkToogle] public bool RunFovEffect = true;
     public float runFOVAmount = 8;
-    [GFWorksToogle] public bool KeepToCrouch = true;
+    [GameFwkToogle] public bool KeepToCrouch = true;
     public bool canStealthMode = true;
     [Header("坠落伤害")]
-    [GFWorksToogle] public bool FallDamage = true;
+    [GameFwkToogle] public bool FallDamage = true;
     [Range(0.1f, 5f)]
     public float SafeFallDistance = 3;
     [Range(3, 25)]
@@ -94,7 +94,7 @@ public class FirstPersonController : FirstPersonControllerBase
     private bool isClimbing, isAiming = false;
     private ClimbableLadder _ladder;
     private bool MoveToStarted = false;
-#if GFWKM
+#if GameM
     private VirtualJoystick Joystick;
 #endif
     private float PostGroundVerticalPos = 0;
@@ -136,7 +136,7 @@ public class FirstPersonController : FirstPersonControllerBase
         _transform = transform;
         playerReferences = GetComponent<PlayerReferencesHandler>();
         _characterController = playerReferences.characterController;
-#if GFWKM
+#if GameM
         Joystick = FindObjectOfType<VirtualJoystick>();
 #endif
         defaultCameraRPosition = CameraRoot.localPosition;
@@ -156,7 +156,7 @@ public class FirstPersonController : FirstPersonControllerBase
         GameEvents.onMatchStart += OnMatchStart;
         GameEvents.onGameSettingsChange += OnGameSettingsChanged;
         GameEvents.onLocalAimChanged += OnAimChange;
-#if GFWKM
+#if GameM
         TouchHelper.OnCrouch += OnCrouchClicked;
         TouchHelper.OnJump += OnJump;
 #endif
@@ -169,7 +169,7 @@ public class FirstPersonController : FirstPersonControllerBase
         GameEvents.onMatchStart -= OnMatchStart;
         GameEvents.onGameSettingsChange -= OnGameSettingsChanged;
         GameEvents.onLocalAimChanged -= OnAimChange;
-#if GFWKM
+#if GameM
         TouchHelper.OnCrouch -= OnCrouchClicked;
         TouchHelper.OnJump -= OnJump;
 #endif
@@ -738,7 +738,7 @@ public class FirstPersonController : FirstPersonControllerBase
         HorizontalInput = GameInput.Horizontal;
         VerticalInput = GameInput.Vertical;
 
-#if GFWKM
+#if GameM
         if (UtilityHelper.isMobile)
         {
             HorizontalInput = Joystick.Horizontal;
@@ -889,7 +889,7 @@ public class FirstPersonController : FirstPersonControllerBase
         JumpInmune = true;
     }
 
-#if GFWKM
+#if GameM
     void OnCrouchClicked()
     {
         Crounching = !Crounching;
@@ -909,7 +909,7 @@ public class FirstPersonController : FirstPersonControllerBase
     {
         mouseLook.Update();
 
-        if (GameInput.InputFocus != GFWKInputFocus.Player) return;
+        if (GameInput.InputFocus != GameInputFocus.Player) return;
 
         if (!isClimbing)
         {

@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class UIInputAxis : MonoBehaviour, IDragHandler, IBeginDragHandler, IEndDragHandler
     {

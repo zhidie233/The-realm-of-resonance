@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+﻿﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -134,7 +134,7 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
     public int ViewID => photonView.ViewID;
     public int ActorNumber => photonView.Owner.ActorNumber;
 
-#if GFWK_VEHICLE
+#if Game_VEHICLE
     private VehicleController _playerVehicle = null;
     public VehicleController PlayerVehicle
     {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿﻿using System;
 using UnityEngine;
 
-namespace GFWK.Internal
+namespace Game.Internal
 {
     public class AnimatorReloadEvent : StateMachineBehaviour
     {

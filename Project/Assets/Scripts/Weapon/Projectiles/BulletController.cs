@@ -1,11 +1,11 @@
-﻿using Photon.Pun;
+﻿﻿using Photon.Pun;
 using UnityEngine;
 
-// This the default bullet handler of GFWK If you want to use your custom bullet script, simply append the ProjectileBase class to it Handle the override functions and attach it to a bullet prefab Follow the Bullet documentation to see how to use a custom bullet prefab. You can use this script as reference to see how to apply damage to players and bots.
+// This the default bullet handler of Game If you want to use your custom bullet script, simply append the ProjectileBase class to it Handle the override functions and attach it to a bullet prefab Follow the Bullet documentation to see how to use a custom bullet prefab. You can use this script as reference to see how to apply damage to players and bots.
 public class BulletController : ProjectileBase
 {
-    // If is enabled, on all collisions will check if the hitted object have a IGFWKDamageable component
-    [GFWorksToogle] public bool checkDamageables = false;
+    // If is enabled, on all collisions will check if the hitted object have a IGameDamageable component
+    [GameFwkToogle] public bool checkDamageables = false;
     public LayerMask HittableLayers;
     public TrailRenderer Trail = null;
 
@@ -170,7 +170,7 @@ public class BulletController : ProjectileBase
             case "Projectile":
                 // do nothing if 2 bullets collide
                 break;
-            case GFWKCore.HITBOX_TAG://Send Damage for other players
+            case GameCore.HITBOX_TAG://Send Damage for other players
                 SendPlayerDamage(hit);
                 break;
             case "AI":
@@ -213,7 +213,7 @@ public class BulletController : ProjectileBase
     {
         if (bulletData.isNetwork) return;
         
-        IGFWKDamageable damageable = hit.transform.GetComponent<IGFWKDamageable>();
+        IGameDamageable damageable = hit.transform.GetComponent<IGameDamageable>();
         if (damageable != null)
         {
             DamageData damageData = BuildBaseDamageData();
@@ -226,7 +226,7 @@ public class BulletController : ProjectileBase
                     // 自由混战：所有玩家互为敌人，命中即提升共鸣值
                     NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
                 }
-                else if (playerRefs.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
+                else if (playerRefs.playerSettings.PlayerTeam == bulletData.GameActor.Team)
                 {
                     if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                     {
@@ -251,7 +251,7 @@ public class BulletController : ProjectileBase
             
             if (botRefs != null && !isOneTeamMode)//是人机
             {
-                if (botRefs.PlayerTeam == bulletData.GFWKActor.Team)//判断是不是队友
+                if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                 {
                     if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                     {
@@ -272,9 +272,9 @@ public class BulletController : ProjectileBase
             }
             
             //check if the bullet comes from a bot or a real player.
-            if (bulletData.GFWKActor != null)
+            if (bulletData.GameActor != null)
             {
-                damageData.Cause = bulletData.GFWKActor.isRealPlayer ? DamageCause.Player : DamageCause.Bot;
+                damageData.Cause = bulletData.GameActor.isRealPlayer ? DamageCause.Player : DamageCause.Bot;
             }
             else
             {
@@ -298,12 +298,12 @@ public class BulletController : ProjectileBase
         //Ping of Master Clients can be volatile since it depend of the client connection, that could affect all the players in the room.
         if (!bulletData.isNetwork)
         {
-            if (bulletData.GFWKActor == null)
+            if (bulletData.GameActor == null)
             {
                 Debug.LogWarning($"Bullet ownerID {bulletData.ActorViewID} not found, ignore this if a player just enter in the match.");
             }
-            if (hit.transform.root != null && bulletData.GFWKActor.Name == hit.transform.root.name) { return; }
-            IGFWKDamageable damageable = hit.transform.GetComponent<IGFWKDamageable>();
+            if (hit.transform.root != null && bulletData.GameActor.Name == hit.transform.root.name) { return; }
+            IGameDamageable damageable = hit.transform.GetComponent<IGameDamageable>();
             
             if (damageable != null)
             {
@@ -318,7 +318,7 @@ public class BulletController : ProjectileBase
                         // 自由混战：所有人机均为敌人，命中即提升共鸣值
                         NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
                     }
-                    else if (botRefs.PlayerTeam == bulletData.GFWKActor.Team)//判断是不是队友
+                    else if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                     {
                         if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                         {
@@ -354,8 +354,8 @@ public class BulletController : ProjectileBase
         //Bots doesn't hit the players HitBoxes like other real players does, instead they hit the Character Controller Collider,
         //So instead of communicate with the hit box script we have to communicate with the player health script directly
         var pdm = hit.transform.GetComponent<PlayerReferencesHandler>();
-        //if (pdm != null && bulletData.GFWKActor != null && !bulletData.GFWKActor.isRealPlayer)
-        if (pdm != null && bulletData.GFWKActor != null)
+        //if (pdm != null && bulletData.GameActor != null && !bulletData.GameActor.isRealPlayer)
+        if (pdm != null && bulletData.GameActor != null)
         {
             DamageData info = BuildBaseDamageData();
             if (isOneTeamMode)
@@ -363,7 +363,7 @@ public class BulletController : ProjectileBase
                 // 自由混战：所有玩家互为敌人，被击中即提升共鸣值
                 NotifyMasterClientResonanceChange("Enemy", info.Damage);
             }
-            else if (pdm.playerSettings.PlayerTeam == bulletData.GFWKActor.Team)
+            else if (pdm.playerSettings.PlayerTeam == bulletData.GameActor.Team)
             {
                 if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
                 {
@@ -391,7 +391,7 @@ public class BulletController : ProjectileBase
     void SendFacilityDamage(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
-        IGFWKDamageable damageable = hit.transform.GetComponent<IGFWKDamageable>();
+        IGameDamageable damageable = hit.transform.GetComponent<IGameDamageable>();
         ResonanceFacility facility = hit.transform.GetComponent<ResonanceFacility>();
         if (damageable != null)
         {
@@ -415,7 +415,7 @@ public class BulletController : ProjectileBase
         {
             // 如果不是房主，通过RPC通知房主
             // 需要获取一个PhotonView来发送RPC
-            PhotonView shooterPhotonView = bulletData.GFWKActor.m_actorView; // 获取发射者的PhotonView
+            PhotonView shooterPhotonView = bulletData.GameActor.m_actorView; // 获取发射者的PhotonView
             shooterPhotonView.RPC("RPC_RequestResonanceChange", RpcTarget.MasterClient, 
                 resonanceKey, damage);
         }
@@ -433,7 +433,7 @@ public class BulletController : ProjectileBase
 
         if (checkDamageables || overrideDamageable)
         {
-            var damageable = hit.transform.GetComponent<IGFWKDamageable>();
+            var damageable = hit.transform.GetComponent<IGameDamageable>();
             if (damageable == null) return;
             DamageData damageData = BuildBaseDamageData();
             damageData.Cause = DamageCause.Player;
@@ -448,11 +448,11 @@ public class BulletController : ProjectileBase
         {
             Damage = (int)bulletData.Damage,
             Direction = bulletData.Position,
-            GFWKActor = bulletData.GFWKActor,
+            GameActor = bulletData.GameActor,
             ActorViewID = bulletData.ActorViewID,
             GunID = bulletData.WeaponID,
         };
-        if (data.GFWKActor != null) { data.From = data.GFWKActor.Name; }
+        if (data.GameActor != null) { data.From = data.GameActor.Name; }
         return data;
     }   
 }

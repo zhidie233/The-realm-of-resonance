@@ -1,6 +1,6 @@
-﻿using System;
+﻿﻿using System;
 
-namespace GFWK.Runtime.AI
+namespace Game.Runtime.AI
 {
     [Serializable]
     public enum BotGameState : byte
@@ -12,7 +12,7 @@ namespace GFWK.Runtime.AI
     }
 
     [Serializable]
-    public class GFWKBotProperties
+    public class GameBotProperties
     {
         public string Name;
         public BotGameState GameState;

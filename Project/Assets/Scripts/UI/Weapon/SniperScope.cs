@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using GFWK.Runtime.UI;
+using Game.Runtime.UI;
 
 public class SniperScope : SniperScopeBase
 {
@@ -10,7 +10,7 @@ public class SniperScope : SniperScopeBase
     [Range(0, 0.5f)] public float fadeInDelay = 0.2f;
     public float breathingAmplitude = 0.14f;
     [Space]
-    [GFWorksToogle] public bool ShowDistance = true;
+    [GameFwkToogle] public bool ShowDistance = true;
     [Space]
     [Tooltip("Objects to disable when the scope shown, usually the weapon and arms meshes.")]
     public List<GameObject> OnScopeDisable = new List<GameObject>();
@@ -105,7 +105,7 @@ public class SniperScope : SniperScopeBase
                        foreach (GameObject go in OnScopeDisable)
                        {
                            if (go == null) continue;
-#if GFWKTPV
+#if GameTPV
                            if (CameraViewSettings.IsThirdPerson()) continue;
 #endif
                            go.SetActive(true);

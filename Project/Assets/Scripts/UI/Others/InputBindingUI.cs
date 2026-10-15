@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Text.RegularExpressions;
 using TMPro;
 using System.Collections.Generic;
 
-namespace GFWK.InputManager
+namespace Game.InputManager
 {
     public class InputBindingUI : MonoBehaviour
     {

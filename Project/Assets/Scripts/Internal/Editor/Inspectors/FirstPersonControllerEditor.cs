@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GFWKEditor;
+using GameEditor;
 using UnityEditor.AnimatedValues;
 
 [CustomEditor(typeof(FirstPersonController))]
@@ -68,7 +68,7 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void MovementSpeeds()
     {
-        moveProp.isExpanded = animatedBools["move"].target = GFWKEditorStyles.ContainerHeaderFoldout("Speed", moveProp.isExpanded);
+        moveProp.isExpanded = animatedBools["move"].target = GameEditorStyles.ContainerHeaderFoldout("Speed", moveProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["move"].faded))
         {
             EditorGUI.BeginChangeCheck();
@@ -91,7 +91,7 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void JumpBox()
     {
-        jumpProp.isExpanded = animatedBools["jump"].target = GFWKEditorStyles.ContainerHeaderFoldout("Jump", jumpProp.isExpanded);
+        jumpProp.isExpanded = animatedBools["jump"].target = GameEditorStyles.ContainerHeaderFoldout("Jump", jumpProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["jump"].faded))
         {
             EditorGUILayout.BeginVertical("box");
@@ -113,13 +113,13 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void SlideBox()
     {
-        slideProp.isExpanded = animatedBools["slide"].target = GFWKEditorStyles.ContainerHeaderFoldout("Slide", slideProp.isExpanded);
+        slideProp.isExpanded = animatedBools["slide"].target = GameEditorStyles.ContainerHeaderFoldout("Slide", slideProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["slide"].faded))
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.canSlide = GFWKEditorStyles.FeatureToogle(r, script.canSlide, "玩家可滑铲");
+            script.canSlide = GameEditorStyles.FeatureToogle(r, script.canSlide, "玩家可滑铲");
             script.slideTime = EditorGUILayout.Slider("滑铲时长", script.slideTime, 0.2f, 1.5f);
             script.slideCoolDown = EditorGUILayout.Slider("滑铲冷却", script.slideCoolDown, 0.1f, 2.5f);
             script.slideFriction = EditorGUILayout.Slider("滑铲摩擦", script.slideFriction, 1, 12);
@@ -135,13 +135,13 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void FallBox()
     {
-        fallProp.isExpanded = animatedBools["fall"].target = GFWKEditorStyles.ContainerHeaderFoldout("Fall", fallProp.isExpanded);
+        fallProp.isExpanded = animatedBools["fall"].target = GameEditorStyles.ContainerHeaderFoldout("Fall", fallProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["fall"].faded))
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.FallDamage = GFWKEditorStyles.FeatureToogle(r, script.FallDamage, "坠落伤害");
+            script.FallDamage = GameEditorStyles.FeatureToogle(r, script.FallDamage, "坠落伤害");
             script.SafeFallDistance = EditorGUILayout.Slider("安全高度", script.SafeFallDistance, 0.1f, 7f);
             script.DeathFallDistance = EditorGUILayout.Slider("致死高度", script.DeathFallDistance, script.SafeFallDistance, 25);
             script.AirControlMultiplier = EditorGUILayout.Slider("空中控制倍率", script.AirControlMultiplier, 0, 2);
@@ -160,14 +160,14 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void MouseLookBox()
     {
-        mouseProp.isExpanded = animatedBools["mouse"].target = GFWKEditorStyles.ContainerHeaderFoldout("视角控制", mouseProp.isExpanded);
+        mouseProp.isExpanded = animatedBools["mouse"].target = GameEditorStyles.ContainerHeaderFoldout("视角控制", mouseProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["mouse"].faded))
         {
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
-            if (script.mouseLook == null) script.mouseLook = new GFWK.PlayerController.MouseLook();
+            if (script.mouseLook == null) script.mouseLook = new Game.PlayerController.MouseLook();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.mouseLook.clampVerticalRotation = GFWKEditorStyles.FeatureToogle(r, script.mouseLook.clampVerticalRotation, "限制垂直旋转");
+            script.mouseLook.clampVerticalRotation = GameEditorStyles.FeatureToogle(r, script.mouseLook.clampVerticalRotation, "限制垂直旋转");
             if (script.mouseLook.clampVerticalRotation)
             {
                 EditorGUILayout.LabelField($"垂直旋转限制 ({script.mouseLook.MinimumX.ToString("0.0")},{script.mouseLook.MaximumX.ToString("0.0")})");
@@ -195,7 +195,7 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void HeadBobBox()
     {
-        bobProp.isExpanded = animatedBools["bob"].target = GFWKEditorStyles.ContainerHeaderFoldout("头部晃动", bobProp.isExpanded);
+        bobProp.isExpanded = animatedBools["bob"].target = GameEditorStyles.ContainerHeaderFoldout("头部晃动", bobProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["bob"].faded))
         {
             EditorGUILayout.BeginVertical("box");
@@ -227,7 +227,7 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void SoundBox()
     {
-        soundProp.isExpanded = animatedBools["sound"].target = GFWKEditorStyles.ContainerHeaderFoldout("Sounds", soundProp.isExpanded);
+        soundProp.isExpanded = animatedBools["sound"].target = GameEditorStyles.ContainerHeaderFoldout("Sounds", soundProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["sound"].faded))
         {
             EditorGUILayout.BeginVertical("box");
@@ -247,7 +247,7 @@ public class FirstPersonControllerEditor : Editor
     /// </summary>
     void MiscBox()
     {
-        miscProp.isExpanded = animatedBools["misc"].target = GFWKEditorStyles.ContainerHeaderFoldout("Misc", miscProp.isExpanded);
+        miscProp.isExpanded = animatedBools["misc"].target = GameEditorStyles.ContainerHeaderFoldout("Misc", miscProp.isExpanded);
         if (EditorGUILayout.BeginFadeGroup(animatedBools["misc"].faded))
         {
             EditorGUILayout.BeginVertical("box");
@@ -255,13 +255,13 @@ public class FirstPersonControllerEditor : Editor
             script.runToAimBehave = (PlayerRunToAimBehave)EditorGUILayout.EnumPopup("奔跑瞄准行为", script.runToAimBehave);
 
             var r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.KeepToCrouch = GFWKEditorStyles.FeatureToogle(r, script.KeepToCrouch, "切换蹲下");
+            script.KeepToCrouch = GameEditorStyles.FeatureToogle(r, script.KeepToCrouch, "切换蹲下");
 
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.canStealthMode = GFWKEditorStyles.FeatureToogle(r, script.canStealthMode, "可使用潜行模式");
+            script.canStealthMode = GameEditorStyles.FeatureToogle(r, script.canStealthMode, "可使用潜行模式");
 
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.RunFovEffect = GFWKEditorStyles.FeatureToogle(r, script.RunFovEffect, "冲刺视野效果");
+            script.RunFovEffect = GameEditorStyles.FeatureToogle(r, script.RunFovEffect, "冲刺视野效果");
 
             script.crouchHeight = EditorGUILayout.Slider("蹲下高度", script.crouchHeight, 0.2f, 3);
             if (script.RunFovEffect)

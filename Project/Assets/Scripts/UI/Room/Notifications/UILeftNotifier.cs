@@ -1,8 +1,8 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections;
 using TMPro;
 
-namespace GFWK.Runtime.UI.Bindings
+namespace Game.Runtime.UI.Bindings
 {
     public class UILeftNotifier : MonoBehaviour
     {

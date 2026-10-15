@@ -1,15 +1,15 @@
-﻿using System;
+﻿﻿using System;
 using System.Text;
 using UnityEngine;
-using GFWKEditor;
+using GameEditor;
 #if ACTK_IS_HERE
 using CodeStage.AntiCheat.Storage;
 #endif
 
-namespace GFWK.Internal.Scriptables
+namespace Game.Internal.Scriptables
 {
     [CreateAssetMenu(menuName = "Game Framework/Shop/Coin", fileName = "Coin")]
-    public class GFWKCoin : ScriptableObject
+    public class GameCoin : ScriptableObject
     {
         public string CoinName;
         public string Acronym;
@@ -24,7 +24,7 @@ namespace GFWK.Internal.Scriptables
         /// </summary>
         /// <param name="coins">Coins to add</param>
         /// <returns></returns>
-        public GFWKCoin Add(int coins, string forUser = "")
+        public GameCoin Add(int coins, string forUser = "")
         {
 #if ULSP
             if (!DataBase.IsUserLogged) return this;
@@ -44,7 +44,7 @@ namespace GFWK.Internal.Scriptables
         /// </summary>
         /// <param name="coins">Coins to add</param>
         /// <returns></returns>
-        public GFWKCoin Deduct(int coins, string forUser = "")
+        public GameCoin Deduct(int coins, string forUser = "")
         {
 #if ULSP
             if (!DataBase.IsUserLogged) return this;
@@ -81,7 +81,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
                 // Debug.Log($"You need an account to accesses to the coins.");
                 return 0;
             }
-            int indexOfCoin = GFWKCore.Coins.GetIndexOfCoin(this);
+            int indexOfCoin = GameCore.Coins.GetIndexOfCoin(this);
             var userCoins = DataBase.LocalUserInstance.Coins;
             if(indexOfCoin >= userCoins.Length)
             {
@@ -122,7 +122,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
             return k;
         }
 
-        public static implicit operator int(GFWKCoin coin) => GFWKCore.Coins.GetIndexOfCoin(coin);
-        public static explicit operator GFWKCoin(int coinID) => GFWKCore.Coins.GetAllCoins()[coinID];
+        public static implicit operator int(GameCoin coin) => GameCore.Coins.GetIndexOfCoin(coin);
+        public static explicit operator GameCoin(int coinID) => GameCore.Coins.GetAllCoins()[coinID];
     }
 }

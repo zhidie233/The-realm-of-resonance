@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Tween
+namespace Game.Tween
 {
     public interface ITween
     {

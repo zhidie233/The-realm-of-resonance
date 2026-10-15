@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using System.Collections.Generic;
-using GFWK.InputManager;
+using Game.InputManager;
 using UnityEngine.UI;
 
 public static class InputHandler

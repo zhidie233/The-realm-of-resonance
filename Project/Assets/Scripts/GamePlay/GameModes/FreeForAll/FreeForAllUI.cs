@@ -1,14 +1,14 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using TMPro;
 
-namespace GFWK.GameModes.FreeForAll
+namespace Game.GameModes.FreeForAll
 {
     public class FreeForAllUI : MonoBehaviour
     {
         public GameObject Content;
         public TextMeshProUGUI ScoreText;
 
-        public void SetScores(GFWKPlayer bestPlayer)
+        public void SetScores(GamePlayer bestPlayer)
         {
             string scoreText = string.Format(GameTexts.PlayerStart, bestPlayer.Name);
             ScoreText.text = scoreText;

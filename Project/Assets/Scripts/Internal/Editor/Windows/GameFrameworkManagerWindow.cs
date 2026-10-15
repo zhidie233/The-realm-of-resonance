@@ -1,6 +1,6 @@
-﻿//#define AUTO_REFRESH
+﻿﻿//#define AUTO_REFRESH
 #define ASCOMPLIANCE
-using GFWKEditor;
+using GameEditor;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -11,7 +11,7 @@ using UnityEngine;
 /// <summary>
 /// 
 /// </summary>
-public class GFWKManagerWindow : EditorWindow
+public class GameManagerWindow : EditorWindow
 {
     #region Parameters
     public static Color primaryColor = new Color(0.098f, 0.098f, 0.098f, 1.00f);
@@ -36,7 +36,7 @@ public class GFWKManagerWindow : EditorWindow
     public bool m_initGUI = false;
     private GameConfig gameData;
     private Vector2 bodyScroll = Vector2.zero;
-    private Texture2D gfwkLogo, soldierIcon;
+    private Texture2D gameLogo, soldierIcon;
     SearchField weaponSearchfield, managerSearchField;
     private string weaponSearchKey, managerSearchKey = "";
     readonly string[] slotsNames = new string[] { "Assault", "Recon", "Support", "Engineer" };
@@ -60,13 +60,13 @@ public class GFWKManagerWindow : EditorWindow
     private void OnEnable()
     {
         serializedObject = new SerializedObject(this);
-        titleContent = new GUIContent(" GFWK", GetUnityIcon("音频混音器"));
-        gfwkLogo = Resources.Load("content/Images/gfwk-name", typeof(Texture2D)) as Texture2D;
+        titleContent = new GUIContent(" Game", GetUnityIcon("音频混音器"));
+        gameLogo = Resources.Load("content/Images/game-name", typeof(Texture2D)) as Texture2D;
         soldierIcon = AssetDatabase.LoadAssetAtPath("Assets/Art/UI/Icons/framework-soldier.png", typeof(Texture2D)) as Texture2D;
         minSize = new Vector2(720, 570);
         weaponSearchfield = new SearchField();
         managerSearchField = new SearchField();
-        GFWorksStats.SetStat("gfwk-manager-window", 1);
+        GameFwkStats.SetStat("game-manager-window", 1);
         currentPlayerClass = currentPlayerClass.GetSavePlayerClass();
         cachedType = this.GetType();
         FetchCustomTabs();
@@ -167,7 +167,7 @@ public class GFWKManagerWindow : EditorWindow
     {
         Rect r = EditorGUILayout.BeginVertical(GUILayout.Width(150));
         EditorGUI.DrawRect(r, primaryColor);
-        GUILayout.Label(gfwkLogo, GUILayout.Height(58), GUILayout.Width(150));
+        GUILayout.Label(gameLogo, GUILayout.Height(58), GUILayout.Width(150));
         DrawBottomLine(0.2f);
         if (currentWindow == WindowType.Managers || currentWindow == WindowType.Home)
             DrawManagerButtons();
@@ -255,9 +255,9 @@ public class GFWKManagerWindow : EditorWindow
         float lw = EditorGUIUtility.labelWidth;
         EditorGUIUtility.labelWidth = 75;
         var sls = GUI.skin.horizontalSlider;
-        GUI.skin.horizontalSlider = GFWKEditorStyles.EditorSkin.customStyles[9];
+        GUI.skin.horizontalSlider = GameEditorStyles.EditorSkin.customStyles[9];
         var slt = GUI.skin.horizontalSliderThumb;
-        GUI.skin.horizontalSliderThumb = GFWKEditorStyles.EditorSkin.customStyles[10];
+        GUI.skin.horizontalSliderThumb = GameEditorStyles.EditorSkin.customStyles[10];
 
         var all = GameConfig.Instance.AllWeapons;
         int rowID = 0;
@@ -347,13 +347,13 @@ public class GFWKManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("取消", GFWKEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
+            if (GUILayout.Button("取消", GameEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
             {
                 editWeaponId = -1;
                 editGunInfo = null;
             }
             GUILayout.Space(10);
-            if (GUILayout.Button("保存", GFWKEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(110)))
+            if (GUILayout.Button("保存", GameEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(110)))
             {
                 EditorUtility.SetDirty(GameConfig.Instance);
                 editWeaponId = -1;
@@ -377,7 +377,7 @@ public class GFWKManagerWindow : EditorWindow
         player = GameConfig.Instance.Player2.PlayerReferences;
         DrawPlayerLoadout(player, ref currentSlot2);
 #else
-        GUILayout.Label("<b>已启用兵种自定义</b>\n<b><size=8><i>玩家武器配置由全局配置统一管理，可在游戏内修改，不再像 GFWK 默认那样按玩家预制体固定配置</i></size></b>\n", styles["textC"]);
+        GUILayout.Label("<b>已启用兵种自定义</b>\n<b><size=8><i>玩家武器配置由全局配置统一管理，可在游戏内修改，不再像 Game 默认那样按玩家预制体固定配置</i></size></b>\n", styles["textC"]);
         GUILayout.Space(10);
         Rect r = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
         {
@@ -395,7 +395,7 @@ public class GFWKManagerWindow : EditorWindow
                     {
                         EditorGUI.DrawRect(br, altColor);
                         GUI.color = new Color(1, 1, 1, 0.2f);
-                        GUI.Box(br, GUIContent.none, GFWKEditorStyles.OutlineButtonStyle);
+                        GUI.Box(br, GUIContent.none, GameEditorStyles.OutlineButtonStyle);
                         GUI.color = Color.white;
                     }
                     if (GUI.Button(br, slotsNames[i], styles["textC"]))
@@ -529,22 +529,22 @@ public class GFWKManagerWindow : EditorWindow
         m.ModeName = EditorGUILayout.TextField("游戏模式名称", m.ModeName);
         m.gameMode = (GameMode)EditorGUILayout.EnumPopup("模式标识", m.gameMode);
         var r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.isEnabled = GFWKEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
+        m.isEnabled = GameEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
 
         GUILayout.Space(10);
         DrawTitleText("SETTINGS");
         m.GoalName = EditorGUILayout.TextField("模式目标名称", m.GoalName);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.supportBots = GFWKEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
+        m.supportBots = GameEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.AutoTeamSelection = GFWKEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
+        m.AutoTeamSelection = GameEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.allowedPickupWeapons = GFWKEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
+        m.allowedPickupWeapons = GameEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.UnlistGameAfterStarted = GFWKEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
+        m.UnlistGameAfterStarted = GameEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
 
         m.RequiredPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.RequiredPlayersToStart, 1, 64);
         m.onRoundStartedSpawn = (GameModeSettings.OnRoundStartedSpawn)EditorGUILayout.EnumPopup("回合开始时", m.onRoundStartedSpawn);
@@ -609,7 +609,7 @@ public class GFWKManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("返回", GFWKEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
+            if (GUILayout.Button("返回", GameEditorStyles.EditorSkin.customStyles[11], GUILayout.Width(100)))
             {
                 selectedGameMode = null;
             }
@@ -673,7 +673,7 @@ public class GFWKManagerWindow : EditorWindow
                         {
                             EditorGUI.DrawRect(br, altColor);
                             GUI.color = new Color(1, 1, 1, 0.2f);
-                            GUI.Box(br, GUIContent.none, GFWKEditorStyles.OutlineButtonStyle);
+                            GUI.Box(br, GUIContent.none, GameEditorStyles.OutlineButtonStyle);
                             GUI.color = Color.white;
                         }
                         if (GUI.Button(br, slotsNames[i], styles["textC"]))
@@ -755,7 +755,7 @@ public class GFWKManagerWindow : EditorWindow
 
     void DrawWeaponSelectionList()
     {
-        var all = GFWKCore.AllWeapons;
+        var all = GameCore.AllWeapons;
         weaponScroll = GUILayout.BeginScrollView(weaponScroll);
         GUILayout.Space(10);
         Color c = new Color(0, 0, 0, 0.1f);
@@ -1052,7 +1052,7 @@ public class GFWKManagerWindow : EditorWindow
         return cachedUnityIcons[iconName];
     }
 
-    public static Color GetHexColor(string hex) => GFWKEditorStyles.GetColorFromHex(hex);
+    public static Color GetHexColor(string hex) => GameEditorStyles.GetColorFromHex(hex);
 
     private static Dictionary<string, Color> cachedColors;
     public static Color GetCachedColor(string key, Color color)
@@ -1068,16 +1068,16 @@ public class GFWKManagerWindow : EditorWindow
     [MenuItem("游戏框架/管理器 %m")]
     static void Open()
     {
-        GetWindow<GFWKManagerWindow>("GFWK 管理器");
+        GetWindow<GameManagerWindow>("Game 管理器");
     }
 
     void FetchCustomTabs()
     {
-        var classes = TypeCache.GetTypesWithAttribute<GFWKManagerTab>();
+        var classes = TypeCache.GetTypesWithAttribute<GameManagerTab>();
         foreach (var classInfo in classes)
         {
             // get the attribute information
-            var attr = classInfo.GetCustomAttribute<GFWKManagerTab>();
+            var attr = classInfo.GetCustomAttribute<GameManagerTab>();
 
             var panel = managerPanels.Find(x => x.Name == attr.name);
             if (panel != null)
@@ -1089,8 +1089,8 @@ public class GFWKManagerWindow : EditorWindow
                 else continue;
             }
 
-            // Cast the GFWKManagerTabData type from the classInfo
-            var tab = (GFWKManagerTabData)Activator.CreateInstance(classInfo);
+            // Cast the GameManagerTabData type from the classInfo
+            var tab = (GameManagerTabData)Activator.CreateInstance(classInfo);
             var data = tab.GetData();
 
             if (panel == null)
@@ -1120,7 +1120,7 @@ public class GFWKManagerWindow : EditorWindow
         internal MethodInfo bodyFunc;
         internal bool isExternalDrawer = false;
 
-        public void DrawBody(Type type, GFWKManagerWindow target)
+        public void DrawBody(Type type, GameManagerWindow target)
         {
             if (string.IsNullOrEmpty(BodyFuncName) && bodyFunc == null) { return; }
 
@@ -1157,7 +1157,7 @@ public class GFWKManagerWindow : EditorWindow
 /// <summary>
 /// 
 /// </summary>
-public abstract class GFWKManagerTabData
+public abstract class GameManagerTabData
 {
     public struct Data
     {
@@ -1178,11 +1178,11 @@ public abstract class GFWKManagerTabData
 /// 
 /// </summary>
 [AttributeUsage(AttributeTargets.Class)]
-public class GFWKManagerTab : Attribute
+public class GameManagerTab : Attribute
 {
     public string name;
 
-    public GFWKManagerTab(string name)
+    public GameManagerTab(string name)
     {
         this.name = name;
     }

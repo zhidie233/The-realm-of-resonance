@@ -1,5 +1,5 @@
-﻿using GFWK.Core.Motion;
-using GFWKEditor;
+﻿﻿using Game.Core.Motion;
+using GameEditor;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;

@@ -1,6 +1,6 @@
-using GFWK.Audio;
-using GFWK.Internal.Structures;
-using GFWK.Runtime.UI;
+using Game.Audio;
+using Game.Internal.Structures;
+using Game.Runtime.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -16,7 +16,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     #region Public members
     [Header("Photon")]
     public SeverRegionCode DefaultServer = SeverRegionCode.usw;
-    [GFWorksToogle] public bool ShowPhotonStatistics;
+    [GameFwkToogle] public bool ShowPhotonStatistics;
 
     [Header("Room Options")]
     //Room Max Ping
@@ -412,7 +412,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         int timeRandom = Random.Range(0, gameMode.timeLimits.Length);
         int randomGoal = Random.Range(0, gameMode.GameGoalsOptions.Length);
 
-        var roomInfo = new GFWKRoomInfo();
+        var roomInfo = new GameRoomInfo();
         roomInfo.roomName = string.Format("[PUBLIC] {0}{1}", PhotonNetworkWrapper.NickName.Substring(0, 2), Random.Range(0, 9999));
         roomInfo.gameMode = gameMode.gameMode;
         roomInfo.time = gameMode.timeLimits[timeRandom];
@@ -443,7 +443,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     /// Create and Join in a room with the given info.
     /// </summary>
     /// <param name="roomInfo"></param>
-    public void CreateRoom(GFWKRoomInfo roomInfo)
+    public void CreateRoom(GameRoomInfo roomInfo)
     {
         SetLobbyChat(false);
         justCreatedRoomName = roomInfo.roomName;
@@ -627,7 +627,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     /// </summary>
     public void OnConnectedToMaster()
     {
-        // GFWK intermediately connect to a 'common' lobby.
+        // Game intermediately connect to a 'common' lobby.
         PhotonNetwork.JoinLobby();
         Debug.Log("Connected to Master.");
     }
@@ -763,7 +763,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
     public void OnJoinedRoom()
     {
-        if (!GFWKCore.GameData.UsingWaitingRoom())
+        if (!GameCore.GameData.UsingWaitingRoom())
         {
             Debug.Log($"Local client joined to the room '{PhotonNetworkWrapper.CurrentRoom.Name}'");
             StartCoroutine(MoveToGameScene());

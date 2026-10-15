@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class GFWKRoomPreview : MonoBehaviour
+public class GameRoomPreview : MonoBehaviour
 {
 
     [Header("References")]
@@ -14,7 +14,7 @@ public class GFWKRoomPreview : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    public void Show(GFWKRoomInfo info)
+    public void Show(GameRoomInfo info)
     {
         var map = info.GetMapInfo();
         MapPreview.sprite = map.Preview;

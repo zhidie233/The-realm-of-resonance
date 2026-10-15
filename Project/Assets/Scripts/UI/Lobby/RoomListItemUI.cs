@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class RoomListItemUI : RoomListItemUIBase
     {

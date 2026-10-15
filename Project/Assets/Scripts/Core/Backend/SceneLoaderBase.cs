@@ -1,7 +1,7 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace GFWK.Internal.BaseClass
+namespace Game.Internal.BaseClass
 {
     public abstract class SceneLoaderBase : ScriptableObject
     {

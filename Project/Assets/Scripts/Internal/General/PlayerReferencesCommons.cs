@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+﻿﻿using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -105,6 +105,6 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
     /// <returns></returns>
     public virtual bool IsTeamMateOfLocalPlayer()
     {
-        return RoomSettings.Instance != null && RoomSettings.Instance.isOneTeamMode ? false : PlayerTeam == GFWKCore.LocalPlayer.Team;
+        return RoomSettings.Instance != null && RoomSettings.Instance.isOneTeamMode ? false : PlayerTeam == GameCore.LocalPlayer.Team;
     }
 }

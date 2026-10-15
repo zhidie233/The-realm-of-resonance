@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿﻿using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -9,8 +9,8 @@ public class AICovertPointManager : MonoBehaviour
     public float MaxDistance = 50;
     public float UsageTime = 10;
     public float maxNeighbordDistance = 25;
-    [GFWorksToogle] public bool onlyAllowOneBotPerCover = true;
-    [GFWorksToogle] public bool ShowGizmos = true;
+    [GameFwkToogle] public bool onlyAllowOneBotPerCover = true;
+    [GameFwkToogle] public bool ShowGizmos = true;
 
     public static List<AICoverPoint> AllCovers = new List<AICoverPoint>();
 

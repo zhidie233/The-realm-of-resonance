@@ -1,6 +1,6 @@
-﻿using UnityEngine;
+﻿﻿using UnityEngine;
 
-namespace GFWK.Runtime.UI
+namespace Game.Runtime.UI
 {
     public class DamageIndicator : DamageIndicatorBase
     {
@@ -68,7 +68,7 @@ namespace GFWK.Runtime.UI
         public override void OnUpdate()
         {
             if (alpha <= 0) return;
-            if (GFWKCore.LocalPlayerReferences == null) return;
+            if (GameCore.LocalPlayerReferences == null) return;
 
             alpha -= Time.deltaTime;
             UpdateDirection();
@@ -79,7 +79,7 @@ namespace GFWK.Runtime.UI
         /// </summary>
         void UpdateDirection()
         {
-            rhs = attackDirection - GFWKCore.LocalPlayerReferences.PlayerCameraTransform.position;
+            rhs = attackDirection - GameCore.LocalPlayerReferences.PlayerCameraTransform.position;
             rhs.y = 0;
             rhs.Normalize();
             if (GameController.Instance.CameraRendered != null)

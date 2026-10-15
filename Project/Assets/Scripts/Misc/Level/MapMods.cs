@@ -1,10 +1,10 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MapMods : MonoBehaviour
 {
-    [GFWorksToogle] public bool infinityAmmo = false;
+    [GameFwkToogle] public bool infinityAmmo = false;
 
     /// <summary>
     /// 
@@ -27,7 +27,7 @@ public class MapMods : MonoBehaviour
     /// </summary>
     void OnLocalPlayerSpawn()
     {
-        var p = GFWKCore.LocalPlayerReferences;
+        var p = GameCore.LocalPlayerReferences;
 
         if (infinityAmmo) p.gunManager.SetInfinityAmmoToAllEquippeds(true);
     }

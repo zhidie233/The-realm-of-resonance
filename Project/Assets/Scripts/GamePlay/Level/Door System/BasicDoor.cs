@@ -1,12 +1,12 @@
-﻿using System.Collections;
+﻿﻿using System.Collections;
 using UnityEngine;
-using GFWKEditor;
-using GFWK.Internal.Scriptables;
+using GameEditor;
+using Game.Internal.Scriptables;
 
-namespace GFWK.Runtime.Level
+namespace Game.Runtime.Level
 {
     /// <summary>
-    /// This is the default Basic Door of GFWK
+    /// This is the default Basic Door of Game
     /// If you want to create a custom door, create a new script and inherited from <see cref="DoorBase"/>
     /// Use this only as reference.
     /// </summary>
@@ -89,7 +89,7 @@ namespace GFWK.Runtime.Level
         /// <returns></returns>
         private State GetOpenDirection()
         {
-            var player = GFWKCore.LocalPlayerReferences;
+            var player = GameCore.LocalPlayerReferences;
             if (player == null) return State.Close;
 
             Vector3 dir = transform.position + player.Transform.forward;

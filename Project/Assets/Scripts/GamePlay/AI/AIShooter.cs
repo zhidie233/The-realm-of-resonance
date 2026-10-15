@@ -1,5 +1,5 @@
 using UnityEngine;
-using GFWK.Runtime.AI;
+using Game.Runtime.AI;
 using UnityEngine.AI;
 
 public abstract class AIShooter : MonoBehaviourBase
