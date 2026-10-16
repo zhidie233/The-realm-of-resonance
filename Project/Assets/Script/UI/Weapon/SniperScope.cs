@@ -10,7 +10,7 @@ public class SniperScope : SniperScopeBase
     [Range(0, 0.5f)] public float fadeInDelay = 0.2f;
     public float breathingAmplitude = 0.14f;
     [Space]
-    [GameFwkToogle] public bool ShowDistance = true;
+    [GameToggle] public bool ShowDistance = true;
     [Space]
     [Tooltip("Objects to disable when the scope shown, usually the weapon and arms meshes.")]
     public List<GameObject> OnScopeDisable = new List<GameObject>();

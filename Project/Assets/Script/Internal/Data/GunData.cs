@@ -9,7 +9,7 @@ public class GunData
     [Header("Info")]
     public string Name;
     public GunType Type = GunType.Machinegun;
-    [GameFwkToogle] public bool Active = true;
+    [GameToggle] public bool Active = true;
 
     [Header("Settings")]
     [Range(1, 100)] public int Damage;

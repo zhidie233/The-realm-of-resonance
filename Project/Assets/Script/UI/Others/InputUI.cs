@@ -9,7 +9,7 @@ namespace Game.InputManager
 {
     public class InputUI : MonoBehaviour
     {
-        [GameFwkToogle] public bool autoHideOnMobile = true;
+        [GameToggle] public bool autoHideOnMobile = true;
         public GameObject KeyBindingTemplate;
         public RectTransform ListPanel;
         public ConfirmationWindow confirmationWindow;

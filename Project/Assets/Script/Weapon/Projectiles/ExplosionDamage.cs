@@ -1,4 +1,4 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
@@ -11,7 +11,7 @@ public class ExplosionDamage : ExplosionBase
 {
     [FormerlySerializedAs("m_Type")]
     public ExplosionType explosionType = ExplosionType.Normal;
-    [GameFwkToogle] public bool CheckRootsOnly = false;
+    [GameToggle] public bool CheckRootsOnly = false;
     public float explosionDamage = 50f;
     public float explosionRadius = 50f;
     public float DisappearIn = 3f;

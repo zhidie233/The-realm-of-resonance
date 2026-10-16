@@ -6,10 +6,10 @@ using UnityEngine.SceneManagement;
 /// <summary>
 /// Default Game scene loader
 /// Use the default Unity Scene load method
-/// If you want to use your custom scene loader e.g: GameFwk Studio's Loading Screen
+/// If you want to use your custom scene loader e.g: Game's Loading Screen
 /// Create a new script and inherited from <see cref="SceneLoaderBase"/>
 /// </summary>
-[CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "Game Framework/Level/Simple Loader")]
+[CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "Game/Level/Simple Loader")]
 public class SimpleSceneLoader : SceneLoaderBase
 {
 

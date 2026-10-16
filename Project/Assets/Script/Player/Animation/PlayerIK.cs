@@ -22,13 +22,13 @@ public class PlayerIK : PlayerIKBase
     public Vector3 AimSightPosition = new Vector3(0.02f, 0.19f, 0.02f);
 
     [Header("FOOT IK")]
-    [GameFwkToogle] public bool useFootPlacement = true;
+    [GameToggle] public bool useFootPlacement = true;
     public LayerMask FootLayers;
     [Range(0.1f, 1)] public float FootHeight = 0.43f;
     [Range(-0.5f, 0.5f)] public float TerrainOffset = 0.13f;
     public Vector3 leftKneeTarget, rightKneeTarget;
     public Vector3 leftFeetRotationOffset, rightFeetRotationOffset;
-    [GameFwkToogle] public bool debugFootGizmos = true;
+    [GameToggle] public bool debugFootGizmos = true;
 
     public bool IsCustomHeadTarget { get; set; } = false;
     #endregion

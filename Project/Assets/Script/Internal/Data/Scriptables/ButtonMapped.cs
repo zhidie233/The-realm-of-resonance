@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.InputManager
 {
-    [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game Framework/Input/Input Mapped")]
+    [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game/Input/Input Mapped")]
     public class ButtonMapped : ScriptableObject
     {
         public InputType inputType = InputType.Keyboard;

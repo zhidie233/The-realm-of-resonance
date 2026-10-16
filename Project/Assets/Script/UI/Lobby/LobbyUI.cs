@@ -1,4 +1,4 @@
-﻿﻿using Game.Audio;
+﻿using Game.Audio;
 using Game.Runtime.FriendList;
 using Game.Runtime.Settings;
 using Game.Runtime.UI;
@@ -31,7 +31,6 @@ public class LobbyUI : MonoBehaviour
     public TMP_InputField PlayerNameField = null;
     [SerializeField] private TMP_Dropdown ServersDropdown = null;
     public FriendListUI FriendUI;
-    public GameObject[] AddonsButtons;
     public LevelUI m_LevelUI;
     public GameObject overAllEmptyLoading;
     public ConfirmationWindow confirmationWindow;
@@ -218,9 +217,6 @@ public class LobbyUI : MonoBehaviour
         }
         LevelManager.Instance.GetInfo();
 #endif
-#if CUSTOMIZER
-        SetActiveAddonObject(2, true);
-#endif
         if (GameConfig.Instance.MasterCanKickPlayers)
         {
             PhotonNetwork.EnableCloseConnection = true;
@@ -262,16 +258,6 @@ public class LobbyUI : MonoBehaviour
         if (LevelIcon != null) LevelIcon.gameObject.SetActive(false);
 #endif
 
-#if SHOP
-        SetActiveAddonObject(9, true);
-#endif
-#if PSELECTOR
-        SetActiveAddonObject(10, !PlayerSelector.InMatch);
-#endif
-        SetActiveAddonObject(0, false);
-#if CLASS_CUSTOMIZER
-        SetActiveAddonObject(0, true);
-#endif
         SetRegionDropdown();
     }
 
@@ -404,19 +390,7 @@ public class LobbyUI : MonoBehaviour
     /// </summary>
     public void ShowBuyCoins()
     {
-#if SHOP
-        Game.Shop.CoinsWindow.Instance.SetActive(true);
-#else
-        Debug.Log("Require shop addon.");
-#endif
     }
-
-#if ULSP
-    void OnUpdateDataBaseInfo(Game.ULogin.LoginUserInfo info)
-    {
-        GameEvents.DispatchCoinUpdate(null);
-    }
-#endif
 
     /// <summary>
     /// 
@@ -431,19 +405,6 @@ public class LobbyUI : MonoBehaviour
              Application.Quit();
 #endif
          });
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="index"></param>
-    /// <param name="active"></param>
-    public void SetActiveAddonObject(int index, bool active)
-    {
-        if (index < 0 || index > AddonsButtons.Length - 1) return;
-        if (AddonsButtons[index] == null) return;
-
-        AddonsButtons[index].SetActive(active);
     }
 
     public WindowUI AddMainMenuOption(string name, GameObject window, bool showTopMenu = true)

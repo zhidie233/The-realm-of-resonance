@@ -1,5 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
 --- !u!1 &987131096
 GameObject:
   m_ObjectHideFlags: 0
@@ -1880,10 +1878,6 @@ MonoBehaviour:
   WaitingPlayersText: {fileID: 6928233874479117170}
   blackScreen: {fileID: 3108708805829116920}
   leaveRoomConfirmation: {fileID: 7489010081291640553}
-  addonReferences:
-  - {fileID: 1734784914094344}
-  - {fileID: 1528220276207192}
-  - {fileID: 717552090961412560}
 --- !u!1 &1347617747013792
 GameObject:
   m_ObjectHideFlags: 0
@@ -21605,7 +21599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: GameFwk
+  m_text: Player
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
   m_sharedMaterial: {fileID: -2996529710204131526, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}

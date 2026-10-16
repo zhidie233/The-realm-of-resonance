@@ -2,7 +2,7 @@
 
 namespace Game.Internal.Scriptables
 {
-    [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "Game Framework/Settings/TagsAndLayers")]
+    [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "Game/Settings/TagsAndLayers")]
     public class TagsAndLayersSettings : ScriptableObject
     {
         public LayerMask LocalPlayerHitableLayers;

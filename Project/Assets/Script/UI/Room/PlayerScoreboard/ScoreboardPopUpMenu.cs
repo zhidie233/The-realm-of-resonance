@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Internal;
 using Photon.Realtime;
 using TMPro;
@@ -127,7 +127,7 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
     /// <param name="option"></param>
     public void OnOptionClicked(int option)
     {
-        // The kick event is handled in KickVotationUI.cs
+        // The kick event is handled in KickVoteUI.cs
         onScoreboardMenuAction?.Invoke(option);
         SetActive(false);
     }

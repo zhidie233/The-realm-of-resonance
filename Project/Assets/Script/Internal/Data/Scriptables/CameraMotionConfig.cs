@@ -1,7 +1,7 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "CameraMotionSettings", menuName = "Game Framework/Camera/Motion Settings")]
+[CreateAssetMenu(fileName = "CameraMotionSettings", menuName = "Game/Camera/Motion Settings")]
 public class CameraMotionConfig : ScriptableObject
 {
     [Header("Wiggle")]

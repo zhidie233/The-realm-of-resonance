@@ -1,4 +1,4 @@
-using Game.PlayerController;
+﻿using Game.PlayerController;
 using Game.Runtime.Level;
 using System;
 using System.Collections;
@@ -39,12 +39,12 @@ public class FirstPersonController : FirstPersonControllerBase
     public float m_StickToGroundForce;
     public float m_GravityMultiplier;
 
-    [GameFwkToogle] public bool RunFovEffect = true;
+    [GameToggle] public bool RunFovEffect = true;
     public float runFOVAmount = 8;
-    [GameFwkToogle] public bool KeepToCrouch = true;
+    [GameToggle] public bool KeepToCrouch = true;
     public bool canStealthMode = true;
     [Header("坠落伤害")]
-    [GameFwkToogle] public bool FallDamage = true;
+    [GameToggle] public bool FallDamage = true;
     [Range(0.1f, 5f)]
     public float SafeFallDistance = 3;
     [Range(3, 25)]

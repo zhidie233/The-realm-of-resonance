@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Name Plate Style", menuName = "Game Framework/UI/Name Plate Style")]
+[CreateAssetMenu(fileName = "Name Plate Style", menuName = "Game/UI/Name Plate Style")]
 public class NamePlateStyle : ScriptableObject
 {
     [Header("Text Style")]

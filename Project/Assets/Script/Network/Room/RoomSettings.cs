@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using Game.Runtime.Settings;
@@ -10,7 +10,7 @@ using System.Collections.Generic;
 /// </summary>
 public class RoomSettings : MonoBehaviourBase
 {
-    [GameFwkToogle] public bool canSuicide = true;
+    [GameToggle] public bool canSuicide = true;
 
     #region Public properties
     public GameMode CurrentGameMode => CurrentRoomInfo.gameMode;

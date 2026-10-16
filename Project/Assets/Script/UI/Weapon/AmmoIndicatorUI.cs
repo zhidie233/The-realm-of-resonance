@@ -11,7 +11,7 @@ namespace Game.Runtime.UI
     /// </summary>
     public class AmmoIndicatorUI : MonoBehaviour
     {
-        [GameFwkToogle] public bool forceUpperCase = true;
+        [GameToggle] public bool forceUpperCase = true;
         public TextMeshProUGUI indicatorText;
 
         private readonly Color m_warninColor = Color.yellow;

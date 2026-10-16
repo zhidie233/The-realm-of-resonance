@@ -1,10 +1,10 @@
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class NetworkItem : MonoBehaviour
 {
     public ItemAuthority itemAuthority = ItemAuthority.All;
-    [GameFwkToogle] public bool isSceneItem = false;
+    [GameToggle] public bool isSceneItem = false;
 
     [SerializeField, HideInInspector]
     private bool isInitializated = false;

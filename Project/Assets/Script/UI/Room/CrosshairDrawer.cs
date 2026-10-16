@@ -13,7 +13,7 @@ public class CrosshairDrawer : CrosshairBase
 
     #region Public members
     [Header("Settings")]
-    [GameFwkToogle] public bool fadeOnAim = true;
+    [GameToggle] public bool fadeOnAim = true;
     [Range(1, 10)] public float ScaleLerp = 5;
     [Range(0.1f, 5)] public float RotationSpeed = 2;
     [Range(0.01f, 1)] public float OnFireScaleRate = 0.1f;

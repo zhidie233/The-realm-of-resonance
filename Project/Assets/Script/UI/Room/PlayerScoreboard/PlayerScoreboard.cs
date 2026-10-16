@@ -9,8 +9,8 @@ public class PlayerScoreboard : PlayerScoreboardBase
 {
     #region Public members
     [Header("Settings")]
-    [GameFwkToogle] public bool updateOnEnable = true;
-    [GameFwkToogle] public bool autoUpdate = true;
+    [GameToggle] public bool updateOnEnable = true;
+    [GameToggle] public bool autoUpdate = true;
 
     [Header("References")]
     public PlayerScoreboardTableBase[] TwoTeamScoreboards;

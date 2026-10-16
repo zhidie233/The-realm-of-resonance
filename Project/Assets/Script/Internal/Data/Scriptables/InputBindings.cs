@@ -4,14 +4,14 @@ using GameEditor;
 
 namespace Game.InputManager
 {
-    [CreateAssetMenu(fileName = "InputManager", menuName = "Game Framework/Input/Manager")]
+    [CreateAssetMenu(fileName = "InputManager", menuName = "Game/Input/Manager")]
     public class InputBindings : ScriptableObject
     {
 
         [SerializeField, ScriptableDrawer] private ButtonMapped Mapped = null;
         public string inputVersion = "1.0.0";
-        [GameFwkToogle] public bool useGamePadNavigation = false;
-        [GameFwkToogle] public bool runWithButton = false;
+        [GameToggle] public bool useGamePadNavigation = false;
+        [GameToggle] public bool runWithButton = false;
 
         [Header("References")]
         public GameObject GamePadInputModule;

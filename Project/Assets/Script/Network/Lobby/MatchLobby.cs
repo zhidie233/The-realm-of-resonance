@@ -1,4 +1,4 @@
-using Game.Audio;
+﻿using Game.Audio;
 using Game.Internal.Structures;
 using Game.Runtime.UI;
 using Photon.Pun;
@@ -16,7 +16,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     #region Public members
     [Header("Photon")]
     public SeverRegionCode DefaultServer = SeverRegionCode.usw;
-    [GameFwkToogle] public bool ShowPhotonStatistics;
+    [GameToggle] public bool ShowPhotonStatistics;
 
     [Header("Room Options")]
     //Room Max Ping
@@ -872,18 +872,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     {
     }
     #endregion
-
-    public AddonsButtonsHelper AddonsButtons = new AddonsButtonsHelper();
-    public class AddonsButtonsHelper
-    {
-        public GameObject this[int index]
-        {
-            get
-            {
-                return LobbyUI.Instance.AddonsButtons[index];
-            }
-        }
-    }
 
     private static MatchLobby _instance;
     public static MatchLobby Instance

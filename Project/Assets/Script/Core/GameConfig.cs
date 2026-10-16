@@ -15,37 +15,37 @@ public class GameConfig : ScriptableObject
 {
     #region Public members
     [Header("Game Settings")]
-    [GameFwkToogle] public bool offlineMode = false;
-    [GameFwkToogle] public bool verifySingleSession = true;
-    [GameFwkToogle] public bool UseLobbyChat = true;
-    [GameFwkToogle] public bool UseVoiceChat = false;
-    [GameFwkToogle] public bool BulletTracer = false;
-    [GameFwkToogle] public bool DropGunOnDeath = true;
-    [GameFwkToogle] public bool SelfGrenadeDamage = true;
-    [GameFwkToogle] public bool CanFireWhileRunning = true;
-    [GameFwkToogle] public bool HealthRegeneration = true;
-    [GameFwkToogle] public bool ShowTeamMateHealthBar = true;
-    [GameFwkToogle] public bool CanChangeTeam = false;
-    [GameFwkToogle] public bool ShowBlood = true;
-    [GameFwkToogle] public bool DetectAFK = false;
-    [GameFwkToogle] public bool MasterCanKickPlayers = true;
-    [GameFwkToogle] public bool ArriveKitsCauseDamage = true;
-    [GameFwkToogle] public bool CalculateNetworkFootSteps = false;
-    [GameFwkToogle] public bool ShowNetworkStats = false;
-    [GameFwkToogle] public bool RememberPlayerName = true;
-    [GameFwkToogle] public bool ShowWeaponLoadout = true;
-    [GameFwkToogle] public bool useCountDownOnStart = true;
-    [GameFwkToogle] public bool showCrosshair = true;
-    [GameFwkToogle] public bool showDamageIndicator = true;
-    [GameFwkToogle] public bool doSpawnHandMeshEffect = true;
-    [GameFwkToogle] public bool playerCameraWiggle = true;
-    [GameFwkToogle] public bool showDeathIcons = true;
-    [GameFwkToogle] public bool allowFallDamage = true;
-    [GameFwkToogle] public bool realisticBullets = true;
-    [GameFwkToogle] public bool bulletDecals = true;
-    [GameFwkToogle] public bool showProjectilesTrails = true;
+    [GameToggle] public bool offlineMode = false;
+    [GameToggle] public bool verifySingleSession = true;
+    [GameToggle] public bool UseLobbyChat = true;
+    [GameToggle] public bool UseVoiceChat = false;
+    [GameToggle] public bool BulletTracer = false;
+    [GameToggle] public bool DropGunOnDeath = true;
+    [GameToggle] public bool SelfGrenadeDamage = true;
+    [GameToggle] public bool CanFireWhileRunning = true;
+    [GameToggle] public bool HealthRegeneration = true;
+    [GameToggle] public bool ShowTeamMateHealthBar = true;
+    [GameToggle] public bool CanChangeTeam = false;
+    [GameToggle] public bool ShowBlood = true;
+    [GameToggle] public bool DetectAFK = false;
+    [GameToggle] public bool MasterCanKickPlayers = true;
+    [GameToggle] public bool ArriveKitsCauseDamage = true;
+    [GameToggle] public bool CalculateNetworkFootSteps = false;
+    [GameToggle] public bool ShowNetworkStats = false;
+    [GameToggle] public bool RememberPlayerName = true;
+    [GameToggle] public bool ShowWeaponLoadout = true;
+    [GameToggle] public bool useCountDownOnStart = true;
+    [GameToggle] public bool showCrosshair = true;
+    [GameToggle] public bool showDamageIndicator = true;
+    [GameToggle] public bool doSpawnHandMeshEffect = true;
+    [GameToggle] public bool playerCameraWiggle = true;
+    [GameToggle] public bool showDeathIcons = true;
+    [GameToggle] public bool allowFallDamage = true;
+    [GameToggle] public bool realisticBullets = true;
+    [GameToggle] public bool bulletDecals = true;
+    [GameToggle] public bool showProjectilesTrails = true;
 #if GameM
-    [GameFwkToogle] public bool AutoWeaponFire = false;
+    [GameToggle] public bool AutoWeaponFire = false;
 #endif
     public AmmunitionType AmmoType = AmmunitionType.Bullets;
     public KillFeedWeaponShowMode killFeedWeaponShowMode = KillFeedWeaponShowMode.WeaponIcon;

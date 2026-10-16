@@ -1,9 +1,9 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Runtime.AI
 {
-    [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "Game Framework/AI/Soldier Settings")]
+    [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "Game/AI/Soldier Settings")]
     public class AISoldierSettings : ScriptableObject
     {
         [Header("Speeds")]

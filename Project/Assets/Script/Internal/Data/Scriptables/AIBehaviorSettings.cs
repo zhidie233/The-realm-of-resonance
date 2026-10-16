@@ -1,17 +1,17 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Runtime.AI
 {
-    [CreateAssetMenu(fileName = "AI Behavior Settings", menuName = "Game Framework/AI/Behavior Settings")]
+    [CreateAssetMenu(fileName = "AI Behavior Settings", menuName = "Game/AI/Behavior Settings")]
     public class AIBehaviorSettings : ScriptableObject
     {
         [Header("Settings")]
         public AIAgentBehave agentBehave = AIAgentBehave.Agressive;
         public AIWeaponAccuracy weaponAccuracy = AIWeaponAccuracy.Casual;
-        [GameFwkToogle] public bool GetRandomTargetOnStart = true;
-        [GameFwkToogle] public bool forceFollowAtHalfHealth = true;
-        [GameFwkToogle] public bool checkEnemysWhenHaveATarget = true;
+        [GameToggle] public bool GetRandomTargetOnStart = true;
+        [GameToggle] public bool forceFollowAtHalfHealth = true;
+        [GameToggle] public bool checkEnemysWhenHaveATarget = true;
         public AITargetOutRangeBehave targetOutRangeBehave = AITargetOutRangeBehave.KeepFollowingBasedOnState;
 
         [Header("Cover")]

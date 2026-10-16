@@ -56,7 +56,7 @@ public class GunInventory : MonoBehaviourBase
         {
             GunRace = FindObjectOfType<GunRaceMode>();
             if (GunRace != null) { GunRace.SetGunManager(this); }
-            else { Debug.Log("Gun Race is not integrated in this map, just go to Game -> Addons -> Gun Race -> Integrate, with the map scene open)."); }
+            else { Debug.Log("Gun Race is not integrated in this map."); }
         }
 #endif
         //when player instance select player class select in RoomMenu

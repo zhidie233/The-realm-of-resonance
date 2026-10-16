@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletController : ProjectileBase
 {
     // If is enabled, on all collisions will check if the hitted object have a IGameDamageable component
-    [GameFwkToogle] public bool checkDamageables = false;
+    [GameToggle] public bool checkDamageables = false;
     public LayerMask HittableLayers;
     public TrailRenderer Trail = null;
 

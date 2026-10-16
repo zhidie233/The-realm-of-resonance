@@ -1,5 +1,3 @@
-%YAML 1.1
-%TAG !u! tag:unity3d.com,2011:
 --- !u!1 &100000
 GameObject:
   m_ObjectHideFlags: 0
@@ -3563,21 +3561,6 @@ MonoBehaviour:
   OptionsWindows:
   - {fileID: 0}
   - {fileID: 0}
-  AddonsButtons:
-  - {fileID: 1607968469885752}
-  - {fileID: 2872105871951827033}
-  - {fileID: 1306335937837894}
-  - {fileID: 0}
-  - {fileID: 2872105871280312687}
-  - {fileID: 1907265102988948}
-  - {fileID: 1480363859980918978}
-  - {fileID: 2872105871094102647}
-  - {fileID: 0}
-  - {fileID: 1731967061236856}
-  - {fileID: 6501799370753493531}
-  - {fileID: 9070475078877486997}
-  - {fileID: 1148079012881248}
-  - {fileID: 2872105871464335439}
   m_LevelUI:
     Root: {fileID: 1974831281386818}
     Icon: {fileID: 2759837575151784944}

@@ -41,24 +41,24 @@ public class GameModeSettings
     /// <summary>
     /// Is this mode enable in your game?
     /// </summary>
-    [GameFwkToogle] public bool isEnabled = true;
+    [GameToggle] public bool isEnabled = true;
 
     /// <summary>
     /// Allow play with bots in this mode?
     /// </summary>
     [Header("Settings")]
-    [GameFwkToogle] public bool supportBots = false;
+    [GameToggle] public bool supportBots = false;
 
     /// <summary>
     /// Force automatically assign the teams for this mode
     /// </summary>
-    [GameFwkToogle] public bool AutoTeamSelection = false;
+    [GameToggle] public bool AutoTeamSelection = false;
 
     /// <summary>
     /// Unlist the room from the server list after the match has started?
     /// So new players can't join in the middle of the match
     /// </summary>
-    [GameFwkToogle] public bool UnlistGameAfterStarted = false;
+    [GameToggle] public bool UnlistGameAfterStarted = false;
 
     /// <summary>
     /// The minimum number of players that have to be joined in the match
@@ -90,7 +90,7 @@ public class GameModeSettings
     /// <summary>
     /// Can players pick up weapons in this game mode?
     /// </summary>
-    [GameFwkToogle] public bool allowedPickupWeapons = true;
+    [GameToggle] public bool allowedPickupWeapons = true;
 
     /// <summary>
     /// Max players options allowed for this game mode

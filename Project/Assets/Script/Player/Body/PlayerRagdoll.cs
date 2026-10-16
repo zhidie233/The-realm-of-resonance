@@ -1,10 +1,10 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 public class PlayerRagdoll : PlayerRagdollBase
 {
     #region Public members
-    [GameFwkToogle] public bool ApplyVelocityToRagdoll = true;
+    [GameToggle] public bool ApplyVelocityToRagdoll = true;
     public PlayerReferencesHandler playerReferences;
     public Transform RightHand;
     public Transform PelvisBone;

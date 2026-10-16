@@ -434,7 +434,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Localization addon helper
+    /// Localization helper
     /// Get the localized text of the given key
     /// </summary>
     /// <returns></returns>
@@ -449,7 +449,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Localization addon helper
+    /// Localization helper
     /// Get the localized text of the given key
     /// </summary>
     /// <returns></returns>

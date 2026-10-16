@@ -1,9 +1,9 @@
-using UnityEngine;
+﻿using UnityEngine;
 using System;
 
 namespace Game.Core.Motion
 {
-    [CreateAssetMenu(fileName = "CameraMotionData", menuName = "Game Framework/Camera/MotionData")]
+    [CreateAssetMenu(fileName = "CameraMotionData", menuName = "Game/Camera/MotionData")]
     public class FirstPersonMotionData : ScriptableObject
     {
         public string Name = "Motion Name";

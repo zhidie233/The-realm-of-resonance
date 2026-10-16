@@ -4,7 +4,7 @@ using TMPro;
 
 public class InputInteractionIndicator : MonoBehaviour
 {
-    [GameFwkToogle] public bool forceUpperCase = true;
+    [GameToggle] public bool forceUpperCase = true;
     [SerializeField] private GameObject content = null;
     [SerializeField] private TextMeshProUGUI inputNameText = null;
     [SerializeField] private TextMeshProUGUI descriptionText = null;

@@ -34,7 +34,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     [SerializeField] private TextMeshProUGUI WaitingPlayersText = null;
     public CanvasGroupFader blackScreen;
     public ConfirmationWindow leaveRoomConfirmation;
-    public GameObject[] addonReferences;
 
     private bool inTeam = false;
     private int ChangeTeamTimes = 0;

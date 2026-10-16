@@ -84,7 +84,7 @@ namespace Game.Runtime.UI
             public string Name;
             public GameObject Window;
             public Button OpenButton;
-            [GameFwkToogle] public bool Active = true;
+            [GameToggle] public bool Active = true;
             public GameEvents.UEvent onOpen;
 
             public void SetActive(bool active)
