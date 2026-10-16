@@ -16,7 +16,7 @@ namespace GameEditor
         Texture[] stateIcons = new Texture[3];
         readonly string LAST_PATH = "last-path-ls";
 
-        [MenuItem("游戏框架/工具/导入武器")]
+        [MenuItem("游戏设置/工具/导入武器")]
         static void OpenImport()
         {
             GetWindow<ImportExportWeapon>("导入").PrepareToImport(null, null);

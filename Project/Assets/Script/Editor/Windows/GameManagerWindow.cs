@@ -1054,7 +1054,7 @@ public class GameManagerWindow : EditorWindow
         return cachedColors[key];
     }
 
-    [MenuItem("游戏框架/管理器 %m")]
+    [MenuItem("游戏设置/管理器 %m")]
     static void Open()
     {
         GetWindow<GameManagerWindow>("Game 管理器");
