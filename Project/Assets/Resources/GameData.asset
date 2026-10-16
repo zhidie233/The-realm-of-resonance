@@ -78,7 +78,7 @@ MonoBehaviour:
   AllScenes:
   - ShowName: "\u5C0F\u9547"
     m_Scene: {fileID: 102900000, guid: a10f286a8f4bf408aac6dbbea9cb022a, type: 3}
-    RealSceneName: Town
+    RealSceneName: OldQuarter
     Preview: {fileID: 21300000, guid: eafda59df5aa26e49ba28801ff0f6736, type: 3}
     NoAllowedGameModes: 
   - ShowName: "\u6D4B\u8BD5"

@@ -133822,7 +133822,7 @@ GameObject:
   - component: {fileID: 4305629292479470399}
   - component: {fileID: 7177561217160589689}
   m_Layer: 12
-  m_Name: MPlayer2 [RED]
+  m_Name: Player [RED]
   m_TagString: Player
   m_Icon: {fileID: 2800000, guid: b8841a16855aa1f4eb78573e53bcda4a, type: 3}
   m_NavMeshLayer: 0
