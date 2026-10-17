@@ -1,4 +1,4 @@
-﻿using Photon.Realtime;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,50 +21,20 @@ public abstract class PlayerScoreboardBase : MonoBehaviourBase
             blockScoreboards = value;
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void ForceUpdateAll();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActive(bool active, bool enableJoinButtons = false);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="enableJoinButtons"></param>
     public abstract void SetActiveByTeamMode(bool enableJoinButtons = false);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActiveByGameState(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActiveJoinButtons(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void OnPlayerClicked(Player player);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void ResetJoinButtons();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="uiBinding"></param>
-    /// <returns></returns>
     public abstract bool RemoveUIBinding(PlayerScoreboardUIBase uiBinding);
 
     private static PlayerScoreboardBase _instance;

@@ -1,4 +1,4 @@
-﻿﻿using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 namespace Game.Runtime.Network
@@ -18,9 +18,6 @@ namespace Game.Runtime.Network
         private bool isWarned = false;
         private bool isShowingPing = false;
 
-        /// <summary>
-        ///
-        /// </summary>
         private void Start()
         {
             InvokeRepeating(nameof(FetchPing), 0, fetchPingEach);
@@ -28,34 +25,22 @@ namespace Game.Runtime.Network
             OnSettingsChanged();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             GameEvents.onGameSettingsChange += OnSettingsChanged;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDisable()
         {
             GameEvents.onGameSettingsChange -= OnSettingsChanged;
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         public void FetchPing()
         {
             CurrentPing = PhotonNetworkWrapper.GetPing();
             PingCheck();
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         private void PingCheck()
         {
             if (pingText != null && isShowingPing) pingText.text = string.Format(displayFormat, CurrentPing);
@@ -80,18 +65,12 @@ namespace Game.Runtime.Network
             }
         }
 
-        /// <summary>
-        ///
-        /// </summary>
         private void KickDuePing()
         {
             PhotonNetworkWrapper.Instance.OnPingKick();
             PhotonNetworkWrapper.LeaveRoom();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnSettingsChanged()
         {
             if (pingText != null)

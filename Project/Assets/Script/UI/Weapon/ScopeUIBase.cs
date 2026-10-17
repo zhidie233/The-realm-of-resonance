@@ -1,18 +1,10 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public abstract class ScopeUIBase : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActive(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="weapon"></param>
     public abstract void SetupWeapon(SniperScopeBase weapon);
 
     /// <summary>
@@ -25,9 +17,6 @@ public abstract class ScopeUIBase : MonoBehaviour
     /// <param name="onStart"></param>
     public abstract void Crossfade(bool fadeIn, float speed, float delay = 0, Action onFinish = null, Action onStart = null);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static ScopeUIBase _instance;
     public static ScopeUIBase Instance
     {

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 namespace Game.Runtime.UI
@@ -17,9 +17,6 @@ namespace Game.Runtime.UI
         private readonly Color m_warninColor = Color.yellow;
         private readonly Color m_alertColor = Color.red;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             SetActive(false);
@@ -27,18 +24,12 @@ namespace Game.Runtime.UI
             GameEvents.onChangeWeapon += onWeaponChanged;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDisable()
         {
             GameEvents.onLocalPlayerAmmoUpdate -= OnLocalAmmoChange;
             GameEvents.onChangeWeapon -= onWeaponChanged;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnLocalAmmoChange(int ammoCount)
         {
             var player = GameCore.LocalPlayerReferences;
@@ -89,18 +80,11 @@ namespace Game.Runtime.UI
             SetColor(m_warninColor );
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void onWeaponChanged(int newWeapon)
         {
             OnLocalAmmoChange(0);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
         private void SetText(string text)
         {
             if (indicatorText == null) return;
@@ -109,20 +93,12 @@ namespace Game.Runtime.UI
             SetActive(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
         private void SetColor(Color color)
         {
             if (indicatorText == null) return;
             indicatorText.color = color;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public void SetActive(bool active)
         {
             if (indicatorText == null) return;

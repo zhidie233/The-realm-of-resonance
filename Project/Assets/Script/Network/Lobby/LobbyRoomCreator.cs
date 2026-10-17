@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using Game.Internal.Structures;
@@ -7,10 +7,6 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
 {
     public string defaultRoomPrefix = "Room";
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public GameRoomInfo BuildRoomInfo()
     {
         var mode = GameModeInfo;

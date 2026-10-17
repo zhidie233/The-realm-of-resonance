@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Internal.Structures
@@ -14,9 +14,6 @@ namespace Game.Internal.Structures
 
         private Graphic[] m_Graphics;
         private Color[] defaultsColors;
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             m_Graphics = transform.GetComponentsInChildren<Graphic>(true);
@@ -29,17 +26,11 @@ namespace Game.Internal.Structures
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetColor(Color c, float speed)
         {
             foreach (Graphic g in m_Graphics) { g.CrossFadeColor(c, speed, true, true); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetDefaultColors(float speed)
         {
             for (int i = 0; i < m_Graphics.Length; i++)

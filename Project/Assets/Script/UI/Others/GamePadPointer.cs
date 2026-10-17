@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,9 +19,6 @@ namespace Game.InputManager
         float[] verticalTraces;
         private bool isActive = true;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             rectTransform = GetComponent<RectTransform>();
@@ -39,9 +36,6 @@ namespace Game.InputManager
             UIObject.SetActive(active);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Update()
         {
             if (!isActive) return;
@@ -49,9 +43,6 @@ namespace Game.InputManager
             PadControlled();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void PadControlled()
         {
             horizontalTraces = new float[smoothing];

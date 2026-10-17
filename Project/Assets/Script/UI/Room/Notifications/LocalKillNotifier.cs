@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Game.Internal.Structures;
 
@@ -12,55 +12,34 @@ public class LocalKillNotifier : MonoBehaviour
 
     private List<KillInfo> localKillsQueque = new List<KillInfo>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Start()
     {
         multipleNotifierRoot.SetActive(GameConfig.Instance.localKillsShowMode == LocalKillDisplay.List);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         GameEvents.onLocalKill += OnLocalKill;
         GameEvents.onLocalNotification += OnLocalNotification;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         GameEvents.onLocalKill -= OnLocalKill;
         GameEvents.onLocalNotification -= OnLocalNotification;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
     void OnLocalKill(KillInfo info)
     {
         if (GameConfig.Instance.localKillsShowMode == LocalKillDisplay.List) InstanceSingleNotification(info);
         else if (GameConfig.Instance.localKillsShowMode == LocalKillDisplay.Queqe) ShowNotification(info);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="notification"></param>
     void OnLocalNotification(GameLocalNotification notification)
     {
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
     void InstanceSingleNotification(KillInfo info)
     {
         GameObject newkillfeedh = Instantiate(notificationTemplate) as GameObject;
@@ -71,10 +50,6 @@ public class LocalKillNotifier : MonoBehaviour
         notificationTemplate.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
     void ShowNotification(KillInfo info)
     {
         if (localKillsQueque.Count <= 0)
@@ -84,9 +59,6 @@ public class LocalKillNotifier : MonoBehaviour
         localKillsQueque.Add(info);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LocalDisplayDone()
     {
         localKillsQueque.RemoveAt(0);

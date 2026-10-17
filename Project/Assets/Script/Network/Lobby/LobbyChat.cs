@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -103,9 +103,6 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
         this.chatClient.Connect(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat, version, new Photon.Chat.AuthenticationValues(PhotonNetwork.NickName));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Disconnect()
     {
         if (this.chatClient != null)

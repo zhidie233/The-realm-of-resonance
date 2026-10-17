@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class AICoverPoint : MonoBehaviour
@@ -33,27 +33,16 @@ public class AICoverPoint : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         AICovertPointManager.Register(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public bool IsAvailable(float timeSpan)
     {
         return (Time.time - lastUseTime) > timeSpan;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public AICoverPoint TryGetAvailableNeighbord()
     {
         if (NeighbordPoints == null || NeighbordPoints.Count <= 0) return null;
@@ -68,15 +57,8 @@ public class AICoverPoint : MonoBehaviour
         return null;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public bool HasNeighbords() => NeighbordPoints != null && NeighbordPoints.Count > 0;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDrawGizmos()
     {
         if(AICovertPointManager.Instance == null)

@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine.Events;
 using UnityEngine;
 
@@ -29,9 +29,6 @@ namespace Game.Tween
         private float duration = 0;
         private Vector3 defaultScale;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnEnable()
         {
             m_Transform = transform;
@@ -46,9 +43,6 @@ namespace Game.Tween
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void StartTween()
         {
             duration = 0;
@@ -56,9 +50,6 @@ namespace Game.Tween
             StartCoroutine(DoTween());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void StartReverseTween(bool desactive = false)
         {
             StopAllCoroutines();
@@ -66,19 +57,12 @@ namespace Game.Tween
                 StartCoroutine(DoTweenReverse(desactive));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnDisable()
         {
             duration = 0;
             StopAllCoroutines();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoTween()
         {
             bool isPlaying = Application.isPlaying;
@@ -128,10 +112,6 @@ namespace Game.Tween
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoTweenReverse(bool desactive)
         {
 #if UNITY_EDITOR

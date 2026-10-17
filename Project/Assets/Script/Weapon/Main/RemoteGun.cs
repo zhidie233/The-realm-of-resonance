@@ -1,4 +1,4 @@
-﻿﻿using Game.Audio;
+﻿using Game.Audio;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
@@ -126,7 +126,6 @@ public class RemoteGun : MonoBehaviour
         }
     }
 
-    // <param name="active"></param>
     public void DesactiveGrenade(bool active, Material mat)
     {
         if (Info.Type != GunType.Grenade)

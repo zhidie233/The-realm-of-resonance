@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using System.Linq;
@@ -31,18 +31,12 @@ public class PlayerScoreboard : PlayerScoreboardBase
     public bool isShowingTables { get; set; } = false;
 
     #region Unity Methods
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
         PhotonCallbacks.PlayerLeftRoom += OnPlayerLeftRoom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -52,9 +46,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         if (popUpMenu != null) popUpMenu.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -62,9 +53,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         PhotonCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesUpdate;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDestroy()
     {
         base.OnDestroy();
@@ -72,9 +60,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
     }
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void UpdateTables()
     {
         int spectators = 0;
@@ -148,10 +133,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         botsScoreInstance = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
     void InstanceBotUIBinding(GameBotProperties info)
     {
         PlayerScoreboardUIBase script = null;
@@ -234,9 +215,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActiveByTeamMode(bool enableJoinButtons = false)
     {
         if (BlockScoreboards) return;
@@ -249,9 +227,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         ForceUpdateAll();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActive(bool active, bool enableJoinButtons = false)
     {
         if (BlockScoreboards) return;
@@ -264,26 +239,17 @@ public class PlayerScoreboard : PlayerScoreboardBase
         if (active) { ForceUpdateAll(); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActiveByGameState(bool active)
     {
         SetActive(active, (!GameController.Instance.FirstSpawnDone && GameController.Joined));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void ResetJoinButtons()
     {
         OneTeamScoreboard?.ResetJoinButton();
         foreach (var table in TwoTeamScoreboards) { table?.ResetJoinButton(); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActiveJoinButtons(bool active)
     {
         bool tm = isOneTeamMode;
@@ -291,9 +257,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         foreach (var table in TwoTeamScoreboards) { table?.SetActiveJoinButton(active && !tm); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnPlayerClicked(Player player)
     {
         if (popUpMenu != null)
@@ -310,9 +273,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override bool RemoveUIBinding(PlayerScoreboardUIBase uiBinding)
     {
         if (uiBinding.isBotBinding)
@@ -336,9 +296,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnPlayerLeftRoom(Player otherPlayer)
     {
         if (!autoUpdate) return;

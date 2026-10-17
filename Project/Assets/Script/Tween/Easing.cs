@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -11,7 +11,6 @@ namespace Game.Tween
         {
             switch (type)
             {
-                //-----------------------------------------------------------
                 case EasingType.Exponential:
                     switch (mode)
                     {
@@ -25,7 +24,6 @@ namespace Game.Tween
                             return EasingFunctions.Exponential.OutIn(t);
                         default: return EasingFunctions.Exponential.InOut(t);
                     }
-                //-----------------------------------------------------------
                 case EasingType.Quintic:
                     switch (mode)
                     {
@@ -39,7 +37,6 @@ namespace Game.Tween
                             return EasingFunctions.Quintic.OutIn(t);
                         default: return EasingFunctions.Quintic.InOut(t);
                     }
-                //-----------------------------------------------------------
                 case EasingType.Quadratic:
                     switch (mode)
                     {
@@ -53,7 +50,6 @@ namespace Game.Tween
                             return EasingFunctions.Quadratic.OutIn(t);
                         default: return EasingFunctions.Quadratic.InOut(t);
                     }
-                //-----------------------------------------------------------
                 case EasingType.Sinusoidal:
                     switch (mode)
                     {
@@ -67,7 +63,6 @@ namespace Game.Tween
                             return EasingFunctions.Sinusoidal.OutIn(t);
                         default: return EasingFunctions.Sinusoidal.InOut(t);
                     }
-                //-----------------------------------------------------------
                 case EasingType.Bounce:
                     switch (mode)
                     {
@@ -81,7 +76,6 @@ namespace Game.Tween
                             return EasingFunctions.Bounce.InOut(t);
                         default: return EasingFunctions.Bounce.InOut(t);
                     }
-                //-----------------------------------------------------------
                 case EasingType.Back:
                     switch (mode)
                     {
@@ -95,7 +89,6 @@ namespace Game.Tween
                             return EasingFunctions.Back.InOut(t);
                         default: return EasingFunctions.Back.InOut(t);
                     }
-                //-----------------------------------------------------------
                 default:
                 case EasingType.Linear:
                     switch (mode)

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System;
 
 namespace Game.Core.Motion
@@ -15,9 +15,6 @@ namespace Game.Core.Motion
 
         [Range(0.1f, 10)] public float Duration = 2;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplyFrame(float time, Vector3 headVector, Vector3 armsVector)
         {
             HeadAnimation.ApplyFrame(headVector, time);
@@ -31,11 +28,6 @@ namespace Game.Core.Motion
             public AnimationCurve Y = AnimationCurve.EaseInOut(0, 0, 1, 0);
             public AnimationCurve Z = AnimationCurve.EaseInOut(0, 0, 1, 0);
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <param name="time"></param>
-            /// <returns></returns>
             public Vector3 Vector(float time = 0) => new Vector3(X.Evaluate(time), Y.Evaluate(time), Z.Evaluate(time));
 
             /// <summary>
@@ -47,9 +39,6 @@ namespace Game.Core.Motion
                 return new Vector3(X.Evaluate(1), Y.Evaluate(1), Z.Evaluate(1));
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
             public void ApplyFrame(Vector3 vector, float time)
             {
                 SetKey(X, time, vector.x);
@@ -57,9 +46,6 @@ namespace Game.Core.Motion
                 SetKey(Z, time, vector.z);
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
             private void SetKey(AnimationCurve curve, float time, float value)
             {
                 for (int i = curve.keys.Length - 1; i >= 0; i--)

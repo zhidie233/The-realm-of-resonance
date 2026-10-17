@@ -240,7 +240,6 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return true;
     }
 
-    // <param name="filter"></param>
     public static void AddSpawnFilter(Func<GameObject, Vector3, Quaternion, Team, bool> filter)
     {
         if (Instance == null) return;
@@ -390,7 +389,6 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         GameModeLogic.OnLocalPlayerKill();
     }
 
-    // <returns></returns>
     public bool isLocalPlayerWinner()
     {
         if (GameModeLogic == null) return false;
@@ -614,7 +612,6 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         }
     }
 
-    // <param name="state"></param>
     public void SetGameState(MatchState state)
     {
         if (!PhotonNetworkWrapper.IsMasterClient)

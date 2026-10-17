@@ -25,10 +25,6 @@ public class ProjectileBody : ProjectileBase
 
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     public override void InitProjectile(BulletData data)
     {
         bulletData = data;
@@ -58,9 +54,6 @@ public class ProjectileBody : ProjectileBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnCollisionEnter(Collision enterObject)
     {
         if (explosionMethod != ExplosionMethod.OnCollision)
@@ -98,9 +91,6 @@ public class ProjectileBody : ProjectileBase
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Counter()
     {
         TimeToExploit--;

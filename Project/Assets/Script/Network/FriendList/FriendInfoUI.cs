@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -24,25 +24,15 @@ namespace Game.Runtime.FriendList
         private string OnlineText = "ONLINE";
         private FriendListUIBase UIManager;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDisable()
         {
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="info"></param>
         public override void SetFriendData(FriendInfo info, FriendListUIBase uiManager)
         {
             UIManager = uiManager;
@@ -55,10 +45,6 @@ namespace Game.Runtime.FriendList
             Expand(UIManager.IsOpen());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="info"></param>
         public override void UpdateFriendInfo(FriendInfo[] infos)
         {
             FriendInfo info = FindMe(infos);
@@ -70,28 +56,16 @@ namespace Game.Runtime.FriendList
             roomName = info.Room;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void Expand(bool isExpanded)
         {
             expandInfoUI.SetActive(isExpanded);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="online"></param>
         void UpdateStatusUI(bool online)
         {
             if (StatusText != null) { StatusText.text = string.Format("[{0}]", online ? OnlineText : OffLineText); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="info"></param>
-        /// <returns></returns>
         private FriendInfo FindMe(FriendInfo[] info)
         {
             for (int i = 0; i < info.Length; i++)
@@ -106,9 +80,6 @@ namespace Game.Runtime.FriendList
             return null;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void JoinRoom()
         {
             if (!string.IsNullOrEmpty(roomName))
@@ -121,18 +92,11 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Remove()
         {
             FriendListBase.Instance.RemoveFriend(NameText.text);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public override void SetActive(bool active) => gameObject.SetActive(active);
     }
 }

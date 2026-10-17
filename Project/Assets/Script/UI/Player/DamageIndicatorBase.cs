@@ -1,10 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class DamageIndicatorBase : MonoBehaviourBase
 {
-    /// <summary>
-    ///
-    /// </summary>
     public abstract void SetHit(Vector3 direction);
 
     private static DamageIndicatorBase _instance;

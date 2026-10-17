@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class WeaponFX : WeaponFXBase
 {
@@ -42,9 +42,6 @@ public class WeaponFX : WeaponFXBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetActiveList(ParticleSystem[] list, bool active)
     {
         foreach (var item in list)
@@ -54,9 +51,6 @@ public class WeaponFX : WeaponFXBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.magenta;

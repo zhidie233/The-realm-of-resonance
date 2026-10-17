@@ -66,9 +66,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     #endregion
 
     #region Unity Callbacks
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         if (!PhotonNetwork.IsConnected) return;
@@ -84,9 +81,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         showIndicator = GameConfig.Instance.showDamageIndicator;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         if (!isConnected)
@@ -105,9 +99,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         if (protecTime > 0) { InvokeRepeating(nameof(OnProtectCount), 1, 1); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -121,9 +112,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -135,9 +123,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (isMine)
@@ -148,10 +133,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="damageData"></param>
     public override void DoDamage(DamageData damageData)
     {
         GetDamage(damageData);
@@ -492,9 +473,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         GetDamage(damageinfo);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void CancelRepetingDamage()
     {
         CancelInvoke(nameof(MakeDamageRepeting));
@@ -516,9 +494,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         if (HealthBar != null) { HealthBar.fillAmount = deci; HealthBar.color = CurColor; }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DamageUI()
     {
         if (damageAlphaValue <= 0)
@@ -539,9 +514,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void RegenerateHealth()
     {
         if (!m_HealthRegeneration || currentHealth < 1) return;
@@ -584,9 +556,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         return true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnProtectCount()
     {
         protecTime--;
@@ -600,19 +569,12 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator DestroyThis()
     {
         yield return new WaitForSeconds(0.3f);
         DestroyEntity();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void DestroyEntity()
     {
         PhotonNetwork.Destroy(this.gameObject);
@@ -679,31 +641,15 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
     private bool isProtectionEnable { get { return (protecTime > 0); } }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetHealth() => currentHealth;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetMaxHealth() => maxHealth;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool IsDeath()
     {
         return isDead;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="newPlayer"></param>
     public void OnPhotonPlayerConnected(Player newPlayer)
     {
         if (photonView.IsMine)

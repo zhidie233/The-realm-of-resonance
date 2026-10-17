@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class KillCam : KillCamBase
@@ -25,27 +25,18 @@ public class KillCam : KillCamBase
     private KillCameraType cameraType = KillCameraType.ObserveDeath;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         GameEvents.onLocalPlayerSpawn += OnLocalSpawn;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
         GameEvents.onLocalPlayerSpawn -= OnLocalSpawn;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         transform.parent = null;
@@ -58,9 +49,6 @@ public class KillCam : KillCamBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (target != null)
@@ -69,9 +57,6 @@ public class KillCam : KillCamBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalSpawn()
     {
         target = null;
@@ -80,9 +65,6 @@ public class KillCam : KillCamBase
         SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ChangeTarget(bool next)
     {
         if (Manager.OthersActorsInScene.Count <= 0)
@@ -179,9 +161,6 @@ public class KillCam : KillCamBase
         return this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void ReadyToShow(KillCamInfo info)
     {
         canManipulate = true;
@@ -192,28 +171,18 @@ public class KillCam : KillCamBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActive(bool active)
     {
         gameObject.SetActive(active);
         if (!active) KillCamUIBase.Instance?.Hide();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SpectPlayer(Transform player)
     {
         target = player;
         canManipulate = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void PositionedAndLookAt(Transform reference)
     {
         float distanceFromLocal = 2.5f;
@@ -234,10 +203,6 @@ public class KillCam : KillCamBase
         CachedTransform.LookAt(position + Vector3.up * 0.25f);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator ZoomOut()
     {
         float d = 0;

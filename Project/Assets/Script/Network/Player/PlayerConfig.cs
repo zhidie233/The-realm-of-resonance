@@ -25,9 +25,6 @@ public class PlayerConfig : PhotonHelper
     private List<ArmsMaterial.MaterialColor> currentWeaponMaterials = new List<ArmsMaterial.MaterialColor>(); 
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected || !PhotonNetworkWrapper.InRoom) return;
@@ -105,9 +102,6 @@ public class PlayerConfig : PhotonHelper
         GameEvents.onGameSettingsChange += OnGameSettingsChanged;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         SetDeafultWeaponRender();
@@ -117,9 +111,6 @@ public class PlayerConfig : PhotonHelper
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDestroy()
     {
         if (!isMine)
@@ -133,9 +124,6 @@ public class PlayerConfig : PhotonHelper
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnGameSettingsChanged()
     {
         playerReferences.DefaultCameraFOV = (float)GameCore.Settings.GetSettingOf("FOV");
@@ -164,9 +152,6 @@ public class PlayerConfig : PhotonHelper
     }
 #endif
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void DoSpawnWeaponRenderEffect(Renderer[] renderers)
     {
         if (!GameConfig.Instance.doSpawnHandMeshEffect) return;
@@ -193,10 +178,6 @@ public class PlayerConfig : PhotonHelper
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator DoSpawnLoop()
     {
         float d = 0;
@@ -220,9 +201,6 @@ public class PlayerConfig : PhotonHelper
         SetDeafultWeaponRender();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetDeafultWeaponRender()
     {
         if (currentWeaponMaterials.Count > 0)

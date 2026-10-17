@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Game.Internal.BaseClass;
@@ -17,9 +17,6 @@ public class SpawnPointManager : MonoBehaviour
     private List<SpawnPointBase> spawnPoints = new List<SpawnPointBase>();
     private int currentSpawnpoint = -1;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void AddSpawnPoint(SpawnPointBase point)
     {
         if (Instance == null) return;
@@ -84,9 +81,6 @@ public class SpawnPointManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public SpawnPointBase GetRandomSpawnPoint(Team team)
     {
         var teamPoints = GetListOfPointsForTeam(team);
@@ -95,9 +89,6 @@ public class SpawnPointManager : MonoBehaviour
         return teamPoints[Random.Range(0, teamPoints.Count)];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public SpawnPointBase GetSequentialSpawnPoint(Team team)
     {
         var teamPoints = GetListOfPointsForTeam(team);
@@ -123,10 +114,6 @@ public class SpawnPointManager : MonoBehaviour
         return teamPoints;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public SpawnPointBase GetSingleRandom() => spawnPoints[Random.Range(0, spawnPoints.Count)];
 
     [System.Serializable]

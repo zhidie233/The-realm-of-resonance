@@ -12,9 +12,6 @@ public abstract class WeaponLoadoutUIBase : MonoBehaviour
         AlwaysShow,
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     [Flags]
     public enum LoadoutFlags : byte
     {
@@ -41,10 +38,6 @@ public abstract class WeaponLoadoutUIBase : MonoBehaviour
     /// <param name="newGun">Weapon to fetch the information from.</param>
     public abstract void ReplaceSlot(int slotID, GunController newWeapon);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="autohide"></param>
     public abstract void SetVisibility(VisibilityMode visibility);
 
     /// <summary>
@@ -53,20 +46,10 @@ public abstract class WeaponLoadoutUIBase : MonoBehaviour
     /// </summary>
     public abstract void ClearSlots(LoadoutFlags flags = LoadoutFlags.None);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract VisibilityMode GetVisibilityMode();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void SetActive(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static WeaponLoadoutUIBase _instance;
     public static WeaponLoadoutUIBase Instance
     {

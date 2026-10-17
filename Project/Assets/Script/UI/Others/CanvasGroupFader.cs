@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,19 +21,11 @@ namespace Game.Runtime.UI
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="alpha"></param>
         public void SetAlpha(float alpha)
         {
             canvasGroup.alpha = alpha; if(alpha > 0) gameObject.SetActive(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public Coroutine FadeIn(float lenght = 0, Action onFinish = null)
         {
             StopAllCoroutines();
@@ -41,10 +33,6 @@ namespace Game.Runtime.UI
             return StartCoroutine(DoFadeIn(lenght, onFinish));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public Coroutine FadeOut(float lenght = 0, Action onFinish = null)
         {
             StopAllCoroutines();
@@ -52,10 +40,6 @@ namespace Game.Runtime.UI
             return StartCoroutine(DoFadeOut(lenght, onFinish));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoFadeIn(float lenght = 0, Action onFinish = null)
         {
             float d = 0;
@@ -71,10 +55,6 @@ namespace Game.Runtime.UI
             onFinish?.Invoke();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoFadeOut(float lenght = 0, Action onFinish = null)
         {
             float d = 0;

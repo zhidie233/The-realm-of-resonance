@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using HashData = ExitGames.Client.Photon.Hashtable;
 
@@ -34,9 +34,6 @@ public class DropDispacher : MonoBehaviour
         PhotonNetworkWrapper.RemoveNetworkCallback(OnNetworkMessage);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnNetworkMessage(HashData data)
     {
         GameObject newInstance = Instantiate(DropDeliveryPrefab, transform.position, Quaternion.identity) as GameObject;

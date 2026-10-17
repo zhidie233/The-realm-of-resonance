@@ -1,19 +1,10 @@
-﻿using Photon.Realtime;
+using Photon.Realtime;
 using UnityEngine;
 
 public abstract class KillCamBase : MonoBehaviourBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActive(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <returns></returns>
     public abstract KillCamBase SetTarget(KillCamInfo info);
 
     private static KillCamBase _killcam;

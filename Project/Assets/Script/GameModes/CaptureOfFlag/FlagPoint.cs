@@ -19,9 +19,6 @@ namespace Game.GameModes.CaptureOfFlag
         public PlayerConfig carriyingPlayer/* { get; set; } = null*/;
         private Color IconColor;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Awake()
         {
             originalPos = transform.position;
@@ -33,18 +30,11 @@ namespace Game.GameModes.CaptureOfFlag
             GameEvents.onLocalPlayerDeath += this.OnLocalPlayerDeath;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDestroy()
         {
             GameEvents.onLocalPlayerDeath -= this.OnLocalPlayerDeath;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newState"></param>
         public void ChangeFlagState(FlagState newState)
         {
             if (State == newState) return;
@@ -58,9 +48,6 @@ namespace Game.GameModes.CaptureOfFlag
             PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CaptureOfFlagMode, data);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnTriggerEnter(Collider collider)
         {
             if (collider.isLocalPlayerCollider())
@@ -73,9 +60,6 @@ namespace Game.GameModes.CaptureOfFlag
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnLocalPlayerDeath()
         {
             if (carriyingPlayer == null)
@@ -97,9 +81,6 @@ namespace Game.GameModes.CaptureOfFlag
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void HandleFlagCapture()
         {
             if (carriyingPlayer == null)
@@ -222,10 +203,6 @@ namespace Game.GameModes.CaptureOfFlag
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="carrier"></param>
         public void SetFlagToCarrier(PlayerConfig carrier)
         {
             carriyingPlayer = carrier;
@@ -237,9 +214,6 @@ namespace Game.GameModes.CaptureOfFlag
                 transform.parent = carrier.carrierPoint;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void ReturnInvoke()
         {
             var data = UtilityHelper.CreatePhotonHashTable();
@@ -248,11 +222,6 @@ namespace Game.GameModes.CaptureOfFlag
             PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CaptureOfFlagMode, data);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="logic"></param>
-        /// <returns></returns>
         public bool CanBePickedUpBy(PlayerConfig logic)
         {
             //If the flag is at its home position, only the enemy team can grab it
@@ -270,9 +239,6 @@ namespace Game.GameModes.CaptureOfFlag
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetFlagToOrigin()
         {
             transform.parent = null;

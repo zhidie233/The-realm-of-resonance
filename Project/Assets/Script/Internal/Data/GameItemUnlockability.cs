@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using Game.Internal.Scriptables;
 using UnityEngine;
@@ -43,36 +43,20 @@ namespace Game.Internal.Structures
             return reason;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool IsFree() => Price <= 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool CanBePurchased()
         {
             if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault || UnlockMethod == UnlockabilityMethod.LevelUpOnly) return false;
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool CanBeUnlockedByLevel()
         {
             if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault || UnlockMethod == UnlockabilityMethod.PurchasedOnly) return false;
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool AllowUnlockByLevel()
         {
             if (!CanBeUnlockedByLevel() || UnlockAtLevel <= 0) return false;
@@ -99,10 +83,6 @@ namespace Game.Internal.Structures
             return copy.Except(GetNoAllowedCoins()).ToList();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public List<GameCoin> GetNoAllowedCoins()
         {
             var copy = new List<GameCoin>();

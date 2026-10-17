@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System;
 using Game.Core.Motion;
 using Game.Internal.Structures;
@@ -62,9 +62,6 @@ public static class GameEvents
     /// </summary>
     public static Action onLocalPlayerSpawn;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public delegate void LocalPlayerShakeEvent(ShakerPresent present, string key, float influence = 1);
     public static LocalPlayerShakeEvent onLocalPlayerShake;
 
@@ -235,19 +232,10 @@ public static class GameEvents
     /// </summary>
     public static void DispatchRoundEndEvent() => onRoundEnd?.Invoke();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void DispatchPlayerLandEvent(float impactAmount) => onPlayerLand?.Invoke(impactAmount);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void DispatchPlayerLocalDeathEvent() => onLocalPlayerDeath?.Invoke();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void DispatchPlayerLocalSpawnEvent() => onLocalPlayerSpawn?.Invoke();
 
     public static void DoPlayerCameraShake(ShakerPresent present, string key, float influence = 1) => onLocalPlayerShake?.Invoke(present, key, influence);

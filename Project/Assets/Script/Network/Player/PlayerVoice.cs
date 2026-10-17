@@ -16,9 +16,6 @@ public class PlayerVoice : MonoBehaviourBase
 #endif
     private PhotonView View;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -72,9 +69,6 @@ public class PlayerVoice : MonoBehaviourBase
     }
 
 #if !UNITY_WEBGL && PVOICE
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (VoiceRecorder == null) return;

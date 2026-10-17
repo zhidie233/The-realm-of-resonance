@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,18 +20,12 @@ namespace Game.Runtime.Settings
 
         public float currentValue { get; set; } = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
         IEnumerator Start()
         {
             while (!GameConfig.isDataCached) yield return null;
             Load();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Load()
         {
             currentValue = (float)GameCore.Settings.GetSettingOf(SettingKeyName);
@@ -39,9 +33,6 @@ namespace Game.Runtime.Settings
             ApplyCurrentValue();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplyCurrentValue()
         {
             if (valueText != null)
@@ -50,35 +41,23 @@ namespace Game.Runtime.Settings
             ApplySetting();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplySetting()
         {
             //Set the changed setting value to the instance settings group.
             GameCore.Settings.SetSettingOf(SettingKeyName, currentValue, SettingsManager.Instance.autoSaveSettings);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void UpdateValue(float value)
         {
             currentValue = value;
             ApplyCurrentValue();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SaveValue()
         {
             GameCore.Settings.SaveSettings();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Revert()
         {
             Load();

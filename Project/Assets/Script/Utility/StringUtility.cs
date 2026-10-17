@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public static class StringUtility
 {
@@ -11,9 +11,6 @@ public static class StringUtility
         return string.Format("{0:00}:{1:00}", m, s);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static string GetTimeFormat(int seconds)
     {
         int minutes = seconds > 60 ? seconds / 60 : 0;

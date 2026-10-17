@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -18,33 +18,21 @@ public class PickUpUI : PickUpUIBase
     private GunPickUpBase CacheGunPickUp = null;
 
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         GameEvents.onLocalPlayerDeath += OnLocalDeath;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         GameEvents.onLocalPlayerDeath -= OnLocalDeath;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalDeath()
     {
         Hide();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnOverWeapon(GunPickUpBase gunPickUp)
     {
         if (gunPickUp == null) return;
@@ -61,10 +49,6 @@ public class PickUpUI : PickUpUIBase
         CacheGunPickUp = gunPickUp;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="information"></param>
     public override void Show(DisplayInformation information)
     {
         mainText.text = information.Text;
@@ -78,9 +62,6 @@ public class PickUpUI : PickUpUIBase
         content.SetActive(true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Hide()
     {
         content.SetActive(false);

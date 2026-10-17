@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Text;
 using UnityEngine;
 using GameEditor;
@@ -81,10 +81,6 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
             return Mathf.FloorToInt(realPrice / CoinValue);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         private string Key(string endPoint = "")
         {
             var k = $"{Application.productName}.coin.{CoinName}.{endPoint}";

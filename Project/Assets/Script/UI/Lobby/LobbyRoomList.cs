@@ -1,4 +1,4 @@
-﻿﻿using Game.Internal;
+﻿using Game.Internal;
 using Game.Runtime.UI;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -12,9 +12,6 @@ public class LobbyRoomList : LobbyRoomListBase
 
     private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         if (!roomListHandler.IsInitialize) roomListHandler.Initialize();
@@ -31,9 +28,6 @@ public class LobbyRoomList : LobbyRoomListBase
         InstanceRoomList();     
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void InstanceRoomList()
     {
         if (cachedRoomList.Count > 0)
@@ -53,9 +47,6 @@ public class LobbyRoomList : LobbyRoomListBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void UpdateCachedRoomList(List<RoomInfo> roomList)
     {
         foreach (RoomInfo info in roomList)
@@ -83,9 +74,6 @@ public class LobbyRoomList : LobbyRoomListBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void ClearList()
     {
         cachedRoomList.Clear();

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -138,9 +138,6 @@ public class GameConfig : ScriptableObject
     private static GameConfig m_instance;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void OnRuntimeInit()
     {
@@ -162,9 +159,6 @@ public class GameConfig : ScriptableObject
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static void OnDataCached()
     {
         if (!UtilityHelper.isMobile && Instance.mouseLookSettings.customCursor != null)
@@ -173,18 +167,12 @@ public class GameConfig : ScriptableObject
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         isDataCached = false;
         RolePrefix = "";
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ResetInstance()
     {
         m_settingProfile = null;
@@ -220,18 +208,11 @@ public class GameConfig : ScriptableObject
         return id;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public string[] AllWeaponStringList()
     {
         return AllWeapons.Select(x => x.Name).ToList().ToArray();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public int CheckPlayerName(string pName)
     {
         for (int i = 0; i < GameTeam.Count; i++)
@@ -249,9 +230,6 @@ public class GameConfig : ScriptableObject
         return 0;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool CheckPasswordUse(string PName, string Pass)
     {
         for (int i = 0; i < GameTeam.Count; i++)
@@ -268,9 +246,6 @@ public class GameConfig : ScriptableObject
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private string _role = string.Empty;
     public string RolePrefix
     {
@@ -308,9 +283,6 @@ public class GameConfig : ScriptableObject
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static GameConfig Instance
     {
         get
@@ -391,17 +363,8 @@ public class GameConfig : ScriptableObject
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newCoins"></param>
         public void AddCoins(int newCoins, string endPoint = "") => GameCore.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="score"></param>
-        /// <returns></returns>
         public int GetCoinsPerScore(int score)
         {
             if (score <= 0 || score < CoinScoreValue || CoinScoreValue <= 0) return 0;

@@ -1,10 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class PlayerAnimationsBase : MonoBehaviourBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
     [SerializeField] private Animator m_animator = null;
     public Animator Animator
     {
@@ -12,18 +9,12 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
         set => m_animator = value;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public PlayerState BodyState
     {
         get;
         set;
     } = PlayerState.Idle;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public PlayerFPState FPState
     {
         get;

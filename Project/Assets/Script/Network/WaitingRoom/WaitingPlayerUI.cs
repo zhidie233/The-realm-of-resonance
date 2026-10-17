@@ -15,19 +15,11 @@ public class WaitingPlayerUI : WaitingPlayerUIBase
     public GameObject MasterClientUI;
     private Player ThisPlayer;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override Player GetPlayer()
     {
         return ThisPlayer;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
     public override void SetInfo(Player player)
     {
         ThisPlayer = player;
@@ -44,17 +36,11 @@ public class WaitingPlayerUI : WaitingPlayerUIBase
         LevelImg.gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UpdateState()
     {
         ReadyUI.SetActive(WaitingRoomBase.Instance.IsPlayerReady(ThisPlayer));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void KickThis()
     {
         if (!PhotonNetworkWrapper.IsMasterClient) return;

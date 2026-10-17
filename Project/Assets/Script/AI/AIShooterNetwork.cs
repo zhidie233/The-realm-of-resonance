@@ -18,9 +18,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
 
     private GameBotProperties BotStat = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -41,18 +38,12 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         RegisterPlayerSpawn();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -60,25 +51,16 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         AIMananger.OnBotStatUpdate -= OnBotStatUpdate;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalStart()
     {
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnNetworkStart()
     {
         References.aiShooter.Init();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         if (stream.IsWriting)
@@ -105,9 +87,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (!PhotonNetworkWrapper.IsMasterClient)//if not master client, then get position from server
@@ -127,9 +106,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GetEssentialData()
     {
         object[] data = photonView.InstantiationData;
@@ -144,17 +120,11 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnMasterStatsReceived(List<GameBotProperties> stats)
     {
         ApplyMasterInfo(stats);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ApplyMasterInfo(List<GameBotProperties> stats)
     {
         int viewID = photonView.ViewID;
@@ -177,10 +147,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="stat"></param>
     void OnBotStatUpdate(GameBotProperties stat)
     {
         if (stat.ViewID != photonView.ViewID) return;
@@ -193,9 +159,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         RegisterPlayerSpawn();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void RegisterPlayerSpawn()
     {
         string name = string.IsNullOrEmpty(AIName) ? (string)photonView.InstantiationData[0] : AIName;
@@ -208,10 +171,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         });
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private GamePlayer BuildPlayer(bool isAlive = true)
     {
         GamePlayer player = new GamePlayer()
@@ -227,9 +186,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         return player;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDestroy()
     {
         base.OnDestroy();
@@ -241,9 +197,6 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         });
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void CheckNamePlate()
     {
         References.namePlateDrawer.SetName(AIName);

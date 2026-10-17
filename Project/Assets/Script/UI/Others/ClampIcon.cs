@@ -18,27 +18,18 @@ namespace Game.Runtime.UI
         float clampBorder = 12;
         bool visible = true;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             ThisTransform = transform;
             visible = IsVisible(ThisTransform.position + Offset);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             ThisTransform = transform;
             if (isPooled) Invoke(nameof(Disable), timeToLive);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnGUI()
         {
             if (isStatic)
@@ -80,9 +71,6 @@ namespace Game.Runtime.UI
             return plane.GetSide(fromPos);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Disable()
         {
             gameObject.SetActive(false);

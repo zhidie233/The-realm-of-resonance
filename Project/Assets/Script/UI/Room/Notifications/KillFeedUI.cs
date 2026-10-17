@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Game.Internal.Structures;
 using Game.Runtime.UI.Bindings;
 
@@ -13,17 +13,11 @@ namespace Game.Runtime.UI
         private KillFeedUIBindingBase[] pool;
         private int currentPooled = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
             PreparePool();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void PreparePool()
         {
             if (pool != null) return;

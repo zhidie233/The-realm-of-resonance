@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,52 +18,33 @@ public class CameraShaker : CameraShakerBase
     float maxAmplitude = 0;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         m_Transform = transform;
         SetCurrentAsOriginPosition();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetCurrentAsOriginPosition()
     {
         if (m_Transform == null) m_Transform = transform;
         OrigiPosition = m_Transform.localEulerAngles;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         GameEvents.onLocalPlayerShake += OnShake;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         GameEvents.onLocalPlayerShake -= OnShake;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="present"></param>
     public override void SetShake(ShakerPresent present, string key)
     {
         AddShake(present, key, 1);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Stop()
     {
         StopAllCoroutines();
@@ -71,23 +52,11 @@ public class CameraShaker : CameraShakerBase
         m_Transform.localRotation = Quaternion.Euler(OrigiPosition);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="present"></param>
-    /// <param name="key"></param>
-    /// <param name="influence"></param>
     void OnShake(ShakerPresent present, string key, float influence)
     {
         AddShake(present, key, influence);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="present"></param>
-    /// <param name="key"></param>
-    /// <param name="influenced"></param>
     public void AddShake(ShakerPresent present, string key, float influenced = 1)
     {
         if (present == null) return;
@@ -107,9 +76,6 @@ public class CameraShaker : CameraShakerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void RemoveShake(string key)
     {
         if (shakersRunning.ContainsKey(key))
@@ -118,10 +84,6 @@ public class CameraShaker : CameraShakerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator UpdateShake()
     {
         Vector3 pos;
@@ -160,11 +122,6 @@ public class CameraShaker : CameraShakerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="intensity"></param>
-    /// <returns></returns>
     public Vector3 ShakeSimple(float intensity)
     {
         tempVector.x = Random.Range(-intensity, intensity) * 0.5f;
@@ -173,9 +130,6 @@ public class CameraShaker : CameraShakerBase
         return tempVector;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public Vector3 Shake(float amplitude, float frequency, int octaves, float persistance, float lacunarity, float burstFrequency, int burstContrast, float influence)
     {
         valX = 0;

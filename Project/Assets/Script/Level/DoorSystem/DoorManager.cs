@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 #if UNITY_EDITOR
@@ -12,9 +12,6 @@ namespace Game.Runtime.Level
         public List<DoorBase> allDoors = new List<DoorBase>();
         private List<DoorBase> toUpdateDoors = new List<DoorBase>();
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override void OnEnable()
         {
             base.OnEnable();
@@ -22,9 +19,6 @@ namespace Game.Runtime.Level
             PhotonNetworkWrapper.AddNetworkCallback(PropertiesKeys.DoorSystem, OnNetworkMessage);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override void OnDisable()
         {
             base.OnDisable();
@@ -32,17 +26,11 @@ namespace Game.Runtime.Level
             PhotonNetworkWrapper.RemoveNetworkCallback(OnNetworkMessage);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void OnUpdate()
         {
             UpdateDoors();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnNetworkMessage(ExitGames.Client.Photon.Hashtable data)
         {
             int command = (int)data["cmd"];
@@ -57,9 +45,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static void SentDoorStateToAll(DoorBase door, DoorBase.State newState)
         {
             if(door.DoorID == -1)
@@ -81,9 +66,6 @@ namespace Game.Runtime.Level
             PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.DoorSystem, data);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SentDoorStateLocally(ExitGames.Client.Photon.Hashtable data)
         {
             int doorId = (int)data["id"];
@@ -108,9 +90,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static void AddUpdateDoor(DoorBase door)
         {
             if (Instance == null) return;
@@ -120,10 +99,6 @@ namespace Game.Runtime.Level
             Instance.toUpdateDoors.Add(door);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="door"></param>
         public static void RemoveUpdateDoor(DoorBase door)
         {
             if (Instance == null) return;
@@ -134,10 +109,6 @@ namespace Game.Runtime.Level
             Instance.toUpdateDoors.RemoveAt(index);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="compiledData"></param>
         void PrepareAllDoors(string compiledData)
         {
             string[] doorStates = compiledData.Split('|');
@@ -151,9 +122,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnNewPlayerEnter(Player newPlayer)
         {
             if (!PhotonNetworkWrapper.IsMasterClient) return;

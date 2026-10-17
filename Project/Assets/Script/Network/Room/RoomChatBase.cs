@@ -1,8 +1,5 @@
-﻿public abstract class RoomChatBase : MonoBehaviourBase
+public abstract class RoomChatBase : MonoBehaviourBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
     private bool _isChatAvailable = true;
     public bool IsChatAvailable
     {
@@ -33,9 +30,6 @@
     /// </summary>
     public abstract void SetActiveUI(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static RoomChatBase _instance;
     public static RoomChatBase Instance
     {

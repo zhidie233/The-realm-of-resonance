@@ -45,7 +45,6 @@ public class PhotonNetworkWrapper : PhotonHelper
         if (e != null) { callbackList.Remove(e); }
     }
 
-    // <param name="callback"></param>
     public static void RemoveNetworkCallback(Action<Hashtable> callback)
     {
         if (Instance == null) return;

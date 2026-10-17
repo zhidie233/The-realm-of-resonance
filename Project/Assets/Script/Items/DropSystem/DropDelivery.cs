@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -20,9 +20,6 @@ public class DropDelivery : DropBase
     private GameObject InstacePrefab;
     private LineRenderer lineRender;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Dispatch(DropData dropData)
     {
         DeliveryTime = dropData.DeliveryDuration;
@@ -39,10 +36,6 @@ public class DropDelivery : DropBase
         StartCoroutine(Delivery());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator Delivery()
     {
         float d = 0;

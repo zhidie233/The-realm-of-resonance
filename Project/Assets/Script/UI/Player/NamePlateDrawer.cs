@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 #if !UNITY_WEBGL && PVOICE
 using Photon.Voice.Unity;
 using Photon.Voice.PUN;
@@ -39,9 +39,6 @@ public class NamePlateDrawer : NamePlateBase
     Vector3 screenPoint;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -57,28 +54,18 @@ public class NamePlateDrawer : NamePlateBase
         distance = UtilityHelper.Distance(myTransform.position, GameController.Instance.CameraRendered.transform.position);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         GameEvents.onRoundEnd += OnGameFinish;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
         GameEvents.onRoundEnd -= OnGameFinish;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="DrawName"></param>
     public override void SetName(string DrawName)
     {
         PlayerName = DrawName;
@@ -88,26 +75,16 @@ public class NamePlateDrawer : NamePlateBase
 #endif
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActive(bool active)
     {
         this.enabled = active;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnGameFinish()
     {
         isFinish = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnGUI()
     {
         if (BlockDraw || GameController.Instance.CameraRendered == null || isFinish || PauseMenuBase.IsMenuOpen)
@@ -150,9 +127,6 @@ public class NamePlateDrawer : NamePlateBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnSlowUpdate()
     {
         if (GameController.Instance.CameraRendered == null)

@@ -2,9 +2,6 @@ using UnityEngine;
 
 public abstract class RoomCameraBase : MonoBehaviourBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public enum CameraMode
     {
         MapPreview,
@@ -20,32 +17,14 @@ public abstract class RoomCameraBase : MonoBehaviourBase
         set;
     } = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract CameraMode GetCameraMode();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cameraMode"></param>
     public abstract void SetCameraMode(CameraMode cameraMode);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActive(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void ResetCamera();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private Camera _cameraComponent = null;
     public virtual Camera GetCamera()
     {

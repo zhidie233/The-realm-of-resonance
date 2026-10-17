@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Game.Runtime.UI;
@@ -26,18 +26,12 @@ public class SniperScope : SniperScopeBase
     RaycastHit m_ray;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
         m_gun = GetComponent<GunController>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -45,9 +39,6 @@ public class SniperScope : SniperScopeBase
         aiming = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -55,9 +46,6 @@ public class SniperScope : SniperScopeBase
         aiming = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (m_gun == null || ScopeTexture == null)

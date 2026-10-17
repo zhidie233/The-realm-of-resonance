@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Game.Runtime.AI;
 
@@ -33,9 +33,6 @@ public class AIAnimation : AIAnimationBase
     private Transform headBone;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -49,9 +46,6 @@ public class AIAnimation : AIAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FetchHashes()
     {
         //cache the hashes in a Array will be more appropriate but to be more readable for other users
@@ -64,18 +58,12 @@ public class AIAnimation : AIAnimationBase
         animatorHashes.Add("isGround", Animator.StringToHash("isGround"));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         ControllerInfo();
         Animate();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ControllerInfo()
     {
         velocity = references.shooterNetwork.Velocity;
@@ -103,9 +91,6 @@ public class AIAnimation : AIAnimationBase
         if (Time.frameCount % 7 == 0) lastYRotation = lastYRotation = CachedTransform.rotation.eulerAngles.y;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Animate()
     {
         if (m_animator == null)
@@ -118,9 +103,6 @@ public class AIAnimation : AIAnimationBase
         m_animator.SetBool(animatorHashes["isGround"], true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnAnimatorIK(int layerIndex)
     {
         if (layerIndex == 1)
@@ -138,9 +120,6 @@ public class AIAnimation : AIAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetKinecmatic()
     {
         for(int i = 0; i< mRigidBody.Count; i++)
@@ -151,11 +130,6 @@ public class AIAnimation : AIAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="from"></param>
-    /// <param name="isExplosion"></param>
     public override void Ragdolled(Vector3 from, bool isExplosion = false)
     {
         m_animator.enabled = false;
@@ -176,9 +150,6 @@ public class AIAnimation : AIAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnGetHit()
     {
         int r = Random.Range(0, 2);

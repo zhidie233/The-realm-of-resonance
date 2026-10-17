@@ -1,41 +1,27 @@
-﻿﻿using Game.Runtime.AI;
+﻿using Game.Runtime.AI;
 using Photon.Realtime;
 using UnityEngine;
 
 public abstract class PlayerScoreboardUIBase : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public GameBotProperties Bot 
     { 
         get; 
         set; 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool isBotBinding 
     { 
         get; 
         set; 
     } = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public Player RealPlayer 
     { 
         get; 
         set; 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
-    /// <param name="bot"></param>
     public abstract void Init(Player player, GameBotProperties bot = null);
 
     /// <summary>
@@ -44,21 +30,9 @@ public abstract class PlayerScoreboardUIBase : MonoBehaviour
     /// <returns></returns>
     public abstract bool Refresh();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract bool UpdateBot();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract int GetScore();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract Team GetTeam();
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine.Serialization;
 
 public abstract class GunPickUpBase : MonoBehaviourBase
@@ -43,9 +43,6 @@ public abstract class GunPickUpBase : MonoBehaviourBase
     /// </summary>
     public bool AutoDestroy = true;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public GunData GunInfo
     {
         get

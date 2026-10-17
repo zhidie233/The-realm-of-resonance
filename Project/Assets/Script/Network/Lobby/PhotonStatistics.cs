@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using Photon.Pun;
@@ -28,9 +28,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
     private int AllPlayerInLobby;
     private bool Started = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         if (!Started)
@@ -41,26 +38,17 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         PhotonNetwork.AddCallbackTarget(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         Refresh();
         InvokeRepeating("UpdateRepeting", 0, UpdateEach);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void UpdateRepeting()
     {
         Refresh();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         CancelInvoke();
@@ -68,9 +56,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Refresh()
     {
         StopAllCoroutines();
@@ -78,9 +63,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         GetPing();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GetPing()
     {
         int ping = PhotonNetwork.GetPing();
@@ -101,10 +83,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         PingText.text = ping.ToString();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator GetStaticsIE()
     {
         GetTime = RandomTime;
@@ -122,9 +100,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         Set();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GetPhotonStatics()
     {
         AllRooms = PhotonNetwork.CountOfRooms;
@@ -133,9 +108,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         AllPlayerInLobby = PhotonNetwork.CountOfPlayersOnMaster;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Set()
     {
         AllRoomText.text = string.Format(GameTexts.RoomsCreated, AllRooms);

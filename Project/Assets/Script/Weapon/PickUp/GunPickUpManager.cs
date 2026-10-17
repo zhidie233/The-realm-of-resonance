@@ -6,26 +6,17 @@ public class GunPickUpManager : GunPickUpManagerBase
 
     [Range(100,500)] public float ForceImpulse = 350;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         PhotonNetworkWrapper.Instance.AddCallback(PropertiesKeys.WeaponPickUpEvent, OnNetworkCall);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         if (PhotonNetworkWrapper.Instance != null)
         PhotonNetworkWrapper.Instance.RemoveCallback(OnNetworkCall);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnNetworkCall(Hashtable data)
     {
         int code = (int)data["type"];

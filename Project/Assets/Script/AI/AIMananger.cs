@@ -387,8 +387,6 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // <param name="bot"></param>
-    // <returns></returns>
     public void GetTargetsFor(AIShooter bot, ref List<Transform> list)
     {
         list.Clear();
@@ -544,8 +542,6 @@ public class AIMananger : PhotonHelper
         stat.ViewID = viewID;
     }
 
-    // <param name="bot"></param>
-    // <param name="gameState"></param>
     public static void SetBotGameState(AIShooter bot, BotGameState gameState)
     {
         var stat = Instance.GetBotStatistics(bot.AIName);
@@ -637,7 +633,6 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // <param name="newMasterClient"></param>
     public void OnMasterClientSwitched(Player newMasterClient)
     {
         //if the new master client is the local client
@@ -691,9 +686,6 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // <param name="data"></param>
-    // <param name="value"></param>
-    // <param name="cmd"></param>
     [PunRPC]
     public void SyncBotStat(string data, int value, byte cmd)
     {
@@ -744,8 +736,6 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // <param name="data"></param>
-    // <param name="cmd"></param>
     [PunRPC]
     void SyncAllBotsStats(string data, int cmd)
     {
@@ -822,7 +812,6 @@ public class AIMananger : PhotonHelper
         lastLifeBots.Add(botName);
     }
 
-    // <param name="Name"></param>
     void DeleteBot(string Name)
     {
         if (BotsStatistics.Exists(x => x.Name == Name))
@@ -846,8 +835,6 @@ public class AIMananger : PhotonHelper
         UpdateTargetList();
     }
 
-    // <param name="team"></param>
-    // <returns></returns>
     public List<GamePlayer> GetAllBotsInTeam(Team team)
     {
         List<GamePlayer> list = new List<GamePlayer>();
@@ -863,7 +850,6 @@ public class AIMananger : PhotonHelper
         return list;
     }
 
-    // <returns></returns>
     public List<Transform> GetOtherBots(Transform bot, Team _team)
     {
         List<Transform> all = new List<Transform>();
@@ -902,8 +888,6 @@ public class AIMananger : PhotonHelper
         return all;
     }
 
-    // <param name="botName"></param>
-    // <returns></returns>
     public GameBotProperties GetBotStatistics(string botName)
     {
         var id = BotsStatistics.FindIndex(x => x.Name == botName);
@@ -960,7 +944,6 @@ public class AIMananger : PhotonHelper
         return null;
     }
 
-    // <returns></returns>
     public GameBotProperties GetBotWithMoreKills()
     {
         if (BotsStatistics == null || BotsStatistics.Count <= 0)

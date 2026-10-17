@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 #if ACTK_IS_HERE
 using CodeStage.AntiCheat.ObscuredTypes;
 #endif
@@ -29,9 +29,6 @@ public class ThrowKits : MonoBehaviourBase
     private ObscuredInt remaingKits;
 #endif
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         CurrentPlayerClass = PlayerClass.Assault.GetSavePlayerClass();
@@ -39,9 +36,6 @@ public class ThrowKits : MonoBehaviourBase
     }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (GameConfig.Instance.isChating) return;
@@ -53,9 +47,6 @@ public class ThrowKits : MonoBehaviourBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void DispatchThrow()
     {
         if (remaingKits <= 0 || DropCallerPrefab == null) return;
@@ -70,9 +61,6 @@ public class ThrowKits : MonoBehaviourBase
         ThrowCaller(id);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ThrowCaller(int id)
     {
         remaingKits--;
@@ -90,10 +78,6 @@ public class ThrowKits : MonoBehaviourBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="amount"></param>
     public void AddKits(int amount)
     {
         remaingKits += amount;

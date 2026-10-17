@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Internal
 {
@@ -16,27 +16,17 @@ namespace Game.Internal
         private bool Initializate = false;
         private float lastSlowCall = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static void AddItem(MonoBehaviourBase behaviour)
         {
             if (instance == null) return;
             instance.AddItemToArray(behaviour);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
             Initializate = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="behaviour"></param>
         public static void RemoveSpecificItem(MonoBehaviourBase behaviour)
         {
             if (instance != null)
@@ -46,10 +36,6 @@ namespace Game.Internal
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="behaviour"></param>
         public static void RemoveSpecificItemAndDestroyIt(MonoBehaviourBase behaviour)
         {
             instance.RemoveSpecificItemFromArray(behaviour);
@@ -57,9 +43,6 @@ namespace Game.Internal
             Destroy(behaviour.gameObject);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDestroy()
         {
             regularArray = new MonoBehaviourBase[0];
@@ -68,10 +51,6 @@ namespace Game.Internal
             slowArray = new MonoBehaviourBase[0];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="behaviour"></param>
         private void AddItemToArray(MonoBehaviourBase behaviour)
         {
             if (behaviour.GetType().GetMethod("OnUpdate").DeclaringType != typeof(MonoBehaviourBase))

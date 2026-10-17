@@ -5,10 +5,6 @@ using System.Collections.Generic;
 public abstract class LobbyRoomListBase : MonoBehaviour
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="rooms"></param>
     public abstract void SetRoomList(List<RoomInfo> rooms);
 
     /// <summary>
@@ -16,9 +12,6 @@ public abstract class LobbyRoomListBase : MonoBehaviour
     /// </summary>
     public abstract void ClearList();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static LobbyRoomListBase _instance;
     public static LobbyRoomListBase Instance
     {

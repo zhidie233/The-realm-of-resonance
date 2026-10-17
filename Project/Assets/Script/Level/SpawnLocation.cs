@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 #if UNITY_EDITOR
 using GameEditor;
 #endif
@@ -27,9 +27,6 @@ public class SpawnLocation : SpawnPointBase
     RaycastHit hitInfo;
     private const float BASE_VERTICAL_THRESHOLD = 0.01f; // if your players fall of the map after spawn, try to increase this value.
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         // Make sure to add this spawnpoint to the list of available points
@@ -57,10 +54,6 @@ public class SpawnLocation : SpawnPointBase
         else Rotation = transform.rotation;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private Vector3 GetPositionInsideShape(float space)
     {
         Vector3 s = transform.position;
@@ -79,9 +72,6 @@ public class SpawnLocation : SpawnPointBase
         return s;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public Vector3 SnapPositionToGround(Vector3 position)
     {
         if (Physics.SphereCast(new Ray(position + (Vector3.up * groundSnapLimit), Vector3.down), 0.1f, out hitInfo, groundSnapLimit * 2.0f, GameConfig.TagsAndLayerSettings.EnvironmentOnly))

@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -13,20 +13,12 @@ namespace Game.Runtime.UI
         public Image scopeImage;
         public CanvasGroup scopeAlpha;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public override void SetActive(bool active)
         {
             scopeAlpha.alpha = 0;
             content.SetActive(active);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="weapon"></param>
         public override void SetupWeapon(SniperScopeBase weapon)
         {
             scopeImage.sprite = weapon.ScopeTexture;
@@ -44,12 +36,6 @@ namespace Game.Runtime.UI
             StartCoroutine(DoFade(fadeIn, speed, delay, onFinish, onStart));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fadeIn"></param>
-        /// <param name="speed"></param>
-        /// <returns></returns>
         IEnumerator DoFade(bool fadeIn, float speed, float delay = 0, Action onFinish = null, Action onStart = null)
         {
             float d = 0;

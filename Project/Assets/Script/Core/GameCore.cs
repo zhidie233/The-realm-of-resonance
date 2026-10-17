@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using Game.Runtime.Settings;
@@ -138,9 +138,6 @@ public static class GameCore
             return LocalPlayerReferences.cameraRay.AddTrigger(detecableInfo);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static void RemoveCameraDetection(DetecableInfo detecableInfo)
         {
             if (LocalPlayerReferences == null) return;
@@ -149,9 +146,6 @@ public static class GameCore
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static class Network
     {
         /// <summary>
@@ -187,16 +181,9 @@ public static class GameCore
             return GetAllCoins().FindIndex(x => x.CoinName == coin.CoinName);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public static List<GameCoin> GetAllCoins() => GameConfig.Instance.gameCoins;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static class Utility
     {
 
@@ -221,15 +208,8 @@ public static class GameCore
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static class GameData
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public static bool UsingWaitingRoom()
         {
             return GameConfig.Instance.lobbyJoinMethod == Game.Internal.Structures.LobbyJoinMethod.WaitingRoom;

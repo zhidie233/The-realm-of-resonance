@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Game Default recoil movement
@@ -19,9 +19,6 @@ public class RecoilHandler : RecoilBase
     private float lerpRecoil = 0;  
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Start()
     {
         GameObject g = new GameObject("Recoil");
@@ -36,17 +33,11 @@ public class RecoilHandler : RecoilBase
         RecoilRot = m_Transform.localEulerAngles;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         RecoilControl();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void RecoilControl()
     {
         if (GunManager == null)
@@ -92,9 +83,6 @@ public class RecoilHandler : RecoilBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void BackToOrigin()
     {
         if (m_Transform == null) return;

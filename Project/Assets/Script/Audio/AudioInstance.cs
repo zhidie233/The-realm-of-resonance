@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,17 +10,11 @@ namespace Game.Audio
         public int ID { get; set; }
         public AudioBankData.AudioInfo playingAudio { get; private set; }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Init()
         {
             if (aSource == null) { aSource = gameObject.AddComponent<AudioSource>(); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public int SetInstance(AudioBankData.AudioInfo info)
         {
             if (aSource == null) { aSource = gameObject.AddComponent<AudioSource>(); }
@@ -39,9 +33,6 @@ namespace Game.Audio
             return ID;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Stop()
         {
             aSource.Stop();

@@ -1,4 +1,4 @@
-﻿using Game.Core.Motion;
+using Game.Core.Motion;
 using GameEditor;
 using UnityEditor;
 using UnityEditorInternal;
@@ -290,9 +290,6 @@ public class GunEditor : Editor
         EditorGUILayout.EndVertical();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawAimSettings()
     {
         EditorGUILayout.BeginVertical("box");
@@ -339,9 +336,6 @@ public class GunEditor : Editor
         EditorGUILayout.EndVertical();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawWeaponBinding()
     {
         GUILayout.BeginVertical("box");
@@ -349,9 +343,6 @@ public class GunEditor : Editor
         GUILayout.EndVertical();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawBullet()
     {
         script.bulletInstanceMethod = (GunController.BulletInstanceMethod)EditorGUILayout.EnumPopup("投射物实例化方式", script.bulletInstanceMethod, EditorStyles.toolbarDropDown);

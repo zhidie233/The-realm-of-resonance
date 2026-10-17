@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class ObjectPoolingBase : MonoBehaviour
 {
@@ -11,9 +11,6 @@ public abstract class ObjectPoolingBase : MonoBehaviour
     /// <param name="rotation"></param>
     public abstract GameObject Instantiate(string prefabName, Vector3 position, Quaternion rotation);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static ObjectPoolingBase _instance;
     public static ObjectPoolingBase Instance
     {

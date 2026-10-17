@@ -15,9 +15,6 @@ public class RoomChat : RoomChatBase
     private List<string> messages = new List<string>();
     private MessageTarget messageTarget = MessageTarget.All;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -26,18 +23,12 @@ public class RoomChat : RoomChatBase
         if (chatInputField != null) chatInputField.gameObject.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         PhotonNetworkWrapper.Instance.AddCallback(PropertiesKeys.ChatEvent, OnNetworkMessageReceived);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -45,17 +36,11 @@ public class RoomChat : RoomChatBase
             PhotonNetworkWrapper.Instance.RemoveCallback(OnNetworkMessageReceived);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Start()
     {
         SetChatLocally(GameTexts.OpenChatStart);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (!CanUseTheChat) return;
@@ -150,18 +135,11 @@ public class RoomChat : RoomChatBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActiveUI(bool active)
     {
         chatInputField.gameObject.SetActive(active);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnSubmit()
     {
         GameConfig.Instance.isChating = !GameConfig.Instance.isChating;
@@ -179,17 +157,11 @@ public class RoomChat : RoomChatBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void HideChat()
     {
         chatText.CrossFadeAlpha(0, 2, true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Refresh()
     {
         chatText.text = string.Empty;
@@ -197,10 +169,6 @@ public class RoomChat : RoomChatBase
             chatText.text += m + "\n";
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="field"></param>
     public void SubmitInputField()
     {
         OnSubmit();

@@ -1,4 +1,4 @@
-﻿﻿namespace Game.Runtime.AI
+﻿namespace Game.Runtime.AI
 {
     /// <summary>
     /// The default bots states
@@ -43,9 +43,6 @@
         KeepFollowingBasedOnState,
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public enum AIWeaponAccuracy
     {
         Pro,
@@ -53,9 +50,6 @@
         Novice,
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public enum AILookAt
     {
         Target,
@@ -64,9 +58,6 @@
         PathToTarget,
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public enum AIRemoteCallType : byte
     {
         DestroyBot = 0,
@@ -75,9 +66,6 @@
         Respawn = 3,
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public enum BotKillConsideration
     {
         /// <summary>

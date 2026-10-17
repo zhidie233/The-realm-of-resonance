@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.Level
 {
@@ -17,10 +17,6 @@ namespace Game.Runtime.Level
     public class CameraRayActiveTrigger : MonoBehaviour
     {
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="other"></param>
         private void OnTriggerEnter(Collider other)
         {
             if (!other.isLocalPlayerCollider()) return;
@@ -28,10 +24,6 @@ namespace Game.Runtime.Level
             SetDetectionActive(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="other"></param>
         private void OnTriggerExit(Collider other)
         {
             if (!other.isLocalPlayerCollider()) return;
@@ -39,9 +31,6 @@ namespace Game.Runtime.Level
             SetDetectionActive(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void SetDetectionActive(bool active)
         {
             if (GameCore.LocalPlayerReferences == null) return;

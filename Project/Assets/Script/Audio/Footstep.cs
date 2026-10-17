@@ -1,4 +1,4 @@
-﻿﻿using Game.Audio;
+﻿using Game.Audio;
 using UnityEngine;
 
 public class Footstep : MonoBehaviour
@@ -22,9 +22,6 @@ public class Footstep : MonoBehaviour
     private float lastStepTime = 0;
     private float volumeMultiplier = 1;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         m_Transform = transform;
@@ -40,9 +37,6 @@ public class Footstep : MonoBehaviour
         audioSource.spatialize = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void UpdateStep(float speed)
     {
         if (Time.time - lastStepTime <= nextRate) return;
@@ -56,9 +50,6 @@ public class Footstep : MonoBehaviour
         lastStepTime = Time.time;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void DetectAndPlaySurface()
     {
         if (Physics.Raycast(m_Transform.position, -Vector3.up, out m_raycastHit, 5, surfaceLayers, QueryTriggerInteraction.Ignore))
@@ -73,18 +64,12 @@ public class Footstep : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void PlayStepForTag(string tag)
     {
         AudioClip step = GetStepSoundFor(tag);
         PlayStepSound(step);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void PlayStepSound(AudioClip clip)
     {
         if (footStepsLibrary != null)
@@ -94,10 +79,6 @@ public class Footstep : MonoBehaviour
         audioSource.Play();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="multiplier"></param>
     public void SetVolumeMuliplier(float multiplier)
     {
         volumeMultiplier = multiplier;

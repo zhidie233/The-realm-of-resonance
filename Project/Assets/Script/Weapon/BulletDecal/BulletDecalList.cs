@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace Game.Internal.Scriptables
@@ -43,9 +43,6 @@ namespace Game.Internal.Scriptables
             return surfaceDecals[genericSurfaceId];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         [Serializable]
         public class SurfaceDecal
         {
@@ -53,10 +50,6 @@ namespace Game.Internal.Scriptables
             public Material[] DecalMaterials;
             public Vector2 SizeRange = new Vector2(0.9f, 1.2f);
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             public Material GetMaterial()
             {
                 return DecalMaterials[UnityEngine.Random.Range(0, DecalMaterials.Length)];

@@ -1,4 +1,4 @@
-﻿﻿using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 
 // This the default bullet handler of Game If you want to use your custom bullet script, simply append the ProjectileBase class to it Handle the override functions and attach it to a bullet prefab Follow the Bullet documentation to see how to use a custom bullet prefab. You can use this script as reference to see how to apply damage to players and bots.
@@ -149,8 +149,6 @@ public class BulletController : ProjectileBase
         gameObject.SetActive(false);
     }
 
-    // <param name="hit"></param>
-    // <returns></returns>
     private bool OnHit(RaycastHit hit)
     {
         Ray mRay = new Ray(_transform.position, _transform.forward);
@@ -441,7 +439,6 @@ public class BulletController : ProjectileBase
         }
     }
 
-    // <returns></returns>
     DamageData BuildBaseDamageData()
     {
         DamageData data = new DamageData()

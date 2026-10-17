@@ -17,9 +17,6 @@ public class MatchInformationDisplay : MonoBehaviour
     public TextMeshProUGUI GameModeText;
     public TextMeshProUGUI TeamText;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void DisplayInfo()
     {
         GameRoomInfo props = PhotonNetwork.CurrentRoom.GetRoomInfo();
@@ -30,10 +27,6 @@ public class MatchInformationDisplay : MonoBehaviour
         StartCoroutine(DoDisplay());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator DoDisplay()
     {
         yield return new WaitForSeconds(Delay);

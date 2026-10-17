@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public class FootstepLibrary : ScriptableObject
@@ -6,11 +6,6 @@ public class FootstepLibrary : ScriptableObject
     public AudioGroup[] Groups;
     public Vector2 pitchRange = new Vector2(0.95f, 1.05f);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="tag"></param>
-    /// <returns></returns>
     public AudioGroup GetGroupFor(string tag)
     {
         for (int i = 0; i < Groups.Length; i++)

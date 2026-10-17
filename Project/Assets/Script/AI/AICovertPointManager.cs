@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -14,28 +14,17 @@ public class AICovertPointManager : MonoBehaviour
 
     public static List<AICoverPoint> AllCovers = new List<AICoverPoint>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDestroy()
     {
         // Since it's a static property, make sure to clean up after unload the scene.
         AllCovers.Clear();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void Register(AICoverPoint co)
     {
         AllCovers.Add(co);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
     public AICoverPoint GetCloseCover(Transform target)
     {
         if (AllCovers == null || AllCovers.Count <= 0)
@@ -59,12 +48,6 @@ public class AICovertPointManager : MonoBehaviour
         return cover;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="radius"></param>
-    /// <returns></returns>
     public AICoverPoint GetCoverOnRadius(Transform target, float radius)
     {
         if (AllCovers == null || AllCovers.Count <= 0)
@@ -92,11 +75,6 @@ public class AICovertPointManager : MonoBehaviour
         return cp;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
     public AICoverPoint GetCloseCoverForced(Transform target)
     {
         if (AllCovers == null || AllCovers.Count <= 0)
@@ -120,12 +98,6 @@ public class AICovertPointManager : MonoBehaviour
         return cover;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="target"></param>
-    /// <param name="overrdidePoint"></param>
-    /// <returns></returns>
     public AICoverPoint GetCloseCover(Transform target, AICoverPoint overrdidePoint)
     {
         AICoverPoint cover = null;
@@ -143,11 +115,6 @@ public class AICovertPointManager : MonoBehaviour
         return cover;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="coverSource"></param>
-    /// <returns></returns>
     public AICoverPoint CheckCoverUsage(AICoverPoint coverSource)
     {
         if (coverSource == null) return null;

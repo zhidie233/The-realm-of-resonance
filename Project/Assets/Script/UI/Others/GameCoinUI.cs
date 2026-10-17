@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -14,27 +14,17 @@ namespace Game.Runtime.UI
         [SerializeField] private Text coinTextUGUI = null;
         [SerializeField] private Image coinIconImg = null;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             if(GameConfig.isDataCached) OnCoinUpdate(null);
             GameEvents.onCoinUpdate += OnCoinUpdate;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDisable()
         {
             GameEvents.onCoinUpdate -= OnCoinUpdate;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="updatedCoin"></param>
         void OnCoinUpdate(GameCoin updatedCoin)
         {
             var coinData = GameCore.Coins.GetCoinData(coin);

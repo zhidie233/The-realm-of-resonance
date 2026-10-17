@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -18,17 +18,11 @@ public class PlayerUIBank : MonoBehaviour
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI HealthText;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         UpdateUIDisplay();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void UpdateUIDisplay()
     {
         TimeUIRoot.SetActive(UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.Time));

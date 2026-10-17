@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -21,9 +21,6 @@ public class OfflineRoom : MonoBehaviour, IConnectionCallbacks
     [Header("References")]
     public GameObject PhotonObject;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         PhotonNetwork.AddCallbackTarget(this);
@@ -44,17 +41,11 @@ public class OfflineRoom : MonoBehaviour, IConnectionCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnConnectedToMaster()
     {
         Debug.Log("Offline Connected to Master");

@@ -64,9 +64,6 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         return true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void UpdatePlayerUI(Player player)
     {
         NameText.text = player.NickNameAndRole();
@@ -85,9 +82,6 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override bool UpdateBot()
     {
         if (Bot == null || string.IsNullOrEmpty(Bot.Name) || !AIMananger.Instance.BotsStatistics.Exists(x => x.Name == Bot.Name))
@@ -112,9 +106,6 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         return true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Kick()
     {
         if (PhotonNetworkWrapper.IsMasterClient)
@@ -123,18 +114,12 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnClick()
     {
         var player = Bot == null ? RealPlayer : null;
         PlayerScoreboardBase.Instance.OnPlayerClicked(player);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         if (RealPlayer == null && !isBotBinding && isInitializated)
@@ -149,28 +134,17 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Destroy()
     {
         Destroy(gameObject);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetScore()
     {
         if (Bot == null) { return RealPlayer.GetPlayerScore(); }
         else { return Bot.Score; }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override Team GetTeam()
     {
         return InitTeam;

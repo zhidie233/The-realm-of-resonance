@@ -38,9 +38,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     private bool inTeam = false;
     private int ChangeTeamTimes = 0;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected || !PhotonNetworkWrapper.InRoom)
@@ -52,9 +49,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         GetRoomInfo();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         SetUpUI();
@@ -66,9 +60,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         PhotonCallbacks.LeftRoom += OnLeftRoom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetUpJoinButtons(bool forced = false)
     {
         if (!inTeam && (CanSelectTeamToJoin() || forced))
@@ -78,9 +69,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         else { playerScoreboards.SetActiveJoinButtons(false); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         StopAllCoroutines();
@@ -92,16 +80,10 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalPlayerDeath()
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnRoundFinish()
     {
         playerScoreboards.SetActiveByTeamMode();
@@ -109,9 +91,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         blackScreen.SetAlpha(0);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GetRoomInfo()
     {
         GameMode mode = GetGameMode;
@@ -121,9 +100,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         MaxPlayerText.text = (!isOneTeamMode) ? string.Format("{0} VS {1}", vs, vs) : string.Format("1 VS {0}", vs);       
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetUpUI()
     {
         if (!RoomSettings.Instance.CurrentRoomInfo.autoTeamSelection)
@@ -156,9 +132,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ShowMenu(bool active)
     {
         if (active) PauseMenuBase.Instance.OpenMenu();
@@ -176,9 +149,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         if (InputHandler.isGamePad) GamePadPointer.Instance?.SetActive(active);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetUIMask(RoomUILayers newMask)
     {
         UIMask = newMask;
@@ -186,9 +156,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         GameEvents.DispatchUIMaskChange(newMask);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Resume()
     {
         if (!GameController.Instance.FirstSpawnDone) return;
@@ -199,9 +166,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         GameEvents.DispatchGamePauseEvent(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void UpdateDisplayUI()
     {
         PlayerUI?.UpdateUIDisplay();
@@ -213,9 +177,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void AutoTeam(bool v)
     {
         AutoTeamUI.SetActive(v);
@@ -235,9 +196,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LeftRoom(bool quit)
     {
         if (!quit)
@@ -251,9 +209,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Suicide()
     {
         if (!GameCore.LocalPlayer.Suicide())
@@ -264,10 +219,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         ShowMenu(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
     public void JoinTeam(int id)
     {
         RoomMenu.Instance.JoinTeam(id);
@@ -293,10 +244,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         SetActiveChangeTeamButton(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public void SetActiveChangeTeamButton(bool active)
     {
         if (ChangeTeamButton == null) return;
@@ -304,10 +251,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         ChangeTeamButton.SetActive(active);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public void ShowScoreboard(bool active)
     {
         playerScoreboards.SetActive(active);
@@ -319,10 +262,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         SpawnProtectionText.gameObject.SetActive(count > 0);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="e"></param>
     void OnPlayerSpawn()
     {
         if (InputHandler.isGamePad)
@@ -331,26 +270,14 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="t_amount"></param>
     void OnPicUpMedKit(int Amount) => new GameLocalNotification(string.Format("+{0} 血量", Amount));
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="text"></param>
-    /// <param name="show"></param>
     public void SetWaitingPlayersText(string text = "", bool show = false)
     {
         WaitingPlayersText.text = text;
         WaitingPlayersText.transform.parent.gameObject.SetActive(show);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ResetRound()
     {
         RoundFinishScreenBase.Instance?.Hide();
@@ -395,10 +322,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private bool CanSelectTeamToJoin()
     {
         return !inTeam && (!RoomSettings.Instance.AutoTeamSelection || !GameCore.GameData.UsingWaitingRoom());

@@ -15,9 +15,6 @@ public abstract class EquippedWeaponUIBase : MonoBehaviour
     /// <param name="fireType"></param>
     public abstract void SetFireType(GunBase.FireType fireType);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static EquippedWeaponUIBase _instance;
     public static EquippedWeaponUIBase Instance
     {

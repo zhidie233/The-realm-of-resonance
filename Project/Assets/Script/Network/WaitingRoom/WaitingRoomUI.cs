@@ -28,26 +28,16 @@ public class WaitingRoomUI : WaitingRoomUIBase
 
     private List<WaitingPlayerUIBase> playerListCache = new List<WaitingPlayerUIBase>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         Content.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="show"></param>
     public override void ShowLoadingScreen(bool show)
     {
         LoadingMapUI.SetActive(show);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActive(bool active)
     {
         if (active)
@@ -65,9 +55,6 @@ public class WaitingRoomUI : WaitingRoomUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void InstancePlayerList()
     {
         playerListCache.ForEach(x => { if (x != null) { Destroy(x.gameObject); } });
@@ -113,9 +100,6 @@ public class WaitingRoomUI : WaitingRoomUIBase
         UpdatePlayerCount();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetPlayerToList(Player player)
     {
         GameObject g = Instantiate(WaitingPlayerPrefab) as GameObject;
@@ -125,9 +109,6 @@ public class WaitingRoomUI : WaitingRoomUIBase
         playerListCache.Add(wp);
     }
    
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UpdateRoomInfoUI()
     {
         GameMode mode = GetGameModeUpdated;
@@ -159,9 +140,6 @@ public class WaitingRoomUI : WaitingRoomUIBase
     }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UpdatePlayerCount()
     {
         int required = GetGameModeUpdated.GetGameModeInfo().RequiredPlayersToStart;
@@ -186,34 +164,22 @@ public class WaitingRoomUI : WaitingRoomUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UpdateAllPlayersStates()
     {
         playerListCache.ForEach(x => { if(x != null) x.UpdateState(); });
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetLocalReady()
     {
         WaitingRoomBase.Instance.SetLocalPlayerReady();
         readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = WaitingRoomBase.Instance.IsLocalReady() ? "取消".Localized(67).ToUpper() : "准备".Localized(184).ToUpper();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void MasterStartTheGame()
     {
         WaitingRoomBase.Instance.StartGame();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void EnterAsSpectator()
     {
         LobbyUI.ShowConfirmationWindow(GameTexts.EnterAsSpectator.Localized(209), () =>
@@ -223,10 +189,6 @@ public class WaitingRoomUI : WaitingRoomUIBase
         });
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private int GetSpectatorsCount()
     {
         int count = 0;
@@ -241,9 +203,6 @@ public class WaitingRoomUI : WaitingRoomUIBase
         return count;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LeaveRoom(bool comfirmed)
     {
         if (comfirmed)

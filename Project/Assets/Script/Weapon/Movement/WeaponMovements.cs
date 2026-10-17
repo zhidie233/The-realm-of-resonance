@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Control the rotation of the FP weapon when the player sprint
@@ -39,9 +39,6 @@ public class WeaponMovements : MonoBehaviourBase
     private bool defaultState = true;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -53,9 +50,6 @@ public class WeaponMovements : MonoBehaviourBase
         sprintReloadRot = Quaternion.Euler(rotateToReload);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnLateUpdate()
     {
         if (controller == null)
@@ -65,9 +59,6 @@ public class WeaponMovements : MonoBehaviourBase
         RotateControl();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void RotateControl()
     {
         float delta = Time.smoothDeltaTime;

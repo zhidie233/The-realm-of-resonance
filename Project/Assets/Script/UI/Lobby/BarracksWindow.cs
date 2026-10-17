@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -18,18 +18,12 @@ namespace Game.Runtime.UI
 
         public int CurrentWindow { get; set; } = -1;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             InitialSetup();
             OpenWindow(firstWindow);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void InitialSetup()
         {
             foreach (var window in windows)
@@ -41,10 +35,6 @@ namespace Game.Runtime.UI
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="windowName"></param>
         public void OpenWindow(string windowName)
         {
             var id = windows.FindIndex(x => x.Name == windowName);
@@ -56,10 +46,6 @@ namespace Game.Runtime.UI
             OpenWindow(id);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="windowName"></param>
         public void OpenWindow(int windowIndex)
         {
             if (windowIndex == CurrentWindow) return;

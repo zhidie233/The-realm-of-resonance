@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.Level
 {
@@ -8,9 +8,6 @@ namespace Game.Runtime.Level
     /// </summary>
     public abstract class DoorBase : MonoBehaviour
     {
-        /// <summary>
-        /// 
-        /// </summary>
         [SerializeField]private State _doorState = State.Close;
         public State DoorState
         {
@@ -18,9 +15,6 @@ namespace Game.Runtime.Level
             set => _doorState = value;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private int _doorId = -1;
         public int DoorID
         {
@@ -46,9 +40,6 @@ namespace Game.Runtime.Level
         /// </summary>
         public abstract void OnUpdateDoor();
 
-        /// <summary>
-        /// 
-        /// </summary>
         public enum State
         {
             Close,

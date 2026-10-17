@@ -20,7 +20,6 @@ public abstract class MatchTimeManagerBase : MonoBehaviourBase
         // Automatically respawn the local player?
         public bool RespawnPlayer { get; set; }
 
-        // <param name="keepData"></param>
         public NewRoundOptions(bool keepData)
         {
             KeepData = keepData;
@@ -77,10 +76,8 @@ public abstract class MatchTimeManagerBase : MonoBehaviourBase
     // <param name="timeText"></param>
     public abstract void SetTimeTextRender(TextMeshProUGUI timeText, bool disableCurrent = true);
 
-    // <returns></returns>
     public abstract bool IsTimeUp();
 
-    // <returns></returns>
     public static bool HaveTimeStarted() => Instance.TimeState == RoomTimeState.Started;
 
     private static MatchTimeManagerBase _instance;

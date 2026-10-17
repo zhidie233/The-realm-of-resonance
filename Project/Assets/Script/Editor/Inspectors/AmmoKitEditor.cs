@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using GameEditor;
@@ -10,17 +10,11 @@ namespace Game.Runtime.Level
     {
         AmmoBox script;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             script = (AmmoBox)target;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void OnInspectorGUI()
         {
             EditorGUI.BeginChangeCheck();

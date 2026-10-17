@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.Level
 {
@@ -8,9 +8,6 @@ namespace Game.Runtime.Level
         [Range(0, 100)]
         public int health = 25;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnTriggerEnter(Collider m_other)
         {
             if (!m_other.isLocalPlayerCollider()) return;

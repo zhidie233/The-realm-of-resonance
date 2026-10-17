@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
@@ -65,7 +65,6 @@ public class ExplosionDamage : ExplosionBase
         SetupAudio();
     }
 
-    // <param name="radius"></param>
     public override void SetRadius(float radius)
     {
         explosionRadius = radius;
@@ -363,7 +362,6 @@ public class ExplosionDamage : ExplosionBase
         Source.spatialize = true;
     }
 
-    // <returns></returns>
     IEnumerator Init()
     {
         yield return new WaitForSeconds(DisappearIn / 2);

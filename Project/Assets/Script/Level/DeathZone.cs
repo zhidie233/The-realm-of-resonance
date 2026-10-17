@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 namespace Game.Runtime.Level
@@ -15,9 +15,6 @@ namespace Game.Runtime.Level
         private int CountDown;
         private Collider m_Collider = null;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Awake()
         {
             CountDown = countDown;
@@ -31,10 +28,6 @@ namespace Game.Runtime.Level
             m_killZoneUI = UIReferences.Instance.PlayerUI.KillZoneUI;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mCol"></param>
         void OnTriggerEnter(Collider mCol)
         {
             if (mCol.isLocalPlayerCollider())//when is player local enter
@@ -46,9 +39,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void DoPlayerDamage(Transform root)
         {
             var pdm = root.GetComponentInChildren<PlayerHealthManagerBase>(true);// get the component damage
@@ -65,10 +55,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="mCol"></param>
         void OnTriggerExit(Collider mCol)
         {
             if (mCol.isLocalPlayerCollider())// if player exit of zone then cancel countdown
@@ -104,9 +90,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void UpdateUI()
         {
             if (m_killZoneUI == null) return;

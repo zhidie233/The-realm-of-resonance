@@ -1,17 +1,14 @@
-﻿﻿#if ACTK_IS_HERE
+#if ACTK_IS_HERE
 using CodeStage.AntiCheat.ObscuredTypes;
 #endif
 
 /// <summary>
-/// Base class for the default Game weapons
-/// GunController.cs is a hard coded class not easy to extend, a modular weapon system is on the works
-/// At the moment, CustomGunBase.cs is the way to extended and create your own custom weapon script.
+/// 本作默认武器的基类。
+/// GunController.cs 是写死的类，不便扩展，模块化武器系统还在做。
+/// 目前要扩展、编写自己的武器脚本，走 CustomGunBase.cs。
 /// </summary>
 public abstract class GunBase : MonoBehaviourBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public enum FireType
     {
         Undefined,
@@ -78,9 +75,5 @@ public abstract class GunBase : MonoBehaviourBase
         set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract FireType GetFireType();
 }

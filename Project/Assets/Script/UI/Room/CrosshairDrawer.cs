@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using Game.Internal.Structures;
@@ -49,9 +49,6 @@ public class CrosshairDrawer : CrosshairBase
     private Vector2 extraScale = Vector2.zero;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -73,9 +70,6 @@ public class CrosshairDrawer : CrosshairBase
         if (m_Canvas == null) { m_Canvas = transform.root.GetComponentInChildren<Canvas>(); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (GetCrosshair.isStatic)
@@ -85,9 +79,6 @@ public class CrosshairDrawer : CrosshairBase
         FadeControll();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -100,9 +91,6 @@ public class CrosshairDrawer : CrosshairBase
         RootContent.gameObject.SetActive(GameConfig.Instance.showCrosshair);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -110,26 +98,17 @@ public class CrosshairDrawer : CrosshairBase
         GameEvents.onLocalPlayerStateChanged -= OnLocalPlayerStateChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalDeath()
     {
         playerState = PlayerState.Idle;
         isAim = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalPlayerStateChange(PlayerState from, PlayerState to)
     {
         playerState = to;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ScaleContent()
     {
         if (RootContent == null)
@@ -140,9 +119,6 @@ public class CrosshairDrawer : CrosshairBase
         RootContent.sizeDelta = Vector2.Lerp(RootContent.sizeDelta, size, Time.unscaledDeltaTime * ScaleLerp);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FadeControll()
     {
         if (CrossAlpha == null)
@@ -152,10 +128,6 @@ public class CrosshairDrawer : CrosshairBase
         CrossAlpha.alpha = Mathf.Lerp(CrossAlpha.alpha, at, Time.deltaTime * 10);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="gun"></param>
     public override void SetupCrosshairForWeapon(GunController gun)
     {
         if (gun == null) return;
@@ -164,10 +136,6 @@ public class CrosshairDrawer : CrosshairBase
         SetupCrosshairForWeapon(gun.WeaponType);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="gun"></param>
     public override void SetupCrosshairForWeapon(GunType gun)
     {
         for (int i = 0; i < weaponCrosshairs.Length; i++)
@@ -188,18 +156,11 @@ public class CrosshairDrawer : CrosshairBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ActiveGenericCrosshair()
     {
         genericCrosshair.SetActive(true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="show"></param>
     public override void Show(bool show)
     {
         if (Block || !GameConfig.Instance.showCrosshair)
@@ -208,9 +169,6 @@ public class CrosshairDrawer : CrosshairBase
         RootContent.gameObject.SetActive(show);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnFire()
     {
         if (!Interactable)
@@ -223,9 +181,6 @@ public class CrosshairDrawer : CrosshairBase
         lastTimeFire = Time.time + OnFireScaleRate;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnAim(bool aim)
     {
         if (!Interactable)
@@ -234,9 +189,6 @@ public class CrosshairDrawer : CrosshairBase
         isAim = aim;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnHit()
     {
         if (HitMarkerRoot == null)
@@ -246,27 +198,17 @@ public class CrosshairDrawer : CrosshairBase
         StartCoroutine(nameof(OnHitMarker));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="allow"></param>
     public override void AllowFade(bool allow)
     {
        m_allowFade = allow;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Reset()
     {
         RootContent.sizeDelta = new Vector2(GetCrosshair.NormalScaleAmount, GetCrosshair.NormalScaleAmount);
         RootContent.eulerAngles = InitialRotation;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private bool CanFade
     {
         get => m_allowFade && fadeOnAim;
@@ -274,9 +216,6 @@ public class CrosshairDrawer : CrosshairBase
 
     private bool Interactable => RootContent != null && !GetCrosshair.isStatic;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private UCrosshairInfo m_currentCrosshair;
     public UCrosshairInfo GetCrosshair
     {
@@ -287,10 +226,6 @@ public class CrosshairDrawer : CrosshairBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator OnHitMarker()
     {
         hitDuration = 0;

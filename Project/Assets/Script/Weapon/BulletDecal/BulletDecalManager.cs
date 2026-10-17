@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Game.Internal.Scriptables;
 using GameEditor;
 
@@ -15,9 +15,6 @@ namespace Game.Runtime.Level
         private Vector3 decalBaseScale = Vector3.one;
         private bool showDecals = true;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
             Init();
@@ -53,10 +50,6 @@ namespace Game.Runtime.Level
                 .SetScaleVariation(decalBaseScale, decalData.SizeRange);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public BulletDecalBase GetPool()
         {
             currentPool = (currentPool + 1) % maxDecalInstances;

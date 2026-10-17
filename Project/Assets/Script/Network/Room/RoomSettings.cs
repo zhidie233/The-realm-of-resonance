@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using Game.Runtime.Settings;
@@ -22,9 +22,6 @@ public class RoomSettings : MonoBehaviourBase
 
     private Dictionary<string, object> matchPersistData = new Dictionary<string, object>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -35,9 +32,6 @@ public class RoomSettings : MonoBehaviourBase
         GetRoomInfo();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator Start()
     {
         while (!GameConfig.isDataCached) yield return null;
@@ -167,11 +161,6 @@ public class RoomSettings : MonoBehaviourBase
         GameController.Instance.SpawnPlayer(team);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="value"></param>
     public static void AddMatchPersistData(string key, object value)
     {
         if (Instance == null) return;
@@ -185,11 +174,6 @@ public class RoomSettings : MonoBehaviourBase
         Instance.matchPersistData[key] = value;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="value"></param>
     public static float IncreaseMatchPersistData(string key, float value)
     {
         if (Instance == null) return 0;
@@ -206,12 +190,6 @@ public class RoomSettings : MonoBehaviourBase
         return current;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="key"></param>
-    /// <param name="value"></param>
-    /// <returns></returns>
     public static bool TryGetMatchPersistData(string key, out object value)
     {
         value = null;

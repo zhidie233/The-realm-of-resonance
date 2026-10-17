@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,9 +11,6 @@ public class GameRoomPreview : MonoBehaviour
     public Image MapPreview;
     public TextMeshProUGUI MapNameText;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Show(GameRoomInfo info)
     {
         var map = info.GetMapInfo();

@@ -8,10 +8,5 @@ public abstract class CameraMotionBase : MonoBehaviourBase
     /// <param name="rotation"></param>
     public abstract void AddCameraRotation(Quaternion rotation);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
-    /// <param name="amplitude"></param>
     public abstract void SetActiveBreathing(bool active, float amplitude = 0);
 }

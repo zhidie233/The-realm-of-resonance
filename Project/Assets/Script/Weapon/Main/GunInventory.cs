@@ -610,13 +610,11 @@ public class GunInventory : MonoBehaviourBase
         PlayerEquip[slot] = weapon;
     }
 
-    // <returns></returns>
     private Vector3 GetThrowPosition()
     {
         return playerReferences.PlayerCameraTransform.TransformPoint(Vector3.forward * 0.55f);
     }
 
-    // <returns></returns>
     private Vector3 GetThrowDirection()
     {
         return playerReferences.PlayerCameraTransform.forward;
@@ -642,7 +640,6 @@ public class GunInventory : MonoBehaviourBase
         }
     }
 
-    // <param name="id"></param>
     public void PlaySound(int id)
     {
         if (ASource == null) return;
@@ -654,7 +651,6 @@ public class GunInventory : MonoBehaviourBase
         }
     }
 
-    // <returns></returns>
     public AudioSource GetFireAudioSource()
     {
         if (fireAudioSource == null)
@@ -667,7 +663,6 @@ public class GunInventory : MonoBehaviourBase
         return fireAudioSource;
     }
 
-    // <returns></returns>
     public GunController GetCurrentWeapon()
     {
         if (CurrentGun == null)
@@ -692,7 +687,6 @@ public class GunInventory : MonoBehaviourBase
 
     void OnMatchStart() { isGameStarted = true; }
 
-    // <returns></returns>
     public bool HasAWeaponActive()
     {
         foreach (var item in PlayerEquip)

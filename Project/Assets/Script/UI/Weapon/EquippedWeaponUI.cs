@@ -1,4 +1,4 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 
 public class EquippedWeaponUI : EquippedWeaponUIBase
@@ -8,9 +8,6 @@ public class EquippedWeaponUI : EquippedWeaponUIBase
     [SerializeField] private TextMeshProUGUI FireTypeText;
     public Gradient AmmoTextColorGradient;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetAmmoOf(GunController gun)
     {
         int bullets = gun.bulletsLeft;
@@ -37,10 +34,6 @@ public class EquippedWeaponUI : EquippedWeaponUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="weapon"></param>
     public override void SetFireType(GunBase.FireType fireType)
     {
         if (FireTypeText == null) return;

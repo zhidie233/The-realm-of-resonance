@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 namespace Game.Audio
@@ -19,33 +19,21 @@ namespace Game.Audio
         public float MaxBackgroundVolume = 0.3f;
         public AudioSource backgroundSource;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
             audioController.Initialized(this);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             MaxBackgroundVolume = GameCore.MusicVolume;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void PlayClip(string clipName)
         {
             audioController.PlayClip(clipName);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void PlayBackground()
         {
             if (BackgroundClip == null) return;
@@ -58,9 +46,6 @@ namespace Game.Audio
             StartCoroutine(FadeAudio(backgroundSource, true, MaxBackgroundVolume));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void StopBackground()
         {
             if (backgroundSource == null) return;
@@ -68,17 +53,11 @@ namespace Game.Audio
             FadeAudio(backgroundSource, false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ForceStopAllFades()
         {
             StopAllCoroutines();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         IEnumerator FadeAudio(AudioSource source, bool up, float volume = 1)
         {
             if (up)

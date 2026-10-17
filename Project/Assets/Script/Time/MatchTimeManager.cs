@@ -51,9 +51,6 @@ public class MatchTimeManager : MatchTimeManagerBase
     private Action<RoundFinishCause> finishRoundCallback = null;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected && !GameConfig.Instance.offlineMode && !OfflineRoom.Instance.forceOffline)
@@ -66,9 +63,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         IsPaused = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Start()
     {
         if (!PhotonNetworkWrapper.IsConnected)
@@ -85,9 +79,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -95,9 +86,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         PhotonCallbacks.RoomPropertiesUpdate += OnRoomPropertiesChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -105,10 +93,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         PhotonCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActive(bool active)
     {
         isThisActive = active;
@@ -137,18 +121,12 @@ public class MatchTimeManager : MatchTimeManagerBase
         GetTime(true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void InitAfterWaiting()
     {
         GetTime(true);
         photonView.RPC(nameof(RpcStartTime), RpcTarget.AllBuffered, 3);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void RemoteInit()
     {
         if (TimeState == RoomTimeState.StartedAfterCountdown)
@@ -169,9 +147,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void InitAfterCountdown()
     {
         RoundDuration = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey];
@@ -226,9 +201,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         IsInitialized = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetTimeState(RoomTimeState state, bool sync = false)
     {
         // Debug.Log($"time state changed from {TimeState.ToString()} to {state.ToString()}");
@@ -245,18 +217,12 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         UpdateTime();
         DisplayTime();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void UpdateTime()
     {
         if (!IsInitialized || IsPaused || m_timeIsUp || !isThisActive)
@@ -289,18 +255,11 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="doPause"></param>
     public override void Pause(bool doPause)
     {
         IsPaused = doPause;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void RestartTime()
     {
         //get the room time duration from hash tables
@@ -319,10 +278,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="finishRoundHandler"></param>
     public override void SetFinishRoundHandler(Action<RoundFinishCause> finishRoundHandler)
     {
         finishRoundCallback = finishRoundHandler;
@@ -364,9 +319,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DisplayTime()
     {
         if (CurrentTime == 0 || !isThisActive) return;
@@ -415,9 +367,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void FinishGame()
     {
         UtilityHelper.LockCursor(false);
@@ -492,9 +441,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         Invoke(nameof(StartTime), wait);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void StartTime()
     {
         if (GameConfig.Instance.useCountDownOnStart)
@@ -510,11 +456,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         GameController.Instance.SpawnPlayer(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="timeText"></param>
-    /// <param name="disableCurrent"></param>
     public override void SetTimeTextRender(TextMeshProUGUI timeText, bool disableCurrent = true)
     {
         if (disableCurrent)
@@ -525,16 +466,8 @@ public class MatchTimeManager : MatchTimeManagerBase
         TimeText = timeText;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool IsTimeUp() => m_timeIsUp;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="newMaster"></param>
     void OnMasterClientSwitch(Player newMaster)
     {
         if (newMaster.ActorNumber == PhotonNetworkWrapper.LocalPlayer.ActorNumber)
@@ -546,10 +479,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="props"></param>
     void OnRoomPropertiesChange(Hashtable props)
     {
         if (props.ContainsKey(StartTimeKey) && !PhotonNetworkWrapper.IsMasterClient)

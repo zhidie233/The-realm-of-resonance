@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -44,9 +44,6 @@ public class AIShooterAttack : AIShooterAttackBase
     private AIShooterAgent AI;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         AiReferences = GetComponent<AIShooterReferences>();
@@ -56,9 +53,6 @@ public class AIShooterAttack : AIShooterAttackBase
         PhotonCallbacks.LeftRoom += OnLocalLeftRoom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         attackTime = Time.time;
@@ -78,26 +72,17 @@ public class AIShooterAttack : AIShooterAttackBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         PhotonCallbacks.PlayerEnteredRoom -= OnPhotonPlayerConnected;
         PhotonCallbacks.LeftRoom -= OnLocalLeftRoom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalLeftRoom()
     {
         Destroy(gameObject);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Fire(FireReason fireReason = FireReason.Normal)
     {
         if (!canFire || AI.ObstacleBetweenTarget)
@@ -168,9 +153,6 @@ public class AIShooterAttack : AIShooterAttackBase
         IsFiring = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void FireSingleProjectile(Vector3 origin, Vector3 direction, bool remote)
     {
         if (Weapon == null) return;
@@ -202,9 +184,6 @@ public class AIShooterAttack : AIShooterAttackBase
         bullet.GetComponent<ProjectileBase>().InitProjectile(m_BulletData);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void PlayFireEffects()
     {
         if (FireSource.enabled)
@@ -216,18 +195,12 @@ public class AIShooterAttack : AIShooterAttackBase
         if (Weapon.MuzzleFlash != null) { Weapon.MuzzleFlash.Play(); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnDeath()
     {
         StopAllCoroutines();
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator ThrowGrenade(bool network, Vector3 velocity, Vector3 forward)
     {
         Anim.SetInteger("UpperState", 2);
@@ -268,10 +241,6 @@ public class AIShooterAttack : AIShooterAttackBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator Reload()
     {
         photonView.RPC(nameof(RpcReload), RpcTarget.Others);
@@ -311,10 +280,6 @@ public class AIShooterAttack : AIShooterAttackBase
         PlayFireEffects();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="ID"></param>
     [PunRPC]
     void SyncAIWeapon(int ID)
     {
@@ -338,11 +303,6 @@ public class AIShooterAttack : AIShooterAttackBase
         Anim.SetInteger("UpperState", 0);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="target"></param>
-    /// <returns></returns>
     private Vector3 GetVelocity(Vector3 target)
     {
         Vector3 velocity;
@@ -381,9 +341,6 @@ public class AIShooterAttack : AIShooterAttackBase
         return velocity;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator PlayReloadSound()
     {
         for (int i = 0; i < Weapon.reloadSounds.Length; i++)
@@ -408,10 +365,6 @@ public class AIShooterAttack : AIShooterAttackBase
         return Weapon.maxFollowingShots;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override Vector3 GetFirePosition()
     {
         return FirePoint.position;

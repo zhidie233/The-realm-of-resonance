@@ -71,9 +71,6 @@ public class AIShooterAgent : AIShooter
     private float lastCrouchTime = 0;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -99,9 +96,6 @@ public class AIShooterAgent : AIShooter
         headBoneReference = References.aiAnimation.GetHumanBone(HumanBodyBones.Head);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Init()
     {
         isMaster = PhotonNetworkWrapper.IsMasterClient;
@@ -110,9 +104,6 @@ public class AIShooterAgent : AIShooter
         References.Agent.enabled = isMaster;
     }
     
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {  
         time = Time.time;
@@ -176,17 +167,11 @@ public class AIShooterAgent : AIShooter
         FootStep();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnAgentStateChanged(AIAgentState from, AIAgentState to)
     {
         
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnTargetChanged(Transform from, Transform to)
     {
 
@@ -211,17 +196,11 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CorrectLookAt()
     {
         SetLookAtState(AILookAt.PathToTarget);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void TargetControll()
     {
         if (Time.frameCount % precisionRate != 0) return;
@@ -250,9 +229,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void WhenTargetOutOfRange()
     {
         if (behaviorSettings.targetOutRangeBehave == AITargetOutRangeBehave.SearchNewNearestTarget)
@@ -305,9 +281,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void WhenTargetOnMediumRange()
     {
         SetDebugState(3, true);
@@ -315,9 +288,6 @@ public class AIShooterAgent : AIShooter
         OnTargeContest(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void WhenTargetOnCloseRange()
     {
         SetDebugState(4, true);
@@ -325,9 +295,6 @@ public class AIShooterAgent : AIShooter
         Follow();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void WhenTargetOnLimitRange()
     {
         SetDebugState(5, true);
@@ -335,9 +302,6 @@ public class AIShooterAgent : AIShooter
         precisionRate = 1;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnCovering()
     {
         if (Time.frameCount % precisionRate != 0) return;
@@ -443,9 +407,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private bool Cover(bool overridePoint, AIAgentCoverArea coverArea = AIAgentCoverArea.ToPoint)
     {
         // 添加空检查
@@ -531,9 +492,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnGetHit(Vector3 pos)
     {
         LastHitDirection = pos;
@@ -576,9 +534,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnHoldingPosition()
     {
         //if (Time.frameCount % 10 != 0) return;
@@ -591,9 +546,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SwitchCover()
     {
         if (Agent.pathStatus != NavMeshPathStatus.PathComplete)
@@ -701,9 +653,6 @@ public class AIShooterAgent : AIShooter
         CheckConfrontation();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SearchPlayers()
     {
         SetDebugState(-2);
@@ -727,9 +676,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckVision()
     {
         if (!HasATarget || !PhotonNetworkWrapper.IsMasterClient)
@@ -839,9 +785,6 @@ public class AIShooterAgent : AIShooter
         SetDestination(finalPosition, 1, true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void KillTheTarget()
     {
         if (!HasATarget) return;
@@ -854,9 +797,6 @@ public class AIShooterAgent : AIShooter
         photonView.RPC(RPC_NAME, RpcTarget.Others, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckConfrontation()
     {
         if (AgentState != AIAgentState.Covering)
@@ -875,9 +815,6 @@ public class AIShooterAgent : AIShooter
         SetCrouch(playerInFront && !ObstacleBetweenTarget);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void LookAtControl()
     {
         if (!isMaster) return;
@@ -908,9 +845,6 @@ public class AIShooterAgent : AIShooter
         m_Transform.localRotation = Quaternion.Slerp(m_Transform.localRotation, Quaternion.Euler(localRotation), delta * soldierSettings.rotationSmoothing);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Follow()
     {
         if (AgentState == AIAgentState.Covering && Random.value > 0.5f) return;
@@ -949,9 +883,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void TriggerFire(AIShooterAttackBase.FireReason reason = AIShooterAttackBase.FireReason.Normal)
     {
         if (LookingAt == AILookAt.Path) SetLookAtState(AILookAt.Target);
@@ -959,17 +890,11 @@ public class AIShooterAgent : AIShooter
         AIWeapon.Fire(reason);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void DetermineSpeedBaseOnRange()
     {
         Speed = (Target != null && CachedTargetDistance > soldierSettings.mediumRange) ? soldierSettings.runSpeed : soldierSettings.walkSpeed;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetState(AIAgentState newState)
     {
         if (newState == AgentState) return;
@@ -978,9 +903,6 @@ public class AIShooterAgent : AIShooter
         AgentState = newState;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetTarget(Transform newTarget)
     {
         if (Target == newTarget) return;
@@ -1014,9 +936,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetLookAtState(AILookAt newLookAt)
     {
         if (LookingAt == newLookAt) return;
@@ -1029,9 +948,6 @@ public class AIShooterAgent : AIShooter
         forceUpdateRotation = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetDestination(Vector3 position, float stopedDistance, bool checkRate = false)
     {
         if (checkRate && (time - lastDestinationTime) < 2) return;
@@ -1104,9 +1020,6 @@ public class AIShooterAgent : AIShooter
         return Vector3.zero;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetCrouch(bool crouch)
     {
         if (IsCrouch == crouch || time - lastCrouchTime < 0.5f) return;
@@ -1163,9 +1076,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UpdateTargetList()
     {
         if (Target != null) return;
@@ -1174,9 +1084,6 @@ public class AIShooterAgent : AIShooter
         AimTarget.name = AIName;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void CheckTargets()
     {
         if (Target != null && Target.name.Contains("(die)"))
@@ -1195,9 +1102,6 @@ public class AIShooterAgent : AIShooter
         photonView.RPC(RPC_NAME, RpcTarget.All, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void FootStep()
     {
         if (velocityMagnitud > 0.2f)
@@ -1292,9 +1196,6 @@ public class AIShooterAgent : AIShooter
          });
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SyncTargetAI(NetHashTable data)
     {
         var view = (int)data["viewID"];
@@ -1318,9 +1219,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalSpawn()
     {
         if (!isOneTeamMode && GameCore.LocalPlayer.Team == AITeam)
@@ -1342,9 +1240,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -1353,9 +1248,6 @@ public class AIShooterAgent : AIShooter
         GameEvents.onMatchStateChanged += OnMatchStateChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -1365,18 +1257,12 @@ public class AIShooterAgent : AIShooter
         GameEvents.onMatchStateChanged -= OnMatchStateChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnMatchStateChange(MatchState state)
     {
         if (state == MatchState.Waiting || state == MatchState.Starting) isGameStarted = false;
         else isGameStarted = MatchTimeManagerBase.Instance.TimeState == RoomTimeState.Started;      
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnMatchStart()
     {
         isGameStarted = GameController.Instance.GameMatchState != MatchState.Waiting && MatchTimeManagerBase.Instance.TimeState == RoomTimeState.Started;
@@ -1420,12 +1306,6 @@ public class AIShooterAgent : AIShooter
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="positionReference"></param>
-    /// <param name="radius"></param>
-    /// <returns></returns>
     private Vector3 GetPositionAround(Vector3 positionReference, float radius)
     {
         var v = Random.insideUnitSphere * radius;
@@ -1434,10 +1314,6 @@ public class AIShooterAgent : AIShooter
         return v;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public Transform GetNearestPlayer()
     {
         if (availableTargets.Count > 0)
@@ -1459,10 +1335,6 @@ public class AIShooterAgent : AIShooter
         else { return null; }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public Transform GetTargetOnRange()
     {
         Transform t = null;

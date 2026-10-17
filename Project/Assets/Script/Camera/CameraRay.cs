@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System;
 
@@ -39,9 +39,6 @@ public class CameraRay : CameraRayBase
     private byte increaseCounter = 0;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (!IsCurrentlyDetecting) { currentFrame = 0; return; }
@@ -53,9 +50,6 @@ public class CameraRay : CameraRayBase
         currentFrame = (currentFrame + 1) % CheckFrameRate;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Fire()
     {
         bool detected = false;
@@ -128,9 +122,6 @@ public class CameraRay : CameraRayBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void UnDetectCurrentItem()
     {
         if (m_currentDetectedItem == null) return;
@@ -161,9 +152,6 @@ public class CameraRay : CameraRayBase
         SetActiver(false, info.ID);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override byte SetActiver(bool add, byte id)
     {
         if (add)

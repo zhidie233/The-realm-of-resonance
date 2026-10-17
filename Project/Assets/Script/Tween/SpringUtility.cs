@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -14,20 +14,12 @@ public class SpringUtility
     private float springTime;
     private float currentValue;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Reset()
     {
         springTime = 0f;
         currentValue = 0f;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="start"></param>
-    /// <param name="end"></param>
     public void SetValues(float start, float end)
     {
         startValue = start;

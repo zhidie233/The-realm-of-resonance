@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
@@ -25,17 +25,11 @@ namespace Game.Tween
         private float duration = 0;
         private bool isInitializated = false;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Awake()
         {
             m_Canvas = GetComponent<CanvasGroup>();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnEnable()
         {
             if(m_Canvas == null)
@@ -53,9 +47,6 @@ namespace Game.Tween
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void StartTween()
         {
             duration = 0;
@@ -63,9 +54,6 @@ namespace Game.Tween
             StartCoroutine(DoTween());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void StartReverseTween(bool desactive = false)
         {
             duration = 0;
@@ -74,19 +62,12 @@ namespace Game.Tween
         }
 
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnDisable()
         {
             duration = 0;
             StopAllCoroutines();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoTween()
         {
             if (m_Canvas == null) yield break;
@@ -133,10 +114,6 @@ namespace Game.Tween
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoTweenReverse(bool desactive)
         {
 #if UNITY_EDITOR

@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
 
@@ -33,9 +33,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Initialize()
         {
             cachedKeys.Clear();
@@ -43,9 +40,6 @@ namespace Game.InputManager
             LoadMapped();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void LoadMapped()
         {
             if (PlayerPrefs.HasKey(MappedBindingKey))
@@ -60,9 +54,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ChangeMapped(int mappedID)
         {
             Mapped = mappedOptions[mappedID];
@@ -73,27 +64,18 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool GetButton(string key)
         {
             if (!IsCached(key)) return false;
             return cachedKeys[key].isButton();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool GetButtonDown(string key)
         {
             if (!IsCached(key)) return false;
             return cachedKeys[key].isButtonDown();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool GetButtonUp(string key)
         {
             if (!IsCached(key)) return false;
@@ -111,9 +93,6 @@ namespace Game.InputManager
             return cachedKeys[key].GetInputName();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private bool IsCached(string key)
         {
             if(mappedInstance == null) { Initialize(); }
@@ -130,18 +109,12 @@ namespace Game.InputManager
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SaveMappedInstance()
         {
             string json = JsonUtility.ToJson(mappedInstance.mapped);
             PlayerPrefs.SetString(MappedBindingKey, json);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void RevertMappedInstance()
         {
             LoadMapped();

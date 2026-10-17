@@ -29,16 +29,8 @@ public abstract class SpectatorModeBase : MonoBehaviourBase
         set => s_enterAsSpectator = value;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActiveSpectatorMode(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public abstract void SetActiveUI(bool active);
 
     /// <summary>

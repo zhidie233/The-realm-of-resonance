@@ -70,9 +70,6 @@ namespace Game.PlayerController
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Move(float inputX, float inputY, Transform character, Transform camera, ClimbableLadder ladder)
         {
             if (ladder == null)
@@ -158,27 +155,18 @@ namespace Game.PlayerController
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Update()
         {
             tiltValue = Mathf.Lerp(tiltValue, tiltTarget, Time.deltaTime * 4);
             extraRotation = Quaternion.Euler(verticalOffset, 0, tiltValue);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void SetVerticalOffset(float amount)
         {
             verticalOffset = amount;
             extraRotation = Quaternion.Euler(amount, 0, tiltValue);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void CombineVerticalOffset()
         {
             m_CameraTargetRot *= extraRotation;
@@ -237,9 +225,6 @@ namespace Game.PlayerController
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LookAt(Vector3 direction, bool extrapolate = true, float influence = 1)
         {
             Quaternion rotate = Quaternion.LookRotation(direction);
@@ -255,18 +240,11 @@ namespace Game.PlayerController
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="angle"></param>
         public override void SetTiltAngle(float angle)
         {
             tiltTarget = angle;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void FetchSettings()
         {
             sensitivity = (float)GameCore.Settings.GetSettingOf("灵敏度");
@@ -276,9 +254,6 @@ namespace Game.PlayerController
             CurrentSensitivity = sensitivity;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void OnAimChange(bool isAiming)
         {
             CurrentSensitivity = isAiming ? sensitivity * aimSensitivity : sensitivity;
@@ -298,18 +273,12 @@ namespace Game.PlayerController
             CurrentSensitivity = CurrentSensitivity * fovPercentage;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void ClampHorizontalRotation(float min, float max)
         {
             horizontalClamp = new Vector2(min, max);
             ClampHorizontal = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void UnClampHorizontal() => ClampHorizontal = false;
 
         public float VerticalAngle => m_CameraTransform.localEulerAngles.x;

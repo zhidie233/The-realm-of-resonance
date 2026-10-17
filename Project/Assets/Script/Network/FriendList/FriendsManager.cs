@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
@@ -17,9 +17,6 @@ namespace Game.Runtime.FriendList
         
         public override int FriendsCount => friendList.Count;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Awake()
         {
             FriendUI = LobbyUI.Instance.FriendUI;
@@ -31,26 +28,16 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnDisable()
         {
             PhotonNetwork.RemoveCallbackTarget(this);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public override Status GetStatus()
         {
             return m_status;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void GetFriendsStore()
         {
             if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InLobby)
@@ -101,28 +88,17 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SaveFriends()
         {
             string allfriends = string.Join(splitChar.ToString(), friendsNames.ToArray());
             PlayerPrefs.SetString(SaveKey, allfriends);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="field"></param>
         public override void AddFriend(TMP_InputField field)
         {
             AddFriend(field.text);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="field"></param>
         public override void AddFriend(string friend)
         {
             
@@ -154,10 +130,6 @@ namespace Game.Runtime.FriendList
             m_status = Status.Fetching;
         }
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="friend"></param>
         public override void RemoveFriend(string friend)
         {
             if (friendsNames.Contains(friend))
@@ -188,38 +160,21 @@ namespace Game.Runtime.FriendList
             else { Debug.Log("This user doesn't exist"); }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public override FriendInfo[] GetFriends()
         {
             return friendList.ToArray();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="playerNick"></param>
-        /// <returns></returns>
         public override bool IsPlayerFriend(string playerNick)
         {
             return friendsNames.Contains(playerNick);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public override bool CanAddMoreFriends()
         {
             return friendsNames.Count < GameConfig.Instance.MaxFriendsAdded;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="friendList"></param>
         public void OnFriendListUpdate(List<FriendInfo> friendList)
         {
             if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName)) return;
@@ -246,9 +201,6 @@ namespace Game.Runtime.FriendList
             FriendUI.UpdateFriendList(build);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void StartFriendsUpdate()
         {
             GetFriendsStore();

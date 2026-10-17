@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -29,9 +29,6 @@ public class RoomCamera : RoomCameraBase
     private float defaultFov;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -42,9 +39,6 @@ public class RoomCamera : RoomCameraBase
         if (cameraComponent != null) defaultFov = cameraComponent.fieldOfView;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -52,9 +46,6 @@ public class RoomCamera : RoomCameraBase
         m_Transform = transform;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (BlockSelfMovement) return;
@@ -63,18 +54,11 @@ public class RoomCamera : RoomCameraBase
         Rotate();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cameraMode"></param>
     public override void SetCameraMode(CameraMode cameraMode)
     {
         currentCameraMode = cameraMode;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Rotate()
     {
         if (!autoRotation || currentCameraMode != CameraMode.MapPreview || rotationDirection == Axis.None) return;
@@ -86,9 +70,6 @@ public class RoomCamera : RoomCameraBase
         m_Transform.Rotate(dir * Time.deltaTime * rotationSpeed);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FlyMovement()
     {
         if (currentCameraMode != CameraMode.Spectator) return;
@@ -126,18 +107,11 @@ public class RoomCamera : RoomCameraBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActive(bool active)
     {
         gameObject.SetActive(active);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void ResetCamera()
     {
         currentCameraMode = CameraMode.MapPreview;
@@ -168,10 +142,6 @@ public class RoomCamera : RoomCameraBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override CameraMode GetCameraMode()
     {
         return currentCameraMode;

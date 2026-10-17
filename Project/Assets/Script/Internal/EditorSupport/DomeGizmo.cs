@@ -4,7 +4,7 @@ using UnityEngine;
 namespace GameEditor
 {
     /// <summary>
-    /// Draws the dome shaped spawn area of a SpawnLocation.
+    /// 绘制 SpawnLocation 的圆顶形出生区域。
     /// </summary>
     public class DomeGizmo
     {

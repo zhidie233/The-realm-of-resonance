@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,17 +13,11 @@ public class GrenadeLauncher : CustomGunBase
         FPWeapon = gun;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnFire()
     {
       
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnFireDown()
     {
         if (!FPWeapon.FireRatePassed) return;
@@ -32,9 +26,6 @@ public class GrenadeLauncher : CustomGunBase
         Shoot();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void TPFire(RemoteGun networkGun, ExitGames.Client.Photon.Hashtable data)
     {
         TPWeapon = networkGun;
@@ -60,9 +51,6 @@ public class GrenadeLauncher : CustomGunBase
         TPWeapon.PlayLocalFireAudio();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Shoot()
     {
         GameObject projectile = null;

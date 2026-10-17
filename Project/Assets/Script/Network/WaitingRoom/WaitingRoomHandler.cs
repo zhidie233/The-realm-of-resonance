@@ -14,9 +14,6 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     private bool isLocalReady = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         readyPlayers.Clear();
@@ -25,18 +22,12 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         PhotonNetwork.NetworkingClient.EventReceived += OnEventCustom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         PhotonNetwork.RemoveCallbackTarget(this);
         PhotonNetwork.NetworkingClient.EventReceived -= OnEventCustom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void AutoJoinToTeam()
     {
         if (isOneTeamModeUpdate)
@@ -53,18 +44,12 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void JoinToTeam(Team team)
     {
         PhotonNetworkWrapper.LocalPlayer.SetPlayerTeam(team);
         SpectatorModeBase.EnterAsSpectator = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalEnterInWaitingRoom()
     {
         var table = UtilityHelper.CreatePhotonHashTable();
@@ -115,9 +100,6 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         SetWaitingState(WaitingState.Started);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetWaitingState(WaitingState state)
     {
         HashTable table = new HashTable();
@@ -134,9 +116,6 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         //We don't need use a RPC cuz all player will receive a callback on OnRoomPropertiesUpdate and we can work with that
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnUpdateStates()
     {
         WaitingRoomUIBase.Instance.UpdateAllPlayersStates();
@@ -146,9 +125,6 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnReceiveInitialInfo(HashTable data)
     {
         string source = (string)data[PropertiesKeys.PlayerID];
@@ -176,17 +152,11 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LoadMap()
     {
         UtilityHelper.LoadLevel((string)PhotonNetwork.CurrentRoom.CustomProperties[PropertiesKeys.SceneNameKey]);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator WaitUntilFullyJoin()
     {
         //CHECK IF THE ROOM IS ALREADY STARTED
@@ -234,9 +204,6 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         LobbyUI.Instance.blackScreenFader.FadeOut(0.4f);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator MoveToMap()
     {
         WaitingRoomUIBase.Instance.ShowLoadingScreen(true);
@@ -245,20 +212,11 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         LoadMap();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
-    /// <returns></returns>
     public override bool IsPlayerReady(Player player)
     {
         return readyPlayers.Contains(player.ActorNumber);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool IsLocalReady()
     {
         return isLocalReady;

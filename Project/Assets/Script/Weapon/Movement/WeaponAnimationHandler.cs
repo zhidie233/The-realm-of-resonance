@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -58,9 +58,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         gunType = ParentGun.Info.Type;
@@ -75,9 +72,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         if (m_AnimationType == AnimationType.Animation)
@@ -91,9 +85,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         if (m_AnimationType == AnimationType.Animator)
@@ -102,10 +93,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="isAiming"></param>
     void OnAim(bool isAiming)
     {
         if (m_AnimationType == AnimationType.Animator)
@@ -117,10 +104,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     #region Base interface
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="aiming"></param>
     public override float PlayFire(AnimationFlags flags)
     {
         switch (gunType)
@@ -136,10 +119,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="onFinish"></param>
     public override void PlayReload(float reloadTime, int[] data, AnimationFlags flags, Action onFinish = null)
     {
         if (flags.IsEnumFlagPresent(AnimationFlags.SplitReload))
@@ -148,39 +127,23 @@ public class WeaponAnimationHandler : WeaponAnimationBase
             Reload(reloadTime);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override float PlayTakeIn()
     {
         // the code is not handle here directly because the DrawWeapon() function was there since version 1.
         return DrawWeapon();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override float PlayTakeOut()
     {
         // the code is not handle here directly because the HideWeapon() function was there since version 1.
         return HideWeapon();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="animationType"></param>
     public override void CancelAnimation(WeaponAnimationType animationType)
     {
         if (animationType == WeaponAnimationType.Reload) cancelReload = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override float GetAnimationDuration(WeaponAnimationType animationType, float[] data = null)
     {
         switch (animationType)
@@ -212,10 +175,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
 
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="playerState"></param>
     void UpdateAnimated(PlayerState playerState)
     {
         if (AnimatedMovements)
@@ -330,10 +289,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator FastGrenade()
     {
         yield return new WaitForSeconds(DrawWeapon());
@@ -349,9 +304,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         StartCoroutine(ParentGun.ThrowGrenade(false, false));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public float AimFire()
     {
         if (m_AnimationType == AnimationType.Animation)
@@ -471,11 +423,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="ReloadTime"></param>
-    /// <param name="Bullets"></param>
     public void SplitReload(float ReloadTime, int bulletsToAdd)
     {
         StartCoroutine(StartShotgunReload());
@@ -576,10 +523,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="motionName"></param>
     public void PlayHeadAnimation(string motionName)
     {
         var animator = GunManager.HeadAnimator;
@@ -596,9 +539,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void PlayThrow()
     {
         // Commented since version 1.9.3 to fix an issue with the grenades throwing direction
@@ -607,20 +547,12 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         // GunManager.HeadAnimator.Play("Throw", 0, 0);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
     public void PlayParticle(int id)
     {
         ParticleSystem.EmissionModule m = Particles[id].emission;
         m.rateOverTime = ParticleRate;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
     public void StopParticle(int id)
     {
         ParticleSystem.EmissionModule m = Particles[id].emission;

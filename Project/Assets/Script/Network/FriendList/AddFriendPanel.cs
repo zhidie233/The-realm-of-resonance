@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -10,9 +10,6 @@ namespace Game.Runtime.FriendList
         public TextMeshProUGUI logText;
         public Button addButton;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void AddFriend()
         {
             FriendListBase.Instance?.AddFriend(nameInput);

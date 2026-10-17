@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -43,9 +43,6 @@ namespace Game.Runtime.Level
         private PlayerReferencesHandler activePlayer;
         const float BOUND_OFFSET = 0.1f;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetUpBounds(PlayerReferencesHandler player)
         {
             activePlayer = player;
@@ -64,9 +61,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void WatchLimits()
         {
             if (activePlayer == null || Status != LadderStatus.Climbing) return;
@@ -84,19 +78,11 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void DetachPlayer()
         {
             Status = LadderStatus.Detaching;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="trigger"></param>
-        /// <returns></returns>
         public Vector3 GetAttachPosition(Collider trigger, float playerHeight)
         {
             Vector3 basePos = BottomCollider.transform.position;
@@ -115,10 +101,6 @@ namespace Game.Runtime.Level
             return basePos;
         }
         Vector3 attpos;
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public Vector3 GetNearestExitPosition(Transform player)
         {
             Vector3 playerPos = player.position;
@@ -130,18 +112,11 @@ namespace Game.Runtime.Level
             return BottomCollider.transform.position;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public Vector3 GetLookDirection()
         {
             return transform.TransformDirection(lookDirection);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void JumpOut()
         {
             LastTime = Time.time;
@@ -167,9 +142,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDrawGizmos()
         {                     
             var matrix = Gizmos.matrix;

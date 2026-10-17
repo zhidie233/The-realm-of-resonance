@@ -13,9 +13,6 @@ namespace Game.Runtime.Misc
         private bool Watching = false;
         private float AFKTimeLimit = 60;
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -27,9 +24,6 @@ namespace Game.Runtime.Misc
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void OnUpdate()
         {
             float time = Time.time;
@@ -66,18 +60,12 @@ namespace Game.Runtime.Misc
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetAFKCount(float seconds)
         {
             afkText.gameObject.SetActive(true);
             afkText.text = string.Format(GameTexts.AFKWarning, seconds.ToString("F2"));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void LeaveMatch()
         {
             if (PhotonNetworkWrapper.IsConnected)

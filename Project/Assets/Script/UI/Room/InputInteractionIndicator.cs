@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 using TMPro;
 
@@ -11,25 +11,16 @@ public class InputInteractionIndicator : MonoBehaviour
 
     private Action onClickCallback;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         GameEvents.onLocalPlayerDeath += OnLocalPlayerDie;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         GameEvents.onLocalPlayerDeath -= OnLocalPlayerDie;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void SetActive(bool active)
     {
         if (Instance == null) return;
@@ -64,17 +55,11 @@ public class InputInteractionIndicator : MonoBehaviour
         SetActive(true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnClick()
     {
         onClickCallback?.Invoke();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalPlayerDie()
     {
         SetActive(false);

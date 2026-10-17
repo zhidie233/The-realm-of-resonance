@@ -6,9 +6,6 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-/// <summary>
-/// 
-/// </summary>
 public class GameManagerWindow : EditorWindow
 {
     #region Parameters
@@ -47,9 +44,6 @@ public class GameManagerWindow : EditorWindow
     private Type cachedType;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         serializedObject = new SerializedObject(this);
@@ -63,9 +57,6 @@ public class GameManagerWindow : EditorWindow
         selectedGameMode = null;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnGUI()
     {
         var cColor = GUI.contentColor;
@@ -95,9 +86,6 @@ public class GameManagerWindow : EditorWindow
 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Header()
     {
         Rect r = EditorGUILayout.BeginHorizontal(GUILayout.Height(60));
@@ -107,9 +95,6 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawWindowButtons()
     {
         WindowButton("管理器", WindowType.Managers);
@@ -120,11 +105,6 @@ public class GameManagerWindow : EditorWindow
         GUILayout.Space(25);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="title"></param>
-    /// <param name="windowType"></param>
     void WindowButton(string title, WindowType windowType)
     {
         Rect r = GUILayoutUtility.GetRect(new GUIContent(title), styles["textC"], GUILayout.Height(30), GUILayout.Width(100));
@@ -144,9 +124,6 @@ public class GameManagerWindow : EditorWindow
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void LeftPanel()
     {
         Rect r = EditorGUILayout.BeginVertical(GUILayout.Width(150));
@@ -160,9 +137,6 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.EndVertical();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawBody()
     {
         GUILayout.Space(10);
@@ -177,9 +151,6 @@ public class GameManagerWindow : EditorWindow
         GUILayout.EndScrollView();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawHomeBody()
     {
         GUILayout.Label("请选择游戏设置窗口", styles["textC"]);
@@ -211,9 +182,6 @@ public class GameManagerWindow : EditorWindow
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawManagersBody()
     {
         if (currentPanel == null) return;
@@ -221,9 +189,6 @@ public class GameManagerWindow : EditorWindow
         currentPanel.DrawBody(cachedType, this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawWeaponsBody()
     {
         GUILayout.Space(10);
@@ -278,9 +243,6 @@ public class GameManagerWindow : EditorWindow
         GUI.skin.horizontalSliderThumb = slt;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawEditWeapon()
     {
         serializedObject.UpdateIfRequiredOrScript();
@@ -345,9 +307,6 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawLoadoutsBody()
     {
         GUILayout.Space(10);
@@ -365,9 +324,6 @@ public class GameManagerWindow : EditorWindow
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawGameModes()
     {
         GUILayout.Space(10);
@@ -401,9 +357,6 @@ public class GameManagerWindow : EditorWindow
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawGameModeBox(GameModeSettings gameMode)
     {
         var r = EditorGUILayout.BeginVertical(GUILayout.Width(150), GUILayout.Height(200));
@@ -448,9 +401,6 @@ public class GameManagerWindow : EditorWindow
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DrawGameModeEdit()
     {
         serializedObject.UpdateIfRequiredOrScript();
@@ -567,11 +517,6 @@ public class GameManagerWindow : EditorWindow
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
-    /// <param name="slotID"></param>
     void DrawPlayerLoadout(PlayerReferencesHandler player, ref int slotID)
     {
         EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(256));
@@ -837,9 +782,6 @@ public class GameManagerWindow : EditorWindow
         weaponSearchKey = weaponSearchfield.OnToolbarGUI(weaponSearchKey);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void InitGUI()
     {
         m_initGUI = true;
@@ -1050,9 +992,6 @@ public class GameManagerWindow : EditorWindow
     #endregion
 }
 
-/// <summary>
-/// 
-/// </summary>
 public abstract class GameManagerTabData
 {
     public struct Data
@@ -1070,9 +1009,6 @@ public abstract class GameManagerTabData
     }
 }
 
-/// <summary>
-/// 
-/// </summary>
 [AttributeUsage(AttributeTargets.Class)]
 public class GameManagerTab : Attribute
 {

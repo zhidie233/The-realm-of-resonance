@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using TMPro;
 using UnityEngine;
 
@@ -16,10 +16,6 @@ namespace Game.Runtime.UI
         public CanvasGroup canvasGroup;
         public Animator bottomAnimator;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="delay"></param>
         public override LobbyLoadingScreenBase HideIn(float delay, bool faded)
         {
             StopAllCoroutines();
@@ -27,10 +23,6 @@ namespace Game.Runtime.UI
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public override LobbyLoadingScreenBase SetActive(bool active)
         {
             content.SetActive(active);
@@ -45,21 +37,12 @@ namespace Game.Runtime.UI
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
         public override LobbyLoadingScreenBase SetText(string text)
         {
             if (loadingText != null) loadingText.text = text;
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="delay"></param>
-        /// <returns></returns>
         IEnumerator Hide(float delay, bool faded)
         {
             yield return new WaitForSeconds(delay);

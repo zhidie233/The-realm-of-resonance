@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -7,18 +7,12 @@ namespace Game.Runtime.Settings
 {
     public class ResolutionSettings : MonoBehaviour
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public enum SettingType
         {
             DisplayMode,
             Resolution,
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public class ResolutionData
         {
             public int Index;
@@ -26,9 +20,6 @@ namespace Game.Runtime.Settings
             public Resolution resolution;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public class ResolutionHandlerData
         {
             public ResolutionData[] resolutions;
@@ -82,18 +73,12 @@ namespace Game.Runtime.Settings
 
         public static ResolutionHandlerData ResolutionHandler;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
             SetupResolutions();
             SetupDisplayMode();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void SetupDisplayMode()
         {
             if (settingType != SettingType.DisplayMode) return;
@@ -125,9 +110,6 @@ namespace Game.Runtime.Settings
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void SetupResolutions()
         {
             if (settingType != SettingType.Resolution) return;
@@ -140,19 +122,11 @@ namespace Game.Runtime.Settings
             settingsBinding.currentOption = ResolutionHandler.CurrentResolutionRelativeID;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
         public void OnChangeDisplayMode(int id)
         {
             GameCore.Settings.SetSettingOf("Display Mode", id, SettingsManager.Instance.autoSaveSettings);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
         public void OnChangeResolution(int id)
         {
             if (ResolutionHandler == null) return;
@@ -162,9 +136,6 @@ namespace Game.Runtime.Settings
             GameCore.Settings.SetSettingOf("Resolution", ResolutionHandler.CurrentResolutionAbsoluteID, SettingsManager.Instance.autoSaveSettings);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public static void FetchResolutions()
         {
             var resolutions = Screen.resolutions;

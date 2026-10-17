@@ -1,25 +1,13 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.UI
 {
     public abstract class LobbyLoadingScreenBase : MonoBehaviour
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public abstract LobbyLoadingScreenBase SetActive(bool active);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
         public abstract LobbyLoadingScreenBase SetText(string text);
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="delay"></param>
         public abstract LobbyLoadingScreenBase HideIn(float delay, bool faded);
 
 

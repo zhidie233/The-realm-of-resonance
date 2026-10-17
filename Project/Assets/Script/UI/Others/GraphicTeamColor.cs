@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -15,17 +15,11 @@ public class GraphicTeamColor : MonoBehaviour
 
     private Graphic graphic;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         Apply();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Apply()
     {
         if (graphic == null) { graphic = GetComponent<Graphic>(); }

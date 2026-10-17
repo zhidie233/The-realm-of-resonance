@@ -23,17 +23,11 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
     [SerializeField] private TextMeshProUGUI CoinsText = null;
     [SerializeField] private GameObject Content = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         UIReferences.Instance.ResumeScreen = this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void CollectData()
     {       
         int kills = PhotonNetworkWrapper.LocalPlayer.GetKills();
@@ -85,18 +79,12 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
         PlayerPrefs.SetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", LocalName), oldsavedScore);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Show()
     {
         Content.SetActive(true);
         Invoke(nameof(GoToLobby), 60);//maximum time out to leave.
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void GoToLobby()
     {
         CancelInvoke();

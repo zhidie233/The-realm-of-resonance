@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Text;
 using ExitGames.Client.Photon;
@@ -26,9 +26,6 @@ public class PhotonNetworkStats : MonoBehaviour, IConnectionCallbacks
     public List<StatInfo> LastValuesList = new List<StatInfo>();
     private bool isInitialized = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator Start()
     {
         while (!GameConfig.isDataCached) { yield return null; }

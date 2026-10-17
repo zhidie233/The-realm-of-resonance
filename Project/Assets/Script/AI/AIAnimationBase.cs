@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class AIAnimationBase : MonoBehaviourBase
 {
@@ -28,10 +28,6 @@ public abstract class AIAnimationBase : MonoBehaviourBase
     /// </summary>
     public abstract void OnGetHit();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="bodyBone"></param>
     public virtual Transform GetHumanBone(HumanBodyBones bodyBone)
     {
         if (m_Animator == null) return null;

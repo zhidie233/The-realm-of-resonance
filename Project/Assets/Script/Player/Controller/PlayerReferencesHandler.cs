@@ -1,4 +1,4 @@
-﻿﻿using Photon.Pun;
+﻿using Photon.Pun;
 using UnityEngine;
 using UnityEngine.Animations;
 
@@ -135,19 +135,16 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
     public int ActorNumber => photonView.Owner.ActorNumber;
 
 
-    // <returns></returns>
     public override bool IsDeath()
     {
         return playerHealthManager.IsDeath();
     }
 
-    // <returns></returns>
     public override int GetHealth()
     {
         return playerHealthManager.GetHealth();
     }
 
-    // <returns></returns>
     public override int GetMaxHealth()
     {
         return playerHealthManager.GetMaxHealth();

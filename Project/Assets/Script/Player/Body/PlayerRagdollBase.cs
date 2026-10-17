@@ -1,10 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class PlayerRagdollBase : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public struct RagdollInfo
     {
         public Vector3 ForcePosition;

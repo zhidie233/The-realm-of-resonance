@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.UI
 {
@@ -20,9 +20,6 @@ namespace Game.Runtime.UI
         private Vector3 attackDirection; 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -30,9 +27,6 @@ namespace Game.Runtime.UI
             GameEvents.onLocalPlayerSpawn += OnLocalSpawn;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override void OnDisable()
         {
             base.OnDisable();
@@ -41,9 +35,6 @@ namespace Game.Runtime.UI
                 indicatorAlpha.alpha = 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnLocalSpawn()
         {
             indicatorAlpha.alpha = 0;

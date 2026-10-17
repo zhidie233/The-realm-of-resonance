@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using TMPro;
 
@@ -11,11 +11,6 @@ public class LocalKillUI : MonoBehaviour
     private CanvasGroup Alpha;
     private Animator Anim;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
-    /// <param name="headShot"></param>
     public void InitMultiple(KillInfo info, bool headShot)
     {
         if (!headShot)
@@ -32,10 +27,6 @@ public class LocalKillUI : MonoBehaviour
         StartCoroutine(Hide(true));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="info"></param>
     public void InitIndividual(KillInfo info)
     {
         if(Anim == null) { Anim = GetComponent<Animator>(); }

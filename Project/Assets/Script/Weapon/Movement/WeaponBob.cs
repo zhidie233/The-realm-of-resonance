@@ -39,18 +39,12 @@ public class WeaponBob : WeaponBobBase
     private float rotationIntensity = 1;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
         Init();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Init()
     {
         playerReferences = transform.GetComponentInParent<PlayerReferencesHandler>();
@@ -61,27 +55,18 @@ public class WeaponBob : WeaponBobBase
         rotationIntensity = 1;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         GameEvents.onLocalAimChanged += OnLocalAimChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
         GameEvents.onLocalAimChanged -= OnLocalAimChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (motor == null) return;
@@ -97,17 +82,11 @@ public class WeaponBob : WeaponBobBase
         StateControl();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnFixedUpdate()
     {
         Movement();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Stop()
     {
         bobbingSpeed = tempIdleSpeed;
@@ -118,9 +97,6 @@ public class WeaponBob : WeaponBobBase
         MoveToDefault();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void StateControl()
     {
         if (motor.State == PlayerState.Jumping || motor.State == PlayerState.InVehicle) return;
@@ -151,9 +127,6 @@ public class WeaponBob : WeaponBobBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Movement()
     {
         tempWalkSpeed = 0;
@@ -187,9 +160,6 @@ public class WeaponBob : WeaponBobBase
         UpdateFootStep();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ApplyMovement()
     {
         if (useAnimation) return;
@@ -235,9 +205,6 @@ public class WeaponBob : WeaponBobBase
         playerReferences.cameraMotion.AddCameraRotation(bobRotation);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void MoveToDefault()
     {
         currentPosition = midpoint;
@@ -245,9 +212,6 @@ public class WeaponBob : WeaponBobBase
         bobRotation = Quaternion.Slerp(bobRotation, Quaternion.Euler(Vector3.zero), Time.smoothDeltaTime * lerp);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void UpdateFootStep()
     {
         if (!motor.isGrounded || motor.State == PlayerState.InVehicle) return;
@@ -267,21 +231,12 @@ public class WeaponBob : WeaponBobBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="aiming"></param>
     void OnLocalAimChange(bool aiming)
     {
         Intensitity = aiming ? settings.AimIntensity : 1;
         rotationIntensity = aiming ? settings.aimRotationIntensity : 1;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="callback"></param>
-    /// <param name="useAnim"></param>
     public override void AnimatedThis(Action<PlayerState> callback, bool useAnim)
     {
         AnimateCallback = callback;

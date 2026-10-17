@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -10,18 +10,11 @@ public class BodyIKHandler
     public Animator m_animator;
     private BodyBoneIK bodyBone;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="animator"></param>
     public void Initialize(Animator animator)
     {
         m_animator = animator;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public BodyBoneIK AddBone(Transform target, AvatarIKGoal ikGoal, bool doPosition = true, bool doRotation = true, float weight = 1, float fadeWeight = 0)
     {
         var bbik = new BodyBoneIK()
@@ -41,9 +34,6 @@ public class BodyIKHandler
         return bbik;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnUpdate()
     {
         if (m_animator == null) return;
@@ -73,9 +63,6 @@ public class BodyIKHandler
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void PrepareFade()
     {
         for (int i = 0; i < allBones.Count; i++)
@@ -100,19 +87,12 @@ public class BodyIKHandler
         private Vector3 PositionOffset = Vector3.zero;
         private int offsetType = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetPositionOffset(Vector3 offset)
         {
             PositionOffset = offset;
             offsetType = 1;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public Vector3 GetPosition()
         {
             if (offsetType == 2) return Target.position + (Target.right * PositionOffset.x);
@@ -122,9 +102,6 @@ public class BodyIKHandler
             return Target.position;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetRightOffset(float space, bool negative)
         {
             offsetType = negative ? 3 : 2;

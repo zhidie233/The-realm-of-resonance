@@ -5,7 +5,7 @@ using UnityEditor;
 namespace GameEditor
 {
     /// <summary>
-    /// Runs an enumerator on the editor update loop.
+    /// 在编辑器的更新循环里跑一个协程迭代器。
     /// </summary>
     public static class EditorCoroutines
     {

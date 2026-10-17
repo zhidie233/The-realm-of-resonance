@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 namespace Game.Runtime.UI.Layout
@@ -20,18 +20,11 @@ namespace Game.Runtime.UI.Layout
             FinalWinnerText.text = string.Format("{0} {1}", winner, GameTexts.FinalWinner).Localized(33).ToUpper();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void Hide()
         {
             content.SetActive(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="count"></param>
         public override void SetCountdown(int count)
         {
             count = Mathf.Clamp(count, 0, int.MaxValue);

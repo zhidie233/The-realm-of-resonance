@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,9 +13,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
     private int current = 0;
     private Image[] IconsImg = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         Alpha.alpha = 0;
@@ -28,10 +25,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         IconsImg[0].CrossFadeColor(Color.black, 0.1f, true, true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="autohide"></param>
     public override void SetVisibility(VisibilityMode visibility)
     {
         showMode = visibility;
@@ -45,9 +38,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetLoadout(List<GunController> guns)
     {
         for (int i = 0; i < SlotsGroups.Length; i++)
@@ -63,9 +53,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         IconsImg[0].canvasRenderer.SetColor(Color.black);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void ReplaceSlot(int slot, GunController newGun)
     {
         if (IconsImg[slot].sprite == null)
@@ -78,9 +65,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         SlotsGroups[slot].gameObject.SetActive(true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetEquippedSlot(int nextSlot)
     {
         if (!GameConfig.Instance.ShowWeaponLoadout) return;
@@ -89,9 +73,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         StartCoroutine(ChangeSlot(nextSlot));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void ClearSlots(LoadoutFlags flags)
     {
         for (int i = 0; i < IconsImg.Length; i++)
@@ -108,10 +89,6 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator ChangeSlot(int nextSlot)
     {
         int cacheActual = current;
@@ -145,18 +122,11 @@ public class WeaponLoadoutUI : WeaponLoadoutUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActive(bool active)
     {
         Alpha.gameObject.SetActive(active);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override VisibilityMode GetVisibilityMode()
     {
         return showMode;

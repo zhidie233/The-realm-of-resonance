@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
@@ -15,10 +15,6 @@ namespace Game.Runtime.UI
         public CoinUI[] coins;
         public LayoutGroup layoutGroup;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="realPrice"></param>
         public GameCoinPriceUI SetPrice(int realPrice)
         {
             foreach (var item in coins)
@@ -28,10 +24,6 @@ namespace Game.Runtime.UI
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="realPrice"></param>
         public GameCoinPriceUI SetPrice(GameItemUnlockability unlockability)
         {
             var noallowedCoins = unlockability.NoAllowedCoins.ToList();
@@ -51,10 +43,6 @@ namespace Game.Runtime.UI
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public void SetActive(bool active)
         {
             gameObject.SetActive(active);

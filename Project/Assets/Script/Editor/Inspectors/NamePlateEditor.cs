@@ -1,4 +1,4 @@
-﻿﻿using UnityEditor;
+﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,9 +11,6 @@ public class NamePlateEditor : Editor
     public string simulatedName = "Player";
     public bool editPresent = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         script = (NamePlateDrawer)target;

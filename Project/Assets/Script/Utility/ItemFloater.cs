@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class ItemFloater : MonoBehaviour
@@ -9,27 +9,17 @@ public class ItemFloater : MonoBehaviour
 
     private Vector3 originPosition, targetPosition;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         originPosition = transform.localPosition;
         targetPosition = originPosition + new Vector3(0, amount, 0);
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     void OnEnable()
     {
         StartCoroutine(StartIE());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator StartIE()
     {
         while (true)
@@ -39,9 +29,6 @@ public class ItemFloater : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator MoveObject(Transform thisTransform, Vector3 startPos, Vector3 endPos, float time)
     {
         float i = 0.0f;

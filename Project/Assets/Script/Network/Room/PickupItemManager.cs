@@ -23,9 +23,6 @@ public class PickupItemManager : ItemManagerBase
     private List<RespawnItems> respawnItems = new List<RespawnItems>();
 
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         if (!PhotonNetworkWrapper.IsConnected) return;
@@ -35,9 +32,6 @@ public class PickupItemManager : ItemManagerBase
         PhotonNetworkWrapper.Instance.AddCallback(PropertiesKeys.NetworkItemChange, OnNetworkItemChange);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -45,10 +39,6 @@ public class PickupItemManager : ItemManagerBase
         PhotonNetworkWrapper.Instance?.RemoveCallback(OnNetworkItemChange);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     void OnNetworkItemInstance(ExitGames.Client.Photon.Hashtable data)
     {
         //don't instance for the player that create the item since it's already instance for him
@@ -73,9 +63,6 @@ public class PickupItemManager : ItemManagerBase
         PoolItem(prefabName, prefab);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void PoolItem(string itemName, NetworkItem item)
     {
         if (networkItemsPool.ContainsKey(itemName)) return;
@@ -107,17 +94,11 @@ public class PickupItemManager : ItemManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnSlowUpdate()
     {
         CheckTimers();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckTimers()
     {
         if (respawnItems.Count <= 0) return;
@@ -147,9 +128,6 @@ public class PickupItemManager : ItemManagerBase
         item.SetActiveSync(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public class RespawnItems
     {
         public float AddedTime;

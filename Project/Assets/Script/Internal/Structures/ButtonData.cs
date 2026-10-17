@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,10 +23,6 @@ namespace Game.InputManager
         private bool wasPressed = false;
         private int lastDownFrame = 0;
         
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool isButtonDown()
         {
             bool isPressedThisFrame = !PrimaryIsAxis ? Input.GetKeyDown(PrimaryKey) : isAxisTrue(PrimaryAxis);
@@ -50,10 +46,6 @@ namespace Game.InputManager
             return isPressedThisFrame;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool isButton()
         {
             bool isTrue = !PrimaryIsAxis ? Input.GetKey(PrimaryKey) : isAxisTrue(PrimaryAxis);
@@ -62,10 +54,6 @@ namespace Game.InputManager
             return isTrue;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public bool isButtonUp()
         {
             bool isTrue = !PrimaryIsAxis ? Input.GetKeyUp(PrimaryKey) : isAxisTrue(PrimaryAxis);
@@ -80,10 +68,6 @@ namespace Game.InputManager
             return Input.GetAxis(axisName) == AxisValue;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public string GetInputName()
         {
             if (PrimaryIsAxis) return PrimaryAxis;

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 
 public class PlayerRagdoll : PlayerRagdollBase
@@ -14,9 +14,6 @@ public class PlayerRagdoll : PlayerRagdollBase
 
     private Collider[] allPlayerCollider;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (rigidBodys.Count > 0)

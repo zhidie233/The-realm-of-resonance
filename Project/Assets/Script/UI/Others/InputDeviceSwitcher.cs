@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Game.Runtime.Settings;
 
 namespace Game.InputManager
@@ -8,25 +8,16 @@ namespace Game.InputManager
         private bool init = false;
         private SingleSettingsBinding settingsBinding;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             settingsBinding = GetComponent<SingleSettingsBinding>();           
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             InitialSetup();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void InitialSetup()
         {
             if (init) return;

@@ -1,4 +1,4 @@
-﻿/// <summary>
+/// <summary>
 /// Base class for the Crosshair
 /// Inherited from this your custom crosshair script.
 /// </summary>
@@ -19,10 +19,6 @@ public abstract class CrosshairBase : MonoBehaviourBase
     /// <param name="active"></param>
     public abstract void Show(bool active);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="aiming"></param>
     public abstract void OnAim(bool aiming);
 
     /// <summary>
@@ -30,20 +26,10 @@ public abstract class CrosshairBase : MonoBehaviourBase
     /// </summary>
     public abstract void OnHit();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void OnFire();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="gun"></param>
     public abstract void SetupCrosshairForWeapon(GunType gunType);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void SetupCrosshairForWeapon(GunController weapon);
 
     /// <summary>

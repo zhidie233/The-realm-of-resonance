@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 
 [Serializable]
@@ -138,16 +138,8 @@ public class GameModeSettings
         return GameGoalsOptions[goalID];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public bool HasForcedRoundMode() => RoundModeAllowed != RoundModeAllowedOptions.AllowBoth;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public RoundStyle GetAllowedRoundMode()
     {
         if (RoundModeAllowed == RoundModeAllowedOptions.RoundModeOnly) return RoundStyle.Rounds;

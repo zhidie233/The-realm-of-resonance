@@ -1,4 +1,4 @@
-﻿using UnityEditor;
+using UnityEditor;
 using UnityEngine;
 
 public class NetworkItem : MonoBehaviour
@@ -26,17 +26,11 @@ public class NetworkItem : MonoBehaviour
         set => m_itemName = value;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Start()
     {
         Init();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnLocalInstanced()
     {
         // ensure to reset the name of the item since the prefab could be already have an custom name.
@@ -117,10 +111,6 @@ public class NetworkItem : MonoBehaviour
         PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.NetworkItemChange, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public bool isAuthorized()
     {
         if (itemAuthority == ItemAuthority.All) return true;

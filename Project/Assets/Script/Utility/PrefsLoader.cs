@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,9 +12,6 @@ public class PrefsLoader : MonoBehaviour
     [Header("Defaults")]
     public bool DefaultBool = true;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         if (!string.IsNullOrEmpty(PrefsKey))
@@ -23,9 +20,6 @@ public class PrefsLoader : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void LoadPrefs()
     {
         if(m_Type == ApplyType.Toogle)

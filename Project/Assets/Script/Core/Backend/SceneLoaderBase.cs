@@ -1,23 +1,14 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Game.Internal.BaseClass
 {
     public abstract class SceneLoaderBase : ScriptableObject
     {
-        /// <summary>
-        /// 
-        /// </summary>
         public abstract void LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single);
 
-        /// <summary>
-        /// 
-        /// </summary>
         public abstract void LoadScene(int sceneID, LoadSceneMode loadSceneMode = LoadSceneMode.Single);
 
-        /// <summary>
-        /// 
-        /// </summary>
         private static SceneLoaderBase _instance;
         public static SceneLoaderBase Instance
         {

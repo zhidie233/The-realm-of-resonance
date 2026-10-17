@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using GameEditor;
@@ -22,9 +22,6 @@ public class FirstPersonControllerEditor : Editor
     SerializedProperty miscProp;
     SerializedProperty slideProp;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         script = (FirstPersonController)target;
@@ -48,9 +45,6 @@ public class FirstPersonControllerEditor : Editor
         animatedBools["slide"] = new AnimBool(slideProp.isExpanded, Repaint);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnInspectorGUI()
     {
         MovementSpeeds();
@@ -63,9 +57,6 @@ public class FirstPersonControllerEditor : Editor
         SoundBox();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void MovementSpeeds()
     {
         moveProp.isExpanded = animatedBools["move"].target = GameEditorStyles.ContainerHeaderFoldout("Speed", moveProp.isExpanded);
@@ -86,9 +77,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void JumpBox()
     {
         jumpProp.isExpanded = animatedBools["jump"].target = GameEditorStyles.ContainerHeaderFoldout("Jump", jumpProp.isExpanded);
@@ -108,9 +96,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SlideBox()
     {
         slideProp.isExpanded = animatedBools["slide"].target = GameEditorStyles.ContainerHeaderFoldout("Slide", slideProp.isExpanded);
@@ -130,9 +115,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FallBox()
     {
         fallProp.isExpanded = animatedBools["fall"].target = GameEditorStyles.ContainerHeaderFoldout("Fall", fallProp.isExpanded);
@@ -155,9 +137,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void MouseLookBox()
     {
         mouseProp.isExpanded = animatedBools["mouse"].target = GameEditorStyles.ContainerHeaderFoldout("视角控制", mouseProp.isExpanded);
@@ -190,9 +169,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void HeadBobBox()
     {
         bobProp.isExpanded = animatedBools["bob"].target = GameEditorStyles.ContainerHeaderFoldout("头部晃动", bobProp.isExpanded);
@@ -222,9 +198,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SoundBox()
     {
         soundProp.isExpanded = animatedBools["sound"].target = GameEditorStyles.ContainerHeaderFoldout("Sounds", soundProp.isExpanded);
@@ -242,9 +215,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void MiscBox()
     {
         miscProp.isExpanded = animatedBools["misc"].target = GameEditorStyles.ContainerHeaderFoldout("Misc", miscProp.isExpanded);
@@ -276,9 +246,6 @@ public class FirstPersonControllerEditor : Editor
         EditorGUILayout.EndFadeGroup();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void EndChangeCheck()
     {
         if (EditorGUI.EndChangeCheck())

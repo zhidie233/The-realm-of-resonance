@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class FrameRate : MonoBehaviourBase
@@ -14,45 +14,30 @@ public class FrameRate : MonoBehaviourBase
     private int frames;
     private bool countFPS = true;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Start()
     {
         timeleft = updateInterval;
         OnSettingsChanged();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         GameEvents.onGameSettingsChange += OnSettingsChanged;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
         GameEvents.onGameSettingsChange -= OnSettingsChanged;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnSettingsChanged()
     {
         countFPS = (bool)GameCore.Settings.GetSettingOf("显示帧率");
         if (TextUI != null) TextUI.gameObject.SetActive(countFPS);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (TextUI == null || !countFPS) return;

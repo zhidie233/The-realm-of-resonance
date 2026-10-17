@@ -5,9 +5,6 @@ using Game.GameModes.TeamDeathMatch;
 public class TeamDeathMatchMode : PhotonHelper, IGameMode
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected)
@@ -17,9 +14,6 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
     }
 
     #region Interface
-    /// <summary>
-    /// 
-    /// </summary>
     public void Initialize()
     {
         //check if this is the game mode of this room
@@ -34,9 +28,6 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnFinishTime(bool gameOver)
     {
         //determine the winner
@@ -107,9 +98,6 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
     }
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckScores(int team1, int team2)
     {
         if (PhotonNetworkWrapper.OfflineMode || !RoomSettings.Instance.RoomInfoFetched) return;

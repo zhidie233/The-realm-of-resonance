@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
@@ -29,9 +29,6 @@ namespace Game.InputManager
         private new EventSystem eventSystem = null;
         public GameObject defaultModule;
 
-        /// <summary>
-        /// 
-        /// </summary>
         protected override void Start()
         {
             base.Start();
@@ -39,9 +36,6 @@ namespace Game.InputManager
             CheckImplementation();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void CheckImplementation()
         {
             if (InputBindings.Instance.useGamePadNavigation)
@@ -107,9 +101,6 @@ namespace Game.InputManager
             HandlePointerExitAndEnter(pointerEvent, targetGO);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void Process()
         {
             if (GamePadPointer.Instance == null) return;

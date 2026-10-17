@@ -18,9 +18,6 @@ public class CameraMotion : CameraMotionBase
     private PlayerReferencesHandler playerRefs;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -29,9 +26,6 @@ public class CameraMotion : CameraMotionBase
         rotationMotion = CachedTransform.localRotation;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -40,9 +34,6 @@ public class CameraMotion : CameraMotionBase
         GameEvents.onLocalPlayerStateChanged += OnPlayerStateChanged;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -50,9 +41,6 @@ public class CameraMotion : CameraMotionBase
         GameEvents.onLocalPlayerStateChanged -= OnPlayerStateChanged;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (!RoomMenu.Instance.isCursorLocked) return;
@@ -64,9 +52,6 @@ public class CameraMotion : CameraMotionBase
         CachedTransform.localRotation = rotationMotion * extraRotation;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Wiggle()
     {
         if (!wiggleMotion) return;
@@ -85,9 +70,6 @@ public class CameraMotion : CameraMotionBase
         rotationMotion = Quaternion.Slerp(rotationMotion, Quaternion.Euler(breathRotation), Time.smoothDeltaTime * motionSettings.smooth);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Breathe()
     {
         if (!breathingMotion) return;
@@ -98,19 +80,11 @@ public class CameraMotion : CameraMotionBase
         breathRotation = (Vector3.up * vertical) + (Vector3.right * horizontal);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="rotation"></param>
     public override void AddCameraRotation(Quaternion rotation)
     {
         extraRotation = rotation;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActiveBreathing(bool active, float amplitude = 0)
     {
         breathingMotion = active;
@@ -127,18 +101,11 @@ public class CameraMotion : CameraMotionBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnSmallImpact(float impactAmount)
     {
         StartCoroutine(FallEffect());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator FallEffect()
     {
         Vector3 target = Vector3.zero;
@@ -156,9 +123,6 @@ public class CameraMotion : CameraMotionBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnPlayerStateChanged(PlayerState from, PlayerState to)
     {
         isSliding = to == PlayerState.Sliding;

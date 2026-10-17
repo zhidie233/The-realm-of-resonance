@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Game.PlayerController;
 
 /// <summary>
@@ -142,21 +142,9 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     /// <returns></returns>
     public abstract float GetCurrentSpeed();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract PlayerRunToAimBehave GetRunToAimBehave();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract float GetHeadBobMagnitudes(bool verticalMagnitude);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public abstract float GetSprintFov();
 }

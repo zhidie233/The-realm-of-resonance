@@ -15,9 +15,6 @@ public class KickVoteUI : MonoBehaviour
     private string CacheTargetName;
     private KickVote KickManager;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         Window.SetActive(false);
@@ -35,10 +32,6 @@ public class KickVoteUI : MonoBehaviour
     }
 
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="actionID"></param>
     private void OnScoreboardPopupAction(int actionID)
     {
         if(actionID == 0)
@@ -94,9 +87,6 @@ public class KickVoteUI : MonoBehaviour
         Invoke("Hide", 3);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void RequestVote()
     {
         KickManager.RequestKick(ScoreboardPopUpMenuBase.TargetPlayer);

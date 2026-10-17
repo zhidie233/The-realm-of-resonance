@@ -1,10 +1,7 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class GunPickUpManagerBase : PhotonHelper
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public struct ThrowData
     {
         public int GunID;
@@ -14,9 +11,6 @@ public abstract class GunPickUpManagerBase : PhotonHelper
         public bool AutoDestroy;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public struct PickUpData
     {
         public string Identifier;
@@ -36,9 +30,6 @@ public abstract class GunPickUpManagerBase : PhotonHelper
     /// </summary>
     public abstract void SendPickUp(PickUpData pickUpData);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static GunPickUpManagerBase _instance;
     public static GunPickUpManagerBase Instance
     {

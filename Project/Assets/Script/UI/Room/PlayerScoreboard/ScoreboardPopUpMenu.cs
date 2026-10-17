@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Game.Internal;
 using Photon.Realtime;
 using TMPro;
@@ -11,18 +11,12 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
     public UIListHandler listHandler;
     [SerializeField] private GameObject content = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         PrepareMenu();
         ((RectTransform)transform).position = Input.mousePosition;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override ScoreboardPopUpMenuBase SetActive(bool active)
     {
         PrepareMenu();
@@ -30,18 +24,12 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
         return this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override ScoreboardPopUpMenuBase SetTargetPlayer(Player player)
     {
         TargetPlayer = player;
         return this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override ScoreboardPopUpMenuBase FilterMenuOptions(MenuFilter filter)
     {
         foreach (var item in options)
@@ -69,9 +57,6 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
         return this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void PrepareMenu()
     {
         if (listHandler.IsInitialize) return;
@@ -91,9 +76,6 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override int AddButton(string buttonName, MenuFilter filter)
     {
         if (!listHandler.IsInitialize)

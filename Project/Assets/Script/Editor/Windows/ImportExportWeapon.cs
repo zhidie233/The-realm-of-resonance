@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
@@ -22,9 +22,6 @@ namespace GameEditor
             GetWindow<ImportExportWeapon>("导入").PrepareToImport(null, null);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnEnable()
         {
             goodTexture = EditorGUIUtility.IconContent("d_SphereCollider Icon").image;
@@ -33,9 +30,6 @@ namespace GameEditor
             stateIcons[2] = EditorGUIUtility.IconContent("CollabNew").image;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnGUI()
         {
             EditorGUI.DrawRect(new Rect(0, 0, position.width, position.height), GameEditorStyles.EditorPalette.GetBackgroundColor());
@@ -50,9 +44,6 @@ namespace GameEditor
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void ExportUI()
         {
             GUILayout.Space(10);
@@ -108,9 +99,6 @@ namespace GameEditor
             GUILayout.Space(10);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void ImportUI()
         {
             if (!isDone)
@@ -214,11 +202,6 @@ namespace GameEditor
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fpweapon"></param>
-        /// <param name="player"></param>
         public void PrepareToExport(GunController fpweapon, PlayerNetworkHandler player)
         {
             FPWeapon = fpweapon;
@@ -231,11 +214,6 @@ namespace GameEditor
             maxSize = new Vector2(250, 200);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="player"></param>
-        /// <param name="exportedWeapon"></param>
         public void PrepareToImport(PlayerNetworkHandler player, WeaponExported exportedWeapon)
         {
             Player = player;
@@ -331,9 +309,6 @@ namespace GameEditor
             Repaint();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Export()
         {
             if (FPWeapon == null || Player == null) return;

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.Level
 {
@@ -20,17 +20,11 @@ namespace Game.Runtime.Level
         public GameEvents.UEvent onDetected;
         public GameEvents.UEvent onUndetected;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void OnRayDetectedByPlayer()
         {
             onDetected?.Invoke();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void OnUnDetectedByPlayer()
         {
             onUndetected?.Invoke();

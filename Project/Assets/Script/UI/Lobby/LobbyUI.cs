@@ -1,4 +1,4 @@
-﻿using Game.Audio;
+using Game.Audio;
 using Game.Runtime.FriendList;
 using Game.Runtime.Settings;
 using Game.Runtime.UI;
@@ -43,9 +43,6 @@ public class LobbyUI : MonoBehaviour
     private int requestedRegionID = -1;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void InitialSetup()
     {
         GameEvents.onGameSettingsChange += ApplyRuntimeSettings;
@@ -54,24 +51,15 @@ public class LobbyUI : MonoBehaviour
         blackScreenFader.SetAlpha(1);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         GameEvents.onGameSettingsChange -= ApplyRuntimeSettings;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ChangeWindow(string window)
     {
         if (window == currentWindow) return;//return if we are trying to open the opened window
@@ -83,9 +71,6 @@ public class LobbyUI : MonoBehaviour
         currentWindow = window;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetEnableWindow(string windowName, bool active)
     {
         WindowUI w = windows.Find(x => x.Name == windowName);
@@ -98,9 +83,6 @@ public class LobbyUI : MonoBehaviour
     public void Home() { ChangeWindow(MainWindowName); MatchLobby.Instance.onShowMenu?.Invoke(); }
     public void HideAll() { currentWindow = ""; windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } }); }//disable all windows 
 
-    /// <summary>
-    /// 
-    /// </summary>
     IEnumerator DoChangeWindow(WindowUI window)
     {
         //now change the windows
@@ -138,9 +120,6 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ShowPopUpWindow(string popUpName)
     {
         PopUpWindows w = popUpWindows.Find(x => x.Name == popUpName);
@@ -149,9 +128,6 @@ public class LobbyUI : MonoBehaviour
         w.Window.SetActive(true);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Update()
     {
         if (PhotonNetworkWrapper.IsConnected && GameConfig.isDataCached)
@@ -167,18 +143,12 @@ public class LobbyUI : MonoBehaviour
 
     #region Settings
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Setup()
     {
         LoadSettings();
         FullSetUp();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LoadSettings()
     {
         ApplyRuntimeSettings();
@@ -199,9 +169,6 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ApplyRuntimeSettings()
     {
         if (GameCore.Settings != null)
@@ -216,9 +183,6 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void FullSetUp()
     {
         if (LevelIcon != null) LevelIcon.gameObject.SetActive(false);
@@ -226,25 +190,16 @@ public class LobbyUI : MonoBehaviour
         SetRegionDropdown();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLanguageChange(Dictionary<string, string> lang)
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ResetSettings()
     {
         LoadSettings();
         FullSetUp();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetRegionDropdown()
     {
         //when Photon Server is used
@@ -275,9 +230,6 @@ public class LobbyUI : MonoBehaviour
     #endregion
 
     #region UI Callbacks
-    /// <summary>
-    /// 
-    /// </summary>
     public void EnterName(TMP_InputField field = null)
     {
         if (field == null || string.IsNullOrEmpty(field.text))
@@ -298,9 +250,6 @@ public class LobbyUI : MonoBehaviour
         MatchLobby.Instance.SetPlayerName(field.text);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void EnterPassword(TMP_InputField field = null)
     {
         if (field == null || string.IsNullOrEmpty(field.text))
@@ -313,18 +262,12 @@ public class LobbyUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void CheckRoomPassword(RoomInfo room)
     {
         EnterPasswordUI.SetActive(true);
         MatchLobby.Instance.CheckRoomPassword(room);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnEnterPassworld(TMP_InputField pass)
     {
         if (!MatchLobby.Instance.SetRoomPassworld(pass.text))
@@ -347,16 +290,10 @@ public class LobbyUI : MonoBehaviour
         MatchLobby.Instance.LoadLocalLevel(level);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ShowBuyCoins()
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Quit()
     {
         confirmationWindow.AskConfirmation(GameTexts.QuitGameConfirmation, () =>

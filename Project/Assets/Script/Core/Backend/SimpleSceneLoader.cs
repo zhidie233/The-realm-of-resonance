@@ -1,4 +1,4 @@
-﻿﻿//#define LOADING_SCREEN
+﻿//#define LOADING_SCREEN
 using Game.Internal.BaseClass;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -13,10 +13,6 @@ using UnityEngine.SceneManagement;
 public class SimpleSceneLoader : SceneLoaderBase
 {
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sceneName"></param>
     public override void LoadScene(string sceneName, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
     {
 #if !LOADING_SCREEN
@@ -28,10 +24,6 @@ public class SimpleSceneLoader : SceneLoaderBase
 #endif
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="sceneID"></param>
     public override void LoadScene(int sceneID, LoadSceneMode loadSceneMode = LoadSceneMode.Single)
     {
 #if !LOADING_SCREEN

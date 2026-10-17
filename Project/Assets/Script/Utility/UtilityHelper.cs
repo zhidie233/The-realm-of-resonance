@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using Game.Runtime.Level;
 using System.Linq;
@@ -15,10 +15,6 @@ using System.IO;
 /// </summary>
 public static class UtilityHelper
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="scene"></param>
     public static void LoadLevel(string scene)
     {
         if (GameConfig.isDataCached && GameConfig.Instance.sceneLoader != null)
@@ -61,9 +57,6 @@ public static class UtilityHelper
     }
     public static bool BlockCursorForUser = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static bool GetCursorState
     {
         get
@@ -98,9 +91,6 @@ public static class UtilityHelper
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void PlayClipAtPoint(AudioClip clip, Vector3 position, float volume, AudioSource sourc)
     {
         GameObject obj2 = new GameObject("One shot audio")
@@ -123,18 +113,11 @@ public static class UtilityHelper
         Object.Destroy(obj2, clip.length * Time.timeScale);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-
     public static void DrawWireCircle(Vector3 center, float radius, int segments = 20, Quaternion rotation = default(Quaternion))
     {
         DrawWireArc(center, radius, 360, segments, rotation);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void DrawWireArc(Vector3 center, float radius, float angle, int segments = 20, Quaternion rotation = default(Quaternion))
     {
         var old = Gizmos.matrix;
@@ -227,13 +210,6 @@ public static class UtilityHelper
         return b.center;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="go"></param>
-    /// <param name="name"></param>
-    /// <param name="inactiveObjects"></param>
-    /// <returns></returns>
     public static GameObject FindInChildren(this GameObject go, string name, bool inactiveObjects = true)
     {
         return (from x in go.GetComponentsInChildren<Transform>(inactiveObjects)
@@ -284,10 +260,6 @@ public static class UtilityHelper
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static bool IsNetworkError(UnityWebRequest w)
     {
 #if UNITY_2020_1_OR_NEWER

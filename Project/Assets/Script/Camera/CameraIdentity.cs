@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -11,26 +11,16 @@ public class CameraIdentity : MonoBehaviour
 {
     private Camera m_Camera;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         StartCoroutine(Set());
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         StopAllCoroutines();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator Set()
     {
         yield return new WaitForSeconds(0.5f);
@@ -42,8 +32,5 @@ public class CameraIdentity : MonoBehaviour
             GameController.Instance.CameraRendered = m_Camera;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static Camera CurrentCamera => GameController.Instance.CameraRendered;
 }

@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using Photon.Realtime;
 using UnityEngine;
 using Game.Internal.Structures;
@@ -45,10 +45,6 @@ public struct GameRoomInfo
         roundStyle = (RoundStyle)room.CustomProperties[PropertiesKeys.RoomRoundKey];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public MapInfo GetMapInfo()
     {
         var mapName = sceneName;

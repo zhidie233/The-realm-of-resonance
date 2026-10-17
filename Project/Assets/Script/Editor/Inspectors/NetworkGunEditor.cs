@@ -1,4 +1,4 @@
-﻿﻿using UnityEditor;
+﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
@@ -12,9 +12,6 @@ public class NetworkGunEditor : Editor
     private GunController[] LocalGuns;
     private int selectLG = 0;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         script = (RemoteGun)target;
@@ -32,9 +29,6 @@ public class NetworkGunEditor : Editor
         SceneView.duringSceneGui += this.OnSceneGUI;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         SceneView.duringSceneGui -= this.OnSceneGUI;

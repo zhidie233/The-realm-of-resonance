@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,16 +26,10 @@ namespace Game.Runtime.Settings
         public TextMeshProUGUI optionTextTMP;
 
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         IEnumerator Start()
         {
             if (string.IsNullOrEmpty(SettingKeyName))
@@ -48,16 +42,10 @@ namespace Game.Runtime.Settings
             Load();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDestroy()
         {
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Load()
         {
             var val = GameCore.Settings.GetSettingOf(SettingKeyName);
@@ -75,9 +63,6 @@ namespace Game.Runtime.Settings
             ApplyCurrentValue();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetOptions(string[] newOptions, bool applySetting = true)
         {
             optionsNames = newOptions;
@@ -86,9 +71,6 @@ namespace Game.Runtime.Settings
 
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplyCurrentValue(bool applySetting = true)
         {
             if (currentOption == -1) return;
@@ -101,9 +83,6 @@ namespace Game.Runtime.Settings
             if(applySetting) ApplySetting();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplySetting()
         {
             onChange?.Invoke(currentOption);
@@ -118,9 +97,6 @@ namespace Game.Runtime.Settings
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ChangeOption(bool forward)
         {
             if (forward)
@@ -135,40 +111,24 @@ namespace Game.Runtime.Settings
             ApplyCurrentValue();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public void SetActive(bool active) => gameObject.SetActive(active);
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SaveValue()
         {
             GameCore.Settings.SaveSettings();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Revert()
         {
             Load();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ResetSelection()
         {
             currentOption = 0;
             ApplyCurrentValue();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetCurrentFromOptionName(string optionName)
         {
             for (int i = 0; i < optionsNames.Length; i++)
@@ -181,9 +141,6 @@ namespace Game.Runtime.Settings
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Localize(Dictionary<string,string> data)
         {
         }

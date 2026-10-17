@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +20,6 @@ namespace Game.Runtime.Settings
 
         private int currentWindow = -1;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             ChangeWindow(defaultWindow);
@@ -48,9 +45,6 @@ namespace Game.Runtime.Settings
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void RevertAll()
         {
             var all = transform.GetComponentsInChildren<SingleSettingsBinding>(true);
@@ -71,9 +65,6 @@ namespace Game.Runtime.Settings
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplySettings()
         {
             GameCore.Settings.SaveSettings();

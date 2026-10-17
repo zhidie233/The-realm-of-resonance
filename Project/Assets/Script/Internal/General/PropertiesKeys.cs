@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public static class PropertiesKeys
 {
@@ -72,18 +72,11 @@ public static class PropertiesKeys
         return string.Format("{0}.{1}.{2}.{3}", Application.companyName, Application.productName, player, key);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static bool GetBoolPrefs(this string key, bool defaultValue)
     {
         return PlayerPrefs.GetInt(key, defaultValue ? 1 : 0) == 1 ? true : false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void SetBoolPrefs(this string key, bool value)
     {
         PlayerPrefs.SetInt(key, value ? 1 : 0);

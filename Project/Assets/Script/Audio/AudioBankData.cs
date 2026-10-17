@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,9 +22,6 @@ namespace Game.Audio
             return info;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public AudioInfo GetInfoOf(string bankName)
         {
             return AudioBank.Find(x => x.Name.ToLower() == bankName.ToLower());

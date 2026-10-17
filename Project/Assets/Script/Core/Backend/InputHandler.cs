@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using Game.InputManager;
 using UnityEngine.UI;
@@ -12,52 +12,31 @@ public static class InputHandler
         get { return InputBindings.Instance.inputType; }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void Initialize()
     {
         InputBindings.Instance.Initialize();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static bool isButton(string keyName)
     {
         return InputBindings.Instance.GetButton(keyName);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static bool isButtonDown(string keyName)
     {
         return InputBindings.Instance.GetButtonDown(keyName);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static bool isButtonUp(string keyName)
     {
         return InputBindings.Instance.GetButtonUp(keyName);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="keyName"></param>
-    /// <returns></returns>
     public static string GetButtonName(string keyName)
     {
         return InputBindings.Instance.GetButtonName(keyName);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static InputType GetInputType()
     {
         string[] names = Input.GetJoystickNames();

@@ -1,4 +1,4 @@
-﻿using Game.PlayerController;
+using Game.PlayerController;
 using Game.Runtime.Level;
 using System;
 using System.Collections;
@@ -446,7 +446,6 @@ public class FirstPersonController : FirstPersonControllerBase
         StartCoroutine(nameof(CrouchTransition));
     }
 
-    // <returns></returns>
     IEnumerator CrouchTransition()
     {
         bool isCrouch = Crounching || State == PlayerState.Sliding;
@@ -971,7 +970,6 @@ public class FirstPersonController : FirstPersonControllerBase
         onFinish?.Invoke();
     }
 
-    // <param name="other"></param>
     private void CheckLadderTrigger(Collider other)
     {
         // if the collider doesn't have a parent, it's not a valid ladder
@@ -1010,7 +1008,6 @@ public class FirstPersonController : FirstPersonControllerBase
         }));
     }
 
-    // <param name="other"></param>
     void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
@@ -1057,13 +1054,11 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
 
-    // <returns></returns>
     public override float GetCurrentSpeed()
     {
         return speed;
     }
 
-    // <returns></returns>
     public override float GetSpeedOnState(PlayerState playerState, bool includeModifiers)
     {
         switch (playerState)
@@ -1080,32 +1075,26 @@ public class FirstPersonController : FirstPersonControllerBase
         return includeModifiers ? WalkSpeed - WeaponWeight : WalkSpeed;
     }
 
-    // <returns></returns>
     public override PlayerRunToAimBehave GetRunToAimBehave()
     {
         return runToAimBehave;
     }
 
-    // <returns></returns>
     public override MouseLookBase GetMouseLook()
     {
         return mouseLook;
     }
 
-    // <returns></returns>
     public override Footstep GetFootStep()
     {
         return footstep;
     }
 
-    // <returns></returns>
     public override float GetSprintFov()
     {
         return RunFov;
     }
 
-    // <param name="vertical"></param>
-    // <returns></returns>
     public override float GetHeadBobMagnitudes(bool vertical)
     {
         if (vertical) return headVerticalBobMagnitude;

@@ -326,7 +326,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         CurrenGun.DesactiveGrenade(active, InvicibleMat);
     }
 
-    // <param name="blockState"></param>
     public void SetWeaponBlocked(int blockState)
     {
         isWeaponBlocked = blockState == 1;
@@ -400,7 +399,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         _positionControl.SetSynchronizedValues(speed, turnSpeed);
     }
 
-    // <param name="newPlayer"></param>
     public void OnPhotonPlayerConnected(Player newPlayer)
     {
         if (photonView.IsMine)
@@ -409,7 +407,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         }
     }
 
-    // <returns></returns>
     private Vector3 GetHeadLookPosition()
     {
         if (PlayerReferences == null || PlayerReferences.playerIK == null)

@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Inherited classes should take care of display to the player the information of the weapon
@@ -11,14 +11,8 @@ public abstract class PickUpUIBase : MonoBehaviour
     /// </summary>
     public abstract void OnOverWeapon(GunPickUpBase toPickUpWeapon);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void Show(DisplayInformation information);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void Hide();
 
     public struct DisplayInformation

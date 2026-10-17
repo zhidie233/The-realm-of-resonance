@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Internal.Structures
 {
@@ -29,9 +29,6 @@ namespace Game.Internal.Structures
         WeaponIcon = 1
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public struct GameLocalNotification
     {
         public string Message { get; private set; }

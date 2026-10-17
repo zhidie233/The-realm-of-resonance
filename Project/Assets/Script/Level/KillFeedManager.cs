@@ -7,9 +7,6 @@ public class KillFeedManager : KillFeedBase
 {    
     public Color SelfColor = Color.green;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (PhotonNetworkWrapper.InRoom)
@@ -18,17 +15,11 @@ public class KillFeedManager : KillFeedBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnEnable()
     {
         PhotonCallbacks.PlayerLeftRoom += OnPhotonPlayerDisconnected;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         PhotonCallbacks.PlayerLeftRoom -= OnPhotonPlayerDisconnected;
@@ -42,9 +33,6 @@ public class KillFeedManager : KillFeedBase
         SendMessageEvent(string.Format("{0} {1}", PhotonNetworkWrapper.LocalPlayer.NickName, GameTexts.JoinedInMatch));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SendKillMessageEvent(FeedData feedData)
     {
         HashTable data = new HashTable();
@@ -57,9 +45,6 @@ public class KillFeedManager : KillFeedBase
         SendMessageOverNetwork(data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SendMessageEvent(string message, bool localOnly = false)
     {
         HashTable data = new HashTable();
@@ -70,9 +55,6 @@ public class KillFeedManager : KillFeedBase
         SendMessageOverNetwork(data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SendTeamHighlightMessage(string teamHighlightMessage, string normalMessage, Team playerTeam)
     {
         HashTable data = new HashTable();
@@ -83,17 +65,11 @@ public class KillFeedManager : KillFeedBase
         SendMessageOverNetwork(data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SendMessageOverNetwork(HashTable data)
     {
         PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.KillFeedEvent, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnMessageReceive(HashTable data)
     {
         KillFeedMessageType mtype = (KillFeedMessageType)data["mt"];
@@ -111,9 +87,6 @@ public class KillFeedManager : KillFeedBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ReceiveWeaponKillEvent(HashTable data)
     {
         KillFeed kf = new KillFeed();
@@ -127,9 +100,6 @@ public class KillFeedManager : KillFeedBase
         KillFeedUIBase.Instance.SetKillFeed(kf);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ReceiveMessage(HashTable data)
     {
         KillFeed kf = new KillFeed();
@@ -140,9 +110,6 @@ public class KillFeedManager : KillFeedBase
         KillFeedUIBase.Instance.SetKillFeed(kf);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ReceiveOnePlayerMessage(HashTable data)
     {
         KillFeed kf = new KillFeed();
@@ -159,9 +126,6 @@ public class KillFeedManager : KillFeedBase
         SendMessageEvent(string.Format("{0} {1}", otherPlayer.NickName, GameTexts.LeftOfMatch), true);
     }
   
-    /// <summary>
-    /// 
-    /// </summary>
     public override void AddCustomIcon(string keyName, Sprite icon)
     {
         if (customIcons.Exists(x => x.Name.Equals(keyName))) return;
@@ -180,9 +144,6 @@ public class KillFeedManager : KillFeedBase
         return customIcons[index];
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override Sprite GetCustomIcon(string keyName)
     {
         Sprite spr = null;

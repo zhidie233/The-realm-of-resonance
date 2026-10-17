@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 /// <summary>
 /// Game Default IK implementation
@@ -55,9 +55,6 @@ public class PlayerIK : PlayerIKBase
     [HideInInspector] public float editor_weight = 1;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -65,9 +62,6 @@ public class PlayerIK : PlayerIKBase
         Init();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Init()
     {
         if (playerReferences == null) return;
@@ -242,9 +236,6 @@ public class PlayerIK : PlayerIKBase
         animator.SetIKHintPositionWeight(AvatarIKHint.RightKnee, rFootIKWeight);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ResetWeightIK()
     {
         leftArmIkWight = 0;
@@ -255,9 +246,6 @@ public class PlayerIK : PlayerIKBase
         animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override Transform HeadLookTarget
     {
         get
@@ -295,9 +283,6 @@ public class PlayerIK : PlayerIKBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private Transform LeftHandTarget
     {
         get
@@ -324,10 +309,6 @@ public class PlayerIK : PlayerIKBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="laTarget"></param>
     private void CompareLeftArmTarget(Transform laTarget)
     {
         if (oldLHTarget != laTarget)
@@ -350,9 +331,6 @@ public class PlayerIK : PlayerIKBase
     }
 
 #if UNITY_EDITOR
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDrawGizmos()
     {
         if (animator == null) { animator = GetComponent<Animator>(); }
@@ -367,9 +345,6 @@ public class PlayerIK : PlayerIKBase
         FootGizmos();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FootGizmos()
     {
         if (!debugFootGizmos) return;

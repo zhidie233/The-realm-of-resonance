@@ -1,4 +1,4 @@
-﻿﻿using Photon.Pun;
+﻿using Photon.Pun;
 using System;
 using UnityEngine;
 
@@ -9,35 +9,23 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
     /// </summary>
     public Action onDie;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract Collider[] AllColliders
     {
         get;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract Animator PlayerAnimator
     {
         get;
         set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract Transform BotAimTarget
     {
         get;
         set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract Team PlayerTeam
     {
         get;
@@ -56,11 +44,6 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="list"></param>
-    /// <param name="ignore"></param>
     public abstract void IgnoreColliders(Collider[] list, bool ignore);
 
     /// <summary>

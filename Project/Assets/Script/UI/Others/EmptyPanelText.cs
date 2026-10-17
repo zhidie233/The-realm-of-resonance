@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,9 +6,6 @@ namespace Game.Runtime.UI
 {
     public class EmptyPanelText : MonoBehaviour
     {
-        /// <summary>
-        /// 
-        /// </summary>
         private void Start()
         {
             Check();
@@ -19,9 +16,6 @@ namespace Game.Runtime.UI
             Debug.Log("change");
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Check()
         {
             var childs = transform.parent.childCount;

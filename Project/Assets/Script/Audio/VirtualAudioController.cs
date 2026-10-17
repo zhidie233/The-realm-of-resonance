@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
 
@@ -16,9 +16,6 @@ namespace Game.Audio
         private bool isInit = false;
         private int currentInstance = 0;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Initialized(MonoBehaviour parent)
         {
             if (isInit || audioBank == null) return;
@@ -52,11 +49,6 @@ namespace Game.Audio
             isInit = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="audioName"></param>
-        /// <returns></returns>
         public AudioInstance PlayClip(string audioName)
         {
             if (audioBank == null || audioBank.AudioBank == null) return null;
@@ -66,11 +58,6 @@ namespace Game.Audio
             return PlayClip(index);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
         public AudioInstance PlayClip(int id)
         {
             if (audioBank == null || audioBank.AudioBank == null) return null;
@@ -91,10 +78,6 @@ namespace Game.Audio
             return ai;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="audioName"></param>
         public void StopClip(string audioName)
         {
             for (int i = 0; i < audioInstances.Count; i++)
@@ -107,32 +90,18 @@ namespace Game.Audio
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="name"></param>
-        /// <returns></returns>
         public AudioBankData.AudioInfo GetAudioInfo(string name)
         {
             if (audioBank == null) return null;
             return audioBank.AudioBank.Find(x => x.Name == name);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="indexID"></param>
-        /// <returns></returns>
         public AudioBankData.AudioInfo GetAudioInfo(int indexID)
         {
             if (audioBank == null) return null;
             return audioBank.AudioBank[indexID];
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public AudioInstance CreateNewInstance()
         {
             if (!isInit) { return null; }

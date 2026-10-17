@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.Level
 {
@@ -29,9 +29,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override BulletDecalBase Init(Transform parent)
         {
             defaultParent = parent;
@@ -40,9 +37,6 @@ namespace Game.Runtime.Level
             return this;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override BulletDecalBase SetDecalMaterial(Material mat)
         {
             if (ThisGameObject != null && !ThisGameObject.activeSelf) ThisGameObject.SetActive(true);

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 namespace Game.Runtime.AI
 {
@@ -16,9 +16,6 @@ namespace Game.Runtime.AI
         public AudioClip fireSound;
         public AudioClip[] reloadSounds;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Initialize(AIShooterAttackBase shooterWeapon)
         {
 
@@ -37,9 +34,6 @@ namespace Game.Runtime.AI
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDrawGizmosSelected()
         {
             Vector3 origin = FirePoint.position;

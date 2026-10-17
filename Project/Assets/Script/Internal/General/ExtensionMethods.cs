@@ -39,9 +39,6 @@ public static class ExtensionMethods
         return s;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static int GetKills(this Player p)
     {
         int k = 0;
@@ -53,9 +50,6 @@ public static class ExtensionMethods
         return k;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static int GetDeaths(this Player p)
     {
         int d = 0;
@@ -67,9 +61,6 @@ public static class ExtensionMethods
         return d;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void PostKill(this Player p, int kills)
     {
         int current = p.GetKills();
@@ -81,9 +72,6 @@ public static class ExtensionMethods
         p.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public static void PostDeaths(this Player p, int deaths)
     {
         int current = p.GetDeaths();
@@ -213,11 +201,6 @@ public static class ExtensionMethods
         return c;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="mode"></param>
-    /// <returns></returns>
     public static GameModeSettings GetModeInfo(this GameMode mode)
     {
         for (int i = 0; i < GameConfig.Instance.gameModes.Count; i++)
@@ -309,10 +292,6 @@ public static class ExtensionMethods
         return list.ToArray();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static Player GetPlayerWithHighestScore(Player[] playerList)
     {
         if (playerList == null) return null;
@@ -470,11 +449,6 @@ public static class ExtensionMethods
         return ((intValue & intLookingForFlag) == intLookingForFlag);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="list"></param>
-    /// <returns></returns>
     public static GamePlayer[] ToGamePlayerList(this Player[] list)
     {
         var gameList = new GamePlayer[list.Length];

@@ -16,18 +16,12 @@ public class KickVote : MonoBehaviourBase
     private bool Voted = false;
     private int AllVoters = 0;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
         UI = FindObjectOfType<KickVoteUI>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -35,9 +29,6 @@ public class KickVote : MonoBehaviourBase
         PhotonNetworkWrapper.Instance.AddCallback(PropertiesKeys.VoteEvent, OnNetworkReceived);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -45,9 +36,6 @@ public class KickVote : MonoBehaviourBase
         PhotonNetworkWrapper.Instance?.RemoveCallback(OnNetworkReceived);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnNetworkReceived(Hashtable data)
     {
         CallType ct = (CallType)data["type"];
@@ -65,10 +53,6 @@ public class KickVote : MonoBehaviourBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="player"></param>
     public void RequestKick(Player player)
     {
         if (IsOpen || player == null)
@@ -91,9 +75,6 @@ public class KickVote : MonoBehaviourBase
         GameCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ResetVote()
     {
         YesCount = 0;
@@ -102,9 +83,6 @@ public class KickVote : MonoBehaviourBase
         Voted = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (!IsOpen || isAgainMy || Voted)
@@ -124,10 +102,6 @@ public class KickVote : MonoBehaviourBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="yes"></param>
     void SendVote(bool yes)
     {
         var data = UtilityHelper.CreatePhotonHashTable();
@@ -138,9 +112,6 @@ public class KickVote : MonoBehaviourBase
         UI.OnSendLocalVote(yes);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnVote(Hashtable data)
     {
         var vote = (bool)data["vote"];
@@ -159,9 +130,6 @@ public class KickVote : MonoBehaviourBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void VoteStart(Hashtable data)
     {
         if (IsOpen)
@@ -178,9 +146,6 @@ public class KickVote : MonoBehaviourBase
         IsOpen = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void EndVote(Hashtable data)
     {
         var kicked = (bool)data["kick"];
@@ -191,9 +156,6 @@ public class KickVote : MonoBehaviourBase
         TargetPlayer = null;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CountVotes()
     {
         int half = (AllVoters / 2);
@@ -211,9 +173,6 @@ public class KickVote : MonoBehaviourBase
         GameCore.Network.SendNetworkCall(PropertiesKeys.VoteEvent, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnPhotonPlayerDisconnected(Player otherPlayer)
     {
         if (TargetPlayer == null)

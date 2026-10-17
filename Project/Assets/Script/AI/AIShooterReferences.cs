@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.AI;
 
 public class AIShooterReferences : PlayerReferencesCommon
@@ -45,9 +45,6 @@ public class AIShooterReferences : PlayerReferencesCommon
 
     public override Team PlayerTeam => aiShooter.AITeam;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void IgnoreColliders(Collider[] list, bool ignore)
     {
         for (int e = 0; e < list.Length; e++)
@@ -62,37 +59,21 @@ public class AIShooterReferences : PlayerReferencesCommon
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool IsDeath()
     {
         return shooterHealth.IsDeath();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetHealth()
     {
         return shooterHealth.GetHealth();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetMaxHealth()
     {
         return shooterHealth.GetMaxHealth();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool IsRealPlayer()
     {
         return false;

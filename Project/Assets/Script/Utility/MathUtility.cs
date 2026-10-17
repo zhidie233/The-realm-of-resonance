@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Animations;
 
 public static class MathUtility
@@ -16,10 +16,6 @@ public static class MathUtility
         return Vector3.Dot(AV, AB) / Vector3.Dot(AB, AB);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static Quaternion ClampRotationAroundAxis(Quaternion q, float minimun, float maximun, Axis axis)
     {
         q.x /= q.w;
@@ -44,10 +40,6 @@ public static class MathUtility
         return q;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static float Distance(Vector3 from, Vector3 to)
     {
         Vector3 v = new Vector3(from.x - to.x, from.y - to.y, from.z - to.z);
@@ -120,11 +112,6 @@ public static class MathUtility
         return Mathf.Clamp(ang, min, max);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="angle"></param>
-    /// <returns></returns>
     public static float WrapAngle(float angle)
     {
         angle %= 360;
@@ -152,19 +139,11 @@ public static class MathUtility
         return angle * (Vector3.Dot(axis, Vector3.Cross(dirA, dirB)) < 0 ? -1 : 1);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static float AngleSigned(Vector3 vector1, Vector3 vector2, Vector3 normal)
     {
         return Mathf.Atan2(Vector3.Dot(normal, Vector3.Cross(vector1, vector2)), Vector3.Dot(vector1, vector2)) * Mathf.Rad2Deg;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public static bool Approximately(float a, float b, float tolerance = 1E-06f)
     {
         return Mathf.Abs(a - b) < tolerance;

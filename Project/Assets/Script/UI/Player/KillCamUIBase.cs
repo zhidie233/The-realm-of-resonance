@@ -1,17 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public abstract class KillCamUIBase : MonoBehaviour
 {
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="killer"></param>
-    /// <param name="gunID"></param>
     public abstract void Show(KillCamBase.KillCamInfo killCamInfo);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void Hide();
 
 

@@ -9719,7 +9719,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224280157574978400}
   m_Layer: 5
-  m_Name: Addons
+  m_Name: Panels
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

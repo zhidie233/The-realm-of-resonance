@@ -1,13 +1,10 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 public class SpectatorMode : SpectatorModeBase
 {
     [GameToggle] public bool leaveSpectatorWithEscape = false;
     [SerializeField] private GameObject content = null;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -23,9 +20,6 @@ public class SpectatorMode : SpectatorModeBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetActiveSpectatorMode(bool active)
     {
         
@@ -65,17 +59,11 @@ public class SpectatorMode : SpectatorModeBase
         isActive = active;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         ListenInput();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ListenInput()
     {
         if (!leaveSpectatorWithEscape) return;
@@ -86,9 +74,5 @@ public class SpectatorMode : SpectatorModeBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="active"></param>
     public override void SetActiveUI(bool active) => content.SetActive(active);
 }

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Game.Runtime.Settings;
 using System.Linq;
 using TMPro;
@@ -27,9 +27,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
         "人","分钟"
     };
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetupSelectors()
     {
         endPoints[0] = endPoints[0].Localized("人", true);
@@ -45,9 +42,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
         SetupGameModeDependentsSelectors();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetupGameModeDependentsSelectors()
     {
         allModes = GetModesForCurrentMap();
@@ -65,9 +59,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
         PerRoundSelector.SetActive(gameMode.RoundModeAllowed == GameModeSettings.RoundModeAllowedOptions.AllowBoth);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnChangeGameMode(int id)
     {
         GameGoalSelector.currentOption = 0;
@@ -76,10 +67,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
         SetupGameModeDependentsSelectors();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="id"></param>
     public void OnChangeMap(int id)
     {
         roomPreview?.Show(LobbyRoomCreator.Instance.BuildRoomInfo());
@@ -88,10 +75,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
         SetupGameModeDependentsSelectors();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private GameModeSettings[] GetModesForCurrentMap()
     {
         var currentMap = LobbyRoomCreator.Instance.MapList[MapSettingsSelector.currentOption];

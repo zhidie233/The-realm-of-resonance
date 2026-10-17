@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -19,11 +19,6 @@ namespace Game.Runtime.UI
         private Action callback;
         private Action cancelCallback;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="description"></param>
-        /// <param name="onAccept"></param>
         public void AskConfirmation(string description, Action onAccept, Action onCancel = null)
         {
             callback = onAccept;
@@ -37,11 +32,6 @@ namespace Game.Runtime.UI
             content.SetActive(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="description"></param>
-        /// <param name="onAccept"></param>
         public void ShowMessage(string description)
         {
             if (!string.IsNullOrEmpty(description))
@@ -53,18 +43,11 @@ namespace Game.Runtime.UI
             content.SetActive(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="text"></param>
         public void SetConfirmationText(string text)
         {
             if (confirmationTextTMP != null) confirmationTextTMP.text = text;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Confirm()
         {
             callback?.Invoke();
@@ -72,9 +55,6 @@ namespace Game.Runtime.UI
             content.SetActive(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Cancel()
         {
             callback = null;

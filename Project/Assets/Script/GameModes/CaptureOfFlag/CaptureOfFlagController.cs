@@ -1,4 +1,4 @@
-﻿using Photon.Realtime;
+using Photon.Realtime;
 using UnityEngine;
 using Game.GameModes.CaptureOfFlag;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -24,9 +24,6 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
     private bool isActive = false;
     public int CapturesToWin { get; set; } = 3;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected)
@@ -35,9 +32,6 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
         Initialize();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         if (isActive)
@@ -46,18 +40,12 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void LateUpdate()
     {
         if (Team1Flag) Team1Flag.HandleFlagCapture();
         if (Team2Flag) Team2Flag.HandleFlagCapture();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckScores()
     {
         if (!RoomSettings.Instance.RoomInfoFetched) return;
@@ -71,10 +59,6 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     void OnNetworkMessage(Hashtable data)
     {
         var command = (int)data["cmd"];
@@ -100,10 +84,6 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     void OnFlagStateChanged(Hashtable data)
     {
         var flagTeam = (Team)data["team"];
@@ -152,10 +132,6 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
         ResonanceManager.Instance.ChangeResonance(resonanceKey);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     void SyncFlags(Hashtable data)
     {
         Team1Flag.State = (FlagPoint.FlagState)data["f1s"];

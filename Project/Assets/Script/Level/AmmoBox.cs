@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections;
 
 namespace Game.Runtime.Level
@@ -13,10 +13,6 @@ namespace Game.Runtime.Level
         public int Projectiles = 2;
         public AudioClip PickSound;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="m_other"></param>
         void OnTriggerEnter(Collider m_other)
         {
             if (!m_other.isLocalPlayerCollider()) return;

@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 using GameEditor;
 using Game.Internal.Scriptables;
@@ -54,9 +54,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void SwithState()
         {
             var state = DoorState;
@@ -100,10 +97,6 @@ namespace Game.Runtime.Level
             return State.OpenToInside;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="newState"></param>
         public override void SetDoorStateInstantly(State newState)
         {
             DoorState = newState;
@@ -115,9 +108,6 @@ namespace Game.Runtime.Level
             else if (newState == State.OpenToOutside) doorPivot.localEulerAngles = doorSettings.OpenOutsideRotation;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void PlayAudioBasedOnState()
         {
             if (doorSettings == null || AudioSource == null) return;
@@ -129,19 +119,12 @@ namespace Game.Runtime.Level
             AudioSource.Play();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void DoTransitionToState()
         {
             StopAllCoroutines();
             StartCoroutine(DoMotionToState());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoMotionToState()
         {
             if (doorSettings == null) yield break;
@@ -163,9 +146,6 @@ namespace Game.Runtime.Level
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDrawGizmosSelected()
         {
             if (doorPivot == null) return;

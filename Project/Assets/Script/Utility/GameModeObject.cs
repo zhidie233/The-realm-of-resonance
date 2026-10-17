@@ -1,12 +1,9 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 
 public class GameModeObject : PhotonHelper
 {
     public GameMode m_GameMode = GameMode.FFA;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         if (!PhotonNetwork.IsConnected || PhotonNetwork.CurrentRoom == null)

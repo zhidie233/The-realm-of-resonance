@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -35,9 +35,6 @@ namespace Game.Runtime.FriendList
         private bool onlineFirst = false;
         private bool isExpand = false;
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Awake()
         {
             onlineFirst = SortOnline;
@@ -62,10 +59,6 @@ namespace Game.Runtime.FriendList
             if (emptyRow != null) emptyRow.Expand(isExpand);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         public override bool IsOpen()
         {
             return isExpand;
@@ -112,9 +105,6 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void UpdateFriendList(bool instance = false)
         {
             if (FriendListBase.Instance.FriendsCount <= 0 || PhotonNetwork.InRoom)
@@ -192,9 +182,6 @@ namespace Game.Runtime.FriendList
             UpdateCount(friends);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void InstanceFriend(FriendInfo[] friends)
         {
             for (int i = 0; i < friends.Length; i++)
@@ -209,9 +196,6 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void UpdateCount(FriendInfo[] friends)
         {
             OnlineCount = 0;
@@ -228,9 +212,6 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void CleanCacheList()
         {
             if (cacheFriendsInfo.Count > 0)
@@ -243,9 +224,6 @@ namespace Game.Runtime.FriendList
             cacheFriendsInfo.Clear();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void SetOnlineFirst(bool first)
         {
             onlineFirst = first;
@@ -253,9 +231,6 @@ namespace Game.Runtime.FriendList
             UpdateFriendList(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ChangeOnlineFirst()
         {
             onlineFirst = !onlineFirst;
@@ -263,19 +238,12 @@ namespace Game.Runtime.FriendList
             UpdateFriendList(true);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ToggleView()
         {
             isExpand = !isExpand;
             ExpandView(isExpand);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="expand"></param>
         public void ExpandView(bool expand)
         {
             isExpand = expand;
@@ -294,10 +262,6 @@ namespace Game.Runtime.FriendList
             if (emptyRow != null) emptyRow.Expand(isExpand);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator DoExpand()
         {
             float d = 0;
@@ -315,10 +279,6 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="log"></param>
         public override void ShowMessage(string log)
         {
             CancelInvoke(nameof(HideLog));
@@ -330,9 +290,6 @@ namespace Game.Runtime.FriendList
             Invoke(nameof(HideLog), 3);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void HideLog()
         {
             if (LogText != null)
@@ -341,20 +298,11 @@ namespace Game.Runtime.FriendList
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         public override void SetActiveList(bool active)
         {
             Panel.SetActive(active);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="fname"></param>
-        /// <returns></returns>
         public override bool IsPlayerListed(string fname)
         {
             for (int i = 0; i < cacheFriendsInfo.Count; i++)

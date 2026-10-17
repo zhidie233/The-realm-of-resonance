@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -39,9 +39,6 @@ namespace Game.InputManager
         private string confirmMessage; 
         #endregion
 
-        /// <summary>
-        /// 
-        /// </summary>
         void Awake()
         {
             if (UtilityHelper.isMobile && autoHideOnMobile)
@@ -50,9 +47,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         IEnumerator Start()
         {
             keyCodeList = Enum.GetValues(typeof(KeyCode));
@@ -68,9 +62,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void OnDisable()
         {
             //if close the window without saving the changes
@@ -80,9 +71,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void InstanceKeys()
         {
             InputBindings.Instance.Initialize();
@@ -103,9 +91,6 @@ namespace Game.InputManager
             initialized = true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public bool ChangeKeyFor(InputBindingUI button)
         {
             if (isFetchingKey) return false;
@@ -115,17 +100,11 @@ namespace Game.InputManager
             return true;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Update()
         {
             WaitForInput();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void WaitForInput()
         {
             if (!isFetchingKey) return;
@@ -187,9 +166,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnDetect()
         {
             currentFetchInput.OnChanged(pendingButton);
@@ -225,9 +201,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplyChanges()
         {
             InputBindings.Instance.SaveMappedInstance();
@@ -236,9 +209,6 @@ namespace Game.InputManager
             if (RevertButton != null) RevertButton.SetActive(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void RevertChanges()
         {
             InputBindings.Instance.RevertMappedInstance();
@@ -247,9 +217,6 @@ namespace Game.InputManager
             if (RevertButton != null) RevertButton.SetActive(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ChangeInputDevice(int id)
         {
             InputBindings.Instance.ChangeMapped(id);
@@ -257,9 +224,6 @@ namespace Game.InputManager
             SetActivePointer(InputHandler.isGamePad);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void SetActivePointer(bool active)
         {
             if (active)
@@ -282,9 +246,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         bool isKeyUsed(KeyCode key)
         {
             foreach (var data in InputBindings.Instance.mappedInstance.ButtonMap)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -20,9 +20,6 @@ public class PauseMenu : PauseMenuBase
     [SerializeField] private GameObject[] layoutRoots = null;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Start()
     {
         if (!IsMenuOpen) CloseMenu();
@@ -39,10 +36,6 @@ public class PauseMenu : PauseMenuBase
         isMenuOpen = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="windowName"></param>
     public override void OpenWindow(string windowName)
     {
         var id = windows.FindIndex(x => x.Name == windowName);
@@ -54,10 +47,6 @@ public class PauseMenu : PauseMenuBase
         OpenWindow(id);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="windowName"></param>
     public override void OpenWindow(int windowIndex)
     {
         if (windowIndex == CurrentWindow && isMenuOpen) return;
@@ -72,9 +61,6 @@ public class PauseMenu : PauseMenuBase
         onOpen?.Invoke();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void CloseMenu()
     {
         isMenuOpen = false;
@@ -82,10 +68,6 @@ public class PauseMenu : PauseMenuBase
         content.SetActive(false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="windowName"></param>
     public override void CloseWindow(string windowName)
     {
         var id = windows.FindIndex(x => x.Name == windowName);
@@ -107,11 +89,6 @@ public class PauseMenu : PauseMenuBase
         layoutRoots[2].SetActive(layouts.IsEnumFlagPresent(LayoutPart.Footer));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="windowName"></param>
-    /// <returns></returns>
     public bool IsWindowOpen(string windowName)
     {
         if (CurrentWindow < 0) return false;

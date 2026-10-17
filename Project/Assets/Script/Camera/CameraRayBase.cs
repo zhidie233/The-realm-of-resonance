@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public abstract class CameraRayBase : MonoBehaviourBase
@@ -10,9 +10,6 @@ public abstract class CameraRayBase : MonoBehaviourBase
         public Action<bool> Callback;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public float ExtraRayDistance { get; set; } = 0;
 
     /// <summary>
@@ -31,11 +28,5 @@ public abstract class CameraRayBase : MonoBehaviourBase
     /// </summary>
     public abstract void RemoveTrigger(DetecableInfo detecableInfo);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="add"></param>
-    /// <param name="id"></param>
-    /// <returns></returns>
     public abstract byte SetActiver(bool add, byte id);
 }

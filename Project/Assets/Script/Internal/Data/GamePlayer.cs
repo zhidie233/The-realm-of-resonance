@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -44,7 +44,6 @@ public class GamePlayer
         }
     }
 
-    // <returns></returns>
     public GameBotProperties GetBotStats()
     {
         GameBotProperties botProps = AIMananger.Instance.GetBotStatistics(Name);
@@ -58,7 +57,6 @@ public class GamePlayer
         return botProps;
     }
 
-    // <returns></returns>
     public Player GetNetworkPlayer()
     {
         if (ActorView != null) return ActorView.Owner;

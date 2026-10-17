@@ -21,9 +21,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
     private AIShooter shooterAgent;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -32,10 +29,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
         shooterAgent = GetComponent<AIShooter>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="damageData"></param>
     public override void DoDamage(DamageData damageData)
     {
         string weaponName = GameConfig.Instance.GetWeapon(damageData.GunID).Name;
@@ -53,17 +46,10 @@ public class AIShooterHealth : PlayerHealthManagerBase
         DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.GameActor.isRealPlayer, damageData.GameActor.Team, damageData.isHeadShot);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="damage"></param>
     public override void DoFallDamage(int damage)
     {
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void DoDamage(int damage, string weaponName, Vector3 direction, int viewID, bool fromBot, Team team, bool ishead)
     {
         if (m_AIShooter.isDeath)
@@ -77,15 +63,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
         photonView.RPC(nameof(RpcDoDamage), RpcTarget.All, damage, weaponName, direction, viewID, fromBot, ishead);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="damage"></param>
-    /// <param name="weaponName"></param>
-    /// <param name="direction"></param>
-    /// <param name="viewID"></param>
-    /// <param name="fromBot"></param>
-    /// <param name="ishead"></param>
     [PunRPC]
     void RpcDoDamage(int damage, string weaponName, Vector3 direction, int viewID, bool fromBot, bool ishead)
     {
@@ -151,9 +128,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Die(int viewID, bool fromBot, bool ishead, string weaponName, Vector3 direction)
     {
         //Debug.Log($"{gameObject.name} die with {weaponName} from viewID {viewID} Bot?= {fromBot}");
@@ -323,9 +297,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void DestroyEntity()
     {
         var deathData = UtilityHelper.CreatePhotonHashTable();
@@ -334,18 +305,12 @@ public class AIShooterHealth : PlayerHealthManagerBase
         this.photonView.RPC(AIShooterAgent.RPC_NAME, RpcTarget.AllBuffered, deathData);//callback is in AIShooterAgent.cs
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void DoRepetingDamage(RepetingDamageInfo info)
     {
         repetingDamageInfo = info;
         InvokeRepeating(nameof(MakeDamageRepeting), 0, info.Rate);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void MakeDamageRepeting()
     {
         if (repetingDamageInfo == null)
@@ -365,49 +330,26 @@ public class AIShooterHealth : PlayerHealthManagerBase
         DoDamage(damageinfo.Damage, "[Burn]", damageinfo.Direction, GameController.LocalPlayerViewID, false, PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam(), false);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void CancelRepetingDamage()
     {
         CancelInvoke(nameof(MakeDamageRepeting));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="healthToAdd"></param>
     public override void SetHealth(int healthToAdd, bool overrideHealth)
     {
         if (overrideHealth) Health = healthToAdd;
         else Health += healthToAdd;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool Suicide()
     {
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetHealth() => Health;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override int GetMaxHealth() => 100;
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public override bool IsDeath()
     {
         return m_AIShooter.isDeath;

@@ -1,4 +1,4 @@
-﻿using Game.Audio;
+using Game.Audio;
 using Game.Internal.Structures;
 using Game.Runtime.UI;
 using Photon.Pun;
@@ -43,9 +43,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     private bool autoRejoinLobby = false;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         SetupPhotonSettings();
@@ -72,10 +69,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = DefaultServer.ToString();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator InitialLoadProcess()
     {
         LobbyLoadingScreenBase.Instance
@@ -100,17 +93,11 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         GetPlayerName();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void ConnectPhoton()
     {
         if (PhotonNetworkWrapper.IsConnected) return;
@@ -172,9 +159,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void Disconect()
     {
         SetLobbyChat(false);
@@ -184,9 +168,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DelayDisconnect() => PhotonNetwork.Disconnect();
 
     /// <summary>
@@ -197,9 +178,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         LobbyRoomListBase.Instance.SetRoomList(roomList);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SetNickName(string nick)
     {
         nick = nick.Replace("\n", "").Trim();
@@ -220,9 +198,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GetPlayerName()
     {
         if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
@@ -236,9 +211,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GeneratePlayerName()
     {
         connectionState = LobbyConnectionState.WaitingForUserName;
@@ -273,9 +245,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void GoToMainMenu()
     {
         if (!PhotonNetworkWrapper.IsConnected)
@@ -312,9 +281,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    ///
-    /// </summary>
     public void SetPlayerName(string InputName)
     {
         CachePlayerName = InputName;
@@ -341,9 +307,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void AutoMatch()
     {
         if (isSeekingMatch)
@@ -449,9 +412,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         if (AudioManager.Instance != null) { AudioManager.Instance.StopBackground(); }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void SignOut()
     {
         PlayerPrefs.SetString(PropertiesKeys.GetUniqueKey("remembernick"), string.Empty);
@@ -465,17 +425,11 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         rememberMe = value;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void CheckRoomPassword(RoomInfo room)
     {
         checkingRoom = room;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool SetRoomPassworld(string pass)
     {
         if (checkingRoom == null)
@@ -503,9 +457,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void LoadLocalLevel(string level)
     {
         LobbyUI.Instance.blackScreenFader.FadeIn(0.75f, () =>
@@ -515,10 +466,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     private IEnumerator MoveToGameScene()
     {
         //Wait for check
@@ -532,9 +479,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         UtilityHelper.LoadLevel((string)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.SceneNameKey]);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetUpGameModes()
     {
         var gameModes = new List<GameModeSettings>();
@@ -548,9 +492,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         GameModes = gameModes.ToArray();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnApplicationQuit()
     {
         quittingApp = true;
@@ -558,9 +499,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         Disconect();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetLobbyChat(bool connect)
     {
         if (LobbyChat.Instance == null) return;
@@ -629,19 +567,12 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         ResetValues();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void RequestSessionVerification()
     {
         var user = new string[] { CachePlayerName };
         PhotonNetwork.FindFriends(user);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="cause"></param>
     public void OnDisconnected(DisconnectCause cause)
     {
         if (cause == DisconnectCause.DisconnectByClientLogic)
@@ -739,10 +670,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
     {
         Debug.LogWarning($"Custom authentication response");
@@ -752,10 +679,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="debugMessage"></param>
     public void OnCustomAuthenticationFailed(string debugMessage)
     {
         LobbyUI.Instance.connectionPopupMessage.AskConfirmation($"Custom Authentication Failed: {debugMessage}", () =>
@@ -778,10 +701,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="friendList"></param>
     public void OnFriendListUpdate(List<FriendInfo> friendList)
     {
         if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))

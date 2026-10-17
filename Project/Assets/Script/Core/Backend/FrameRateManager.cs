@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,9 +7,6 @@ public class FrameRateManager : MonoBehaviour
 {
     public Dropdown optionDropdown;
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnStart()
     {
         if(optionDropdown != null && GameCore.Settings != null)
@@ -29,18 +26,12 @@ public class FrameRateManager : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnChange(int option)
     {        
         Application.targetFrameRate = GameCore.Settings.RefreshRates[option];
         PlayerPrefs.SetInt(PropertiesKeys.GetUniqueKey("framerateid"), option);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnChangeCustom(int option)
     {
         Application.targetFrameRate = GameCore.Settings.RefreshRates[option];

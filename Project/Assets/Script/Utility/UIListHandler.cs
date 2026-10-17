@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -75,9 +75,6 @@ namespace Game.Internal
             return go.GetComponent<T>();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Clear()
         {
             if (poolList == null) return;
@@ -90,9 +87,6 @@ namespace Game.Internal
             poolList.Clear();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public int Count
         {
             get

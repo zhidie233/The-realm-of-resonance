@@ -9,9 +9,6 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
     private bool isSub = false;
     [HideInInspector] public List<GamePlayer> FFAPlayerSort = new List<GamePlayer>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected)
@@ -20,9 +17,6 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         Initialize();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnDisable()
     {
         if (isSub)
@@ -31,9 +25,6 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void OnPlayerPropertiesUpdate(Player target, ExitGames.Client.Photon.Hashtable changedProps)
     {
         if (changedProps.ContainsKey(PropertiesKeys.KillsKey))
@@ -42,9 +33,6 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckScore()
     {
         if (!RoomSettings.Instance.RoomInfoFetched) return;
@@ -80,10 +68,6 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public GamePlayer GetBestPlayer()
     {
         if (FFAPlayerSort.Count > 0 && FFAPlayerSort != null)

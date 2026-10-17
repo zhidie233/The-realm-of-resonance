@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections;
@@ -15,9 +15,6 @@ public class KillCamUI :  KillCamUIBase
     public Image levelIcon;
     public TextMeshProUGUI KillCamSpectatingText;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Show(KillCamBase.KillCamInfo kcinfo)
 {
         var killer = kcinfo.TargetName;
@@ -57,10 +54,6 @@ public class KillCamUI :  KillCamUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator RespawnCountDown()
     {
         float d = 0;
@@ -75,9 +68,6 @@ public class KillCamUI :  KillCamUIBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void Hide()
     {
         content.SetActive(false);

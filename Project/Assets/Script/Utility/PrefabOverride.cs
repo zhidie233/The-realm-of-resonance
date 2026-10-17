@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Use this script to override the default player prefabs set in GameData -> PlayerTeam1 and PlayerTeam2
@@ -8,17 +8,11 @@ public class PrefabOverride : MonoBehaviour
 {
     public PlayerNetworkHandler Team1Player, Team2Player;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         GameController.Instance.OverridePlayerPrefab = this;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public GameObject GetPlayerForTeam(Team team)
     {
         var player = Team1Player.gameObject;

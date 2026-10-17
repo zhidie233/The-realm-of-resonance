@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
 public class CountDownHandler : CountDownBase
@@ -11,34 +11,21 @@ public class CountDownHandler : CountDownBase
     private AudioSource ASource;
     private int countDown = 5;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         PhotonNetworkWrapper.AddNetworkCallback(PropertiesKeys.CountdownEvent, OnNetworkEvent);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnDisable()
     {
         PhotonNetworkWrapper.RemoveNetworkCallback(OnNetworkEvent);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="data"></param>
     void OnNetworkEvent(ExitGames.Client.Photon.Hashtable data)
     {
         OnReceiveCount((int)data["c"]);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void StartCountDown(bool overrideIfStarted = false)
     {
         if (!PhotonNetworkWrapper.IsMasterClient) return;
@@ -57,18 +44,11 @@ public class CountDownHandler : CountDownBase
         InvokeRepeating(nameof(SetCountDown), 1, 1);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="count"></param>
     public override void SetCount(int count)
     {
         OnCountChanged(count);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void SetCountDown()
     {
         countDown--;
@@ -83,10 +63,6 @@ public class CountDownHandler : CountDownBase
         PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CountdownEvent, data);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="count"></param>
     void OnReceiveCount(int count)
     {
         if (!PhotonNetworkWrapper.IsMasterClient)
@@ -105,10 +81,6 @@ public class CountDownHandler : CountDownBase
         OnCountChanged(countDown);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="count"></param>
     private void OnCountChanged(int count)
     {
         if (CountAudio != null)

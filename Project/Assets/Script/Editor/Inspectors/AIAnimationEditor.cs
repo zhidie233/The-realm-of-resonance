@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using GameEditor;
@@ -8,17 +8,11 @@ public class AIAnimationEditor : Editor
 {
     AIAnimation script;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         script = (AIAnimation)target;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnInspectorGUI()
     {
         EditorGUI.BeginChangeCheck();

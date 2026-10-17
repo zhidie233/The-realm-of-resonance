@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using GameEditor;
@@ -11,18 +11,12 @@ public class PlayerIKEditor : Editor
     public Transform headTransform;
     private Vector3 aimPos;
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void OnEnable()
     {
         script = (PlayerIK)target;
         animator = script.GetComponent<Animator>();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnInspectorGUI()
     {
         EditorGUI.BeginChangeCheck();

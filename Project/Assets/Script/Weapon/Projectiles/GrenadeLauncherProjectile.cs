@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 public class GrenadeLauncherProjectile : ProjectileBase
 {
@@ -13,7 +13,6 @@ public class GrenadeLauncherProjectile : ProjectileBase
     private Rigidbody _rigidbody;
     private float instanceTime = 0;
 
-    // <param name="data"></param>
     public override void InitProjectile(BulletData data)
     {
         if (_rigidbody == null)
@@ -37,13 +36,11 @@ public class GrenadeLauncherProjectile : ProjectileBase
         detecting = true;
     }
 
-    // <param name="collision"></param>
     private void OnCollisionEnter(Collision collision)
     {
         OnHit(collision);
     }
 
-    // <param name="collision"></param>
     protected virtual void OnHit(Collision collision)
     {
         if (!detecting) return;

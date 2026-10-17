@@ -1183,7 +1183,6 @@ public class GunController : GunBase
         }
     }
 
-    // <param name="bullet"></param>
     public void AddBullet(int bullet)
     {
         if (AmmoType == AmmunitionType.Bullets)
@@ -1285,7 +1284,6 @@ public class GunController : GunBase
         Source.Play();
     }
 
-    // <param name="part"></param>
     public void PlayReloadAudio(int part)
     {
         if (SoundReloadByAnim) return;
@@ -1340,7 +1338,6 @@ public class GunController : GunBase
         gunManager?.HeadAnimation(0, t_time);
     }
 
-    // <returns></returns>
     IEnumerator KnifeSendFire()
     {
         yield return new WaitForSeconds(0.5f);
@@ -1427,7 +1424,6 @@ public class GunController : GunBase
         return true;
     }
 
-    // <param name="newPoint"></param>
     public void OverrideMuzzlePoint(Transform newPoint)
     {
         defaultMuzzlePoint = muzzlePoint;
@@ -1450,7 +1446,6 @@ public class GunController : GunBase
         onWeaponRendersActive?.Invoke(active);
     }
 
-    // <returns></returns>
     public float GetReloadTime()
     {
         if (reloadPer == ReloadPer.Bullet && WeaponAnimation != null)
@@ -1470,7 +1465,6 @@ public class GunController : GunBase
     public void SetDefaultWeaponCameraFOV(float fov) => WeaponCamera.fieldOfView = fov;
     public Vector3 GetDefaultPosition() => DefaultPos;
 
-    // <returns></returns>
     public override FireType GetFireType()
     {
         switch (WeaponType)

@@ -54,9 +54,6 @@ public class RoomMenu : MonoBehaviourBase
         private set;
     } = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         if (!isConnected)
@@ -67,9 +64,6 @@ public class RoomMenu : MonoBehaviourBase
         InputHandler.CheckGamePadRequired();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         GameEvents.onLocalPlayerSpawn += OnPlayerSpawn;
@@ -77,9 +71,6 @@ public class RoomMenu : MonoBehaviourBase
         PhotonCallbacks.LeftRoom += OnLeftRoom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         GameEvents.onLocalPlayerSpawn -= OnPlayerSpawn;
@@ -87,27 +78,18 @@ public class RoomMenu : MonoBehaviourBase
         PhotonCallbacks.LeftRoom -= OnLeftRoom;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnPlayerSpawn()
     {
         UIReferences.Instance.PlayerUI.PlayerUICanvas.enabled = true;
         GameController.Instance.IsLocalPlaying = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnPlayerLocalDeath()
     {
         UIReferences.Instance.PlayerUI.PlayerUICanvas.enabled = false;
         GameController.Instance.IsLocalPlaying = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         isCursorLocked = UtilityHelper.GetCursorState;
@@ -155,9 +137,6 @@ public class RoomMenu : MonoBehaviourBase
         GameEvents.DispatchGamePauseEvent(paused);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ScoreboardInput()
     {
         if (GameController.Instance.GameFinish || PauseMenuBase.IsMenuOpen) return;
@@ -182,9 +161,6 @@ public class RoomMenu : MonoBehaviourBase
         GameController.Instance.IsLocalPlaying = true;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void JoinTeam(int id)
     {
         Team team = (Team)id;
@@ -246,9 +222,6 @@ public class RoomMenu : MonoBehaviourBase
             StartCoroutine(UIReferences.Instance.FinalFade(true));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnApplicationQuit()
     {
         isApplicationQuitting = true;

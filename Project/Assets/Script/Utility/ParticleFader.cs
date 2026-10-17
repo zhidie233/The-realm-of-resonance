@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections;
 using UnityEngine;
 
@@ -11,10 +11,6 @@ namespace Game.Runtime.Misc
         [Range(1, 20)] public float Emission = 12;
         [Range(1, 10)] public float DestroyTime = 7;
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         private IEnumerator Start()
         {
             if (DestroyAfterTime)
@@ -34,28 +30,17 @@ namespace Game.Runtime.Misc
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void DestroyParticles()
         {
             StartCoroutine(FadeOut());
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="onFinish"></param>
         public void DoFadeOut(bool autoDestroy = true, Action onFinish = null)
         {
             StopAllCoroutines();
             StartCoroutine(FadeOut(autoDestroy, onFinish));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns></returns>
         IEnumerator FadeOut(bool autoDestroy = true, Action onFinish = null)
         {
             ParticleSystem.EmissionModule e = GetComponent<ParticleSystem>().emission;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameEditor
 {
     /// <summary>
-    /// Textures and drawing helpers shared by the project editor tools.
+    /// 项目编辑器工具共用的贴图与绘制辅助。
     /// </summary>
     public static class GameEditorUtils
     {
@@ -13,7 +13,7 @@ namespace GameEditor
         static Texture2D m_GrabHandle;
 
         /// <summary>
-        /// Icon of the remove button used by the list inspectors.
+        /// 列表 Inspector 用的移除按钮图标。
         /// </summary>
         public static Texture2D texRemoveButton
         {
@@ -25,7 +25,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Icon of the drag handle used by the list inspectors.
+        /// 列表 Inspector 用的拖拽手柄图标。
         /// </summary>
         public static Texture2D texGrabHandle
         {

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Text.RegularExpressions;
 using TMPro;
 using System.Collections.Generic;
@@ -21,9 +21,6 @@ namespace Game.InputManager
             { KeyCode.Mouse0, "Left Mouse" }, { KeyCode.Mouse1, "Right Mouse" }, { KeyCode.Mouse2, "Middle Mouse" }
         };
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void Set(ButtonData data, InputUI uimanager)
         {
             CachedData = data;
@@ -31,9 +28,6 @@ namespace Game.InputManager
             ApplyUI();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void ApplyUI()
         {
             KeyNameText.text = CachedData.Description;
@@ -76,9 +70,6 @@ namespace Game.InputManager
             if(AltOverlay != null) AltOverlay.SetActive(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void OnEdit(bool primary)
         {
             if (UIManager.ChangeKeyFor(this))
@@ -91,9 +82,6 @@ namespace Game.InputManager
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void OnChanged(InputUI.PendingButton button)
         {
             if (waitingFor == 1)
@@ -131,17 +119,11 @@ namespace Game.InputManager
             waitingFor = 0;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void CancelChange()
         {
             ApplyUI();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ResetKey(KeyCode key)
         {
             if(CachedData.PrimaryKey == key) { CachedData.PrimaryKey = KeyCode.None; }
@@ -149,9 +131,6 @@ namespace Game.InputManager
             ApplyUI();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ResetAxis(string axis)
         {
             if (string.IsNullOrEmpty(axis)) return;

@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -15,9 +15,6 @@ public class ObjectPooling : ObjectPoolingBase
 
     private Dictionary<string, PoolObject> pools = new Dictionary<string, PoolObject>();
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void Awake()
     {
         for (int i = 0; i < pooledPrefabs.Length; i++)
@@ -83,9 +80,6 @@ public class ObjectPooling : ObjectPoolingBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public class PoolObject
     {
         public string Name;

@@ -36,9 +36,6 @@ public class WeaponSway : WeaponSwayBase
     private float amplitudeMultiplier = 1;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -49,9 +46,6 @@ public class WeaponSway : WeaponSwayBase
         defaultEuler = m_Transform.localEulerAngles;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {     
         deltaTime = Time.smoothDeltaTime;
@@ -88,9 +82,6 @@ public class WeaponSway : WeaponSwayBase
         defaultRotation = Quaternion.Slerp(defaultRotation, Quaternion.identity, deltaTime * Smoothness);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -100,9 +91,6 @@ public class WeaponSway : WeaponSwayBase
         GameEvents.onLocalPlayerStateChanged += OnLocalStateChange;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -120,27 +108,16 @@ public class WeaponSway : WeaponSwayBase
         StartCoroutine(FallEffect(impactAmount));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="aim"></param>
     void OnLocalAimChanged(bool aim)
     {
         isAiming = aim;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="newWeapon"></param>
     void OnLocalWeaponChanged(int newWeapon)
     {
         isAiming = false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnLocalStateChange(PlayerState from, PlayerState to)
     {
         if(to == PlayerState.Jumping)
@@ -148,18 +125,11 @@ public class WeaponSway : WeaponSwayBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="multiplier"></param>
     public override void SetMotionMultiplier(float multiplier)
     {
         amplitudeMultiplier = multiplier;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UseAimSettings()
     {
         amplitudeMultiplier = aimMultiplier;
@@ -188,9 +158,6 @@ public class WeaponSway : WeaponSwayBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void ResetSettings()
     {
         Amount = delayAmplitude;

@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
@@ -8,9 +8,6 @@ namespace Game.Runtime.UI
     {
         private TMP_Dropdown dropdown;
 
-        /// <summary>
-        /// 
-        /// </summary>
         private void Awake()
         {
             if (dropdown == null)
@@ -21,10 +18,6 @@ namespace Game.Runtime.UI
             }
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="value"></param>
         public void OnChanged(int value)
         {
             var loadout = (PlayerClass)value;

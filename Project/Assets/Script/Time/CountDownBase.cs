@@ -11,20 +11,10 @@ public abstract class CountDownBase : MonoBehaviour
         set;
     } = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void StartCountDown(bool overrideIfStarted = false);
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="count"></param>
     public abstract void SetCount(int count);
 
-    /// <summary>
-    /// 
-    /// </summary>
     private static CountDownBase _instance;
     public static CountDownBase Instance
     {

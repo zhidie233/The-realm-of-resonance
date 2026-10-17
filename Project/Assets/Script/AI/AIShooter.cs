@@ -4,81 +4,54 @@ using UnityEngine.AI;
 
 public abstract class AIShooter : MonoBehaviourBase
 {
-    /// <summary>
-    /// 
-    /// </summary>
     public AIAgentState AgentState
     {
         get;
         set;
     } = AIAgentState.Idle;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public Transform Target
     {
         get;
         set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public virtual Transform AimTarget
     {
         get;
         protected set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract float CachedTargetDistance
     {
         get;
         set;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public AILookAt LookingAt 
     { 
         get; 
         set; 
     } = AILookAt.Path;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool isDeath
     {
         get;
         set;
     } = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public Team AITeam
     {
         get;
         set;
     } = Team.None;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool FocusOnSingleTarget 
     { 
         get;
         set; 
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool isTeamMate
     {
         get
@@ -107,48 +80,23 @@ public abstract class AIShooter : MonoBehaviourBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void Init();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public virtual void OnDeath() { }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public virtual void CheckTargets() { }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void Respawn();
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void UpdateTargetList();
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="fromPosition"></param>
     public abstract void OnGetHit(Vector3 fromPosition);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public virtual Vector3 TargetPosition
     {
         get => Target.position;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private Vector3 m_lookAtDirection = Vector3.forward;
     public virtual Vector3 LookAtDirection
     {
@@ -156,9 +104,6 @@ public abstract class AIShooter : MonoBehaviourBase
         set => m_lookAtDirection = value;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private Vector3 m_lookAtPosition = Vector3.forward;
     public virtual Vector3 LookAtPosition
     {

@@ -15,9 +15,6 @@ namespace Game.Runtime.UI.Bindings
         [SerializeField] private Image KillTypeImage = null;
         private CanvasGroup Alpha;
 
-        /// <summary>
-        /// 
-        /// </summary>
         public override void Init(KillFeed feed)
         {
             if (Alpha == null) Alpha = GetComponent<CanvasGroup>();
@@ -40,9 +37,6 @@ namespace Game.Runtime.UI.Bindings
             StartCoroutine(Hide(10));
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnKillMessage(KillFeed info)
         {
             KillerText.text = info.Killer;
@@ -82,9 +76,6 @@ namespace Game.Runtime.UI.Bindings
             KillTypeImage.gameObject.SetActive(info.HeadShot);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnMessage(KillFeed info)
         {
             DisableAll();
@@ -92,9 +83,6 @@ namespace Game.Runtime.UI.Bindings
             KillerText.text = info.Message;
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void OnTeamHighight(KillFeed info)
         {
             DisableAll();
@@ -103,18 +91,11 @@ namespace Game.Runtime.UI.Bindings
             KillerText.text = string.Format("<color=#{0}>{1}</color> {2}", hex, info.Killer, info.Message);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         void DisableAll()
         {
             SetActiveAll(false);
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="active"></param>
         void SetActiveAll(bool active)
         {
             KillerText.gameObject.SetActive(active);

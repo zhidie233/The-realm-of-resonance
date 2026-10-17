@@ -42,9 +42,6 @@ public class PlayerAnimations : PlayerAnimationsBase
     private float timeSinceLastMove = 0;
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         base.Awake();
@@ -62,27 +59,18 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnEnable()
     {
         base.OnEnable();
         AnimatorReloadEvent.OnTPReload += OnTPReload;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDisable()
     {
         base.OnDisable();
         AnimatorReloadEvent.OnTPReload -= OnTPReload;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void FetchHashes()
     {
         // cache the hashes in a Array will be more appropriate but to be more readable for other users
@@ -99,9 +87,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         animatorHashes.Add("GunType", Animator.StringToHash("GunType"));
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnTPReload(bool enter, Animator theAnimator, AnimatorStateInfo stateInfo)
     {
         if (theAnimator != Animator || CurrentNetworkGun == null || CurrentNetworkGun.LocalGun == null) return;
@@ -111,9 +96,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         Animator.SetFloat("ReloadSpeed", reloadSpeed);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         deltaTime = Time.deltaTime;
@@ -124,9 +106,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         DropPlayerAngle();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void ControllerInfo()
     {
         if (PlayerRoot != null)
@@ -155,9 +134,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         if (Time.frameCount % 7 == 0) lastYRotation = PlayerRoot.localEulerAngles.y;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void Animate()
     {
         if (Animator == null)
@@ -173,9 +149,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         Animator.SetBool(animatorHashes["isGround"], IsGrounded);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void CheckPlayerStates()
     {
         if (BodyState != lastBodyState)
@@ -207,9 +180,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool OnEnterPlayerState(PlayerState playerState)
     {
         if (BodyState == playerState && lastBodyState != playerState)
@@ -219,9 +189,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public bool OnExitPlayerState(PlayerState playerState)
     {
         if (lastBodyState == playerState && BodyState != playerState)
@@ -231,9 +198,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         return false;
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void UpperControll()
     {
         int _fpState = (int)FPState;
@@ -241,9 +205,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         Animator.SetInteger(animatorHashes["UpperState"], _fpState);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void DropPlayerAngle()
     {
         if (BodyState != PlayerState.Dropping) return;
@@ -254,9 +215,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         m_Transform.localRotation = Quaternion.Slerp(m_Transform.localRotation, Quaternion.Euler(pangle), deltaTime * 4);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void BlockWeapons(int blockState)
     {
         if (PlayerReferences == null || PlayerReferences.playerIK == null) return;
@@ -275,9 +233,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnGetHit()
     {
         int r = Random.Range(0, 2);
@@ -285,9 +240,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         Animator.Play(hit, 2, 0);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     private void UpdateFootstep()
     {
         if (!useFootSteps) return;
@@ -309,10 +261,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         footstep?.UpdateStep(movementSpeed);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="typ"></param>
     public override void PlayFireAnimation(GunType typ)
     {
         // Check if the network weapon is using custom animations
@@ -345,9 +293,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public void HitPlayer()
     {
         if (Animator != null)
@@ -359,9 +304,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void UpdateAnimatorParameters()
     {
         ControllerInfo();
@@ -369,9 +311,6 @@ public class PlayerAnimations : PlayerAnimationsBase
         UpperControll();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void SetNetworkGun(GunType weaponType, RemoteGun networkGun)
     {
         if (Animator == null || !Animator.gameObject.activeInHierarchy) return;
@@ -402,15 +341,8 @@ public class PlayerAnimations : PlayerAnimationsBase
             Invoke(nameof(ResetHandsIK), 0.3f);
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
     void ResetHandsIK() { PlayerReferences.playerIK.ControlArmsWithIK = true; }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     public GunType GetCurretWeaponType() { return cacheWeaponType; }
 
     private PlayerReferencesHandler _playerReferences = null;

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameEditor
 {
     /// <summary>
-    /// Styles shared by the project editor tools.
+    /// 项目编辑器工具共用的样式。
     /// </summary>
     public static class GameEditorStyles
     {
@@ -17,7 +17,7 @@ namespace GameEditor
         static GUISkin m_EditorSkin;
 
         /// <summary>
-        /// Skin used by the custom editor windows.
+        /// 自定义编辑器窗口用的皮肤。
         /// </summary>
         public static GUISkin EditorSkin
         {
@@ -48,32 +48,32 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Box style used to outline a selectable header.
+        /// 给可折叠标题描边用的方框样式。
         /// </summary>
         public static GUIStyle OutlineButtonStyle { get { return SkinStyle(7, EditorStyles.helpBox); } }
 
         /// <summary>
-        /// Foldout header style.
+        /// 折叠标题样式。
         /// </summary>
         public static GUIStyle HeaderFoldoutStyle { get { return SkinStyle(6, EditorStyles.foldout); } }
 
         /// <summary>
-        /// Slider style used by the weapon cards.
+        /// 武器卡片用的滑杆样式。
         /// </summary>
         public static GUIStyle HorizontalSliderStyle { get { return SkinStyle(9, EditorStyles.label); } }
 
         /// <summary>
-        /// Slider thumb style used by the weapon cards.
+        /// 武器卡片用的滑杆滑块样式。
         /// </summary>
         public static GUIStyle HorizontalSliderThumbStyle { get { return SkinStyle(10, EditorStyles.label); } }
 
         /// <summary>
-        /// Button style used by the custom editor windows.
+        /// 自定义编辑器窗口用的按钮样式。
         /// </summary>
         public static GUIStyle WindowButtonStyle { get { return SkinStyle(11, EditorStyles.toolbarButton); } }
 
         /// <summary>
-        /// Draws a labeled toggle inside the given rect.
+        /// 在给定矩形里画一个带标签的开关。
         /// </summary>
         public static bool FeatureToogle(Rect rect, bool value, string label)
         {
@@ -81,7 +81,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Foldout header used to open and close a section.
+        /// 用来展开和收起分节的折叠标题。
         /// </summary>
         public static bool ContainerHeaderFoldout(string title, bool expanded)
         {
@@ -89,7 +89,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Outline button drawn in the current layout.
+        /// 在当前布局里画一个描边按钮。
         /// </summary>
         public static bool ButtonOutline(string label)
         {
@@ -97,7 +97,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Parses a hex color, with or without the leading '#'.
+        /// 解析十六进制颜色，带不带前缀 # 都可以。
         /// </summary>
         public static Color GetColorFromHex(string hex)
         {
@@ -108,7 +108,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Clones the closest built in style and lets the caller customize the copy.
+        /// 克隆最接近的内置样式，把副本交给调用方调整。
         /// </summary>
         public static GUIStyle GetUnityStyle(string name, OnCreateStyleOp onCreate, string overlap = "")
         {
@@ -160,7 +160,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Colors used by the custom editor windows.
+        /// 自定义编辑器窗口用的颜色。
         /// </summary>
         public static class EditorPalette
         {

@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using System.Globalization;
 #if UNITY_EDITOR
@@ -94,9 +94,6 @@ namespace Game.Runtime.Settings
                 GameEvents.DispatchGameSettingsChange();
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
         public void ApplyResolutionSettings(ResolutionApplication resolutionApplication)
         {
             if (resolutionApplication == ResolutionApplication.NoApply) return;
@@ -141,10 +138,6 @@ namespace Game.Runtime.Settings
 
             private bool hasBeenModified = false;
 
-            /// <summary>
-            /// 
-            /// </summary>
-            /// <returns></returns>
             public object GetValue()
             {
                 string v = PlayerPrefs.GetString(SettingKey, Value);
@@ -181,9 +174,6 @@ namespace Game.Runtime.Settings
                 }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
             public void SetSettingValue(object value, bool autoSave = false)
             {
                 string v = "";
@@ -199,9 +189,6 @@ namespace Game.Runtime.Settings
                 }
             }
 
-            /// <summary>
-            /// 
-            /// </summary>
             public void SaveValue()
             {
                 if (!hasBeenModified) return;

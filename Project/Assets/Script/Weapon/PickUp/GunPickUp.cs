@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -23,9 +23,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
     #endregion
     
     #region Unity Methods
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void Awake()
     {
         if (!PhotonNetworkWrapper.IsConnected) return;
@@ -34,10 +31,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         uniqueLocal = (byte)UnityEngine.Random.Range(0, 9998);
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <returns></returns>
     IEnumerator Start()
     {
         if (AutoDestroy)
@@ -54,9 +47,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     protected override void OnDestroy()
     {
         base.OnDestroy();
@@ -75,10 +65,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="c"></param>
     void OnTriggerEnter(Collider c)
     {
         if (!PickupOnCollide || GameController.Instance.GameMatchState == MatchState.Waiting)
@@ -108,9 +94,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         }
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
     void OnTriggerExit(Collider c)
     {
         if (c.isLocalPlayerCollider() && localInsideTrigger)
@@ -132,9 +115,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
     } 
     #endregion
 
-    /// <summary>
-    /// 
-    /// </summary>
     public override void OnUpdate()
     {
         if (!localInsideTrigger) return;
@@ -193,10 +173,6 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         PickUpUIBase.Instance?.Hide();
     }
 
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="delay"></param>
     public override void DestroyAfter(float delay)
     {
         this.InvokeAfter(delay, () =>

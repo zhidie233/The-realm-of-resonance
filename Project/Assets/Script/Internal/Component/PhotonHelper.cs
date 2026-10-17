@@ -62,8 +62,6 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // <param name="go"></param>
-    // <returns></returns>
     public PhotonView GetPhotonView(GameObject go)
     {
         PhotonView view = go.GetComponent<PhotonView>();
@@ -112,7 +110,6 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // <returns></returns>
     public GameObject FindPhotonPlayer(Player p)
     {
         GameObject player = GameObject.Find(p.NickName);

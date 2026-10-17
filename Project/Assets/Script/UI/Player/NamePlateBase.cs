@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 /// <summary>
 /// Base class for Name Plate Drawer
@@ -9,9 +9,6 @@ public abstract class NamePlateBase : MonoBehaviourBase
 
     public static bool BlockDraw = false;
 
-    /// <summary>
-    /// 
-    /// </summary>
     public string PlayerName { get; set; }
 
     /// <summary>
@@ -19,8 +16,5 @@ public abstract class NamePlateBase : MonoBehaviourBase
     /// </summary>
     public abstract void SetName(string playerName);
 
-    /// <summary>
-    /// 
-    /// </summary>
     public abstract void SetActive(bool active);
 }
