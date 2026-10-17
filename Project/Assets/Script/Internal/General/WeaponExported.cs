@@ -78,20 +78,6 @@ namespace GameEditor
                 GUILayout.EndHorizontal();
 
                 GUILayout.EndVertical();
-              /*  if(GUILayout.Button("Update Info"))
-                {
-                    var old = script.WeaponInfo;
-                    var newInfoID = GameConfig.Instance.AllWeapons.FindIndex(x => x.Name == old.Name);
-                    if(newInfoID == -1)
-                    {
-                        Debug.Log("Can't find");
-                        return;
-                    }
-
-                    script.WeaponInfo = GameConfig.Instance.AllWeapons[newInfoID];
-                    serializedObject.ApplyModifiedProperties();
-                    EditorUtility.SetDirty(target);
-                }*/
             }
         }
     }

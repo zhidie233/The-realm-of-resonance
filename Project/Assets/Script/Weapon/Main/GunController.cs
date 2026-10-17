@@ -997,7 +997,6 @@ public class GunController : GunBase
                     // 若子弹用了自定义特效就会看出来（比如从眼睛射出子弹）
                     // 若这正是你需要的且没有用自定义弹道/特效，就注释上面的行，取消注释下面这行：
 
-                    // bulletInstanceData.Position = cp;
                 }
                 else
                 {

@@ -28,6 +28,5 @@ public class UpdateNavmesh : MonoBehaviour
         navMeshSurface.BuildNavMesh();
         
         // 方法2：如果场景变化不大，可以尝试更新NavMeshData（更高效）
-        // navMeshSurface.UpdateNavMesh(navMeshSurface.navMeshData);
     }
 }

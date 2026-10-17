@@ -161,7 +161,6 @@ public class GameManagerWindow : EditorWindow
             r = GUILayoutUtility.GetRect(new GUIContent(managerPanels[i].Name), styles["panelButton"], GUILayout.Height(30));
             if (currentPanelType == managerPanels[i].Name)
             {
-                // EditorGUI.DrawRect(r, altColor);
                 float w = r.width;
                 r.width = 1;
                 EditorGUI.DrawRect(r, hightlightColor);
@@ -771,7 +770,6 @@ public class GameManagerWindow : EditorWindow
                 currentWindow = WindowType.Managers;
             }
         }
-        //  DrawBottomLine(0.2f);
         GUILayout.Space(30);
         EditorGUILayout.EndScrollView();
     }

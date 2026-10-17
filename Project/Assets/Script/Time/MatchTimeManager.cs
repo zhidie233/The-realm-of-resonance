@@ -203,7 +203,6 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     public override void SetTimeState(RoomTimeState state, bool sync = false)
     {
-        // Debug.Log($"time state changed from {TimeState.ToString()} to {state.ToString()}");
         if (sync && PhotonNetworkWrapper.IsMasterClient)
         {
             Hashtable table = new Hashtable();
@@ -239,8 +238,6 @@ public class MatchTimeManager : MatchTimeManagerBase
                 roomClose = true;
                 if (RoomSettings.Instance.CurrentRoomInfo.roundStyle == RoundStyle.OneMacht)
                 {
-                   // PhotonNetwork.CurrentRoom.IsOpen = false;
-                   // PhotonNetwork.CurrentRoom.IsVisible = false;
                 }
             }
         }

@@ -360,7 +360,6 @@ public class FirstPersonController : FirstPersonControllerBase
     void OnSurface()
     {
         // 始终沿摄像机前方移动，因为那是瞄准方向
-        // desiredMove = (_transform.forward * _input.y) + (_transform.right * _input.x);
 
         desiredMove.Set(_input.x, 0.0f, _input.y);
         desiredMove = _transform.TransformDirection(desiredMove);
@@ -729,7 +728,6 @@ public class FirstPersonController : FirstPersonControllerBase
             HorizontalInput = 0;
         }
 
-        // _input = Vector2.Lerp(_input, new Vector2(HorizontalInput, VerticalInput), Time.deltaTime * 25);
         _input.Set(HorizontalInput, VerticalInput);
 
         float inputMagnitude = _input.magnitude;
@@ -1019,20 +1017,6 @@ public class FirstPersonController : FirstPersonControllerBase
     {
         surfaceNormal = hit.normal;
         surfacePoint = hit.point;
-        // 想让玩家控制器在碰撞时对刚体施力就启用这段
-        // 出于性能考虑默认注释掉。
-        /* Rigidbody body = hit.collider.attachedRigidbody;
-         // 角色踩在刚体上时不要推动它
-         if (m_CollisionFlags == CollisionFlags.Below)
-         {
-             return;
-         }
-
-         if (body == null || body.isKinematic)
-         {
-             return;
-         }
-         body.AddForceAtPosition(_characterController.velocity * 0.1f, hit.point, ForceMode.Impulse);*/
     }
 
     internal float _speed = 0;

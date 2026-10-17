@@ -123,7 +123,6 @@ namespace Game.Tween
             }
             else
             {
-                //if (Delay > 0) { yield return new EditorWaitForSeconds(Delay); }
             }
 #else
         if(Delay > 0) { yield return new WaitForSecondsRealtime(Delay); }

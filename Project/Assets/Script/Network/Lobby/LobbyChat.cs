@@ -31,7 +31,6 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
     public ChatClient chatClient = null;
     private bool isShow = false;
     private bool subscribed = false;
-    // private static string WelcomeText = "Welcome to chat. Type \\help to list commands.";
     private static string HelpText = "\n    -- HELP --\n" +
         "To subscribe to channel(s):\n" +
             "\t<color=#E07B00>\\subscribe</color> <color=green><list of channelnames></color>\n" +
@@ -204,7 +203,6 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
             string[] splitNames = this.selectedChannelName.Split(new char[] { ':' });
             privateChatTarget = splitNames[1];
         }
-        //UnityEngine.Debug.Log("selectedChannelName: " + selectedChannelName + " doingPrivateChat: " + doingPrivateChat + " privateChatTarget: " + privateChatTarget);
 
 
         if (inputLine[0].Equals('\\'))

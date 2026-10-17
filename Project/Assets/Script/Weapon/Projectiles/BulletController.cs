@@ -64,7 +64,6 @@ public class BulletController : ProjectileBase
         // 子弹什么都没打中时安排销毁
         Invoke(nameof(Disable), 5);//TTL
 
-        //BulletDebugger.CreateBullet(this);
     }
 
     // 把子弹所有属性设为初始值。
@@ -116,7 +115,6 @@ public class BulletController : ProjectileBase
 
             if (distanceSinceLastCheck > 0)
             {
-                //BulletDebugger.UpdateBullet(this);
 
                 // 检测途中是否命中物体
                 dir /= distanceSinceLastCheck;
@@ -352,7 +350,6 @@ public class BulletController : ProjectileBase
         //机器人不像其他真人玩家那样击中玩家的判定盒，而是击中角色控制器碰撞体，
         //所以不通过判定盒脚本，而是直接和玩家生命值脚本通信
         var pdm = hit.transform.GetComponent<PlayerReferencesHandler>();
-        //if (pdm != null && bulletData.GameActor != null && !bulletData.GameActor.isRealPlayer)
         if (pdm != null && bulletData.GameActor != null)
         {
             DamageData info = BuildBaseDamageData();

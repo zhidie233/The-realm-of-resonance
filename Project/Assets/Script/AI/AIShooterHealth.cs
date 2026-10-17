@@ -130,7 +130,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
 
     void Die(int viewID, bool fromBot, bool ishead, string weaponName, Vector3 direction)
     {
-        //Debug.Log($"{gameObject.name} die with {weaponName} from viewID {viewID} Bot?= {fromBot}");
         m_AIShooter.isDeath = true;
         m_AIShooter.OnDeath();
         gameObject.name += " (die)";

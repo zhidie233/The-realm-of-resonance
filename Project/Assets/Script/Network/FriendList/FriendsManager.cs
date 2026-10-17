@@ -60,7 +60,6 @@ namespace Game.Runtime.FriendList
             }
             else
             {
-                // Debug.Log("No friends saved");
                 return;
             }
         }

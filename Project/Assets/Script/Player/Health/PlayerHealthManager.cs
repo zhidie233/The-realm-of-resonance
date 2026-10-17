@@ -263,7 +263,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// </summary>
 	void Die(string killer, bool isHeadshot, DamageCause cause, int gunID, Vector3 hitPos, Player sender)
     {
-        // Debug.Log($"{gameObject.name} die cause {cause.ToString()} from {killer} and GunID {gunID}");
         isDead = true;
         transform.parent = null;
         m_CharacterController.enabled = false;

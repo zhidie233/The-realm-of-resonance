@@ -165,8 +165,6 @@ namespace Game.InputManager
 
             if (raycastResult.distance > maxInteractDistance)
             {
-                //Debug.Log("Distance too great");
-                // return;
             }
 
             if (Input.GetKeyDown(submitButton))

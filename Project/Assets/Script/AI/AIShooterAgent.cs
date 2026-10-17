@@ -462,7 +462,6 @@ public class AIShooterAgent : AIShooter
             SetState(AIAgentState.Covering);
             CoverTime = time;
             TriggerFire(behaviorSettings.agentBehave == AIAgentBehave.Agressive ? AIShooterAttackBase.FireReason.Normal : AIShooterAttackBase.FireReason.OnMove);
-            //LookAtTarget();
             return true;
         }
         else
@@ -536,7 +535,6 @@ public class AIShooterAgent : AIShooter
 
     void OnHoldingPosition()
     {
-        //if (Time.frameCount % 10 != 0) return;
 
         SetDebugState(37, true);
         if (time > lastHoldPositionTime)
@@ -637,9 +635,7 @@ public class AIShooterAgent : AIShooter
                 SetDebugState(23);
                 if (time > lastHoldPositionTime)
                 {
-                    // if (Random.value > 0.8f)
                     HoldPosition();
-                    // else lastHoldPositionTime = time + 7;
                 }
                 DetermineSpeedBaseOnRange();
             }
@@ -1405,7 +1401,6 @@ public class AIShooterAgent : AIShooter
                 {
                     if (i == 0)
                     {
-                        // Gizmos.DrawSphere(Agent.path.corners[i], 0.05f);
                         continue;
                     }
                     else if (i == 1)

@@ -272,7 +272,6 @@ public class AIMananger : PhotonHelper
                     AiName = GameConfig.Instance.BotTeam3.name;
                     break;
             }
-            //AiName = (_team == Team.Team2) ? GameConfig.Instance.BotTeam2.name : GameConfig.Instance.BotTeam1.name;
             if (!isOneTeamMode)//if team mode, spawn bots in the respective team spawn points.
             {
                 spawnPoint = SpawnPointManager.Instance.GetSpawnPointForTeam(_team, SpawnPointManager.SpawnMode.Sequential);
@@ -466,7 +465,6 @@ public class AIMananger : PhotonHelper
     //把机器人放入待重生列表，等最短重生时间过去后重生。
     public void AddBotToRespawn(AIShooter bot)
     {
-        //Debug.Log($"ADD BOT TO RESPAWN: " + bot.AIName);
         SpawningBots.Add(bot);
         //重生时间到后自动出生
         if (GetGameMode.GetGameModeInfo().onPlayerDie == GameModeSettings.OnPlayerDie.SpawnAfterDelay)
@@ -622,7 +620,6 @@ public class AIMananger : PhotonHelper
             AIShooter bot = AllBots.Find(x => x.AIName == remplaceBot);
             if (bot != null)
             {
-                //Debug.Log($"<color=blue>Bot {bot.AIName} was replaced by master {player.NickName}</color>");
                 PhotonView bv = bot.GetComponent<PhotonView>();
                 bot.References.shooterHealth.DestroyEntity();//destroy on remote clients
                 AllBots.Remove(bot);
@@ -654,7 +651,6 @@ public class AIMananger : PhotonHelper
                 AllBotsTransforms.Add(bot.transform);
                 bot.Init();
             }
-            // Debug.Log("Bots data has been build in new Master Client");
         }
     }
 

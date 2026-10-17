@@ -297,7 +297,6 @@ public class BodyHitBoxManagerEditor: Editor
         if (Styles.UnityDude.image)
         {
             Rect rect = GUILayoutUtility.GetRect(Styles.UnityDude, GUIStyle.none, GUILayout.MaxWidth(Styles.UnityDude.image.width));
-            //rect.x += (Screen.width - rect.width) / 2;
 
             Color oldColor = GUI.color;
             GUI.color = new Color(0.2f, 0.2f, 0.2f, 1.0f);
@@ -314,7 +313,6 @@ public class BodyHitBoxManagerEditor: Editor
             }
             GUI.color = oldColor;
 
-            // DoPicking(rect, count);
         }
     }
 
@@ -364,7 +362,6 @@ public class BodyHitBoxManagerEditor: Editor
                                 if (m_MaskBodyPartPicker[i] == color)
                                 {
                                     GUI.changed = true;
-                                    //bodyMask.GetArrayElementAtIndex(i).intValue = bodyMask.GetArrayElementAtIndex(i).intValue == 1 ? 0 : 1;
                                     Debug.Log("Pick " + i);
                                     anyBodyPartPick = true;
                                 }
@@ -376,12 +373,10 @@ public class BodyHitBoxManagerEditor: Editor
 
                                 for (int i = 0; i < count && !atLeastOneSelected; i++)
                                 {
-                                    // atLeastOneSelected = bodyMask.GetArrayElementAtIndex(i).intValue == 1;
                                 }
 
                                 for (int i = 0; i < count; i++)
                                 {
-                                    //bodyMask.GetArrayElementAtIndex(i).intValue = !atLeastOneSelected ? 1 : 0;
                                 }
                                 GUI.changed = true;
                             }

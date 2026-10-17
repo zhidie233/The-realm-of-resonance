@@ -97,7 +97,6 @@ public class KillCam : KillCamBase
         y -= (GameInput.MouseY * this.ySpeed) * 0.02f;
         y = MathUtility.ClampAngle(this.y, this.yMinLimit, this.yMaxLimit);
         Quaternion quaternion = Quaternion.Euler(this.y, this.x, 0f);
-        //this.distance = Mathf.Clamp(this.distance - (Input.GetAxis("Mouse ScrollWheel") * 5f), distanceMin, distanceMax);
 
         Vector3 vector = new Vector3(0f, 0f, -targetDistance);
         Vector3 vector2 = target.position;

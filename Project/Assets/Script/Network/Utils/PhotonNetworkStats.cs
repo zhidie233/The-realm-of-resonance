@@ -169,7 +169,6 @@ public class PhotonNetworkStats : MonoBehaviour, IConnectionCallbacks
         // mag 为 0 表示字节，1 表示 KB，2 表示 MB，以此类推
         int mag = (int)Mathf.Log(value, 1024);
 
-        // 1L << (mag * 10) == 2 ^ (10 * mag) 
         // [即 mag 对应单位下的字节数]
         decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 

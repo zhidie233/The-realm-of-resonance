@@ -105,7 +105,6 @@ public class GunInventory : MonoBehaviourBase
         AddWeaponToSlot(3, GetGunOnListById(pcl.Perks), true);
 
         // 想加更多武器可以在这里加
-        // e.g AddWeaponToSlot(4, GetGunOnListById(pcl.Custom), true);
 
         for (int i = 0; i < PlayerEquip.Count; i++)
         {

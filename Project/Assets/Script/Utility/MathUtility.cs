@@ -189,8 +189,6 @@ public static class MathUtility
     /// <returns></returns>
     public static Vector3 CalculateDrag(Vector3 velocityVec)
     {
-        //F_drag = k * v^2 = m * a
-        //k = 0.5 * C_d * rho * A 
 
         float m = 0.2f; // kg
         float C_d = 0.5f;

@@ -814,7 +814,6 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         {
             if (cameraRender == null)
             {
-                // Debug.Log("Not Camera has been setup.");
                 return Camera.current;
             }
             return cameraRender;

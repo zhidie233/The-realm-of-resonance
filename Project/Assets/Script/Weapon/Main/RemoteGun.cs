@@ -228,8 +228,6 @@ public class RemoteGun : MonoBehaviour
 #if UNITY_EDITOR
     private void OnDrawGizmos()
     {
-        /*  if (Application.isPlaying)
-              return;*/
 
         if (LeftHandPosition != null)
         {

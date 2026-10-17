@@ -243,7 +243,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
                 return 0;
 
             string an = Quickfire ? QuickFireAnim.name : FireAimAnimation.name;
-            // Anim.Rewind(an);
             Anim[an].speed = FireSpeed;
             Anim.Play(an);
 
@@ -544,7 +543,6 @@ public class WeaponAnimationHandler : WeaponAnimationBase
         // 自 1.9.3 起注释掉，用于修复手雷投掷方向的问题
         // 该问题由动画位移引起。
 
-        // GunManager.HeadAnimator.Play("Throw", 0, 0);
     }
 
     public void PlayParticle(int id)

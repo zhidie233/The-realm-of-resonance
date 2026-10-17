@@ -171,7 +171,6 @@ public class PlayerSyncEditor : Editor
                 Rect elementRect = new Rect(containerRect.xMin, containerRect.yMin + containerElementHeight * i, containerRect.width, containerElementHeight);
                 {
                     Rect texturePosition = new Rect(elementRect.xMin + 6, elementRect.yMin + elementRect.height / 2f - 1, 9, 5);
-                    //GameEditorUtils.DrawTexture(texturePosition, GameEditorUtils.texGrabHandle);
 
                     Rect propertyPosition = new Rect(elementRect.xMin + 20, elementRect.yMin + 3, elementRect.width - 45, 16);
                     EditorGUI.PropertyField(propertyPosition, listProperty.GetArrayElementAtIndex(i), new GUIContent());
@@ -317,9 +316,6 @@ public class PlayerSyncEditor : Editor
     {
         GUI.enabled = true;
 
-        /* EditorGUI.PropertyField(propertyRect, serializedObject.FindProperty("m_PositionModel.DrawErrorGizmo"),
-             new GUIContent("绘制同步位置误差"));
-         propertyRect.y += EDITOR_LINE_HEIGHT;*/
     }
 
     private void DrawHelpBox(ref Rect propertyRect, bool isOpen, float height, string helpText, string url)

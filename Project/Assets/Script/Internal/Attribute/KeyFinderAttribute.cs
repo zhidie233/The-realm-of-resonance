@@ -31,7 +31,6 @@ public class KeyFinderAttributeDrawer : PropertyDrawer
         p.width -= 50;
         p.height = EditorGUIUtility.singleLineHeight;
         EditorGUI.PropertyField(p, property);
-     //   property.enumValueIndex = (int)(KeyCode)EditorGUI.EnumPopup(p, property.displayName, (KeyCode)property.enumValueIndex, EditorStyles.toolbarPopup);
 
         p.x += position.width - 50;
         p.width = 50;
