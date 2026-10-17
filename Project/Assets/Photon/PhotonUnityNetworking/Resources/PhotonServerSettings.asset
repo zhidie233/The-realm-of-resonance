@@ -34,8 +34,6 @@ MonoBehaviour:
   RunInBackground: 1
   StartInOfflineMode: 0
   RpcList:
-  - ClickRpc
-  - DestroyRpc
   - FireGrenadeRpc
   - FireGrenadeRPC
   - FireSync
