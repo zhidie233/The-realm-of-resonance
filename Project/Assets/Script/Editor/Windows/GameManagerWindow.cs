@@ -47,7 +47,7 @@ public class GameManagerWindow : EditorWindow
     private void OnEnable()
     {
         serializedObject = new SerializedObject(this);
-        titleContent = new GUIContent(" Game", GetUnityIcon("音频混音器"));
+        titleContent = new GUIContent("游戏管理", GetUnityIcon("音频混音器"));
         minSize = new Vector2(720, 570);
         weaponSearchfield = new SearchField();
         managerSearchField = new SearchField();
