@@ -11,7 +11,7 @@ public abstract class SpectatorModeBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Is the spectator mode active?
+    /// 观战模式是否处于激活状态？
     /// </summary>
     public virtual bool isActive 
     { 
@@ -20,7 +20,7 @@ public abstract class SpectatorModeBase : MonoBehaviourBase
     } = false;
 
     /// <summary>
-    /// Does the local player has enters as spectator to the current match?
+    /// 本地玩家是否以观战者身份进入了当前对局？
     /// </summary>
     private static bool s_enterAsSpectator = false;
     public static bool EnterAsSpectator
@@ -34,7 +34,7 @@ public abstract class SpectatorModeBase : MonoBehaviourBase
     public abstract void SetActiveUI(bool active);
 
     /// <summary>
-    /// Can the player select a team after being in spectator mode?
+    /// 玩家能否在进入观战模式后选择队伍？
     /// </summary>
     /// <returns></returns>
     public virtual bool CanSelectTeam()

@@ -26,7 +26,7 @@ namespace Game.Runtime.UI
         }
 
         /// <summary>
-        /// Show/Hide the scope UI with a fade transition
+        /// 淡入淡出显示/隐藏瞄准镜 UI
         /// </summary>
         /// <param name="fadeIn"></param>
         /// <param name="speed"></param>

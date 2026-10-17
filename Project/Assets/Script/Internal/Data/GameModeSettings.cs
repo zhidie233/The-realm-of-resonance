@@ -27,98 +27,98 @@ public class GameModeSettings
     }
 
     /// <summary>
-    /// Game mode name
-    /// This is the name that will show to the player
+    /// 游戏模式名称
+    /// 显示给玩家的名称
     /// </summary>
     public string ModeName;
 
     /// <summary>
-    /// Game Mode internal identifier
-    /// The unique enum identifier for this mode
+    /// 游戏模式内部标识
+    /// 此模式的唯一枚举标识
     /// </summary>
     public GameMode gameMode;
 
     /// <summary>
-    /// Is this mode enable in your game?
+    /// 此模式是否在游戏中启用？
     /// </summary>
     [GameToggle] public bool isEnabled = true;
 
     /// <summary>
-    /// Allow play with bots in this mode?
+    /// 此模式是否允许与机器人对战？
     /// </summary>
     [Header("Settings")]
     [GameToggle] public bool supportBots = false;
 
     /// <summary>
-    /// Force automatically assign the teams for this mode
+    /// 此模式强制自动分配队伍
     /// </summary>
     [GameToggle] public bool AutoTeamSelection = false;
 
     /// <summary>
-    /// Unlist the room from the server list after the match has started?
-    /// So new players can't join in the middle of the match
+    /// 对局开始后是否将房间从服务器列表隐藏？
+    /// 这样新玩家无法中途加入对局
     /// </summary>
     [GameToggle] public bool UnlistGameAfterStarted = false;
 
     /// <summary>
-    /// The minimum number of players that have to be joined in the match
-    /// before the game can start
+    /// 对局所需的最少玩家数，
+    /// 达到后游戏才能开始
     /// </summary>
     [Range(1, 32)] public int RequiredPlayersToStart = 1;
 
     /// <summary>
-    /// What happen when a player joins in the game when the match has started
+    /// 对局开始后玩家加入时的行为
     /// </summary>
     public OnRoundStartedSpawn onRoundStartedSpawn = OnRoundStartedSpawn.SpawnAfterSelectTeam;
 
     /// <summary>
-    /// What happen when a player die
+    /// 玩家死亡时的行为
     /// </summary>
     public OnPlayerDie onPlayerDie = OnPlayerDie.SpawnAfterDelay;
 
     /// <summary>
-    /// Allow players to select the game mode round mode
-    /// or force a round mode
+    /// 允许玩家选择游戏模式的回合模式
+    /// 或强制指定回合模式
     /// </summary>
     public RoundModeAllowedOptions RoundModeAllowed = RoundModeAllowedOptions.AllowBoth;
 
     /// <summary>
-    /// The score/goal name of this game mode
+    /// 此游戏模式的得分/目标名称
     /// </summary>
     public string GoalName = "Kills";
 
     /// <summary>
-    /// Can players pick up weapons in this game mode?
+    /// 此游戏模式下玩家能否拾取武器？
     /// </summary>
     [GameToggle] public bool allowedPickupWeapons = true;
 
     /// <summary>
-    /// Max players options allowed for this game mode
-    /// These are the options that appear in the room creator window
-    /// Max players are the total player allowed, in two team game modes the max players
-    /// per team is equal to 1/2 of the max player
+    /// 此游戏模式允许的最大玩家数选项
+    /// 这些选项会出现在房间创建窗口中
+    /// 最大玩家数是允许的总人数，在双队伍模式中每队
+    /// 人数等于最大玩家数的一半
     /// </summary>
     [Header("Options")]
     public int[] maxPlayers = new int[] { 6, 2, 4, 8 };
 
     /// <summary>
-    /// The max score, kills or wherever the goal is in this mode options
-    /// These are the options that appear in the room creator window
+    /// 此模式选项中的最大得分、击杀数等目标值
+    /// 这些选项会出现在房间创建窗口中
     /// </summary>
     public int[] GameGoalsOptions = new int[] { 50, 100, 150, 200 };
 
     /// <summary>
-    /// The round time limits options for this game mode
-    /// These are the options that appear in the room creator window
-    /// The time is in seconds 60 = 1 minute
+    /// 此游戏模式的回合时间限制选项
+    /// 这些选项会出现在房间创建窗口中
+    /// 时间以秒为单位，60 = 1 分钟
     /// </summary>
     public int[] timeLimits = new int[] { 900, 600, 1200, 300 };
 
     public string GetGoalFullName(int goalID) { return string.Format("{0} {1}", GameGoalsOptions[goalID], GoalName); }
 
     /// <summary>
-    /// Get the game mode goal name
-    /// e.g: kills, captures, score, points, etc...
+    /// 获取游戏模式的目标名称
+    /// 例如：击杀、占领、得分、积分等
     /// </summary>
     public string GetGoalName(int goalID)
     {
@@ -127,7 +127,7 @@ public class GameModeSettings
     }
 
     /// <summary>
-    /// Get the goal value by the index in the GameGoalsOptions list
+    /// 按 GameGoalsOptions 列表中的索引获取目标值
     /// </summary>
     /// <returns></returns>
     public int GetGoalValue(int goalID)

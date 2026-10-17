@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -19,8 +19,8 @@ namespace Game.Runtime.UI
         private RoomInfo cacheInfo = null;
 
         /// <summary>
-        /// This method assign the RoomInfo and get the properties of it
-        /// to display in the UI
+        /// 此方法赋值 RoomInfo 并读取其属性
+        /// 用于在 UI 中显示
         /// </summary>
         /// <param name="info"></param>
         public override void SetInfo(RoomInfo info)
@@ -40,19 +40,19 @@ namespace Game.Runtime.UI
         }
 
         /// <summary>
-        /// Join to the room that this UI Row represent
+        /// 加入此行 UI 所代表的房间
         /// </summary>
         public void JoinRoom()
         {
-            //If the local player ping is higher than the max allowed in the room
+            //本地玩家延迟高于房间允许的上限时
             if (PhotonNetwork.GetPing() >= (int)cacheInfo.CustomProperties[PropertiesKeys.MaxPing])
             {
-                //display the message and Don't join to the room
+                //显示提示信息，不加入该房间
                 LobbyUI.Instance.ShowPopUpWindow("max room ping");
                 return;
             }
 
-            //if the room doesn't require a password
+            //房间不需要密码时
             if (string.IsNullOrEmpty((string)cacheInfo.CustomProperties[PropertiesKeys.RoomPassword]))
             {
                 LobbyUI.Instance.blackScreenFader.FadeIn(1);

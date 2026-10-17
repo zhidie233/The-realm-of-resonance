@@ -19,7 +19,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     [GameToggle] public bool ShowPhotonStatistics;
 
     [Header("Room Options")]
-    //Room Max Ping
+    //房间最大 Ping
     public int[] MaxPing = new int[] { 100, 200, 500, 1000 };
     #endregion
 
@@ -49,7 +49,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         UtilityHelper.BlockCursorForUser = false;
         UtilityHelper.LockCursor(false);
 
-        // Loading process
+        // 加载流程
         StartCoroutine(InitialLoadProcess());
 
         if (AudioManager.Instance != null) { AudioManager.Instance.PlayBackground(); }
@@ -57,7 +57,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// Setup Photon
+    /// 初始化 Photon
     /// </summary>
     void SetupPhotonSettings()
     {
@@ -77,7 +77,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
         if (!GameConfig.isDataCached)
         {
-            // Load GameData asynchronously
+            //异步加载 GameData
             yield return StartCoroutine(GameConfig.AsyncLoadData());
             yield return new WaitForEndOfFrame();
         }
@@ -109,15 +109,15 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
         PhotonNetwork.AuthValues = authValues;
 
-        //if we don't have a custom region to connect or we are using a self hosted server
+        //如果没有自定义的连接区域，或者用的是自建服务器
         if (ServerRegionID == -1 || !PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer)
         {
-            //connect using the default PhotonServerSettings
+            //使用默认的 PhotonServerSettings 连接
             PhotonNetwork.ConnectUsingSettings();
         }
         else
         {
-            //Change the cloud server region
+            //切换云服务器区域
             ConnectToServerRegion(ServerRegionID, true);
         }
 
@@ -127,13 +127,13 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// Change the server region (Photon PUN Only)
+    /// 切换服务器区域（仅 Photon PUN）
     /// </summary>
     public void ConnectToServerRegion(int id, bool initialConnection = false)
     {
         if (PhotonNetwork.IsConnected && !initialConnection)
         {
-            // When the player manually change of region
+            // 玩家手动切换区域时
             connectionState = LobbyConnectionState.ChangingRegion;
             LobbyLoadingScreenBase.Instance.SetActive(true)
            .SetText(GameTexts.ConnectingToGameServer.Localized(40));
@@ -171,7 +171,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     void DelayDisconnect() => PhotonNetwork.Disconnect();
 
     /// <summary>
-    /// This is called from the server every time the room list is updated.
+    /// 服务器每次更新房间列表时都会调用
     /// </summary>
     public void ServerList(List<RoomInfo> roomList)
     {
@@ -185,7 +185,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         {
             if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
             {
-                // Session verification is required, which will be done after connect to the server.
+                // 需要会话验证，验证在连接服务器之后进行。
                 CachePlayerName = nick;
             }
             else PhotonNetworkWrapper.NickName = nick; // in case a nick name change happens, make sure to update it.
@@ -232,7 +232,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         }
         else
         {
-            // Assign the saved nick name automatically
+            //自动填入已保存的昵称
             CachePlayerName = PlayerPrefs.GetString(PropertiesKeys.GetUniqueKey("remembernick"));
             if (string.IsNullOrEmpty(CachePlayerName))
             {
@@ -274,7 +274,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
                 ResetValues();
                 LobbyLoadingScreenBase.Instance.HideIn(0.2f, true);
 
-                // Fix: room list doesn't update when the player is already in the lobby
+                //修复：玩家已在 Lobby 时房间列表不刷新
                 autoRejoinLobby = true;
                 PhotonNetwork.LeaveLobby();
             }
@@ -290,8 +290,8 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// The password of the special accounts
-    /// See 'Game Staff' in the documentation for more information
+    /// 特殊账号的密码
+    /// 更多信息见文档中的 'Game Staff'
     /// </summary>
     public bool EnterPassword(string password)
     {
@@ -316,9 +316,9 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         StartCoroutine(DoSearch());
         IEnumerator DoSearch()
         {
-            //active the search match UI
+            //激活搜索比赛 UI
             LobbyUI.Instance.SeekingMatchUI.SetActive(true);
-            // This is not actually needed :)
+            // 这里其实并不需要 :)
             yield return new WaitForSeconds(3);
             PhotonNetwork.JoinRandomRoom();
             isSeekingMatch = false;
@@ -327,12 +327,12 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// This function is called when hit Play button but there is not rooms to join in.
+    /// 点击 Play 按钮但当前没有可加入的房间时调用
     /// </summary>
     public void OnNoRoomsToJoin(short returnCode, string message)
     {
         Debug.Log("No games to join found on matchmaking, creating one.");
-        //create random room properties
+        //创建随机房间属性
         int scid = Random.Range(0, GameConfig.Instance.AllScenes.Count);
         var mapInfo = GameConfig.Instance.AllScenes[scid];
 
@@ -363,7 +363,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// Create a room with the settings specified in the Room Creator menu.
+    /// 使用 Room Creator 菜单中指定的设置创建房间
     /// </summary>
     public void CreateRoom()
     {
@@ -372,7 +372,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// Create and Join in a room with the given info.
+    /// 用给定信息创建并加入房间
     /// </summary>
     /// <param name="roomInfo"></param>
     public void CreateRoom(GameRoomInfo roomInfo)
@@ -381,7 +381,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         justCreatedRoomName = roomInfo.roomName;
         JoinedWithPassword = true;
 
-        //Save Room properties for load in room
+        //保存房间属性，供进入房间时加载
         var roomOption = new ExitGames.Client.Photon.Hashtable();
         roomOption[PropertiesKeys.TimeRoomKey] = roomInfo.time;
         roomOption[PropertiesKeys.GameModeKey] = roomInfo.gameMode.ToString();
@@ -468,7 +468,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
     private IEnumerator MoveToGameScene()
     {
-        //Wait for check
+        //等待检查
         SetLobbyChat(false);
         if (AudioManager.Instance != null) { AudioManager.Instance.StopBackground(); }
         while (!PhotonNetworkWrapper.InRoom)
@@ -511,7 +511,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     #region Photon Callbacks
 
     /// <summary>
-    /// Called once the game successfully establish connection with the game server
+    /// 与游戏服务器连接成功后调用
     /// </summary>
     public void OnConnected()
     {
@@ -526,17 +526,17 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     }
 
     /// <summary>
-    /// Called once the game successfully establish connection with the master server
+    /// 与主服务器连接成功后调用
     /// </summary>
     public void OnConnectedToMaster()
     {
-        // Game intermediately connect to a 'common' lobby.
+        // 游戏会立即连接到一个 'common' lobby
         PhotonNetwork.JoinLobby();
         Debug.Log("Connected to Master.");
     }
 
     /// <summary>
-    /// Called when the player successfully connect to the common lobby
+    /// 玩家成功连接到公共 Lobby 时调用
     /// </summary>
     public void OnJoinedLobby()
     {
@@ -548,7 +548,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
         LobbyUI.Instance.Home();
 
-        // Require session verification
+        // 需要会话验证
         if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
         {
             connectionState = LobbyConnectionState.Authenticating;
@@ -625,7 +625,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
             LobbyUI.Instance.blackScreenFader.FadeOut(1);
             LobbyUI.Instance.connectionPopupMessage.SetConfirmationText(GameTexts.TryAgain.ToUpper());
 
-            // CustomAuthenticationFailed is handled in OnCustomAuthenticationFailed(...)
+            // CustomAuthenticationFailed 在 OnCustomAuthenticationFailed(...) 中处理
             if (cause != DisconnectCause.CustomAuthenticationFailed)
             {
                 LobbyUI.Instance.connectionPopupMessage.AskConfirmation(string.Format(GameTexts.DisconnectCause.Localized(41), cause.ToString()), () =>
@@ -652,7 +652,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     public void ResetValues()
     {
         if (LobbyRoomCreatorUI.Instance == null) { LobbyRoomCreatorUI.Instance = transform.GetComponentInChildren<LobbyRoomCreatorUI>(true); }
-        //Create a random name for a future room that player create
+        //为玩家以后创建的房间生成一个随机名字
         LobbyRoomCreatorUI.Instance.SetupSelectors();
         PhotonNetworkWrapper.IsMessageQueueRunning = true;
     }
@@ -709,7 +709,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
             {
                 if (player.UserId == CachePlayerName && player.IsOnline)
                 {
-                    // Another session is open
+                    // 该账号已有其他会话打开
                     Debug.Log("This account has a session open.");
                     LobbyUI.Instance.connectionPopupMessage.SetConfirmationText(GameTexts.Ok.ToUpper());
                     LobbyUI.Instance.connectionPopupMessage.AskConfirmation(GameTexts.AnotherSessionOpen.Localized(197), () =>
@@ -723,7 +723,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
                 }
             }
 
-            // No session open for this account
+            // 该账号没有打开的会话
             connectionState = LobbyConnectionState.Authenticating;
             PhotonNetworkWrapper.NickName = CachePlayerName;
             GameEvents.DispatchCoinUpdate(null);

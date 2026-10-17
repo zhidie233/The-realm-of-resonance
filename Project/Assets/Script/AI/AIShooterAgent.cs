@@ -135,7 +135,7 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// this is called one time each second instead of each frame
+    /// 每秒调用一次，而不是每帧
     /// </summary>
     public override void OnSlowUpdate()
     {
@@ -152,9 +152,9 @@ public class AIShooterAgent : AIShooter
             if (!HasATarget)
             {
                 SetDebugState(-1, true);
-                //Get the player nearest player
+                //获取最近的玩家
                 SearchPlayers();
-                //if target null yet, then patrol         
+                //目标仍为空就先巡逻
                 RandomPatrol(!isOneTeamMode);
             }
             else
@@ -178,10 +178,10 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// Called when the bot not direct vision to the target -> have direct vision to the target and vice versa
+    /// 机器人在对目标失去直视线与重新获得直视线时调用
     /// </summary>
-    /// <param name="from">seeing?</param>
-    /// <param name="to">seeing?</param>
+    /// <param name="from">是否看得见？</param>
+    /// <param name="to">是否看得见？</param>
     private void OnTargetLineOfSightChanged(bool from, bool to)
     {
         if (from == true)//the player lost the line of vision with the target
@@ -245,7 +245,7 @@ public class AIShooterAgent : AIShooter
         {
             if (!isOneTeamMode)
             {
-                //update the target position each 300 frames
+                //每 300 帧更新一次目标位置
                 if (!Agent.hasPath || (Time.frameCount % 300) == 0)
                 {
                     if (UtilityHelper.Distance(TargetPosition, Agent.destination) > 1)//update the path only if the target has moved substantially
@@ -256,8 +256,8 @@ public class AIShooterAgent : AIShooter
             }
             else
             {
-                //in one team mode, when the target is in the limit range
-                //the bot will start to random patrol instead of following the player.
+                //单人队伍模式下，目标进入限定范围时
+                //机器人会改为随机巡逻，不再跟随玩家。
                 RandomPatrol(true);
             }
             SetDebugState(0, true);
@@ -415,7 +415,7 @@ public class AIShooterAgent : AIShooter
             Debug.LogError("AICoverPointManager实例为空！");
             return false;
         }
-        //if the target if far, there's not point in cover right now
+        //目标太远就没必要躲掩体
         if (behaviorSettings.agentBehave == AIAgentBehave.Agressive && CachedTargetDistance > 20)
         {
             SetState(AIAgentState.Following);
@@ -430,18 +430,18 @@ public class AIShooterAgent : AIShooter
         }
         if (overridePoint)//override the current cover point
         {
-            //if the agent has complete his current destination
+            //如果机器人已到达当前目的地
             if (Agent.pathStatus == NavMeshPathStatus.PathComplete)
             {
-                //get a random point in 30 metters
+                //在 30 米内取一个随机点
                 if (coverArea == AIAgentCoverArea.ToRandomPoint)
                 {
-                    //look for another random cover point 
+                    //找另一个随机掩体点
                     CoverPoint = AICovertPointManager.Instance.GetCoverOnRadius(t, 30);
                 }
                 else
                 {
-                    //Get the nearest cover point
+                    //获取最近的掩体点
                     CoverPoint = AICovertPointManager.Instance.GetCloseCover(t, CoverPoint);
                 }
             }
@@ -450,7 +450,7 @@ public class AIShooterAgent : AIShooter
         else
         {
             SetDebugState(14);
-            //look for a near cover point
+            //找一个附近的掩体点
             CoverPoint = AICovertPointManager.Instance.GetCloseCover(t);
         }
 
@@ -467,11 +467,11 @@ public class AIShooterAgent : AIShooter
         }
         else
         {
-            //if there are not nears cover points
+            //附近没有掩体点
             if (Target != null)//and have a target
             {
                 SetDebugState(16);
-                //follow the target
+                //跟随目标
                 SetDestination(TargetPosition, 3);
                 DetermineSpeedBaseOnRange();
                 FocusOnSingleTarget = true;//and follow not matter the distance
@@ -480,7 +480,7 @@ public class AIShooterAgent : AIShooter
             else//if don't have a target
             {
                 SetDebugState(17);
-                //Force to get a covert point
+                //强制获取一个掩体点
                 CoverPoint = AICovertPointManager.Instance.GetCloseCoverForced(m_Transform);
                 if (CoverPoint != null)
                 {
@@ -502,10 +502,10 @@ public class AIShooterAgent : AIShooter
             SetLookAtState(AILookAt.Target);
             return;
         }
-        //if the AI is not covering, will look for a cover point
+        //机器人没有躲掩体，就去找一个掩体点
         if (AgentState != AIAgentState.Covering)
         {
-            //if the AI is following and attacking the target he will not look for cover point
+            //机器人正在跟随并攻击目标，就不去找掩体点
             if (AgentState == AIAgentState.Following && TargetDistance <= soldierSettings.mediumRange && !ObstacleBetweenTarget)
             {
                 SetLookAtState(AILookAt.Target);
@@ -515,7 +515,7 @@ public class AIShooterAgent : AIShooter
         }
         else
         {
-            //if already in a cover and still get shoots from far away will force the AI to fire.
+            //已在掩体中却仍被打到，就强制机器人开火。
             if (!playerInFront)
             {
                 SetLookAtState(AILookAt.Target);
@@ -526,7 +526,7 @@ public class AIShooterAgent : AIShooter
                 ForceCoverFire = true;
                 SetLookAtState(AILookAt.HitDirection);
             }
-            //if the AI is cover but still get hit, he will search other cover point 
+            //机器人躲着掩体仍被击中，就另找掩体点
             if (AIHealth.GetHealth() <= 50 && Agent.pathStatus == NavMeshPathStatus.PathComplete)
             {
                 Cover(true);
@@ -566,7 +566,7 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// When the target is at look range
+    /// 目标进入视距时
     /// </summary>
     void OnTargeContest(bool overrideCover)
     {
@@ -616,8 +616,8 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    // When the target is near
-    // Determine if can attack him
+    //目标靠近时
+    //判断能否攻击它
     /// </summary>
     void OnDirectConfrontation()
     {
@@ -660,7 +660,7 @@ public class AIShooterAgent : AIShooter
         Transform target = behaviorSettings.agentBehave == AIAgentBehave.Agressive ? GetNearestPlayer() : GetTargetOnRange();
         if (target != null) SetTarget(target);
 
-        // Take a random target at the beginning
+        //开局随机选一个目标
         if (PhotonNetworkWrapper.IsMasterClient && !randomOnStartTake && availableTargets.Count > 0)
         {
             if (behaviorSettings.GetRandomTargetOnStart)
@@ -701,7 +701,7 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// Make the bot stay where he is for a given time
+    /// 让机器人在原地停留指定时间
     /// </summary>
     /// <param name="forTime"></param>
     public void HoldPosition(float forTime = 10)
@@ -711,9 +711,9 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// If a enemy is not in range, then make the AI randomly patrol in the map
+    /// 敌人在范围外时，让机器人在地图上随机巡逻
     /// </summary>
-    /// <param name="precision">Patrol closed to the enemy's area</param>
+    /// <param name="precision">巡逻时靠近敌人区域的程度</param>
     void RandomPatrol(bool precision)
     {
         if (isDeath || !PhotonNetworkWrapper.IsMasterClient)
@@ -912,7 +912,7 @@ public class AIShooterAgent : AIShooter
 
         if (!PhotonNetworkWrapper.IsMasterClient) return;
 
-        // sync the bot target
+        //同步机器人目标
         var data = UtilityHelper.CreatePhotonHashTable();
         data.Add("type", AIRemoteCallType.SyncTarget);
 
@@ -1043,8 +1043,8 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// This is called when the bot have a Target
-    /// this check if other enemy is nearest and change of target if it's require
+    /// 机器人有目标时调用
+    /// 检查是否有更近的敌人，必要时切换目标
     /// </summary>
     void CheckEnemysDistances()
     {
@@ -1054,22 +1054,22 @@ public class AIShooterAgent : AIShooter
         CachedTargetDistance = UtilityHelper.Distance(m_Transform.localPosition, TargetPosition);
         for (int i = 0; i < availableTargets.Count; i++)
         {
-            //if the enemy transform is not null or the same target that have currently have or death.
+            //敌人的 transform 不为空、不是当前目标、且未死亡时
             if (availableTargets[i] == null || availableTargets[i] == Target || availableTargets[i].name.Contains("(die)")) continue;
-            //calculate the distance from this other enemy
+            //计算与这个敌人的距离
             float otherDistance = UtilityHelper.Distance(m_Transform.localPosition, availableTargets[i].position);
             if (otherDistance > soldierSettings.limitRange) continue;//if this enemy is too far away...
-            //and check if it's nearest than the current target (5 meters close at least)
+            //判断是否比当前目标更近（至少近 5 米）
             if (otherDistance < CachedTargetDistance && (CachedTargetDistance - otherDistance) > 5)
             {
-                //calculate the angle between this bot and the other enemy to check if it's in a "View Angle"
+                //计算机器人与该敌人之间的夹角，判断是否在“视野角”内
                 Vector3 targetDir = availableTargets[i].position - m_Transform.localPosition;
                 float Angle = Vector3.Angle(targetDir, m_Transform.forward);
                 if (Angle > -55 && Angle < 55)
                 {
-                    //so then get it as new dangerous target
+                    //满足条件就把它当作新的危险目标
                     SetTarget(availableTargets[i]);
-                    //prevent to change target in at least the next 3 seconds
+                    //至少接下来 3 秒内不再切换目标
                     nextEnemysCheck = time + 3;
                 }
             }
@@ -1093,7 +1093,7 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// This is called when a forced bot respawn is called and this bot is still alive
+    /// 强制重生被调用、而该机器人仍存活时调用
     /// </summary>
     public override void Respawn()
     {
@@ -1153,7 +1153,7 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// Do a respawn without destroying the bot instance
+    /// 不销毁机器人实例直接重生
     /// </summary>
     private void DoAliveRespawn()
     {
@@ -1172,7 +1172,7 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// Called from Master Client on all clients when a bot die
+    /// 机器人死亡时，由主客户端在所有客户端上调用
     /// </summary>
     public void DestroyBot(NetHashTable data, PhotonMessageInfo info)
     {
@@ -1228,14 +1228,14 @@ public class AIShooterAgent : AIShooter
     }
 
     /// <summary>
-    /// When a new player joins in the room
+    /// 新玩家加入房间时
     /// </summary>
     /// <param name="newPlayer"></param>
     public void OnPhotonPlayerConnected(Player newPlayer)
     {
         if (PhotonNetworkWrapper.IsMasterClient && newPlayer.ActorNumber != PhotonNetworkWrapper.LocalPlayer.ActorNumber)
         {
-            // received in AIShooterHealth
+            //在 AIShooterHealth 中接收
             photonView.RPC("RpcSyncHealth", newPlayer, AIHealth.GetHealth());
         }
     }

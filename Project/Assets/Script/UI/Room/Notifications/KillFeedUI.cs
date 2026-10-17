@@ -34,7 +34,7 @@ namespace Game.Runtime.UI
         }
 
         /// <summary>
-        /// Global notification (on right corner) when kill someone
+        /// 击杀他人时在右上角弹出全局提示
         /// </summary>
         public override void SetKillFeed(KillFeed feed)
         {

@@ -79,14 +79,14 @@ public class PhotonNetworkWrapper : PhotonHelper
         }
     }
 
-    // Send an event to be invoke in all clients subscribed to the callback Similar to PhotonView.RPC but without needed of a PhotonView
+    // 向所有订阅了该回调的客户端发送事件，类似 PhotonView.RPC，但不需要 PhotonView
     public void SendDataOverNetwork(byte code, Hashtable data)
     {
         SendOptions so = new SendOptions();
         PhotonNetwork.RaiseEvent(code, data, EventsAll, so);
     }
 
-    // Send an event to be invoke in a specific client subscribed to the callback Similar to PhotonView.RPC but without needed of a PhotonView
+    // 向订阅了该回调的指定客户端发送事件，类似 PhotonView.RPC，但不需要 PhotonView
     public void SendDataOverNetworkToPlayer(byte code, Hashtable data, Player targetPlayer)
     {
         SendOptions so = new SendOptions();
@@ -131,7 +131,7 @@ public class PhotonNetworkWrapper : PhotonHelper
     }
     public static bool IsConnected { get { return PhotonNetwork.IsConnected; } }
     public static bool IsConnectedInRoom { get { return PhotonNetwork.IsConnected && PhotonNetwork.InRoom; } }
-    // Are we the master client?
+    // 我们是主客户端吗？
     public static bool IsMasterClient => PhotonNetwork.IsMasterClient;
     public static bool InRoom => PhotonNetwork.InRoom;
     public static Room CurrentRoom => PhotonNetwork.CurrentRoom;

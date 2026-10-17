@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GetMainCamera : MonoBehaviour
 {
-    // Start is called before the first frame update
+    // Start 在第一帧更新前调用
     void Start()
     {
         Canvas canvas = GetComponent<Canvas>();

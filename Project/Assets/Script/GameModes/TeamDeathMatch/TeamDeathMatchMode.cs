@@ -16,7 +16,7 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
     #region Interface
     public void Initialize()
     {
-        //check if this is the game mode of this room
+        //检查这是否是当前房间的游戏模式
         if (GameController.Instance.IsGameMode(GameMode.TDM, this))
         {
             GameController.Instance.SetGameState(MatchState.Starting);
@@ -30,7 +30,7 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
 
     public void OnFinishTime(bool gameOver)
     {
-        //determine the winner
+        //判定胜者
         string finalText = "";
         if(!PhotonNetworkWrapper.OfflineMode && GetWinnerTeam() != Team.None)
         {
@@ -102,7 +102,7 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
     {
         if (PhotonNetworkWrapper.OfflineMode || !RoomSettings.Instance.RoomInfoFetched) return;
         
-        //check if any of the team reach the max kills
+        //检查是否有队伍达到最大击杀数
         if (team1 >= RoomSettings.Instance.GameGoal)
         {
             MatchTimeManagerBase.Instance.FinishRound();

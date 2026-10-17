@@ -23,7 +23,7 @@ public class PlayerRagdoll : PlayerRagdollBase
     }
 
     /// <summary>
-    /// Set ragdoll state for the local player
+    /// 设置本地玩家的布娃娃状态
     /// </summary>
     public override void SetLocalRagdoll(RagdollInfo info)
     {
@@ -37,9 +37,9 @@ public class PlayerRagdoll : PlayerRagdollBase
     }
 
     /// <summary>
-    /// Change the ragdoll kinematic state
+    /// 修改布娃娃的运动学状态
     /// </summary>
-    /// <param name="kinematic">is Kinematic?</param>
+    /// <param name="kinematic">是否为运动学刚体？</param>
     public void SetKinematic(bool kinematic = true)
     {
         if (rigidBodys == null || rigidBodys.Count <= 0)
@@ -53,19 +53,19 @@ public class PlayerRagdoll : PlayerRagdollBase
     }
 
     /// <summary>
-    /// Make the current player a ragdoll
-    /// The player won't be controlled by the Character Controller anymore 
-    /// and will be detached from the player root
+    /// 把当前玩家变成布娃娃
+    /// 玩家不再由 Character Controller 控制
+    /// 并会从玩家根节点上分离
     /// </summary>
     public override void Ragdolled(RagdollInfo info)
     {
         gameObject.SetActive(true);
         if (!info.AutoDestroy)
         {
-            //apply the a frame to the animator with the current player state
+            //用当前玩家状态给动画器推进一帧
             playerReferences.PlayerAnimator.speed = 5;
             playerReferences.playerAnimations.UpdateAnimatorParameters();
-            //update multiple at once in order to play the right pose
+            //一次性更新多个参数，才能播放正确的姿势
             for (int i = 0; i < 4; i++)
                 playerReferences.PlayerAnimator.Update(1);
         }
@@ -94,7 +94,7 @@ public class PlayerRagdoll : PlayerRagdollBase
     }
 
     /// <summary>
-    /// Make the local player ignore its Character Controller collider.
+    /// 让本地玩家忽略自身的 Character Controller 碰撞体。
     /// </summary>
     public override void IgnorePlayerCollider()
     {
@@ -115,7 +115,7 @@ public class PlayerRagdoll : PlayerRagdollBase
     }
 
     /// <summary>
-    /// Active/Deactivate the player rigid bodies and colliders
+    /// 启用/停用玩家的刚体和碰撞体
     /// </summary>
     public override void SetActiveRagdollPhysics(bool active)
     {
@@ -134,7 +134,7 @@ public class PlayerRagdoll : PlayerRagdollBase
     }
 
     /// <summary>
-    /// Make this player colliders ignore the give colliders
+    /// 让该玩家的碰撞体忽略指定的碰撞体
     /// </summary>
     /// <param name="list"></param>
     /// <param name="ignore"></param>

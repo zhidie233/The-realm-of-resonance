@@ -153,7 +153,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
     #region GameMode Interface
     public void Initialize()
     {
-        //check if this is the game mode of this room
+        //检查这是否是当前房间的游戏模式
         if (GameController.Instance.IsGameMode(GameMode.CTF, this))
         {
             Content.SetActive(true);
@@ -172,7 +172,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
 
     public void OnFinishTime(bool gameOver)
     {
-        //determine the winner
+        //判定胜者
         string finalText = "";
         if (GetWinnerTeam() != Team.None)
         {

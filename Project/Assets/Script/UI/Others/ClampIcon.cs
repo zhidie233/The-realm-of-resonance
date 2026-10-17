@@ -48,13 +48,13 @@ namespace Game.Runtime.UI
 
             if (!visible) return;
 
-            //Calculate the 2D position of the position where the icon should be drawn
+            //计算图标应绘制位置的 2D 坐标
             viewportPoint = GameController.Instance.CameraRendered.WorldToViewportPoint(position);
 
-            //The viewportPoint coordinates are between 0 and 1, so we have to convert them into screen space here
+            //viewportPoint 坐标范围是 0 到 1，这里需要转换到屏幕空间
             drawPosition = new Vector2(viewportPoint.x * Screen.width, Screen.height * (1 - viewportPoint.y));
 
-            //Clamp the position to the edge of the screen in case the icon would be drawn outside the screen
+            //把位置限制在屏幕边缘，防止图标绘制到屏幕外
             drawPosition.x = Mathf.Clamp(drawPosition.x, clampBorder, Screen.width - clampBorder);
             drawPosition.y = Mathf.Clamp(drawPosition.y, clampBorder, Screen.height - clampBorder);
 

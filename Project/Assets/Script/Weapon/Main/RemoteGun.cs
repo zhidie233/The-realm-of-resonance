@@ -16,7 +16,7 @@ public class RemoteGun : MonoBehaviour
     public GameObject DesactiveOnOffAmmo;
     public Transform LeftHandPosition;
 
-    // Automatically setup this weapon when enabled
+    // 启用时自动设置这把武器
     public bool AutoSetup { get; set; }
 
     private AudioSource Source;
@@ -33,7 +33,7 @@ public class RemoteGun : MonoBehaviour
         Root = transform.root;
     }
 
-    // Update type each is enable
+    // 每次启用时更新类型
     void OnEnable()
     {
         if (AutoSetup) SetUpType();
@@ -45,7 +45,7 @@ public class RemoteGun : MonoBehaviour
         LocalGun?.customWeapon?.Initialitate(LocalGun);
     }
 
-    // Fire Sync in network player
+    // 网络玩家中的开火同步
     public void Fire(Vector3 hitPoint, Vector3 inacuracity)
     {
         if (LocalGun != null)
@@ -61,9 +61,9 @@ public class RemoteGun : MonoBehaviour
             }
 
             bulletRotation = Quaternion.LookRotation(hitPoint - bulletPosition);
-            //bullet info is set up in start function
+            //子弹信息在 start 函数中设置
             GameObject newBullet = ObjectPoolingBase.Instance.Instantiate(LocalGun.BulletName, bulletPosition, bulletRotation); // create a bullet
-            // set the gun's info into an array to send to the bullet
+            // 把枪械信息写入数组传给子弹
             m_BulletData.Damage = 0;
             m_BulletData.ImpactForce = 0;
             m_BulletData.Speed = LocalGun.bulletSpeed;
@@ -87,15 +87,15 @@ public class RemoteGun : MonoBehaviour
         return false;
     }
 
-    // if grenade
+    // 若是手雷
     // <param name="s"></param>
     public void GrenadeFire(float s, Vector3 position, Quaternion rotation, Vector3 direction)
     {
         if (LocalGun != null)
         {
-            //bullet info is set up in start function
+            //子弹信息在 start 函数中设置
             GameObject newBullet = Instantiate(Bullet, position, rotation) as GameObject; // create a bullet
-            // set the gun's info into an array to send to the bullet
+            // 把枪械信息写入数组传给子弹
             BulletData bulletData = new BulletData();
             bulletData.SetInaccuracity(s, LocalGun.spreadMinMax.y);
             bulletData.Speed = LocalGun.bulletSpeed;
@@ -115,7 +115,7 @@ public class RemoteGun : MonoBehaviour
         }
     }
 
-    // When is knife only reply sounds
+    // 是刀时只回放音效
     public void KnifeFire()
     {
         if (LocalGun != null)
@@ -133,8 +133,8 @@ public class RemoteGun : MonoBehaviour
             Debug.LogError("Gun type is not grenade, can't desactive it: " + Info.Type);
             return;
         }
-        //when hide network gun / grenade we use method of change material to a invincible
-        //due that if desactive the render cause animation  player broken.
+        //隐藏网络枪/手雷时改用换成不可见材质的方式
+        //因为直接禁用渲染器会破坏玩家动画。
         if (DesactiveOnOffAmmo != null)
         {
             DesactiveOnOffAmmo.SetActive(active);
@@ -174,7 +174,7 @@ public class RemoteGun : MonoBehaviour
         Source.spatialize = true;
     }
 
-    // Returns the upper state ID That will be used to identify which upper body animations will be played when this weapon is equipped
+    // 返回上半身状态 ID，用于确定装备该武器时播放哪些上半身动画
     // <returns></returns>
     public int GetUpperStateID()
     {

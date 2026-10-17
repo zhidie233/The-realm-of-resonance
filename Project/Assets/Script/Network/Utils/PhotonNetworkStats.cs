@@ -166,15 +166,15 @@ public class PhotonNetworkStats : MonoBehaviour, IConnectionCallbacks
         if (value < 0) { return "-" + SizeSuffix(-value); }
         if (value == 0) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
 
-        // mag is 0 for bytes, 1 for KB, 2, for MB, etc.
+        // mag 为 0 表示字节，1 表示 KB，2 表示 MB，以此类推
         int mag = (int)Mathf.Log(value, 1024);
 
         // 1L << (mag * 10) == 2 ^ (10 * mag) 
-        // [i.e. the number of bytes in the unit corresponding to mag]
+        // [即 mag 对应单位下的字节数]
         decimal adjustedSize = (decimal)value / (1L << (mag * 10));
 
-        // make adjustment when the value is large enough that
-        // it would round up to 1000 or more
+        // 当数值大到会进位到 1000 以上时
+        // 做一下调整，即达到 1000 或以上时
         if (System.Math.Round(adjustedSize, decimalPlaces) >= 1000)
         {
             mag += 1;

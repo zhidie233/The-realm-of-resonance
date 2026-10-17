@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class PlayerReferencesCommon : MonoBehaviour
 {
     /// <summary>
-    /// Called when this player dies
+    /// 此玩家死亡时调用
     /// </summary>
     public Action onDie;
 
@@ -33,7 +33,7 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
 
     private PhotonView _networkView = null;
     /// <summary>
-    /// Player network view
+    /// 玩家网络视图
     /// </summary>
     public PhotonView NetworkView
     {
@@ -47,26 +47,26 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
     public abstract void IgnoreColliders(Collider[] list, bool ignore);
 
     /// <summary>
-    /// Determine if this player is death
-    /// Since when the player dies it still exists in the game as a ragdoll for a short period of time
+    /// 判断此玩家是否死亡
+    /// 因为玩家死亡后会以布娃娃形式短暂存在于游戏中
     /// </summary>
     /// <returns></returns>
     public abstract bool IsDeath();
 
     /// <summary>
-    /// Get the health of this player
+    /// 获取此玩家的生命值
     /// </summary>
     /// <returns></returns>
     public abstract int GetHealth();
 
     /// <summary>
-    /// Get the max health of this player
+    /// 获取此玩家的最大生命值
     /// </summary>
     /// <returns></returns>
     public virtual int GetMaxHealth() { return 100; }
 
     /// <summary>
-    /// Is a local player?
+    /// 是否为本地玩家？
     /// </summary>
     public virtual bool IsLocal()
     {
@@ -74,7 +74,7 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
     }
 
     /// <summary>
-    /// Is this player a real player or a bot?
+    /// 此玩家是真实玩家还是机器人？
     /// </summary>
     /// <returns></returns>
     public virtual bool IsRealPlayer()
@@ -83,7 +83,7 @@ public abstract class PlayerReferencesCommon : MonoBehaviour
     }
 
     /// <summary>
-    /// Is this player in the same team of the local player?
+    /// 此玩家是否与本地玩家同队？
     /// </summary>
     /// <returns></returns>
     public virtual bool IsTeamMateOfLocalPlayer()

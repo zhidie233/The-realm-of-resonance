@@ -4,9 +4,9 @@ using UnityEngine;
 using UnityEngine.Serialization;
 
 /// <summary>
-/// Default Game pooling system
-/// If you want to use your custom pool system, simply inherited your script from ObjectPoolingBase.cs
-/// And make sure you served the default prefabs from the default pool system with the same key/identifiers.
+/// 默认游戏对象池系统
+/// 想用自己的对象池系统，继承 ObjectPoolingBase.cs 即可
+/// 并确保默认池系统中的预制体使用相同的键/标识。
 /// </summary>
 public class ObjectPooling : ObjectPoolingBase
 {
@@ -24,9 +24,9 @@ public class ObjectPooling : ObjectPoolingBase
     }
 
     /// <summary>
-    /// Add a new pooled prefab
+    /// 添加一个新的池化预制体
     /// </summary>
-    /// <param name="poolName">Identifier of this pool</param>
+    /// <param name="poolName">此对象池的标识</param>
     /// <param name="prefab"></param>
     /// <param name="count"></param>
     public void RegisterObject(string poolName, GameObject prefab, int count)
@@ -53,8 +53,8 @@ public class ObjectPooling : ObjectPoolingBase
     }
 
     /// <summary>
-    /// Instantiate a pooled prefab
-    /// use this instead of GameObject.Instantiate(...)
+    /// 实例化池化预制体
+    /// 用它代替 GameObject.Instantiate(...)
     /// </summary>
     /// <returns></returns>
     public override GameObject Instantiate(string objectName, Vector3 position, Quaternion rotation)

@@ -49,7 +49,7 @@ public static class InputHandler
     }
 
     /// <summary>
-    /// Use this instead of Input.GetAxis("Vertical");
+    /// 用它代替 Input.GetAxis("Vertical");
     /// </summary>
     public static float VerticalAxis
     {
@@ -82,7 +82,7 @@ public static class InputHandler
     }
 
     /// <summary>
-    /// start button on game pad controllers
+    /// 手柄上的开始按钮
     /// </summary>
     public static bool isStartPad
     {
@@ -93,7 +93,7 @@ public static class InputHandler
     }
 
     /// <summary>
-    /// Use this instead of Input.GetAxis("Horizontal");
+    /// 用它代替 Input.GetAxis("Horizontal");
     /// </summary>
     public static float HorizontalAxis
     {

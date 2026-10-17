@@ -276,7 +276,7 @@ public class PlayerSyncEditor : Editor
             containerHeight += GetExtrapolateHelpBoxHeight();
         }
 
-        // removed Gizmo Options. -3 lines, -1 splitter
+        // 移除了 Gizmo 选项。少了 3 行，少了 1 个分隔条
         containerHeight -= EDITOR_LINE_HEIGHT * 2;
 
         Rect rect = PhotonGUI.ContainerBody(containerHeight);

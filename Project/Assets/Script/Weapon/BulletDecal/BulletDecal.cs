@@ -41,13 +41,13 @@ namespace Game.Runtime.Level
         {
             if (ThisGameObject != null && !ThisGameObject.activeSelf) ThisGameObject.SetActive(true);
 
-            // .sharedMaterial since .material create a new material instance for each decal.
+            // 用 .sharedMaterial，因为 .material 会为每个弹痕创建新的材质实例。
             meshRender.sharedMaterial = mat;
             return this;
         }
 
         /// <summary>
-        /// Translate and Rotate to the raycast hit point
+        /// 平移到射线检测命中点并旋转
         /// </summary>
         /// <returns></returns>
         public override BulletDecalBase SetToHit(RaycastHit hit, bool asPendingParent = false)
@@ -62,7 +62,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Randomize the decal size
+        /// 随机化弹痕大小
         /// </summary>
         /// <returns></returns>
         public override BulletDecalBase SetScaleVariation(Vector3 scaleBase, Vector2 Range)
@@ -79,7 +79,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Disable and set to the default parent
+        /// 禁用并设回默认父节点
         /// </summary>
         public override void BackToOrigin()
         {

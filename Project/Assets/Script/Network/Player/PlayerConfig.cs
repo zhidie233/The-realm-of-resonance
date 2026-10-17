@@ -40,7 +40,7 @@ public class PlayerConfig : PhotonHelper
     }
 
     /// <summary>
-    /// We call this function only if this is a Remote player
+    /// 仅在远程玩家上调用
     /// </summary>
     public void OnRemotePlayer()
     {
@@ -55,7 +55,7 @@ public class PlayerConfig : PhotonHelper
         gameObject.tag = GameCore.REMOTE_PLAYER_TAG;
         gameObject.layer = (int)Mathf.Log(GameConfig.TagsAndLayerSettings.RemotePlayerRootLayer.value, 2);
 
-        //Build Player Data
+        //构建玩家数据
         GamePlayer playerData = new GamePlayer()
         {
             Name = photonView.Owner.NickName,
@@ -77,7 +77,7 @@ public class PlayerConfig : PhotonHelper
     }
 
     /// <summary>
-    /// We call this function only if we are Local player
+    /// 仅在本机玩家上调用
     /// </summary>
     public void OnLocalPlayer()
     {
@@ -157,7 +157,7 @@ public class PlayerConfig : PhotonHelper
         if (!GameConfig.Instance.doSpawnHandMeshEffect) return;
         if (currentWeaponMaterials.Count > 0)
         {
-            //set default color
+            //设置默认颜色
             foreach (var item in currentWeaponMaterials)
             {
                 if (item.Material == null) continue;

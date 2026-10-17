@@ -98,7 +98,7 @@ public class PlayerVoice : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Called when the player push to talk option change.
+    /// 玩家按下说话选项变化时调用
     /// </summary>
     /// <param name="b"></param>
     public void OnPushToTalkChange(bool b)

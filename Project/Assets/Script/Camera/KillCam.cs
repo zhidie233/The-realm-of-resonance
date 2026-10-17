@@ -79,7 +79,7 @@ public class KillCam : KillCamBase
     }
 
     /// <summary>
-    /// update camera movements
+    /// 更新相机运动
     /// </summary>
     void Orbit()
     {
@@ -108,12 +108,12 @@ public class KillCam : KillCamBase
     }
 
     /// <summary>
-    /// Set the kill cam focus/expectate target
+    /// 设置击杀回放聚焦/观察的目标
     /// </summary>
     /// <param name="targetName"></param>
     public override KillCamBase SetTarget(KillCamInfo info)
     {
-        //if the player send the target
+        //如果玩家传入了目标
         if(info.Target != null && (GameConfig.Instance.killCameraType == KillCameraType.ObserveDeath || string.IsNullOrEmpty(info.TargetName)))
         {
             target = info.Target;
@@ -121,11 +121,11 @@ public class KillCam : KillCamBase
             return this;
         }
 
-        //if the player just send the name of the target
+        //如果玩家只传了目标的名字
         var targetName = info.TargetName;
         if (string.IsNullOrEmpty(targetName)) return this;
 
-        //try to find it by the name
+        //尝试按名字查找
         var targetInstance = GameObject.Find(targetName);
 
         if (targetName == LocalName)

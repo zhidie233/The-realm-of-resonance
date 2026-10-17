@@ -31,7 +31,7 @@ public class GunPickUpManager : GunPickUpManagerBase
     }
 
     /// <summary>
-    /// Call to sync the instantiation of a pick up weapon
+    /// 调用后同步拾取武器的生成
     /// </summary>
     public override void ThrowGun(ThrowData throwData)
     {
@@ -39,9 +39,9 @@ public class GunPickUpManager : GunPickUpManagerBase
         i[0] = throwData.Data[0];
         i[1] = throwData.Data[1];
         i[2] = GameController.LocalPlayerViewID;
-        //prevent the go has an existing name
+        //防止物体重名
         int rand = Random.Range(0, 9999);
-        //unique go name
+        //唯一的物体名
         string prefix = PhotonNetworkWrapper.NickName + rand;
 
         var data = UtilityHelper.CreatePhotonHashTable();
@@ -57,7 +57,7 @@ public class GunPickUpManager : GunPickUpManagerBase
     }
 
     /// <summary>
-    /// Called on all clients when a player instance a weapon (a pick up weapon)
+    /// 玩家生成武器（拾取武器）时在所有客户端调用
     /// </summary>
     void NetworkInstanceWeapon(Hashtable data)
     {
@@ -94,7 +94,7 @@ public class GunPickUpManager : GunPickUpManagerBase
     }
 
     /// <summary>
-    /// Send a call to all the room clients to let them know that player will pick up a weapon
+    /// 通知房间内所有客户端该玩家将要拾取武器
     /// </summary>
     public override void SendPickUp(PickUpData pickUpData)
     {
@@ -110,20 +110,20 @@ public class GunPickUpManager : GunPickUpManagerBase
     }
 
     /// <summary>
-    /// Called on all clients when a player pick up a weapon from the map
+    /// 玩家从地图上拾取武器时在所有客户端调用
     /// </summary>
     /// <param name="data"></param>
     void NetworkPickUp(Hashtable data)
     {
-        // one of the messages might be ours
-        // note: you could check "active" first, if you're not interested in your own, failed pickup-attempts.
+        // 其中一条消息可能就是我们自己的
+        // 注意：若不关心自己失败的拾取尝试，可以先判断 "active"。
         GameObject g = GameObject.Find((string)data["name"]);
         if (g == null)
         {
             Debug.LogWarning("This Gun does not exist in this scene");
             return;
         }
-        //is mine
+        //是我的
         if ((int)data["actorID"] == PhotonNetworkWrapper.LocalPlayer.ActorNumber)
         {
             GunPickUpData pi = new GunPickUpData();

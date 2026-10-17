@@ -17,7 +17,7 @@ namespace Game.Internal
         public bool IsInitialize => poolList != null && poolList.Count > 0;
 
         /// <summary>
-        /// Initialize the handler if needed
+        /// 按需初始化处理器
         /// </summary>
         public void Initialize()
         {
@@ -39,7 +39,7 @@ namespace Game.Internal
         }
 
         /// <summary>
-        /// Get an available object from the pool
+        /// 从池中获取一个可用对象
         /// </summary>
         /// <returns></returns>
         public GameObject Instantiate()
@@ -65,7 +65,7 @@ namespace Game.Internal
         }
 
         /// <summary>
-        /// Get the next available object in the pool and return an specific component attached in it.
+        /// 获取池中下一个可用对象，并返回其上挂载的指定组件。
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>

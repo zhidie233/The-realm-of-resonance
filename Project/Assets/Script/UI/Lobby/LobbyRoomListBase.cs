@@ -8,7 +8,7 @@ public abstract class LobbyRoomListBase : MonoBehaviour
     public abstract void SetRoomList(List<RoomInfo> rooms);
 
     /// <summary>
-    /// Clear all the rooms (including the cache) in the list.
+    /// 清空列表中的所有房间（含缓存）。
     /// </summary>
     public abstract void ClearList();
 

@@ -1,8 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// Control the rotation of the FP weapon when the player sprint
-/// This class has not direct references so you can use your custom script instead.
+/// 玩家冲刺时控制第一人称武器的旋转
+/// 此类没有直接引用，可以换成自己的脚本。
 /// </summary>
 public class WeaponMovements : MonoBehaviourBase
 {

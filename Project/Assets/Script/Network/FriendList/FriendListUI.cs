@@ -65,7 +65,7 @@ namespace Game.Runtime.FriendList
         }
 
         /// <summary>
-        /// Instance UI in Friend panel for each friends
+        /// 好友面板里每个好友对应的 UI 实例
         /// </summary>
         /// <param name="friends"></param>
         public void InstanceFriendList(string[] friends)
@@ -79,14 +79,14 @@ namespace Game.Runtime.FriendList
         }
 
         /// <summary>
-        /// This is called each time that Friend list is update
-        /// while updating a friends list, Photon will temporarily set
-        // isOnline and isInRoom to false
-        // if you update on a timer, you will notice state rapidly
-        // switching between offline and online
-        // therefore, we will store online state and room in a
-        // dictionary and wait until an update is actually received
-        // and store the updated value
+        /// 每次好友列表更新时调用
+        /// 更新好友列表期间 Photon 会临时把
+        // isOnline 和 isInRoom 置为 false
+        // 如果按定时器更新，就会看到状态在
+        // 离线和在线之间频繁切换
+        // 因此把在线状态和房间先存进一个
+        // 字典，等到真正收到更新时
+        // 再记录更新后的值
         /// </summary>
         public void OnUpdatedFriendList()
         {

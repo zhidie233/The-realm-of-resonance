@@ -83,7 +83,7 @@ namespace Game.InputManager
         }
 
         /// <summary>
-        /// Get the name of the primary button name
+        /// 获取主按键名称
         /// </summary>
         /// <param name="key"></param>
         /// <returns></returns>

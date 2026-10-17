@@ -43,7 +43,7 @@ namespace Game.Runtime.Settings
 
         public void ApplySetting()
         {
-            //Set the changed setting value to the instance settings group.
+            //把修改后的设置值写入对应的设置组实例。
             GameCore.Settings.SetSettingOf(SettingKeyName, currentValue, SettingsManager.Instance.autoSaveSettings);
         }
 

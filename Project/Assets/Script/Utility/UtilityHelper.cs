@@ -11,7 +11,7 @@ using System.IO;
 #endif
 
 /// <summary>
-/// Static class with utility functions
+/// 工具函数静态类
 /// </summary>
 public static class UtilityHelper
 {
@@ -26,7 +26,7 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Sort Player by Kills
+    /// 按击杀数排序玩家
     /// </summary>
     /// <returns></returns>
     public static int GetSortPlayerByKills(GamePlayer player1, GamePlayer player2)
@@ -37,9 +37,9 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Helper for Cursor locked in Unity 5
+    /// Unity 5 中锁定光标用的辅助方法
     /// </summary>
-    /// <param name="mLock">cursor state</param>
+    /// <param name="mLock">光标状态</param>
     public static void LockCursor(bool mLock)
     {
         if (BlockCursorForUser) return;
@@ -77,7 +77,7 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Are we currently playing in a mobile build or using Unity Remote in editor
+    /// 当前是否在移动端构建中运行，或在编辑器中通过 Unity Remote 运行
     /// </summary>
     public static bool isMobile
     {
@@ -135,7 +135,7 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Calculate distance from two vectors
+    /// 计算两个向量之间的距离
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
@@ -180,7 +180,7 @@ public static class UtilityHelper
 #endif
 
     /// <summary>
-    /// Calculate the center pivot from the child meshes of a object
+    /// 根据物体的子网格计算中心轴点
     /// </summary>
     /// <param name="aObjects"></param>
     /// <returns></returns>
@@ -218,7 +218,7 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Create a Photon hashtable
+    /// 创建 Photon 哈希表
     /// </summary>
     /// <returns></returns>
     public static ExitGames.Client.Photon.Hashtable CreatePhotonHashTable()
@@ -226,12 +226,12 @@ public static class UtilityHelper
         return new ExitGames.Client.Photon.Hashtable();
     }
 
-    //Use this instead of Vector3.forward since that return a new Vector3 each time that is called
+    //用它代替 Vector3.forward，后者每次调用都会返回新的 Vector3
     private static Vector3 m_VectorForward = Vector3.forward;
     public static Vector3 VectorForward => m_VectorForward;
 
     /// <summary>
-    /// Check if one of the two teams reach the max score
+    /// 检查两队之一的得分是否达到上限
     /// </summary>
     /// <param name="maxScore"></param>
     /// <returns></returns>
@@ -247,7 +247,7 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Reset all the decals in this object recursively
+    /// 递归重置此对象下的所有贴花
     /// </summary>
     public static void DetachChildDecals(GameObject go)
     {
@@ -270,7 +270,7 @@ public static class UtilityHelper
     }
 
     /// <summary>
-    /// Is the animator playing or in transition
+    /// 动画器是否正在播放或处于过渡中
     /// </summary>
     /// <param name="animator"></param>
     /// <returns></returns>

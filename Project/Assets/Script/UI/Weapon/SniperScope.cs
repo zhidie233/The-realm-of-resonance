@@ -67,7 +67,7 @@ public class SniperScope : SniperScopeBase
                       }
                   });
 
-                // Active breathing effect
+                // 启用呼吸晃动效果
                 if (breathingAmplitude > 0)
                 {
                     m_gun.PlayerReferences.cameraMotion.SetActiveBreathing(true, breathingAmplitude);
@@ -108,7 +108,7 @@ public class SniperScope : SniperScopeBase
     }
 
     /// <summary>
-    /// calculate the distance to the first object that raycast hits
+    /// 计算射线首次命中物体的距离
     /// </summary>  
     void GetDistance()
     {

@@ -181,8 +181,8 @@ public class FirstPersonController : FirstPersonControllerBase
 
         moveDirection = Vector3.Lerp(moveDirection, targetDirection, acceleration * Time.deltaTime);
 
-        // apply the movement direction in the character controller
-        // apply the movement in LateUpdate to avoid the camera jerky/jitter effect when move and rotate the player camera.
+        // 把移动方向应用到 Character Controller
+        // 在 LateUpdate 里应用移动，避免移动并旋转玩家摄像机时画面抖动。
         m_CollisionFlags = _characterController.Move(moveDirection * Time.deltaTime);
     }
 
@@ -192,10 +192,10 @@ public class FirstPersonController : FirstPersonControllerBase
             return;
 
         GroundDetection();
-        //if player focus is in game
+        //如果玩家焦点在游戏内
         if (RoomMenu.Instance.isCursorLocked && !GameConfig.Instance.isChating)
         {
-            //determine the player speed
+            //确定玩家速度
             GetInput(out float s);
             desiredSpeed = Mathf.Lerp(desiredSpeed, s, Time.fixedDeltaTime * 8);
             speed = desiredSpeed;
@@ -207,17 +207,17 @@ public class FirstPersonController : FirstPersonControllerBase
 
         if (isClimbing && _ladder != null)
         {
-            //climbing control
+            //攀爬控制
             OnClimbing();
         }
         else
         {
-            //player movement
+            //玩家移动
             Move();
         }
     }
 
-    // Triggered when the state of this player controller has changed.
+    // 该玩家控制器的状态变化时触发。
     private void OnStateChanged(PlayerState from, PlayerState to)
     {
         if (from == PlayerState.Crouching || to == PlayerState.Crouching)
@@ -231,7 +231,7 @@ public class FirstPersonController : FirstPersonControllerBase
         GameEvents.DispatchLocalPlayerStateChange(from, to);
     }
 
-    // Handle the player input key/buttons for the player controller
+    // 处理玩家控制器的按键输入
     void MovementInput()
     {
         jumpPressed |= GameInput.Jump();
@@ -277,10 +277,10 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
 
-    // Check when the player is in a surface (not jumping or falling)
+    // 检查玩家是否站在地面上（不在跳跃或下落）
     void GroundDetection()
     {
-        //if the player has touch the ground after falling
+        //如果玩家下落之后接触了地面
         if (!_previouslyGrounded && _characterController.isGrounded)
         {
             OnLand();
@@ -320,17 +320,17 @@ public class FirstPersonController : FirstPersonControllerBase
         _previouslyGrounded = _characterController.isGrounded;
     }
 
-    // Apply the movement direction to the CharacterController
+    // 把移动方向应用到 CharacterController
     void Move()
     {
-        //if the player is touching the surface
+        //如果玩家接触地面
         if (_characterController.isGrounded)
         {
             OnSurface();
-            //vertical resistance
+            //垂直阻力
             moveDirection.y = -m_StickToGroundForce;
             hasTouchGround = true;
-            //has a pending jump
+            //有待执行的跳跃
             if (_jump || hasPlatformJump)
             {
                 DoJump();
@@ -338,16 +338,16 @@ public class FirstPersonController : FirstPersonControllerBase
         }
         else//if the player is not touching the ground
         {
-            //if the player is dropping
+            //如果玩家正在下坠
             if (State == PlayerState.Dropping)
             {
-                //handle the air movement in different process
+                //空中移动由单独流程处理
                 OnDropping();
                 return;
             }
             else if (State == PlayerState.Gliding)
             {
-                //handle the gliding movement in different function
+                //滑翔移动由单独函数处理
                 OnGliding();
                 return;
             }
@@ -356,19 +356,19 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
 
-    // Control the player when is in a surface
+    // 玩家在地面上时的控制
     void OnSurface()
     {
-        // always move along the camera forward as it is the direction that it being aimed at
+        // 始终沿摄像机前方移动，因为那是瞄准方向
         // desiredMove = (_transform.forward * _input.y) + (_transform.right * _input.x);
 
         desiredMove.Set(_input.x, 0.0f, _input.y);
         desiredMove = _transform.TransformDirection(desiredMove);
 
-        // get a normal for the surface that is being touched to move along it
+        // 获取所接触地面的法线，以便沿地面移动
         Physics.SphereCastNonAlloc(_transform.localPosition, capsuleRadious, Vector3.down, SurfaceRay, _characterController.height * 0.5f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
 
-        //determine the movement angle based in the normal of the current player surface
+        //根据当前玩家所踩地面的法线确定移动角度
         desiredMove = Vector3.ProjectOnPlane(desiredMove, SurfaceRay[0].normal);
         targetDirection.x = desiredMove.x * speed;
         targetDirection.z = desiredMove.z * speed;
@@ -376,7 +376,7 @@ public class FirstPersonController : FirstPersonControllerBase
         SlopeControl();
     }
 
-    // Control the player when is in air (not dropping nor gliding)
+    // 玩家在空中时的控制（既不在下坠也不在滑翔）
     void OnAir()
     {
         desiredMove = (_transform.forward * Mathf.Clamp01(_input.y)) + (_transform.right * _input.x);
@@ -389,14 +389,14 @@ public class FirstPersonController : FirstPersonControllerBase
         momentum = Vector3.Lerp(momentum, Vector3.zero, Time.fixedDeltaTime * momentunDecaySpeed);
     }
 
-    // Called when the player hit a surface after falling/jumping
+    // 玩家下落/跳跃后撞到地面时调用
     void OnLand()
     {
         if (isClimbing) return;
 
         if (!overrideNextLandEvent)
         {
-            //land camera effect
+            //落地摄像机效果
             StartCoroutine(m_JumpBob.DoBobCycle());
 
             isFalling = false;
@@ -423,7 +423,7 @@ public class FirstPersonController : FirstPersonControllerBase
             State = PlayerState.Crouching;
             UIReferences.Instance.PlayerUI.PlayerStateIcon.sprite = CrouchIcon;
 
-            //Slide implementation
+            //滑铲实现
             if (canSlide && VelocityMagnitude > WalkSpeed && GetLocalVelocity().z > 0.1f)
             {
                 DoSlide();
@@ -469,7 +469,7 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
 
-    // Make the player jump
+    // 让玩家跳跃
     public override void DoJump()
     {
         momentum = desiredMove * jumpMomentumBooster;
@@ -487,7 +487,7 @@ public class FirstPersonController : FirstPersonControllerBase
         m_CollisionFlags = _characterController.Move(moveDirection * Time.deltaTime);
     }
 
-    // Make the player slide
+    // 让玩家滑铲
     public override void DoSlide()
     {
         if ((Time.time - lastSlideTime) < slideTime * slideCoolDown) return;//wait the equivalent of one extra slide before be able to slide again
@@ -499,7 +499,7 @@ public class FirstPersonController : FirstPersonControllerBase
         State = PlayerState.Sliding;
         slideForce = slideSpeed;//slide force will be continually decreasing
         speed = slideSpeed;
-        //playerReferences.gunManager.HeadAnimator.Play("slide-start", 0, 0); // if you want to use an animation instead
+        //playerReferences.gunManager.HeadAnimator.Play("slide-start", 0, 0); // 想改用动画播放就解开这行
         mouseLook.SetTiltAngle(slideCameraTiltAngle);
         if (slideSound != null)
         {
@@ -523,7 +523,7 @@ public class FirstPersonController : FirstPersonControllerBase
         });
     }
 
-    // Detect slope limit and apply slide physics.
+    // 检测坡度上限并应用滑铲物理。
     void SlopeControl()
     {
         float angle = Vector3.Angle(Vector3.up, surfaceNormal);
@@ -537,7 +537,7 @@ public class FirstPersonController : FirstPersonControllerBase
         targetDirection.y = targetDirection.y - surfacePoint.y;
     }
 
-    // Make the player dropping
+    // 让玩家进入下坠
     public override void DoDrop()
     {
         if (isGrounded)
@@ -548,29 +548,29 @@ public class FirstPersonController : FirstPersonControllerBase
         State = PlayerState.Dropping;
     }
 
-    // Called each frame when the player is dropping (fall control is On)
+    // 玩家下坠时每帧调用（下落控制开启）
     void OnDropping()
     {
-        //get the camera upside down angle
+        //获取摄像机倒置角度
         float tilt = Mathf.InverseLerp(0, 90, mouseLook.VerticalAngle);
-        //normalize it
+        //归一化
         tilt = Mathf.Clamp01(tilt);
         if (mouseLook.VerticalAngle <= 0 || mouseLook.VerticalAngle >= 180) tilt = 0;
-        //get the forward direction of the player camera
+        //获取玩家摄像机的前方向
         desiredMove = headRoot.forward * Mathf.Clamp01(_input.y);
         if (desiredMove.y > 0) desiredMove.y = 0;
 
-        //calculate the drop speed based in the upside down camera angle
+        //根据摄像机倒置角度计算下坠速度
         float dropSpeed = Mathf.Lerp(m_GravityMultiplier * dropTiltSpeedRange.x, m_GravityMultiplier * dropTiltSpeedRange.y, tilt);
         targetDirection = Physics.gravity * dropSpeed * Time.fixedDeltaTime;
-        //if the player press the vertical input -> add velocity in the direction where the camera is looking at
+        //如果玩家按下纵向输入 -> 沿摄像机注视方向加速
         targetDirection += desiredMove * dropControlSpeed;
 
-        //apply the movement direction in the character controller
+        //把移动方向应用到 Character Controller
         m_CollisionFlags = _characterController.Move(targetDirection * Time.fixedDeltaTime);
     }
 
-    // Make the player glide
+    // 让玩家滑翔
     public override void DoGliding()
     {
         if (isGrounded)
@@ -581,13 +581,13 @@ public class FirstPersonController : FirstPersonControllerBase
         State = PlayerState.Gliding;
     }
 
-    // Called each frame when the player is gliding
+    // 玩家滑翔时每帧调用
     void OnGliding()
     {
         desiredMove = (_transform.forward * _input.y) + (_transform.right * _input.x);
-        //how much can the player control the player when is in air.
+        //玩家在空中时能施加多少控制。
         float airControlMult = AirControlMultiplier * 5;
-        //fall gravity amount
+        //下落重力大小
         float gravity = m_GravityMultiplier * 15;
 
         targetDirection = Physics.gravity * gravity * Time.fixedDeltaTime;
@@ -642,7 +642,7 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
 
-    // Math behind the fall damage calculation
+    // 坠落伤害计算原理
     private float CalculateFall()
     {
         float fallDistance = HigherPointOnJump - _transform.position.y;
@@ -679,24 +679,24 @@ public class FirstPersonController : FirstPersonControllerBase
         return fallDistance;
     }
 
-    // Check in which vertical direction is the player translating to
+    // 检查玩家正朝哪个纵向方向移动
     void VerticalDirectionCheck()
     {
         if (_transform.position.y == PostGroundVerticalPos) return;
 
-        //if the direction has not been decided yet
+        //如果方向还没确定
         if (JumpDirection == 0)
         {
-            //is the player below or above from the surface he was?
-            // 1 = above (jump), -1 = below (falling)
+            //玩家在起跳面之上还是之下？
+            // 1 = 上方（跳跃），-1 = 下方（下落）
             JumpDirection = (_transform.position.y > PostGroundVerticalPos) ? 1 : -1;
         }
         else if (JumpDirection == 1)//if the player jump
         {
-            //but not start falling
+            //但还没开始下落
             if (_transform.position.y < PostGroundVerticalPos)
             {
-                //get the higher point he reached jumping
+                //获取跳跃到达的最高点
                 HigherPointOnJump = PostGroundVerticalPos;
             }
             else//if still going up
@@ -719,7 +719,7 @@ public class FirstPersonController : FirstPersonControllerBase
             return;
         }
 
-        // Read input
+        // 读取输入
         HorizontalInput = GameInput.Horizontal;
         VerticalInput = GameInput.Vertical;
 
@@ -733,7 +733,7 @@ public class FirstPersonController : FirstPersonControllerBase
         _input.Set(HorizontalInput, VerticalInput);
 
         float inputMagnitude = _input.magnitude;
-        //if the player is dropping, the speed is calculated in the dropping function
+        //如果玩家正在下坠，速度在下坠函数里计算
         if (State == PlayerState.Dropping || State == PlayerState.Gliding) { outputSpeed = 0; return; }
 
         if (State != PlayerState.Climbing && State != PlayerState.Sliding)
@@ -745,8 +745,8 @@ public class FirstPersonController : FirstPersonControllerBase
                     float forwardVelocity = GetLocalVelocity().z;
                     if (!UtilityHelper.isMobile)
                     {
-                        // On standalone builds, walk/run speed is modified by a key press.
-                        // keep track of whether or not the character is walking or running
+                        // 独立构建版本中，按键可切换行走/奔跑速度。
+                        // 记录角色当前是行走还是奔跑
                         if (GameInput.Run() && forwardVelocity > 0.1f)
                         {
                             if (runToAimBehave == PlayerRunToAimBehave.AimWhileRunning)
@@ -807,14 +807,14 @@ public class FirstPersonController : FirstPersonControllerBase
         }
         else
         {
-            // set the desired speed to be walking or running
+            // 把期望速度设为行走或奔跑速度
             outputSpeed = (State == PlayerState.Running && _characterController.isGrounded) ? runSpeed : WalkSpeed;
             if (State == PlayerState.Stealth)
             {
                 outputSpeed = stealthSpeed;
             }
         }
-        // normalize input if it exceeds 1 in combined length:
+        // 输入合成长度超过 1 时归一化：
         if (inputMagnitude > 1)
         {
             _input.Normalize();
@@ -827,7 +827,7 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
 
-    // Force the player stop this frame
+    // 本帧强制玩家停下
     public override void Stop()
     {
         _input = Vector2.zero;
@@ -905,7 +905,7 @@ public class FirstPersonController : FirstPersonControllerBase
         _audioSource.Play();
     }
 
-    // Check if the player has a obstacle above the head
+    // 检查玩家头顶是否有障碍物
     // <returns></returns>
     public bool IsHeadHampered()
     {
@@ -972,7 +972,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
     private void CheckLadderTrigger(Collider other)
     {
-        // if the collider doesn't have a parent, it's not a valid ladder
+        // 碰撞体没有父节点就不是有效梯子
         if (isClimbing || other.transform.parent == null)
             return;
 
@@ -980,11 +980,11 @@ public class FirstPersonController : FirstPersonControllerBase
         if (ladder == null || !ladder.CanUse)
             return;
 
-        // Enter in a ladder trigger
+        // 进入梯子触发器
 
         Stop();
         _ladder = ladder;
-        // setup the in and out position based on the player height
+        // 根据玩家身高设置上梯和下梯位置
         ladder.SetUpBounds(playerReferences);
 
         bool wasControllable = isControlable;
@@ -994,17 +994,17 @@ public class FirstPersonController : FirstPersonControllerBase
 
         SetActiveClimbing(true);
 
-        // get the position to automatically translate the player to start climbing/down-climbing
+        // 获取让玩家自动移动到开始爬梯/下梯的位置
         Vector3 startPos = ladder.GetAttachPosition(other, _characterController.height);
         overrideNextLandEvent = true;
-        // move the player to the start position
+        // 把玩家移动到起始位置
         StartCoroutine(MoveTo(startPos, () =>
         {
-            // after finish the position adjustment
+            // 位置调整完成之后
             isControlable = wasControllable;
             ladder.Status = ClimbableLadder.LadderStatus.Climbing;
 
-            // now the movement will be handled in OnClimbing() function
+            // 之后的移动由 OnClimbing() 函数处理
         }));
     }
 
@@ -1019,10 +1019,10 @@ public class FirstPersonController : FirstPersonControllerBase
     {
         surfaceNormal = hit.normal;
         surfacePoint = hit.point;
-        // Enable this if you want player controller apply force on contact to rigidbodys
-        // is commented by default for performance matters.
+        // 想让玩家控制器在碰撞时对刚体施力就启用这段
+        // 出于性能考虑默认注释掉。
         /* Rigidbody body = hit.collider.attachedRigidbody;
-         //dont move the rigidbody if the character is on top of it
+         // 角色踩在刚体上时不要推动它
          if (m_CollisionFlags == CollisionFlags.Below)
          {
              return;
@@ -1113,7 +1113,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
         private float _offset = 0f;
 
-        // provides the offset that can be used
+        // 提供可用的偏移量
         public float Offset()
         {
             return _offset;
@@ -1121,7 +1121,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
         public IEnumerator DoBobCycle()
         {
-            // make the camera move down slightly
+            // 让摄像机略微下移
             float t = 0f;
             while (t < BobDuration)
             {
@@ -1130,7 +1130,7 @@ public class FirstPersonController : FirstPersonControllerBase
                 yield return new WaitForFixedUpdate();
             }
 
-            // make it move back to neutral
+            // 让它回到中位
             t = 0f;
             while (t < BobDuration)
             {

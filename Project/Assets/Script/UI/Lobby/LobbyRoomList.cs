@@ -18,11 +18,11 @@ public class LobbyRoomList : LobbyRoomListBase
     }
 
     /// <summary>
-    /// display all available rooms
+    /// 显示所有可用房间
     /// </summary>
     public override void SetRoomList(List<RoomInfo> rooms)
     {
-        //Removed old list
+        //移除旧列表
         roomListHandler.Clear();
         UpdateCachedRoomList(rooms);
         InstanceRoomList();     
@@ -51,7 +51,7 @@ public class LobbyRoomList : LobbyRoomListBase
     {
         foreach (RoomInfo info in roomList)
         {
-            // Remove room from cached room list if it got closed, became invisible or was marked as removed
+            // 房间被关闭、不可见或标记为删除时，从缓存的房间列表移除
             if (!info.IsOpen || !info.IsVisible || info.RemovedFromList)
             {
                 if (cachedRoomList.ContainsKey(info.Name))
@@ -61,12 +61,12 @@ public class LobbyRoomList : LobbyRoomListBase
                 continue;
             }
 
-            // Update cached room info
+            // 更新缓存的房间信息
             if (cachedRoomList.ContainsKey(info.Name))
             {
                 cachedRoomList[info.Name] = info;
             }
-            // Add new room info to cache
+            // 把新房间信息加入缓存
             else
             {
                 cachedRoomList.Add(info.Name, info);

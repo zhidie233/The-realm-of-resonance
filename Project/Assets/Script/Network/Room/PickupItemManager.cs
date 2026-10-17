@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This script handle the instantiation of network items
-/// Network items are those game objects that instantiation and or destruction is replicated on all other clients in the room.
-/// With this script, those network items doesn't have to have a PhotonView or be located in a Resources folder
-/// Making way more network and memory efficient.
+/// 该脚本负责网络物品的实例化
+/// 网络物品指实例化和销毁会同步到房间内其他所有客户端的 game object。
+/// 有了该脚本，这些网络物品不必挂 PhotonView，也不必放进 Resources 目录
+/// 从而大幅提高网络和内存效率。
 /// 
-/// In order to instance a network item, there's only one requirement:
-/// 1. the item prefab has to be listed in the 'Network Items Prefabs' list
+/// 实例化网络物品只有一个要求：
+/// 1. 物品预制体必须列在 'Network Items Prefabs' 列表中
 /// </summary>
 public class PickupItemManager : ItemManagerBase
 {
@@ -18,7 +18,7 @@ public class PickupItemManager : ItemManagerBase
     [Header("Settings")]
     public float respawnItemsAfter = 12;
 
-    //private
+    //私有
     private Dictionary<string, NetworkItem> networkItemsPool = new Dictionary<string, NetworkItem>();
     private List<RespawnItems> respawnItems = new List<RespawnItems>();
 
@@ -41,7 +41,7 @@ public class PickupItemManager : ItemManagerBase
 
     void OnNetworkItemInstance(ExitGames.Client.Photon.Hashtable data)
     {
-        //don't instance for the player that create the item since it's already instance for him
+        //创建该物品的玩家不再实例化，因为他本地已经有了
         int actorID = (int)data["actorID"];
         if (PhotonNetworkWrapper.LocalPlayer.ActorNumber == actorID) return;
 
@@ -59,7 +59,7 @@ public class PickupItemManager : ItemManagerBase
 
         prefab = Instantiate(prefab.gameObject, (Vector3)data["position"], (Quaternion)data["rotation"]).GetComponent<NetworkItem>();
         prefab.OnNetworkInstance(data);
-        //pool this network item
+        //回收该网络物品到池中
         PoolItem(prefabName, prefab);
     }
 
@@ -70,7 +70,7 @@ public class PickupItemManager : ItemManagerBase
     }
 
     /// <summary>
-    /// Called when the state of a network item change, eg: OnDestroy, OnEnable or OnDisable
+    /// 网络物品状态变化时调用，如 OnDestroy、OnEnable 或 OnDisable
     /// </summary>
     void OnNetworkItemChange(ExitGames.Client.Photon.Hashtable data)
     {
@@ -115,7 +115,7 @@ public class PickupItemManager : ItemManagerBase
     }
 
     /// <summary>
-    /// Add an item to the waiting list to respawn it after certain time
+    /// 将物品加入等待列表，在指定时间后重生
     /// </summary>
     public override void RespawnAfter(NetworkItem item, float respawnAfter = 0)
     {

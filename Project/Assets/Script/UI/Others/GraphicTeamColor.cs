@@ -3,8 +3,8 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Automatically apply a team color to an UI element 
-/// Or team name to an UI Text
+/// 自动为 UI 元素应用队伍颜色
+/// 或为 UI 文本设置队伍名称
 /// </summary>
 public class GraphicTeamColor : MonoBehaviour
 {

@@ -5,9 +5,9 @@ using UnityEngine;
 namespace Game.Runtime.UI
 {
     /// <summary>
-    /// Default lobby connection loading screen
-    /// You can use your custom one by inherit your script from LobbyLoadingScreenBase
-    /// and replacing the 'Loading' UI from the Lobby canvas.
+    /// 默认的大厅连接加载界面
+    /// 继承 LobbyLoadingScreenBase 即可使用自定义实现
+    /// 并替换 Lobby 画布中的 'Loading' UI。
     /// </summary>
     public class LobbyLoadingScreen : LobbyLoadingScreenBase
     {

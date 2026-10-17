@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(fileName = "Weapon Bob Settings", menuName = "Game/Weapons/Bob/Settings")]
 public class WeaponBobSettings : ScriptableObject

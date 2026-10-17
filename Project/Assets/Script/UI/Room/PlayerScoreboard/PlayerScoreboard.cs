@@ -67,13 +67,13 @@ public class PlayerScoreboard : PlayerScoreboardBase
         for (int i = 0; i < players.Length; i++)
         {
             Player p = players[i];
-            //check if the player has selected a team
+            //检查玩家是否已选择队伍
             if (p.GetPlayerTeam() != Team.None)
             {
-                //is the ui binding already created for this player?
+                //该玩家的 UI 绑定是否已创建？
                 if (cachedUIBindings.ContainsKey(p.ActorNumber))
                 {
-                    //if it's so, then simply refresh his info
+                    //若已创建，只需刷新其信息
                     cachedUIBindings[p.ActorNumber]?.Refresh();
                 }
                 else
@@ -104,7 +104,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
     }
 
     /// <summary>
-    /// Update the scoreboard players and bots fields
+    /// 更新记分板中的玩家和机器人字段
     /// </summary>
     void UpdateBotScoreboard()
     {
@@ -151,7 +151,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
     }
 
     /// <summary>
-    /// Force update the scoreboard information
+    /// 强制刷新记分板信息
     /// </summary>
     public override void ForceUpdateAll()
     {
@@ -164,7 +164,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
     }
 
     /// <summary>
-    /// Sort the scoreboard players by their score
+    /// 按得分对记分板玩家排序
     /// </summary>
     void SortScoreboard()
     {

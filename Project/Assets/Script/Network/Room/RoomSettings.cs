@@ -5,8 +5,8 @@ using Game.Runtime.Settings;
 using System.Collections.Generic;
 
 /// <summary>
-/// This script handle all the room properties, setup the required local player data containers
-/// and handle the auto team selection logic.
+/// 该脚本处理所有房间属性，初始化所需的本地玩家数据容器
+/// 并处理自动选队逻辑。
 /// </summary>
 public class RoomSettings : MonoBehaviourBase
 {
@@ -39,12 +39,12 @@ public class RoomSettings : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Reset all the room properties to it's default values
+    /// 把所有房间属性重置为默认值
     /// </summary>
     public void ResetRoom()
     {
         Hashtable table = new Hashtable();
-        //Initialize new properties where the information will stay Room
+        //初始化存放房间级信息的新属性
         if (PhotonNetworkWrapper.IsMasterClient)
         {
             table.Add(PropertiesKeys.Team1Score, 0);
@@ -52,7 +52,7 @@ public class RoomSettings : MonoBehaviourBase
             PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(table);
         }
         table.Clear();
-        //Initialize new properties where the information will stay Players
+        //初始化存放玩家级信息的新属性
         if (!GameCore.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
         {
             table.Add(PropertiesKeys.TeamKey, Team.None.ToString());
@@ -71,8 +71,8 @@ public class RoomSettings : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Get the custom room properties of this room
-    /// These properties was set by the room creator (Host)
+    /// 获取本房间的自定义房间属性
+    /// 这些属性由房间创建者（Host）设置
     /// </summary>
     void GetRoomInfo()
     {
@@ -82,8 +82,8 @@ public class RoomSettings : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Check if the local player should spawn automatically
-    /// or should let him decide when spawn.
+    /// 检查本机玩家是应自动出生
+    /// 还是由他自己决定何时出生。
     /// </summary>
     public void CheckAutoSpawn()
     {
@@ -110,13 +110,13 @@ public class RoomSettings : MonoBehaviourBase
             }
             else
             {
-                // if the player joined as spectator from the waiting room
+                // 如果玩家以观战身份从等待房间加入
             }
         }
     }
 
     /// <summary>
-    /// Set the player that just join to the room to the team with less players on it automatically
+    /// 把刚进房间的玩家自动分配到人数较少的队伍
     /// </summary>
     void SelectTeamAutomatically()
     {
@@ -157,7 +157,7 @@ public class RoomSettings : MonoBehaviourBase
             return;
         }
 
-        //spawn player
+        //生成玩家
         GameController.Instance.SpawnPlayer(team);
     }
 

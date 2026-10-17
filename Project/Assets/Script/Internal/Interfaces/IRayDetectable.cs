@@ -1,15 +1,15 @@
 ﻿/// <summary>
-/// Use to mark objects that can be detected from the local player camera ray
+/// 用于标记可被本地玩家相机射线检测到的物体
 /// </summary>
 public interface IRayDetectable
 {
     /// <summary>
-    /// Called when the local player is looking at this item at certain near distance
+    /// 本地玩家在一定近距离注视此物品时调用
     /// </summary>
     void OnRayDetectedByPlayer();
 
     /// <summary>
-    /// Called when the local player WAS looking at this item but then look away.
+    /// 本地玩家原本注视此物品、随后移开视线时调用。
     /// </summary>
     void OnUnDetectedByPlayer();
 }

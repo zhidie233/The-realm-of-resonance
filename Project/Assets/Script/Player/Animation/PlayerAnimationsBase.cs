@@ -22,8 +22,8 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
     } = PlayerFPState.Idle;
 
     /// <summary>
-    /// Is this player touching the ground?
-    /// This value should be provided by PhotonNetworkWrapper.cs
+    /// 该玩家是否接触地面？
+    /// 该值应由 PhotonNetworkWrapper.cs 提供
     /// </summary>
     public bool IsGrounded
     {
@@ -32,7 +32,7 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// The velocity of this player
+    /// 该玩家的速度
     /// </summary>
     public Vector3 Velocity
     {
@@ -41,7 +41,7 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
     } = Vector3.zero;
 
     /// <summary>
-    /// The local velocity of this player
+    /// 该玩家的本地速度
     /// </summary>
     public Vector3 LocalVelocity
     {
@@ -50,28 +50,28 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
     } = Vector3.zero;
 
     /// <summary>
-    /// Called when the player has changed of weapon
+    /// 玩家切换武器时调用
     /// </summary>
     public abstract void SetNetworkGun(GunType weaponType, RemoteGun networkGun);
 
     /// <summary>
-    /// Play the fire animation for a specific gun type.
+    /// 播放指定枪械类型的开火动画。
     /// </summary>
     /// <param name="gunType"></param>
     public abstract void PlayFireAnimation(GunType gunType);
 
     /// <summary>
-    /// Update the player animator parameters.
+    /// 更新玩家动画器参数。
     /// </summary>
     public abstract void UpdateAnimatorParameters();
 
     /// <summary>
-    /// Called when the player get hit by an enemy.
+    /// 玩家被敌人击中时调用。
     /// </summary>
     public abstract void OnGetHit();
 
     /// <summary>
-    /// Block / Unequipped the weapons
+    /// 收起 / 卸下武器
     /// </summary>
     public abstract void BlockWeapons(int blockType);
 }

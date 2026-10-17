@@ -23,7 +23,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
     [Header("GUI")]
     /// <summary>
-    /// Color of UI when player health is low
+    /// 玩家生命值偏低时的 UI 颜色
     /// </summary>
     public Gradient HealthColorGradient;
     private Color CurColor = new Color(0, 0, 0);
@@ -139,14 +139,14 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// Call this to make a new damage to the player
+    /// 调用它对玩家造成一次新伤害
     /// </summary>
     public void GetDamage(DamageData e)
     {
         bool canDamage = true;
         if (!DamageEnabled)
         {
-            //Fix: bots can't damage Master Client teammates.
+            //修复：机器人无法伤害主客户端的队友。
             if (e.GameActor != null && (e.GameActor.Team != thisPlayerTeam || RoomSettings.Instance.CurrentRoomInfo.friendlyFire)) { canDamage = true; }
             else canDamage = false;
         }
@@ -164,7 +164,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// Call this when Player Take Damage From fall impact
+    /// 玩家受到坠落冲击伤害时调用
     /// </summary>
     public override void DoFallDamage(int damage)
     {
@@ -176,7 +176,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// This function is called on all clients when this player receive damage
+    /// 该玩家受到伤害时会在所有客户端调用此函数
     /// </summary>
     [PunRPC]
     void SyncDamage(int damage, string killer, DamageCause cause, Vector3 hitDirection, bool isHeatShot, int weaponID, Player m_sender)
@@ -199,7 +199,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 }
                 else
                 {
-                    // When the damage is given by the local player
+                    // 伤害由本地玩家造成时
                     if (m_sender != null && m_sender.NickName == LocalName && cause != DamageCause.Bot)
                     {
                         CrosshairBase.Instance.OnHit();
@@ -258,8 +258,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// This is called when this player die in match
-    /// This function determine the cause of death and update the require stats
+    /// 该玩家在对局中死亡时调用
+    /// 此函数判断死因并更新所需统计
     /// </summary>
 	void Die(string killer, bool isHeadshot, DamageCause cause, int gunID, Vector3 hitPos, Player sender)
     {
@@ -283,7 +283,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
         else
         {
-            //Make the remote players drop their weapon
+            //让远程玩家掉落武器
             Transform ngr = (GameConfig.Instance.DropGunOnDeath) ? null : PlayerSync.NetGunsRoot;
             playerReferences.playerRagdoll.SetLocalRagdoll(new PlayerRagdollBase.RagdollInfo()
             {
@@ -295,7 +295,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             });
         }
 
-        //disable all other player prefabs child's
+        //禁用玩家预制体其余子对象
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
@@ -309,7 +309,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
         if (!isMine)// when player is not ours
         {
-            //if the local player was how kill this player
+            //如果杀死该玩家的是本地玩家
             if (lastDamageGiverActor == LocalName)
             {
                 AddKill(isHeadshot, weapon, gunID);
@@ -329,7 +329,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         else//when is local player who dies
         {
 
-            //Set to respawn again
+            //设为可以再次重生
             if (GetGameMode.GetGameModeInfo().onPlayerDie == GameModeSettings.OnPlayerDie.SpawnAfterDelay)
             {
                 GameController.Instance.RespawnLocalPlayerAfter();
@@ -337,19 +337,19 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
             if (cause == DamageCause.Bot)
             {
-                // increase the deaths count for the local player
+                // 增加本地玩家的死亡数
                 if (GameConfig.Instance.howConsiderBotsEliminations == Game.Runtime.AI.BotKillConsideration.SameAsRealPlayers)
                     PhotonNetworkWrapper.LocalPlayer.PostDeaths(1);
             }
             else
             {
-                // increase the deaths count for the local player
+                // 增加本地玩家的死亡数
                 PhotonNetworkWrapper.LocalPlayer.PostDeaths(1);
             }
 
             playerReferences.playerRagdoll.gameObject.name = "YOU";
 
-            //Show the kill camera
+            //显示击杀摄像机
             KillCamBase.Instance.SetTarget(new KillCamBase.KillCamInfo()
             {
                 RealPlayer = sender,
@@ -390,7 +390,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 feed.AddData("headshot", isHeadshot);
 
                 KillFeedBase.Instance.SendKillMessageEvent(feed);
-                //the local player will update the bot stats instead of the Master in this case.
+                //这种情况下由本地玩家而不是主客户端更新机器人统计。
                 AIMananger.Instance.SetBotKill(killer);
             }
             StartCoroutine(DestroyThis());
@@ -398,11 +398,11 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// when we get a new kill, synchronize and add points to the player
+    /// 获得新击杀时同步并给玩家加分
     /// </summary>
     public void AddKill(bool isHeadshot, string m_weapon, int gunID)
     {
-        //send kill feed kill message
+        //发送击杀提示消息
         var feed = new KillFeedBase.FeedData()
         {
             LeftText = LocalName,
@@ -414,12 +414,12 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
         KillFeedBase.Instance.SendKillMessageEvent(feed);
 
-        //Add a new kill and update the player information
+        //新增一次击杀并更新玩家信息
         PhotonNetworkWrapper.LocalPlayer.PostKill(1);
-        // calculate the score gained for this kill
+        // 计算这次击杀获得的得分
         int score = (isHeadshot) ? GameConfig.Instance.ScoreReward.ScorePerKill + GameConfig.Instance.ScoreReward.ScorePerHeadShot : GameConfig.Instance.ScoreReward.ScorePerKill;
 
-        //show an local notification for the kill
+        //显示本地击杀通知
         var localKillInfo = new KillInfo();
         localKillInfo.Killer = lastDamageGiverActor;
         localKillInfo.Killed = gameObject.name;
@@ -442,7 +442,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// Do constant damage to the player in a loop until cancel.
+    /// 循环对玩家持续造成伤害，直到取消。
     /// </summary>
     public override void DoRepetingDamage(RepetingDamageInfo info)
     {
@@ -451,7 +451,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// Apply damage from a custom loop
+    /// 从自定义循环中施加伤害
     /// </summary>
     void MakeDamageRepeting()
     {
@@ -479,7 +479,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// Update the player health UI with this player stats
+    /// 用该玩家的数据更新玩家生命值 UI
     /// </summary>
     void UpdateUI()
     {
@@ -539,8 +539,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         UpdateUI();
     }
 
-    /// <summary>n
-    /// Make the local player kill himself
+    /// <summary>
+    /// 让本地玩家自杀
     /// </summary>
     public override bool Suicide()
     {
@@ -581,16 +581,16 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// This event is called when player pick up a med kit
+    /// 玩家拾取医疗包时调用此事件
     /// </summary>
-    /// <param name="amount"> amount for sum at current health</param>
+    /// <param name="amount"> 在当前生命值上增加的数量</param>
     void OnPickUp(int amount)
     {
         SetHealth(amount);
     }
 
     /// <summary>
-    /// Add health to this player and sync with all clients
+    /// 为该玩家增加生命值并同步给所有客户端
     /// </summary>
     /// <param name="amount"></param>
     /// <param name="replace"></param>
@@ -625,7 +625,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// Sync Health when pick up a med kit.
+    /// 拾取医疗包时同步生命值。
     /// </summary>
     [PunRPC]
     void PickUpHealth(int t_amount)
@@ -659,8 +659,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
 
     /// <summary>
-    /// When round is end 
-    /// desactive some functions
+    /// 回合结束时
+    /// 停用部分功能
     /// </summary>
     void OnRoundEnd()
     {

@@ -3,10 +3,10 @@ using UnityEngine.UI;
 using TMPro;
 
 /// <summary>
-/// Default Game PickUp UI handler
-/// This script take care of receive information about pick up weapon events and display to the player
-/// To modify the behave DO NOT modify this script, instead create your own and inherited from PickUpUIBase
-/// Use this as reference.
+/// 默认游戏拾取 UI 处理器
+/// 此脚本负责接收武器拾取事件的信息并显示给玩家
+/// 要改行为请不要修改此脚本，新建自己的脚本并继承 PickUpUIBase
+/// 以此作为参考。
 /// </summary>
 public class PickUpUI : PickUpUIBase
 {
@@ -68,7 +68,7 @@ public class PickUpUI : PickUpUIBase
     }
 
     /// <summary>
-    /// Called from the pick up UI button
+    /// 由拾取 UI 按钮调用
     /// </summary>
     public void OnPickUpClicked()
     {

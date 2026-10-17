@@ -8,7 +8,7 @@ public abstract class WaitingRoomUIBase : PhotonHelper
     public abstract void ShowLoadingScreen(bool show);
 
     /// <summary>
-    /// Show the waiting room menu
+    /// 显示等待房间菜单
     /// </summary>
     public abstract void SetActive(bool active);
 

@@ -27,10 +27,10 @@ public class SpringUtility
     }
 
     /// <summary>
-    /// Update the end value in the middle of motion.
-    /// This reuse the current velocity and interpolate the value smoothly afterwards.
+    /// 运动过程中更新目标值。
+    /// 会复用当前速度，之后平滑插值到新值。
     /// </summary>
-    /// <param name="value">End value</param>
+    /// <param name="value">目标值</param>
     public void UpdateEndValue(float value, float velocity)
     {
         startValue = currentValue;
@@ -40,10 +40,10 @@ public class SpringUtility
     }
 
     /// <summary>
-    /// Advance a step by deltaTime(seconds).
+    /// 按 deltaTime（秒）推进一步。
     /// </summary>
-    /// <param name="deltaTime">Delta time since previous frame</param>
-    /// <returns>Evaluated value</returns>
+    /// <param name="deltaTime">距上一帧的时间间隔</param>
+    /// <returns>计算出的值</returns>
     public float Evaluate(float deltaTime)
     {
         springTime += deltaTime;

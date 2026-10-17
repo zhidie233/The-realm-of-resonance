@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -20,7 +20,7 @@ namespace Game.InputManager
     {
         private Dictionary<string, ReorderableList> _reorderableLists = new Dictionary<string, ReorderableList>();
 
-        // Draw the property inside the given rect
+        // 在指定矩形内绘制属性
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
             EditorGUI.BeginProperty(position, label, property);

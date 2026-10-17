@@ -6,7 +6,7 @@ public static class MathUtility
     public static Vector3 Gravity => Physics.gravity;
     
     /// <summary>
-    /// Return the normalized intersection value between two vectors
+    /// 返回两个向量之间的归一化交点值
     /// </summary>
     /// <returns></returns>
     public static float InverseLerp(Vector3 a, Vector3 b, Vector3 value)
@@ -47,7 +47,7 @@ public static class MathUtility
     }
 
     /// <summary>
-    /// Clamp a value in 0-360 where the min can be > to the max angle
+    /// 把角度限制在 0-360，最小值可以大于最大值
     /// </summary>
     /// <returns></returns>
     public static float Clamp360Angle(float angle, float min, float max)
@@ -84,7 +84,7 @@ public static class MathUtility
     }
 
     /// <summary>
-    /// Returns the value from where the val is nearest two between the min max
+    /// 返回 min 与 max 中距 val 较近的那个值
     /// </summary>
     /// <returns></returns>
     public static float GetNearestBetweenTwo(float val, float min, float max)
@@ -96,7 +96,7 @@ public static class MathUtility
     }
 
     /// <summary>
-    /// Get ClampAngle
+    /// 获取 ClampAngle
     /// </summary>
     /// <returns></returns>
     public static float ClampAngle(float ang, float min, float max)
@@ -123,19 +123,19 @@ public static class MathUtility
 
 
     /// <summary>
-    /// The angle between dirA and dirB around axis
+    /// dirA 与 dirB 绕 axis 的角度
     /// </summary>
     /// <returns></returns>
     public static float AngleAroundAxis(Vector3 dirA, Vector3 dirB, Vector3 axis)
     {
-        // Project A and B onto the plane orthogonal target axis
+        // 把 A 和 B 投影到与目标轴正交的平面
         dirA = dirA - Vector3.Project(dirA, axis);
         dirB = dirB - Vector3.Project(dirB, axis);
 
-        // Find (positive) angle between A and B
+        // 求 A 与 B 之间的（正）夹角
         float angle = Vector3.Angle(dirA, dirB);
 
-        // Return angle multiplied with 1 or -1
+        // 返回乘以 1 或 -1 后的角度
         return angle * (Vector3.Dot(axis, Vector3.Cross(dirA, dirB)) < 0 ? -1 : 1);
     }
 
@@ -150,8 +150,8 @@ public static class MathUtility
     }
 
     /// <summary>
-	/// returns the angle between a look vector and a target position.
-	/// can be used for various aiming logic
+	/// 返回朝向向量与目标位置之间的角度。
+	/// 可用于各种瞄准逻辑
 	/// </summary>
 	public static float LookAtAngle(Vector3 fromPosition, Vector3 fromForward, Vector3 toPosition)
     {
@@ -162,8 +162,8 @@ public static class MathUtility
 
 
     /// <summary>
-    /// returns the angle between a look vector and a target position as
-    /// seen top-down in the cardinal directions. useful for gui pointers
+    /// 返回俯视视角下朝向向量与目标位置之间的角度，
+    /// 按四正方向计算。适用于 GUI 指示箭头
     /// </summary>
     public static float LookAtAngleHorizontal(Vector3 fromPosition, Vector3 fromForward, Vector3 toPosition)
     {
@@ -174,8 +174,8 @@ public static class MathUtility
     }
 
     /// <summary>
-	/// Zeroes the y property of a Vector3, for some cases where you want to
-	/// make 2D physics calculations.
+	/// 把 Vector3 的 y 分量置零，适用于需要
+	/// 做 2D 物理计算的场合。
 	/// </summary>
 	public static Vector3 HorizontalVector(Vector3 value)
     {
@@ -184,7 +184,7 @@ public static class MathUtility
     }
 
     /// <summary>
-    /// Calculate the bullet's drag's acceleration
+    /// 计算子弹的阻力加速度
     /// </summary>
     /// <returns></returns>
     public static Vector3 CalculateDrag(Vector3 velocityVec)
@@ -203,14 +203,14 @@ public static class MathUtility
 
         float aDrag = (k * vSqr) / m;
 
-        //Has to be in a direction opposite of the bullet's velocity vector
+        //方向必须与子弹速度向量相反
         Vector3 dragVec = aDrag * velocityVec.normalized * -1f;
 
         return dragVec;
     }
 
     /// <summary>
-    /// Interpolate two values using spring/jiggle effect
+    /// 使用弹簧/抖动效果插值两个数值
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>
@@ -224,7 +224,7 @@ public static class MathUtility
     }
 
     /// <summary>
-    /// Interpolate two vectors using spring/jiggle effect
+    /// 使用弹簧/抖动效果插值两个向量
     /// </summary>
     /// <param name="from"></param>
     /// <param name="to"></param>

@@ -4,7 +4,7 @@ using UnityEngine.Serialization;
 public abstract class GunPickUpBase : MonoBehaviourBase
 {
     /// <summary>
-    /// Ammunition information
+    /// 弹药信息
     /// </summary>
     [Serializable]
     public class AmmoInformation
@@ -27,19 +27,19 @@ public abstract class GunPickUpBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Identifier of the weapon
+    /// 武器标识
     /// </summary>
     [GunID] public int GunID = 0;
 
     /// <summary>
-    /// Ammunition data of this dropped weapon
+    /// 这把掉落武器的弹药数据
     /// </summary>
     [FormerlySerializedAs("Info")] 
     public AmmoInformation Ammunition;
 
     /// <summary>
-    /// This weapon will be automatically be destroyed
-    /// after certain time?
+    /// 这把武器将被自动销毁
+    /// 是否在特定时间后？
     /// </summary>
     public bool AutoDestroy = true;
 
@@ -58,12 +58,12 @@ public abstract class GunPickUpBase : MonoBehaviourBase
     private GunData _gunInfo;
 
     /// <summary>
-    /// Pick up the weapon
+    /// 拾取武器
     /// </summary>
     public abstract void PickUp();
 
     /// <summary>
-    /// Destroy this weapon instance after a delay
+    /// 延迟后销毁该武器实例
     /// </summary>
     /// <param name="delay"></param>
     public abstract void DestroyAfter(float delay);

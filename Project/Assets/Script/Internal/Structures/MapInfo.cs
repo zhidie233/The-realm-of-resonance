@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
 using GameEditor;
@@ -17,7 +17,7 @@ namespace Game.Internal.Structures
         public List<GameMode> NoAllowedGameModes = new List<GameMode>();
 
         /// <summary>
-        /// Return only the allowed game modes in this map from the given modes list.
+        /// 从给定模式列表中返回此地图允许的游戏模式。
         /// </summary>
         /// <returns></returns>
         public GameModeSettings[] GetAllowedGameModes(GameModeSettings[] allAvailables)

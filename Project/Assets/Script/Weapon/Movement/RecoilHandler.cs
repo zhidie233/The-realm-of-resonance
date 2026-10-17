@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Game Default recoil movement
-/// If you want to use your custom recoil script, inherited your script from RecoilBase.cs
-/// Use this as reference only.
+/// Game 默认后坐力运动
+/// 想用自己的后坐力脚本，就让脚本继承 RecoilBase.cs
+/// 此脚本仅供参考。
 /// </summary>
 public class RecoilHandler : RecoilBase
 {
@@ -93,7 +93,7 @@ public class RecoilHandler : RecoilBase
     }
 
     /// <summary>
-    /// Add recoil
+    /// 添加后坐力
     /// </summary>
     public override void SetRecoil(RecoilData data)
     {

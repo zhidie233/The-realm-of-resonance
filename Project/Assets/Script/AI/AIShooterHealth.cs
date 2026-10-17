@@ -4,9 +4,9 @@ using Photon.Pun;
 using UnityEngine;
 
 /// <summary>
-/// Handle all relating to the bot health
-/// This script has not direct references, you can replace with your own script
-/// Simply make sure to inherit your script from <see cref="PlayerHealthManagerBase"/>
+/// 处理机器人的生命值相关逻辑
+/// 本脚本没有直接引用，你可以替换成自己的脚本
+/// 只要让你的脚本继承 <see cref="PlayerHealthManagerBase"/> 即可
 /// </summary>
 public class AIShooterHealth : PlayerHealthManagerBase
 {
@@ -32,10 +32,10 @@ public class AIShooterHealth : PlayerHealthManagerBase
     public override void DoDamage(DamageData damageData)
     {
         string weaponName = GameConfig.Instance.GetWeapon(damageData.GunID).Name;
-        //if was not killed by a listed weapon
+        //如果不是被列表中的武器击杀
         if (damageData.GunID < 0)
         {
-            //try to find the custom weapon name
+            //尝试找到自定义武器名
             var iconData = KillFeedBase.Instance.GetCustomIconByIndex(Mathf.Abs(damageData.GunID + 1));
             if (iconData != null)
             {
@@ -141,17 +141,17 @@ public class AIShooterHealth : PlayerHealthManagerBase
 
         if (PhotonNetworkWrapper.IsMasterClient && references.Agent.enabled) references.Agent.isStopped = true;
         GetComponent<NamePlateBase>().SetActive(false);
-        //update the GamePlayer data
+        //更新 GamePlayer 数据
         GamePlayer player = GameController.Instance.GetGamePlayer(m_AIShooter.AIName);
         if (player != null)
             player.isAlive = false;
 
         AIShooter killerBot = null;
-        //if was local player who terminated this bot
+        //如果击杀这个机器人的是本地玩家
         if (viewID == GameController.LocalPlayerViewID && !fromBot)
         {
             Team team = PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam();
-            //send kill feed message
+            //发送击杀提示消息
             int gunID = GameConfig.Instance.GetWeaponID(weaponName);
             if (weaponName.Contains("cmd:") || gunID == -1)
             {
@@ -185,11 +185,11 @@ public class AIShooterHealth : PlayerHealthManagerBase
                 }
             }
 
-            // only grant score to the kill player if bot eliminations counts as real players.
+            //只有在机器人击杀计入真人玩家的前提下，才给击杀者加分。
             if (killConsideration == BotKillConsideration.SameAsRealPlayers)
             {
                 int score;
-                //If headshot will give you double experience
+                //爆头可以给双倍经验
                 if (ishead)
                 {
                     GameController.Instance.Headshots++;
@@ -207,7 +207,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
                 }
             }
 
-            //show an local notification for the kill
+            //显示本地击杀提示
             var localKillInfo = new KillInfo();
             localKillInfo.Killer = PhotonNetworkWrapper.LocalPlayer.NickName;
             localKillInfo.Killed = string.IsNullOrEmpty(m_AIShooter.AIName) ? gameObject.name.Replace("(die)", "") : m_AIShooter.AIName;
@@ -215,17 +215,17 @@ public class AIShooterHealth : PlayerHealthManagerBase
             localKillInfo.KillMethod = weaponName;
             GameEvents.DispatchLocalKillEvent(localKillInfo);
 
-            //update team score
+            //更新队伍得分
             GameController.Instance.SetPoint(1, GameMode.TDM, team);
 
         }
-        //if was killed by another bot
+        //如果被另一个机器人击杀
         else if (fromBot)
         {
-            //make Master handle as the owner
+            //让主客户端作为所有者处理
             if (PhotonNetworkWrapper.IsMasterClient)
             {
-                //find the killer in the scene
+                //在场景中找到凶手
                 PhotonView p = PhotonView.Find(viewID);
                 AIShooter bot = null;
                 string killer = "Unknown";
@@ -234,11 +234,11 @@ public class AIShooterHealth : PlayerHealthManagerBase
                     bot = p.GetComponent<AIShooter>();//killer bot
                     killer = bot.AIName;
                     if (string.IsNullOrEmpty(killer)) { killer = p.gameObject.name.Replace(" (die)", ""); }
-                    //update bot stats
+                    //更新机器人战绩
                     AIMananger.Instance.SetBotKill(killer);
                 }
 
-                //send kill feed message
+                //发送击杀提示消息
                 int gunID = GameConfig.Instance.GetWeaponID(weaponName);
 
                 var feed = new KillFeedBase.FeedData()
@@ -274,16 +274,16 @@ public class AIShooterHealth : PlayerHealthManagerBase
         var mplayer = new GamePlayer(photonView, false, false);
         GameEvents.DispatchRemotePlayerDeath(mplayer);
 
-        //update the bot deaths count.
+        //更新机器人死亡数。
         AIMananger.Instance.SetBotDeath(m_AIShooter.AIName);
 
         if (PhotonNetworkWrapper.IsMasterClient)
         {
-            //respawn management here
-            //only master client called it since the spawn will be sync by PhotonNetwork.Instantiate()
+            //重生逻辑在这里处理
+            //只由主客户端调用，因为出生会通过 PhotonNetwork.Instantiate() 同步
             AIMananger.Instance.OnBotDeath(m_AIShooter, killerBot);
 
-            //Only Master client should send the RPC
+            //只有主客户端应该发送这个 RPC
             var deathData = UtilityHelper.CreatePhotonHashTable();
             deathData.Add("type", AIRemoteCallType.DestroyBot);
             deathData.Add("direction", direction);
@@ -292,7 +292,7 @@ public class AIShooterHealth : PlayerHealthManagerBase
                 deathData.Add("explosion", true);
             }
 
-            //Should buffer this RPC?
+            //这个 RPC 需要缓存吗？
             this.photonView.RPC(AIShooterAgent.RPC_NAME, RpcTarget.All, deathData);//callback is in AIShooterAgent.cs -> DestroyBot(...)
         }
     }

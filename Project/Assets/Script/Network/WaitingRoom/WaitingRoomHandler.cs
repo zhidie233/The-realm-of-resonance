@@ -59,7 +59,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     }
 
     /// <summary>
-    /// Local
+    /// 本地
     /// </summary>
     public override void SetLocalPlayerReady()
     {
@@ -71,7 +71,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     }
 
     /// <summary>
-    /// From Server
+    /// 来自服务器
     /// </summary>
     void OnReceivePlayerState(HashTable data)
     {
@@ -91,7 +91,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     }
 
     /// <summary>
-    /// Called by Master Client after click on the start button
+    /// 主客户端点击开始按钮后调用
     /// </summary>
     public override void StartGame()
     {
@@ -113,7 +113,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         }
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(table, expectTable);
-        //We don't need use a RPC cuz all player will receive a callback on OnRoomPropertiesUpdate and we can work with that
+        //不需要用 RPC，因为所有玩家都会收到 OnRoomPropertiesUpdate 回调，用它就行
     }
 
     void OnUpdateStates()
@@ -134,7 +134,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     }
 
     /// <summary>
-    /// RaiseEvent = RPC, I just used this cuz I like it more :)
+    /// RaiseEvent 相当于 RPC，这里用它只是因为我更喜欢 :)
     /// </summary>
     public void OnEventCustom(EventData data)
     {
@@ -159,43 +159,43 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     IEnumerator WaitUntilFullyJoin()
     {
-        //CHECK IF THE ROOM IS ALREADY STARTED
+        //检查房间是否已经开始
         while (!PhotonNetwork.InRoom)
         {
             yield return null;
 
         }
 
-        // check if the room has a password and if the player has entered it
+        // 检查房间是否有密码，以及玩家是否已输入
         if ((string)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.RoomPassword] != string.Empty && !MatchLobby.Instance.JoinedWithPassword)
         {
-            // if not, that means the player enter to a room with password using the matchmaking,
-            // the matchmaking is controller by Photon so it doesn't check if a room has a password before select it
-            // so we can only determine this once joined to the room
+            // 如果没有，说明玩家是通过匹配进入带密码的房间的，
+            // 匹配由 Photon 控制，选房时不会先检查房间有没有密码
+            // 所以只能进房间后才能判断
             PhotonNetwork.LeaveRoom();
             Debug.Log("Leaving room because this is a private room.");
             yield break;
         }
 
-        //if this is the master client is means that the room is not initialized
+        //如果本机是主客户端，说明房间还没初始化
         if (PhotonNetworkWrapper.IsMasterClient)
         {
-            //so let set the state as waiting
+            //那就把状态设为等待
             SetWaitingState(WaitingState.Waiting);
         }
         else//if is a normal client
         {
-            //check the state the Waiting room
+            //检查等待房间的状态
             if ((WaitingState)PhotonNetwork.CurrentRoom.CustomProperties[PropertiesKeys.WaitingState] == WaitingState.Started)//if is started
             {
-                //go directly to the game map and skip the waiting room menu
+                //直接进入游戏地图，跳过等待房间菜单
                 PhotonNetwork.IsMessageQueueRunning = false;
                 LoadMap();
                 yield break;
             }
         }
 
-        //if is not started yet -> show the UI and hide the Lobby menu
+        //如果还没开始 -> 显示 UI 并隐藏 Lobby 菜单
         LobbyUI.Instance.HideAll();
         OnLocalEnterInWaitingRoom();
         AutoJoinToTeam();
@@ -286,14 +286,14 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     public void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
     {
-        //if the wait state has change
+        //如果等待状态发生变化
         if (propertiesThatChanged.ContainsKey(PropertiesKeys.WaitingState))
         {
             WaitingState state = (WaitingState)propertiesThatChanged[PropertiesKeys.WaitingState];
             if (state == WaitingState.Started)//if the master client start the game
             {
                 PhotonNetwork.IsMessageQueueRunning = false;
-                //load the map scene
+                //加载地图场景
                 StartCoroutine(MoveToMap());
             }
         }

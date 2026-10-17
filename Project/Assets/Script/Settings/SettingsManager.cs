@@ -26,7 +26,7 @@ namespace Game.Runtime.Settings
         }
 
         /// <summary>
-        /// Change the settings UI window
+        /// 切换设置 UI 窗口
         /// </summary>
         public void ChangeWindow(int id)
         {

@@ -10,16 +10,16 @@ public class AIMananger : PhotonHelper
 {
     [Header("设置")]
     public int updateBotsLookAtEach = 50;
-    // References to all the currently instanced bots in the scene
+    //场景中当前所有已实例化机器人的引用
     [HideInInspector] public List<Transform> AllBotsTransforms = new List<Transform>();
 
-    // Information and stats of all the bots currently playing
+    //当前所有在局机器人的信息和战绩
     [HideInInspector] public List<GameBotProperties> BotsStatistics = new List<GameBotProperties>();
 
-    // Is this game using bots?
+    //本局是否使用机器人？
     public bool BotsActive { get; set; }
 
-    // Is the bots information already synced by the Mater client?
+    //机器人信息是否已由主客户端同步？
     public bool HasMasterInfo { get; set; } = false;
 
     public delegate void EEvent(List<GameBotProperties> stats);
@@ -68,7 +68,7 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // Instance all bots for the first time
+    //首次实例化所有机器人
     void FirstSpawn()
     {
         if (PhotonNetworkWrapper.IsMasterClient)
@@ -112,28 +112,28 @@ public class AIMananger : PhotonHelper
         GameEvents.onLocalPlayerSpawn -= OnLocalPlayerSpawn;
     }
 
-    // Send the bots data to all other clients in the room This data will automatically send to new players
+    //把机器人数据发给房间内其他所有客户端，新玩家会自动收到这些数据
     void SyncBotsDataToAllOthers()
     {
         if (!PhotonNetworkWrapper.IsMasterClient) return;
 
         Player[] players = PhotonNetworkWrapper.PlayerList;
         string line = GetCompiledBotsData();
-        //and send to the new player so him can have the data and update locally.
+        //再发给新玩家，让他拿到数据在本地更新。
         photonView.RPC(nameof(SyncAllBotsStats), RpcTarget.Others, line, 0);
 
-        //also send the slots data so all player have the same list in case the Master Client leave the game
+        //同时发送槽位数据，保证主客户端退出后所有玩家的列表一致
         line = GetCompiledSlotsData();
-        //and send to the new player so him can have the data and update locally.
+        //再发给新玩家，让他拿到数据在本地更新。
         photonView.RPC(nameof(SyncAllBotsStats), RpcTarget.Others, line, 1);
         GameEvents.onBotsInitializated?.Invoke();
     }
 
-    // Gets the bots data as a string line
+    //把机器人数据取成一行字符串
     // <returns></returns>
     public string GetCompiledBotsData()
     {
-        //so first we recollect all the stats from the master client and join it in a string line
+        //先从主客户端收集全部战绩，拼成一行字符串
         string line = string.Empty;
         for (int i = 0; i < BotsStatistics.Count; i++)
         {
@@ -143,7 +143,7 @@ public class AIMananger : PhotonHelper
         return line;
     }
 
-    // Get the slots list in a string line
+    //把槽位列表取成一行字符串
     // <returns></returns>
     public string GetCompiledSlotsData()
     {
@@ -165,7 +165,7 @@ public class AIMananger : PhotonHelper
         return line;
     }
 
-    // Setup the team slots where players and bots can be assigned.
+    //设置队伍槽位，用来分配玩家和机器人。
     void SetUpSlots(bool addExistingPlayers)
     {
         Team1PlayersSlots.Clear();
@@ -229,7 +229,7 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // Spawn the a bot in the selected team You can set the agent as null to instantiate it for the first time
+    //在指定队伍出生一个机器人，首次实例化时 agent 传 null
     public AIShooter SpawnBot(AIShooter agent = null, Team _team = Team.None)
     {
         var spawnPoint = SpawnPointManager.Instance.GetSingleRandom();
@@ -241,18 +241,18 @@ public class AIMananger : PhotonHelper
 
             if (agent.AITeam == Team.None) { Debug.LogError($"bot {agent.AIName} has not team"); }
 
-            //Check if the bot has been assigned to a team, or if not, check if there's a space for him
+            //检查机器人是否已分配队伍，没有就看看有没有空位给它
             if (VerifyTeamAffiliation(agent, agent.AITeam))
             {
                 spawnPoint = SpawnPointManager.Instance.GetSpawnPointForTeam(agent.AITeam, SpawnPointManager.SpawnMode.Sequential);
             }
             else // there's not space in the team for this bot
             {
-                //Check if the bot was registered in a team before
+                //检查机器人之前是否注册过队伍
                 int ind = BotsStatistics.FindIndex(x => x.Name == agent.AIName);
                 if (ind != -1 && ind <= BotsStatistics.Count - 1)
                 {
-                    //delete the bot data since it won't play anymore.
+                    //机器人不再参战，删除它的数据。
                     BotsStatistics.RemoveAt(ind);
                 }
                 return null;
@@ -286,11 +286,11 @@ public class AIMananger : PhotonHelper
         spawnPoint.GetSpawnPosition(out Vector3 spawnPosition, out Quaternion spawnRot);
 
         object[] botEssentialData = new object[] { AIName, AITeam };
-        //use InstantiateSceneObject to make the bots by controlled by Master Client but not destroy them when MC leave the room.
+        //用 InstantiateSceneObject 让机器人由主客户端控制，主客户端离开房间时也不会销毁它们。
         GameObject bot = PhotonNetwork.InstantiateRoomObject(AiName, spawnPosition, spawnRot, 0, botEssentialData);
 
         AIShooter newAgent = bot.GetComponent<AIShooter>();
-        //if this bot was already in the game
+        //如果这个机器人已在局中
         if (agent != null)
         {
             newAgent.AIName = agent.AIName;
@@ -302,18 +302,18 @@ public class AIMananger : PhotonHelper
             newAgent.AIName = AIName;
             newAgent.AITeam = _team;
             BotsNames.RemoveAt(rbn);
-            //insert bot stats
+            //写入机器人战绩
             var bs = new GameBotProperties();
             bs.Name = newAgent.AIName;
             bs.Team = _team;
             bs.ViewID = bot.GetComponent<PhotonView>().ViewID;
             BotsStatistics.Add(bs);
-            //reserve a space in the team for this bot
+            //在队伍里为这个机器人预留一个空位
             VerifyTeamAffiliation(newAgent, _team);
         }
         newAgent.Init();
 
-        //Build Player Data
+        //构建玩家数据
         GamePlayer playerData = new GamePlayer()
         {
             Name = newAgent.AIName,
@@ -338,19 +338,19 @@ public class AIMananger : PhotonHelper
         return newAgent;
     }
 
-    // Check if the bot is already assigned in a Team slot
+    //检查机器人是否已分配到队伍槽位
     // <returns></returns>
     private bool VerifyTeamAffiliation(AIShooter agent, Team team)
     {
         var playerSlots = team == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
-        //check if the bot is assigned in the team
+        //检查机器人是否已分配到该队伍
         if (playerSlots.Exists(x => x.Bot == agent.AIName)) return true;
         else
         {
-            //if it's not assigned, check if we can add him
+            //未分配的话，看看能不能把它加进去
             if (hasSpaceInTeamForBot(team))
             {
-                //assign the bot to the team
+                //把机器人分配到该队伍
                 int index = playerSlots.FindIndex(x => x.Player == string.Empty && x.Bot == string.Empty);
                 playerSlots[index].Bot = agent.AIName;
                 return true;
@@ -359,7 +359,7 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // Fetch all the available players (alive) in the map.
+    //获取地图上所有可用的（存活）玩家。
     private void UpdateTargetList()
     {
         if (!PhotonNetworkWrapper.IsMasterClient || GameController.Instance == null) return;
@@ -378,7 +378,7 @@ public class AIMananger : PhotonHelper
             targetsLists.Add(GameCore.LocalPlayerReferences);
         }
 
-        // Update the targets for each bot
+        //刷新每个机器人的目标
         for (int i = 0; i < AllBots.Count; i++)
         {
             if (AllBots[i] == null) continue;
@@ -409,7 +409,7 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // Remove the death bot from the available bots and put it on the wait list to respawn
+    //把死亡的机器人从可用列表移出，放进等待重生列表
     public void OnBotDeath(AIShooter agent, AIShooter killer)
     {
         if (!PhotonNetworkWrapper.IsMasterClient)
@@ -435,14 +435,14 @@ public class AIMananger : PhotonHelper
         {
             if (forcedRespawn)
             {
-                // if the bot is still alive
+                //如果机器人仍然存活
                 if (AllBots[i].gameObject != null)
                 {
                     AllBots[i].Respawn();
                 }
             }
 
-            // if the bot is death
+            //如果机器人已死亡
             if (AllBots[i].gameObject == null)
             {
                 SpawnBot(AllBots[i]);
@@ -463,12 +463,12 @@ public class AIMananger : PhotonHelper
         }
     }
 
-    // Put a bot to the pending list to respawn after the min respawn time.
+    //把机器人放入待重生列表，等最短重生时间过去后重生。
     public void AddBotToRespawn(AIShooter bot)
     {
         //Debug.Log($"ADD BOT TO RESPAWN: " + bot.AIName);
         SpawningBots.Add(bot);
-        //automatically spawn the bot after the re-spawn time
+        //重生时间到后自动出生
         if (GetGameMode.GetGameModeInfo().onPlayerDie == GameModeSettings.OnPlayerDie.SpawnAfterDelay)
         {
             Invoke(nameof(SpawnPendingBot), GameConfig.Instance.PlayerRespawnTime);
@@ -481,13 +481,13 @@ public class AIMananger : PhotonHelper
         if (SpawningBots[0] != null)
         {
             SpawnBot(SpawningBots[0]);
-            //This fix the issue with the duplicate pv id when a master client re-enter in a room.
+            //修复主客户端重新进入房间时 PhotonView ID 重复的问题。
             PhotonNetwork.Destroy(SpawningBots[0].gameObject);
             SpawningBots.RemoveAt(0);
         }
     }
 
-    // Update the killer bot kills count and sync with everyone
+    //更新凶手机器人的击杀数并同步给所有人
     public void SetBotKill(string botName)
     {
         var stats = GetBotStatistics(botName);
@@ -507,15 +507,15 @@ public class AIMananger : PhotonHelper
         stat.Score += score;
     }
 
-    // Called in all clients when a bot die Update the killed bot death count and sync with everyone.
-    // bot that die
+    //机器人死亡时在所有客户端调用，更新其死亡数并同步给所有人。
+    //死亡的机器人
     public void SetBotDeath(string killed)
     {
-        //if this bots was already replaced by a real player
+        //如果这个机器人已被真人玩家替换
         if (lastLifeBots.Contains(killed))
         {
-            //this is his last life, so since he die, remove his data
-            //last life due he got replace by a player so this bot wont respawn again.
+            //这是它最后一条命，既然死了就删除它的数据
+            //因为已被玩家替换，这是最后一条命，不会再重生。
             int bi = GameController.Instance.OthersActorsInScene.FindIndex(x => x.Name == killed);
             if (bi != -1)
             {
@@ -530,7 +530,7 @@ public class AIMananger : PhotonHelper
 
         GameEvents.EventBotDeath(killed);
 
-        // Shouldn't this be called by Master client only?
+        //这里难道不该只由主客户端调用？
         if (PhotonNetworkWrapper.IsMasterClient) photonView.RPC(nameof(SyncBotStat), RpcTarget.All, BotsStatistics[index].Name, 0, (byte)1);
     }
 
@@ -550,27 +550,27 @@ public class AIMananger : PhotonHelper
         stat.GameState = gameState;
     }
 
-    // Event called when a new player enter in the match
+    //新玩家进入对局时触发的事件
     void OnPlayerEnter(Player player)
     {
         if (player.ActorNumber == PhotonNetworkWrapper.LocalPlayer.ActorNumber) return;
 
-        //cause bots statistics are not sync by Hashtables as player data do we need sync it by RPC
-        //so for sync it just one time (after will be update by the local client) we send it when a new player enter (only to the new player)
+        //机器人战绩不像玩家数据那样用 Hashtable 同步，所以要用 RPC 同步
+        //只需同步一次（之后由本地客户端更新），因此在新玩家进入时发送（只发给新玩家）
         if (PhotonNetworkWrapper.IsMasterClient)
         {
-            //so first we recollect all the stats from the master client and join it in a string line
+            //先从主客户端收集全部战绩，拼成一行字符串
             string line = GetCompiledBotsData();
-            //and send to the new player so him can have the data and update locally.
+            //再发给新玩家，让他拿到数据在本地更新。
             photonView.RPC(nameof(SyncAllBotsStats), player, line, 0);
 
-            //also send the slots data so all player have the same list in case the Master Client leave the game
+            //同时发送槽位数据，保证主客户端退出后所有玩家的列表一致
             line = GetCompiledSlotsData();
             photonView.RPC(nameof(SyncAllBotsStats), player, line, 1);
         }
     }
 
-    // Event called when a player change some property This used to listen when a player change of Team
+    //玩家修改属性时触发的事件，用来监听玩家换队
     public void OnPhotonPlayerPropertiesChanged(Player player, Hashtable changedProps)
     {
         if (!BotsActive)
@@ -585,7 +585,7 @@ public class AIMananger : PhotonHelper
         ReplaceBotWithPlayer(player, team);
     }
 
-    // Replace one of the bots with the given player in the given team The player will not be immediate replaced but after he dies and won't respawn again.
+    //用指定玩家替换指定队伍里的一个机器人。玩家不会立刻替换，而是在他死亡且不再重生后才替换。
     // <param name="newPlayer"></param>
     // <param name="playerTeam"></param>
     public void ReplaceBotWithPlayer(Player newPlayer, Team playerTeam)
@@ -595,19 +595,19 @@ public class AIMananger : PhotonHelper
         string remplaceBot = string.Empty;
         var slotList = playerTeam == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
 
-        //check if this player was already assigned (maybe just change of team)
+        //检查这个玩家是否已分配过（可能只是换了队伍）
         if (slotList.Exists(x => x.Player == newPlayer.NickName)) return;
-        //find a empty slot in the team
+        //在队伍里找一个空位
         int index = slotList.FindIndex(x => x.Player == string.Empty);
         if (index != -1)
         {
-            //replace the bot slot with the new player
+            //用新玩家替换该机器人的槽位
             remplaceBot = slotList[index].Bot;
             DeleteBot(remplaceBot);
             slotList[index].Player = newPlayer.NickName;
             slotList[index].Bot = string.Empty;
 
-            //sync the slot change with other players
+            //把槽位变更同步给其他玩家
             if (PhotonNetworkWrapper.IsMasterClient)
             {
                 int teamCmdID = playerTeam == Team.Team2 ? 2 : 1;
@@ -616,7 +616,7 @@ public class AIMananger : PhotonHelper
             Debug.Log($"<color=yellow>Bot {remplaceBot} was replaced by {newPlayer.NickName}</color>");
         }
 
-        //remove the bot that the master client replace
+        //删除被主客户端替换掉的那个机器人
         if (newPlayer.IsMasterClient && PhotonNetworkWrapper.IsMasterClient && !isMasterAlredyInTeam && !string.IsNullOrEmpty(remplaceBot))
         {
             AIShooter bot = AllBots.Find(x => x.AIName == remplaceBot);
@@ -635,13 +635,13 @@ public class AIMananger : PhotonHelper
 
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-        //if the new master client is the local client
+        //如果新的主客户端就是本地客户端
         if (newMasterClient.ActorNumber == PhotonNetworkWrapper.LocalPlayer.ActorNumber)
         {
             if (Team1PlayersSlots == null || Team1PlayersSlots.Count <= 0)
                 SetUpSlots(false);
 
-            //since bots where not collected on the new master client, lets take them manually
+            //机器人没有在新主客户端上收集，这里手动取出来
             AIShooter[] allBots = FindObjectsOfType<AIShooter>();
             foreach (var bot in allBots)
             {
@@ -662,25 +662,25 @@ public class AIMananger : PhotonHelper
     {
         if (!BotsActive || GameController.Instance.GameFinish) return;
 
-        //Check if the player was occupying a slot
+        //检查玩家是否占用了某个槽位
         Team team = player.GetPlayerTeam();
         var slotList = team == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
         int index = slotList.FindIndex(x => x.Player == player.NickName);
-        //empty the occupied slot
+        //清空被占用的槽位
         if (index != -1) { slotList[index].Player = ""; }
 
-        //make the master client instance a new bot to replace the player that just left
+        //让主客户端实例化一个新机器人，补上刚离开的玩家
         if (PhotonNetworkWrapper.IsMasterClient)
         {
-            //try to instance the new bot
+            //尝试实例化新机器人
             var newAgent = SpawnBot(null, team);
             if (newAgent == null) return;
 
-            //find the slot id where the bot was assigned
+            //找到机器人被分配到的槽位 ID
             int botIndex = slotList.FindIndex(x => x.Bot == newAgent.AIName);
-            //sync the new slot with all other players
+            //把新槽位同步给其他所有玩家
             photonView.RPC(nameof(SyncBotStat), RpcTarget.Others, $"{(int)team}|{newAgent.AIName}|{newAgent.photonView.ViewID}", botIndex, (byte)5);
-            //show a notification in all players with the new bot name
+            //向所有玩家显示新机器人的名字通知
             KillFeedBase.Instance.SendMessageEvent($"{newAgent.AIName} has joined to {team.GetTeamName()}");
             Debug.Log($"<color=blue>Bot {newAgent.AIName} has replace the player {player.NickName}.</color>");
         }
@@ -727,7 +727,7 @@ public class AIMananger : PhotonHelper
             list[value].Player = "";
             list[value].Bot = dataSplit[1];
 
-            //add the bot statistic
+            //添加机器人战绩
             bs = new GameBotProperties();
             bs.Name = dataSplit[1];
             bs.Team = team;
@@ -895,7 +895,7 @@ public class AIMananger : PhotonHelper
         return BotsStatistics[id];
     }
 
-    // Count the empty slots (not occupied by a real player)
+    //统计空槽位数量（没有被真人玩家占用的）
     // <returns></returns>
     public int EmptySlotsCount(Team team)
     {

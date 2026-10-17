@@ -20,29 +20,29 @@ public abstract class WeaponLoadoutUIBase : MonoBehaviour
     }
 
     /// <summary>
-    /// Show the given weapons in the slots UI
+    /// 在槽位 UI 中显示给定的武器
     /// </summary>
     /// <param name="weapons"></param>
     public abstract void SetLoadout(List<GunController> weapons);
 
     /// <summary>
-    /// Mark the given slot as the current equipped weapon
+    /// 把给定槽位标记为当前装备武器
     /// </summary>
-    /// <param name="slotID">Slot to be marked as equipped.</param>
+    /// <param name="slotID">要标记为已装备的槽位。</param>
     public abstract void SetEquippedSlot(int slotID);
 
     /// <summary>
-    /// Replace the given slot UI with the given weapon info.
+    /// 用给定武器信息替换指定槽位的 UI。
     /// </summary>
-    /// <param name="slot">Slot to be replace.</param>
-    /// <param name="newGun">Weapon to fetch the information from.</param>
+    /// <param name="slot">要替换的槽位。</param>
+    /// <param name="newGun">读取信息的武器。</param>
     public abstract void ReplaceSlot(int slotID, GunController newWeapon);
 
     public abstract void SetVisibility(VisibilityMode visibility);
 
     /// <summary>
-    /// Empty the weapon slots UI
-    /// Since the slots are not auto updated if a weapon is unequipped, this have to be called manually.
+    /// 清空武器槽位 UI
+    /// 卸下武器时槽位不会自动刷新，需手动调用。
     /// </summary>
     public abstract void ClearSlots(LoadoutFlags flags = LoadoutFlags.None);
 

@@ -21,12 +21,12 @@ public abstract class GunPickUpManagerBase : PhotonHelper
     public GunPickUpBase LastTrigger { get; set; }
 
     /// <summary>
-    /// Throw a weapon on all clients
+    /// 在所有客户端上投掷武器
     /// </summary>
     public abstract void ThrowGun(ThrowData throwData);
 
     /// <summary>
-    /// Send a call to all the room clients to let them know that player will pick up a weapon
+    /// 通知房间内所有客户端该玩家将要拾取武器
     /// </summary>
     public abstract void SendPickUp(PickUpData pickUpData);
 

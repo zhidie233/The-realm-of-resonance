@@ -9,7 +9,7 @@ public abstract class RoomCameraBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Don't move or rotate the camera by this script (or it's inherited script)
+    /// 不要通过此脚本（或其子类）移动或旋转相机
     /// </summary>
     public bool BlockSelfMovement
     {

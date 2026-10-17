@@ -126,7 +126,7 @@ public class RoomCamera : RoomCameraBase
         StartCoroutine(Transition());
         IEnumerator Transition()
         {
-            //smooth transition of the camera position to the original position
+            //相机位置平滑过渡回原始位置
             float t = 0.0f;
             while (t < 1.0f)
             {

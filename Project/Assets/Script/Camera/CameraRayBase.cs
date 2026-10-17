@@ -13,18 +13,18 @@ public abstract class CameraRayBase : MonoBehaviourBase
     public float ExtraRayDistance { get; set; } = 0;
 
     /// <summary>
-    /// Is currently the camera detecting colliders?
+    /// 相机当前是否在检测碰撞体？
     /// </summary>
     public abstract bool IsCurrentlyDetecting { get; set; }
 
     /// <summary>
-    /// If you wanna detect when an object is in front of the local player view
-    /// register a callback in this function
+    /// 想检测物体是否出现在本地玩家视野前方时
+    /// 在这个函数里注册一个回调
     /// </summary>
     public abstract byte AddTrigger(DetecableInfo detecableInfo);
 
     /// <summary>
-    /// Make sure of remove the trigger when you don't need to detect it anymore.
+    /// 不再需要检测时记得移除触发器。
     /// </summary>
     public abstract void RemoveTrigger(DetecableInfo detecableInfo);
 

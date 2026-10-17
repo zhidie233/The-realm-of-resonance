@@ -7,40 +7,40 @@ using Photon.Realtime;
 public interface IGameMode 
 {
     /// <summary>
-    /// initialize the game mode
+    /// 初始化游戏模式
     /// </summary>
     void Initialize();
     /// <summary>
-    /// When round time = 0
+    /// 回合时间归零时
     /// </summary>
     void OnFinishTime(bool gameOver);
     /// <summary>
-    /// Call when LOCAL player score a point in this game mode
+    /// 本地玩家在此游戏模式中得分时调用
     /// </summary>
     /// <param name="points"></param>
     void OnLocalPoint(int points, Team teamToAddPoint);
     /// <summary>
-    /// Local player kill someone (only local receive it)
+    /// 本地玩家击杀他人（仅本地收到）
     /// </summary>
     void OnLocalPlayerKill();
     /// <summary>
-    /// Local player death (only local receive it)
+    /// 本地玩家死亡（仅本地收到）
     /// </summary>
     void OnLocalPlayerDeath();
     /// <summary>
-    /// when a new player enter in room
+    /// 新玩家进入房间时
     /// </summary>
     void OnOtherPlayerEnter(Player newPlayer);
     /// <summary>
-    /// when a player leave the room
+    /// 玩家离开房间时
     /// </summary>
     void OnOtherPlayerLeave(Player otherPlayer);
     /// <summary>
-    /// Room Properties Update
+    /// 房间属性更新
     /// </summary>
     void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged);
     /// <summary>
-    /// use to determinate if the local player win in this game mode
+    /// 用于判断本地玩家是否在此游戏模式中获胜
     /// </summary>
     bool isLocalPlayerWinner { get; }
 }

@@ -3,17 +3,17 @@
 namespace Game.Runtime.Level
 {
     /// <summary>
-    /// This script invoke OnDetected or UnDetected events when the local player is looking at the object
-    /// A collider is required and the local player CameraRay.Checking have to be true.
-    /// Check CameraRayActiveTrigger.cs
+    /// 本地玩家看向此对象时，脚本触发 OnDetected 或 UnDetected 事件
+    /// 需要碰撞体，且本地玩家的 CameraRay.Checking 必须为 true。
+    /// 参见 CameraRayActiveTrigger.cs
     /// 
-    /// How it works?
+    /// 工作原理
     /// 
-    /// For optimization reasons, the player camera is not detecting (RayCast) every frame.
-    /// First you have to let it know when start checking (Firing raycasts)
-    /// In order to do that, you have to set the 'Checking' bool of the CameraRay of the local player to = true;
-    /// You can do this with a trigger collider that represent the area where the player should start detecting when the player enter in the trigger and 
-    /// stop when exit it, check CameraRayActiveTrigger.cs for this implementation,
+    /// 出于性能考虑，玩家相机不会每帧检测（RayCast）。
+    /// 首先要告诉它何时开始检测（发射射线）
+    /// 做法是把本地玩家 CameraRay 的 'Checking' 布尔值设为 true；
+    /// 可以用一个触发器碰撞体表示检测区域：玩家进入触发器时开始检测，
+    /// 离开时停止，本实现见 CameraRayActiveTrigger.cs，
     /// </summary>
     public class CameraRayDetectableEvent : MonoBehaviour, IRayDetectable
     {

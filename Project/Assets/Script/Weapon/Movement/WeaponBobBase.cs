@@ -7,14 +7,14 @@ public abstract class WeaponBobBase : MonoBehaviourBase
     public float Intensitity { get; set; } = 1;
 
     /// <summary>
-    /// Stop the walking bob movement
+    /// 停止行走摇晃运动
     /// </summary>
     public abstract void Stop();
 
     /// <summary>
-    /// Update the walk animation elsewhere
-    /// if useAnimation == false -> control the movement in the weapon bob script
-    /// else -> controlled in the passed action 'callback' and do not update the weapon bob script.
+    /// 在别处更新行走动画
+    /// useAnimation == false -> 由武器摇晃脚本控制运动
+    /// else -> 由传入的 'callback' 委托控制，不更新武器摇晃脚本。
     /// </summary>
     /// <param name="callback"></param>
     /// <param name="useAnimation"></param>

@@ -48,8 +48,8 @@ public class AIAnimation : AIAnimationBase
 
     void FetchHashes()
     {
-        //cache the hashes in a Array will be more appropriate but to be more readable for other users
-        // I decide to cached them in a Dictionary with the key name indicating the parameter that contain
+        //用数组缓存哈希值更合适，但为了让其他使用者更容易理解
+        //我决定改用字典缓存，键名表示它对应的参数
         animatorHashes = new Dictionary<string, int>();
         animatorHashes.Add("Vertical", Animator.StringToHash("Vertical"));
         animatorHashes.Add("Horizontal", Animator.StringToHash("Horizontal"));
@@ -141,7 +141,7 @@ public class AIAnimation : AIAnimationBase
             mRigidBody[i].isKinematic = false;
             mRigidBody[i].detectCollisions = true;
             Vector3 rhs = transform.position - from;
-            //Use the exact hitbox position instead of transform.position should result in a more realistic result.
+            //用精确的判定盒位置代替 transform.position，效果更真实。
             mRigidBody[i].AddForceAtPosition(rhs.normalized * 150, transform.position);
             if (isExplosion)
             {

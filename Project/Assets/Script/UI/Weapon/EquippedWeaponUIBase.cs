@@ -4,13 +4,13 @@ public abstract class EquippedWeaponUIBase : MonoBehaviour
 {
 
     /// <summary>
-    /// Update the ammo information in the local player interface
+    /// 更新本地玩家界面中的弹药信息
     /// </summary>
     /// <param name="gun"></param>
     public abstract void SetAmmoOf(GunController gun);
 
     /// <summary>
-    /// Update the fire type text for the local player interface.
+    /// 更新本地玩家界面中的开火模式文本。
     /// </summary>
     /// <param name="fireType"></param>
     public abstract void SetFireType(GunBase.FireType fireType);

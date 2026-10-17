@@ -3,8 +3,8 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Game default script to handle the FPWeapon animations.
-/// You can use your own script to handle the animations if you inherit your script from WeaponAnimationBase.cs
+/// 处理 FPWeapon 动画的 Game 默认脚本。
+/// 脚本继承 WeaponAnimationBase.cs 后可以用自己的脚本处理动画
 /// </summary>
 public class WeaponAnimationHandler : WeaponAnimationBase
 {
@@ -129,13 +129,13 @@ public class WeaponAnimationHandler : WeaponAnimationBase
 
     public override float PlayTakeIn()
     {
-        // the code is not handle here directly because the DrawWeapon() function was there since version 1.
+        // 这里不直接处理，因为 DrawWeapon() 函数从 1 版本就存在。
         return DrawWeapon();
     }
 
     public override float PlayTakeOut()
     {
-        // the code is not handle here directly because the HideWeapon() function was there since version 1.
+        // 这里不直接处理，因为 HideWeapon() 函数从 1 版本就存在。
         return HideWeapon();
     }
 
@@ -191,7 +191,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// Play the fire animation one time
+    /// 播放一次开火动画
     /// </summary>
     public float Fire()
     {
@@ -233,7 +233,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// Play the fire animation for the knife
+    /// 播放刀的开火动画
     /// </summary>
     public float KnifeFire(bool Quickfire)
     {
@@ -260,7 +260,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// Play the fire animation for the grenade
+    /// 播放手雷的开火动画
     /// </summary>
     /// <param name="fastFire"></param>
     /// <returns></returns>
@@ -296,8 +296,8 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// Throw the grenade prefab (from the GunController.cs)
-    /// This should be called from an animation event
+    /// 抛出手雷预制体（来自 GunController.cs）
+    /// 应从动画事件中调用
     /// </summary>
     public void ThrowProjectile()
     {
@@ -339,7 +339,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// Play the draw/take in animation
+    /// 播放掏枪动画
     /// </summary>
     public float DrawWeapon()
     {
@@ -365,7 +365,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    ///  Play the hide/take out animation
+    ///  播放收枪动画
     /// </summary>
     public float HideWeapon()
     {
@@ -388,7 +388,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// event called by animation when is a reload state
+    /// 处于换弹状态时由动画调用的事件
     /// </summary>
     /// <param name="ReloadTime"></param>
     public void Reload(float ReloadTime)
@@ -411,7 +411,7 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// event called by animation when is fire
+    /// 开火时由动画调用的事件
     /// </summary>
     public void FireAudio()
     {
@@ -494,8 +494,8 @@ public class WeaponAnimationHandler : WeaponAnimationBase
     }
 
     /// <summary>
-    /// Use this for greater coordination
-    /// reload sounds with animation
+    /// 用来更好地配合
+    /// 换弹音效与动画配合
     /// </summary>
     public void ReloadSound(int index)
     {
@@ -541,8 +541,8 @@ public class WeaponAnimationHandler : WeaponAnimationBase
 
     public void PlayThrow()
     {
-        // Commented since version 1.9.3 to fix an issue with the grenades throwing direction
-        // caused by the animation movement.
+        // 自 1.9.3 起注释掉，用于修复手雷投掷方向的问题
+        // 该问题由动画位移引起。
 
         // GunManager.HeadAnimator.Play("Throw", 0, 0);
     }

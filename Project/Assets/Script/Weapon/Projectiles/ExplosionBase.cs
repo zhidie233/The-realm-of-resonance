@@ -1,6 +1,6 @@
 ﻿/// <summary>
-/// Game Explosion base class
-/// Inherited from this your custom explosion script.
+/// Game 爆炸基类
+/// 自定义爆炸脚本继承此类。
 /// </summary>
 public abstract class ExplosionBase : PhotonHelper
 {

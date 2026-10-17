@@ -17,14 +17,14 @@ public abstract class AIAnimationBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Make the bot player a ragdoll
+    /// 让机器人变成布娃娃
     /// </summary>
     /// <param name="from"></param>
     /// <param name="isExplosion"></param>
     public abstract void Ragdolled(Vector3 from, bool isExplosion = false);
 
     /// <summary>
-    /// React to the bot being injured
+    /// 处理机器人受伤
     /// </summary>
     public abstract void OnGetHit();
 

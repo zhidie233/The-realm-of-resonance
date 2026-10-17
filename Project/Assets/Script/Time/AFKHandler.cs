@@ -27,7 +27,7 @@ namespace Game.Runtime.Misc
         public override void OnUpdate()
         {
             float time = Time.time;
-            //if no movement or action of the player is detected, then start again
+            //如果检测不到玩家的移动或操作，就重新开始计时
             if ((PhotonNetworkWrapper.LocalPlayer == null || Input.anyKey) || ((oldMousePosition != Input.mousePosition)))
             {
                 lastInput = time;
@@ -50,7 +50,7 @@ namespace Game.Runtime.Misc
                     SetAFKCount(t);
                 }
             }
-            //If the maximum time is AFK then meets back to the lobby.
+            //如果挂机时间达到上限，就返回大厅。
             if ((lastInput + AFKTimeLimit) < time && !Leaving)
             {
                 UtilityHelper.LockCursor(false);

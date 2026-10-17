@@ -1,9 +1,9 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Game Default IK implementation
-/// In order to use your own IK control system, simply create a new script
-/// and inherited from PlayerIKBase.cs
+/// 游戏默认的 IK 实现
+/// 想用自己的 IK 控制系统，只需新建一个脚本
+/// 并继承 PlayerIKBase.cs
 /// </summary>
 [ExecuteInEditMode]
 public class PlayerIK : PlayerIKBase
@@ -50,7 +50,7 @@ public class PlayerIK : PlayerIKBase
     private Transform oldLHTarget;
     private RaycastHit footRaycast;
     private Quaternion footIKRotation = Quaternion.identity;
-    //editor only
+    //仅编辑器
     [HideInInspector] public int editor_previewMode = 0;
     [HideInInspector] public float editor_weight = 1;
     #endregion
@@ -84,7 +84,7 @@ public class PlayerIK : PlayerIKBase
     }
 
     /// <summary>
-    /// Called from the Animator after the animation update
+    /// 动画更新后由 Animator 调用
     /// </summary>
     void OnAnimatorIK(int layer)
     {
@@ -98,7 +98,7 @@ public class PlayerIK : PlayerIKBase
     }
 
     /// <summary>
-    /// Control the legs IK
+    /// 控制腿部 IK
     /// </summary>
     void BottomBody()
     {
@@ -120,11 +120,11 @@ public class PlayerIK : PlayerIKBase
     }
 
     /// <summary>
-    /// Control the arms and head IK bones
+    /// 控制手臂和头部 IK 骨骼
     /// </summary>
     void UpperBody()
     {
-        //If there's another script handling the arms IK
+        //如果已有其他脚本处理手臂 IK
         if (CustomArmsIKHandler != null)
         {
             CustomArmsIKHandler.OnUpdate();
@@ -140,11 +140,11 @@ public class PlayerIK : PlayerIKBase
     }
 
     /// <summary>
-    /// Control left and right arms
+    /// 控制左右手臂
     /// </summary>
     void ArmsIK()
     {
-        //control the arms only when the player is aiming or firing
+        //仅在玩家瞄准或开火时控制手臂
         float weight = (inPointMode) ? 1 : 0;
         float lweight = (PlayerSync.FPState != PlayerFPState.Running && PlayerSync.FPState != PlayerFPState.Reloading) ? 1 : 0;
         rightArmIKRotationWeight = Mathf.Lerp(rightArmIKRotationWeight, lweight, deltaTime * 6);
@@ -155,8 +155,8 @@ public class PlayerIK : PlayerIKBase
 
         if (rightArmIKRotationWeight > 0)
         {
-            // Make the right arm aim where the player is looking at
-            // Get the look at direction
+            // 让右臂瞄准玩家注视的方向
+            // 获取注视方向
             Quaternion lookAt = Quaternion.LookRotation(targetPosition - rightUpperArm.position);
             lookAt *= Quaternion.Euler(HandOffset);
             animator.SetIKRotation(AvatarIKGoal.RightHand, lookAt);
@@ -181,7 +181,7 @@ public class PlayerIK : PlayerIKBase
     }
 
     /// <summary>
-    /// Detect the ground and place the foots using IK
+    /// 检测地面并用 IK 放置脚部
     /// </summary>
     void LegsIK()
     {
@@ -273,7 +273,7 @@ public class PlayerIK : PlayerIKBase
     }
 
     /// <summary>
-    /// If the player in an state where the arms should be controlled by IK
+    /// 玩家是否处于需要用 IK 控制手臂的状态
     /// </summary>
     private bool inPointMode
     {

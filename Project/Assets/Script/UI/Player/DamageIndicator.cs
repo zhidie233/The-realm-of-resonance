@@ -42,7 +42,7 @@ namespace Game.Runtime.UI
         }
 
         /// <summary>
-        /// Use this to send a new direction of attack
+        /// 用于发送新的受击方向
         /// </summary>
         public override void SetHit(Vector3 direction)
         {
@@ -54,7 +54,7 @@ namespace Game.Runtime.UI
         }
 
         /// <summary>
-        /// if this is visible Update position
+        /// 可见时更新位置
         /// </summary>
         public override void OnUpdate()
         {
@@ -66,7 +66,7 @@ namespace Game.Runtime.UI
         }
 
         /// <summary>
-        /// update direction as the arrow shows
+        /// 按箭头指示更新方向
         /// </summary>
         void UpdateDirection()
         {

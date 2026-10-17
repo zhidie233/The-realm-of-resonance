@@ -1,28 +1,28 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Game.Core.Motion;
 
 public abstract class CameraShakerBase : MonoBehaviour
 {
 
     /// <summary>
-    /// Add or start shake movement
+    /// 添加或开始一个抖动
     /// </summary>
     /// <param name="present"></param>
     public abstract void SetShake(ShakerPresent present, string key = "global");
 
     /// <summary>
-    /// Remove/stop a specific shake
+    /// 移除/停止指定的抖动
     /// </summary>
     /// <param name="key"></param>
     public abstract void RemoveShake(string key);
 
     /// <summary>
-    /// Stop all the shakes
+    /// 停止所有抖动
     /// </summary>
     public abstract void Stop();
 
     /// <summary>
-    /// Set the current camera position/rotation as the origin position
+    /// 把相机当前位置/旋转设为原点位置
     /// </summary>
     public abstract void SetCurrentAsOriginPosition();
 }

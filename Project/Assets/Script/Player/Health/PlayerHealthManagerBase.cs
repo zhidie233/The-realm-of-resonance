@@ -1,5 +1,5 @@
 /// <summary>
-/// Base script for the health manager script of players and bots
+/// 玩家和机器人的生命值管理器基类脚本
 /// </summary>
 public abstract class PlayerHealthManagerBase : MonoBehaviourBase
 {
@@ -12,8 +12,8 @@ public abstract class PlayerHealthManagerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Function that should handle the damage give from a local player
-    /// it should sync the damage with all other players.
+    /// 负责处理本地玩家造成的伤害
+    /// 它应把伤害同步给其他所有玩家。
     /// </summary>
     /// <param name="damageData"></param>
     public abstract void DoDamage(DamageData damageData);
@@ -21,12 +21,12 @@ public abstract class PlayerHealthManagerBase : MonoBehaviourBase
     public abstract void DoFallDamage(int damage);
 
     /// <summary>
-    /// Make the player die instantaneously
+    /// 让玩家立即死亡
     /// </summary>
     public abstract bool Suicide();
 
     /// <summary>
-    /// Return the current health of the player
+    /// 返回玩家当前生命值
     /// </summary>
     /// <returns></returns>
     public abstract int GetHealth();
@@ -34,10 +34,10 @@ public abstract class PlayerHealthManagerBase : MonoBehaviourBase
     public abstract int GetMaxHealth();
 
     /// <summary>
-    /// Add or replace the current health value
-    /// This should only be called by the owner of the network entity or the Master
+    /// 增加或替换当前生命值
+    /// 只应由网络实体的拥有者或主客户端调用
     /// </summary>
-    /// <param name="replace">If true the amount will replace the current health, otherwise, the amount will be added</param>
+    /// <param name="replace">为 true 时用该数量替换当前生命值，否则在其上增加</param>
     public abstract void SetHealth(int amount, bool replace = false);
 
     public abstract void DoRepetingDamage(RepetingDamageInfo info);

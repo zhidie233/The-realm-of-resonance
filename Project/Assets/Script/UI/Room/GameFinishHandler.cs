@@ -4,9 +4,9 @@ using TMPro;
 using Game.Runtime.AI;
 
 /// <summary>
-/// Default Game after match resume screen
-/// If you want to use your custom resume screen, simply append the IGameResumeScreen interface to your script
-/// and handle the inherited functions.
+/// 默认的游戏赛后结算界面
+/// 想用自定义结算界面，只需让脚本实现 IGameResumeScreen 接口
+/// 并处理继承来的函数。
 /// </summary>
 public class GameFinishHandler : PhotonHelper, IGameResumeScreen
 {
@@ -32,7 +32,7 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
     {       
         int kills = PhotonNetworkWrapper.LocalPlayer.GetKills();
 
-        // if bots eliminations doesn't count for the player stats
+        // 若机器人击杀不计入玩家数据
         if (GameConfig.Instance.howConsiderBotsEliminations != BotKillConsideration.SameAsRealPlayers)
         {
             if (RoomSettings.TryGetMatchPersistData("bot-kills", out var value))

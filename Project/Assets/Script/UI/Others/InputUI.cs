@@ -64,7 +64,7 @@ namespace Game.InputManager
 
         private void OnDisable()
         {
-            //if close the window without saving the changes
+            //关闭窗口时未保存修改
             if (ApplyButton != null && ApplyButton.activeSelf)
             {
                 RevertChanges();
@@ -109,7 +109,7 @@ namespace Game.InputManager
         {
             if (!isFetchingKey) return;
 
-            //once when detect an input down
+            //检测到一次按键按下时
             if (Input.anyKeyDown)
             {
                 foreach (KeyCode vKey in keyCodeList)
@@ -142,7 +142,7 @@ namespace Game.InputManager
                 }
             }
 
-            ///Check for joystick axis
+            ///检查摇杆轴
             for (int i = 0; i < GamePadButtonsNames.TriggerAxis.Length; i++)
             {
                 if (Input.GetAxis(GamePadButtonsNames.TriggerAxis[i]) != 0)
@@ -175,14 +175,14 @@ namespace Game.InputManager
         }
 
         /// <summary>
-        /// Confirm change when the key is already defined in other key binding
+        /// 该按键已被其他按键绑定占用时确认修改
         /// </summary>
         public void ConfirmChange(bool confirm)
         {
             if (confirm)
             {
                 OnDetect();
-                //reset the key where it was assigned before
+                //把按键恢复到之前绑定的位置
                 cachedBindings.ForEach(x =>
                 {
                     if (x.CachedData.KeyName.Equals(pendingResetButton.KeyName))

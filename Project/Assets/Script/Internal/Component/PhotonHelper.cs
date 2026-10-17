@@ -23,7 +23,7 @@ public class PhotonHelper : MonoBehaviourPun {
         get { return (PhotonNetworkWrapper.IsConnected && PhotonNetworkWrapper.InRoom); }
     }
 
-    // Find a player gameobject by the viewID
+    // 按 ViewID 查找玩家 GameObject
     // <returns></returns>
     public GameObject FindPlayerRoot(int view)
     {
@@ -37,7 +37,7 @@ public class PhotonHelper : MonoBehaviourPun {
             return null;
         }
     }
-    // get a photonView by the viewID
+    // 按 ViewID 获取 PhotonView
     // <param name="view"></param>
     // <returns></returns>
     public PhotonView FindPlayerView(int view)
@@ -87,11 +87,11 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // True if the PhotonView is "mine" and can be controlled by this client.
+    // 当 PhotonView 属于本客户端并可被其控制时为 true。
     // <remarks>
-    // PUN has an ownership concept that defines who can control and destroy each PhotonView.
-    // True in case the owner matches the local PhotonPlayer.
-    // True if this is a scene photon view on the Master client.
+    // PUN 有所有权概念，规定谁能控制和销毁各 PhotonView。
+    // 所有者与本地 PhotonPlayer 一致时为 true。
+    // 这是主客户端上的场景 PhotonView 时为 true。
     // </remarks>
     public bool isMine
     {
@@ -101,7 +101,7 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // Get Photon.connect
+    // 获取 Photon 连接
     public bool isConnected
     {
         get
@@ -120,7 +120,7 @@ public class PhotonHelper : MonoBehaviourPun {
           return player;
     }
 
-    // Get the team of players
+    // 获取玩家所属队伍
     // <param name="p"></param>
     // <returns></returns>
     public string GetTeam(Player p)
@@ -131,7 +131,7 @@ public class PhotonHelper : MonoBehaviourPun {
             return (string)p.CustomProperties[PropertiesKeys.TeamKey];
     }
 
-    // Get the team of players
+    // 获取玩家所属队伍
     // <param name="p"></param>
     // <returns></returns>
     public Team GetTeamEnum(Player p)
@@ -151,7 +151,7 @@ public class PhotonHelper : MonoBehaviourPun {
         return Team.All;
     }
 
-    // Get current gamemode
+    // 获取当前游戏模式
     public GameMode GetGameMode
     {
         get
@@ -178,7 +178,7 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // Get current gamemode
+    // 获取当前游戏模式
     public GameMode GetGameModeUpdated
     {
         get
@@ -214,7 +214,7 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // Get All Player in Room of a specific team
+    // 获取房间内指定队伍的所有玩家
     // <param name="team"></param>
     // <returns></returns>
     public List<Player> GetPlayersInTeam(string team)
@@ -233,7 +233,7 @@ public class PhotonHelper : MonoBehaviourPun {
         return PlayerList;
     }
 
-    // is the a one team game mode?
+    // 是否为单队伍游戏模式？
     public bool isOneTeamMode
     {
         get
@@ -245,7 +245,7 @@ public class PhotonHelper : MonoBehaviourPun {
         }
     }
 
-    // is the a one team game mode?
+    // 是否为单队伍游戏模式？
     public bool isOneTeamModeUpdate
     {
         get

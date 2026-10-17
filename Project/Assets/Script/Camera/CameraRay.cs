@@ -69,12 +69,12 @@ public class CameraRay : CameraRayBase
             hasDectected = true;
             OnHit();
 
-            //check in each register trigger
+            //逐个检查注册的触发器
             if (triggers.Count > 0)
             {
                 foreach (var item in triggers.Keys)
                 {
-                    //if the object that is in front have the same name that the register trigger -> call their callback
+                    //如果前方物体的名字与注册触发器相同，就调用它的回调
                     if (RayHit.transform.name == item)
                     {
                         triggers[item].Invoke(true);
@@ -84,7 +84,7 @@ public class CameraRay : CameraRayBase
         }
         else
         {
-            // if the player was focusing in a item before, but not anymore
+            //如果玩家之前聚焦着某个物体，现在不再聚焦
             UnDetectCurrentItem();
 
             if (triggers.Count > 0 && hasDectected)
@@ -99,17 +99,17 @@ public class CameraRay : CameraRayBase
     }
 
     /// <summary>
-    /// When the player camera ray hit something in the map
+    /// 玩家相机射线击中地图上的物体时
     /// </summary>
     void OnHit()
     {
         var item = RayHit.transform.GetComponent<IRayDetectable>();
         if (item != null)
         {
-            // if was focusing in other object before
+            //如果之前聚焦的是另一个物体
             if (m_currentDetectedItem != null && m_currentDetectedItem != item)
             {
-                // let that object know that is not being focused anymore.
+                //通知那个物体它不再被聚焦了。
                 m_currentDetectedItem.OnUnDetectedByPlayer();
             }
 
@@ -131,8 +131,8 @@ public class CameraRay : CameraRayBase
     }
 
     /// <summary>
-    /// If you wanna detect when an object is in front of the local player view
-    /// register a callback in this function
+    /// 想检测物体是否出现在本地玩家视野前方时
+    /// 在这个函数里注册一个回调
     /// </summary>
     public override byte AddTrigger(DetecableInfo info)
     {
@@ -143,7 +143,7 @@ public class CameraRay : CameraRayBase
     }
 
     /// <summary>
-    /// Make sure of remove the trigger when you don't need to detect it anymore.
+    /// 不再需要检测时记得移除触发器。
     /// </summary>
     public override void RemoveTrigger(DetecableInfo info)
     {

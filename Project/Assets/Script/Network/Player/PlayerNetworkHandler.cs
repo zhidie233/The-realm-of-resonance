@@ -74,7 +74,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         InvokeRepeating(nameof(SlowLoop), 0, 1);
     }
 
-    // serialization method of photon
+    // photon 的序列化方法
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         _positionControl.OnPhotonSerializeView(_transform.localPosition, stream, info);
@@ -89,7 +89,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
 
         if (stream.IsWriting)
         {
-            //We own this player: send the others our data
+            //这个玩家归我们所有：把数据发给其他人
             stream.SendNext(GetHeadLookPosition());
             stream.SendNext(fpControler.State);
             stream.SendNext(fpControler.isGrounded);
@@ -99,7 +99,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         }
         else
         {
-            //Network player, receive data
+            //网络玩家，接收数据
             networkHeadLookAt = (Vector3)stream.ReceiveNext();
             NetworkBodyState = (PlayerState)stream.ReceiveNext();
             networkIsGrounded = (bool)stream.ReceiveNext();
@@ -134,17 +134,17 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         }
     }
 
-    // Function called each frame when the player is local
+    // 玩家为本机玩家时每帧调用
     void OnLocalPlayer()
     {
-        //send the state of player local for remote animation
+        //发送本机玩家状态，供远程动画使用
         PlayerReferences.playerAnimations.BodyState = fpControler.State;
         PlayerReferences.playerAnimations.IsGrounded = fpControler.isGrounded;
         PlayerReferences.playerAnimations.Velocity = fpControler.Velocity;
         PlayerReferences.playerAnimations.FPState = FPState;
     }
 
-    // Function called each frame when the player is remote
+    // 玩家为远程玩家时每帧调用
     void OnRemotePlayer()
     {
         if (_transform.parent == null)
@@ -162,7 +162,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
 
         if (!isOneTeamMode)
         {
-            //Determine if remote player is teamMate or enemy
+            //判断远程玩家是队友还是敌人
             if (isFriend)
                 OnTeammatePlayer();
             else
@@ -180,14 +180,14 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         }
     }
 
-    // Function called each frame when this Remote player is an enemy
+    // 该远程玩家是敌人时每帧调用
     void OnEnemyPlayer()
     {
         playerHealthManager.DamageEnabled = true;
         DrawName.SetActive(SpectatorModeBase.Instance.isActive);
     }
 
-    // Function called each frame when this Remote player is a teammate.
+    // 该远程玩家是队友时每帧调用
     void OnTeammatePlayer()
     {
         playerHealthManager.DamageEnabled = RoomSettings.Instance.CurrentRoomInfo.friendlyFire;
@@ -202,16 +202,16 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
 
     }
 
-    // This function control which TP Weapon should be showing on remote players.
-    // Should take the current gun from the local player or from the network data?
-    // Double-check even if the equipped weapon has not changed.
+    // 控制远程玩家显示哪把第三人称武器
+    // 当前武器应该取本机玩家的，还是取网络数据？
+    // 即使已装备武器没变也要再核对一次。
     public void CurrentTPVGun(bool local = false, bool force = false)
     {
         if (PlayerReferences.gunManager == null)
             return;
         if (networkGunID == currentGunID && !force) return;
 
-        //Get the current gun ID local and sync with remote
+        //获取本机当前武器 ID 并与远程同步
         for (int i = 0; i < NetworkGuns.Count; i++)
         {
             currentGun = NetworkGuns[i];
@@ -246,25 +246,25 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         isFriend = (RemoteTeam == PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
-    // Change the current TPWeapon on this remote player.
+    // 修改该远程玩家当前的 TPWeapon
     public void SetNetworkWeapon(GunType weaponType, RemoteGun networkGun)
     {
         PlayerReferences.playerAnimations?.SetNetworkGun(weaponType, networkGun);
     }
 
-    // Send a call to all other clients to sync a bullet
+    // 通知所有其他客户端同步一发子弹
     public void ReplicateFire(GunType weaponType, Vector3 hitPosition, Vector3 inacuracity)
     {
         photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inacuracity);
     }
 
-    // public method to send the RPC shot synchronization
+    // 发送射击同步 RPC 的公开方法
     public void IsFireGrenade(float t_spread, Vector3 pos, Quaternion rot, Vector3 direction)
     {
         photonView.RPC(nameof(FireGrenadeRpc), RpcTarget.Others, new object[] { t_spread, pos, rot, direction });
     }
 
-    // Synchronize the shot with the current remote weapon send the information necessary so that fire impact in the same direction as the local
+    // 用当前远程武器同步这次射击，发送必要信息，使弹着方向与本机一致
     [PunRPC]
     void FireSync(GunType weaponType, Vector3 hitPosition, Vector3 inaccuracity)
     {
@@ -391,9 +391,9 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         Debug.DrawLine(targetPosition, targetPosition + Vector3.up, Color.red, 2f);
     }
 
-    // These values are synchronized to the remote objects if the interpolation mode or the extrapolation mode SynchronizeValues is used. Your movement script should pass on the current speed (in units/second) and turning speed (in angles/second) so the remote object can use them to predict the objects movement.
-    // The current movement vector of the object in units/second.
-    // The current turn speed of the object in angles/second.
+    // 使用插值模式或外推模式 SynchronizeValues 时，这些值会同步到远程对象。移动脚本应传入当前速度（单位/秒）和转向速度（角度/秒），远程对象用它们预测物体运动。
+    // 物体当前移动向量，单位/秒。
+    // 物体当前转向速度，角度/秒。
     public void SetSynchronizedValues(Vector3 speed, float turnSpeed)
     {
         _positionControl.SetSynchronizedValues(speed, turnSpeed);

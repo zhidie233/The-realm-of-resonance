@@ -1,7 +1,7 @@
 ﻿namespace Game.Runtime.AI
 {
     /// <summary>
-    /// The default bots states
+    /// 机器人默认状态
     /// </summary>
     public enum AIAgentState
     {
@@ -15,7 +15,7 @@
     }
 
     /// <summary>
-    /// Bots behave mode
+    /// 机器人行为模式
     /// </summary>
     public enum AIAgentBehave
     {
@@ -25,7 +25,7 @@
     }
 
     /// <summary>
-    /// Internal use only
+    /// 仅供内部使用
     /// </summary>
     public enum AIAgentCoverArea
     {
@@ -35,7 +35,7 @@
     }
 
     /// <summary>
-    /// Internal use only
+    /// 仅供内部使用
     /// </summary>
     public enum AITargetOutRangeBehave
     {
@@ -69,17 +69,17 @@
     public enum BotKillConsideration
     {
         /// <summary>
-        /// Bot kills will count in the match scoreboard and kill/score will be granted to the killer.
+        /// 机器人击杀计入对局记分板，击杀/得分归于击杀者。
         /// </summary>
         SameAsRealPlayers,
 
         /// <summary>
-        /// The bot kill will count for the player in the match scoreboard but won't increase the player account stats (score and kills count)
+        /// 机器人击杀计入该玩家的对局记分板，但不增加账号统计（得分与击杀数）
         /// </summary>
         OnlyAffectMatchScoreboard,
 
         /// <summary>
-        /// Bot kills doesn't count even for the match scoreboard
+        /// 机器人击杀连对局记分板都不计入
         /// </summary>
         DoNotCountAtAll,
     }

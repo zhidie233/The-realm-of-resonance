@@ -3,7 +3,7 @@
 public class HitBox : HitBoxBase
 {   
     /// <summary>
-    /// Use this for receive damage local and sync for all other
+    /// 用它在本地接收伤害并同步给其他客户端
     /// </summary>
     public override void ReceiveDamage(DamageData damageData)
     {

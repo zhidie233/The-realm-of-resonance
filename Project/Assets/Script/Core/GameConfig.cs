@@ -52,8 +52,8 @@ public class GameConfig : ScriptableObject
     public GunInventory.AutoChangeOnPickup switchToPickupWeapon = GunInventory.AutoChangeOnPickup.OnlyOnEmptySlots;
     public SpectatorModeBase.LeaveSpectatorModeAction onLeaveSpectatorMode = SpectatorModeBase.LeaveSpectatorModeAction.AllowSelectTeam;
     /// <summary>
-    /// Determine how the bot eliminations are considered for real player stats
-    /// If you want to avoid players being able to level up exploiting bots eliminations to increase their personal stats.
+    /// 决定机器人击杀如何计入真人玩家战绩
+    /// 用于避免玩家靠刷机器人击杀来提升个人战绩。
     /// </summary>
     public BotKillConsideration howConsiderBotsEliminations = BotKillConsideration.SameAsRealPlayers;
 
@@ -141,7 +141,7 @@ public class GameConfig : ScriptableObject
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void OnRuntimeInit()
     {
-        //check that there's an instance of the Photon object in scene
+        //检查场景里存在 Photon 对象实例
         if (PhotonGameInstance == null && Application.isPlaying)
         {
             PhotonGameInstance = PhotonNetworkWrapper.Instance;
@@ -181,9 +181,9 @@ public class GameConfig : ScriptableObject
 
     #region Getters
     /// <summary>
-    /// Get a weapon info by they ID
+    /// 按 ID 获取武器信息
     /// </summary>
-    /// <param name="ID">the id of the weapon, this ID is the indexOf the weapon info in GameData</param>
+    /// <param name="ID">武器 ID，即 GameData 中该武器信息的 indexOf</param>
     /// <returns></returns>
     public GunData GetWeapon(int ID)
     {
@@ -194,7 +194,7 @@ public class GameConfig : ScriptableObject
     }
 
     /// <summary>
-    /// Get a weapon info by they Name
+    /// 按名称获取武器信息
     /// </summary>
     /// <param name="gunName"></param>
     /// <returns></returns>
@@ -303,7 +303,7 @@ public class GameConfig : ScriptableObject
     #endregion
 
     /// <summary>
-    /// cache the GameData from Resources asynchronous to avoid overhead and freeze the main thread the first time we access to the instance
+    /// 异步从 Resources 缓存 GameData，避免首次访问实例时卡顿和阻塞主线程
     /// </summary>
     /// <returns></returns>
     public static IEnumerator AsyncLoadData()

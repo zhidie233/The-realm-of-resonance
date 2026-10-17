@@ -1,4 +1,4 @@
-﻿﻿public interface IGameDamageable
+﻿public interface IGameDamageable
 {
     void ReceiveDamage(DamageData damageData);
 }

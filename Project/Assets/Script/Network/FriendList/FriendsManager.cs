@@ -44,18 +44,18 @@ namespace Game.Runtime.FriendList
                 return;
 
             friendsNames.Clear();
-            //Get all friends saved 
+            //获取已保存的所有好友
             string cacheFriend = PlayerPrefs.GetString(SaveKey, "Null");
             if (!string.IsNullOrEmpty(cacheFriend))
             {
                 string[] splitFriends = cacheFriend.Split(splitChar);
                 friendsNames.AddRange(splitFriends);
             }
-            //Find all friends names in photon list.
+            //在 Photon 列表中查找所有好友名字
             if (friendsNames.Count > 0)
             {
                 PhotonNetwork.FindFriends(friendsNames.ToArray());
-                //Update the list UI 
+                //更新列表 UI
                 FriendUI.UpdateFriendList(true);
             }
             else
@@ -66,7 +66,7 @@ namespace Game.Runtime.FriendList
         }
 
         /// <summary>
-        /// Call For Update List of friends.
+        /// 调用以更新好友列表
         /// </summary>
         void UpdateList()
         {
@@ -179,7 +179,7 @@ namespace Game.Runtime.FriendList
         {
             if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName)) return;
 
-            // Fix issue with the first friend added now begins show up in the list.
+            // 修复第一个添加的好友现在才出现在列表里的问题
             foreach (var item in friendList)
             {
                 if (item.UserId == PhotonNetworkWrapper.NickName) return;
@@ -210,7 +210,7 @@ namespace Game.Runtime.FriendList
         }
 
         /// <summary>
-        /// custom key for each player can save multiple friend list in a same device.
+        /// 每个玩家的自定义 key，可在同一设备上保存多份好友列表
         /// </summary>
         private string SaveKey
         {

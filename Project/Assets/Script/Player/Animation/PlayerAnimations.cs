@@ -73,8 +73,8 @@ public class PlayerAnimations : PlayerAnimationsBase
 
     void FetchHashes()
     {
-        // cache the hashes in a Array will be more appropriate but to be more readable for other users
-        // I decide to cached them in a Dictionary with the key name indicating the parameter that contain
+        // 用数组缓存 hash 更合适，但为了其他开发者易读
+        // 我决定改用字典缓存，键名表示对应的参数
         animatorHashes = new Dictionary<string, int>();
         animatorHashes.Add("BodyState", Animator.StringToHash("BodyState"));
         animatorHashes.Add("Vertical", Animator.StringToHash("Vertical"));
@@ -221,12 +221,12 @@ public class PlayerAnimations : PlayerAnimationsBase
 
         bool baredHands = blockState == 1;
 
-        // Do not control the arms with IK when the player is not using weapons.
+        // 玩家没拿武器时不要用 IK 控制手臂。
         PlayerReferences.playerIK.ControlArmsWithIK = !baredHands;
 
         if (blockState != 2)
         {
-            // -1 is the ID for play the bared arms animations in the player animator controller.
+            // -1 是玩家动画控制器里播放徒手手臂动画的 ID。
             int id = baredHands ? -1 : (int)cacheWeaponType;
 
             if (animatorHashes != null) Animator.SetInteger(animatorHashes["GunType"], id);
@@ -263,7 +263,7 @@ public class PlayerAnimations : PlayerAnimationsBase
 
     public override void PlayFireAnimation(GunType typ)
     {
-        // Check if the network weapon is using custom animations
+        // 检查网络武器是否使用自定义动画
         if (CurrentNetworkGun != null && CurrentNetworkGun.useCustomPlayerAnimations)
         {
             if (!string.IsNullOrEmpty(CurrentNetworkGun.customFireAnimationName))
@@ -331,10 +331,10 @@ public class PlayerAnimations : PlayerAnimationsBase
             reloadSpeed = 1;
         }
 
-        // @TODO: Find the issue that cause Missing Reference exception when this conditional is not present.
+        // @TODO: 找出缺了这个判断就抛 Missing Reference 异常的原因。
         if (this != null)
         {
-            // Do not control the arms with IK while the 'Equip' animation is playing.
+            // 播放 'Equip' 动画时不要用 IK 控制手臂。
             PlayerReferences.playerIK.ControlArmsWithIK = false;
 
             CancelInvoke(nameof(ResetHandsIK));

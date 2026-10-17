@@ -2,43 +2,43 @@
 using UnityEngine;
 
 /// <summary>
-/// Base class with the required functions to handle the FPWeapons animations.
-/// Inherit this class in your custom weapon animation script.
+/// 处理 FPWeapon 动画所需函数的基类。
+/// 自定义武器动画脚本继承此类。
 /// </summary>
 public abstract class WeaponAnimationBase : MonoBehaviour
 {
     /// <summary>
-    /// Play the Fire animation
+    /// 播放开火动画
     /// </summary>
-    /// <returns>The time that will take the whole animation.</returns>
+    /// <returns>整段动画的耗时。</returns>
     public abstract float PlayFire(AnimationFlags flags = AnimationFlags.None);
 
     /// <summary>
-    /// Play the reload animation
+    /// 播放换弹动画
     /// </summary>
-    /// <param name="onFinish">Callback to invoke once the reload animation finish.</param>
+    /// <param name="onFinish">换弹动画播完后调用的回调。</param>
     public abstract void PlayReload(float reloadDuration, int[] data, AnimationFlags flags = AnimationFlags.None, Action onFinish = null);
 
     /// <summary>
-    /// Play the take in animation
+    /// 播放掏枪动画
     /// </summary>
-    /// <returns>The time that will take the whole animation.</returns>
+    /// <returns>整段动画的耗时。</returns>
     public abstract float PlayTakeIn();
 
     /// <summary>
-    /// Play the take out animation
+    /// 播放收枪动画
     /// </summary>
-    /// <returns>The time that will take the whole animation.</returns>
+    /// <returns>整段动画的耗时。</returns>
     public abstract float PlayTakeOut();
 
     /// <summary>
-    /// Handle cancel animations.
+    /// 处理动画取消。
     /// </summary>
     /// <param name="animationType"></param>
     public abstract void CancelAnimation(WeaponAnimationType animationType);
 
     /// <summary>
-    /// Should return the animation time that takes play the whole sequence.
+    /// 应返回播放整个序列所需的动画时间。
     /// </summary>
     /// <returns></returns>
     public abstract float GetAnimationDuration(WeaponAnimationType animationType, float[] data = null);

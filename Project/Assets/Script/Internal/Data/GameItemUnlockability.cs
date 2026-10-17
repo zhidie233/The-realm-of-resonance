@@ -21,7 +21,7 @@ namespace Game.Internal.Structures
         [GameCoinID] public int[] NoAllowedCoins;
 
         /// <summary>
-        /// Is this item unlocked for the local player?
+        /// 此物品对本地玩家是否已解锁？
         /// </summary>
         public bool IsUnlocked(int itemID)
         {
@@ -30,7 +30,7 @@ namespace Game.Internal.Structures
         }
 
         /// <summary>
-        /// If locked return the reason, otherwise return: LockReason.None
+        /// 锁定时返回原因，否则返回 LockReason.None
         /// </summary>
         public LockReason GetLockReason(int itemID)
         {
@@ -64,8 +64,8 @@ namespace Game.Internal.Structures
         }
 
         /// <summary>
-        /// Get the coins that can be used with this item
-        /// Compare from all the available coins in the game (assigned in GameData -> Game Coins)
+        /// 获取可用于此物品的硬币
+        /// 与游戏内所有可用硬币比较（在 GameData -> Game Coins 中指定）
         /// </summary>
         /// <param name="originalCoins"></param>
         /// <returns></returns>
@@ -136,8 +136,8 @@ namespace Game.Internal.Structures
     {
         public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
         {
-            // Using BeginProperty / EndProperty on the parent property means that
-            // prefab override logic works on the entire property.
+            // 在父属性上使用 BeginProperty / EndProperty，可以让
+            // 预制体覆盖逻辑作用于整个属性。
             EditorGUI.BeginProperty(position, label, property);
 
             EditorGUI.DrawRect(position, new Color(0, 0, 0, 0.1f));
@@ -146,7 +146,7 @@ namespace Game.Internal.Structures
             r.height = EditorGUIUtility.singleLineHeight;
             property.isExpanded = EditorGUI.Foldout(r, property.isExpanded, label);
 
-            // Don't make child fields be indented
+            // 不让子字段缩进
             var indent = EditorGUI.indentLevel;
             EditorGUI.indentLevel++;
 
@@ -181,7 +181,7 @@ namespace Game.Internal.Structures
                 }
                 GUI.enabled = true;
             }
-            // Set indent back to what it was
+            // 恢复原有缩进
             EditorGUI.indentLevel = indent;
             EditorGUI.EndProperty();
         }

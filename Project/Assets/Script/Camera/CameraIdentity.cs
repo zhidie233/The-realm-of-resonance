@@ -2,10 +2,10 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Camera Identity is used to identify which camera is rendering currently
-/// instead of use the Unity Camera.current which is slow and can't be used in loop functions
-/// You must attach this script in any camera that you want to use in game.
-/// If you want to get the current camera that is rendered, use: GameController.Instance.CameraRendered.
+/// Camera Identity 用于识别当前正在渲染的是哪个相机
+/// 而不是用 Unity 的 Camera.current，它慢且不能在循环函数里使用
+/// 想使用的相机都要挂上这个脚本。
+/// 要获取当前正在渲染的相机，用：GameController.Instance.CameraRendered。
 /// </summary>
 public class CameraIdentity : MonoBehaviour
 {

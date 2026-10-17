@@ -29,8 +29,8 @@ public class InputInteractionIndicator : MonoBehaviour
     }
 
     /// <summary>
-    /// Set active will only execute if the current text showing is the same
-    /// as the provided.
+    /// 仅当当前显示文本与之相同时，Set active 才会执行
+    /// 与传入值一致。
     /// </summary>
     public static void SetActiveIfSame(bool active, string description)
     {
@@ -43,8 +43,8 @@ public class InputInteractionIndicator : MonoBehaviour
     /// <summary>
     /// 
     /// </summary>
-    /// <param name="inputName">Input Name to execute the action</param>
-    /// <param name="description">Description of the action.</param>
+    /// <param name="inputName">执行该操作的输入名称</param>
+    /// <param name="description">操作说明。</param>
     public static void ShowIndication(string inputName, string description, Action clickCallback = null)
     {
         if (Instance == null) return;

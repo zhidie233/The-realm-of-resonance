@@ -4,7 +4,7 @@ public static class StringUtility
 {
 
     /// <summary>
-    /// Get string in time format
+    /// 获取时间格式的字符串
     /// </summary>
     public static string GetTimeFormat(float m, float s)
     {
@@ -18,7 +18,7 @@ public static class StringUtility
     }
 
     /// <summary>
-    /// Make a displayable name for a variable like name.
+    /// 把像 name 这样的变量名转成可显示的文本。
     /// </summary>
     /// <param name="str"></param>
     /// <returns></returns>
@@ -45,7 +45,7 @@ public static class StringUtility
     }
 
     /// <summary>
-    /// Generate a random string with the given length
+    /// 生成指定长度的随机字符串
     /// </summary>
     /// <param name="length"></param>
     /// <returns></returns>

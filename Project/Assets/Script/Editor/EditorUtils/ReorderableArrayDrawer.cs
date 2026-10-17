@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -36,8 +36,8 @@ namespace GameEditor
         private static GUIStyle styleHighlight;
 
         /// <summary>
-        /// Internal class that manages ReorderableLists for each reorderable
-        /// SerializedProperty in a SerializedObject's direct child
+        /// 内部类，为每个可重排的 SerializedProperty 管理 ReorderableList
+        /// 该 SerializedProperty 位于 SerializedObject 的直接子级
         /// </summary>
         protected class SortableListData
         {
@@ -55,7 +55,7 @@ namespace GameEditor
 
             public void AddProperty(SerializedProperty property)
             {
-                // Check if this property actually belongs to the same direct child
+                //检查这个属性是否真的属于同一个直接子级
                 if (GetGrandParentPath(property).Equals(Parent) == false)
                     return;
 
@@ -77,14 +77,14 @@ namespace GameEditor
                     if (targetElement.hasVisibleChildren)
                         rect.xMin += 10;
 
-                    // Get Unity to handle drawing each element
+                    //交给 Unity 绘制每个元素
                     GUIContent propHeader = new GUIContent(targetElement.displayName);
                     if (ElementHeaderCallback != null)
                         propHeader.text = ElementHeaderCallback(index);
                     EditorGUI.PropertyField(rect, targetElement, propHeader, isExpanded);
                 };
 
-                // Unity 5.3 onwards allows reorderable lists to have variable element heights
+                //Unity 5.3 起可重排列表支持元素高度不一
 #if UNITY_5_3_OR_NEWER
                 propList.elementHeightCallback = index => ElementHeightCallback(property, index);
 
@@ -116,14 +116,14 @@ namespace GameEditor
                 if (propIndex.ContainsKey(property.propertyPath) == false)
                     return false;
 
-                // Draw the header
+                //绘制表头
                 string headerText = string.Format("{0} [{1}]", property.displayName, property.arraySize);
                 EditorGUILayout.PropertyField(property, new GUIContent(headerText), false);
 
-                // Save header rect for handling drag and drop
+                //保存表头区域，用于处理拖放
                 Rect dropRect = GUILayoutUtility.GetLastRect();
 
-                // Draw the reorderable list for the property
+                //为这个属性绘制可重排列表
                 if (property.isExpanded)
                 {
                     int newArraySize = EditorGUILayout.IntField("Size", property.arraySize);
@@ -132,7 +132,7 @@ namespace GameEditor
                     propIndex[property.propertyPath].DoLayoutList();
                 }
 
-                // Handle drag and drop into the header
+                //处理拖放到表头
                 Event evt = Event.current;
                 if (evt == null)
                     return true;
@@ -264,8 +264,8 @@ namespace GameEditor
             editableIndex.Clear();
             Type typeScriptable = typeof(ScriptableObject);
             SerializedProperty iterProp = serializedObject.GetIterator();
-            // This iterator goes through all the child serialized properties, looking
-            // for properties that have the SortableArray attribute
+            //这个迭代器遍历所有子级序列化属性，寻找
+            //带有 SortableArray 特性的属性
             if (iterProp.NextVisible(true))
             {
                 do
@@ -330,7 +330,7 @@ namespace GameEditor
         {
             string parent = GetGrandParentPath(property);
 
-            // Try to find the grand parent in SortableListData
+            //尝试在 SortableListData 中查找祖父级
             SortableListData data = listIndex.Find(listData => listData.Parent.Equals(parent));
             if (data == null)
             {
@@ -352,13 +352,13 @@ namespace GameEditor
 
         private void HandleReorderableOptions(ReorderableAttribute arrayAttr, SerializedProperty property, SortableListData data)
         {
-            // Custom element header
+            //自定义元素表头
             if (string.IsNullOrEmpty(arrayAttr.ElementHeader) == false)
             {
                 data.ElementHeaderCallback = i => string.Format("{0} {1}", arrayAttr.ElementHeader, (arrayAttr.HeaderZeroIndex ? i : i + 1));
             }
 
-            // Draw property as single line
+            //按单行绘制属性
             if (arrayAttr.ElementSingleLine)
             {
                 var list = data.GetPropertyList(property);
@@ -416,7 +416,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Given a SerializedProperty, return the automatic ReorderableList assigned to it if any
+        /// 给定一个 SerializedProperty，返回分配给它的自动 ReorderableList（如果有）
         /// </summary>
         /// <param name="property"></param>
         /// <returns></returns>
@@ -435,7 +435,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Set a drag and drop handler function on a SerializedObject's ReorderableList, if any
+        /// 在 SerializedObject 的 ReorderableList 上设置拖放处理函数（如果有）
         /// </summary>
         /// <param name="property"></param>
         /// <param name="handler"></param>
@@ -458,13 +458,13 @@ namespace GameEditor
 
         protected bool InspectorGUIStart(bool force = false)
         {
-            // Not initialized, try initializing
+            //未初始化，尝试初始化
             if (hasSortableArrays && listIndex.Count == 0)
                 InitInspector();
             if (hasEditable && editableIndex.Count == 0)
                 InitInspector();
 
-            // No sortable arrays or list index unintialized
+            //没有可排序数组或列表索引未初始化
             bool cannotDrawOrderable = (hasSortableArrays == false || listIndex.Count == 0);
             bool cannotDrawEditable = (hasEditable == false || editableIndex.Count == 0);
             if (cannotDrawOrderable && cannotDrawEditable && force == false)
@@ -512,11 +512,11 @@ namespace GameEditor
         {
             if (property.NextVisible(true))
             {
-                // Remember depth iteration started from
+                //记住迭代开始时的深度
                 int depth = property.Copy().depth;
                 do
                 {
-                    // If goes deeper than the iteration depth, get out
+                    //如果比迭代深度更深，就退出
                     if (property.depth != depth)
                         break;
                     if (isSubEditor && property.name.Equals("m_Script"))
@@ -537,21 +537,21 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Draw a SerializedProperty as a ReorderableList if it was found during
-        /// initialization, otherwise use EditorGUILayout.PropertyField
+        /// 如果初始化时找到了，就把 SerializedProperty 绘制成 ReorderableList
+        /// 否则用 EditorGUILayout.PropertyField
         /// </summary>
         /// <param name="property"></param>
         protected void DrawPropertySortableArray(SerializedProperty property)
         {
-            // Try to get the sortable list this property belongs to
+            //尝试获取该属性所属的可排序列表
             SortableListData listData = null;
             if (listIndex.Count > 0)
                 listData = listIndex.Find(data => property.propertyPath.StartsWith(data.Parent));
 
-            // Has ReorderableList
+            //有 ReorderableList
             if (listData != null)
             {
-                // Try to show the list
+                //尝试显示该列表
                 if (listData.DoLayoutProperty(property) == false)
                 {
                     EditorGUILayout.PropertyField(property, false);
@@ -582,7 +582,7 @@ namespace GameEditor
 
         #region Helper functions
         /// <summary>
-        /// Draw the default inspector, with the sortable arrays
+        /// 绘制默认 inspector，并带上可排序数组
         /// </summary>
         public void DrawPropertiesAll()
         {
@@ -591,7 +591,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Draw the default inspector, except for the given property names
+        /// 绘制默认 inspector，但跳过给定的属性名
         /// </summary>
         /// <param name="propertyNames"></param>
         public void DrawPropertiesExcept(params string[] propertyNames)
@@ -608,9 +608,9 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Draw the default inspector, starting from a given property
+        /// 绘制默认 inspector，从给定属性开始
         /// </summary>
-        /// <param name="propertyStart">Property name to start from</param>
+        /// <param name="propertyStart">起始属性名</param>
         public void DrawPropertiesFrom(string propertyStart)
         {
             bool canDraw = false;
@@ -627,9 +627,9 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Draw the default inspector, up to a given property
+        /// 绘制默认 inspector，到给定属性为止
         /// </summary>
-        /// <param name="propertyStop">Property name to stop at</param>
+        /// <param name="propertyStop">结束属性名</param>
         public void DrawPropertiesUpTo(string propertyStop)
         {
             SerializedProperty iterProp = serializedObject.GetIterator();
@@ -643,10 +643,10 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Draw the default inspector, starting from a given property to a stopping property
+        /// 绘制默认 inspector，从起始属性到结束属性
         /// </summary>
-        /// <param name="propertyStart">Property name to start from</param>
-        /// <param name="propertyStop">Property name to stop at</param>
+        /// <param name="propertyStart">起始属性名</param>
+        /// <param name="propertyStop">结束属性名</param>
         public void DrawPropertiesFromUpTo(string propertyStart, string propertyStop)
         {
             bool canDraw = false;

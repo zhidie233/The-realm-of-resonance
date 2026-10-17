@@ -10,7 +10,7 @@ namespace Game.Internal.Scriptables
         public SurfaceDecal[] surfaceDecals;
 
         /// <summary>
-        /// Get a random material from the given surface
+        /// 从给定表面随机取一个材质
         /// </summary>
         /// <param name="surfaceTag"></param>
         /// <returns></returns>
@@ -27,7 +27,7 @@ namespace Game.Internal.Scriptables
         }
 
         /// <summary>
-        /// Get a random material from the given surface
+        /// 从给定表面随机取一个材质
         /// </summary>
         /// <param name="surfaceTag"></param>
         /// <returns></returns>

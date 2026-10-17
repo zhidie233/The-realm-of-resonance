@@ -3,7 +3,7 @@ using UnityEngine;
 public abstract class CountDownBase : MonoBehaviour
 {
     /// <summary>
-    /// Is currently counting down?
+    /// 当前是否正在倒计时？
     /// </summary>
     public virtual bool IsCounting
     {

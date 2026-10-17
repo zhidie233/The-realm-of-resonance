@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -13,7 +13,7 @@ public class HitBoxManager : MonoBehaviour
     public PlayerHealthManagerBase healthManager;
 
     /// <summary>
-    /// Called when a hitbox get hit
+    /// 判定盒被击中时调用
     /// </summary>
     public void OnHit(DamageData damageData, HitBoxBase hitbox)
     {
@@ -22,8 +22,8 @@ public class HitBoxManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Called from editor only
-    /// Do not use in runtime.
+    /// 仅编辑器调用
+    /// 不要在运行时使用。
     /// </summary>
     public void SetupHitboxes(Animator animator)
     {
@@ -75,7 +75,7 @@ public class HitBoxManager : MonoBehaviour
     }
 }
 
-//EDITOR DRAWER
+//编辑器绘制
 #if UNITY_EDITOR
 [CustomEditor(typeof(HitBoxManager))]
 public class BodyHitBoxManagerEditor: Editor
@@ -349,9 +349,9 @@ public class BodyHitBoxManagerEditor: Editor
                         {
                             evt.Use();
 
-                            // Texture coordinate start at 0,0 at bottom, left
-                            // Screen coordinate start at 0,0 at top, left
-                            // So we need to convert from screen coord to texture coord
+                            // 纹理坐标原点在左下角
+                            // 屏幕坐标原点在左上角
+                            // 所以需要把屏幕坐标转成纹理坐标
                             int top = (int)evt.mousePosition.x - (int)rect.x;
                             int left = Styles.UnityDude.image.height - ((int)evt.mousePosition.y - (int)rect.y);
 

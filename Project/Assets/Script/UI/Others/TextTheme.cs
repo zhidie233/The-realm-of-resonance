@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
@@ -101,10 +101,10 @@ namespace Game.Runtime.UI
 
             for (int lineIdx = 0; lineIdx < lines.Length; lineIdx++)
             {
-                //the real line
+                //实际文本行
                 string realLine = lines[lineIdx];
                 string parsedLine = "";
-                //line without rich text characters
+                //去掉富文本标签的文本行
                 string unrichLine = WithoutRichText(realLine, out parsedLine);
 
                 float lineOffset = (unrichLine.Length - 1) * letterOffset * alignmentFactor;
@@ -124,7 +124,7 @@ namespace Game.Runtime.UI
                     int idx5 = glyphIdx * 6 + 4;
                     int idx6 = glyphIdx * 6 + 5;
 
-                    // Check for truncated text (doesn't generate verts for all characters)
+                    // 检查文本是否被截断（不会为所有字符生成顶点）
                     if (idx6 > verts.Count - 1) { return; }
 
                     UIVertex vert1 = verts[idx1];

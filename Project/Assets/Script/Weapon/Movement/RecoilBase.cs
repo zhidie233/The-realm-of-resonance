@@ -1,6 +1,6 @@
 /// <summary>
-/// Base class for the player weapon recoil movement
-/// Inherited from this your custom recoil script.
+/// 玩家武器后坐力运动基类
+/// 自定义后坐力脚本继承此类。
 /// </summary>
 public abstract class RecoilBase : MonoBehaviourBase
 {

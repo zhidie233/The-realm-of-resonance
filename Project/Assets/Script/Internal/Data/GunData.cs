@@ -25,7 +25,7 @@ public class GunData
     [SpritePreview(30, true)] public Sprite GunIcon;
 
     /// <summary>
-    /// Whether this weapon is listed in the game menus (loadout, unlocks, etc...)
+    /// 此武器是否显示在游戏菜单中（配装、解锁等）
     /// </summary>
     /// <returns></returns>
     public bool CanShowWeapon()

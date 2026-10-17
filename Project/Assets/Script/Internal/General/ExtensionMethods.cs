@@ -10,7 +10,7 @@ using System.Linq;
 public static class ExtensionMethods
 {
     /// <summary>
-    /// Post score to the given player and sync over network
+    /// 为指定玩家记分并在网络上同步
     /// </summary>
     public static void PostScore(this Player player, int ScoreToAdd = 0)
     {
@@ -24,7 +24,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the score of the given player
+    /// 获取指定玩家的得分
     /// </summary>
     public static int GetPlayerScore(this Player player)
     {
@@ -84,7 +84,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the score of the given team
+    /// 获取指定队伍的得分
     /// </summary>
     /// <returns></returns>
     public static int GetRoomScore(this Room room, Team team)
@@ -108,7 +108,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Add the given score to the given team and sync over network
+    /// 为指定队伍增加得分并在网络上同步
     /// </summary>
     public static void SetTeamScore(this Room r, Team t, int scoreToAdd = 1)
     {
@@ -124,7 +124,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the team in which the given player is affiliated to
+    /// 获取指定玩家所属的队伍
     /// </summary>
     /// <returns></returns>
     public static Team GetPlayerTeam(this Player p)
@@ -151,7 +151,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Sync the player team in which the given player is affiliated
+    /// 同步指定玩家所属的队伍
     /// </summary>
     public static void SetPlayerTeam(this Player player, Team team)
     {
@@ -161,7 +161,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the team name by their identifier
+    /// 按标识获取队伍名称
     /// </summary>
     /// <returns></returns>
     public static string GetTeamName(this Team t)
@@ -178,7 +178,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the team color by their identifier
+    /// 按标识获取队伍颜色
     /// </summary>
     /// <returns></returns>
     public static Color GetTeamColor(this Team t, float alpha = 0)
@@ -211,7 +211,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Save (locally) the given player class as the default
+    /// 将指定玩家职业（本地）保存为默认值
     /// </summary>
     private const string PLAYER_CLASS_KEY = "{0}.playerclass";
     public static void SavePlayerClass(this PlayerClass pc)
@@ -221,7 +221,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the locally saved player class
+    /// 获取本地保存的玩家职业
     /// </summary>
     /// <returns></returns>
     public static PlayerClass GetSavePlayerClass(this PlayerClass pc)
@@ -234,7 +234,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the player name along with their user role (if there's any)
+    /// 获取玩家名称及其用户角色（若有）
     /// </summary>
     /// <returns></returns>
     public static string NickNameAndRole(this Player p)
@@ -248,7 +248,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the complete game mode name by their identifier
+    /// 按标识获取完整的游戏模式名称
     /// </summary>
     /// <returns></returns>
     public static string GetName(this GameMode mode)
@@ -259,7 +259,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the game mode info by their identifier
+    /// 按标识获取游戏模式信息
     /// </summary>
     /// <returns></returns>
     public static GameModeSettings GetGameModeInfo(this GameMode mode)
@@ -268,7 +268,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// is this player in the same team that local player?
+    /// 此玩家是否与本地玩家同队？
     /// </summary>
     /// <returns></returns>
     public static bool isTeamMate(this Player p)
@@ -279,7 +279,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the player list of an specific team
+    /// 获取指定队伍的玩家列表
     /// </summary>
     /// <returns></returns>
     public static Player[] GetPlayersInTeam(this Player[] player, Team team)
@@ -312,7 +312,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get current gamemode
+    /// 获取当前游戏模式
     /// </summary>
     public static GameMode GetGameMode(this RoomInfo room)
     {
@@ -322,7 +322,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get the current room info parsed in the custom Game class
+    /// 获取已解析到自定义 Game 类中的当前房间信息
     /// </summary>
     /// <returns></returns>
     public static GameRoomInfo GetRoomInfo(this Room room)
@@ -331,7 +331,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Check if the given team is the local player enemy team
+    /// 检查指定队伍是否为本地玩家的敌方队伍
     /// </summary>
     /// <returns></returns>
     public static Team OppsositeTeam(this Team team)
@@ -345,7 +345,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Better solution for invoke methods after a certain time
+    /// 延时调用方法的更好方案
     /// </summary>
     public static void InvokeAfter(this MonoBehaviour mono, float time, Action callback)
     {
@@ -359,7 +359,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Re-size a rawImage to fit with the parent RectTransform size
+    /// 调整 RawImage 尺寸以适配父 RectTransform 大小
     /// </summary>
     /// <returns></returns>
     public static Vector2 SizeToParent(this RawImage image, float padding = 0)
@@ -368,7 +368,7 @@ public static class ExtensionMethods
         var parent = image.transform.parent.GetComponent<RectTransform>();
         var imageTransform = image.GetComponent<RectTransform>();
 
-        // check if there is something to do
+        // 检查是否有需要处理的内容
         if (image.texture != null)
         {
             if (!parent) { return imageTransform.sizeDelta; } //if we don't have a parent, just return our current width;
@@ -377,10 +377,10 @@ public static class ExtensionMethods
             var bounds = new Rect(0, 0, parent.rect.width, parent.rect.height);
             if (Mathf.RoundToInt(imageTransform.eulerAngles.z) % 180 == 90)
             {
-                //Invert the bounds if the image is rotated
+                //图片旋转时反转边界
                 bounds.size = new Vector2(bounds.height, bounds.width);
             }
-            //Size by height first
+            //先按高度计算尺寸
             h = bounds.height * padding;
             w = h * ratio;
             if (w > bounds.width * padding)
@@ -395,7 +395,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Randomize some Audio Source properties to get a different audio output result
+    /// 随机化部分 AudioSource 属性以获得不同的音效结果
     /// </summary>
     public static void RandomizeAudioOutput(this AudioSource source)
     {
@@ -404,7 +404,7 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Check if the collider is from the local player
+    /// 检查该碰撞体是否属于本地玩家
     /// </summary>
     /// <returns></returns>
     public static bool isLocalPlayerCollider(this Collider collider)
@@ -413,8 +413,8 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Localization helper
-    /// Get the localized text of the given key
+    /// 本地化辅助
+    /// 获取指定键的本地化文本
     /// </summary>
     /// <returns></returns>
     public static string Localized(this string str, string key, bool plural = false)
@@ -423,8 +423,8 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Localization helper
-    /// Get the localized text of the given key
+    /// 本地化辅助
+    /// 获取指定键的本地化文本
     /// </summary>
     /// <returns></returns>
     public static string Localized(this string str, int id, bool plural = false)
@@ -433,13 +433,13 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// Get an int array as a string array separated by the give char
+    /// 将 int 数组按指定字符拼接为字符串数组
     /// </summary>
     /// <returns></returns>
     public static string[] AsStringArray(this int[] array, string endoint = "") => array.Select(x => (x.ToString() + endoint)).ToArray();
 
     /// <summary>
-    /// Check if a flag is selected in the give flag enum property
+    /// 检查指定枚举标志属性中是否选中某个标志
     /// </summary>
     /// <returns></returns>
     public static bool IsEnumFlagPresent<T>(this T value, T lookingForFlag) where T : Enum

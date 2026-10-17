@@ -2,9 +2,9 @@
 using UnityEngine;
 
 /// <summary>
-/// This script handle the default Game drop/package delivery
-/// If you want to create a custom drop delivery, create a new script and inherited from DropBase
-/// and use this ONLY as reference.
+/// 此脚本处理游戏默认的空投/包裹投放
+/// 若要自定义投放方式，新建脚本并从 DropBase 继承
+/// 此脚本仅作参考。
 /// </summary>
 public class DropDelivery : DropBase
 {
@@ -26,7 +26,7 @@ public class DropDelivery : DropBase
         InstacePrefab = dropData.DropPrefab;
         lineRender = GetComponent<LineRenderer>();
 
-        //set up initial position of all objects
+        //设置所有物体的初始位置
         transform.position = dropData.DropPosition + new Vector3(0, -0.1f, 0);
         PackageHolder.position = transform.position;
         PackageHolder.position += new Vector3(0, 500, 0);
@@ -39,7 +39,7 @@ public class DropDelivery : DropBase
     IEnumerator Delivery()
     {
         float d = 0;
-        //start animation
+        //开始动画
         while (d < 1)
         {
             d += Time.deltaTime / 2;
@@ -53,7 +53,7 @@ public class DropDelivery : DropBase
         Vector3 initPosition = PackageHolder.position;
         if (TimeText != null) { TimeText.gameObject.SetActive(true); }
 
-        //start delivery package
+        //开始投放包裹
         while (d < 1)
         {
             d += Time.deltaTime / DeliveryTime;
@@ -69,7 +69,7 @@ public class DropDelivery : DropBase
         }
         yield return new WaitForSeconds(1.5f);
 
-        //instance package
+        //实例化包裹
         if (DeliveryEffect != null) { Instantiate(DeliveryEffect, transform.position, Quaternion.identity); }
         if (InstacePrefab != null)
         {

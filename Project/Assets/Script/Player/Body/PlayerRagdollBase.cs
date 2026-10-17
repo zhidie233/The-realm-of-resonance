@@ -12,27 +12,27 @@ public abstract class PlayerRagdollBase : MonoBehaviour
     }
 
     /// <summary>
-    /// Make a remote player a ragdoll
+    /// 把远程玩家变成布娃娃
     /// </summary>
     public abstract void Ragdolled(RagdollInfo info);
 
     /// <summary>
-    /// Make the local player ragdoll
+    /// 把本地玩家变成布娃娃
     /// </summary>
     public abstract void SetLocalRagdoll(RagdollInfo info);
 
     /// <summary>
-    /// Active/Deactivate all the colliders and Rigidbody's of the ragdoll
+    /// 启用/停用布娃娃的所有碰撞体和刚体
     /// </summary>
     public abstract void SetActiveRagdollPhysics(bool active);
 
     /// <summary>
-    /// Make this ragdoll collider ignore or detect the given colliders
+    /// 让该布娃娃碰撞体忽略或检测指定的碰撞体
     /// </summary>
     public abstract void IgnoreColliders(Collider[] list, bool ignore);
 
     /// <summary>
-    /// In this function you should make this player collider ignore the LOCAL player colliders.
+    /// 在这个函数里应让该玩家碰撞体忽略本地玩家的碰撞体。
     /// </summary>
     public abstract void IgnorePlayerCollider();
 }

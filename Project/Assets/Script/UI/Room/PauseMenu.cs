@@ -26,7 +26,7 @@ public class PauseMenu : PauseMenuBase
     }
 
     /// <summary>
-    /// Open the pause menu
+    /// 打开暂停菜单
     /// </summary>
     public override void OpenMenu(string windowOpen = "")
     {
@@ -79,7 +79,7 @@ public class PauseMenu : PauseMenuBase
     }
 
     /// <summary>
-    /// Active the given menu layout parts only (disable the not given parts)
+    /// 仅启用给定的菜单布局部分（禁用其余部分）
     /// </summary>
     /// <param name="layouts"></param>
     public override void SetActiveLayouts(LayoutPart layouts)

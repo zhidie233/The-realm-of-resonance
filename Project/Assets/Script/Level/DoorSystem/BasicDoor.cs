@@ -6,9 +6,9 @@ using Game.Internal.Scriptables;
 namespace Game.Runtime.Level
 {
     /// <summary>
-    /// This is the default Basic Door of Game
-    /// If you want to create a custom door, create a new script and inherited from <see cref="DoorBase"/>
-    /// Use this only as reference.
+    /// 这是游戏默认的基础门
+    /// 若要自定义门，新建脚本并从 <see cref="DoorBase"/> 继承
+    /// 此脚本仅作参考。
     /// </summary>
     public class BasicDoor : DoorBase
     {
@@ -16,9 +16,9 @@ namespace Game.Runtime.Level
         [ScriptableDrawer] public DoorStateSettings doorSettings;
 
         /// <summary>
-        /// This is not called automatically
-        /// it should be invoked manually
-        /// You can use CameraRayDetectableEvent.cs
+        /// 此方法不会自动调用
+        /// 需要手动调用
+        /// 可以使用 CameraRayDetectableEvent.cs
         /// </summary>
         public void OnRayDetectedByPlayer()
         {
@@ -33,9 +33,9 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// This is not called automatically
-        /// it should be invoked manually
-        /// You can use CameraRayDetectableEvent.cs
+        /// 此方法不会自动调用
+        /// 需要手动调用
+        /// 可以使用 CameraRayDetectableEvent.cs
         /// </summary>
         public void OnUnDetectedByPlayer()
         {
@@ -44,7 +44,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Call each frame only when the local player is looking at this door.
+        /// 仅在本地玩家注视此门时每帧调用。
         /// </summary>
         public override void OnUpdateDoor()
         {
@@ -70,7 +70,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Called from server when a player change the door state
+        /// 玩家更改门状态时由服务器调用
         /// </summary>
         public override void SetDoorState(State newState)
         {
@@ -81,7 +81,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Get open direction based on the local player view direction
+        /// 根据本地玩家视角方向获取开门方向
         /// </summary>
         /// <returns></returns>
         private State GetOpenDirection()

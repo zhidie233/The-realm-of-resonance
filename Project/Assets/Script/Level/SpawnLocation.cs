@@ -4,8 +4,8 @@ using GameEditor;
 #endif
 
 /// <summary>
-/// Default spawnpoint implementation
-/// If you wanna to use your own spawnpoint system simply inherited your script from SpawnPointBase.cs
+/// 默认出生点实现
+/// 若要使用自己的出生点系统，让脚本从 SpawnPointBase.cs 继承即可
 /// </summary>
 public class SpawnLocation : SpawnPointBase
 {
@@ -29,13 +29,13 @@ public class SpawnLocation : SpawnPointBase
 
     void OnEnable()
     {
-        // Make sure to add this spawnpoint to the list of available points
-        // Otherwise your spawnpoint will never be used.
+        // 确保把此出生点加入可用点列表
+        // 否则你的出生点永远不会被使用。
         Initialize();
     }
 
     /// <summary>
-    /// returns a spawn position confined to this spawnpoint's settings
+    /// 返回符合此出生点设置的出生位置
     /// </summary>
     public override void GetSpawnPosition(out Vector3 position, out Quaternion Rotation)
     {
@@ -43,7 +43,7 @@ public class SpawnLocation : SpawnPointBase
     }
 
     /// <summary>
-    /// returns a spawn position with the given offset
+    /// 返回带指定偏移的出生位置
     /// </summary>
     public void GetSpawnPosition(float radiusSpace, out Vector3 position, out Quaternion Rotation)
     {

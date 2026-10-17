@@ -5,11 +5,11 @@ using UnityEngine.Rendering.PostProcessing;
 #endif
 
 /// <summary>
-/// IF YOU HAVE A ERROR IN THE CONSOLE POINTING TO THIS SCRIPT
-/// is probably due to the Post Processing package is not imported in the project.
-/// If this is intended (not to use it) in order to fix the problem, go to the Unity Player Settings -> Other Settings -> Script Define Symbols ->
-/// find and remove this string from the input field: UNITY_POST_PROCESSING_STACK_V2; -> hit Enter/Submit.
-/// If it's not intended, go to Window -> Package Manager -> Find the 'Post Processing' package on the left panel -> Import it.
+/// 如果控制台报错指向本脚本
+/// 多半是因为项目没有导入 Post Processing 包。
+/// 如果是刻意不用它，按以下方式消除报错：Unity Player Settings -> Other Settings -> Script Define Symbols ->
+/// 在输入框里找到并删除这个字符串：UNITY_POST_PROCESSING_STACK_V2; -> 回车/提交。
+/// 如果并非刻意，去 Window -> Package Manager -> 在左侧面板找到 'Post Processing' 包 -> Import 导入它。
 /// </summary>
 public class PostProcessEffects : MonoBehaviour
 {

@@ -2,16 +2,16 @@
 using Game.PlayerController;
 
 /// <summary>
-/// Base class for the player controller
-/// If you want to use your own player controller, inherited your script from this class
-/// and implement the override functions and properties
-/// use the default child script FirstPersonController.cs as reference.
+/// 玩家控制器的基类
+/// 想用自己的玩家控制器，就让脚本继承该类
+/// 并实现需要重写的函数和属性
+/// 可参考默认子脚本 FirstPersonController.cs。
 /// </summary>
 public abstract class FirstPersonControllerBase : MonoBehaviourBase
 {
     /// <summary>
-    /// The player state has to be updated from the child script
-    /// this always has to represent the current state of the player
+    /// 玩家状态必须由子脚本更新
+    /// 它始终要表示玩家当前的状态
     /// </summary>
     public PlayerState State 
     {
@@ -20,8 +20,8 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     } = PlayerState.Idle;
 
     /// <summary>
-    /// Has to be assigned from the inherited class
-    /// returns the current velocity of the player
+    /// 必须由继承类赋值
+    /// 返回玩家当前速度
     /// </summary>
     public abstract Vector3 Velocity
     {
@@ -30,8 +30,8 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Has to be assigned from the inherited class
-    /// returns the current velocity magnitude of the player
+    /// 必须由继承类赋值
+    /// 返回玩家当前速度大小
     /// </summary>
     public abstract float VelocityMagnitude
     {
@@ -40,8 +40,8 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// returns true if the player is currently controlled
-    /// by the user input, otherwise returns false.
+    /// 玩家当前是否由用户输入控制，
+    /// 是则返回 true，否则返回 false。
     /// </summary>
     public abstract bool isControlable
     {
@@ -50,9 +50,9 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Has to be assigned from the inherited class
-    /// returns true if the player is touching a surface
-    /// Normally use CharacterController.IsGrounded
+    /// 必须由继承类赋值
+    /// 玩家是否接触地面，是则返回 true
+    /// 通常用 CharacterController.IsGrounded
     /// </summary>
     public abstract bool isGrounded 
     { 
@@ -60,8 +60,8 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Use to access to variables of the default Game controller
-    /// If you are using your own inherited class, you don't need this.
+    /// 用于访问默认游戏控制器的变量
+    /// 如果用自己继承的类，不需要这个。
     /// </summary>
     private FirstPersonController _gameController = null;
     public FirstPersonController GameController
@@ -74,70 +74,70 @@ public abstract class FirstPersonControllerBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Make the player jump
+    /// 让玩家跳跃
     /// </summary>
     public abstract void DoJump();
 
     /// <summary>
-    /// Make the player slide
+    /// 让玩家滑铲
     /// </summary>
     public abstract void DoSlide();
 
     /// <summary>
-    /// Active the player dropping mode
+    /// 开启玩家下坠模式
     /// </summary>
     public abstract void DoDrop();
 
     /// <summary>
-    /// Active the player gliding mode
+    /// 开启玩家滑翔模式
     /// </summary>
     public abstract void DoGliding();
 
     /// <summary>
-    /// Force the player to stop at least one frame.
+    /// 强制玩家至少停一帧。
     /// </summary>
     public abstract void Stop();
 
     /// <summary>
-    /// Handle the vertical jump when the player enters in a platform
+    /// 玩家进入平台时处理纵向弹跳
     /// </summary>
-    /// <param name="force">up force</param>
+    /// <param name="force">向上力</param>
     public abstract void PlatformJump(float force);
 
     /// <summary>
-    /// Update the mouse look movement
-    /// You can call to manually update it.
+    /// 更新鼠标视角移动
+    /// 可手动调用更新。
     /// </summary>
     public abstract void UpdateMouseLook();
 
     /// <summary>
-    /// Play once the footstep sound
-    /// The clip should be played respecting to the surface where the player is 
-    /// currently hitting
+    /// 播放一次脚步声
+    /// 播放的音效应与玩家所在的地面材质对应
+    /// 即玩家当前踩到的地面
     /// </summary>
     public abstract void PlayFootStepSound();
 
     /// <summary>
-    /// Get the MouseLook controller module
+    /// 获取 MouseLook 控制器模块
     /// </summary>
     /// <returns></returns>
     public abstract MouseLookBase GetMouseLook();
 
     /// <summary>
-    /// Get the footstep controller module
+    /// 获取脚步控制器模块
     /// </summary>
     /// <returns></returns>
     public abstract Footstep GetFootStep();
 
     /// <summary>
-    /// Return the top speed of the player at a specific state
+    /// 返回玩家在指定状态下的最高速度
     /// </summary>
     /// <param name="playerState"></param>
     /// <returns></returns>
     public abstract float GetSpeedOnState(PlayerState playerState, bool includeModifiers = false);
 
     /// <summary>
-    /// Returns the current speed of the player
+    /// 返回玩家当前速度
     /// </summary>
     /// <returns></returns>
     public abstract float GetCurrentSpeed();

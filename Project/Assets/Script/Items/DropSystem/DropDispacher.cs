@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using HashData = ExitGames.Client.Photon.Hashtable;
 
 /// <summary>
-/// This script take care of instantiate and synchronize drop/packages requested by players.
-/// this class doesn't have direct references hence can be just replaced with a custom script
+/// 此脚本负责实例化并同步玩家请求的空投/包裹。
+/// 此类没有直接引用，可直接替换为自定义脚本
 /// </summary>
 public class DropDispacher : MonoBehaviour
 {
@@ -17,7 +17,7 @@ public class DropDispacher : MonoBehaviour
     public List<DropInfo> AvailableDrops = new List<DropInfo>();
 
     /// <summary>
-    /// when activated, record this in the event
+    /// 激活时将该实例登记到事件中
     /// </summary>
     void OnEnable()
     {
@@ -26,7 +26,7 @@ public class DropDispacher : MonoBehaviour
     }
 
     /// <summary>
-    /// when disabled, quit this in the event
+    /// 禁用时从事件中移除
     /// </summary>
     void OnDisable()
     {
@@ -47,7 +47,7 @@ public class DropDispacher : MonoBehaviour
     }
 
     /// <summary>
-    /// This is called by an internal event
+    /// 由内部事件调用
     /// </summary>
     public void SendDevilery(Vector3 position, int kitID)
     {

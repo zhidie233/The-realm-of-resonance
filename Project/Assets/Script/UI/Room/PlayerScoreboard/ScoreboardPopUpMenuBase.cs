@@ -34,6 +34,6 @@ public abstract class ScoreboardPopUpMenuBase : MonoBehaviour
     /// 
     /// </summary>
     /// <param name="buttonName"></param>
-    /// <returns>button id</returns>
+    /// <returns>按钮 id</returns>
     public abstract int AddButton(string buttonName, MenuFilter filter);
 }

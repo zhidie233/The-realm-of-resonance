@@ -21,7 +21,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Instantiate a decal in the raycastHit point
+        /// 在射线检测命中点生成弹痕
         /// </summary>
         public override void InstanceDecal(RaycastHit raycastHit)
         {
@@ -33,8 +33,8 @@ namespace Game.Runtime.Level
 
             var decalInstance = GetPool();
 
-            // since the decals are attached to the colliders, if a collider is destroyed, the decal get destroyed as well
-            // so we have to make sure it is not null, otherwise, replace the null decal.
+            // 弹痕挂在碰撞体上，碰撞体销毁时弹痕也会被销毁
+            // 所以必须确认它不为空，为空就替换掉这个弹痕。
             if(decalInstance == null)
             {
                 decalPool[currentPool] = Instantiate(decalPrefab.gameObject).GetComponent<BulletDecalBase>();
@@ -57,7 +57,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Initialize the decal pool list
+        /// 初始化弹痕池列表
         /// </summary>
         private void Init()
         {

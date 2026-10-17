@@ -1,8 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// Base class for Name Plate Drawer
-/// Inherited from this script your custom script where you can handle how to draw the players name in game.
+/// 名称牌绘制器的基类
+/// 自定义脚本继承此类，自行处理游戏中玩家名称的绘制。
 /// </summary>
 public abstract class NamePlateBase : MonoBehaviourBase
 {
@@ -12,7 +12,7 @@ public abstract class NamePlateBase : MonoBehaviourBase
     public string PlayerName { get; set; }
 
     /// <summary>
-    /// Set the name to draw
+    /// 设置要绘制的名称
     /// </summary>
     public abstract void SetName(string playerName);
 

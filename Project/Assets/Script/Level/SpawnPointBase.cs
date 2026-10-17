@@ -2,8 +2,8 @@
 using UnityEngine.Serialization;
 
 /// <summary>
-/// Spawnpoint base class
-/// You can inherited from this your own spawnpoint scripts.
+/// 出生点基类
+/// 你的自定义出生点脚本可从此类继承。
 /// </summary>
 public abstract class SpawnPointBase : MonoBehaviour
 {
@@ -13,7 +13,7 @@ public abstract class SpawnPointBase : MonoBehaviour
     public static implicit operator Transform(SpawnPointBase d) => d.transform;
 
     /// <summary>
-    /// Register this spawnpoint
+    /// 注册此出生点
     /// </summary>
     public virtual void Initialize()
     {
@@ -21,7 +21,7 @@ public abstract class SpawnPointBase : MonoBehaviour
     }
 
     /// <summary>
-    /// returns a spawn position confined to this spawnpoint's settings
+    /// 返回符合此出生点设置的出生位置
     /// </summary>
     public abstract void GetSpawnPosition(out Vector3 position, out Quaternion Rotation);
 

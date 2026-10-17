@@ -21,7 +21,7 @@ public static class GameCore
     public const string HITBOX_TAG = "BodyPart";
     
     /// <summary>
-    /// Class helper with some useful function referenced to the local player only.
+    /// 只与本地玩家相关的辅助工具类。
     /// </summary>
     public static class LocalPlayer
     {
@@ -29,7 +29,7 @@ public static class GameCore
         public static GamePlayer GameActor => GameController.Instance.LocalActor;
 
         /// <summary>
-        /// The team of the local player
+        /// 本地玩家所在的队伍
         /// </summary>
         public static Team Team
         {
@@ -38,12 +38,12 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Stats of the local player
+        /// 本地玩家的战绩
         /// </summary>
         public static class Stats
         {
             /// <summary>
-            /// Get the all time kill count of the local player
+            /// 获取本地玩家的总击杀数
             /// </summary>
             /// <returns></returns>
             public static int GetAllTimeKills()
@@ -52,7 +52,7 @@ public static class GameCore
             }
 
             /// <summary>
-            /// Get the all time death count of the local player
+            /// 获取本地玩家的总死亡数
             /// </summary>
             /// <returns></returns>
             public static int GetAllTimeDeaths()
@@ -61,7 +61,7 @@ public static class GameCore
             }
 
             /// <summary>
-            /// Get the all time score of the local player
+            /// 获取本地玩家的总得分
             /// </summary>
             /// <returns></returns>
             public static int GetAllTimeScore()
@@ -71,7 +71,7 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Make the local player die
+        /// 让本地玩家死亡
         /// </summary>
         public static bool Suicide(bool increaseWarnings = true)
         {
@@ -83,7 +83,7 @@ public static class GameCore
             UtilityHelper.LockCursor(true);
             if(increaseWarnings)
             GameController.SuicideCount++;
-            //if player is a joker o abuse of suicide, them kick of room
+            //如果玩家消极送死或滥杀自己，就踢出房间
             if (GameController.SuicideCount > GameConfig.Instance.maxSuicideAttempts)
             {              
                 IsAlive = false;
@@ -94,7 +94,7 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Is the Local player alive?
+        /// 本地玩家是否存活？
         /// </summary>
         public static bool IsAlive
         {
@@ -109,7 +109,7 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Will Return the local player nick name with the clan/crew tag (if any)
+        /// 返回带队伍/战队标签的本地玩家昵称（如果有）
         /// </summary>
         /// <returns></returns>
         public static string FullNickName()
@@ -119,7 +119,7 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Make the local player ignore colliders
+        /// 让本地玩家忽略碰撞体
         /// </summary>
         public static void IgnoreColliders(Collider[] colliders, bool ignore)
         {
@@ -129,7 +129,7 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Make the player detect an object when the camera look at it
+        /// 让玩家在相机看向物体时检测到它
         /// </summary>
         public static byte AddCameraRayDetection(DetecableInfo detecableInfo)
         {
@@ -149,18 +149,18 @@ public static class GameCore
     public static class Network
     {
         /// <summary>
-        /// Send a RPC-like call (without a Photon view required) to all other clients in the same room.
+        /// 向同一房间内的所有其他客户端发送类 RPC 调用（无需 PhotonView）。
         /// </summary>
         public static void SendNetworkCall(byte code, Hashtable data) => PhotonNetworkWrapper.Instance.SendDataOverNetwork(code, data);
     }
 
     /// <summary>
-    /// Static functions for the Game coins
+    /// 游戏金币的静态函数
     /// </summary>
     public static class Coins
     {
         /// <summary>
-        /// Get one of the listed coins in GameData by their ID.
+        /// 按 ID 获取 GameData 中列出的金币。
         /// </summary>
         /// <param name="coinID"></param>
         /// <returns></returns>
@@ -172,7 +172,7 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Get the coin index/id by the coin data
+        /// 按金币数据获取它的索引/ID
         /// </summary>
         /// <param name="coin"></param>
         /// <returns></returns>
@@ -188,9 +188,9 @@ public static class GameCore
     {
 
         /// <summary>
-        /// Check if the given photon player is the local player
+        /// 检查给定的 Photon 玩家是否是本地玩家
         /// </summary>
-        /// <param name="player">Player to check if is local</param>
+        /// <param name="player">要检查是否为本地玩家的 Player</param>
         /// <returns></returns>
         public static bool IsLocalPlayer(Player player)
         {
@@ -198,9 +198,9 @@ public static class GameCore
         }
 
         /// <summary>
-        /// Check if the given viewID is the local player
+        /// 检查给定的 viewID 是否是本地玩家
         /// </summary>
-        /// <param name="player">ViewID to check if is local</param>
+        /// <param name="player">要检查是否为本地玩家的 ViewID</param>
         /// <returns></returns>
         public static bool IsLocalPlayer(int viewID)
         {

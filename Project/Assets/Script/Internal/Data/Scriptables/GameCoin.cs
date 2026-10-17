@@ -20,9 +20,9 @@ namespace Game.Internal.Scriptables
         [SpritePreview] public Sprite CoinIcon;
 
         /// <summary>
-        /// Add and save coins
+        /// 增加并保存硬币
         /// </summary>
-        /// <param name="coins">Coins to add</param>
+        /// <param name="coins">要增加的硬币数</param>
         /// <returns></returns>
         public GameCoin Add(int coins, string forUser = "")
         {
@@ -34,9 +34,9 @@ namespace Game.Internal.Scriptables
         }
 
         /// <summary>
-        /// Add and save coins
+        /// 增加并保存硬币
         /// </summary>
-        /// <param name="coins">Coins to add</param>
+        /// <param name="coins">要增加的硬币数</param>
         /// <returns></returns>
         public GameCoin Deduct(int coins, string forUser = "")
         {
@@ -58,7 +58,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
         }
 
         /// <summary>
-        /// Get the locally saved coins
+        /// 获取本地保存的硬币
         /// </summary>
         /// <returns></returns>
         public int GetCoins(string endPoint = "")
@@ -72,7 +72,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
         }
 
         /// <summary>
-        /// Return the conversion of this coin to the reference price (value of 1)
+        /// 返回此硬币相对基准价格（值为 1）的换算比
         /// </summary>
         /// <param name="realPrice"></param>
         /// <returns></returns>
@@ -84,8 +84,8 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
         private string Key(string endPoint = "")
         {
             var k = $"{Application.productName}.coin.{CoinName}.{endPoint}";
-            //Most basic obfuscation possible, is not recommended store coins locally.
-            //For serious game, store the coins in a external server.
+            //最基础的混淆方式；不建议将硬币存在本地。
+            //正式项目请将硬币保存在外部服务器。
             k = Convert.ToBase64String(Encoding.UTF8.GetBytes(k));
             return k;
         }

@@ -12,13 +12,13 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     // 当前游戏状态
     public MatchState GameMatchState;
 
-    // Event called once all the players required to start have joined This is only called when GameData.JoinMethod is set to DirectToMap
+    // 开始所需的玩家全部加入后触发。仅在 GameData.JoinMethod 为 DirectToMap 时调用
     public Action onAllPlayersRequiredIn;
 
     // 所有已连接的真实玩家列表
     public List<Player> connectedPlayerList = new List<Player>();
 
-    // List with references to all instanced players (bots and real players) in the scene. This list included all but the local player.
+    // 场景中所有已实例化玩家（机器人和真人）的引用列表，不包含本机玩家。
     public List<GamePlayer> OthersActorsInScene = new List<GamePlayer>();
 
     // 本地玩家 GamePlayer 数据
@@ -48,7 +48,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     // 覆盖 GameData 中玩家预制体
     public PrefabOverride OverridePlayerPrefab { get; set; }
 
-    // The name of the player prefab with which the local player prefab spawned
+    // 本机玩家出生时所用玩家预制体的名字
     public string LastInstancedPlayerPrefabName { get; private set; }
 
     public static int LocalPlayerViewID = -1;
@@ -58,7 +58,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     private int WaitingPlayersAmount = 1;
     private float StartPlayTime;
     private bool registered = false;
-    // In case you need to filter the player spawn This function will be invoked right before the instanced the player prefab if the function return true, the player will not be spawned, otherwise it won't spawn and you will have to handled the instantiation in your custom function.
+    // 需要过滤玩家出生时使用。该函数在实例化玩家预制体之前调用：返回 true 则不生成玩家，返回 false 同样不生成，需要你在自定义函数里完成实例化。
     private Queue<Func<GameObject, Vector3, Quaternion, Team, bool>> spawnFilters;
 
     void Awake()
@@ -111,27 +111,27 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         }
     }
 
-    // Spawn the local player in the give team If a player instanced already exist, it will be automatically destroyed and replaced with a new one.
-    // team in which the player will spawn
+    // 让本机玩家在指定队伍出生。如果已存在玩家实例，会自动销毁并替换成新的实例。
+    // 玩家出生的队伍
     // <returns></returns>
     public bool SpawnPlayer(Team playerTeam)
     {
         if (IsLocalWaitingForSpawn) return false;//there's a reserved spawn incoming, don't spawn before that
 
-        //if there is a local player already instance
+        //如果已存在本机玩家实例
         if (LocalPlayer != null)
         {
             PhotonNetwork.Destroy(LocalPlayer);
         }
 
-        //if the game finish
+        //如果游戏已结束
         if (GameFinish)
         {
             RoomCameraBase.Instance?.SetActive(false);
             return false;
         }
 
-        //set the player team to the player properties
+        //把玩家队伍写入玩家属性
         var PlayerTeam = new Hashtable
         {
             { PropertiesKeys.TeamKey, playerTeam.ToString() }
@@ -139,12 +139,12 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         PhotonNetworkWrapper.LocalPlayer.SetCustomProperties(PlayerTeam);
         GameCore.LocalPlayer.Team = playerTeam;
 
-        //spawn the player model
+        //生成玩家模型
         SpawnPlayerModel(playerTeam);
         return true;
     }
 
-    // Spawn player based in the team
+    // 按队伍生成玩家
     // <returns></returns>
     public void SpawnPlayerModel(Team playerTeam)
     {
@@ -164,15 +164,15 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
 
         if (!InstancePlayer(playerPrefab, pos, rot, playerTeam))
         {
-            // if the player was not instanced
+            // 如果玩家尚未实例化
             return;
         }
 
         OnPostSpawn();
     }
 
-    // Spawn the local player in the given position and rotation.
-    // Player prefab
+    // 在指定位置和旋转处生成本机玩家
+    // 玩家预制体
     // <param name="position"></param>
     // <param name="rotation"></param>
     // <param name="team"></param>
@@ -181,27 +181,27 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     {
         if (!PhotonNetworkWrapper.InRoom) return false;
 
-        // Check if there're spawn filters
+        // 检查是否有出生过滤器
         if (VerifySpawnFilter(prefab, position, rotation, team, out bool filterResult))
         {
-            // if there's a filter and it returns True
+            // 如果有过滤器且返回 True
             if (filterResult)
             {
-                // That means we can spawn the player, so lets start this function from the begin (to check any other pending filter)
+                // 说明可以生成玩家，于是重新从头执行本函数（检查其他待处理的过滤器）
                 InstancePlayer(prefab, position, rotation, team);
             }
-            // if the filter returns False, this mean the spawn in canceled here and therefore
-            // the spawn will be handle elsewhere (by the filter)
+            // 过滤器返回 False 表示出生在这里被取消，
+            // 出生将由其他地方（该过滤器）处理
             else return false;
         }
 
-        //set the some common data that will be sync right after the player is instanced in the other clients
+        //设置一些公共数据，玩家在其他客户端实例化后立即同步
         var commonData = new object[1];
         commonData[0] = team;
 
         LastInstancedPlayerPrefabName = prefab.name;
 
-        //instantiate the player prefab
+        //实例化玩家预制体
         LocalPlayer = PhotonNetwork.Instantiate(prefab.name, position, rotation, 0, commonData);
 
         LocalPlayerReferences = LocalPlayer.GetComponent<PlayerReferencesHandler>();
@@ -228,7 +228,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         gravityManager.UpdateEffect();
     }
 
-    // Check if there's any spawn filter pending
+    // 检查是否还有待处理的出生过滤器
     // 返回: True if a filter exist, false if not filters availables
     public static bool VerifySpawnFilter(GameObject prefab, Vector3 position, Quaternion rotation, Team team, out bool filterResult)
     {
@@ -247,7 +247,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         Instance.spawnFilters.Enqueue(filter);
     }
 
-    // Assign a player to a team but not instance it
+    // 把玩家分配到队伍，但不实例化
     public void SetLocalPlayerToTeam(Team team)
     {
         Hashtable PlayerTeam = new Hashtable
@@ -259,7 +259,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         Joined = true;
     }
 
-    // Instance a Player only if already has been instanced and is alive
+    // 仅在玩家已实例化且存活时才出生该玩家
     public void SpawnPlayerIfAlreadyInstanced()
     {
         if (LocalPlayer == null)
@@ -269,8 +269,8 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         SpawnPlayer(t);
     }
 
-    // Respawn the local player after the respawn time delay
-    // define a custom delay or -1 to use the GameData respawn fixed delay
+    // 重生延迟结束后重生本机玩家
+    // 自定义延迟，填 -1 则使用 GameData 中的固定重生延迟
     public void RespawnLocalPlayerAfter(float respawnTime = -1, bool doFadeIn = true)
     {
         if (respawnTime < 0) respawnTime = GameConfig.Instance.PlayerRespawnTime;
@@ -297,7 +297,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         }
     }
 
-    // Called after each player spawn.
+    // 每个玩家出生后调用
     public static void OnPostSpawn(bool skipFade = false)
     {
         if (Instance == null) return;
@@ -309,7 +309,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         CrosshairBase.Instance.Show(true);
     }
 
-    // If Player exist, them destroy
+    // 如果玩家已存在就销毁
     public void DestroyPlayer(bool ActiveCamera)
     {
         if (LocalPlayer != null)
@@ -319,7 +319,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         RoomCameraBase.Instance?.SetActive(ActiveCamera);
     }
 
-    // Called when the room round time finish
+    // 房间回合时间结束时调用
     public void OnGameTimeFinish(bool gameOver)
     {
         GameFinish = true;
@@ -327,14 +327,14 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         SetGameState(MatchState.Finishing);
     }
 
-    // Make the local player spawn in a random spawn point of the current team
+    // 让本机玩家在当前队伍的随机出生点出生
     public void SpawnPlayerWithCurrentTeam()
     {
         if (SpawnPlayer(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam()))
             RoomMenu.Instance.OnAutoTeam();
     }
 
-    // Called after the local player spawn
+    // 本机玩家出生后调用
     public void AfterSpawnSetup(bool skipFade = false)
     {
         RoomCameraBase.Instance?.SetActive(false);
@@ -364,7 +364,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return isIt;
     }
 
-    // Should called when the local player score in game
+    // 本机玩家在游戏中得分时应调用
     public void SetPointFromLocalPlayer(int points, GameMode mode)
     {
         if (GameModeLogic == null) return;
@@ -373,7 +373,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         GameModeLogic.OnLocalPoint(points, PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
-    // Should called when a non player object score in game, ex: AI This should be called by master client only
+    // 非玩家对象（如 AI）得分时应调用，只能由主客户端调用
     public void SetPoint(int points, GameMode mode, Team team)
     {
         if (GameModeLogic == null) return;
@@ -420,7 +420,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return true;
     }
 
-    // This is a event callback here is caching all 'actors' in the scene (players and bots)
+    // 这是事件回调，这里会缓存场景中所有 'actors'（玩家和机器人）
     public void OnRemoteActorChange(GameEvents.PlayerChangeData data)
     {
         int id = OthersActorsInScene.FindIndex(x => x.Name == data.PlayerName);
@@ -457,9 +457,9 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         }
     }
 
-    // Add a new player info in the <see cref="OthersActorsInScene"/> list
-    // The new player to register
-    // Replace the information if record already exist for this player
+    // 向 <see cref="OthersActorsInScene"/> 列表中添加新的玩家信息
+    // 要注册的新玩家
+    // 该玩家已有记录时替换原信息
     public void RegisterGamePlayer(GamePlayer newPlayer, bool force = false)
     {
         if (OthersActorsInScene.Exists(x => x.Name == newPlayer.Name) && !force) return;
@@ -476,7 +476,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         }
     }
 
-    // Find a player or bot by their PhotonView ID
+    // 按 PhotonView ID 查找玩家或机器人
     // <returns></returns>
     public Transform FindActor(int ViewID)
     {
@@ -491,7 +491,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return null;
     }
 
-    // Find a player or bot by their PhotonPlayer
+    // 按 PhotonPlayer 查找玩家或机器人
     // <returns></returns>
     public Transform FindActor(Player player)
     {
@@ -507,7 +507,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return null;
     }
 
-    // Find a player or bot by their PhotonPlayer
+    // 按 PhotonPlayer 查找玩家或机器人
     // <returns></returns>
     public GamePlayer FindActor(string actorName)
     {
@@ -522,7 +522,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return null;
     }
 
-    // Find a player or bot by their ViewID
+    // 按 ViewID 查找玩家或机器人
     // <returns></returns>
     public GamePlayer GetGameActor(int viewID)
     {
@@ -547,9 +547,9 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return player;
     }
 
-    // Get the list of Game players that are joined in the given team
-    // Team from where the players have to be part of.
-    // Fetch only players that has been registered in the <see cref="OthersActorsInScene"/> list.
+    // 获取已加入指定队伍的 Game 玩家列表
+    // 玩家所属的队伍。
+    // 只取已登记到 <see cref="OthersActorsInScene"/> 列表中的玩家。
     // <returns></returns>
     public GamePlayer[] GetGamePlayerInTeam(Team team, bool registeredActorsOnly = true)
     {
@@ -572,7 +572,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         return list.ToArray();
     }
 
-    // Get the list of Game actors that are not in the same team of the local player
+    // 获取与本机玩家不在同一队伍的 Game actors 列表
     // <param name="includeBots"></param>
     // <returns></returns>
     public List<GamePlayer> GetNonTeamMatePlayers(bool includeBots = true)
@@ -622,7 +622,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         {
             if (state == MatchState.Starting)
             {
-                // Unlist the room if the game mode is set to unlist after started
+                // 游戏模式设置为开始后隐藏房间时，取消房间的公开列出
                 if (GetGameMode.GetGameModeInfo().UnlistGameAfterStarted)
                 {
                     PhotonNetwork.CurrentRoom.IsVisible = false;
@@ -645,10 +645,10 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         CheckPlayersInMatch();
     }
 
-    // Check the minimum required players are meet
+    // 检查是否满足最少玩家数
     void CheckPlayersInMatch()
     {
-        //if still waiting
+        //如果仍在等待
         if (!MatchTimeManagerBase.Instance.IsInitialized && GameMatchState == MatchState.Waiting)
         {
             bool ready = false;
@@ -669,18 +669,18 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
                     team2Count += AIMananger.Instance.GetAllBotsInTeam(Team.Team2).Count;
                 }
 
-                //if the minimum amount of players are in the game
+                //如果游戏内玩家数达到最少要求
                 if (totalPlayers >= WaitingPlayersAmount)
                 {
-                    //and they are split in both teams
+                    //并且两队都有人
                     if ((team1Count > 0 && team2Count > 0) || WaitingPlayersAmount <= 1)
                     {
-                        //we are ready to start
+                        //可以开始了
                         ready = true;
                     }
                     else
                     {
-                        //otherwise wait until player split in both teams
+                        //否则等待玩家分到两队
                         UIReferences.Instance.SetWaitingPlayersText(GameTexts.WaitingTeamBalance, true);
                         return;
                     }
@@ -688,7 +688,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
             }
             if (ready)//all needed players in game
             {
-                //master set the call to start the match
+                //主客户端调用开始比赛
                 if (PhotonNetworkWrapper.IsMasterClient)
                 {
                     MatchTimeManagerBase.Instance.InitAfterWaiting();
@@ -714,22 +714,22 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         PhotonNetwork.Disconnect();
     }
 
-    //PLAYER EVENTS
+    //玩家事件
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("Player connected: " + newPlayer.NickName);
         if (PhotonNetworkWrapper.IsMasterClient)
         {
-            //master sync the require match info to be sure all players have the same info at the start
+            //主客户端同步必要的比赛信息，确保开局时所有玩家信息一致
             photonView.RPC(nameof(RPCSyncGame), newPlayer, GameMatchState);
         }
 
-        // if the new player has a team, it means it came from the waiting room
+        // 新玩家已有队伍，说明是从等待房间进来的
         if (newPlayer.GetPlayerTeam() != Team.None)
         {
-            // Try register the player info right away
-            // This is important to do since in game modes where the player have to wait until a round finish before he can spawn
-            // the player record won't be added until the second time he spawn
+            // 立即尝试注册玩家信息
+            // 这一步很重要，因为有些模式里玩家要等到回合结束才能出生，
+            // 否则玩家记录要到他第二次出生时才会添加
             var playerData = new GamePlayer()
             {
                 Name = newPlayer.NickName,
@@ -753,10 +753,10 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
 
     public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
-        //when a player has join to a team
+        //玩家加入队伍时
         if (changedProps.ContainsKey(PropertiesKeys.TeamKey))
         {
-            //make sure has join to a team
+            //确保已加入队伍
             if ((string)changedProps[PropertiesKeys.TeamKey] != Team.None.ToString())
             {
                 CheckPlayersInMatch();
@@ -823,7 +823,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         {
             if (cameraRender != null && cameraRender.isActiveAndEnabled)
             {
-                //if the current render over the set camera, keep it as renderer camera
+                //如果当前渲染相机覆盖了所设置的相机，就保留它作为渲染相机
                 if (cameraRender.depth >= value.depth) return;
             }
             cameraRender = value;

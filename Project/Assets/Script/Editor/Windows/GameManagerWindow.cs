@@ -385,7 +385,7 @@ public class GameManagerWindow : EditorWindow
             selectedGameMode = gameMode;
         }
 
-        // active icon
+        // 激活图标
         sr = r;
         sr.x = sr.x + sr.width - 16;
         sr.y += 4;
@@ -533,7 +533,7 @@ public class GameManagerWindow : EditorWindow
             r = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
             {
                 EditorGUI.DrawRect(r, new Color(1, 1, 1, 0.02f));
-                //Slot buttons
+                // 槽位按钮
                 using (new GUILayout.HorizontalScope(GUILayout.Height(30)))
                 {
                     GUILayout.Space(5);
@@ -567,7 +567,7 @@ public class GameManagerWindow : EditorWindow
                 if (slotID == 1) loadout = player.gunManager.m_ReconClass;
                 if (slotID == 2) loadout = player.gunManager.m_SupportClass;
                 if (slotID == 3) loadout = player.gunManager.m_EngineerClass;
-                //loadout
+                // 配装
                 DrawSlots(loadout);
 
             }
@@ -914,7 +914,7 @@ public class GameManagerWindow : EditorWindow
         var classes = TypeCache.GetTypesWithAttribute<GameManagerTab>();
         foreach (var classInfo in classes)
         {
-            // get the attribute information
+            // 获取特性信息
             var attr = classInfo.GetCustomAttribute<GameManagerTab>();
 
             var panel = managerPanels.Find(x => x.Name == attr.name);
@@ -927,7 +927,7 @@ public class GameManagerWindow : EditorWindow
                 else continue;
             }
 
-            // Cast the GameManagerTabData type from the classInfo
+            // 从 classInfo 转换出 GameManagerTabData 类型
             var tab = (GameManagerTabData)Activator.CreateInstance(classInfo);
             var data = tab.GetData();
 

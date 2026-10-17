@@ -6,8 +6,8 @@ using TMPro;
 using System;
 
 /// <summary>
-/// Default Time Management script, handled the match time
-/// For modifications inherited a new script from <see cref="MatchTimeManagerBase"/>
+/// 默认时间管理脚本，负责对局时间
+/// 需要修改时，从 <see cref="MatchTimeManagerBase"/> 继承新脚本
 /// </summary>
 public class MatchTimeManager : MatchTimeManagerBase
 {
@@ -68,7 +68,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         if (!PhotonNetworkWrapper.IsConnected)
             return;
 
-        //only master client initialized by default, other players will wait until master sync match information after they join.
+        //默认只有主客户端会初始化，其他玩家加入后等主客户端同步对局信息。
         if (PhotonNetworkWrapper.IsMasterClient)
         {
             Init();
@@ -99,11 +99,11 @@ public class MatchTimeManager : MatchTimeManagerBase
     }
 
     /// <summary>
-    /// Master Client Initialize the room time
+    /// 主客户端初始化房间时间
     /// </summary>
     public override void Init()
     {
-        //if the match is waiting for a minimum amount of players to start
+        //如果对局正在等待最少玩家数才能开始
         if (GameController.Instance.GameMatchState == MatchState.Waiting && !isThisActive)
         {
             UIReferences.Instance.SetWaitingPlayersText(string.Format(GameTexts.WaitingPlayers, PhotonNetworkWrapper.PlayerList.Length, 2), true);
@@ -169,13 +169,13 @@ public class MatchTimeManager : MatchTimeManagerBase
     }
 
     /// <summary>
-    /// get the current time and verify if it is correct
+    /// 获取当前时间并校验是否正确
     /// </summary>
     public void GetTime(bool ResetReference)
     {
         if (PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey] != null)
         {
-            //get the time duration from the room properties 
+            //从房间属性获取时长
             RoundDuration = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey];
         }
 
@@ -228,12 +228,12 @@ public class MatchTimeManager : MatchTimeManagerBase
         if (!IsInitialized || IsPaused || m_timeIsUp || !isThisActive)
             return;
 
-        //calculate seconds from the reference time and the current server time
+        //根据参考时间和当前服务器时间计算秒数
         float seconds = RoundDuration - ((float)PhotonNetworkWrapper.Time - m_serverTimeReference);
         if (seconds > 0.0001f)
         {
             CurrentTime = seconds;
-            //if the game is about to finish, close the room so it will not be listed in the lobby anymore
+            //如果游戏即将结束，关闭房间使其不再显示在大厅列表
             if (CurrentTime <= 30 && !roomClose && PhotonNetworkWrapper.IsMasterClient)
             {
                 roomClose = true;
@@ -262,14 +262,14 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     public override void RestartTime()
     {
-        //get the room time duration from hash tables
+        //从哈希表获取房间时长
         if (PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey] != null)
         {
             RoundDuration = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey];
         }
-        //cause everyone is already in the room, all will get the reference locally from the server
+        //因为所有人都已在房间内，大家会直接从服务器本地取得参考时间
         m_serverTimeReference = (float)PhotonNetworkWrapper.Time;
-        //Master Client will take care of store the reference time for future players
+        //主客户端负责为后续加入的玩家保存参考时间
         if (PhotonNetworkWrapper.IsMasterClient)
         {
             Hashtable startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
@@ -284,17 +284,17 @@ public class MatchTimeManager : MatchTimeManagerBase
     }
 
     /// <summary>
-    /// Call this in order to finish the match
-    /// if the room is setup as one match room -> the game resume screen will appear.
+    /// 调用它以结束对局
+    /// 如果房间设置为一局制 -> 会出现对局结算界面。
     /// </summary>
     public override void FinishRound(RoundFinishCause cause)
     {
-        // if the room time if finished but the countdown is still running, do not finish the match.
+        // 如果房间时间已到但倒计时还在跑，就不结束对局。
         if (TimeState == RoomTimeState.Countdown) return;
         
         if(finishRoundCallback != null && cause != RoundFinishCause.GameFinish)
         {
-            // handle the finish round logic in the custom callback
+            // 在自定义回调里处理结束回合逻辑
             finishRoundCallback?.Invoke(cause);
             return;
         }
@@ -309,7 +309,7 @@ public class MatchTimeManager : MatchTimeManagerBase
             m_timeIsUp = true;
             GameController.Instance.OnGameTimeFinish(RoomSettings.Instance.CurrentRoomInfo.roundStyle == RoundStyle.OneMacht || cause == RoundFinishCause.GameFinish);
 
-            // Save the gained XP in this game
+            // 保存本局获得的经验值
             UIReferences.Instance.ResumeScreen.CollectData();
 
             finalCountDown = GameConfig.Instance.afterMatchCountdown;
@@ -328,7 +328,7 @@ public class MatchTimeManager : MatchTimeManagerBase
     }
 
     /// <summary>
-    /// with this fixed the problem of the time lag in the Photon
+    /// 用它修复了 Photon 时间延迟的问题
     /// </summary>
     void Refresh()
     {
@@ -353,7 +353,7 @@ public class MatchTimeManager : MatchTimeManagerBase
     }
 
     /// <summary>
-    /// Count down before leave the room after finish the game
+    /// 游戏结束后离开房间前的倒计时
     /// </summary>
     void FinalCountdown()
     {
@@ -386,8 +386,8 @@ public class MatchTimeManager : MatchTimeManagerBase
     }
 
     /// <summary>
-    /// Start a new round and keep the player and team scores
-    /// The time will be reset to the initial value
+    /// 开始新回合并保留玩家和队伍得分
+    /// 时间会重置为初始值
     /// </summary>
     public override void StartNewRound(NewRoundOptions options)
     {

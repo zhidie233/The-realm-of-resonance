@@ -1,37 +1,37 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using Photon.Realtime;
 
-// Game class with all the Damage information
+// 包含全部伤害信息的游戏类
 public class DamageData
 {
-    // The amount of damage to apply to the IDamageable object
+    // 对 IDamageable 对象施加的伤害量
     public int Damage = 10;
 
-    // The cached name of the actor of this damage Since the damage can't always comes from a <see cref="GameActor"/> (player or bot) This the alternative way to get the name of the actor.
+    // 缓存的伤害来源名称。伤害并非总来自 <see cref="GameActor"/>（玩家或机器人），这是获取来源名称的替代方式。
     public string From;
 
-    // Cause of the damage
+    // 伤害来源
     public DamageCause Cause = DamageCause.Player;
 
-    // The position from where this damage origins (bullet origin, explosion origin, etc...)
+    // 伤害的产生位置（子弹起点、爆炸点等）
     public Vector3 Direction { get; set; } = Vector3.zero;
 
-    // Is this damage comes from a head shot?
+    // 该伤害是否来自爆头？
     public bool isHeadShot { get; set; } = false;
 
-    // The GunID of the weapon that cause this damage in case it was origin from a weapon if the damage was not from a weapon you can skip it.
+    // 造成此伤害的武器 GunID；若伤害并非来自武器可忽略。
     public int GunID { get; set; } = 0;
 
-    // The network player from which this damage
+    // 此伤害所属的网络玩家
     public Player Actor { get; set; }
 
-    // The Game Actor of this damage Can be a real player or bot
+    // 此伤害的 GameActor，可能是真实玩家或机器人
     public GamePlayer GameActor { get; set; }
 
-    // The cached network view id of the actor of this damage
+    // 缓存的伤害来源网络 ViewID
     public int ActorViewID { get; set; }
 
-    // Create a hashtable with the this damage data
+    // 用该伤害数据创建哈希表
     // <returns></returns>
     public ExitGames.Client.Photon.Hashtable GetAsHashtable()
     {
@@ -64,15 +64,15 @@ public class DamageData
 
 public struct GameHitData
 {
-    // The name of the object who was hit
+    // 被命中物体的名称
     public string HitName;
 
-    // The amount of damage applied to the hit object
+    // 对命中物体施加的伤害量
     public int Damage;
 
-    // The point of the hit collision
+    // 命中碰撞点
     public Vector3 HitPosition;
 
-    // The transform reference of the hit object A null check is required before access this since is can be destroyed
+    // 命中物体的 Transform 引用。它可能被销毁，访问前需判空
     public Transform HitTransform;
 }

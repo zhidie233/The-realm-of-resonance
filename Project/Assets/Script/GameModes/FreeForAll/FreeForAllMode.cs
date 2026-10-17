@@ -52,13 +52,13 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
             player = GameController.Instance.LocalActor;
         }
         FreeForAllUI.Instance.SetScores(player);
-        //check if the best player reach the max kills
+        //检查最佳玩家是否达到最大击杀数
         if((int)player.GetPlayerPropertie(PropertiesKeys.KillsKey) >= RoomSettings.Instance.GameGoal && !PhotonNetworkWrapper.OfflineMode)
         {
             MatchTimeManagerBase.Instance.FinishRound();
             return;
         }
-        //check if bots have not reach max kills
+        //检查机器人是否还没达到最大击杀数
         if (AIMananger.Instance != null && AIMananger.Instance.BotsActive && AIMananger.Instance.BotsStatistics.Count > 0)
         {
             if (AIMananger.Instance.GetBotWithMoreKills().Kills >= RoomSettings.Instance.GameGoal)
@@ -97,7 +97,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
 
     public void Initialize()
     {
-        //check if this is the game mode of this room
+        //检查这是否是当前房间的游戏模式
         if (GameController.Instance.IsGameMode(GameMode.FFA, this))
         {
             GameController.Instance.SetGameState(MatchState.Starting);

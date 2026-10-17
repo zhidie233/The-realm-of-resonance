@@ -8,25 +8,25 @@ public abstract class RoomChatBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Local player sent text to all
+    /// 本机玩家向所有人发送文本
     /// </summary>
     /// <param name="text"></param>
     public abstract void SetChat(string text);
 
     /// <summary>
-    /// Local client only
+    /// 仅本地客户端
     /// </summary>
     /// <param name="text"></param>
     public abstract void SetChatLocally(string text);
 
     /// <summary>
-    /// Should take the text from the input field 
-    /// Then do the same as in SetChat(...);
+    /// 应从输入框取文本
+    /// 然后做与 SetChat(...) 相同的事
     /// </summary>
     public abstract void OnSubmit();
 
     /// <summary>
-    /// Active / Deactivate the chat UI.
+    /// 启用/关闭聊天 UI。
     /// </summary>
     public abstract void SetActiveUI(bool active);
 

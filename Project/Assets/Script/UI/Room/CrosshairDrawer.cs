@@ -5,8 +5,8 @@ using Game.Internal.Structures;
 using System.Linq;
 
 /// <summary>
-/// Default crosshair implementation
-/// You can use your own crosshair system by inherited your main crosshair script from <see cref="CrosshairBase"/>
+/// 默认准星实现
+/// 主准星脚本继承 <see cref="CrosshairBase"/> 即可使用自己的准星系统
 /// </summary>
 public class CrosshairDrawer : CrosshairBase
 {

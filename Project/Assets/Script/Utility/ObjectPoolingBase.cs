@@ -4,7 +4,7 @@ public abstract class ObjectPoolingBase : MonoBehaviour
 {
 
     /// <summary>
-    /// Get a pooled prefab instance.
+    /// 获取一个池化预制体实例。
     /// </summary>
     /// <param name="prefabName"></param>
     /// <param name="position"></param>

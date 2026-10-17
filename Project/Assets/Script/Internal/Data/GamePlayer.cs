@@ -15,7 +15,7 @@ public class GamePlayer
     public Transform AimPosition;
 
     public PhotonView m_actorView;
-    // Photon View of this actor
+    // 此角色的 PhotonView
     public PhotonView ActorView
     {
         get => m_actorView;
@@ -27,14 +27,14 @@ public class GamePlayer
     }
 
     private int _viewID;
-    // Photon View ID of this actor
+    // 此角色的 PhotonView ID
     public int ActorViewID
     {
         get => _viewID;
         set => _viewID = value;
     }
 
-    // Photon Player Actor Number of this actor
+    // 此角色的 Photon 玩家 Actor Number
     public int ActorNumber
     {
         get
@@ -50,7 +50,7 @@ public class GamePlayer
         if (botProps == null)
         {
             Debug.LogWarning($"Bot {Name} not found in AI Manager, this could be a de-sync issue.");
-            //return a empty container to prevent any error
+            //返回空容器以防报错
             botProps = new GameBotProperties();
             botProps.Name = Name;
         }
@@ -71,7 +71,7 @@ public class GamePlayer
         }      
     }
 
-    // Get a real player or bot property value
+    // 获取真实玩家或机器人的属性值
     // <param name="key"></param>
     // <param name="defaultValue"></param>
     // <returns></returns>

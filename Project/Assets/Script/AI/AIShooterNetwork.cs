@@ -77,7 +77,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
             Velocity = (Vector3)stream.ReceiveNext();
             networkLookAtPosition = (Vector3)stream.ReceiveNext();
 
-            //Fix the translation effect on remote clients
+            //修复远程客户端的位移效果
             if (receivePackages < 5)
             {
                 m_Transform.localPosition = correctPlayerPos;
@@ -113,7 +113,7 @@ public sealed class AIShooterNetwork : MonoBehaviourBase, IPunObservable
         AITeam = (Team)data[1];
         gameObject.name = AIName;
         CheckNamePlate();
-        //since Non master client doesn't update the view ID when bots are created, lets do it on Start
+        //非主客户端在机器人创建时不会更新 View ID，所以在 Start 里补上
         if (!PhotonNetworkWrapper.IsMasterClient)
         {
             AIMananger.UpdateBotView(References.aiShooter, photonView.ViewID);

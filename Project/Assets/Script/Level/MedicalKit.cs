@@ -15,12 +15,12 @@ namespace Game.Runtime.Level
             var pdm = m_other.transform.root.GetComponent<PlayerHealthManagerBase>();
             if (pdm == null) { return; }
 
-            //don't pickup if the player has max health
+            //玩家生命值满时不拾取
             if (pdm.GetHealth() >= pdm.GetMaxHealth()) return;
 
             GameEvents.DispatchPickUpHealth(health);
 
-            //should this health kit respawn after certain time?
+            //此医疗包是否在一段时间后重生？
             if (autoRespawn)
             {
                 ItemManagerBase.Instance.RespawnAfter(this);

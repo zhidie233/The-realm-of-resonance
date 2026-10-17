@@ -16,7 +16,7 @@ public class ResonanceManager : MonoBehaviourPunCallbacks
     // 事件系统
     public event System.Action<float> OnResonanceChanged;
     
-    // Room Property Key
+    // 房间属性键
     private const string RESONANCE_KEY = "ResonanceValue";
     
     private void Awake()

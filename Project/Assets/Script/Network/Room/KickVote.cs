@@ -180,7 +180,7 @@ public class KickVote : MonoBehaviourBase
 
        if(otherPlayer.ActorNumber == TargetPlayer.ActorNumber)
         {
-            //cancel voting due player left the room by himself
+            //玩家自己离开房间，取消投票
             UI.OnFinish(true);
         }
     }

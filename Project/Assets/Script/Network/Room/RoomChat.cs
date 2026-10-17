@@ -68,7 +68,7 @@ public class RoomChat : RoomChatBase
     }
 
     /// <summary>
-    /// Receive network message from chat event from the server
+    /// 接收服务器聊天事件发来的网络消息
     /// </summary>
     /// <param name="data"></param>
     void OnNetworkMessageReceived(ExitGames.Client.Photon.Hashtable data)
@@ -105,7 +105,7 @@ public class RoomChat : RoomChatBase
     }
 
     /// <summary>
-    /// Send text message over network to all other clients
+    /// 通过网络向其他所有客户端发送文本消息
     /// </summary>
     /// <param name="txt"></param>
     public override void SetChat(string txt)
@@ -123,7 +123,7 @@ public class RoomChat : RoomChatBase
     }
 
     /// <summary>
-    /// Post a message in the chat locally only.
+    /// 仅在本地聊天窗口发布消息。
     /// </summary>
     /// <param name="newLine"></param>
     public override void SetChatLocally(string newLine)

@@ -85,7 +85,7 @@ public class LobbyUI : MonoBehaviour
 
     IEnumerator DoChangeWindow(WindowUI window)
     {
-        //now change the windows
+        //现在切换窗口
         for (int i = 0; i < windows.Count; i++)
         {
             WindowUI w = windows[i];
@@ -202,10 +202,10 @@ public class LobbyUI : MonoBehaviour
 
     void SetRegionDropdown()
     {
-        //when Photon Server is used
+        //当使用 Photon Server 时
         if (!PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer)
         {
-            //disable the dropdown server selection since it doesn't work with Photon Server.
+            //禁用下拉框的服务器选择，因为它与 Photon Server 不兼容。
             ServersDropdown.gameObject.SetActive(false);
             return;
         }
@@ -224,7 +224,7 @@ public class LobbyUI : MonoBehaviour
         }
         ServersDropdown.RefreshShownValue();
 
-        // Add the callback after setup the dropdown to avoid call the listener unintentional.
+        // 下拉框设置完成后再绑定回调，避免意外触发监听。
         ServersDropdown.onValueChanged.AddListener(ChangeServerCloud);
     }
     #endregion

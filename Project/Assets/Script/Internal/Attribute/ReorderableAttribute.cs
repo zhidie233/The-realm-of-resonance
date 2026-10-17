@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 /// <summary>
-/// Display a List/Array as a sortable list in the inspector
+/// 在 Inspector 中将 List/Array 显示为可排序列表
 /// </summary>
 public class ReorderableAttribute : PropertyAttribute
 {
@@ -10,7 +10,7 @@ public class ReorderableAttribute : PropertyAttribute
     public bool ElementSingleLine { get; protected set; }
 
     /// <summary>
-    /// Display a List/Array as a sortable list in the inspector
+    /// 在 Inspector 中将 List/Array 显示为可排序列表
     /// </summary>
     public ReorderableAttribute()
     {
@@ -20,11 +20,11 @@ public class ReorderableAttribute : PropertyAttribute
     }
 
     /// <summary>
-    /// Display a List/Array as a sortable list in the inspector
+    /// 在 Inspector 中将 List/Array 显示为可排序列表
     /// </summary>
-    /// <param name="headerString">Customize the element name in the inspector</param>
-    /// <param name="isZeroIndex">If false, start element list count from 1</param>
-    /// <param name="isSingleLine">Try to fit the array elements in a single line</param>
+    /// <param name="headerString">自定义 Inspector 中的元素名称</param>
+    /// <param name="isZeroIndex">为 false 时，元素编号从 1 开始</param>
+    /// <param name="isSingleLine">尝试将数组元素排成一行</param>
     public ReorderableAttribute(string headerString = "", bool isZeroIndex = true, bool isSingleLine = false)
     {
         ElementHeader = headerString;

@@ -89,7 +89,7 @@ namespace Game.Runtime.Level
             float offset = BOUND_OFFSET;
             if (IsTopTrigger(trigger))
             {
-                // we use the same offset from the bottom collider, but we add the top collider y position
+                // 沿用底部碰撞体的偏移，再加上顶部碰撞体的 y 位置
                 float relativeDis = MathUtility.Distance(basePos, TopCollider.transform.position) - (playerHeight * 0.75f);
                 basePos = basePos + transform.forward * relativeDis;
                 offset = -0.55f;

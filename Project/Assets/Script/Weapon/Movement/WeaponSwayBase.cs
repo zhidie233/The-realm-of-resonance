@@ -6,7 +6,7 @@ public abstract class WeaponSwayBase : MonoBehaviourBase
     public abstract void UseAimSettings();
 
     /// <summary>
-    /// Reset all the settings to its original value
+    /// 把所有设置重置为初始值
     /// </summary>
     public abstract void ResetSettings();
 }

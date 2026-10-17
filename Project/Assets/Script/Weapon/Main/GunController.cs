@@ -30,13 +30,13 @@ public class GunController : GunBase
     public bool CanAuto = true;
     public bool CanSemi = true;
     public bool CanSingle = true;
-    //Shotgun Specific Vars
+    //霰弹枪专用变量
     public int pelletsPerShot = 10;         // number of pellets per round fired for the shotgun
     public float delayForSecondFireSound = 0.45f;
-    //Burst Specific Vars
+    //点射专用变量
     public int roundsPerBurst = 3;          // number of rounds per burst fire
     public float lagBetweenBurst = 0.5f;    // time between each shot in a burst
-    //Launcher Specific Vars
+    //发射器专用变量
     public List<GameObject> OnAmmoLauncher = new List<GameObject>();
     public bool ThrowByAnimation = false;
     public int impactForce = 50;            // how much force applied to a rigid body
@@ -56,7 +56,7 @@ public class GunController : GunBase
     public float spread = 0.0f;             // current spread of the gun
     public float decreaseSpreadPerSec = 0.5f;// amount of accuracy regained per frame when the gun isn't being fired 
     [HideInInspector] public bool isReloading = false;       // am I in the process of reloading
-    // Recoil
+    // 后坐力
     public float RecoilAmount = 5.0f;
     public float RecoilSpeed = 2;
     public bool SoundReloadByAnim = false;
@@ -67,7 +67,7 @@ public class GunController : GunBase
     public AudioClip ReloadSound2 = null;
     public AudioClip ReloadSound3 = null;
     public AudioSource DelaySource = null;
-    //cached player components
+    //缓存的玩家组件
     public Renderer[] weaponRenders = null;
     public PlayerConfig playerSettings;
 
@@ -208,7 +208,7 @@ public class GunController : GunBase
         Initialized();
     }
 
-    // This is called from the Weapon Manager at start for all the equipped weapons.
+    // 启动时武器管理器会对所有已装备武器调用。
     public void Initialized()
     {
         if (isInitialized)
@@ -275,10 +275,10 @@ public class GunController : GunBase
         ResetDefaultMuzzlePoint();
     }
 
-    // Called by the weapon manager on all the equipped weapons even when they have not been enabled
+    // 武器管理器对所有已装备武器调用，即使它们尚未启用
     public void Setup(bool initial = false)
     {
-        // Initial ammo setup
+        // 初始弹药设置
         bulletsLeft = BulletsPerMagazine;
         if (AmmoType == AmmunitionType.Clips) _remainingClips = numberOfClips;
         if (WeaponType != GunType.Shotgun && WeaponType != GunType.Sniper) { reloadPer = ReloadPer.Magazine; }
@@ -297,8 +297,8 @@ public class GunController : GunBase
         WeaponCamera.fieldOfView = GameCore.Settings != null ? (float)GameCore.Settings.GetSettingOf("武器FOV") : 55;
         CanAiming = true;
 
-        // @TODO: Change this with more elaborated fire type system
-        // Temporal fix to the initial fire type setup
+        // @TODO: 换成更完善的射击类型系统
+        // 初始射击类型设置的临时修正
         if (WeaponType == GunType.Machinegun && !CanAuto)
         {
             if (CanSemi) currentGunType = GunType.Burst;
@@ -316,7 +316,7 @@ public class GunController : GunBase
         }
     }
 
-    // check what the player is doing every frame
+    // 每帧检查玩家的状态
     // <returns></returns>
     public override void OnUpdate()
     {
@@ -338,7 +338,7 @@ public class GunController : GunBase
         spread = Mathf.Clamp(spread, BaseSpread + extraSpread, spreadMinMax.y + extraSpread);
     }
 
-    // All Input events
+    // 全部输入事件
     void InputUpdate()
     {
         if (GameConfig.Instance.isChating || !gunManager.isGameStarted || !RoomMenu.Instance.isCursorLocked) return;
@@ -352,10 +352,10 @@ public class GunController : GunBase
 
             if (CanFire)
             {
-                // if press once
+                // 单击
                 if (fireDown) SingleFire();
 
-                // if keep pressing
+                // 长按
                 if (GameInput.Fire()) LoopFire();
             }
             else
@@ -401,7 +401,7 @@ public class GunController : GunBase
             ChangeTypeFire();
         }
 
-        //used to decrease weapon accuracy as long as the trigger remains down
+        //扳机一直按下时用来降低武器精度
         if (WeaponType != GunType.Grenade && WeaponType != GunType.Knife)
         {
             if (UtilityHelper.isMobile)
@@ -426,7 +426,7 @@ public class GunController : GunBase
         }
     }
 
-    // change the type of gun gust
+    // 切换枪械射击类型
     void ChangeTypeFire()
     {
         bool inp = GameInput.SwitchFireMode();
@@ -452,7 +452,7 @@ public class GunController : GunBase
         }
     }
 
-    // Called by mobile button event
+    // 由移动端按钮事件调用
     void OnFire()
     {
         if (!gunManager.isGameStarted) return;
@@ -485,7 +485,7 @@ public class GunController : GunBase
 
     }
 
-    // Fire one time
+    // 单次开火
     void SingleFire()
     {
         if (PlayerReferences.firstPersonController.State == PlayerState.Running && Time.time - lastShotTime > (Info.FireRate * 2) || pendingFirstShot)
@@ -509,7 +509,7 @@ public class GunController : GunBase
         lastShotTime = Time.time;
     }
 
-    // Fire continuously
+    // 持续开火
     void LoopFire()
     {
         if (WeaponType != GunType.Machinegun) return;
@@ -536,8 +536,8 @@ public class GunController : GunBase
         lastShotTime = Time.time;
     }
 
-    // Call the fire function depending on the weapon type
-    // automatic fire?
+    // 按武器类型调用对应的开火函数
+    // 是否自动开火？
     void GunTypeFire(bool auto)
     {
         if (customWeapon != null) { customWeapon.OnFireDown(); }
@@ -570,10 +570,10 @@ public class GunController : GunBase
         }
     }
 
-    // fire the machine gun
+    // 机枪开火
     void MachineGunFire()
     {
-        // If there is more than one bullet between the last and this frame
+        // 若上一帧到这一帧之间有多于一颗子弹
         float time = Time.time;
 
         if (nextFireTime > time) return;
@@ -581,28 +581,28 @@ public class GunController : GunBase
 
         FireOneShot();
 
-        //Play fire animation
+        //播放开火动画
         if (isAiming) WeaponAnimation?.PlayFire(WeaponAnimationBase.AnimationFlags.Aiming);
         else WeaponAnimation?.PlayFire();
 
         OnFireCommons();
         PlayFX();
 
-        //is Auto reload
+        //是否自动换弹
         if (bulletsLeft <= 0 && _remainingClips > 0 && AutoReload)
         {
             Reload();
         }
     }
 
-    // fire the sniper gun
+    // 狙击枪开火
     void SniperFire()
     {
         float time = Time.time;
         if (time - Info.FireRate > nextFireTime)
             nextFireTime = time - Time.deltaTime;
 
-        // Keep firing until we used up the fire time
+        // 持续开火直到用完开火时长
         while (nextFireTime < time)
         {
             FireOneShot();
@@ -611,7 +611,7 @@ public class GunController : GunBase
             OnFireCommons();
             gunManager.HeadAnimator.Play("Sniper", 0, 0);
             PlayFX();
-            //is Auto reload
+            //是否自动换弹
             if (bulletsLeft <= 0 && _remainingClips > 0 && AutoReload)
             {
                 Reload(delayForSecondFireSound + 0.2f);
@@ -621,13 +621,13 @@ public class GunController : GunBase
 
     private float KnifeFire(bool quickFire = false)
     {
-        // If there is more than one shot  between the last and this frame
-        // Reset the nextFireTime
+        // 若上一帧到这一帧之间有多于一次射击
+        // 重置 nextFireTime
         if (Time.time - Info.FireRate > nextFireTime)
             nextFireTime = Time.time - Time.deltaTime;
 
         float time = 0;
-        // Keep firing until we used up the fire time
+        // 持续开火直到用完开火时长
         while (nextFireTime < Time.time)
         {
             isFiring = true; // fire is down, gun is firing
@@ -692,18 +692,18 @@ public class GunController : GunBase
         return time;
     }
 
-    // burst shooting
+    // 点射
     // <returns></returns>
     IEnumerator BurstFire()
     {
         int shotCounter = 0;
-        // If there is more than one bullet between the last and this frame
-        // Reset the nextFireTime
+        // 若上一帧到这一帧之间有多于一颗子弹
+        // 重置 nextFireTime
         if (Time.time - lagBetweenBurst > nextFireTime)
             nextFireTime = Time.time - Time.deltaTime;
 
         int shots = Mathf.Min(roundsPerBurst, bulletsLeft);
-        // Keep firing until we used up the fire time
+        // 持续开火直到用完开火时长
         while (nextFireTime < Time.time)
         {
             while (shotCounter < shots)
@@ -714,7 +714,7 @@ public class GunController : GunBase
                 OnFireCommons();
                 PlayFX();
 
-                //Play fire animation
+                //播放开火动画
                 if (isAiming) WeaponAnimation?.PlayFire(WeaponAnimationBase.AnimationFlags.Aiming);
                 else WeaponAnimation?.PlayFire();
 
@@ -723,7 +723,7 @@ public class GunController : GunBase
             }
 
             nextFireTime += lagBetweenBurst;
-            //is Auto reload
+            //是否自动换弹
             if (bulletsLeft <= 0 && _remainingClips > 0 && AutoReload)
             {
                 Reload();
@@ -732,16 +732,16 @@ public class GunController : GunBase
         isBursting = false;
     }
 
-    // fire the shotgun
+    // 霰弹枪开火
     void ShotgunFire()
     {
-        // If there is more than one bullet between the last and this frame
-        // Reset the nextFireTime
+        // 若上一帧到这一帧之间有多于一颗子弹
+        // 重置 nextFireTime
         if (Time.time - Info.FireRate > nextFireTime)
             nextFireTime = Time.time - Time.deltaTime;
 
         int pelletCounter = 0;  // counter used for pellets per round
-        // Keep firing until we used up the fire time
+        // 持续开火直到用完开火时长
         while (nextFireTime < Time.time)
         {
             do
@@ -758,7 +758,7 @@ public class GunController : GunBase
             WeaponAnimation?.PlayFire();
             OnFireCommons();
             PlayFX();
-            //is Auto reload
+            //是否自动换弹
             if (bulletsLeft <= 0 && _remainingClips > 0 && AutoReload)
             {
                 Reload(delayForSecondFireSound + 0.3f);
@@ -787,11 +787,11 @@ public class GunController : GunBase
         else { StartCoroutine(ThrowGrenade(fastFire)); }
     }
 
-    // fire your launcher
+    // 发射器开火
     public IEnumerator ThrowGrenade(bool fastFire = false, bool useDelay = true)
     {
         float t = 0;
-        // multiple these values to add compatibility with the default inspector values in older Game versions
+        // 与原版 Game 旧版本的默认 Inspector 数值相乘，保持兼容
         float throwForce = BulletSpeed * 22;
         float upwardForce = bulletDropFactor * 33;
 
@@ -819,7 +819,7 @@ public class GunController : GunBase
         PlayFireAudio();
         isFiring = false;
 
-        //hide the grenade mesh when doesn't have ammo
+        //没有弹药时隐藏手雷模型
         if (bulletsLeft <= 0)
         {
             OnAmmoLauncher.ForEach(x =>
@@ -829,7 +829,7 @@ public class GunController : GunBase
            });
         }
 
-        //is Auto reload
+        //是否自动换弹
         if (!fastFire && AutoReload)
         {
             if (useDelay)
@@ -879,14 +879,14 @@ public class GunController : GunBase
         gameObject.SetActive(false);
     }
 
-    // Create and fire a bullet
+    // 创建并发射子弹
     // <returns></returns>
     void FireOneShot()
     {
-        // set the gun's info into an array to send to the bullet
+        // 把枪械信息写入数组传给子弹
         BuildBulletData();
         var instanceData = GetBulletPosition();
-        //bullet info is set up in start function
+        //子弹信息在 start 函数中设置
         instancedBullet = ObjectPoolingBase.Instance.Instantiate(BulletName, instanceData.Position, instanceData.Rotation); // create a bullet
         instancedBullet.GetComponent<ProjectileBase>().InitProjectile(BulletSettings);// send the gun's info to the bullet
         CrosshairBase.Instance.OnFire();
@@ -898,13 +898,13 @@ public class GunController : GunBase
         }
     }
 
-    // Create and Fire 1 launcher projectile
+    // 创建并发射 1 个发射器投掷物
     // <returns></returns>
     void FireOneProjectile(Vector3 direction, Vector3 origin)
     {
         BuildBulletData();
 
-        //Instantiate grenade
+        //生成手雷
         GameObject newNoobTube = Instantiate(grenade, origin, transform.parent.rotation) as GameObject;
 
         var proRigid = newNoobTube.GetComponent<Rigidbody>();
@@ -929,7 +929,7 @@ public class GunController : GunBase
         Shake();
     }
 
-    // Play muzzleflash effect.
+    // 播放枪口火光特效。
     public void PlayFX()
     {
         if (!isAiming)
@@ -942,7 +942,7 @@ public class GunController : GunBase
         }
     }
 
-    // Get the bullet spawn position and rotation
+    // 获取子弹的出生位置和旋转
     public BulletInstanceData GetBulletPosition()
     {
         bulletInstanceData.Rotation = _transform.parent.rotation;
@@ -950,30 +950,30 @@ public class GunController : GunBase
         Vector3 mp = muzzlePoint.position;
         bulletInstanceData.ProjectedHitPoint = cp + (PlayerCamera.transform.forward * 100);
 
-        // if there's a collider between the player camera and the weapon fire point
-        // that means the fire point is going through the collider
+        // 若玩家相机与武器开火点之间存在碰撞体
+        // 说明开火点穿进了碰撞体
         if (Physics.Linecast(cp, mp, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers))
         {
-            // since we can't shoot from the fire point (since the bullets will go through the collider)
-            // the bullet will be instanced from the center of the player camera
+            // 因为不能从开火点射击（子弹会穿过碰撞体）
+            // 子弹改从玩家相机中心生成
             bulletInstanceData.Position = cp;
         }
         else
         {
-            // we can shoot from the fire point
+            // 可以从开火点射击
             bulletInstanceData.Position = mp;
         }
 
-        // Now there is a situation where the bullet wont get to hit the desired destination 
-        // this happens when the bullet trajectory is hampered by a collider that is near to the bullet instantiation point.
-        // in these case the player may not be aiming to that collider but the bullet will hit that collider instead of where the player is aiming to
-        // so to fix this we do the following:
+        // 还有一种情况是子弹打不到目标位置
+        // 发生在子弹轨迹被靠近生成点的碰撞体挡住时。
+        // 此时玩家可能并没有瞄准该碰撞体，但子弹会打到它而不是玩家瞄准的位置
+        // 为此做如下处理：
 
-        // detect colliders between the fire point and the direction (5 meters long) where the player is aiming to
+        // 检测开火点与玩家瞄准方向（长 5 米）之间的碰撞体
         if (Physics.Raycast(bulletInstanceData.Position, PlayerCamera.transform.forward, out hit, 5, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers, QueryTriggerInteraction.Ignore))
         {
-            // if indeed there is a collider hampering the trajectory
-            // instance the bullet from the camera to make the bullet avoid the obstacle and hit the desired destination.
+            // 若确实有碰撞体挡住轨迹
+            // 就从相机生成子弹，让它绕过障碍并打中目标位置。
 
             bulletInstanceData.ProjectedHitPoint = hit.point;
             bulletInstanceData.Position = cp;
@@ -984,7 +984,7 @@ public class GunController : GunBase
             {
                 if (WeaponType != GunType.Sniper)
                 {
-                    // this result in a more realist bullet shoot effect when aiming but add a sightly inaccuracy on close targets
+                    // 这样瞄准时弹道更真实，但近处目标会有轻微偏差
                     bulletInstanceData.Rotation = Quaternion.LookRotation(bulletInstanceData.ProjectedHitPoint - mp);
                     if (Physics.Raycast(cp, PlayerCamera.transform.forward, out hit, 500, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers, QueryTriggerInteraction.Ignore))
                     {
@@ -993,9 +993,9 @@ public class GunController : GunBase
 
                     }
 
-                    // this in the other hand make the bullet travel exactly where the player is aiming but the bullets are instanced from the center of the screen
-                    // which if you are using some sort of custom effects in the bullets will be noticed (like shooting bullets from the eyes)
-                    // but if this is what you need and you are not using custom bullet trails/effects, comment the above lines and uncomment the following one:
+                    // 另一种做法是子弹精确沿玩家瞄准方向飞行，但子弹从屏幕中心生成
+                    // 若子弹用了自定义特效就会看出来（比如从眼睛射出子弹）
+                    // 若这正是你需要的且没有用自定义弹道/特效，就注释上面的行，取消注释下面这行：
 
                     // bulletInstanceData.Position = cp;
                 }
@@ -1012,7 +1012,7 @@ public class GunController : GunBase
         return bulletInstanceData;
     }
 
-    // Fetch the information that will be attached to the next fired bullet containing all required information from the weapon from which the bullet was shoot and the information about the player who shoot it
+    // 收集下一颗子弹要附带的信息，包含来源武器和射击玩家的全部所需数据
     public void BuildBulletData()
     {
         BulletSettings.Damage = Damage;
@@ -1037,7 +1037,7 @@ public class GunController : GunBase
         BulletSettings.IsLocalPlayer = true;
     }
 
-    // Aiming control
+    // 瞄准控制
     void Aim()
     {
         if (isAiming && !isReloading)
@@ -1057,7 +1057,7 @@ public class GunController : GunBase
             spreadMinMax = defaultSpreadRange;
         }
         float delta = Time.deltaTime;
-        //apply position
+        //应用位置
         _transform.localPosition = useSmooth ? Vector3.Lerp(_transform.localPosition, CurrentPos, delta * AimSpeed) : //with smooth effect
         Vector3.MoveTowards(_transform.localPosition, CurrentPos, delta * AimSpeed); // with snap effect
         _transform.localRotation = Quaternion.Slerp(_transform.localRotation, currentRotation, delta * AimSpeed);
@@ -1073,7 +1073,7 @@ public class GunController : GunBase
         }
     }
 
-    // send kick back to mouse look when is fire
+    // 开火时把后坐力反馈给鼠标视角
     public void Kick() => PlayerReferences.recoil.SetRecoil(new RecoilBase.RecoilData() { Amount = WeaponRecoil, Speed = RecoilSpeed });
 
     void Shake()
@@ -1112,7 +1112,7 @@ public class GunController : GunBase
         StartCoroutine(nameof(DoReload), delay);
     }
 
-    // start reload weapon deduct the remaining bullets in the cartridge of a new clip as this happens, we disable the options: fire, aim and run
+    // 开始换弹，扣掉一个新弹匣的弹药；同时禁用开火、瞄准和奔跑
     // <returns></returns>
     IEnumerator DoReload(float waitTime = 0.2f)
     {
@@ -1121,7 +1121,7 @@ public class GunController : GunBase
         if (isReloading)
             yield break; // if already reloading... exit and wait till reload is finished
 
-        // Delay before start reloading
+        // 开始换弹前的延迟
         yield return new WaitForSeconds(waitTime);
 
         if (_remainingClips > 0 || inReloadMode)//if have at least one cartridge
@@ -1136,8 +1136,8 @@ public class GunController : GunBase
                     int add = (_remainingClips >= t_repeat) ? t_repeat : (int)_remainingClips;
                     WeaponAnimation?.PlayReload(ReloadTime, new int[1] { add }, WeaponAnimationBase.AnimationFlags.SplitReload);
 
-                    // Since this reload method const of multiple animation parts, the reload time
-                    // will be determined by the animations, the reload will end once the last animation has been played.
+                    // 这种换弹方式由多段动画组成，换弹时间
+                    // 由动画决定，最后一段动画播完后换弹才结束。
                     yield break;
                 }
                 else
@@ -1193,7 +1193,7 @@ public class GunController : GunBase
         UpdateUI();
     }
 
-    // Set unlimited ammo to this weapon
+    // 把该武器设为无限弹药
     // <param name="infinity"></param>
     public void SetInifinityAmmo(bool infinity)
     {
@@ -1204,7 +1204,7 @@ public class GunController : GunBase
             UpdateUI();
     }
 
-    // Sync Weapon state for Upper animations
+    // 同步上半身动画的武器状态
     void DetermineUpperState()
     {
         if (PlayerNetwork == null)
@@ -1233,7 +1233,7 @@ public class GunController : GunBase
         PlayerNetwork.FPState = FPState;
     }
 
-    // Snap the weapon to the aim position.
+    // 把武器吸附到瞄准位置。
     public void SetToAim()
     {
         _transform.localPosition = AimPosition;
@@ -1248,7 +1248,7 @@ public class GunController : GunBase
         FireSource.Play();
     }
 
-    // most shotguns have the sound of shooting and then reloading
+    // 多数霰弹枪是先开枪声后换弹声
     // <returns></returns>
     IEnumerator DelayFireSound()
     {
@@ -1301,7 +1301,7 @@ public class GunController : GunBase
         }
     }
 
-    // use this method to various sounds reload. if you have only 1 sound, them put only one in inspector and leave empty other box
+    // 用这个方法配置多段换弹音效。只有 1 段音效时，只在 Inspector 里填一个，其他留空
     // <returns></returns>
     IEnumerator ReloadSoundIE()
     {
@@ -1345,7 +1345,7 @@ public class GunController : GunBase
         alreadyKnife = false;
     }
 
-    // When we disable the gun ship called the animation and disable the basic functions
+    // 禁用枪械时调用动画并关闭基础功能
     public float DisableWeapon(bool isFastKill = false)
     {
         CanAiming = false;
@@ -1379,22 +1379,22 @@ public class GunController : GunBase
         }
     }
 
-    // When round is end we can't fire
+    // 回合结束时不能开火
     void OnRoundEnd() => _enable = false;
 
     public bool OnPickUpAmmo(int bullets, int projectiles, int gunID)
     {
-        //if this is not a global ammo but for a specific weapon
+        //若这不是全局弹药，而是某把武器专用
         if (gunID != -1)
         {
-            //and this is not the weapon that is for
+            //而且这又不是对应的那把武器
             if (gunID != GunID) return false;
         }
 
         if (WeaponType == GunType.Knife) return false;
         if (AmmoType == AmmunitionType.Clips)
         {
-            //max number of clips
+            //弹匣数量上限
             if (_remainingClips >= maxNumberOfClips) return false;
 
             _remainingClips += Mathf.FloorToInt(bullets / BulletsPerMagazine);
@@ -1430,7 +1430,7 @@ public class GunController : GunBase
         muzzlePoint = newPoint;
     }
 
-    // Enable/Disable the weapon renders/meshes
+    // 启用/禁用武器渲染器和模型
     public void SetWeaponRendersActive(bool active)
     {
         if (weaponRenders == null)
@@ -1476,7 +1476,7 @@ public class GunController : GunBase
         }
     }
 
-    // The current <see cref="GunType"/> This can change if the weapon fire type changes in runtime.
+    // 当前的 <see cref="GunType"/>，武器射击类型在运行时变化时会跟着变。
     public GunType WeaponType
     {
         get
@@ -1490,7 +1490,7 @@ public class GunController : GunBase
         }
     }
 
-    // The default <see cref="GunType"/> defined in GameData
+    // GameData 中定义的默认 <see cref="GunType"/>
     public GunType OriginalWeaponType
     {
         get => Info.Type;
@@ -1503,7 +1503,7 @@ public class GunController : GunBase
 
     public int GetCompactClips { get { return (_remainingClips / BulletsPerMagazine); } }
 
-    // Determine if the player can shoot this weapon.
+    // 判断玩家能否射击这把武器。
     public bool CanFire
     {
         get
@@ -1516,7 +1516,7 @@ public class GunController : GunBase
     public bool FireRatePassed { get { return (Time.time - nextFireTime) > Info.FireRate; } }
     public bool AllowQuickFire() => m_AllowQuickFire && bulletsLeft > 0 && FireRatePassed;
 
-    // Determine if the player can aiming with this weapon in the current state
+    // 判断玩家在当前状态下能否用这把武器瞄准
     public bool CanAiming
     {
         get
@@ -1529,7 +1529,7 @@ public class GunController : GunBase
         set => _canAim = value;
     }
 
-    // Determine if the player can reload this weapon
+    // 判断玩家能否给这把武器换弹
     bool CanReload
     {
         get

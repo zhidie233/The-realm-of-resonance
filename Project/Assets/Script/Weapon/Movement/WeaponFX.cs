@@ -8,7 +8,7 @@ public class WeaponFX : WeaponFXBase
     private ParticleSystem[] targetParticles;
 
     /// <summary>
-    /// Play the weapon fire FX effects
+    /// 播放武器开火特效
     /// </summary>
     public override void PlayFireFX()
     {
@@ -22,9 +22,9 @@ public class WeaponFX : WeaponFXBase
     }
 
     /// <summary>
-    /// Use the particles based on the platform target
-    /// high for PC and console platforms
-    /// low for mobile platforms
+    /// 根据目标平台使用对应粒子
+    /// 高配用于 PC 和主机平台
+    /// 低配用于移动平台
     /// </summary>
     public void ActiveDependOfTarget()
     {

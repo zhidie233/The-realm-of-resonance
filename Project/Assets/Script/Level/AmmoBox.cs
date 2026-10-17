@@ -22,7 +22,7 @@ namespace Game.Runtime.Level
             if (GameEvents.OnAmmo(Bullets, Projectiles, gunID))
             {
                 if (PickSound) AudioSource.PlayClipAtPoint(PickSound, transform.position, 1.0f);
-                //should this ammo reaper after certain time?
+                //此弹药是否在一定时间后重新出现？
                 if (autoRespawn)
                 {
                     ItemManagerBase.Instance.RespawnAfter(this);

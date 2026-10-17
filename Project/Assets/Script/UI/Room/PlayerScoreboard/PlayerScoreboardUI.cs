@@ -23,7 +23,7 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
     #endregion
 
     /// <summary>
-    /// Called when the first time that this player appear in the scoreboard
+    /// 该玩家首次出现在记分板时调用
     /// </summary>
     public override void Init(Player player, GameBotProperties bot = null)
     {
@@ -45,7 +45,7 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
     }
 
     /// <summary>
-    /// Called each time the scoreboard is update (when the scoreboard is open)
+    /// 记分板每次刷新时调用（记分板打开期间）
     /// </summary>
     public override bool Refresh()
     {

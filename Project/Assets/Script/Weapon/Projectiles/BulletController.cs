@@ -1,10 +1,10 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-// This the default bullet handler of Game If you want to use your custom bullet script, simply append the ProjectileBase class to it Handle the override functions and attach it to a bullet prefab Follow the Bullet documentation to see how to use a custom bullet prefab. You can use this script as reference to see how to apply damage to players and bots.
+// Game 默认的子弹处理脚本。想用自己的子弹脚本，就继承 ProjectileBase 类，实现要覆盖的函数，再挂到子弹预制体上。使用自定义子弹预制体请查看 Bullet 文档。可以参考本脚本了解如何对玩家和机器人施加伤害。
 public class BulletController : ProjectileBase
 {
-    // If is enabled, on all collisions will check if the hitted object have a IGameDamageable component
+    // 启用后，每次碰撞都会检查被击中的物体是否有 IGameDamageable 组件
     [GameToggle] public bool checkDamageables = false;
     public LayerMask HittableLayers;
     public TrailRenderer Trail = null;
@@ -29,10 +29,10 @@ public class BulletController : ProjectileBase
     private LayerMask bulletMask;
     private int localLayer = -2;
 
-    // Initialize the bullet with the given info from the weapon
+    // 用武器传来的信息初始化子弹
     public override void InitProjectile(BulletData data)
     {
-        // Since the bullet is pooled, make sure to reset all the variables to its initial values.
+        // 子弹是池化的，必须把所有变量重置为初始值。
         ResetBullet();
 
         _transform = transform;
@@ -40,13 +40,13 @@ public class BulletController : ProjectileBase
 
         ActorViewID = data.ActorViewID;
 
-        // direction bullet is traveling, add some spread to it by the weapon accuracy
+        // 子弹飞行方向，按武器精度加入散布
         direction = _transform.TransformDirection(data.Inaccuracity);
         bulletRange = data.Range;
         newPos = _transform.position;
         oldPos = newPos;
         velocity = data.Speed * _transform.forward; // bullet's velocity determined by direction and bullet speed
-        // apply the spread direction
+        // 应用散布方向
         velocity += direction;
         gravity = MathUtility.Gravity * data.DropFactor;
 
@@ -61,13 +61,13 @@ public class BulletController : ProjectileBase
         }
 
         if (Trail != null) { if (!GameConfig.Instance.BulletTracer) { Destroy(Trail); } }
-        // schedule for destruction if bullet never hits anything
+        // 子弹什么都没打中时安排销毁
         Invoke(nameof(Disable), 5);//TTL
 
         //BulletDebugger.CreateBullet(this);
     }
 
-    // Set all the bullet properties to their initial values.
+    // 把子弹所有属性设为初始值。
     void ResetBullet()
     {
         bulletData = null;
@@ -85,21 +85,21 @@ public class BulletController : ProjectileBase
         Travel();
     }
 
-    // Determine the ballistic movement Detect if the bullet hit anything during the travel.
+    // 计算弹道运动并检测子弹飞行途中是否命中物体。
     void Travel()
     {
         timeStep = Time.fixedDeltaTime;
         if (!realisticBallistics)
         {
-            // Calculate the linear ballistic trajectory
-            // No external or gravity forces applied here.
+            // 计算直线弹道轨迹
+            // 这里不施加外力或重力。
             newPos += velocity * timeStep;
         }
         else
         {
-            //Calculate the new velocity and position using Heuns method's
-            //y_k+1 = y_k + timeStep * 0.5 * (f(t_k, y_k) + f(t_k+1, y_k+1))
-            //Where f(t_k+1, y_k+1) is calculated with Forward Euler: y_k+1 = y_k + timeStep * f(t_k, y_k)
+            //用 Heun 法计算新的速度和位置
+            //公式：y_k+1 = y_k + timeStep * 0.5 * (f(t_k, y_k) + f(t_k+1, y_k+1))
+            //其中 f(t_k+1, y_k+1) 用前向欧拉法计算：y_k+1 = y_k + timeStep * f(t_k, y_k)
             newVelEuler = velocity + timeStep * gravity;
             Vector3 newVel = velocity + timeStep * 0.5f * (gravity + gravity);
 
@@ -109,7 +109,7 @@ public class BulletController : ProjectileBase
 
         if (fixedFrame % detectionStep == 0)
         {
-            // get the traveled trajectory since last check
+            // 获取上次检测以来走过的轨迹
             dir = newPos - oldPos;
             distanceSinceLastCheck = dir.magnitude;
             totalTraveledDistance += distanceSinceLastCheck;
@@ -118,7 +118,7 @@ public class BulletController : ProjectileBase
             {
                 //BulletDebugger.UpdateBullet(this);
 
-                // Check if we hit anything on the way
+                // 检测途中是否命中物体
                 dir /= distanceSinceLastCheck;
                 if (Physics.Raycast(oldPos, dir, out hit, distanceSinceLastCheck, bulletMask, QueryTriggerInteraction.Ignore))
                 {
@@ -166,17 +166,17 @@ public class BulletController : ProjectileBase
             case "IgnoreBullet":
                 return false;
             case "Projectile":
-                // do nothing if 2 bullets collide
+                // 两颗子弹相撞时不处理
                 break;
             case GameCore.HITBOX_TAG://Send Damage for other players
                 SendPlayerDamage(hit);
                 break;
             case "AI":
-                //Bullet hit a bot collider, check if we have to apply damage.
+                //子弹击中机器人碰撞体，检查是否需要施加伤害。
                 SendBotDamage(hit);
                 break;
             case "Player":
-                //A bot hit a real player
+                //机器人击中了真人玩家
                 SendPlayerDamageFromBot(hit);
                 break;
             case "Facility":
@@ -206,7 +206,7 @@ public class BulletController : ProjectileBase
         return true;
     }
 
-    // Apply damage to real players from a bot or another real player
+    // 对真人玩家施加来自机器人或其他真人玩家的伤害
     void SendPlayerDamage(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
@@ -269,7 +269,7 @@ public class BulletController : ProjectileBase
                 }
             }
             
-            //check if the bullet comes from a bot or a real player.
+            //检查子弹来自机器人还是真人玩家。
             if (bulletData.GameActor != null)
             {
                 damageData.Cause = bulletData.GameActor.isRealPlayer ? DamageCause.Player : DamageCause.Bot;
@@ -289,11 +289,11 @@ public class BulletController : ProjectileBase
         Disable();
     }
 
-    // Apply damage to a bot from a Real Player or Another bot
+    // 对机器人施加来自真人玩家或其他机器人的伤害
     void SendBotDamage(RaycastHit hit)
     {
-        //apply damage only if this is the Local Player, we could use only On Master Client to have a more "Authoritative" logic but since the
-        //Ping of Master Clients can be volatile since it depend of the client connection, that could affect all the players in the room.
+        //只在本地玩家上施加伤害。也可以只在主客户端上处理以获得更"权威"的逻辑，但由于
+        //主客户端的延迟会随其网络连接波动，可能影响房间内所有玩家。
         if (!bulletData.isNetwork)
         {
             if (bulletData.GameActor == null)
@@ -305,7 +305,7 @@ public class BulletController : ProjectileBase
             
             if (damageable != null)
             {
-                //callback is in HitBox.cs
+                //回调在 HitBox.cs 中
                 var damageData = BuildBaseDamageData();
                 //不是真人
                 var botRefs = hit.transform.root.GetComponent<AIShooterReferences>();//判断是不是人机
@@ -344,13 +344,13 @@ public class BulletController : ProjectileBase
         Disable();
     }
 
-    // Apply damage to real players FROM bots.
+    // 对真人玩家施加来自机器人的伤害。
     void SendPlayerDamageFromBot(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
         
-        //Bots doesn't hit the players HitBoxes like other real players does, instead they hit the Character Controller Collider,
-        //So instead of communicate with the hit box script we have to communicate with the player health script directly
+        //机器人不像其他真人玩家那样击中玩家的判定盒，而是击中角色控制器碰撞体，
+        //所以不通过判定盒脚本，而是直接和玩家生命值脚本通信
         var pdm = hit.transform.GetComponent<PlayerReferencesHandler>();
         //if (pdm != null && bulletData.GameActor != null && !bulletData.GameActor.isRealPlayer)
         if (pdm != null && bulletData.GameActor != null)
@@ -393,7 +393,7 @@ public class BulletController : ProjectileBase
         ResonanceFacility facility = hit.transform.GetComponent<ResonanceFacility>();
         if (damageable != null)
         {
-            //callback is in HitBox.cs
+            //回调在 HitBox.cs 中
             var damageData = BuildBaseDamageData();
             NotifyMasterClientResonanceChange(facility.resonanceKey, damageData.Damage);
             damageable.ReceiveDamage(damageData);
@@ -421,9 +421,9 @@ public class BulletController : ProjectileBase
 
     void InstanceHitParticle(string poolPrefab, RaycastHit hit, bool overrideDamageable = false)
     {
-        // instantiate particle
+        // 生成粒子
         GameObject go = ObjectPoolingBase.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-        // instance decal
+        // 生成弹痕
         BulletDecalManagerBase.InstantiateDecal(hit);
 
         if (go != null)

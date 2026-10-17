@@ -1,13 +1,13 @@
 using UnityEngine;
 
 /// <summary>
-/// Inherited classes should take care of display to the player the information of the weapon
-/// that they are about to pick up.
+/// 派生类负责向玩家显示武器信息
+/// 即玩家即将拾取的武器。
 /// </summary>
 public abstract class PickUpUIBase : MonoBehaviour
 {
     /// <summary>
-    /// Called when the player enter in the trigger or focus a gun pick up in the map
+    /// 玩家进入触发器或准星指向地图中的枪械拾取物时调用
     /// </summary>
     public abstract void OnOverWeapon(GunPickUpBase toPickUpWeapon);
 

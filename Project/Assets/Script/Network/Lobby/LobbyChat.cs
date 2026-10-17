@@ -133,7 +133,7 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
         subscribed = false;
     }
 
-    /// <summary>To avoid that the Editor becomes unresponsive, disconnect all Photon connections in OnApplicationQuit.</summary>
+    /// <summary>避免编辑器卡死，在 OnApplicationQuit 中断开所有 Photon 连接。</summary>
     public void OnApplicationQuit()
     {
         if (this.chatClient != null)
@@ -198,8 +198,8 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
         string privateChatTarget = string.Empty;
         if (doingPrivateChat)
         {
-            // the channel name for a private conversation is (on the client!!) always composed of both user's IDs: "this:remote"
-            // so the remote ID is simple to figure out
+            // 私聊频道名（在客户端上）总是由双方用户 ID 组成："this:remote"
+            // 所以对方 ID 很容易推出来
 
             string[] splitNames = this.selectedChannelName.Split(new char[] { ':' });
             privateChatTarget = splitNames[1];
@@ -271,7 +271,7 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
             {
                 string[] subtokens = tokens[1].Split(new char[] { ' ', ',' }, 2);
 
-                // If we are already subscribed to the channel we directly switch to it, otherwise we subscribe to it first and then switch to it implicitly
+                // 如果已订阅该频道就直接切换，否则先订阅再隐式切换过去
                 if (channelToggles.ContainsKey(subtokens[0]))
                 {
                     ShowChannel(subtokens[0]);
@@ -344,21 +344,21 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
 
     public void OnChatStateChange(ChatState state)
     {
-        // use OnConnected() and OnDisconnected()
-        // this method might become more useful in the future, when more complex states are being used.
+        // 请使用 OnConnected() 和 OnDisconnected()
+        // 以后用到更复杂的状态时，这个方法可能会更有用。
 
         this.StateText.text = state.ToString();
     }
 
     public void OnSubscribed(string[] channels, bool[] results)
     {
-        // in this demo, we simply send a message into each channel. This is NOT a must have!
+        // 这个示例只是往每个频道各发一条消息，并非必须这么做
         foreach (string channel in channels)
         {
             this.chatClient.PublishMessage(channel, "says 'hi'."); // you don't HAVE to send a msg on join but you could.
         }
 
-        // Switch to the first newly created channel
+        // 切换到第一个新建的频道
         ShowChannel(channels[0]);
     }
 
@@ -384,7 +384,7 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
 
                 Debug.Log("Unsubscribed from channel '" + channelName + "'.");
 
-                // Showing another channel if the active channel is the one we unsubscribed from before
+                // 如果当前频道正是刚取消订阅的那个，就显示另一个频道
                 if (channelName == selectedChannelName && channelToggles.Count > 0)
                 {
                     IEnumerator<KeyValuePair<string, Toggle>> firstEntry = channelToggles.GetEnumerator();
@@ -406,15 +406,15 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
     {
         if (channelName.Equals(this.selectedChannelName))
         {
-            // update text
+            //更新文本
             ShowChannel(this.selectedChannelName);
         }
     }
 
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
-        // as the ChatClient is buffering the messages for you, this GUI doesn't need to do anything here
-        // you also get messages that you sent yourself. in that case, the channelName is determinded by the target of your msg
+        // ChatClient 已经帮你缓存了消息，这个 GUI 不用做任何处理
+        // 自己发的消息也会收到，这时 channelName 由消息目标决定
         this.InstantiateChannelButton(channelName);
 
         byte[] msgBytes = message as byte[];
@@ -429,13 +429,13 @@ public class LobbyChat : MonoBehaviour, IChatClientListener
     }
 
     /// <summary>
-    /// New status of another user (you get updates for users set in your friends list).
+    /// 其他用户的新状态（只会收到好友列表里用户的状态更新）
     /// </summary>
-    /// <param name="user">Name of the user.</param>
-    /// <param name="status">New status of that user.</param>
-    /// <param name="gotMessage">True if the status contains a message you should cache locally. False: This status update does not include a
-    /// message (keep any you have).</param>
-    /// <param name="message">Message that user set.</param>
+    /// <param name="user">用户名。</param>
+    /// <param name="status">该用户的新状态。</param>
+    /// <param name="gotMessage">为 true 表示状态里带有需要本地缓存的消息。为 false 表示本次状态更新不含消息
+    /// （保留已有的）。</param>
+    /// <param name="message">用户设置的消息。</param>
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
 

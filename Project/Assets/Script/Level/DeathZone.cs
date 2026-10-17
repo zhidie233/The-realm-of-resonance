@@ -70,7 +70,7 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Start CountDown when player is on Trigger
+        /// 玩家进入触发器时开始倒计时
         /// </summary>
         void DoCountDown()
         {
@@ -110,8 +110,8 @@ namespace Game.Runtime.Level
             Gizmos.matrix = transform.localToWorldMatrix;
             if (gameObject == UnityEditor.Selection.activeGameObject)
             {
-                // If we are directly selected (and not just our parent is selected)
-                // draw with negative size to get an 'inside out' cube we can see from the inside
+                // 若直接选中了本对象（而非仅选中父对象）
+                // 用负尺寸绘制，得到可从内部看到的“外翻”立方体
                 Gizmos.color = new Color(1.0f, 1.0f, 0.5f, 0.8f);
                 Gizmos.DrawCube(c.center, -c.size);
             }

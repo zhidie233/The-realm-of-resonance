@@ -1,4 +1,4 @@
-﻿﻿using Game.Internal;
+﻿using Game.Internal;
 using UnityEngine;
 
 public class MonoBehaviourBase : PhotonHelper

@@ -88,11 +88,11 @@ namespace Game.Runtime.Settings
             onChange?.Invoke(currentOption);
             if (string.IsNullOrEmpty(SettingKeyName)) return;
 
-            //Set the changed setting value to the instance settings group.
+            //把修改后的设置值写入对应的设置组实例。
             GameCore.Settings.SetSettingOf(SettingKeyName, currentOption, SettingsManager.Instance.autoSaveSettings);
             if (SettingsManager.Instance.applySettingsOnChange)
             {
-                //call the listener that will apply the settings in game
+                //调用监听器在游戏中应用设置
                 GameCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.NoApply);
             }
         }

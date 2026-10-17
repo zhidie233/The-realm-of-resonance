@@ -25,7 +25,7 @@ public abstract class PlayerScoreboardUIBase : MonoBehaviour
     public abstract void Init(Player player, GameBotProperties bot = null);
 
     /// <summary>
-    /// Called each time the scoreboard is update (when the scoreboard is open)
+    /// 记分板每次刷新时调用（记分板打开期间）
     /// </summary>
     /// <returns></returns>
     public abstract bool Refresh();

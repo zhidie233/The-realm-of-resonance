@@ -16,7 +16,7 @@ public class AICovertPointManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        // Since it's a static property, make sure to clean up after unload the scene.
+        //这是静态属性，卸载场景后要记得清理。
         AllCovers.Clear();
     }
 
@@ -119,7 +119,7 @@ public class AICovertPointManager : MonoBehaviour
     {
         if (coverSource == null) return null;
 
-        // If this cover has been used recently, try to find another one
+        //如果这个掩体最近被用过，就换一个
         if ((Time.time - coverSource.lastUseTime) <= UsageTime)
         {
             if (coverSource.HasNeighbords())

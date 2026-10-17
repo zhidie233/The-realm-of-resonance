@@ -1,4 +1,4 @@
-﻿﻿using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -184,7 +184,7 @@ namespace GameEditor
 
         #region Simple string path based extensions
         /// <summary>
-        /// Returns the path to the parent of a SerializedProperty
+        /// 返回 SerializedProperty 的父级路径
         /// </summary>
         /// <param name="prop"></param>
         /// <returns></returns>
@@ -198,7 +198,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Returns the parent of a SerializedProperty, as another SerializedProperty
+        /// 以另一个 SerializedProperty 的形式返回 SerializedProperty 的父级
         /// </summary>
         /// <param name="prop"></param>
         /// <returns></returns>
@@ -214,7 +214,7 @@ namespace GameEditor
         // 获取 SerializedProperty 所属实例的思路参考自 Unity 社区旧帖
 
         /// <summary>
-        /// Use reflection to get the actual data instance of a SerializedProperty
+        /// 用反射获取 SerializedProperty 的实际数据实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="prop"></param>
@@ -261,7 +261,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Uses reflection to get the actual data instance of the parent of a SerializedProperty
+        /// 用反射获取 SerializedProperty 父级的实际数据实例
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="prop"></param>
@@ -315,7 +315,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Use reflection to check if SerializedProperty has a given attribute
+        /// 用反射检查 SerializedProperty 是否带有给定特性
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="prop"></param>
@@ -331,7 +331,7 @@ namespace GameEditor
         }
 
         /// <summary>
-        /// Use reflection to get the attributes of the SerializedProperty
+        /// 用反射获取 SerializedProperty 的特性
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="prop"></param>

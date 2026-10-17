@@ -31,7 +31,7 @@ namespace Game.Core.Motion
             public Vector3 Vector(float time = 0) => new Vector3(X.Evaluate(time), Y.Evaluate(time), Z.Evaluate(time));
 
             /// <summary>
-            /// Get the final rotation of the animation curves
+            /// 获取动画曲线的最终旋转
             /// </summary>
             /// <returns></returns>
             public Vector3 FinalVector()

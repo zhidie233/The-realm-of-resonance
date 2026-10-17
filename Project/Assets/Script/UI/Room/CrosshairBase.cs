@@ -1,11 +1,11 @@
 /// <summary>
-/// Base class for the Crosshair
-/// Inherited from this your custom crosshair script.
+/// 准星基类
+/// 自定义准星脚本继承此类。
 /// </summary>
 public abstract class CrosshairBase : MonoBehaviourBase
 {
     /// <summary>
-    /// If true = Freeze and block any action/call to the crosshair
+    /// 为 true 时冻结并屏蔽对准星的所有操作/调用
     /// </summary>
     public bool Block
     {
@@ -14,7 +14,7 @@ public abstract class CrosshairBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Show/Hide the crosshair
+    /// 显示/隐藏准星
     /// </summary>
     /// <param name="active"></param>
     public abstract void Show(bool active);
@@ -22,7 +22,7 @@ public abstract class CrosshairBase : MonoBehaviourBase
     public abstract void OnAim(bool aiming);
 
     /// <summary>
-    /// Call when the local player hit a damageable object
+    /// 本地玩家命中可伤害对象时调用
     /// </summary>
     public abstract void OnHit();
 
@@ -33,7 +33,7 @@ public abstract class CrosshairBase : MonoBehaviourBase
     public abstract void SetupCrosshairForWeapon(GunController weapon);
 
     /// <summary>
-    /// Allow the crosshair to fade in/out
+    /// 允许准星淡入淡出
     /// </summary>
     /// <param name="allow"></param>
     public abstract void AllowFade(bool allow);

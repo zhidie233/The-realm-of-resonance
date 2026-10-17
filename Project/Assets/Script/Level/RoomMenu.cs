@@ -15,12 +15,12 @@ public class RoomMenu : MonoBehaviourBase
     public float DelayLeave = 1.5f;
 
     /// <summary>
-    /// event called when a player enter but have to wait until current round finish.
+    /// 玩家进入但需等待当前回合结束时的事件。
     /// </summary>
     public Action<Team> onWaitUntilRoundFinish;
 
     /// <summary>
-    /// Is currently the cursor locked?
+    /// 当前是否锁定光标？
     /// </summary>
     public bool isCursorLocked
     {
@@ -29,7 +29,7 @@ public class RoomMenu : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Return which part of the game is currently using the Input/Control/Keyboard
+    /// 返回当前哪部分游戏正在使用输入/控制/键盘
     /// </summary>
     public ControlFocus CurrentControlFocus
     {
@@ -38,7 +38,7 @@ public class RoomMenu : MonoBehaviourBase
     } = ControlFocus.None;
 
     /// <summary>
-    /// Is currently the game showing the pause menu?
+    /// 游戏当前是否显示暂停菜单？
     /// </summary>
     public bool isPaused
     {
@@ -46,7 +46,7 @@ public class RoomMenu : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Is the game quitting?
+    /// 游戏是否正在退出？
     /// </summary>
     public bool isApplicationQuitting
     {
@@ -98,12 +98,12 @@ public class RoomMenu : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Check the input for open/hide the pause menu
+    /// 检测打开/隐藏暂停菜单的输入
     /// </summary>
     void PauseControll()
     {
 
-        // Force lock cursor when press left Alt + left mouse button
+        // 按下左 Alt + 鼠标左键时强制锁定光标
         if (Input.GetKey(KeyCode.LeftAlt))
         {
             if (Input.GetMouseButtonDown(0))
@@ -123,7 +123,7 @@ public class RoomMenu : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Toggle the current paused state
+    /// 切换当前暂停状态
     /// </summary>
     public void TogglePause()
     {
@@ -153,7 +153,7 @@ public class RoomMenu : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Event called when the player will be automatically assigned to a team
+    /// 玩家将被自动分配到队伍时触发
     /// </summary>
     public void OnAutoTeam()
     {
@@ -177,24 +177,24 @@ public class RoomMenu : MonoBehaviourBase
             KillFeedBase.Instance.SendTeamHighlightMessage(PhotonNetworkWrapper.NickName, jt, team);
         }
         UtilityHelper.LockCursor(true);
-        //if player only spawn when a new round start
+        //若玩家只在新回合开始时出生
         if (GetGameMode.GetGameModeInfo().onRoundStartedSpawn == GameModeSettings.OnRoundStartedSpawn.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
         {
-            //subscribe to the start round event
+            //订阅回合开始事件
             if (onWaitUntilRoundFinish != null) { onWaitUntilRoundFinish.Invoke(team); }
             GameController.Instance.SetLocalPlayerToTeam(team);//set the player to the selected team but not spawn yet.
             return;
         }
-        //set the player to the selected team and spawn the player
+        //将玩家设为所选队伍并出生
         GameController.Instance.SpawnPlayer(team);
     }
 
     /// <summary>
-    /// Leave the current room (if exist) and return to the lobby
+    /// 离开当前房间（若存在）并返回大厅
     /// </summary>
     public void LeaveRoom(bool save = true)
     {
-        //Good place to save info before reset statistics
+        //适合在重置统计数据前保存信息
         if (PhotonNetworkWrapper.IsConnected && PhotonNetworkWrapper.InRoom)
         {
             PhotonNetworkWrapper.CleanBuffer();
@@ -210,7 +210,7 @@ public class RoomMenu : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Called from the server when the left room request was retrieved.
+    /// 服务器收到离开房间请求时调用。
     /// </summary>
     public void OnLeftRoom()
     {

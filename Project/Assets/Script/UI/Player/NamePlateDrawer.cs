@@ -7,9 +7,9 @@ using UnityEngine.Serialization;
 using Game.Internal.BaseClass;
 
 /// <summary>
-/// Default Game Name Plate (Name above head) script
-/// If you want to make a different approach like use UGUI instead of OnGUI
-/// Create a custom script and inherited it from NamePlateBase.cs
+/// 默认游戏名称牌（头顶名称）脚本
+/// 若想改用其他方案，例如用 UGUI 代替 OnGUI
+/// 新建自定义脚本并继承 NamePlateBase.cs
 /// </summary>
 public class NamePlateDrawer : NamePlateBase
 {
@@ -112,7 +112,7 @@ public class NamePlateDrawer : NamePlateBase
                 }
 
 #if !UNITY_WEBGL && PVOICE
-                //voice chat icon
+                //语音聊天图标
                 if (voiceView != null && voiceView.IsSpeaking)
                 {
                     GUI.DrawTexture(new Rect(screenPoint.x + RightPand, (screenHeight - screenPoint.y) - vertical, 14, 14), StylePresent.TalkingIcon);

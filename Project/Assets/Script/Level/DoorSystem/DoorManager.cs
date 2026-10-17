@@ -75,9 +75,9 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// Update doors only when needed
-        /// Doors are dynamically added to the updated list to update them only when is needed
-        /// in order to allow many doors per map without performance cost.
+        /// 仅在需要时更新门
+        /// 门会动态加入更新列表，以便只在需要时更新
+        /// 从而让地图容纳大量门而不带来性能开销。
         /// </summary>
         void UpdateDoors()
         {

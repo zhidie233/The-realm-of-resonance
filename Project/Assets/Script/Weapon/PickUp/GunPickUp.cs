@@ -2,8 +2,8 @@ using System.Collections;
 using UnityEngine;
 
 /// <summary>
-/// Default weapon pick up script
-/// You can use your own script by inherited it from GunPickUpBase
+/// 默认武器拾取脚本
+/// 继承 GunPickUpBase 即可用自己的脚本
 /// </summary>
 public class GunPickUp : GunPickUpBase, IRayDetectable
 {
@@ -41,7 +41,7 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         if (m_DetectMode == DetectMode.Trigger)
         {
             PickupOnCollide = false;
-            // Delay before detect the throwed weapon again.
+            // 再次检测投掷出去的武器前的延迟。
             yield return new WaitForSeconds(2f);
             PickupOnCollide = true;
         }
@@ -70,7 +70,7 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
         if (!PickupOnCollide || GameController.Instance.GameMatchState == MatchState.Waiting)
             return;
         if (!GetGameMode.GetGameModeInfo().allowedPickupWeapons) return;
-        // if it is not a local player, just ignore it.
+        // 若不是本地玩家，直接忽略。
         if (!c.isLocalPlayerCollider()) return;
 
         var playerReferences = c.GetComponent<PlayerReferencesHandler>();
@@ -138,7 +138,7 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
     }
 
     /// <summary>
-    /// Pickup the weapon
+    /// 拾取武器
     /// </summary>
     public override void PickUp()
     {
@@ -156,7 +156,7 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
     }
 
     /// <summary>
-    /// Called when the player look at the weapon
+    /// 玩家看向武器时调用
     /// </summary>
     public void OnRayDetectedByPlayer()
     {
@@ -165,7 +165,7 @@ public class GunPickUp : GunPickUpBase, IRayDetectable
     }
 
     /// <summary>
-    /// Called when the player stop looking at the weapon
+    /// 玩家不再看向武器时调用
     /// </summary>
     public void OnUnDetectedByPlayer()
     {

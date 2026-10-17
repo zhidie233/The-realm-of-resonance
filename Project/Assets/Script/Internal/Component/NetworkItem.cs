@@ -33,19 +33,19 @@ public class NetworkItem : MonoBehaviour
 
     public void OnLocalInstanced()
     {
-        // ensure to reset the name of the item since the prefab could be already have an custom name.
+        // 重置物品名称，因为预制体可能已带有自定义名称。
         m_itemName = string.Empty;
         isInitializated = false;
     }
 
     /// <summary>
-    /// If the local player create this item, this will be executed
+    /// 本地玩家创建此物品时执行
     /// </summary>
     void Init()
     {
         if (isInitializated)
         {
-            //in case this is a scene item
+            //以防这是场景物品
             ItemManagerBase.Instance.PoolItem(m_itemName, this);
             return;
         }
@@ -55,11 +55,11 @@ public class NetworkItem : MonoBehaviour
         OwnerActorID = PhotonNetworkWrapper.LocalPlayer.ActorNumber;
         isInitializated = true;
 
-        //add the item in the pool here since it won't be added for the local player
+        //在此把物品加入池中，因为本地玩家不会走添加流程
         ItemManagerBase.Instance.PoolItem(ItemName, this);
 
-        //instead of use a PhotonView for each item, we simple sync the information
-        //and identify the item by an unique name
+        //不为每个物品各用一个 PhotonView，而是直接同步信息
+        //并通过唯一名称识别物品
         var data = UtilityHelper.CreatePhotonHashTable();
         data.Add("prefab", prefabName);
         data.Add("name", ItemName);
@@ -67,12 +67,12 @@ public class NetworkItem : MonoBehaviour
         data.Add("position", transform.position);
         data.Add("rotation", transform.rotation);
 
-        //this call is received and handled in PickupItemManager.cs -> OnNetworkItemInstance()
+        //该调用由 PickupItemManager.cs 的 OnNetworkItemInstance() 接收并处理
         PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.NetworkItemInstance, data);
     }
 
     /// <summary>
-    /// If this item was created for other player, this code will be executed
+    /// 此物品是为其他玩家创建时执行
     /// </summary>
     public void OnNetworkInstance(ExitGames.Client.Photon.Hashtable data)
     {
@@ -85,7 +85,7 @@ public class NetworkItem : MonoBehaviour
     }
 
     /// <summary>
-    /// Destroy this network item for all clients
+    /// 为所有客户端销毁此网络物品
     /// </summary>
     public void DestroySync()
     {
@@ -99,7 +99,7 @@ public class NetworkItem : MonoBehaviour
     }
 
     /// <summary>
-    /// Active or disable this network item for all clients
+    /// 为所有客户端启用或禁用此网络物品
     /// </summary>
     public void SetActiveSync(bool active)
     {

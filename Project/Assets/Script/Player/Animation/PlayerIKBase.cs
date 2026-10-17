@@ -3,7 +3,7 @@
 public abstract class PlayerIKBase : MonoBehaviourBase
 {
     /// <summary>
-    /// When this is true, you shouldn't control the arms with IK.
+    /// 为 true 时不应使用 IK 控制手臂。
     /// </summary>
     public bool ControlArmsWithIK
     {
@@ -12,7 +12,7 @@ public abstract class PlayerIKBase : MonoBehaviourBase
     } = true;
 
     /// <summary>
-    /// Return the player IK head look transform reference.
+    /// 返回玩家 IK 头部注视的 Transform 引用。
     /// </summary>
     /// <returns></returns>
     public abstract Transform HeadLookTarget
@@ -22,8 +22,8 @@ public abstract class PlayerIKBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// When CustomArmsIKHandler is != null
-    /// You should stop controlling the Arms with IK in your inherited script.
+    /// 当 CustomArmsIKHandler != null 时
+    /// 继承脚本里应停止用 IK 控制手臂。
     /// </summary>
     public BodyIKHandler CustomArmsIKHandler 
     { 
@@ -32,7 +32,7 @@ public abstract class PlayerIKBase : MonoBehaviourBase
     } = null;
 
     /// <summary>
-    /// Initialize the IK Solver
+    /// 初始化 IK 解算器
     /// </summary>
     public abstract void Init();
 }

@@ -4,10 +4,10 @@ using TMPro;
 namespace Game.Runtime.UI
 {
     /// <summary>
-    /// Default Game Ammo Indicator handler
-    /// The purpose of this script is to show a text that indicate of the current ammo state of the equipped weapon
-    /// in order to let the player know if he need to reload, have low ammo remain or doesn't have any at all.
-    /// This script is reference free, so if you want don't want to use or want to use your custom one, simply remove it from the UI instance.
+    /// 默认游戏弹药指示器处理器
+    /// 此脚本用于显示文本，指示当前装备武器的弹药状态
+    /// 让玩家知道需要换弹、弹药不足还是已打空。
+    /// 此脚本无引用依赖，不想用或想换成自定义实现时，直接从 UI 实例上移除即可。
     /// </summary>
     public class AmmoIndicatorUI : MonoBehaviour
     {
@@ -49,7 +49,7 @@ namespace Game.Runtime.UI
                 return;
             }
 
-            //for these weapons type we only care to notify if there is no ammo
+            //这些武器类型只需在没弹药时提示
             if (type == GunType.Grenade || type == GunType.Launcher)
             {
                 SetActive(false);
@@ -57,17 +57,17 @@ namespace Game.Runtime.UI
             }
 
             int max = weapon.bulletsPerClip;
-            //if the magazine max bullets are is too little, don't bother to notify
+            //弹匣容量太小时不必提示
             if (max <= 4) { SetActive(false); return; }
 
             int third = Mathf.FloorToInt(max / 3);
  
 
-            //the weapon is just fine.
+            //武器状态正常。
             if (bullets > third) { SetActive(false); return; }
 
             int five = Mathf.FloorToInt(max / 5);
-            //the weapon have just 1/5 of the magazine capacity
+            //武器剩余弹药仅为弹匣容量的 1/5
             if (bullets <= third && bullets > five)
             {
                 SetText(GameTexts.Reload.ToUpper());
@@ -75,7 +75,7 @@ namespace Game.Runtime.UI
                 return;
             }
 
-            //only one possibility left = remaining bullets are 1/5 of the max ammo = low ammo
+            //只剩一种可能 = 剩余弹药为最大弹药的 1/5 = 弹药不足
             SetText(GameTexts.LowAmmo);
             SetColor(m_warninColor );
         }

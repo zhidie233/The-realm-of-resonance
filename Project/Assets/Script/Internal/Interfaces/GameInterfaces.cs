@@ -1,9 +1,9 @@
-﻿﻿namespace Game.Internal.Interfaces
+﻿namespace Game.Internal.Interfaces
 {
 
     /// <summary>
-    /// Handle the UI window that appear after the finish of a match
-    /// By default it collect the local player data and show it to the screen
+    /// 处理对局结束后出现的 UI 窗口
+    /// 默认收集本地玩家数据并显示到屏幕上
     /// </summary>
     public interface IGameResumeScreen
     {

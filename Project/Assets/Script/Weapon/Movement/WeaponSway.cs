@@ -56,7 +56,7 @@ public class WeaponSway : WeaponSwayBase
     }
 
     /// <summary>
-    /// The delay effect movement when move the camera with the mouse.
+    /// 用鼠标移动相机时的延迟跟随运动。
     /// </summary>
     void DelayMovement()
     {
@@ -71,7 +71,7 @@ public class WeaponSway : WeaponSwayBase
     }
 
     /// <summary>
-    /// The angle oscillation movement when the player move sideway
+    /// 玩家横向移动时的角度摆动
     /// </summary>
     void SideMovement()
     {
@@ -101,7 +101,7 @@ public class WeaponSway : WeaponSwayBase
     }
 
     /// <summary>
-    /// On Impact event
+    /// 碰撞事件
     /// </summary>
     void OnSmallImpact(float impactAmount)
     {
@@ -136,7 +136,7 @@ public class WeaponSway : WeaponSwayBase
     }
 
     /// <summary>
-    /// create a soft impact effect
+    /// 创建轻微的碰撞效果
     /// </summary>
     /// <returns></returns>
     public IEnumerator FallEffect(float amount)

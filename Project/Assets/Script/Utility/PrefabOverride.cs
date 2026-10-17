@@ -1,8 +1,8 @@
 using UnityEngine;
 
 /// <summary>
-/// Use this script to override the default player prefabs set in GameData -> PlayerTeam1 and PlayerTeam2
-/// Attach this script in any game object of the map scene where you wanna override the player prefabs
+/// 用此脚本覆盖 GameData -> PlayerTeam1 和 PlayerTeam2 中设置的默认玩家预制体
+/// 把此脚本挂到需要覆盖玩家预制体的地图场景中任意游戏物体上
 /// </summary>
 public class PrefabOverride : MonoBehaviour
 {

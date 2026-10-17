@@ -104,12 +104,12 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
     }
 
     /// <summary>
-    /// Called when the player click one of the popup buttons
+    /// 玩家点击弹窗按钮之一时调用
     /// </summary>
     /// <param name="option"></param>
     public void OnOptionClicked(int option)
     {
-        // The kick event is handled in KickVoteUI.cs
+        // 踢人事件在 KickVoteUI.cs 中处理
         onScoreboardMenuAction?.Invoke(option);
         SetActive(false);
     }

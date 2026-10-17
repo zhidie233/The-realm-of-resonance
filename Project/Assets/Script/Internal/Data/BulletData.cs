@@ -1,49 +1,49 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 
-// Contains all the information about an instanced bullet
+// 包含一颗已实例化子弹的全部信息
 public class BulletData 
 {
 
-    // The name of the weapon from which this bullet was fired.
+    // 发射这颗子弹的武器名称。
     public string WeaponName;
 
-    // The base damage that this bullet will cause
+    // 这颗子弹造成的基础伤害
     public float Damage;
 
-    // The Position from where this bullet was fired.
+    // 这颗子弹的发射位置。
     public Vector3 Position;
 
-    // The amount of force to applied to the hit object in case this have a RigidBody
+    // 命中物体带 RigidBody 时施加的力
     public float ImpactForce;
 
-    // The bullet inaccuracy to apply to the projected direction
+    // 作用于投射方向的子弹散布
     public Vector3 Inaccuracity = Vector3.zero;
 
-    // Bullet Speed
+    // 子弹速度
     public float Speed;
 
-    // The max distance that this bullet can travel without hit anything.
+    // 这颗子弹未命中任何物体时的最大飞行距离。
     public float Range;
 
-    // The amount of bullet drop
+    // 子弹下坠量
     public float DropFactor;
 
-    // GunID of the weapon from which this bullet was fire
+    // 发射这颗子弹的武器 GunID
     public int WeaponID;
 
-    // Was this bullet created by a remote player?
+    // 这颗子弹是否由远程玩家创建？
     public bool isNetwork;
 
-    // Was this bullet created by the actual local player The difference between this and <see cref="isNetwork"/> Is that IsNetwork can be False (meaning is not a remote bullet) when a Bot created the bullet But this ensure that the bullet was created by the real local player.
+    // 这颗子弹是否由真正的本地玩家创建。与 <see cref="isNetwork"/> 的区别：机器人创建子弹时 IsNetwork 可能为 false（即不是远程子弹），而此值确保子弹由真正的本地玩家创建。
     public bool IsLocalPlayer;
 
-    // The Cached Network View
+    // 缓存的 PhotonView
     public int ActorViewID { get; set; }
 
-    // The Game Actor who create this bullet
+    // 创建这颗子弹的 GameActor
     public GamePlayer GameActor { get; set; }
 
-    // Create the bullet data and fetch info from the <see cref="DamageData"/>
+    // 创建子弹数据并从 <see cref="DamageData"/> 取信息
     // <param name="data"></param>
     public BulletData(DamageData data)
     {
@@ -54,7 +54,7 @@ public class BulletData
         Position = data.Direction;
     }
 
-    // Calculate and assign the projectile inaccuracy vector
+    // 计算并设置弹道散布向量
     // <param name="spreadBase"></param>
     // <param name="maxSpread"></param>
     // <returns></returns>

@@ -159,7 +159,7 @@ public class AIShooterAttack : AIShooterAttackBase
 
         bullet = ObjectPoolingBase.Instance.Instantiate(Weapon.BulletName, origin, transform.root.rotation);
         bullet.transform.LookAt(direction);
-        //build bullet data
+        //构建子弹数据
         m_BulletData.Damage = Weapon.Info.Damage;
         m_BulletData.isNetwork = remote;
         m_BulletData.Position = transform.position;
@@ -308,12 +308,12 @@ public class AIShooterAttack : AIShooterAttackBase
         Vector3 velocity;
         Vector3 toTarget = target - transform.position;
         float speed = 15;
-        // Set up the terms we need to solve the quadratic equations.
+        //列出解二次方程所需的各项。
         float gSquared = Physics.gravity.sqrMagnitude;
         float b = speed * speed + Vector3.Dot(toTarget, Physics.gravity);
         float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
 
-        // Check whether the target is reachable at max speed or less.
+        //检查以最大速度或更低速度能否命中目标。
         if (discriminant < 0)
         {
             velocity = toTarget;
@@ -329,13 +329,13 @@ public class AIShooterAttack : AIShooterAttackBase
 
         float discRoot = Mathf.Sqrt(discriminant);
 
-        // Highest shot with the given max speed:
+        //给定最大速度时的最高射击角：
         float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
 
         float T = 0;
         T = T_max;
 
-        // Convert from time-to-hit to a launch velocity:
+        //把命中时间换算成发射速度：
         velocity = toTarget / T - Physics.gravity * T / 2f;
 
         return velocity;

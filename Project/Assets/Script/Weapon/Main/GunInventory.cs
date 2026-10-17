@@ -47,13 +47,13 @@ public class GunInventory : MonoBehaviourBase
         base.Awake();
         ASource = GetComponent<AudioSource>();
         isGameStarted = MatchTimeManagerBase.HaveTimeStarted();
-        //when player instance select player class select in RoomMenu
+        //玩家实例创建后应用 RoomMenu 中选定的玩家职业
         SetupLoadout();
     }
 
     private void Start()
     {
-        //Disable all weapons in children and take the first
+        //禁用所有子武器并取第一个
         foreach (GunController g in PlayerEquip) { g?.Setup(true); }
         foreach (GunController guns in AllGuns) { guns.gameObject?.SetActive(false); }
         WeaponLoadoutUIBase.Instance?.SetLoadout(PlayerEquip);
@@ -70,10 +70,10 @@ public class GunInventory : MonoBehaviourBase
         }
     }
 
-    // Setup the player equipped weapons from the selected player class
+    // 按所选玩家职业设置玩家已装备的武器
     void SetupLoadout()
     {
-        //when player instance select player class select in RoomMenu
+        //玩家实例创建后应用 RoomMenu 中选定的玩家职业
         PlayerClassLoadout pcl = null;
         var currentClass = PlayerClass.Assault.GetSavePlayerClass();
         switch (currentClass)
@@ -98,13 +98,13 @@ public class GunInventory : MonoBehaviourBase
             return;
         }
 
-        // Assign the player class loadout weapons
+        // 分配玩家职业的配装武器
         AddWeaponToSlot(0, GetGunOnListById(pcl.Primary), true);
         AddWeaponToSlot(1, GetGunOnListById(pcl.Secondary), true);
         AddWeaponToSlot(2, GetGunOnListById(pcl.Letal), true);
         AddWeaponToSlot(3, GetGunOnListById(pcl.Perks), true);
 
-        // if you want to add more weapons you can do it here
+        // 想加更多武器可以在这里加
         // e.g AddWeaponToSlot(4, GetGunOnListById(pcl.Custom), true);
 
         for (int i = 0; i < PlayerEquip.Count; i++)
@@ -161,13 +161,13 @@ public class GunInventory : MonoBehaviourBase
             ChangeCurrentWeaponTo(3);
         }
 
-        //fast fire knife
+        //快速挥刀
         if (GameInput.QuickMelee() && PlayerEquip[3] != null && PlayerEquip[3].m_AllowQuickFire && currentWeaponIndex != 3 && !isFastFire)
         {
             DoFastKnifeShot();
         }
 
-        //fast throw grenade
+        //快速扔手雷
         if (GameInput.QuickNade() && PlayerEquip[2] != null && PlayerEquip[2].AllowQuickFire() && currentWeaponIndex != 2 && !isFastFire)
         {
             DoSingleGrenadeThrow();
@@ -176,7 +176,7 @@ public class GunInventory : MonoBehaviourBase
         if (PlayerEquip.Count <= 0 || PlayerEquip == null)
             return;
 
-        //change gun with Scroll mouse
+        //滚轮切换枪械
         if (InputHandler.isButtonDown("NextWeapon"))
         {
             SwitchNext();
@@ -265,7 +265,7 @@ public class GunInventory : MonoBehaviourBase
         CanSwich = true;
     }
 
-    // Call to set none weapon in the local player and can't select any weapon
+    // 调用后本地玩家没有武器，且不能选择任何武器
     public void BlockAllWeapons()
     {
         foreach (GunController g in PlayerEquip) { g.gameObject.SetActive(false); }
@@ -275,7 +275,7 @@ public class GunInventory : MonoBehaviourBase
         playerReferences.playerNetwork.SetWeaponBlocked(1);
     }
 
-    // Make local player can switch weapons again
+    // 让本地玩家可以重新切换武器
     public void ReleaseWeapons(bool takeFirst)
     {
         CanSwich = true;
@@ -291,7 +291,7 @@ public class GunInventory : MonoBehaviourBase
         playerReferences.playerNetwork.SetWeaponBlocked(0);
     }
 
-    // Unequipped all the player weapons leaving him with anything to attack.
+    // 卸下玩家所有武器，使其无法攻击。
     public void UnEquipEverything()
     {
         foreach (GunController g in PlayerEquip) { g.gameObject.SetActive(false); }
@@ -313,14 +313,14 @@ public class GunInventory : MonoBehaviourBase
         });
     }
 
-    // Change the current weapon (if any) to the given one
+    // 把当前武器（若有）换成指定武器
     public void ChangeTo(int AllWeaponsIndex)
     {
         StartCoroutine(ChangeGun(currentWeaponIndex, AllGuns[AllWeaponsIndex].gameObject, currentWeaponIndex));
         PlayerEquip[currentWeaponIndex] = AllGuns[AllWeaponsIndex];
     }
 
-    // Change to a weapon without delay/animation
+    // 无延迟/无动画地切换武器
     public void ChangeToInstant(int AllWeaponsIndex)
     {
         PlayerEquip[currentWeaponIndex].gameObject.SetActive(false);
@@ -329,8 +329,8 @@ public class GunInventory : MonoBehaviourBase
         GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].GunID);
     }
 
-    // Change the current equipped weapon to the one the one in the provided weapon slot
-    // index of the weapon in the <see cref="PlayerEquip"/> list
+    // 把当前已装备武器换成指定武器槽中的那把
+    // 武器在 <see cref="PlayerEquip"/> 列表中的索引
     public void ChangeCurrentWeaponTo(int nextSlotID)
     {
         if (currentWeaponIndex == nextSlotID || PlayerEquip[nextSlotID] == null) return;
@@ -345,14 +345,14 @@ public class GunInventory : MonoBehaviourBase
         currentWeaponIndex = nextSlotID;
     }
 
-    // Coroutine to Change of Gun
+    // 切换枪械的协程
     // <returns></returns>
     public IEnumerator ChangeGun(int IDfrom, GameObject t_next, int newID)
     {
         CanSwich = false;
         WeaponLoadoutUIBase.Instance?.SetEquippedSlot(newID);
         float hideTime = PlayerEquip[IDfrom].DisableWeapon();
-        //instantly disable the current weapon and active the next weapon
+        //立即禁用当前武器并启用下一把
         if (changeWeaponStyle == ChangeWeaponStyle.CounterStrike)
         {
             PlayerEquip[IDfrom].gameObject.SetActive(false);
@@ -360,13 +360,13 @@ public class GunInventory : MonoBehaviourBase
         else if (changeWeaponStyle == ChangeWeaponStyle.HideAndDraw)
         {
             HeadAnimator?.Play("SwichtGun", 0, 0);
-            //wait a fixed delay before active the next weapon
+            //等待固定延迟后再启用下一把
             yield return new WaitForSeconds(SwichTime);
         }
         else if (changeWeaponStyle == ChangeWeaponStyle.HideCompletelyAndThenDraw)
         {
             HeadAnimator?.Play("SwichtGun", 0, 0);
-            //wait until the current weapon hide animation complete before active the next weapon
+            //等当前武器的隐藏动画播完再启用下一把
             yield return new WaitForSeconds(hideTime);
         }
         foreach (GunController guns in AllGuns)
@@ -380,7 +380,7 @@ public class GunInventory : MonoBehaviourBase
         GameEvents.ChangeWeaponEvent(PlayerEquip[newID].GunID);
     }
 
-    // This function is called when the local player pick up a weapon in the map
+    // 本地玩家在地图上拾取武器时调用
     public void PickUpGun(GunPickUpData e)
     {
         if (GunPickUpManagerBase.Instance == null)
@@ -388,24 +388,24 @@ public class GunInventory : MonoBehaviourBase
             Debug.LogWarning("Need a 'Pick Up Manager' in the scene!");
             return;
         }
-        //find the pick up weapon in the FP weapon list of this player prefab
+        //在该玩家预制体的第一人称武器列表中查找拾取的武器
         GunController pickedLocalGun = AllGuns.Find(x => x.GunID == e.ID);
         if (pickedLocalGun == null)
         {
             Debug.LogWarning($"The weapon {e.ID} is not integrated in this player prefab.");
             return;
         }
-        //If not already equipped
+        //若尚未装备
         if (!PlayerEquip.Exists(x => x != null && x.GunID == e.ID))
         {
             GunData gunInfo = GameConfig.Instance.GetWeapon(e.ID);
-            //first we need to make sure that there's not an empty slot in the loadout
+            //先确认配装里没有空槽位
             for (int i = 0; i < PlayerEquip.Count; i++)
             {
-                //if there's an empty slot
+                //若有空槽位
                 if (PlayerEquip[i] == null)
                 {
-                    //check if the this weapon can by equipped in this slot
+                    //检查这把武器能否装备在该槽位
                     if (GameConfig.Instance.weaponSlotRuler.CanBeOnSlot(gunInfo.Type, i))
                     {
                         SetUpPickUpWeapon(e, pickedLocalGun, i);
@@ -419,30 +419,30 @@ public class GunInventory : MonoBehaviourBase
                 }
             }
 
-            //if get there means that there's not empty slots so we have to replace the current weapon
-            //so first let's check if the pick up weapon can replace the weapon in the current slot.
+            //走到这里说明没有空槽位，只能替换当前武器
+            //先检查拾取的武器能否替换当前槽位的武器。
 
             bool isEmpty = PlayerEquip[currentWeaponIndex] == null;
             int actualID = isEmpty ? -1 : PlayerEquip[currentWeaponIndex].GunID;
 
-            //Get the required data from the weapon that we are going to replace
+            //获取要被替换的武器所需的数据
             int[] info = new int[2];
             int clips = isEmpty ? 3 : (int)PlayerEquip[currentWeaponIndex].RemainingClips;
             info[0] = clips;
             info[1] = isEmpty ? 30 : PlayerEquip[currentWeaponIndex].bulletsLeft;
 
             GunController oldGun;
-            //if the pick up weapon can't replace the current slot
+            //若拾取的武器不能替换当前槽位
             if (!GameConfig.Instance.weaponSlotRuler.CanBeOnSlot(gunInfo.Type, currentWeaponIndex))
             {
-                //let's find out the a compatible slot for it and replace the weapon there
+                //就找一个兼容的槽位并在那里替换武器
                 for (int i = 0; i < 4; i++)
                 {
-                    //when find the slot for this pick up weapon
+                    //找到这把拾取武器的槽位时
                     if (GameConfig.Instance.weaponSlotRuler.CanBeOnSlot(gunInfo.Type, i))
                     {
                         oldGun = PlayerEquip[i];
-                        //change the weapon on that slot with the pick up one
+                        //用拾取的武器替换该槽位上的武器
                         SetUpPickUpWeapon(e, pickedLocalGun, i);
                         if (EquipPickUpMode == (AutoChangeOnPickup.OnlyOnReplacements | AutoChangeOnPickup.Always))
                         {
@@ -466,13 +466,13 @@ public class GunInventory : MonoBehaviourBase
             }
 
             oldGun = PlayerEquip[currentWeaponIndex];
-            //Replace the current equipped weapon
+            //替换当前已装备的武器
             SetUpPickUpWeapon(e, pickedLocalGun, currentWeaponIndex);
             StartCoroutine(SwitchToPickUpGun(oldGun, pickedLocalGun, info, currentWeaponIndex));
         }
         else//if the weapon is already equipped
         {
-            // pick up it as ammo only
+            // 只当作弹药拾取
             foreach (GunController g in PlayerEquip)
             {
                 if (g != null && g.GunID == e.ID)
@@ -532,7 +532,7 @@ public class GunInventory : MonoBehaviourBase
         CanSwich = true;
     }
 
-    // Throw the current gun
+    // 扔掉当前枪械
     public void ThrowCurrent(bool AutoDestroy, Vector3 throwPosition)
     {
         if (PlayerEquip[currentWeaponIndex] == null)
@@ -570,7 +570,7 @@ public class GunInventory : MonoBehaviourBase
         return gun;
     }
 
-    // Called when the game settings changed in runtime
+    // 运行时游戏设置变化时调用
     public void OnGameSettingsChanged()
     {
         if (GameCore.Settings == null) return;
@@ -583,7 +583,7 @@ public class GunInventory : MonoBehaviourBase
         }
     }
 
-    // Add a weapon to the player quipped weapons list
+    // 把武器加入玩家已装备武器列表
     // <param name="slot"></param>
     // <param name="weapon"></param>
     // <param name="addSlotIfNotExist"></param>
@@ -675,7 +675,7 @@ public class GunInventory : MonoBehaviourBase
         }
     }
 
-    // The GunID of the current equipped weapon -1 means that the player doesn't have a weapon equipped yet
+    // 当前已装备武器的 GunID，-1 表示玩家还没有装备武器
     public int GetCurrentGunID
     {
         get

@@ -2,7 +2,7 @@ using UnityEngine;
 
 public static class PropertiesKeys
 {
-    // Room hashtable keys
+    // 房间哈希表键
     public const string TimeRoomKey = "rTr";
     public const string GameModeKey = "rGm";
     public const string SceneNameKey = "rLn";
@@ -18,7 +18,7 @@ public static class PropertiesKeys
     public const string WithBotsKey = "rWb";
     public const string TimeState = "rTs";
 
-    // Player in room properties keys
+    // 房间内玩家属性键
     public const string TeamKey = "Team";
     public const string KillsKey = "Kills";
     public const string DeathsKey = "Deaths";
@@ -29,7 +29,7 @@ public static class PropertiesKeys
     public const string PlayerID = "playerID";
     public const string WaitingState = "WaitingState";
 
-    // Custom network event codes
+    // 自定义网络事件码
     public const byte KickPlayerEvent = 101;
     public const byte WaitingPlayerReadyEvent = 102;
     public const byte WaitingInitialSyncEvent = 103;
@@ -52,9 +52,9 @@ public static class PropertiesKeys
     public const byte CountdownEvent = 120;
 
     /// <summary>
-    /// Return an per game unique key.
+    /// 返回每局唯一的键。
     /// </summary>
-    /// <param name="key">key end point</param>
+    /// <param name="key">键的端点</param>
     /// <returns></returns>
     public static string GetUniqueKey(string key)
     {
@@ -62,10 +62,10 @@ public static class PropertiesKeys
     }
 
     /// <summary>
-    /// Return an per game unique key for an specific player.
+    /// 返回指定玩家每局唯一的键。
     /// </summary>
-    /// <param name="key">key end point</param>
-    /// <param name="player">player nick</param>
+    /// <param name="key">键的端点</param>
+    /// <param name="player">玩家昵称</param>
     /// <returns></returns>
     public static string GetUniqueKeyForPlayer(string key, string player)
     {

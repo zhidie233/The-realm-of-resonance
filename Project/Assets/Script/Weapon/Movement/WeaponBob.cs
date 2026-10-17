@@ -5,10 +5,10 @@ using UnityEditor;
 #endif
 
 /// <summary>
-/// Default weapon walk bob movement
-/// You use your custom weapon script by inherited your script from the base class WeaponBobBase.cs
-/// NOTE: this default script also control the head bob movement, so if you replace this with you own script
-/// make sure you also handle the head bob.
+/// 默认武器行走摇晃运动
+/// 脚本继承基类 WeaponBobBase.cs 即可用自己的武器脚本
+/// 注意：该默认脚本也控制头部摇晃，若用自己的脚本替换
+/// 要确保同时处理头部摇晃。
 /// </summary>
 public class WeaponBob : WeaponBobBase
 {
@@ -174,7 +174,7 @@ public class WeaponBob : WeaponBobBase
 
             if (motor.isGrounded && motor.State != PlayerState.InVehicle)
             {
-                //if player is moving
+                //若玩家正在移动
                 if (motor.VelocityMagnitude > 0.1f && motor.State != PlayerState.Idle)
                 {
                     currentPosition.Set(midpoint.x + horizontalMovement, midpoint.y + verticalMovement, midpoint.z);
@@ -192,13 +192,13 @@ public class WeaponBob : WeaponBobBase
             }
             else
             {
-                //Player not moving
+                //玩家未移动
                 MoveToDefault();
             }
         }
         else
         {
-            //Player not moving
+            //玩家未移动
             MoveToDefault();
         }
         CachedTransform.localPosition = Vector3.Lerp(CachedTransform.localPosition, currentPosition, time * lerp);

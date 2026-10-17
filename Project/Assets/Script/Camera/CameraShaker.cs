@@ -139,13 +139,13 @@ public class CameraShaker : CameraShakerBase
         iFrequency = frequency;
         maxAmplitude = 0;
         float time = Time.time;
-        // Burst frequency
+        //爆发频率
         float burstCoord = time / (1 - burstFrequency);
 
-        // Sample diagonally trough perlin noise
+        //在对角线上采样 Perlin 噪声
         float burstMultiplier = Mathf.PerlinNoise(burstCoord, burstCoord);
 
-        //Apply contrast to the burst multiplier using power, it will make values stay close to zero and less often peak closer to 1
+        //用幂运算给爆发倍率加对比度，让数值更多贴近 0，较少接近 1
         burstMultiplier = Mathf.Pow(burstMultiplier, burstContrast);
 
         for (int i = 0; i < octaves; i++) // Iterate trough octaves
@@ -155,14 +155,14 @@ public class CameraShaker : CameraShakerBase
             float perlinValueX = Mathf.PerlinNoise(noiseFrequency, 0.5f);
             float perlinValueY = Mathf.PerlinNoise(0.5f, noiseFrequency);
 
-            // Adding small value To keep the average at 0 and   *2 - 1 to keep values between -1 and 1.
+            //加一个小值使均值为 0，再 *2 - 1 使数值落在 -1 到 1 之间。
             perlinValueX = (perlinValueX + 0.0352f) * 2 - 1;
             perlinValueY = (perlinValueY + 0.0345f) * 2 - 1;
 
             valX += perlinValueX * iAmplitude;
             valY += perlinValueY * iAmplitude;
 
-            // Keeping track of maximum amplitude for normalizing later
+            //记录最大振幅，方便之后归一化
             maxAmplitude += iAmplitude;
 
             iAmplitude *= persistance;
@@ -172,7 +172,7 @@ public class CameraShaker : CameraShakerBase
         valX *= burstMultiplier;
         valY *= burstMultiplier;
 
-        // normalize
+        //归一化
         valX /= maxAmplitude;
         valY /= maxAmplitude;
 

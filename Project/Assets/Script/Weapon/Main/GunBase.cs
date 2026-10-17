@@ -19,7 +19,7 @@ public abstract class GunBase : MonoBehaviourBase
 
     private GunData m_gunInfo = null;
     /// <summary>
-    /// Weapon information
+    /// 武器信息
     /// </summary>
     public GunData Info
     {
@@ -35,7 +35,7 @@ public abstract class GunBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Weapon Index
+    /// 武器索引
     /// </summary>
     public int GunID;
 
@@ -45,7 +45,7 @@ public abstract class GunBase : MonoBehaviourBase
     protected ObscuredInt _bulletLeft;
 #endif
     /// <summary>
-    /// Current weapon bullet left in the clip
+    /// 当前武器弹匣内剩余弹药
     /// </summary>
     public int bulletsLeft
     {
@@ -58,7 +58,7 @@ public abstract class GunBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Is the player currently aiming?
+    /// 玩家当前是否正在瞄准？
     /// </summary>
     public bool isAiming
     {
@@ -67,7 +67,7 @@ public abstract class GunBase : MonoBehaviourBase
     }
 
     /// <summary>
-    /// Is the player currently firing with this weapon
+    /// 玩家当前是否正在用这把武器开火
     /// </summary>
     public bool isFiring
     {

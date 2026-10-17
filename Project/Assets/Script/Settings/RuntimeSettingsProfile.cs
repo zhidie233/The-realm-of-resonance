@@ -22,8 +22,8 @@ namespace Game.Runtime.Settings
         public int[] RefreshRates = new int[] { 30, 60, 120, 144, 200, 260, 0 };
 
         /// <summary>
-        /// Get the save value of an specific settings
-        /// or if it doesn't exist, get the default value
+        /// 获取某项设置的已保存值
+        /// 不存在时返回默认值
         /// </summary>
         public object GetSettingOf(string settingName)
         {
@@ -35,7 +35,7 @@ namespace Game.Runtime.Settings
         }
 
         /// <summary>
-        /// Save the value of an specific setting
+        /// 保存某项设置的值
         /// </summary>
         public void SetSettingOf(string settingName, object value, bool autoSave = false)
         {
@@ -46,8 +46,8 @@ namespace Game.Runtime.Settings
         }
 
         /// <summary>
-        /// Have a setting defined in the <see cref="settingValues"/> list?
-        /// This doesn't check if there is a setting value saved for settings.
+        /// <see cref="settingValues"/> 列表里是否定义了该设置？
+        /// 不检查该设置是否已保存过值。
         /// </summary>
         /// <param name="settingName"></param>
         public bool HasSettingDefinedFor(string settingName)
@@ -56,7 +56,7 @@ namespace Game.Runtime.Settings
         }
 
         /// <summary>
-        /// Save the current Settings
+        /// 保存当前设置
         /// </summary>
         public void SaveSettings()
         {
@@ -67,7 +67,7 @@ namespace Game.Runtime.Settings
         }
 
         /// <summary>
-        /// Apply the settings of this profile
+        /// 应用该配置档的设置
         /// </summary>
         public void ApplySettings(ResolutionApplication resolutionApplication, bool fireCallback = true)
         {
@@ -82,7 +82,7 @@ namespace Game.Runtime.Settings
             GameEvents.SetEffectChange((bool)GetSettingOf("CrAberration"), antialising, (bool)GetSettingOf("Bloom"),
                 (bool)GetSettingOf("SSAO"), (bool)GetSettingOf("动态模糊"));
 
-            // in webgl the resolution has to be changed in the web canvas, that require an external call integration not supported by default.
+            // webgl 下分辨率必须改网页 canvas，需要默认不支持的外部调用集成。
 #if !UNITY_WEBGL
             if (!UtilityHelper.isMobile)
             {
@@ -215,22 +215,22 @@ namespace Game.Runtime.Settings
         [CustomPropertyDrawer(typeof(SettingValue))]
         public class SettingValueDrawer : PropertyDrawer
         {
-            // Draw the property inside the given rect
+            // 在给定矩形内绘制属性
             public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
             {
-                // Using BeginProperty / EndProperty on the parent property means that
-                // prefab override logic works on the entire property.
+                // 对父属性使用 BeginProperty / EndProperty 意味着
+                // 预制体覆盖逻辑对整个属性生效。
                 EditorGUI.BeginProperty(position, label, property);
                 Rect r = position;
                 r.height = EditorGUIUtility.singleLineHeight;
-                // Draw label
+                // 绘制标签
                 property.isExpanded = EditorGUI.Foldout(r, property.isExpanded, label);
                 r.y += EditorGUIUtility.singleLineHeight + 2;
 
                 if (property.isExpanded)
                 {
 
-                    // Draw fields - passs GUIContent.none to each so they are drawn without labels
+                    // 绘制字段 - 每个都传 GUIContent.none，这样绘制时不带标签
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("Name"), new GUIContent("Name"));
                     r.y += EditorGUIUtility.singleLineHeight + 2;
                     EditorGUI.PropertyField(r, property.FindPropertyRelative("valueType"), new GUIContent("Value Type"));

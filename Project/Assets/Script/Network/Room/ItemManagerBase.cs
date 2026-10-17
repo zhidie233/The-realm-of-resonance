@@ -4,16 +4,16 @@ public abstract class ItemManagerBase : MonoBehaviourBase
 {
 
     /// <summary>
-    /// Queue the given item and respawn after the defined time
+    /// 将给定物品加入队列，并在指定时间后重生
     /// </summary>
     /// <param name="item"></param>
-    /// <param name="delay">if 0 the time defined in the PickupItemManager inspector will be used</param>
+    /// <param name="delay">为 0 时使用 PickupItemManager inspector 中设定的时间</param>
     public abstract void RespawnAfter(NetworkItem item, float delay = 0);
 
     /// <summary>
-    /// Add the given item to the pool network items
+    /// 将给定物品加入网络物品池
     /// </summary>
-    /// <param name="itemName">pool list name</param>
+    /// <param name="itemName">池列表名称</param>
     /// <param name="item"></param>
     public abstract void PoolItem(string itemName, NetworkItem item);
 

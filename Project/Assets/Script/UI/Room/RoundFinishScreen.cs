@@ -11,7 +11,7 @@ namespace Game.Runtime.UI.Layout
         [SerializeField] private TextMeshProUGUI FinalWinnerText = null;
 
         /// <summary>
-        /// Show the final round UI
+        /// 显示最后一局 UI
         /// </summary>
         public override void Show(string winner)
         {

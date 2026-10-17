@@ -26,7 +26,7 @@ public class SpawnPointManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the position and rotation to instance the player from one of the team spawn points in the scene
+    /// 从场景中该队伍的某个出生点获取实例化玩家的位置和旋转
     /// </summary>
     public void GetPlayerSpawnPosition(Team team, out Vector3 position, out Quaternion rotation)
     {
@@ -43,13 +43,13 @@ public class SpawnPointManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the spawnpoint from all the registered points based in the default selector mode. 
+    /// 按默认选择模式从所有已注册出生点中获取一个出生点。
     /// </summary>
     /// <returns></returns>
     public SpawnPointBase GetSpawnPointForTeam(Team team) => GetSpawnPointForTeam(team, spawnMode);
 
     /// <summary>
-    /// Get the spawnpoint from all the registered points based in the given selector mode. 
+    /// 按指定选择模式从所有已注册出生点中获取一个出生点。
     /// </summary>
     /// <returns></returns>
     public SpawnPointBase GetSpawnPointForTeam(Team team, SpawnMode m_spawnMode)
@@ -99,7 +99,7 @@ public class SpawnPointManager : MonoBehaviour
     }
 
     /// <summary>
-    /// Get the list of all the spawnpoints available for the given team
+    /// 获取指定队伍可用的所有出生点列表
     /// </summary>
     public List<SpawnPointBase> GetListOfPointsForTeam(Team team)
     {

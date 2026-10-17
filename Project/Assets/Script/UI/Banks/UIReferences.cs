@@ -236,7 +236,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     }
 
     /// <summary>
-    /// Called from the Change Team button
+    /// 由 Change Team 按钮调用
     /// </summary>
     public void ActiveChangeTeam()
     {

@@ -85,7 +85,7 @@ public class Footstep : MonoBehaviour
     }
 
     /// <summary> 
-    /// Get a random step sound clip for the given tag
+    /// 根据给定 tag 随机取一个脚步音效
     /// </summary>
     /// <returns></returns>
     public AudioClip GetStepSoundFor(string tag)

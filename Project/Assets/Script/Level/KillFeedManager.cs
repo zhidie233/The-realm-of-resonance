@@ -26,7 +26,7 @@ public class KillFeedManager : KillFeedBase
     }
 
     /// <summary>
-    /// Player Joined? sync
+    /// 玩家加入了？同步
     /// </summary>
     void OnJoined()
     {

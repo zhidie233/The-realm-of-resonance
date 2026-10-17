@@ -38,7 +38,7 @@ namespace Game.PlayerController
         public bool onlyCameraTransform { get; set; } = false;
 
         /// <summary>
-        ///  Initialize the camera controller with the character initial rotation.
+        ///  用角色初始旋转初始化摄像机控制器。
         /// </summary>
         public override void Init(Transform character, Transform camera)
         {
@@ -53,11 +53,11 @@ namespace Game.PlayerController
         }
 
         /// <summary>
-        /// Updates the character and camera rotation based on the player input.
+        /// 根据玩家输入更新角色和摄像机旋转。
         /// </summary>
         public override void UpdateLook(Transform character, Transform camera, ClimbableLadder ladder = null)
         {
-            // When use a mobile device or Unity Remote
+            // 使用移动设备或 Unity Remote 时
             if (UtilityHelper.isMobile)
             {
             }
@@ -180,7 +180,7 @@ namespace Game.PlayerController
         }
 
         /// <summary>
-        /// Don't rotate the character body but only the Camera/Head
+        /// 只旋转摄像机/头部，不旋转角色身体
         /// </summary>
         public void UseOnlyCameraRotation()
         {
@@ -188,9 +188,9 @@ namespace Game.PlayerController
         }
 
         /// <summary>
-        /// Port the Current Camera Rotation to separate the vertical and horizontal rotation in the body and head
-        /// horizontal rotation for the body and vertical for the camera/head
-        /// That should only be called when OnlyCameraRotation was used before.
+        /// 把当前摄像机旋转拆分为身体的水平旋转和头部的垂直旋转
+        /// 身体负责水平旋转，摄像机/头部负责垂直旋转
+        /// 只应在之前用过 OnlyCameraRotation 时调用。
         /// </summary>
         public void PortBodyOrientationToCamera()
         {
@@ -210,7 +210,7 @@ namespace Game.PlayerController
         }
 
         /// <summary>
-        /// Forces the character to look at a position in the world.
+        /// 强制角色注视世界中的某个位置。
         /// </summary>
         public override void LookAt(Transform reference, bool extrapolate = true)
         {
@@ -263,7 +263,7 @@ namespace Game.PlayerController
         }
 
         /// <summary>
-        /// Adjust the mouse sensitivity based on the camera field of view.
+        /// 根据摄像机视场角调整鼠标灵敏度。
         /// </summary>
         public void AdjustSensitivityBasedOnFOV()
         {

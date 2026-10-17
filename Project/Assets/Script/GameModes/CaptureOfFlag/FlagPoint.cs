@@ -72,7 +72,7 @@ namespace Game.GameModes.CaptureOfFlag
 
             if (carriyingPlayer.View.ViewID == local.ViewID)
             {
-                // Drop the flag
+                // 掉落旗帜
                 var data = UtilityHelper.CreatePhotonHashTable();
                 data.Add("cmd", 1);
                 data.Add("team", flagTeam);
@@ -94,13 +94,13 @@ namespace Game.GameModes.CaptureOfFlag
             if (oppositeFlag.IsHome() == true && UtilityHelper.Distance(transform.position, oppositeFlag.transform.position) <= CaptureOfFlagController.Instance.captureAreaRange)
             {
                 ChangeFlagState(FlagState.Captured);
-                // change the state locally instantly to prevent detect the capture multiple times.
+                // 立即在本地切换状态，避免多次检测到夺旗。
                 State = FlagState.Captured;
             }
         }
 
         /// <summary>
-        /// Determines whether this instance is at the home base
+        /// 判断此实例是否在己方基地
         /// </summary>
         /// <returns></returns>
         public bool IsHome()
@@ -109,7 +109,7 @@ namespace Game.GameModes.CaptureOfFlag
         }
 
         /// <summary>
-        /// Called on all clients when a player drop the flag.
+        /// 玩家掉落旗帜时在所有客户端调用。
         /// </summary>
         /// <param name="data"></param>
         public void DropFlag(Hashtable data)
@@ -130,26 +130,26 @@ namespace Game.GameModes.CaptureOfFlag
         }
 
         /// <summary>
-        /// Called on all clients when a player successfully capture the flag.
+        /// 玩家成功夺旗时在所有客户端调用。
         /// </summary>
         public void OnCapture(Player actor)
         {
             carriyingPlayer = null;
             SetFlagToOrigin();
 
-            //Only the player who captures the flag, updates the properties
+            //只有夺旗的玩家更新这些属性
             if (PhotonNetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
             {
                 KillFeedBase.Instance.SendTeamHighlightMessage(PhotonNetworkWrapper.LocalPlayer.NickName, GameTexts.CaptureTheFlag, actor.GetPlayerTeam());
                 GameController.Instance.SetPointFromLocalPlayer(1, GameMode.CTF);
-                //Add Point for personal score
+                //增加个人得分
                 PhotonNetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerCapture);
                 CaptureOfFlagController.Instance.onCapture?.Invoke();
             }
         }
 
         /// <summary>
-        /// Called on all clients when a player recover the flag.
+        /// 玩家归还旗帜时在所有客户端调用。
         /// </summary>
         public void Recover(Player actor)
         {
@@ -163,7 +163,7 @@ namespace Game.GameModes.CaptureOfFlag
         }
 
         /// <summary>
-        /// Called on all clients when a player pick up this flag.
+        /// 玩家拾取这面旗帜时在所有客户端调用。
         /// </summary>
         /// <param name="actor"></param>
         public void OnPickup(Player actor, int viewID)
@@ -184,7 +184,7 @@ namespace Game.GameModes.CaptureOfFlag
             {
                 if (IsHome() == false)
                 {
-                    // the flag is dropped and taken by a team member = recovering the flag.
+                    //旗帜被掉落又被队友捡起，即为归还旗帜。
                     if (PhotonNetworkWrapper.IsMasterClient) ChangeFlagState(FlagState.InHome);
                 }
             }
@@ -193,7 +193,7 @@ namespace Game.GameModes.CaptureOfFlag
                 SetFlagToCarrier(logic);
             }
 
-            //show capture notification
+            //显示夺旗提示
             if (PhotonNetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
             {
                 Team enemyTeam = CaptureOfFlagController.GetOppositeTeam(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
@@ -224,13 +224,13 @@ namespace Game.GameModes.CaptureOfFlag
 
         public bool CanBePickedUpBy(PlayerConfig logic)
         {
-            //If the flag is at its home position, only the enemy team can grab it
+            //旗帜在己方基地位置时，只有敌方队伍能拿
             if (IsHome() == true)
             {
                 return logic.PlayerTeam != flagTeam;
             }
 
-            //If another player is already carrying the flag, no one else can grab it
+            //如果已有其他玩家持旗，其他人不能拿
             if (carriyingPlayer != null)
             {
                 return false;

@@ -3,8 +3,8 @@
 namespace Game.Runtime.Level
 {
     /// <summary>
-    /// Game door base class
-    /// Inherited from this class your custom door system.
+    /// 游戏门基类
+    /// 自定义门系统从此类继承。
     /// </summary>
     public abstract class DoorBase : MonoBehaviour
     {
@@ -23,20 +23,20 @@ namespace Game.Runtime.Level
         }
 
         /// <summary>
-        /// In this function you should handle the given door state
-        /// You should apply the state rotation/position with the animation/tween
+        /// 在此函数中处理传入的门状态
+        /// 应用该状态的旋转/位置，并带动画/补间
         /// </summary>
         public abstract void SetDoorState(State newState);
 
         /// <summary>
-        /// In this function you should handle the given door state
-        /// it will be called from the master when a new player enter in room in order to sync the door state.
-        /// You should apply the state rotation/position instantly
+        /// 在此函数中处理传入的门状态
+        /// 新玩家进入房间时由主客户端调用，用于同步门状态。
+        /// 立即应用该状态的旋转/位置
         /// </summary>
         public abstract void SetDoorStateInstantly(State newState);
 
         /// <summary>
-        /// See the usage implementation in BasicDoor.cs
+        /// 用法实现见 BasicDoor.cs
         /// </summary>
         public abstract void OnUpdateDoor();
 

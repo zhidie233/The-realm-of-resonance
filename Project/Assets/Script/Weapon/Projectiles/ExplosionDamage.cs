@@ -23,7 +23,7 @@ public class ExplosionDamage : ExplosionBase
     private BulletData cachedData;
     private GamePlayer creator;
 
-    // is not remote take damage
+    // 不是远程受击
     void Start()
     {
         if (cachedData == null)
@@ -70,7 +70,7 @@ public class ExplosionDamage : ExplosionBase
         explosionRadius = radius;
     }
 
-    // applying impact damage from the explosion to enemies
+    // 对敌人施加爆炸的冲击伤害
     private void DoDamage()
     {
         if (explosionType == ExplosionType.Shake && !GameConfig.Instance.ArriveKitsCauseDamage)
@@ -80,7 +80,7 @@ public class ExplosionDamage : ExplosionBase
         DoCollisionDamage();
     }
 
-    // Apply damage to the real players The splash calculation for players is due by distance instead of detect colliders due to its simpler and performs better.
+    // 对真人玩家施加伤害。玩家的波及范围按距离计算而不检测碰撞体，实现更简单、性能更好。
     void DoPlayersDamage()
     {
         List<Player> playersInRange = this.GetPlayersInRange();
@@ -100,7 +100,7 @@ public class ExplosionDamage : ExplosionBase
 
             var pt = p.transform;
             Vector3 pp = pt.position + Vector3.up;
-            //check if there is an obstacle between player and explosion
+            //检查玩家与爆炸点之间是否有障碍物
             if (!ExplosionCanHitTarget(pt, new Vector3(0, 0.6f, 0), pp) && !ExplosionCanHitTarget(pt, new Vector3(0, 0.15f, 0), pp)) continue;
 
             var pdm = p.transform.GetComponentInParent<PlayerHealthManagerBase>();
@@ -148,7 +148,7 @@ public class ExplosionDamage : ExplosionBase
         }
     }
 
-    // Apply damage to objects, items, bots, etc... if the collider is inside the explosion radius
+    // 对物体、物品、机器人等施加伤害，条件是碰撞体在爆炸半径内
     void DoCollisionDamage()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, explosionRadius, detectLayers, QueryTriggerInteraction.Ignore);
@@ -156,7 +156,7 @@ public class ExplosionDamage : ExplosionBase
 
         foreach (Collider c in colls)
         {
-            //the damage to real players is handled separately
+            //对真人玩家的伤害单独处理
             if (c.isLocalPlayerCollider() || c.CompareTag("Untagged")) continue;
 
             var damageable = c.transform.GetComponent<IGameDamageable>();
@@ -195,7 +195,7 @@ public class ExplosionDamage : ExplosionBase
         }
     }
 
-    // When Explosion is local, and take player hit Send only shake movement
+    // 爆炸发生在本地且玩家被击中时，只发送震动
     void ApplyShake()
     {
         if (isMyInRange() == true)
@@ -204,7 +204,7 @@ public class ExplosionDamage : ExplosionBase
         }
     }
 
-    // calculate the damage it generates, based on the distance between the player and the explosion
+    // 根据玩家与爆炸点的距离计算产生的伤害
     private int CalculatePlayerDamage(Transform trans, Player p)
     {
         if (p != null)
@@ -228,7 +228,7 @@ public class ExplosionDamage : ExplosionBase
         return Mathf.Clamp((int)(explosionDamage * ((explosionRadius - distance) / explosionRadius)), 0, (int)explosionDamage);
     }
 
-    // Do a simple check to see if there's anything between the explosion and the collider target if that is the case, the explosion should not make any effect to the target.
+    // 简单检查爆炸点与目标碰撞体之间是否有遮挡，若有则爆炸不应影响目标。
     // <param name="target"></param>
     // <param name="offset"></param>
     // <returns></returns>
@@ -237,7 +237,7 @@ public class ExplosionDamage : ExplosionBase
         return ExplosionCanHitTarget(target, offset, target.position, rootOnly);
     }
 
-    // Do a simple check to see if there's anything between the explosion and the collider target if that is the case, the explosion should not make any effect to the target.
+    // 简单检查爆炸点与目标碰撞体之间是否有遮挡，若有则爆炸不应影响目标。
     // <param name="target"></param>
     // <param name="offset"></param>
     // <param name="targetPosition"></param>
@@ -257,8 +257,8 @@ public class ExplosionDamage : ExplosionBase
             }
             else
             {
-                // If the collider has a rigidbody in the transform root, it will always hinder the raycast
-                // so lets ignore it.
+                // 若碰撞体的 transform 根节点上有 rigidbody，它会一直挡住射线检测
+                // 所以忽略它。
                 if (target.IsChildOf(hitInfo.transform)) return true;
 
                 if (hitInfo.transform == target) { return true; }
@@ -267,7 +267,7 @@ public class ExplosionDamage : ExplosionBase
         return result;
     }
 
-    // get players who are within the range of the explosion
+    // 获取爆炸范围内的玩家
     // <returns></returns>
     private List<Player> GetPlayersInRange()
     {
@@ -333,7 +333,7 @@ public class ExplosionDamage : ExplosionBase
         return list;
     }
 
-    // Calculate if player local in explosion radius
+    // 计算本地玩家是否在爆炸半径内
     // <returns></returns>
     private bool isMyInRange()
     {

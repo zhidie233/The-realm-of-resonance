@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEditor.Animations;
@@ -241,7 +241,7 @@ public class WeaponAnimationEditor : Editor
         if (AssetDatabase.CopyAsset(copyName, relativepath))
         {
             AnimatorController controller = AssetDatabase.LoadAssetAtPath(relativepath, typeof(AnimatorController)) as AnimatorController;
-            // Add StateMachines
+            // 添加状态机
             var rootStateMachine = controller.layers[0].stateMachine;
             var movementStateMachine = controller.layers[1].stateMachine;
 

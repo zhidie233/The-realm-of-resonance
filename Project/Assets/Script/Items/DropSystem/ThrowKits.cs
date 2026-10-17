@@ -8,7 +8,7 @@ public class ThrowKits : MonoBehaviourBase
     [Header("SETTINGS")]
     public int AmountOfKits = 3;
     /// <summary>
-    /// force when it is instantiated prefabs
+    /// 实例化预制体时强制应用
     /// </summary>
     public float ForceImpulse = 500;
     [Range(1, 4)] public float CallDelay = 1.4f;
@@ -16,7 +16,7 @@ public class ThrowKits : MonoBehaviourBase
 
     [Header("REFERENCES")]
     /// <summary>
-    /// Prefabs for instantiate
+    /// 用于实例化的预制体
     /// </summary>
     public GameObject DropCallerPrefab;
     public AudioClip SpawnSound;
