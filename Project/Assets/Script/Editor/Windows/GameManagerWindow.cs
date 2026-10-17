@@ -1,4 +1,3 @@
-﻿//#define AUTO_REFRESH
 using GameEditor;
 using System;
 using System.Collections.Generic;
@@ -22,10 +21,6 @@ public class GameManagerWindow : EditorWindow
     private List<ManagerPanel> managerPanels = new List<ManagerPanel>()
     {
     new ManagerPanel(){Name = "游戏数据", BodyFuncName = nameof(DrawGameDataSettings)},
-    new ManagerPanel(){Name = "玩家选择器", BodyFuncName = nameof(DrawPlayerSelector)},
-    new ManagerPanel(){Name = "兵种自定义", BodyFuncName = nameof(DrawClassCustomizer)},
-    new ManagerPanel(){Name = "Customizer", BodyFuncName = nameof(DrawCustomizer)},
-    new ManagerPanel(){Name = "关卡管理器", BodyFuncName = nameof(DrawlevelManager)},
     new ManagerPanel(){Name = "输入管理器", BodyFuncName = nameof(DrawInputManager)},
     };
     private WindowType currentWindow = WindowType.Home;
@@ -97,9 +92,6 @@ public class GameManagerWindow : EditorWindow
         GUILayout.EndHorizontal();
         GUI.contentColor = cColor;
 
-#if AUTO_REFRESH
-        if (!Application.isPlaying) Repaint();
-#endif
 
     }
 
@@ -124,9 +116,6 @@ public class GameManagerWindow : EditorWindow
         WindowButton("武器", WindowType.Weapons);
         WindowButton("装备配置", WindowType.Loadouts);
         WindowButton("游戏模式", WindowType.GameModes);
-#if LM
-        WindowButton("关卡", WindowType.Levels);
-#endif
 
         GUILayout.Space(25);
     }
@@ -183,9 +172,6 @@ public class GameManagerWindow : EditorWindow
         else if (currentWindow == WindowType.Loadouts) DrawLoadoutsBody();
         else if (currentWindow == WindowType.Home) DrawHomeBody();
         else if (currentWindow == WindowType.GameModes) DrawGameModes();
-#if LM
-        else if (currentWindow == WindowType.Levels) LevelManagerWindowEditor.DrawLevels();
-#endif
         GUILayout.FlexibleSpace();
         GUILayout.Space(100);
         GUILayout.EndScrollView();
@@ -365,58 +351,11 @@ public class GameManagerWindow : EditorWindow
     void DrawLoadoutsBody()
     {
         GUILayout.Space(10);
-#if !CLASS_CUSTOMIZER
         var player = GameConfig.Instance.Player1.PlayerReferences;
         DrawPlayerLoadout(player, ref currentSlot);
         GUILayout.Space(15);
         player = GameConfig.Instance.Player2.PlayerReferences;
         DrawPlayerLoadout(player, ref currentSlot2);
-#else
-        GUILayout.Label("<b>已启用兵种自定义</b>\n<b><size=8><i>玩家武器配置由全局配置统一管理，可在游戏内修改，不再像 Game 默认那样按玩家预制体固定配置</i></size></b>\n", styles["textC"]);
-        GUILayout.Space(10);
-        Rect r = EditorGUILayout.BeginVertical(GUILayout.ExpandWidth(true));
-        {
-            EditorGUI.DrawRect(r, new Color(1, 1, 1, 0.02f));
-            //Slot buttons
-            using (new GUILayout.HorizontalScope(GUILayout.Height(30)))
-            {
-                GUILayout.Space(5);
-                for (int i = 0; i < slotsNames.Length; i++)
-                {
-                    Rect br = GUILayoutUtility.GetRect(new GUIContent(slotsNames[i]), styles["textC"], GUILayout.Height(30));
-                    if (i != currentSlot)
-                        EditorGUI.DrawRect(br, primaryColor);
-                    else
-                    {
-                        EditorGUI.DrawRect(br, altColor);
-                        GUI.color = new Color(1, 1, 1, 0.2f);
-                        GUI.Box(br, GUIContent.none, GameEditorStyles.OutlineButtonStyle);
-                        GUI.color = Color.white;
-                    }
-                    if (GUI.Button(br, slotsNames[i], styles["textC"]))
-                    {
-                        if (currentSlot != i)
-                        {
-                            selectedLoadout = null;
-                            selectedSlot = -1;
-                        }
-                        currentSlot = i;
-                    }
-                }
-                GUILayout.Space(5);
-            }
-            GUILayout.Space(20);
-
-            var loadout = ClassManager.Instance.DefaultAssaultClass;
-            if (currentSlot == 1) loadout = ClassManager.Instance.DefaultReconClass;
-            if (currentSlot == 2) loadout = ClassManager.Instance.DefaultSupportClass;
-            if (currentSlot == 3) loadout = ClassManager.Instance.DefaultEngineerClass;
-            //loadout
-            DrawSlots(loadout);
-
-        }
-        EditorGUILayout.EndVertical();
-#endif
         GUILayout.Space(10);
         var latpc = currentPlayerClass;
         currentPlayerClass = (PlayerClass)EditorGUILayout.EnumPopup("当前玩家兵种", currentPlayerClass);
@@ -838,38 +777,6 @@ public class GameManagerWindow : EditorWindow
         DrawTitleText("游戏数据");
         if (gameData == null) return;
         DrawEditorOf(gameData);
-    }
-
-    void DrawPlayerSelector()
-    {
-        DrawTitleText("玩家选择器");
-#if PSELECTOR
-        DrawEditorOf(PlayerSelector.Data);
-#endif
-    }
-
-    void DrawCustomizer()
-    {
-        DrawTitleText("Customizer");
-#if CUSTOMIZER
-        DrawEditorOf(CustomizerData.Instance);
-#endif
-    }
-
-    void DrawClassCustomizer()
-    {
-        DrawTitleText("兵种自定义");
-#if CLASS_CUSTOMIZER
-        DrawEditorOf(ClassManager.Instance);
-#endif
-    }
-
-    void DrawlevelManager()
-    {
-        DrawTitleText("关卡管理器");
-#if LM
-        DrawEditorOf(LevelManager.Instance);
-#endif
     }
 
     void DrawInputManager()

@@ -29,9 +29,6 @@ namespace Game.Runtime.UI
         {
             var loadout = (PlayerClass)value;
             loadout.SavePlayerClass();
-#if CLASS_CUSTOMIZER
-            ClassManager.Instance.CurrentPlayerClass = loadout;
-#endif
             GameEvents.DispatchPlayerClassChange(loadout);
         }
     }

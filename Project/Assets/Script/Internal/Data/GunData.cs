@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using UnityEngine;
 using Game.Internal.Structures;
 using GameEditor;
@@ -25,7 +25,7 @@ public class GunData
     [SpritePreview(30, true)] public Sprite GunIcon;
 
     /// <summary>
-    /// Can show this weapons in the game lists like class customizer, customizer, unlocks, etc...
+    /// Whether this weapon is listed in the game menus (loadout, unlocks, etc...)
     /// </summary>
     /// <returns></returns>
     public bool CanShowWeapon()

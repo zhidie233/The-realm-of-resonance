@@ -238,9 +238,6 @@ public class AIMananger : PhotonHelper
         {
             AiName = (agent.AITeam == Team.Team2) ? GameConfig.Instance.BotTeam2.name : GameConfig.Instance.BotTeam1.name;
 
-#if PSELECTOR
-            AiName = PlayerSelector.GetBotForTeam(agent.AITeam).name;
-#endif
 
             if (agent.AITeam == Team.None) { Debug.LogError($"bot {agent.AIName} has not team"); }
 

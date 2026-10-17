@@ -440,12 +440,7 @@ public static class ExtensionMethods
     /// <returns></returns>
     public static string Localized(this string str, string key, bool plural = false)
     {
-#if LOCALIZATION
-        if (plural) { return LocalizationTable.Instance.GetTextPlural(key); }
-        return LocalizationTable.Instance.GetText(key);
-#else
         return str;
-#endif
     }
 
     /// <summary>
@@ -455,12 +450,7 @@ public static class ExtensionMethods
     /// <returns></returns>
     public static string Localized(this string str, int id, bool plural = false)
     {
-#if LOCALIZATION
-        if (plural) { return LocalizationTable.Instance.GetTextPlural(id); }
-        return LocalizationTable.Instance.GetText(id);
-#else
         return str;
-#endif
     }
 
     /// <summary>

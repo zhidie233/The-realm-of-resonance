@@ -25,9 +25,6 @@ namespace Game.Runtime.UI
             SetActive(false);
             GameEvents.onLocalPlayerAmmoUpdate += OnLocalAmmoChange;
             GameEvents.onChangeWeapon += onWeaponChanged;
-#if Game_VEHICLE
-            VehicleEvents.onLocalEnterInVehicle += OnEnterInVehicle;
-#endif
         }
 
         /// <summary>
@@ -37,9 +34,6 @@ namespace Game.Runtime.UI
         {
             GameEvents.onLocalPlayerAmmoUpdate -= OnLocalAmmoChange;
             GameEvents.onChangeWeapon -= onWeaponChanged;
-#if Game_VEHICLE
-            VehicleEvents.onLocalEnterInVehicle -= OnEnterInVehicle;
-#endif
         }
 
         /// <summary>
@@ -136,14 +130,5 @@ namespace Game.Runtime.UI
             indicatorText.gameObject.SetActive(active);
         }
 
-#if Game_VEHICLE
-        /// <summary>
-        /// 
-        /// </summary>
-        void OnEnterInVehicle(Vehicles.VehicleManager vehicle)
-        {
-            SetActive(false);
-        }
-#endif
     }
 }

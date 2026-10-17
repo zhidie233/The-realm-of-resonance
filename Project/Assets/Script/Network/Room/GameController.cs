@@ -140,23 +140,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         GameCore.LocalPlayer.Team = playerTeam;
 
         //spawn the player model
-#if !PSELECTOR
         SpawnPlayerModel(playerTeam);
-#else
-        if (PlayerSelector.InMatch)
-        {
-            if(PlayerSelector.Instance == null)
-            {
-                Debug.LogWarning("Player Selector is enabled but is not integrated in this map.");
-                return false;
-            }
-            if (!PlayerSelector.Instance.TrySpawnSelectedPlayer(playerTeam)) return false;
-        }
-        else
-        {
-            PlayerSelector.SpawnPreSelectedPlayer(playerTeam);
-        }
-#endif
         return true;
     }
 
@@ -700,11 +684,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
                     else
                     {
                         //otherwise wait until player split in both teams
-#if LOCALIZATION
-                        UIReferences.Instance.SetWaitingPlayersText(LocalizationTable.Instance.GetText(128), true);
-#else
                         UIReferences.Instance.SetWaitingPlayersText(GameTexts.WaitingTeamBalance, true);
-#endif
                         return;
                     }
                 }

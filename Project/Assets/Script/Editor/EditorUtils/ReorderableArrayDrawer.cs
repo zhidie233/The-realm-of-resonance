@@ -293,11 +293,7 @@ namespace GameEditor
                         bool isScriptable = propType.IsSubclassOf(typeScriptable);
                         if (isScriptable)
                         {
-#if EDIT_ALL_SCRIPTABLES
-							bool makeEditable = true;
-#else
                             bool makeEditable = true;
-#endif
 
                             if (makeEditable)
                             {

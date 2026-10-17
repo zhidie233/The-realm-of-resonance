@@ -244,12 +244,6 @@ public class AIShooterHealth : PlayerHealthManagerBase
             //update team score
             GameController.Instance.SetPoint(1, GameMode.TDM, team);
 
-#if GR
-            if (GetGameMode == GameMode.GR)
-            {
-                GunRaceMode.Instance?.GetNextGun();
-            }
-#endif
         }
         //if was killed by another bot
         else if (fromBot)

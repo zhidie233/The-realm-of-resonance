@@ -27,10 +27,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
     private int AllPlayerInRoom;
     private int AllPlayerInLobby;
     private bool Started = false;
-#if LOCALIZATION
-    private int[] LocalizatedKeysID = new int[] { 48, 49, 50, 51 };
-    private string[] LocalizedTexts = new string[4];
-#endif
 
     /// <summary>
     /// 
@@ -50,10 +46,6 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
     /// </summary>
     void OnEnable()
     {
-#if LOCALIZATION
-        LocalizedTexts = LocalizationTable.Instance.GetTextArray(LocalizatedKeysID);
-        LocalizationTable.Instance.OnLanguageChange += OnLangChange;
-#endif
         Refresh();
         InvokeRepeating("UpdateRepeting", 0, UpdateEach);
     }
@@ -74,18 +66,8 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
         CancelInvoke();
         StopAllCoroutines();
         PhotonNetwork.RemoveCallbackTarget(this);
-#if LOCALIZATION
-        LocalizationTable.Instance.OnLanguageChange -= OnLangChange;
-#endif
     }
 
-#if LOCALIZATION
-    void OnLangChange(Dictionary<string, string> lang)
-    {
-        LocalizedTexts = LocalizationTable.Instance.GetTextArray(LocalizatedKeysID);
-        Refresh();
-    }
-#endif
     /// <summary>
     /// 
     /// </summary>
@@ -156,17 +138,10 @@ public class PhotonStatistics : PhotonHelper, IConnectionCallbacks, ILobbyCallba
     /// </summary>
     void Set()
     {
-#if LOCALIZATION
-        AllRoomText.text = string.Format(LocalizedTexts[0].ToUpper(), AllRooms);
-        AllPlayerText.text = string.Format(LocalizedTexts[1].ToUpper(), AllPlayers);
-        AllPlayerInRoomText.text = string.Format(LocalizedTexts[2].ToUpper(), AllPlayerInRoom);
-        AllPlayerInLobbyText.text = string.Format(LocalizedTexts[3].ToUpper(), AllPlayerInLobby);
-#else
         AllRoomText.text = string.Format(GameTexts.RoomsCreated, AllRooms);
         AllPlayerText.text = string.Format(GameTexts.PlayersOnline, AllPlayers);
         AllPlayerInRoomText.text = string.Format(GameTexts.PlayersPlaying, AllPlayerInRoom);
         AllPlayerInLobbyText.text = string.Format(GameTexts.PlayersInLobby, AllPlayerInLobby);
-#endif
     }
 
     public void OnConnected()

@@ -38,27 +38,6 @@ public class ThrowKits : MonoBehaviourBase
         remaingKits = AmountOfKits;
     }
 
-#if GameM
-    protected override void OnEnable()
-    {
-        base.OnEnable();
-        TouchHelper.OnKit += OnMobileClick;
-    }
-
-    protected override void OnDisable()
-    {
-        base.OnDisable();
-        TouchHelper.OnKit -= OnMobileClick;
-    }
-
-    /// <summary>
-    /// 
-    /// </summary>
-    void OnMobileClick()
-    {
-        DispatchThrow();
-    }
-#endif
 
     /// <summary>
     /// 
@@ -87,9 +66,6 @@ public class ThrowKits : MonoBehaviourBase
             id = 1;
         }
 
-#if CLASS_CUSTOMIZER
-        id = ClassManager.Instance.ClassKit;
-#endif
 
         ThrowCaller(id);
     }

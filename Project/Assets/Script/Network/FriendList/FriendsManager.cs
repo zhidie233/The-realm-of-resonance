@@ -58,28 +58,12 @@ namespace Game.Runtime.FriendList
 
             friendsNames.Clear();
             //Get all friends saved 
-#if ULSP
-            if (DataBase.Instance != null)
-            {
-                friendsNames.AddRange(DataBase.LocalUserInstance.FriendList.ToArray());
-            }
-            else
-            {
-                string cacheFriend = PlayerPrefs.GetString(SaveKey, "Null");
-                if (!string.IsNullOrEmpty(cacheFriend))
-                {
-                    string[] splitFriends = cacheFriend.Split(splitChar);
-                    friendsNames.AddRange(splitFriends);
-                }
-            }
-#else
             string cacheFriend = PlayerPrefs.GetString(SaveKey, "Null");
             if (!string.IsNullOrEmpty(cacheFriend))
             {
                 string[] splitFriends = cacheFriend.Split(splitChar);
                 friendsNames.AddRange(splitFriends);
             }
-#endif
             //Find all friends names in photon list.
             if (friendsNames.Count > 0)
             {
@@ -123,22 +107,7 @@ namespace Game.Runtime.FriendList
         public void SaveFriends()
         {
             string allfriends = string.Join(splitChar.ToString(), friendsNames.ToArray());
-#if ULSP
-            if (DataBase.IsUserLogged)
-            {
-                ULoginGame.SaveFriendList(allfriends, () =>
-                {
-                    Debug.Log("Friend list save in database!");
-                    DataBase.LocalUserInstance.SetFriends(allfriends);
-                });
-            }
-            else
-            {
-                PlayerPrefs.SetString(SaveKey, allfriends);
-            }
-#else
             PlayerPrefs.SetString(SaveKey, allfriends);
-#endif
         }
 
         /// <summary>

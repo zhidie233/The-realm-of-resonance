@@ -56,23 +56,11 @@ public class PlayerVoice : MonoBehaviourBase
     protected override void OnEnable()
     {
         base.OnEnable();
-#if GameM
-        if (View.IsMine)
-        {
-            TouchHelper.OnTransmit += OnPushToTalkMobile;
-        }
-#endif
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-#if GameM
-        if (View.IsMine)
-        {
-            TouchHelper.OnTransmit -= OnPushToTalkMobile;
-        }
-#endif
     }
 
     public void OnPushToTalkMobile(bool transmit)
@@ -125,12 +113,6 @@ public class PlayerVoice : MonoBehaviourBase
         {
 #if !UNITY_WEBGL && PVOICE
             PushToTalk = b;
-#endif
-#if GameM
-            if (TouchHelper.Instance != null)
-            {
-                TouchHelper.Instance.OnPushToTalkChange(b);
-            }
 #endif
         }
     }

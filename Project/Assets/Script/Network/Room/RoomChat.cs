@@ -50,11 +50,7 @@ public class RoomChat : RoomChatBase
     /// </summary>
     private void Start()
     {
-#if LOCALIZATION
-        SetChatLocally(LocalizationTable.Instance.GetText(29));
-#else
         SetChatLocally(GameTexts.OpenChatStart);
-#endif
     }
 
     /// <summary>

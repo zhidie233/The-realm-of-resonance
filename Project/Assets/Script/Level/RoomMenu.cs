@@ -63,9 +63,6 @@ public class RoomMenu : MonoBehaviourBase
             return;
 
         base.Awake();
-#if ULSP
-        if (DataBase.IsUserLogged) { DataBase.Instance.RecordTime(); }
-#endif
         UIReferences.Instance.PlayerUI.PlayerUICanvas.enabled = false;
         InputHandler.CheckGamePadRequired();
     }
@@ -77,9 +74,6 @@ public class RoomMenu : MonoBehaviourBase
     {
         GameEvents.onLocalPlayerSpawn += OnPlayerSpawn;
         GameEvents.onLocalPlayerDeath += OnPlayerLocalDeath;
-#if GameM
-        TouchHelper.OnPause += TogglePause;
-#endif
         PhotonCallbacks.LeftRoom += OnLeftRoom;
     }
 
@@ -90,9 +84,6 @@ public class RoomMenu : MonoBehaviourBase
     {
         GameEvents.onLocalPlayerSpawn -= OnPlayerSpawn;
         GameEvents.onLocalPlayerDeath -= OnPlayerLocalDeath;
-#if GameM
-        TouchHelper.OnPause -= TogglePause;
-#endif
         PhotonCallbacks.LeftRoom -= OnLeftRoom;
     }
 
@@ -200,9 +191,6 @@ public class RoomMenu : MonoBehaviourBase
         string tn = team.GetTeamName();
         string joinText = isOneTeamMode ? GameTexts.JoinedInMatch : GameTexts.JoinIn;
 
-#if LOCALIZATION
-        joinText = isOneTeamMode ? LocalizationTable.Instance.GetText(17) : LocalizationTable.Instance.GetText(23);
-#endif
         if (isOneTeamMode)
         {
             KillFeedBase.Instance.SendMessageEvent(string.Format("{0} {1}", PhotonNetworkWrapper.NickName, joinText));
@@ -212,14 +200,7 @@ public class RoomMenu : MonoBehaviourBase
             string jt = string.Format("{0} {1}", joinText, tn);
             KillFeedBase.Instance.SendTeamHighlightMessage(PhotonNetworkWrapper.NickName, jt, team);
         }
-#if !PSELECTOR
         UtilityHelper.LockCursor(true);
-#else
-        if (!PlayerSelector.InMatch)
-        {
-            UtilityHelper.LockCursor(true);
-        }
-#endif
         //if player only spawn when a new round start
         if (GetGameMode.GetGameModeInfo().onRoundStartedSpawn == GameModeSettings.OnRoundStartedSpawn.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
         {
@@ -237,14 +218,6 @@ public class RoomMenu : MonoBehaviourBase
     /// </summary>
     public void LeaveRoom(bool save = true)
     {
-#if ULSP
-        if (DataBase.IsUserLogged && save)
-        {
-            var p = PhotonNetworkWrapper.LocalPlayer;
-            ULoginGame.SaveLocalPlayerKDS();
-            DataBase.Instance.StopAndSaveTime();
-        }
-#endif
         //Good place to save info before reset statistics
         if (PhotonNetworkWrapper.IsConnected && PhotonNetworkWrapper.InRoom)
         {

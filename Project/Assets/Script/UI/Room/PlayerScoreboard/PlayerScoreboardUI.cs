@@ -41,9 +41,7 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         InitTeam = player.GetPlayerTeam();
         UpdatePlayerUI(RealPlayer);
 
-#if !LM
         LevelIcon.gameObject.SetActive(false);
-#endif
     }
 
     /// <summary>
@@ -85,12 +83,6 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         }
         else { if (KickButton != null) KickButton.SetActive(false); }
 
-#if LM
-        LevelIcon.gameObject.SetActive(true);
-        var li = LevelManager.Instance.GetPlayerLevelInfo(RealPlayer);
-        LevelIcon.sprite = li.Icon;
-        if (levelNumberText != null) levelNumberText.text = li.LevelID.ToString();
-#endif
     }
 
     /// <summary>
@@ -116,12 +108,6 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         InitTeam = Bot.Team;
         if (KickButton != null) KickButton.SetActive(false);
 
-#if LM
-        var li = LevelManager.Instance.GetLevel(Bot.Score);
-        LevelIcon.sprite = li.Icon;
-        if (levelNumberText != null) levelNumberText.text = li.LevelID.ToString();
-        LevelIcon.gameObject.SetActive(true);
-#endif
 
         return true;
     }

@@ -60,13 +60,6 @@ namespace Game.PlayerController
             // When use a mobile device or Unity Remote
             if (UtilityHelper.isMobile)
             {
-#if GameM
-                Vector2 input = TouchPad.Instance.GetInput(CurrentSensitivity);
-                input.x = !InvertHorizontal ? input.x : (input.x * -1f);
-                input.y = InvertVertical ? (input.y * -1f) : input.y;
-
-                Move(input.x, input.y, character, camera, ladder);
-#endif
             }
             else
             {

@@ -105,9 +105,6 @@ public class SniperScope : SniperScopeBase
                        foreach (GameObject go in OnScopeDisable)
                        {
                            if (go == null) continue;
-#if GameTPV
-                           if (CameraViewSettings.IsThirdPerson()) continue;
-#endif
                            go.SetActive(true);
                        }
 

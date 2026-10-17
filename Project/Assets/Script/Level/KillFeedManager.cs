@@ -7,10 +7,6 @@ public class KillFeedManager : KillFeedBase
 {    
     public Color SelfColor = Color.green;
 
-#if LOCALIZATION
-    private int[] LocaleTextIDs = new int[] { 28,17, };
-    private string[] LocaleStrings;
-#endif
     /// <summary>
     /// 
     /// </summary>
@@ -18,9 +14,6 @@ public class KillFeedManager : KillFeedBase
     {
         if (PhotonNetworkWrapper.InRoom)
         {
-#if LOCALIZATION
-            LocaleStrings = LocalizationTable.Instance.GetTextArray(LocaleTextIDs);
-#endif
             OnJoined();
         }
     }
@@ -46,12 +39,7 @@ public class KillFeedManager : KillFeedBase
     /// </summary>
     void OnJoined()
     {
-#if LOCALIZATION
-        string joinCmd = LocalizationTable.AsCommand("joinmatch");
-        SendMessageEvent(string.Format("{0} {1}", PhotonNetworkWrapper.LocalPlayer.NickName, joinCmd));
-#else
         SendMessageEvent(string.Format("{0} {1}", PhotonNetworkWrapper.LocalPlayer.NickName, GameTexts.JoinedInMatch));
-#endif
     }
 
     /// <summary>
@@ -148,9 +136,6 @@ public class KillFeedManager : KillFeedBase
         kf.Message = (string)data["message"];
         kf.messageType = KillFeedMessageType.Message;
 
-#if LOCALIZATION
-        LocalizationTable.Instance.ParseCommad(ref kf.Message);
-#endif
 
         KillFeedUIBase.Instance.SetKillFeed(kf);
     }
@@ -171,11 +156,7 @@ public class KillFeedManager : KillFeedBase
 
     public void OnPhotonPlayerDisconnected(Player otherPlayer)
     {
-#if LOCALIZATION
-        SendMessageEvent(string.Format("{0} {1}", otherPlayer.NickName, LocalizationTable.Instance.GetText(18)), true);
-#else
         SendMessageEvent(string.Format("{0} {1}", otherPlayer.NickName, GameTexts.LeftOfMatch), true);
-#endif
     }
   
     /// <summary>

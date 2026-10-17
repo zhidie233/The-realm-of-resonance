@@ -36,13 +36,7 @@ namespace Game.InputManager
         /// </summary>
         void ApplyUI()
         {
-#if LOCALIZATION
-            string description = CachedData.KeyName;
-            LocalizationTable.Instance.TryGetText($"input_{CachedData.KeyName.ToLower()}", ref description);
-            KeyNameText.text = description;
-#else
             KeyNameText.text = CachedData.Description;
-#endif
 
             if (!CachedData.PrimaryIsAxis)
             {

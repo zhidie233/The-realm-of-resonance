@@ -94,9 +94,6 @@ public class FirstPersonController : FirstPersonControllerBase
     private bool isClimbing, isAiming = false;
     private ClimbableLadder _ladder;
     private bool MoveToStarted = false;
-#if GameM
-    private VirtualJoystick Joystick;
-#endif
     private float PostGroundVerticalPos = 0;
     private bool isFalling = false;
     private int JumpDirection = 0;
@@ -136,9 +133,6 @@ public class FirstPersonController : FirstPersonControllerBase
         _transform = transform;
         playerReferences = GetComponent<PlayerReferencesHandler>();
         _characterController = playerReferences.characterController;
-#if GameM
-        Joystick = FindObjectOfType<VirtualJoystick>();
-#endif
         defaultCameraRPosition = CameraRoot.localPosition;
         _audioSource = gameObject.AddComponent<AudioSource>();
         mouseLook.Init(_transform, headRoot);
@@ -156,10 +150,6 @@ public class FirstPersonController : FirstPersonControllerBase
         GameEvents.onMatchStart += OnMatchStart;
         GameEvents.onGameSettingsChange += OnGameSettingsChanged;
         GameEvents.onLocalAimChanged += OnAimChange;
-#if GameM
-        TouchHelper.OnCrouch += OnCrouchClicked;
-        TouchHelper.OnJump += OnJump;
-#endif
     }
 
     protected override void OnDisable()
@@ -169,10 +159,6 @@ public class FirstPersonController : FirstPersonControllerBase
         GameEvents.onMatchStart -= OnMatchStart;
         GameEvents.onGameSettingsChange -= OnGameSettingsChanged;
         GameEvents.onLocalAimChanged -= OnAimChange;
-#if GameM
-        TouchHelper.OnCrouch -= OnCrouchClicked;
-        TouchHelper.OnJump -= OnJump;
-#endif
     }
 
     public override void OnUpdate()
@@ -738,14 +724,6 @@ public class FirstPersonController : FirstPersonControllerBase
         HorizontalInput = GameInput.Horizontal;
         VerticalInput = GameInput.Vertical;
 
-#if GameM
-        if (UtilityHelper.isMobile)
-        {
-            HorizontalInput = Joystick.Horizontal;
-            VerticalInput = Joystick.Vertical;
-            VerticalInput = VerticalInput * 1.25f;
-        }
-#endif
         if (State == PlayerState.Sliding)
         {
             VerticalInput = 1;
@@ -889,21 +867,6 @@ public class FirstPersonController : FirstPersonControllerBase
         JumpInmune = true;
     }
 
-#if GameM
-    void OnCrouchClicked()
-    {
-        Crounching = !Crounching;
-        OnCrouchChanged();
-    }
-
-    void OnJump()
-    {
-        if (!_jump && State != PlayerState.Crouching)
-        {
-            _jump = true;
-        }
-    }
-#endif
 
     public override void UpdateMouseLook()
     {

@@ -46,13 +46,6 @@ public class GunManagerEditor : Editor
         EditorGUILayout.BeginVertical("box");
         string[] weaponList = GameConfig.Instance.AllWeaponStringList();
 
-#if CLASS_CUSTOMIZER
-        GUILayout.BeginHorizontal();
-        GUILayout.Label("已启用兵种自定义，在此设置默认武器： ", EditorStyles.miniLabel);
-        if (GUILayout.Button("兵种管理器")) { Selection.activeObject = ClassManager.Instance; EditorGUIUtility.PingObject(ClassManager.Instance); }
-        GUILayout.EndHorizontal();
-        GUI.enabled = false;
-#endif
         EditorGUILayout.BeginVertical("box");
         ShowAssault = PhotonGUI.ContainerHeaderFoldout("突击兵兵种", ShowAssault);
         AssaultAnim.target = ShowAssault;

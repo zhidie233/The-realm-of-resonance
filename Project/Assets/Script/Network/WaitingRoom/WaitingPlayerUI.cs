@@ -41,12 +41,7 @@ public class WaitingPlayerUI : WaitingPlayerUIBase
         else { KickButton.SetActive(false); }
         UpdateState();
 
-#if LM
-        LevelImg.gameObject.SetActive(true);
-        LevelImg.sprite = LevelManager.Instance.GetPlayerLevelInfo(player).Icon;
-#else
         LevelImg.gameObject.SetActive(false);
-#endif
     }
 
     /// <summary>

@@ -93,9 +93,6 @@ public static class UtilityHelper
 #if (UNITY_ANDROID || UNITY_IOS || UNITY_IPHONE) && !UNITY_EDITOR
             return true;
 #else
-#if GameM && UNITY_EDITOR
-            if (EditorApplication.isRemoteConnected) return true;
-#endif
             return false;
 #endif
         }

@@ -49,9 +49,6 @@ public class LobbyUI : MonoBehaviour
     public void InitialSetup()
     {
         GameEvents.onGameSettingsChange += ApplyRuntimeSettings;
-#if LOCALIZATION
-        LocalizationTable.Instance.OnLanguageChange += OnLanguageChange;
-#endif
         windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } });//disable all windows
         if (PhotonStaticticsUI != null) { PhotonStaticticsUI.SetActive(MatchLobby.Instance.ShowPhotonStatistics); }
         blackScreenFader.SetAlpha(1);
@@ -62,9 +59,6 @@ public class LobbyUI : MonoBehaviour
     /// </summary>
     private void OnEnable()
     {
-#if ULSP
-        if (DataBase.IsUserLogged) DataBase.OnUpdateData += OnUpdateDataBaseInfo;
-#endif
     }
 
     /// <summary>
@@ -73,12 +67,6 @@ public class LobbyUI : MonoBehaviour
     void OnDisable()
     {
         GameEvents.onGameSettingsChange -= ApplyRuntimeSettings;
-#if LOCALIZATION
-        LocalizationTable.Instance.OnLanguageChange -= OnLanguageChange;
-#endif
-#if ULSP
-        if (DataBase.IsUserLogged) DataBase.OnUpdateData -= OnUpdateDataBaseInfo;
-#endif
     }
 
     /// <summary>
@@ -205,18 +193,6 @@ public class LobbyUI : MonoBehaviour
         InputHandler.Initialize();
         InputHandler.CheckGamePadRequired();
 
-#if LM
-        LevelManager.Instance.Initialize();
-        if (LevelManager.Instance.isNewLevel)
-        {
-            var info = LevelManager.Instance.GetLevel();
-            m_LevelUI.Icon.sprite = info.Icon;
-            m_LevelUI.LevelNameText.text = info.Name;
-            m_LevelUI.Root.SetActive(true);
-            LevelManager.Instance.Refresh();
-        }
-        LevelManager.Instance.GetInfo();
-#endif
         if (GameConfig.Instance.MasterCanKickPlayers)
         {
             PhotonNetwork.EnableCloseConnection = true;
@@ -245,18 +221,7 @@ public class LobbyUI : MonoBehaviour
     /// </summary>
     public void FullSetUp()
     {
-#if LM
-        if (LevelIcon != null)
-        {
-            LevelIcon.gameObject.SetActive(true);
-            var pli = LevelManager.Instance.GetLevel();
-            LevelIcon.sprite = pli.Icon;
-            var plt = LevelIcon.GetComponentInChildren<TextMeshProUGUI>();
-            if (plt != null) plt.text = pli.LevelID.ToString();
-        }
-#else
         if (LevelIcon != null) LevelIcon.gameObject.SetActive(false);
-#endif
 
         SetRegionDropdown();
     }
@@ -266,9 +231,6 @@ public class LobbyUI : MonoBehaviour
     /// </summary>
     void OnLanguageChange(Dictionary<string, string> lang)
     {
-#if LOCALIZATION
-        LobbyRoomCreatorUI.Instance.SetupSelectors();
-#endif
     }
 
     /// <summary>

@@ -43,13 +43,6 @@ namespace Game.Runtime.Level
             }
             else if (mCol.CompareTag("Metal"))
             {
-#if Game_VEHICLE
-                var vehicle = mCol.GetComponentInParent<Vehicles.VehicleManager>();
-                if (vehicle != null && vehicle.IsLocalPlayerInside())
-                {
-                    DoPlayerDamage(vehicle.transform.root);
-                }
-#endif
             }
         }
 

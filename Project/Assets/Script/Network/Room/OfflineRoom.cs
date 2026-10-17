@@ -31,9 +31,6 @@ public class OfflineRoom : MonoBehaviour, IConnectionCallbacks
         {
             if (GameConfig.Instance.offlineMode || forceOffline)
             {
-#if CLASS_CUSTOMIZER
-                ClassManager.Instance.Init();
-#endif
                 InputHandler.Initialize();
                 PhotonNetwork.OfflineMode = true;
                 PhotonNetwork.NickName = "Offline Player";

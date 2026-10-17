@@ -103,9 +103,6 @@ public class PlayerConfig : PhotonHelper
         }
         playerReferences.DefaultCameraFOV = (float)GameCore.Settings.GetSettingOf("FOV");
         GameEvents.onGameSettingsChange += OnGameSettingsChanged;
-#if GR
-        transform.GetComponentInChildren<GunInventory>().isGunRace = (GetGameMode == GameMode.GR);
-#endif
     }
 
     /// <summary>

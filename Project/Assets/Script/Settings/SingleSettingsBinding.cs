@@ -25,20 +25,12 @@ namespace Game.Runtime.Settings
         public Text optionText;
         public TextMeshProUGUI optionTextTMP;
 
-#if LOCALIZATION
-        private string[] cachedKeys;
-#endif
 
         /// <summary>
         /// 
         /// </summary>
         private void Awake()
         {
-#if LOCALIZATION
-            if(cachedKeys == null)
-            cachedKeys = optionsNames;
-            LocalizationTable.Instance.OnLanguageChange += Localize;
-#endif
         }
 
         /// <summary>
@@ -61,9 +53,6 @@ namespace Game.Runtime.Settings
         /// </summary>
         private void OnDestroy()
         {
-#if LOCALIZATION
-            LocalizationTable.Instance.OnLanguageChange -= Localize;
-#endif
         }
 
         /// <summary>
@@ -95,9 +84,6 @@ namespace Game.Runtime.Settings
             currentOption = 0;
             ApplyCurrentValue(applySetting);
 
-#if LOCALIZATION
-            cachedKeys = optionsNames;
-#endif
         }
 
         /// <summary>
@@ -200,13 +186,6 @@ namespace Game.Runtime.Settings
         /// </summary>
         void Localize(Dictionary<string,string> data)
         {
-#if LOCALIZATION
-            for (int i = 0; i < optionsNames.Length; i++)
-            {
-                LocalizationTable.Instance.TryGetText(cachedKeys[i].ToLower(), ref optionsNames[i]);
-            }
-            ApplyCurrentValue();
-#endif
         }
 
 #if UNITY_EDITOR

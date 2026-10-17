@@ -244,12 +244,6 @@ public class PhotonHelper : MonoBehaviourPun {
             bool b = false;
             GameMode m = GetGameMode;
             if (m == GameMode.FFA) { b = true; }
-#if GR
-            if (m == GameMode.GR) { b = true; }
-#endif
-#if LMS
-            if (m == GameMode.BR) { b = true; }
-#endif
             return b;
         }
     }
@@ -262,12 +256,6 @@ public class PhotonHelper : MonoBehaviourPun {
             bool b = false;
             GameMode m = GetGameModeUpdated;
             if (m == GameMode.FFA) { b = true; }
-#if GR
-            if (m == GameMode.GR) { b = true; }
-#endif
-#if LMS
-            if (m == GameMode.BR) { b = true; }
-#endif
             return b;
         }
     }

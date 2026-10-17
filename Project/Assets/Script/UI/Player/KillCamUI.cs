@@ -46,25 +46,9 @@ public class KillCamUI :  KillCamUIBase
 
             if (actor.isRealPlayer)
             {
-#if LM
-                if (actor.ActorView != null)
-                {
-                    var level = LevelManager.Instance.GetPlayerLevelInfo(actor.ActorView.Owner);
-                    levelIcon.sprite = level.Icon;
-                    levelIcon.gameObject.SetActive(true);
-                }
-#endif
             }
             else
             {
-#if LM
-                if (actor.GetBotStats() != null)
-                {
-                    var level = LevelManager.Instance.GetLevel(actor.GetBotStats().Score);
-                    levelIcon.sprite = level.Icon;
-                    levelIcon.gameObject.SetActive(true);
-                }
-#endif
             }
         }
         else

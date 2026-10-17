@@ -48,9 +48,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     /// </summary>
     void Awake()
     {
-#if ULSP
-        if (ULoginUtility.RedirectToLoginIfNeeded()) return;
-#endif
         SetupPhotonSettings();
         UtilityHelper.BlockCursorForUser = false;
         UtilityHelper.LockCursor(false);
@@ -122,20 +119,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         PhotonNetwork.GameVersion = GameConfig.Instance.GameVersion;
         AuthenticationValues authValues = new AuthenticationValues(PhotonNetworkWrapper.NickName);
 
-#if ULSP  
-        if (DataBase.IsUserLogged && LoginProDataBase.Instance.usePhotonAuthentication)
-        {
-            authValues.AuthType = CustomAuthenticationType.Custom;
-            authValues.AddAuthParameter("type", "0");
-            authValues.AddAuthParameter("photonId", PhotonNetworkWrapper.NickName);
-            authValues.AddAuthParameter("userId", DataBase.LocalLoggedUser.ID.ToString());
-            authValues.AddAuthParameter("ip", DataBase.LocalLoggedUser.IP);
-            if (LoginProDataBase.UseDeviceId())
-            {
-                authValues.AddAuthParameter("deviceId", SystemInfo.deviceUniqueIdentifier);
-            }
-        }
-#endif
 
         PhotonNetwork.AuthValues = authValues;
 
@@ -244,21 +227,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     {
         if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
         {
-#if ULSP
-            // if the user has log in with an account
-            if (DataBase.IsUserLogged)
-            {
-                SetNickName(DataBase.Instance.LocalUser.NickName);
-                GameEvents.DispatchCoinUpdate(null);
-                GoToMainMenu();
-            }
-            else
-            {
-                GeneratePlayerName();
-            }
-#else
             GeneratePlayerName();
-#endif
         }
         else
         {
@@ -488,10 +457,6 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         PlayerPrefs.SetString(PropertiesKeys.GetUniqueKey("remembernick"), string.Empty);
         Disconect();
         LobbyUI.Instance.ChangeWindow("player name");
-#if ULSP
-        if (PhotonNetworkWrapper.Instance != null) PhotonNetworkWrapper.LocalPlayer.NickName = string.Empty;
-        LoginProDataBase.Instance.SignOut();
-#endif
     }
 
     #region UGUI
@@ -833,11 +798,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
                         connectionState = LobbyConnectionState.Disconnected;
                         Disconect();
                         LobbyLoadingScreenBase.Instance.HideIn(0.2f, true);
-#if !ULSP
                         LobbyUI.Instance.ChangeWindow("player name");
-#else
-                        SignOut();
-#endif
                     });
                     return;
                 }

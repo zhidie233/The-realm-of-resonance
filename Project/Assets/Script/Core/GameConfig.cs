@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,9 +44,6 @@ public class GameConfig : ScriptableObject
     [GameToggle] public bool realisticBullets = true;
     [GameToggle] public bool bulletDecals = true;
     [GameToggle] public bool showProjectilesTrails = true;
-#if GameM
-    [GameToggle] public bool AutoWeaponFire = false;
-#endif
     public AmmunitionType AmmoType = AmmunitionType.Bullets;
     public KillFeedWeaponShowMode killFeedWeaponShowMode = KillFeedWeaponShowMode.WeaponIcon;
     public LobbyJoinMethod lobbyJoinMethod = LobbyJoinMethod.WaitingRoom;
@@ -69,7 +66,7 @@ public class GameConfig : ScriptableObject
     [ScriptableDrawer] public List<GameCoin> gameCoins;
 
     [Header("Settings")]
-    public string GameVersion = "1.0";
+    public string GameVersion = "1.0.0";
     public string guestNameFormat = "Guest {0}";
     public string botsNameFormat = "BOT {0}";
     [Range(0, 10)] public int SpawnProtectedTime = 5; // Time were the player can't receive damage after spawn.
@@ -279,25 +276,6 @@ public class GameConfig : ScriptableObject
     {
         get
         {
-#if ULSP
-            if (!DataBase.IsUserLogged)
-            {
-                return string.Empty;
-            }
-
-            if (string.IsNullOrEmpty(_role))
-            {
-                _role = DataBase.LocalUserInstance.GetStatusPrefix();
-#if CLANS
-                if (DataBase.Instance.LocalUser.HaveAClan())
-                {
-                    if (_role != null && _role.Length > 1) _role += " ";
-                    _role += string.Format("{0}", DataBase.Instance.LocalUser.Clan.GetTagPrefix());
-                }
-#endif
-            }
-            return _role;
-#else
             if (CurrentTeamUser != null && !string.IsNullOrEmpty(CurrentTeamUser.UserName))
             {
                 return string.Format("<color=#{1}>[{0}]</color>", CurrentTeamUser.m_Role.ToString(), ColorUtility.ToHtmlStringRGBA(CurrentTeamUser.m_Color));
@@ -306,7 +284,6 @@ public class GameConfig : ScriptableObject
             {
                 return string.Empty;
             }
-#endif
         }
         private set => _role = value;
     }

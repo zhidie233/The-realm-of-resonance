@@ -42,9 +42,6 @@ public class AIShooterAttack : AIShooterAttackBase
     private int WeaponID = -1;
     private BulletData m_BulletData = new BulletData();
     private AIShooterAgent AI;
-#if UMM
-    private MiniMapMarker miniMapItem;
-#endif 
     #endregion
 
     /// <summary>
@@ -57,9 +54,6 @@ public class AIShooterAttack : AIShooterAttackBase
         Anim = GetComponentInChildren<Animator>();
         PhotonCallbacks.PlayerEnteredRoom += OnPhotonPlayerConnected;
         PhotonCallbacks.LeftRoom += OnLocalLeftRoom;
-#if UMM
-        miniMapItem = GetComponent<MiniMapMarker>();
-#endif
     }
 
     /// <summary>
@@ -220,9 +214,6 @@ public class AIShooterAttack : AIShooterAttackBase
             FireSource.Play();
         }
         if (Weapon.MuzzleFlash != null) { Weapon.MuzzleFlash.Play(); }
-#if UMM
-        ShowMiniMapItem();
-#endif
     }
 
     /// <summary>
@@ -232,12 +223,6 @@ public class AIShooterAttack : AIShooterAttackBase
     {
         StopAllCoroutines();
 
-#if UMM
-        if (miniMapItem != null)
-        {
-            miniMapItem.DestroyItem(false);
-        }
-#endif
     }
 
     /// <summary>
@@ -281,9 +266,6 @@ public class AIShooterAttack : AIShooterAttackBase
             r.AddRelativeTorque(Vector3.right * -5500.0f);
             r.transform.forward = forward;
         }
-#if UMM
-        ShowMiniMapItem();
-#endif
     }
 
     /// <summary>
@@ -412,30 +394,6 @@ public class AIShooterAttack : AIShooterAttackBase
         }
     }
 
-#if UMM
-    void ShowMiniMapItem()
-    {
-        if (AI.isTeamMate) return;
-#if KSA
-        if (KillStreakHandler.Instance != null && KillStreakHandler.Instance.activeAUVs > 0) return;
-#endif
-        if (miniMapItem != null && !miniMapItem.isTeamMateBot())
-        {
-            CancelInvoke(nameof(HideMiniMapItem));
-            miniMapItem.ShowItem();
-            Invoke(nameof(HideMiniMapItem), 0.25f);
-        }
-    }
-
-    void HideMiniMapItem()
-    {
-        if (AI.isTeamMate) return;
-        if (miniMapItem != null)
-        {
-            miniMapItem.HideItem();
-        }
-    }
-#endif
 
     public void OnPhotonPlayerConnected(Player newPlayer)
     {

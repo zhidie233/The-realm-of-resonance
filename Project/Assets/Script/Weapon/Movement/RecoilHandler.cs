@@ -30,10 +30,8 @@ public class RecoilHandler : RecoilBase
         m_Transform.localPosition = Vector3.zero;
         m_Transform.localEulerAngles = Vector3.zero;
         transform.parent = m_Transform;
-#if !GameTPV
         transform.localPosition = Vector3.zero;
         transform.localEulerAngles = Vector3.zero;
-#endif
 
         RecoilRot = m_Transform.localEulerAngles;
     }
@@ -111,9 +109,6 @@ public class RecoilHandler : RecoilBase
     /// </summary>
     public override void SetRecoil(RecoilData data)
     {
-#if GameM
-        if (UtilityHelper.isMobile && MobileControlSettings.Instance.disableRecoil) return;
-#endif
         
         Recoil += data.Amount;
         Recoil = Mathf.Clamp(Recoil, 0, MaxRecoil);

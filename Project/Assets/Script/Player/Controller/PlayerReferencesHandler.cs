@@ -134,17 +134,6 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
     public int ViewID => photonView.ViewID;
     public int ActorNumber => photonView.Owner.ActorNumber;
 
-#if Game_VEHICLE
-    private VehicleController _playerVehicle = null;
-    public VehicleController PlayerVehicle
-    {
-        get
-        {
-            if (_playerVehicle == null) _playerVehicle = GetComponent<VehicleController>();
-            return _playerVehicle;
-        }
-    }
-#endif
 
     // <returns></returns>
     public override bool IsDeath()

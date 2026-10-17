@@ -14,10 +14,6 @@ public class KickVoteUI : MonoBehaviour
     [SerializeField] private GameObject KeyInfoUI = null;
     private string CacheTargetName;
     private KickVote KickManager;
-#if LOCALIZATION
-    private int[] LocaleTextIDs = new int[] { 54, 55, 110, 111, 56, 52, 53 };
-    private string[] LocaleStrings;
-#endif
 
     /// <summary>
     /// 
@@ -30,27 +26,14 @@ public class KickVoteUI : MonoBehaviour
 
     private void OnEnable()
     {
-#if LOCALIZATION
-        LocaleStrings = LocalizationTable.Instance.GetTextArray(LocaleTextIDs);
-        LocalizationTable.Instance.OnLanguageChange += OnLangChange;
-#endif
         ScoreboardPopUpMenuBase.onScoreboardMenuAction += OnScoreboardPopupAction;
     }
 
     private void OnDisable()
     {
-#if LOCALIZATION
-        LocalizationTable.Instance.OnLanguageChange -= OnLangChange;
-#endif
         ScoreboardPopUpMenuBase.onScoreboardMenuAction -= OnScoreboardPopupAction;
     }
 
-#if LOCALIZATION
-    void OnLangChange(Dictionary<string, string> lang)
-    {
-        LocaleStrings = LocalizationTable.Instance.GetTextArray(LocaleTextIDs);
-    }
-#endif
 
     /// <summary>
     /// 
@@ -68,13 +51,8 @@ public class KickVoteUI : MonoBehaviour
     {
         CancelInvoke("Hide");
         CacheTargetName = again.NickName;
-#if LOCALIZATION
-        TitleText.text = string.Format(LocaleStrings[0], By.NickName);
-        VotingText.text = string.Format(LocaleStrings[1], again.NickName);
-#else
         TitleText.text = string.Format(GameTexts.VoteBy, By.NickName);
         VotingText.text = string.Format(GameTexts.KickQuestion, again.NickName);
-#endif
         YesText.text = "0";
         NoText.text = "0";
         VoteConfirmation.text = string.Empty;
@@ -92,13 +70,8 @@ public class KickVoteUI : MonoBehaviour
     public void OnSendLocalVote(bool yes)
     {
         KeyInfoUI.SetActive(false);
-#if LOCALIZATION
-        string vote = yes ? "<color=green>" + LocaleStrings[2] +"</color>" : "<color=red>" + LocaleStrings[3] + "</color>";
-        VoteConfirmation.text = string.Format(LocaleStrings[4], vote);
-#else
         string vote = yes ? "<color=green>YES</color>" : "<color=red>NO</color>";
         VoteConfirmation.text = string.Format(GameTexts.YouVote, vote);
-#endif
     }
 
     public void OnReceiveVote(int yes, int no)
@@ -109,16 +82,6 @@ public class KickVoteUI : MonoBehaviour
 
     public void OnFinish(bool yes)
     {
-#if LOCALIZATION
-        if (yes)
-        {
-            VotingText.text = string.Format(LocaleStrings[5], CacheTargetName);
-        }
-        else
-        {
-            VotingText.text = string.Format(LocaleStrings[6], CacheTargetName);
-        }
-#else
         if (yes)
         {
             VotingText.text = string.Format(GameTexts.KickConfirmation, CacheTargetName);
@@ -127,7 +90,6 @@ public class KickVoteUI : MonoBehaviour
         {
             VotingText.text = string.Format(GameTexts.KickFailed, CacheTargetName);
         }
-#endif
         KeyInfoUI.SetActive(false);
         Invoke("Hide", 3);
     }

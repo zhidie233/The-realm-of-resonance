@@ -134,9 +134,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         {
             SetTimeState(RoomTimeState.Started, true);
         }
-#if LMS
-        if (GetGameMode == GameMode.BR) return;
-#endif
         GetTime(true);
     }
 

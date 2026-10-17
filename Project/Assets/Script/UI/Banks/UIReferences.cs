@@ -37,10 +37,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
 
     private bool inTeam = false;
     private int ChangeTeamTimes = 0;
-#if LOCALIZATION
-    private int[] LocaleTextIDs = new int[] { 126, 22, 38, 32, 33, 34, 127 };
-    private string[] LocaleStrings;
-#endif
 
     /// <summary>
     /// 
@@ -130,9 +126,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     /// </summary>
     public void SetUpUI()
     {
-#if LOCALIZATION
-        if (LocaleStrings == null) LocaleStrings = LocalizationTable.Instance.GetTextArray(LocaleTextIDs);
-#endif
         if (!RoomSettings.Instance.CurrentRoomInfo.autoTeamSelection)
         {
             PauseMenuBase.Instance.OpenMenu();
@@ -150,16 +143,9 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
             if (MaxKillsText != null)
             {
                 int MaxKills = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.RoomGoal];
-#if LOCALIZATION
-                MaxKillsText.text = string.Format("{0} {1}", MaxKills, LocaleStrings[0]);
-#else
             MaxKillsText.text = string.Format("{0} 击杀", MaxKills);
-#endif
             }
         }
-#if LMS
-        if (GetGameMode == GameMode.BR) ShowMenu(false);
-#endif
         if (GameCore.GameData.UsingWaitingRoom())
         {
             if (PhotonNetworkWrapper.OfflineMode && !PhotonNetworkWrapper.CurrentRoom.GetRoomInfo().autoTeamSelection) return;
@@ -185,12 +171,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
 
         if (!active)
         {
-#if PSELECTOR
-            if (PlayerSelector.Instance != null)
-            {
-                PlayerSelector.Instance.isChangeOfTeam = false;
-            }
-#endif
         }
 
         if (InputHandler.isGamePad) GamePadPointer.Instance?.SetActive(active);
@@ -290,15 +270,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     /// <param name="id"></param>
     public void JoinTeam(int id)
     {
-#if ELIM
-        if (GetGameMode == GameMode.ELIM)
-        {
-            if (GameController.Instance.GameMatchState == MatchState.Playing)
-            {
-                Elimination.Instance.WaitForRoundFinish();
-            }
-        }
-#endif
         RoomMenu.Instance.JoinTeam(id);
         PauseMenuBase.Instance.CloseMenu();
         inTeam = true;
@@ -318,12 +289,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     /// </summary>
     public void ActiveChangeTeam()
     {
-#if PSELECTOR
-        if (PlayerSelector.Instance != null)
-        {
-            PlayerSelector.Instance.isChangeOfTeam = true;
-        }
-#endif
         playerScoreboards.SetActive(false, true);
         SetActiveChangeTeamButton(false);
     }
@@ -350,11 +315,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
 
     public void OnSpawnCount(int count)
     {
-#if LOCALIZATION
-        SpawnProtectionText.text = string.Format(LocaleStrings[6].ToUpper(), count);
-#else
         SpawnProtectionText.text = string.Format("出生保护倒计时: <b>{0}</b>", count);
-#endif
         SpawnProtectionText.gameObject.SetActive(count > 0);
     }
 
@@ -422,12 +383,6 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         {
             yield return new WaitForSeconds(delay);
             yield return blackScreen.FadeIn(1);
-#if ULSP
-            if (DataBase.Instance != null && DataBase.Instance.IsRunningTask)
-            {
-                while (DataBase.Instance.IsRunningTask) { yield return null; }
-            }
-#endif
             if (goToLobby)
             {
                 UtilityHelper.LoadLevel(GameConfig.Instance.MainMenuScene);

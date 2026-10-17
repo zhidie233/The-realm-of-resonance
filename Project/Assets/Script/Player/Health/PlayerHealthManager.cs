@@ -378,12 +378,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 FallbackTarget = playerReferences.playerRagdoll.transform
             }).SetActive(true);
 
-#if ELIM
-            if (GetGameMode == GameMode.ELIM) { Elimination.Instance.OnLocalDeath(); }
-#endif
-#if DM
-            if (GetGameMode == GameMode.DM) { Demolition.Instance.OnLocalDeath(); }
-#endif
 
             if (killer == LocalName)
             {
@@ -464,12 +458,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
         GameController.Instance.OnLocalPlayerKill();
 
-#if GR
-        if (GetGameMode == GameMode.GR)
-        {
-            GunRaceMode.Instance?.GetNextGun();
-        }
-#endif
     }
 
     /// <summary>

@@ -48,15 +48,7 @@ public static class GameCore
             /// <returns></returns>
             public static int GetAllTimeKills()
             {
-#if ULSP
-                if (DataBase.IsUserLogged)
-                {
-                    return DataBase.LocalUserInstance.Kills;
-                }
-                else return 0;
-#else
                 return PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("kills", PhotonNetworkWrapper.NickName));
-#endif
             }
 
             /// <summary>
@@ -65,15 +57,7 @@ public static class GameCore
             /// <returns></returns>
             public static int GetAllTimeDeaths()
             {
-#if ULSP
-                if (DataBase.IsUserLogged)
-                {
-                    return DataBase.LocalUserInstance.Deaths;
-                }
-                else return 0;
-#else
                 return PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("deaths", PhotonNetworkWrapper.NickName));
-#endif
             }
 
             /// <summary>
@@ -82,15 +66,7 @@ public static class GameCore
             /// <returns></returns>
             public static int GetAllTimeScore()
             {
-#if ULSP
-                if (DataBase.IsUserLogged)
-                {
-                    return DataBase.LocalUserInstance.Score;
-                }
-                else return 0;
-#else
                 return PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", PhotonNetworkWrapper.NickName));
-#endif
             }
         }
 

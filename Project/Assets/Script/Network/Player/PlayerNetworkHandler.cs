@@ -40,9 +40,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     bool _receivedNetworkUpdate = false;
     private Vector3 headEuler = Vector3.zero;
     private int currentGunID = -1;
-#if UMM
-    private MiniMapMarker MiniMapItem = null;
-#endif
 
     // 此玩家是否为本地玩家的队友
     public bool isFriend { get; set; }
@@ -70,13 +67,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         {
             if (x != null) x.gameObject.SetActive(false);
         });
-#if UMM
-        MiniMapItem = this.GetComponent<MiniMapMarker>();
-        if (isMine && MiniMapItem != null)
-        {
-            MiniMapItem.enabled = false;
-        }
-#endif
     }
 
     private void Start()
@@ -195,22 +185,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     {
         playerHealthManager.DamageEnabled = true;
         DrawName.SetActive(SpectatorModeBase.Instance.isActive);
-#if UMM
-        if (MiniMapData.Instance.showEnemysWhenFire)
-        {
-#if KSA
-            if (KillStreakHandler.Instance != null && KillStreakHandler.Instance.activeAUVs > 0) return;
-#endif
-            if (FPState == PlayerFPState.Firing || FPState == PlayerFPState.FireAiming)
-            {
-                MiniMapItem?.ShowItem();
-            }
-            else
-            {
-                MiniMapItem?.HideItem();
-            }
-        }
-#endif
     }
 
     // Function called each frame when this Remote player is a teammate.
@@ -226,9 +200,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
             PlayerReferences.playerRagdoll.IgnorePlayerCollider();
         }
 
-#if UMM
-        MiniMapItem?.ShowItem();
-#endif
     }
 
     // This function control which TP Weapon should be showing on remote players.
@@ -285,10 +256,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     public void ReplicateFire(GunType weaponType, Vector3 hitPosition, Vector3 inacuracity)
     {
         photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inacuracity);
-#if GameTPV
-        if (CameraViewSettings.IsThirdPerson())
-            PlayerReferences.playerAnimations?.PlayFireAnimation(weaponType);
-#endif
     }
 
     // public method to send the RPC shot synchronization
@@ -393,20 +360,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     void SyncCustomizer(int weaponID, string line, PhotonMessageInfo info)
     {
         if (photonView.ViewID != info.photonView.ViewID) return;
-#if CUSTOMIZER
-        RemoteGun ng = NetworkGuns.Find(x => x.LocalGun.GunID == weaponID);
-        if (ng != null)
-        {
-            if (ng.GetComponent<CustomizerWeapon>() != null)
-            {
-                ng.GetComponent<CustomizerWeapon>().ApplyAttachments(line);
-            }
-            else
-            {
-                Debug.LogWarning("You have not setup the attachments in the TPWeapon: " + weaponID);
-            }
-        }
-#endif
     }
 
     void UpdatePosition()

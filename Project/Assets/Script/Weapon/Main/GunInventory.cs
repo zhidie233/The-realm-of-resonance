@@ -41,24 +41,12 @@ public class GunInventory : MonoBehaviourBase
     private bool isFastFire = false;
     public bool ObservedComponentsFoldoutOpen = false;
     private AudioSource ASource, fireAudioSource;
-#if GR
-    public bool isGunRace { get; set; }
-    private GunRaceMode GunRace;
-#endif
 
     protected override void Awake()
     {
         base.Awake();
         ASource = GetComponent<AudioSource>();
         isGameStarted = MatchTimeManagerBase.HaveTimeStarted();
-#if GR
-        if (playerReferences.photonView.IsMine)
-        {
-            GunRace = FindObjectOfType<GunRaceMode>();
-            if (GunRace != null) { GunRace.SetGunManager(this); }
-            else { Debug.Log("Gun Race is not integrated in this map."); }
-        }
-#endif
         //when player instance select player class select in RoomMenu
         SetupLoadout();
     }
@@ -70,13 +58,6 @@ public class GunInventory : MonoBehaviourBase
         foreach (GunController guns in AllGuns) { guns.gameObject?.SetActive(false); }
         WeaponLoadoutUIBase.Instance?.SetLoadout(PlayerEquip);
         EquipPickUpMode = GameConfig.Instance.switchToPickupWeapon;
-#if GR
-        if (isGunRace)
-        {
-            PlayerEquip[0] = GunRace.GetGunInfo(AllGuns);
-            currentWeaponIndex = 0;
-        }
-#endif
         var firstWeapon = PlayerEquip[currentWeaponIndex];
         TakeWeapon(firstWeapon);
 
@@ -87,20 +68,11 @@ public class GunInventory : MonoBehaviourBase
         {
             BlockAllWeapons();
         }
-#if LMS
-        if (GetGameMode == GameMode.BR)
-        {
-            UnEquipEverything();
-        }
-#endif
     }
 
     // Setup the player equipped weapons from the selected player class
     void SetupLoadout()
     {
-#if CLASS_CUSTOMIZER
-        ClassManager.Instance.SetUpClasses(this);
-#else
         //when player instance select player class select in RoomMenu
         PlayerClassLoadout pcl = null;
         var currentClass = PlayerClass.Assault.GetSavePlayerClass();
@@ -135,7 +107,6 @@ public class GunInventory : MonoBehaviourBase
         // if you want to add more weapons you can do it here
         // e.g AddWeaponToSlot(4, GetGunOnListById(pcl.Custom), true);
 
-#endif
         for (int i = 0; i < PlayerEquip.Count; i++)
         {
             if (PlayerEquip[i] == null) continue;
@@ -172,9 +143,6 @@ public class GunInventory : MonoBehaviourBase
     {
         if (!CanSwich || GameConfig.Instance.isChating)
             return;
-#if GR
-        if (isGunRace) return;
-#endif
 
         if (GameInput.WeaponSlot(1))
         {
@@ -223,9 +191,6 @@ public class GunInventory : MonoBehaviourBase
     {
         if (PlayerEquip.Count <= 0 || PlayerEquip == null)
             return 0;
-#if GR
-        if (isGunRace) return 0;
-#endif
 
         int next = (this.currentWeaponIndex + 1) % this.PlayerEquip.Count;
         if (PlayerEquip[next] == null) return 0;
@@ -238,9 +203,6 @@ public class GunInventory : MonoBehaviourBase
     {
         if (PlayerEquip.Count <= 0 || PlayerEquip == null)
             return 0;
-#if GR
-        if (isGunRace) return 0;
-#endif
 
         int next = 0;
         if (this.currentWeaponIndex != 0)
@@ -651,33 +613,18 @@ public class GunInventory : MonoBehaviourBase
     // <returns></returns>
     private Vector3 GetThrowPosition()
     {
-#if GameTPV
-        if (CameraViewSettings.IsThirdPerson())
-        {
-            return transform.root.TransformPoint(new Vector3(0, 1, 1) * 0.55f);
-        }
-#endif
         return playerReferences.PlayerCameraTransform.TransformPoint(Vector3.forward * 0.55f);
     }
 
     // <returns></returns>
     private Vector3 GetThrowDirection()
     {
-#if GameTPV
-        if (CameraViewSettings.IsThirdPerson())
-        {
-            return transform.root.forward;
-        }
-#endif
         return playerReferences.PlayerCameraTransform.forward;
     }
     public void HeadAnimation(int state, float speed)
     {
         if (HeadAnimator == null)
             return;
-#if GameTPV
-        if (CameraViewSettings.IsThirdPerson()) return;
-#endif
         switch (state)
         {
             case 0:

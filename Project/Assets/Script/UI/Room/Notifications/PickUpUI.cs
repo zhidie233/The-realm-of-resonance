@@ -17,10 +17,6 @@ public class PickUpUI : PickUpUIBase
 
     private GunPickUpBase CacheGunPickUp = null;
 
-#if LOCALIZATION
-    private int[] LocaleTextIDs = new int[] { 13, 12 };
-    private string[] LocaleStrings;
-#endif
 
     /// <summary>
     /// 
@@ -28,9 +24,6 @@ public class PickUpUI : PickUpUIBase
     private void OnEnable()
     {
         GameEvents.onLocalPlayerDeath += OnLocalDeath;
-#if LOCALIZATION
-        LocaleStrings = LocalizationTable.Instance.GetTextArray(LocaleTextIDs);
-#endif
     }
 
     /// <summary>
@@ -58,11 +51,7 @@ public class PickUpUI : PickUpUIBase
 
         var info = gunPickUp.GunInfo;
         var inputName = InputHandler.GetButtonName("Interact");
-#if LOCALIZATION
-        string t = string.Format(LocaleStrings[1], info.Name, inputName);
-#else
         string t =  string.Format(GameTexts.PickUpWeapon, info.Name, inputName);
-#endif
         Show(new DisplayInformation()
         {
             Text = t,

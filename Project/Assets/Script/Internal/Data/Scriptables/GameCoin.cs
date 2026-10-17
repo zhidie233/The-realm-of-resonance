@@ -1,4 +1,4 @@
-﻿﻿using System;
+﻿using System;
 using System.Text;
 using UnityEngine;
 using GameEditor;
@@ -8,7 +8,7 @@ using CodeStage.AntiCheat.Storage;
 
 namespace Game.Internal.Scriptables
 {
-    [CreateAssetMenu(menuName = "Game/Shop/Coin", fileName = "Coin")]
+    [CreateAssetMenu(menuName = "Game/Coin", fileName = "Coin")]
     public class GameCoin : ScriptableObject
     {
         public string CoinName;
@@ -26,16 +26,10 @@ namespace Game.Internal.Scriptables
         /// <returns></returns>
         public GameCoin Add(int coins, string forUser = "")
         {
-#if ULSP
-            if (!DataBase.IsUserLogged) return this;
-
-            DataBase.Instance.SaveNewCoins(coins, this);
-#else
             int savedCoins = GetCoins(forUser);
             savedCoins += coins;
 
             PlayerPrefs.SetInt(Key(forUser), savedCoins);
-#endif
             return this;
         }
 
@@ -46,11 +40,6 @@ namespace Game.Internal.Scriptables
         /// <returns></returns>
         public GameCoin Deduct(int coins, string forUser = "")
         {
-#if ULSP
-            if (!DataBase.IsUserLogged) return this;
-
-            DataBase.Instance.SubtractCoins(coins, this);
-#else
             int savedCoins = GetCoins(forUser);
             savedCoins -= coins;
 
@@ -65,7 +54,6 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
 #else
  ObscuredPrefs.Set<int>(Key(forUser), savedCoins);
 #endif                     
-#endif
             return this;
         }
 
@@ -75,28 +63,12 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
         /// <returns></returns>
         public int GetCoins(string endPoint = "")
         {
-#if ULSP
-            if (!DataBase.IsUserLogged)
-            {
-                // Debug.Log($"You need an account to accesses to the coins.");
-                return 0;
-            }
-            int indexOfCoin = GameCore.Coins.GetIndexOfCoin(this);
-            var userCoins = DataBase.LocalUserInstance.Coins;
-            if(indexOfCoin >= userCoins.Length)
-            {
-                Debug.LogWarning($"Local user doesn't have data for this coin '{CoinName} with ID {indexOfCoin}'.");
-                return 0;
-            }
-            return userCoins[indexOfCoin];
-#else         
 #if !ACTK_IS_HERE
             int savedCoins = PlayerPrefs.GetInt(Key(endPoint), InitialCoins);
 #else
             int savedCoins = ObscuredPrefs.Get<int>(Key(endPoint), InitialCoins);
 #endif
             return savedCoins;
-#endif
         }
 
         /// <summary>

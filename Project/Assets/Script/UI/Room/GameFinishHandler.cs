@@ -76,21 +76,6 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
         TotalScoreText.text = string.Format("{0}\n<size=9>{1}</size>", tscore, GameTexts.TotalScore.Localized(35).ToUpper());
         CoinsText.text = string.Format("+{0}\n<size=9>COINS</size>", coins);
 
-#if ULSP
-        if (DataBase.Instance != null)
-        {
-            var p = PhotonNetworkWrapper.LocalPlayer;
-            ULoginGame.SaveLocalPlayerKDS();
-            DataBase.Instance.StopAndSaveTime();
-            if (coins > 0)
-            {
-                DataBase.Instance.SaveNewCoins(coins, GameConfig.Instance.VirtualCoins.XPCoin);
-            }
-#if CLANS
-            DataBase.Instance.SetClanScore(score);
-#endif
-        }
-#else
         if (coins > 0)
         {
             GameConfig.Instance.VirtualCoins.AddCoins(coins, PhotonNetworkWrapper.NickName);
@@ -98,7 +83,6 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
         int oldsavedScore = PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", LocalName), 0);
         oldsavedScore += tscore;
         PlayerPrefs.SetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", LocalName), oldsavedScore);
-#endif
     }
 
     /// <summary>

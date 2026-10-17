@@ -72,11 +72,7 @@ namespace Game.Runtime.Misc
         public void SetAFKCount(float seconds)
         {
             afkText.gameObject.SetActive(true);
-#if LOCALIZATION
-            afkText.text = string.Format(LocalizationTable.Instance.GetText(31), seconds.ToString("F2"));
-#else
             afkText.text = string.Format(GameTexts.AFKWarning, seconds.ToString("F2"));
-#endif
         }
 
         /// <summary>

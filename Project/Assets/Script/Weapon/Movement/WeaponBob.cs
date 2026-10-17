@@ -289,92 +289,6 @@ public class WeaponBob : WeaponBobBase
     }
 
 
-#if ENABLE_SIMULATION
-    public float simulationSpeed = 0;
-    public bool isSimulating = false;
-
-    public void SimulateMovement()
-    {
-        float time = 0.018f;
-
-        if (simulationSpeed > 0.1f && simulationSpeed <= 4)
-        {
-            bobbingSpeed = tempWalkSpeed;
-            BobbingAmount = settings.WalkOscillationAmount;
-            lerp = settings.WalkLerpSpeed;
-            eulerZ = settings.EulerZAmount;
-            eulerX = settings.EulerXAmount;
-        }
-        else if (simulationSpeed > 4)
-        {
-            bobbingSpeed = tempRunSpeed;
-            BobbingAmount = settings.RunOscillationAmount;
-            lerp = settings.RunLerpSpeed;
-            eulerZ = settings.RunEulerZAmount;
-            eulerX = settings.RunEulerXAmount;
-        }
-
-        if (simulationSpeed < 0.1f)
-        {
-            bobbingSpeed = tempIdleSpeed;
-            BobbingAmount = settings.WalkOscillationAmount * 0.1f;
-            lerp = settings.WalkLerpSpeed;
-            eulerZ = settings.EulerZAmount;
-            eulerX = settings.EulerXAmount;
-        }
-
-        tempWalkSpeed = 0;
-        tempRunSpeed = 0;
-        tempIdleSpeed = 0;
-
-        if (tempIdleSpeed != settings.idleBobbingSpeed)
-        {
-            tempWalkSpeed = simulationSpeed * 0.06f * settings.WalkSpeedMultiplier;
-            tempRunSpeed = simulationSpeed * 0.03f * settings.RunSpeedMultiplier;
-            tempIdleSpeed = settings.idleBobbingSpeed;
-        }
-
-        waveslice = Mathf.Sin(timer * 2);
-        waveslice2 = Mathf.Sin(timer);
-        timer = timer + bobbingSpeed;
-
-        float w1v = (waveslice + 1) / 2;
-        w1v = settings.pitchCurve.Evaluate(w1v);
-        waveslice = Mathf.Lerp(-1, 1, w1v);
-
-        float w2v = (waveslice2 + 1) / 2;
-        w2v = settings.rollCurve.Evaluate(w2v);
-        waveslice2 = Mathf.Lerp(-1, 1, w2v);
-
-        if (waveslice != 0)
-        {
-            float verticalMovement = -(waveslice * BobbingAmount * Intensitity);
-            float horizontalMovement = waveslice2 * BobbingAmount * Intensitity;
-            float zFlow = waveslice2 * eulerZ;
-            float xFlow = waveslice * eulerX;
-
-            //if player is moving
-            if (simulationSpeed > 0.1f)
-            {
-                currentPosition.Set(midpoint.x + horizontalMovement, midpoint.y + verticalMovement, currentPosition.z);
-                currentRotation.Set(localRotation.x + xFlow, localRotation.y, localRotation.z + zFlow);
-                CachedTransform.localRotation = Quaternion.Slerp(CachedTransform.localRotation, Quaternion.Euler(currentRotation), time * lerp);
-            }
-            else//if player is idle
-            {
-                currentPosition.Set(midpoint.x, midpoint.y + verticalMovement, currentPosition.z);
-                CachedTransform.localRotation = Quaternion.Slerp(CachedTransform.localRotation, Quaternion.Euler(Vector3.zero), time * 10);
-            }
-        }
-        else
-        {
-            //Player not moving
-            MoveToDefault();
-        }
-
-        CachedTransform.localPosition = Vector3.Lerp(CachedTransform.localPosition, currentPosition, time * lerp);
-    }
-#endif
 }
 
 #if UNITY_EDITOR
@@ -411,33 +325,7 @@ public class WeaponEditorBob : Editor
             serializedObject.ApplyModifiedProperties();
             EditorUtility.SetDirty(target);
         }
-#if ENABLE_SIMULATION
-        if (!script.isSimulating)
-        {
-            if (GUILayout.Button("Simulate"))
-            {
-                script.isSimulating = true;
-                script.Init();
-                EditorApplication.update += OnEditorUpdate;
-            }
-        }
-        else
-        {
-            script.simulationSpeed = EditorGUILayout.Slider("Simulation Speed", script.simulationSpeed, 0, 8);
-            if (GUILayout.Button("Stop Simulate"))
-            {
-                EditorApplication.update -= OnEditorUpdate;
-                script.isSimulating = false;
-            }
-        }
-#endif
     }
 
-#if ENABLE_SIMULATION
-    void OnEditorUpdate()
-    {
-        script.SimulateMovement();
-    }
-#endif
 }
 #endif

@@ -39,40 +39,6 @@ namespace Game.Internal.Structures
             if (UnlockMethod == UnlockabilityMethod.Hidden) return LockReason.Hidden;
 
             bool isPurchased = false;
-#if SHOP && ULSP
-            if (CanBePurchased())
-            {
-                isPurchased = DataBase.IsItemPurchased((int)ItemType, itemID);
-                if (!isPurchased)
-                {
-                    reason = LockReason.NoPurchased;
-                }
-            }
-#endif
-#if LM
-            if (CanBeUnlockedByLevel())
-            {
-                // if the local player level doesn't meets the required level to unlock.
-                if ((LevelManager.Instance.GetLevelID() + 1) < UnlockAtLevel)
-                {
-                    if (reason == LockReason.NoPurchased) reason = LockReason.NoPurchasedAndLevel;
-                    else
-                    {
-                        // if this item is purchased and both ways are allowed to unlock the item (purchase or level up) then the item is unlock no matter the player level.
-                        if(isPurchased && UnlockMethod == UnlockabilityMethod.PurchasedOrLevelUp) reason = LockReason.None;
-                        else reason = LockReason.Level;
-                    }
-                }// if the player have the required level to unlock.
-                else
-                {
-                    // if the item is not purchased, but the player meets the required level to unlock the item.
-                    if(reason == LockReason.NoPurchased && UnlockMethod == UnlockabilityMethod.PurchasedOrLevelUp)
-                    {
-                        reason = LockReason.None;
-                    }
-                }
-            }
-#endif
             if (isPurchased) { }
             return reason;
         }

@@ -29,29 +29,14 @@ namespace Game.Runtime.FriendList
         /// </summary>
         private void OnEnable()
         {
-#if LOCALIZATION
-        OffLineText = LocalizationTable.Instance.GetText("offline");
-        OnlineText = LocalizationTable.Instance.GetText("online");
-        LocalizationTable.Instance.OnLanguageChange += OnLangChange;
-#endif
         }
 
-#if LOCALIZATION
-    void OnLangChange(Dictionary<string, string> lang)
-    {
-        OffLineText = lang["offline"];
-        OnlineText = lang["online"];
-    }
-#endif
 
         /// <summary>
         /// 
         /// </summary>
         private void OnDisable()
         {
-#if LOCALIZATION
-        LocalizationTable.Instance.OnLanguageChange -= OnLangChange;
-#endif
         }
         
         /// <summary>

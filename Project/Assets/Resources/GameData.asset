@@ -60,7 +60,7 @@ MonoBehaviour:
   gameCoins:
   - {fileID: 11400000, guid: a8e2d139cede6ec4dbb43712a6f9a86f, type: 2}
   - {fileID: 11400000, guid: 6249e2dd81be65b448a55259fd1d2bea, type: 2}
-  GameVersion: 1.9.4
+  GameVersion: 1.0.0
   guestNameFormat: Guest {0}
   botsNameFormat: BOT {0}
   SpawnProtectedTime: 5

@@ -235,13 +235,6 @@ public class GunController : GunBase
 
     protected override void OnEnable()
     {
-#if GameM
-        if (UtilityHelper.isMobile)
-        {
-            TouchHelper.OnFireClick += OnFire;
-            TouchHelper.OnReload += OnReload;
-        }
-#endif
 
         if (!isInitialized) return;
 
@@ -265,13 +258,6 @@ public class GunController : GunBase
         EquippedWeaponUIBase.Instance.SetFireType(GetFireType());
         playerSettings?.DoSpawnWeaponRenderEffect(weaponRenders);
         OnAmmoLauncher.ForEach(x => { x?.SetActive(true); });
-#if GameTPV
-        var tpScript = PlayerReferences.GetComponent<PlayerCameraSwitcher>();
-        if (tpScript != null)
-        {
-            SetWeaponRendersActive(!CameraViewSettings.IsThirdPerson());
-        }
-#endif
     }
 
     protected override void OnDisable()
@@ -279,13 +265,6 @@ public class GunController : GunBase
         base.OnDisable();
         GameEvents.onAmmoPickUp -= this.OnPickUpAmmo;
         GameEvents.onRoundEnd -= this.OnRoundEnd;
-#if GameM
-        if (UtilityHelper.isMobile)
-        {
-            TouchHelper.OnFireClick -= OnFire;
-            TouchHelper.OnReload -= OnReload;
-        }
-#endif
         alreadyKnife = false;
         if (PlayerCamera == null) { PlayerCamera = PlayerReferences.playerCamera; }
         StopAllCoroutines();
@@ -367,27 +346,9 @@ public class GunController : GunBase
         bool fireDown = GameInput.Fire(GameInputType.Down);
         if (UtilityHelper.isMobile)
         {
-#if GameM
-            if (GameConfig.Instance.AutoWeaponFire && AutoFire.Instance != null)
-                HandleAutoFire();
-            else
-            {
-                if (WeaponType == GunType.Machinegun && TouchHelper.Instance != null)
-                {
-                    if (TouchHelper.Instance.FireDown && CanFire)
-                        LoopFire();
-                }
-            }
-#endif
         }
         else
         {
-#if GameM
-            if (GameConfig.Instance.AutoWeaponFire && AutoFire.Instance != null)
-            {
-                HandleAutoFire();
-            }
-#endif
 
             if (CanFire)
             {
@@ -419,9 +380,6 @@ public class GunController : GunBase
 
         if (UtilityHelper.isMobile)
         {
-#if GameM
-            isAiming = TouchHelper.Instance.isAim && CanAiming;
-#endif
         }
         else
         {
@@ -448,12 +406,6 @@ public class GunController : GunBase
         {
             if (UtilityHelper.isMobile)
             {
-#if GameM
-                if (!GameConfig.Instance.AutoWeaponFire && TouchHelper.Instance != null)
-                {
-                    isFiring = (TouchHelper.Instance.FireDown && CanFire);
-                }
-#endif
             }
             else
             {
@@ -531,17 +483,6 @@ public class GunController : GunBase
     {
         if (!CanFire) return;
 
-#if GameM
-        bool fireDown = AutoFire.Instance.Fire();
-        isFiring = fireDown;
-        if (fireDown)
-        {
-            if (WeaponType == GunType.Machinegun)
-                LoopFire();
-            else
-                SingleFire();
-        }
-#endif
     }
 
     // Fire one time
@@ -1050,19 +991,6 @@ public class GunController : GunBase
                         bulletInstanceData.ProjectedHitPoint = hit.point;
                         bulletInstanceData.Rotation = Quaternion.LookRotation(bulletInstanceData.ProjectedHitPoint - mp);
 
-#if GameTPV
-                        if (CameraViewSettings.IsThirdPerson())
-                        {
-                            // In third person view, we have to make sure the projected hit point is not behind the weapon fire point
-                            if (MathUtility.Distance(hit.point, cp) <= MathUtility.Distance(mp, cp))
-                            {
-                                // if the projected hit point is behind the fire point, then the bullet raycast has to be fired from the 
-                                // actual fire point
-                                bulletInstanceData.ProjectedHitPoint = cp + (PlayerCamera.transform.forward * 100);
-                                bulletInstanceData.Rotation = _transform.parent.rotation;
-                            }
-                        }
-#endif
                     }
 
                     // this in the other hand make the bullet travel exactly where the player is aiming but the bullets are instanced from the center of the screen
@@ -1078,27 +1006,6 @@ public class GunController : GunBase
             }
             else
             {
-#if GameTPV
-                // in third person we have to always get the direction from the camera
-                if (CameraViewSettings.IsThirdPerson())
-                {
-                    if (Physics.Raycast(cp, PlayerCamera.transform.forward, out hit, 500, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers, QueryTriggerInteraction.Ignore))
-                    {
-
-                        // In third person view, we have to make sure the projected hit point is not behind the weapon fire point
-                        if (MathUtility.Distance(hit.point, cp) > MathUtility.Distance(mp, cp))
-                        {
-                            bulletInstanceData.ProjectedHitPoint = hit.point;
-                            bulletInstanceData.Rotation = Quaternion.LookRotation(bulletInstanceData.ProjectedHitPoint - mp);
-                        }
-                        else
-                        {
-                            // if the projected hit point is behind the fire point, then the bullet raycast has to be fired from the 
-                            // actual fire point
-                        }
-                    }
-                }
-#endif
             }
         }
 
@@ -1540,14 +1447,6 @@ public class GunController : GunBase
             if (item == null) continue;
             item.gameObject.SetActive(active);
         }
-#if CUSTOMIZER
-        var customizerWeapon = GetComponent<CustomizerWeapon>();
-        if (active && customizerWeapon != null && customizerWeapon.ApplyOnStart)
-        {
-            customizerWeapon.LoadAttachments();
-            customizerWeapon.ApplyAttachments();
-        }
-#endif
         onWeaponRendersActive?.Invoke(active);
     }
 
