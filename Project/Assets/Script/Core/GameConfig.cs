@@ -129,9 +129,9 @@ public class GameConfig : ScriptableObject
     #region Private Members
     public GameTeamInfo CurrentTeamUser { get; set; } = null;
     [HideInInspector] public bool isChating = false;
-    [HideInInspector] public string _GameLicense = string.Empty;
-    [HideInInspector] public int _GameFromStore = 2;
-    [HideInInspector] public string _keyToken = "";
+    [HideInInspector] public string _ProductKey = string.Empty;
+    [HideInInspector] public int _DistributionType = 2;
+    [HideInInspector] public string _SessionToken = "";
     private static PhotonNetworkWrapper PhotonGameInstance = null;
     public static bool isDataCached = false;
     private static bool isCaching = false;

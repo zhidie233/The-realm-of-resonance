@@ -99,7 +99,7 @@
     public static string TotalScore = "总得分";
 
     public static readonly string[] RandomNames = new string[] { "John", "William", "Michael", "Jason", "Aaron", "Angie", "Benjamin", "Cody", "Dany", "Gao",
-        "Jacob", "Jeese","Katherin","Lee","Massimo", "Oliver", "Pride", "Sarah", "Thomas", "Tuan", "Johnson", "Lovo", "Patick", "Derek", "Felix", "Harry",
+        "Jacob", "Jeese","Katherin","Lee","Massimo", "Oliver", "Pride", "Sarah", "Thomas", "Tuan", "Johnson", "Lucas", "Patick", "Derek", "Felix", "Harry",
         "Ian", "Jani", "Petroske", "Kyler", "Marco", "Rosa", "Santos", "Astrid","Elvis", "Mueller", "Ryan", "Komatsu", "Vladimir", "Yank", "Albert",
         "Maxwell", "Daria", "Ethan", "Jake", "Holm", "Tobiass", "Karen", "David", "Moly", "Charlie", "Bruno", "Dayanara", "Blanca","Juan", "Jose", "Sthepen",
         "Tim", "Xuan", "Alex", "Jenskin", "Boris", "Morrison", "Blaga", "Umer", "Eva", "Grace", "Park", "Jesper", "Kim", "Karl", "Knut", "Rusell", "Elmer",
