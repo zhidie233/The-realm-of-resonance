@@ -7,9 +7,6 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-#if ACTK_IS_HERE
-using CodeStage.AntiCheat.ObscuredTypes;
-#endif
 
 public class PlayerHealthManager : PlayerHealthManagerBase
 {
@@ -28,7 +25,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     public Gradient HealthColorGradient;
     private Color CurColor = new Color(0, 0, 0);
     [Header("Shake")]
-    [ScriptableDrawer] public ShakerPresent damageShakerPresent;
+    [ScriptableDrawer] public ShakerPreset damageShakerPresent;
 
     [Header("Effects")]
     public AudioClip[] HitsSound;
@@ -48,7 +45,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     private int ScorePerKill, ScorePerHeatShot;
     private PlayerNetworkHandler PlayerSync;
     private float TimeToRegenerate = 4;
-    private GunInventory GunManager;
+    private FirearmInventory GunManager;
     private bool isSuscribed = false;
     private int protecTime = 0;
     private RepetingDamageInfo repetingDamageInfo;
@@ -58,11 +55,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     private bool showIndicator = false;
     private float nextHealthSend = 0;
     private PlayerReferencesHandler playerReferences;
-#if !ACTK_IS_HERE
     private int currentHealth = 100;
-#else
-    private ObscuredInt currentHealth = 100;
-#endif
     #endregion
 
     #region Unity Callbacks
@@ -107,7 +100,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             GameController.LocalPlayerViewID = this.photonView.ViewID;
             GameEvents.onPickUpHealth += this.OnPickUp;
             GameEvents.onRoundEnd += this.OnRoundEnd;
-            PhotonCallbacks.PlayerEnteredRoom += OnPhotonPlayerConnected;
+            NetworkCallbacks.PlayerEnteredRoom += OnPhotonPlayerConnected;
             isSuscribed = true;
         }
     }
@@ -119,7 +112,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         {
             GameEvents.onPickUpHealth -= this.OnPickUp;
             GameEvents.onRoundEnd -= this.OnRoundEnd;
-            PhotonCallbacks.PlayerEnteredRoom -= OnPhotonPlayerConnected;
+            NetworkCallbacks.PlayerEnteredRoom -= OnPhotonPlayerConnected;
         }
     }
 
@@ -133,7 +126,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
     #endregion
 
-    public override void DoDamage(DamageData damageData)
+    public override void DoDamage(DamageInfo damageData)
     {
         GetDamage(damageData);
     }
@@ -141,7 +134,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// <summary>
     /// 调用它对玩家造成一次新伤害
     /// </summary>
-    public void GetDamage(DamageData e)
+    public void GetDamage(DamageInfo e)
     {
         bool canDamage = true;
         if (!DamageEnabled)
@@ -160,7 +153,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             return;
         }
 
-        photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, e.Damage, e.From, e.Cause, e.Direction, e.isHeadShot, e.GunID, PhotonNetworkWrapper.LocalPlayer);
+        photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, e.Damage, e.From, e.Cause, e.Direction, e.isHeadShot, e.GunID, NetworkWrapper.LocalPlayer);
     }
 
     /// <summary>
@@ -172,7 +165,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             return;
 
         Vector3 downpos = transform.position - transform.TransformVector(new Vector3(0, 5, 1));
-        photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, damage, PhotonNetworkWrapper.NickName, DamageCause.FallDamage, downpos, false, 103, PhotonNetworkWrapper.LocalPlayer);
+        photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, damage, NetworkWrapper.NickName, DamageCause.FallDamage, downpos, false, 103, NetworkWrapper.LocalPlayer);
     }
 
     /// <summary>
@@ -202,7 +195,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     // 伤害由本地玩家造成时
                     if (m_sender != null && m_sender.NickName == LocalName && cause != DamageCause.Bot)
                     {
-                        CrosshairBase.Instance.OnHit();
+                        ReticleBase.Instance.OnHit();
                         AudioManager.Instance.PlayClip("body-hit");
                         GameEvents.DispatchLocalPlayerHitEnemy(new GameHitData()
                         {
@@ -267,8 +260,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         transform.parent = null;
         m_CharacterController.enabled = false;
         GameController.Instance.GetGamePlayer(gameObject.name).isAlive = false;
-        GunData gunInfo = GameConfig.Instance.GetWeapon(gunID);
-        bool isExplosion = gunInfo.Type == GunType.Grenade || gunInfo.Type == GunType.Launcher;
+        FirearmData gunInfo = GameConfig.Instance.GetWeapon(gunID);
+        bool isExplosion = gunInfo.Type == FirearmType.Grenade || gunInfo.Type == FirearmType.Launcher;
         playerReferences.onDie?.Invoke();
 
         if (!isMine)
@@ -316,9 +309,9 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
             if (GameConfig.Instance.showDeathIcons && !isOneTeamMode)
             {
-                if (photonView.Owner.GetPlayerTeam() == PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam())
+                if (photonView.Owner.GetPlayerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam())
                 {
-                    ObjectPoolingBase.Instance.Instantiate("deathicon", transform.position, transform.rotation);
+                    ObjectRecyclerBase.Instance.Instantiate("deathicon", transform.position, transform.rotation);
                 }
             }
 
@@ -337,19 +330,19 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             if (cause == DamageCause.Bot)
             {
                 // 增加本地玩家的死亡数
-                if (GameConfig.Instance.howConsiderBotsEliminations == Game.Runtime.AI.BotKillConsideration.SameAsRealPlayers)
-                    PhotonNetworkWrapper.LocalPlayer.PostDeaths(1);
+                if (GameConfig.Instance.howConsiderBotsEliminations == Game.Runtime.AI.BotKillPolicy.SameAsRealPlayers)
+                    NetworkWrapper.LocalPlayer.PostDeaths(1);
             }
             else
             {
                 // 增加本地玩家的死亡数
-                PhotonNetworkWrapper.LocalPlayer.PostDeaths(1);
+                NetworkWrapper.LocalPlayer.PostDeaths(1);
             }
 
             playerReferences.playerRagdoll.gameObject.name = "YOU";
 
             //显示击杀摄像机
-            KillCamBase.Instance.SetTarget(new KillCamBase.KillCamInfo()
+            DeathCamBase.Instance.SetTarget(new DeathCamBase.DeathCamInfo()
             {
                 RealPlayer = sender,
                 TargetName = killer,
@@ -363,12 +356,12 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             {
                 if (cause == DamageCause.FallDamage)
                 {
-                    KillFeedBase.Instance.SendTeamHighlightMessage(LocalName, GameTexts.DeathByFall.Localized(20), PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+                    KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.DeathByFall.Localized(20), NetworkWrapper.LocalPlayer.GetPlayerTeam());
 
                 }
                 else
                 {
-                    KillFeedBase.Instance.SendTeamHighlightMessage(LocalName, GameTexts.CommittedSuicide.Localized(19), PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+                    KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.CommittedSuicide.Localized(19), NetworkWrapper.LocalPlayer.GetPlayerTeam());
                 }
             }
 
@@ -379,18 +372,18 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
             if (cause == DamageCause.Bot)
             {
-                var feed = new KillFeedBase.FeedData()
+                var feed = new KillReportEntry.FeedData()
                 {
                     LeftText = killer,
                     RightText = gameObject.name,
-                    Team = PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam()
+                    Team = NetworkWrapper.LocalPlayer.GetPlayerTeam()
                 };
                 feed.AddData("gunid", gunID);
                 feed.AddData("headshot", isHeadshot);
 
-                KillFeedBase.Instance.SendKillMessageEvent(feed);
+                KillReportEntry.Instance.SendKillMessageEvent(feed);
                 //这种情况下由本地玩家而不是主客户端更新机器人统计。
-                AIMananger.Instance.SetBotKill(killer);
+                AIManager.Instance.SetBotKill(killer);
             }
             StartCoroutine(DestroyThis());
         }
@@ -402,24 +395,24 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     public void AddKill(bool isHeadshot, string m_weapon, int gunID)
     {
         //发送击杀提示消息
-        var feed = new KillFeedBase.FeedData()
+        var feed = new KillReportEntry.FeedData()
         {
             LeftText = LocalName,
             RightText = gameObject.name,
-            Team = PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam()
+            Team = NetworkWrapper.LocalPlayer.GetPlayerTeam()
         };
         feed.AddData("gunid", gunID);
         feed.AddData("headshot", isHeadshot);
 
-        KillFeedBase.Instance.SendKillMessageEvent(feed);
+        KillReportEntry.Instance.SendKillMessageEvent(feed);
 
         //新增一次击杀并更新玩家信息
-        PhotonNetworkWrapper.LocalPlayer.PostKill(1);
+        NetworkWrapper.LocalPlayer.PostKill(1);
         // 计算这次击杀获得的得分
         int score = (isHeadshot) ? GameConfig.Instance.ScoreReward.ScorePerKill + GameConfig.Instance.ScoreReward.ScorePerHeadShot : GameConfig.Instance.ScoreReward.ScorePerKill;
 
         //显示本地击杀通知
-        var localKillInfo = new KillInfo();
+        var localKillInfo = new KillRecord();
         localKillInfo.Killer = lastDamageGiverActor;
         localKillInfo.Killed = gameObject.name;
         localKillInfo.byHeadShot = isHeadshot;
@@ -429,11 +422,11 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         var elimatedTeam = photonView.Owner.GetPlayerTeam();
         if (isOneTeamMode)
         {
-            PhotonNetworkWrapper.LocalPlayer.PostScore(score);
+            NetworkWrapper.LocalPlayer.PostScore(score);
         }
-        else if (elimatedTeam != Team.All && elimatedTeam != PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam())
+        else if (elimatedTeam != Team.All && elimatedTeam != NetworkWrapper.LocalPlayer.GetPlayerTeam())
         {
-            PhotonNetworkWrapper.LocalPlayer.PostScore(score);
+            NetworkWrapper.LocalPlayer.PostScore(score);
         }
 
         GameController.Instance.OnLocalPlayerKill();
@@ -460,10 +453,10 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             return;
         }
 
-        var damageinfo = repetingDamageInfo.DamageData;
+        var damageinfo = repetingDamageInfo.DamageInfo;
         if (damageinfo == null)
         {
-            damageinfo = new DamageData();
+            damageinfo = new DamageInfo();
             damageinfo.Direction = Vector3.zero;
             damageinfo.Cause = DamageCause.Map;
         }
@@ -546,7 +539,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         if (!isMine || !GameCore.LocalPlayer.IsAlive) return false;
         if (isProtectionEnable) return false;
 
-        DamageData e = new DamageData();
+        DamageInfo e = new DamageInfo();
         e.Damage = 500;
         e.From = base.LocalName;
         e.Direction = transform.position;

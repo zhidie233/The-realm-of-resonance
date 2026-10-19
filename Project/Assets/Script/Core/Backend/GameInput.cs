@@ -111,11 +111,6 @@ public class GameInput
         return GetInputManager("TeamChat", inputType);
     }
 
-    public static bool Talk(GameInputType inputType = GameInputType.Hold)
-    {
-        return GetInputManager("VoiceTalk", inputType);
-    }
-
     public static bool ChangeView(GameInputType inputType = GameInputType.Down)
     {
         return GetInputManager("SwitchView", inputType);
@@ -125,7 +120,7 @@ public class GameInput
     {
         get
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
 
             return InputHandler.VerticalAxis;
         }
@@ -135,7 +130,7 @@ public class GameInput
     {
         get
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
 
             return InputHandler.HorizontalAxis;
         }
@@ -145,7 +140,7 @@ public class GameInput
     {
         get
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
 
             return Input.GetAxis("Mouse X");
         }
@@ -155,7 +150,7 @@ public class GameInput
     {
         get
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return 0;
 
             return Input.GetAxis("Mouse Y");
         }
@@ -165,7 +160,7 @@ public class GameInput
     {
         if (!overrideBlockers)
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return false;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return false;
         }
 
         if (inputType == GameInputType.Hold) { return Input.GetKey(key); }
@@ -178,7 +173,7 @@ public class GameInput
 
         if (!overrideBlockers)
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return false;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return false;
         }
 
         if (inputType == GameInputType.Hold) { return Input.GetKey(key); }
@@ -190,7 +185,7 @@ public class GameInput
     {
         if (!overrideBlockers)
         {
-            if (!RoomMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return false;
+            if (!LobbyMenu.Instance.isCursorLocked || GameConfig.Instance.isChating) return false;
         }
         if (inputType == GameInputType.Hold) { return InputHandler.isButton(key); }
         else if (inputType == GameInputType.Down) { return InputHandler.isButtonDown(key); }

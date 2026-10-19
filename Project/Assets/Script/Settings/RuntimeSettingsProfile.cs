@@ -84,7 +84,7 @@ namespace Game.Runtime.Settings
 
             // webgl 下分辨率必须改网页 canvas，需要默认不支持的外部调用集成。
 #if !UNITY_WEBGL
-            if (!UtilityHelper.isMobile)
+            if (!CommonUtil.isMobile)
             {
                 ApplyResolutionSettings(resolutionApplication);
             }

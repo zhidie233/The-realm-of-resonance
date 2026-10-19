@@ -3,11 +3,11 @@ using System.Collections;
 
 namespace Game.Runtime.Level
 {
-    public class AmmoBox : NetworkItem
+    public class AmmoBox : NetworkedItem
     {
         [GameToggle] public bool isGlobal = true;
         [GameToggle] public bool autoRespawn = false;
-        [GunID] public int ForGun = 0;
+        [FirearmID] public int ForGun = 0;
 
         public int Bullets = 30;
         public int Projectiles = 2;
@@ -25,7 +25,7 @@ namespace Game.Runtime.Level
                 //此弹药是否在一定时间后重新出现？
                 if (autoRespawn)
                 {
-                    ItemManagerBase.Instance.RespawnAfter(this);
+                    ItemRespawnerBase.Instance.RespawnAfter(this);
                 }
                 else
                 {

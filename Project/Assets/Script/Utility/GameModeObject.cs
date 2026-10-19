@@ -1,6 +1,6 @@
 using Photon.Pun;
 
-public class GameModeObject : PhotonHelper
+public class GameModeObject : NetworkHelper
 {
     public GameMode m_GameMode = GameMode.FFA;
 

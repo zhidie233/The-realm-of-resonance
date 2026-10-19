@@ -45,23 +45,23 @@ public class RoomSettings : MonoBehaviourBase
     {
         Hashtable table = new Hashtable();
         //初始化存放房间级信息的新属性
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
-            table.Add(PropertiesKeys.Team1Score, 0);
-            table.Add(PropertiesKeys.Team2Score, 0);
-            PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(table);
+            table.Add(NetworkKeys.Team1Score, 0);
+            table.Add(NetworkKeys.Team2Score, 0);
+            NetworkWrapper.CurrentRoom.SetCustomProperties(table);
         }
         table.Clear();
         //初始化存放玩家级信息的新属性
         if (!GameCore.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
         {
-            table.Add(PropertiesKeys.TeamKey, Team.None.ToString());
+            table.Add(NetworkKeys.TeamKey, Team.None.ToString());
         }
-        table.Add(PropertiesKeys.KillsKey, 0);
-        table.Add(PropertiesKeys.DeathsKey, 0);
-        table.Add(PropertiesKeys.ScoreKey, 0);
-        table.Add(PropertiesKeys.UserRole, GameConfig.Instance.RolePrefix);
-        table.Add(PropertiesKeys.PlayerTotalScore, GameCore.LocalPlayer.Stats.GetAllTimeScore());
+        table.Add(NetworkKeys.KillsKey, 0);
+        table.Add(NetworkKeys.DeathsKey, 0);
+        table.Add(NetworkKeys.ScoreKey, 0);
+        table.Add(NetworkKeys.UserRole, GameConfig.Instance.RolePrefix);
+        table.Add(NetworkKeys.PlayerTotalScore, GameCore.LocalPlayer.Stats.GetAllTimeScore());
 
         LocalPlayer.SetCustomProperties(table);
 
@@ -102,7 +102,7 @@ public class RoomSettings : MonoBehaviourBase
                 return;
             }
 
-            if (!SpectatorModeBase.EnterAsSpectator && RoomCameraBase.Instance.GetCameraMode() != RoomCameraBase.CameraMode.Spectator)
+            if (!ObserverModeBase.EnterAsSpectator && LobbyCameraBase.Instance.GetCameraMode() != LobbyCameraBase.CameraMode.Spectator)
             {
                 UIReferences.Instance.AutoTeam(true);
                 UIReferences.Instance.ShowMenu(false);
@@ -141,18 +141,18 @@ public class RoomSettings : MonoBehaviourBase
             }
 
             string jt = string.Format("{0} {1}", joinText, team.GetTeamName());
-            KillFeedBase.Instance.SendTeamHighlightMessage(PhotonNetwork.NickName, jt, team);
+            KillReportEntry.Instance.SendTeamHighlightMessage(PhotonNetwork.NickName, jt, team);
         }
         else
         {
-            KillFeedBase.Instance.SendMessageEvent(string.Format("{0} {1}", PhotonNetwork.NickName, joinText));
+            KillReportEntry.Instance.SendMessageEvent(string.Format("{0} {1}", PhotonNetwork.NickName, joinText));
         }
-        RoomMenu.Instance.OnAutoTeam();
+        LobbyMenu.Instance.OnAutoTeam();
         UIReferences.Instance.AutoTeam(false);
 
         if (GetGameMode.GetGameModeInfo().onRoundStartedSpawn == GameModeSettings.OnRoundStartedSpawn.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
         {
-            if (RoomMenu.Instance.onWaitUntilRoundFinish != null) { RoomMenu.Instance.onWaitUntilRoundFinish.Invoke(team); }
+            if (LobbyMenu.Instance.onWaitUntilRoundFinish != null) { LobbyMenu.Instance.onWaitUntilRoundFinish.Invoke(team); }
             GameController.Instance.SetLocalPlayerToTeam(team);
             return;
         }

@@ -182,10 +182,10 @@ public class FirstPersonControllerEditor : Editor
             script.m_JumpBob.BobAmount = EditorGUILayout.Slider("跳跃晃动幅度", script.m_JumpBob.BobAmount, 0.1f, 1);
             script.m_JumpBob.BobDuration = EditorGUILayout.Slider("跳跃晃动时长", script.m_JumpBob.BobDuration, 0.1f, 1);
 
-            GUILayout.Label("头部晃动参数可在 WeaponBob 中修改。", EditorStyles.helpBox);
-            if (GUILayout.Button("定位 WeaponBob.cs", EditorStyles.toolbarButton))
+            GUILayout.Label("头部晃动参数可在 WeaponStride 中修改。", EditorStyles.helpBox);
+            if (GUILayout.Button("定位 WeaponStride.cs", EditorStyles.toolbarButton))
             {
-                var wb = script.transform.GetComponentInChildren<WeaponBobBase>(true);
+                var wb = script.transform.GetComponentInChildren<WeaponStrideBase>(true);
                 if (wb != null)
                 {
                     Selection.activeObject = wb.gameObject;

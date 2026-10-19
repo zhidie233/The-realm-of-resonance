@@ -26,9 +26,9 @@ public class WaitingPlayerUI : WaitingPlayerUIBase
         NameText.text = string.Format(player.NickNameAndRole());
         TeamColorImg.color = player.GetPlayerTeam().GetTeamColor();
         MasterClientUI.SetActive(player.IsMasterClient);
-        if(GameConfig.Instance.MasterCanKickPlayers && player.ActorNumber != PhotonNetworkWrapper.LocalPlayer.ActorNumber)
+        if(GameConfig.Instance.MasterCanKickPlayers && player.ActorNumber != NetworkWrapper.LocalPlayer.ActorNumber)
         {
-            KickButton.SetActive(PhotonNetworkWrapper.IsMasterClient);
+            KickButton.SetActive(NetworkWrapper.IsMasterClient);
         }
         else { KickButton.SetActive(false); }
         UpdateState();
@@ -43,7 +43,7 @@ public class WaitingPlayerUI : WaitingPlayerUIBase
 
     public void KickThis()
     {
-        if (!PhotonNetworkWrapper.IsMasterClient) return;
+        if (!NetworkWrapper.IsMasterClient) return;
 
         PhotonNetwork.CloseConnection(ThisPlayer);
     }

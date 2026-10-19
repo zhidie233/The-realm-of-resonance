@@ -25,7 +25,7 @@ public abstract class PlayerIKBase : MonoBehaviourBase
     /// 当 CustomArmsIKHandler != null 时
     /// 继承脚本里应停止用 IK 控制手臂。
     /// </summary>
-    public BodyIKHandler CustomArmsIKHandler 
+    public BodyIKController CustomArmsIKHandler 
     { 
         get; 
         set; 

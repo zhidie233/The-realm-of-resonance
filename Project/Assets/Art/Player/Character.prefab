@@ -17,7 +17,6 @@ GameObject:
   - component: {fileID: 147577898994712743}
   - component: {fileID: 145168409435013727}
   - component: {fileID: 147791654682354305}
-  - component: {fileID: 145111274916391263}
   - component: {fileID: 197475134595014287}
   - component: {fileID: 3968436279661622461}
   m_Layer: 12
@@ -307,18 +306,6 @@ MonoBehaviour:
   dropInstanceDistance: 1
   DropCallerPrefab: {fileID: 1934429473589762, guid: 6289f7a1f6879d54598ab9cf80ea9a36, type: 3}
   SpawnSound: {fileID: 8300000, guid: bb6d16be40c037c458f1246183a22439, type: 3}
---- !u!114 &145111274916391263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1353458154535538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec39e7a320b228542af382984ed2965a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &197475134595014287
 AudioSource:
   m_ObjectHideFlags: 0
@@ -50937,7 +50924,7 @@ GameObject:
   - component: {fileID: 3619436623503463681}
   - component: {fileID: 8037946374547176171}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -108495,7 +108482,7 @@ GameObject:
   - component: {fileID: 1146673662717596548}
   - component: {fileID: 5935632520806104174}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -174603,7 +174590,7 @@ GameObject:
   - component: {fileID: 7538528181722305058}
   - component: {fileID: 3830431031289658824}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -224880,7 +224867,7 @@ GameObject:
   - component: {fileID: 6069677528553699155}
   - component: {fileID: 688351758584273081}
   m_Layer: 0
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

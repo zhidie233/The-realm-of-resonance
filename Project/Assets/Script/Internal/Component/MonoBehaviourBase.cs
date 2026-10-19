@@ -1,7 +1,7 @@
 ﻿using Game.Internal;
 using UnityEngine;
 
-public class MonoBehaviourBase : PhotonHelper
+public class MonoBehaviourBase : NetworkHelper
 {
     private bool isRegister = false;
 

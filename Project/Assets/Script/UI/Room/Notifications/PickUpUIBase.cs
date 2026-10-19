@@ -9,7 +9,7 @@ public abstract class PickUpUIBase : MonoBehaviour
     /// <summary>
     /// 玩家进入触发器或准星指向地图中的枪械拾取物时调用
     /// </summary>
-    public abstract void OnOverWeapon(GunPickUpBase toPickUpWeapon);
+    public abstract void OnOverWeapon(FirearmPickUpBase toPickUpWeapon);
 
     public abstract void Show(DisplayInformation information);
 

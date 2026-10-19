@@ -28,7 +28,7 @@ namespace Game.Runtime.Misc
         {
             float time = Time.time;
             //如果检测不到玩家的移动或操作，就重新开始计时
-            if ((PhotonNetworkWrapper.LocalPlayer == null || Input.anyKey) || ((oldMousePosition != Input.mousePosition)))
+            if ((NetworkWrapper.LocalPlayer == null || Input.anyKey) || ((oldMousePosition != Input.mousePosition)))
             {
                 lastInput = time;
                 if (Watching)
@@ -53,8 +53,8 @@ namespace Game.Runtime.Misc
             //如果挂机时间达到上限，就返回大厅。
             if ((lastInput + AFKTimeLimit) < time && !Leaving)
             {
-                UtilityHelper.LockCursor(false);
-                PhotonNetworkWrapper.Instance.hasAFKKick = true;
+                CommonUtil.LockCursor(false);
+                NetworkWrapper.Instance.hasAFKKick = true;
                 LeaveMatch();
                 Leaving = true;
             }
@@ -68,13 +68,13 @@ namespace Game.Runtime.Misc
 
         public void LeaveMatch()
         {
-            if (PhotonNetworkWrapper.IsConnected)
+            if (NetworkWrapper.IsConnected)
             {
-                PhotonNetworkWrapper.LeaveRoom();
+                NetworkWrapper.LeaveRoom();
             }
             else
             {
-                UtilityHelper.LoadLevel(GameConfig.Instance.MainMenuScene);
+                CommonUtil.LoadLevel(GameConfig.Instance.MainMenuScene);
             }
         }
     }

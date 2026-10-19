@@ -67,16 +67,16 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
     private void UpdatePlayerUI(Player player)
     {
         NameText.text = player.NickNameAndRole();
-        if (!player.CustomProperties.ContainsKey(PropertiesKeys.KillsKey)) return;
+        if (!player.CustomProperties.ContainsKey(NetworkKeys.KillsKey)) return;
 
         if (localHighlight != null) localHighlight.SetActive(player.IsLocal);
         KillsText.text = player.GetKills().ToString();
         DeathsText.text = player.GetDeaths().ToString();
         ScoreText.text = player.GetPlayerScore().ToString();
 
-        if (GameConfig.Instance.MasterCanKickPlayers && player.ActorNumber != PhotonNetworkWrapper.LocalPlayer.ActorNumber)
+        if (GameConfig.Instance.MasterCanKickPlayers && player.ActorNumber != NetworkWrapper.LocalPlayer.ActorNumber)
         {
-            if (KickButton != null) KickButton.SetActive(PhotonNetworkWrapper.IsMasterClient);
+            if (KickButton != null) KickButton.SetActive(NetworkWrapper.IsMasterClient);
         }
         else { if (KickButton != null) KickButton.SetActive(false); }
 
@@ -84,7 +84,7 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
 
     public override bool UpdateBot()
     {
-        if (Bot == null || string.IsNullOrEmpty(Bot.Name) || !AIMananger.Instance.BotsStatistics.Exists(x => x.Name == Bot.Name))
+        if (Bot == null || string.IsNullOrEmpty(Bot.Name) || !AIManager.Instance.BotsStatistics.Exists(x => x.Name == Bot.Name))
         {
             if (!PlayerScoreboardBase.Instance.RemoveUIBinding(this))
             {
@@ -108,9 +108,9 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
 
     public void Kick()
     {
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
-            PhotonNetworkWrapper.Instance.KickPlayer(RealPlayer);
+            NetworkWrapper.Instance.KickPlayer(RealPlayer);
         }
     }
 

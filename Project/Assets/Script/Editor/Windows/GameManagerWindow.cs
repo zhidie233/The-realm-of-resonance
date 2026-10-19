@@ -37,7 +37,7 @@ public class GameManagerWindow : EditorWindow
     private PlayerClass currentPlayerClass = PlayerClass.Assault;
     private Dictionary<ScriptableObject, Editor> cachedEditors = new Dictionary<ScriptableObject, Editor>();
     public int editWeaponId = -1;
-    public GunData editGunInfo;
+    public FirearmData editGunInfo;
     public GameModeSettings selectedGameMode = null;
     public SerializedObject serializedObject;
     private Rect windowRect;
@@ -263,7 +263,7 @@ public class GameManagerWindow : EditorWindow
         GUILayout.Space(18);
 
         w.Name = EditorGUILayout.TextField("武器名称", w.Name);
-        w.Type = (GunType)EditorGUILayout.EnumPopup("武器类型", w.Type);
+        w.Type = (FirearmType)EditorGUILayout.EnumPopup("武器类型", w.Type);
 
         GUILayout.Space(18);
         DrawTitleText("Specs");
@@ -283,7 +283,7 @@ public class GameManagerWindow : EditorWindow
         GUILayout.Space(18);
         DrawTitleText("Others");
 
-        w.PickUpPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.PickUpPrefab, typeof(GunPickUpBase), false) as GunPickUpBase;
+        w.PickUpPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.PickUpPrefab, typeof(FirearmPickUpBase), false) as FirearmPickUpBase;
 
         GUILayout.Space(18);
         EditorGUILayout.BeginHorizontal();
@@ -601,7 +601,7 @@ public class GameManagerWindow : EditorWindow
         GUILayout.Space(10);
     }
 
-    void DrawSlot(GunData gun, string Title, PlayerClassLoadout loadout, int slotID)
+    void DrawSlot(FirearmData gun, string Title, PlayerClassLoadout loadout, int slotID)
     {
         if (gun == null) return;
 
@@ -663,7 +663,7 @@ public class GameManagerWindow : EditorWindow
         GUILayout.EndScrollView();
     }
 
-    void WeaponCard(GunData gun, int gunId)
+    void WeaponCard(FirearmData gun, int gunId)
     {
         Rect rect = EditorGUILayout.BeginVertical(styles["borders"], GUILayout.Width(370), GUILayout.Height(90));
         {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Photon.Pun;
 using GameEditor;
 
-public class PlayerConfig : PhotonHelper
+public class PlayerConfig : NetworkHelper
 {
 
     #region Public members
@@ -27,7 +27,7 @@ public class PlayerConfig : PhotonHelper
 
     void Awake()
     {
-        if (!PhotonNetworkWrapper.IsConnected || !PhotonNetworkWrapper.InRoom) return;
+        if (!NetworkWrapper.IsConnected || !NetworkWrapper.InRoom) return;
         PlayerTeam = (Team)photonView.InstantiationData[0];
         if (isMine)
         {
@@ -81,7 +81,7 @@ public class PlayerConfig : PhotonHelper
     /// </summary>
     public void OnLocalPlayer()
     {
-        gameObject.name = PhotonNetworkWrapper.NickName;
+        gameObject.name = NetworkWrapper.NickName;
         for (int i = 0; i < RemoteOnlyScripts.Count; i++)
         {
             if (RemoteOnlyScripts[i] != null)
@@ -214,7 +214,7 @@ public class PlayerConfig : PhotonHelper
 
     public bool isLocal { get { return photonView.IsMine; } }
     public PhotonView View { get { return photonView; } }
-    public bool isTeamMate { get { return (PlayerTeam == PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam() && !isOneTeamMode); } }
+    public bool isTeamMate { get { return (PlayerTeam == NetworkWrapper.LocalPlayer.GetPlayerTeam() && !isOneTeamMode); } }
 
     private PlayerReferencesHandler _playerReferences;
     public PlayerReferencesHandler playerReferences

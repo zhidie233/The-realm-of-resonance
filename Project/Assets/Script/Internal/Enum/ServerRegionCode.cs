@@ -1,5 +1,5 @@
 ﻿[System.Serializable]
-public enum SeverRegionCode
+public enum ServerRegionCode
 {
     /// <summary>阿姆斯特丹的欧洲服务器。</summary>
     eu = 0,

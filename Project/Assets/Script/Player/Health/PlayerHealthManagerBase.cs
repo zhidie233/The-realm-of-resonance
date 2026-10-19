@@ -16,7 +16,7 @@ public abstract class PlayerHealthManagerBase : MonoBehaviourBase
     /// 它应把伤害同步给其他所有玩家。
     /// </summary>
     /// <param name="damageData"></param>
-    public abstract void DoDamage(DamageData damageData);
+    public abstract void DoDamage(DamageInfo damageData);
 
     public abstract void DoFallDamage(int damage);
 
@@ -52,6 +52,6 @@ public abstract class PlayerHealthManagerBase : MonoBehaviourBase
     {
         public int Damage;
         public float Rate;
-        public DamageData DamageData;
+        public DamageInfo DamageInfo;
     }
 }

@@ -8,16 +8,16 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
     public FirstPersonControllerBase firstPersonController;
     public PlayerHealthManagerBase playerHealthManager;
     public PlayerConfig playerSettings;
-    public GunInventory gunManager;
+    public FirearmInventory gunManager;
     public PlayerAnimationsBase playerAnimations;
     public PlayerRagdollBase playerRagdoll;
-    public RecoilBase recoil;
-    public CameraShakerBase cameraShaker;
-    public CameraRayBase cameraRay;
-    public WeaponBobBase weaponBob;
-    public WeaponSwayBase weaponSway;
+    public KickbackBase recoil;
+    public CameraImpulseBase cameraShaker;
+    public ViewRayBase cameraRay;
+    public WeaponStrideBase weaponBob;
+    public WeaponDriftBase weaponSway;
     public HitBoxManager hitBoxManager;
-    public CameraMotionBase cameraMotion;
+    public CameraMotionRigBase cameraMotion;
     public CharacterController characterController;
     public PhotonView photonView;
     public Camera playerCamera;
@@ -164,5 +164,5 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
         }
     }
 
-    [HideInInspector] public RemoteGun EditorSelectedGun = null;
+    [HideInInspector] public NetworkFirearm EditorSelectedGun = null;
 }

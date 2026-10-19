@@ -18,7 +18,6 @@ public class GameConfig : ScriptableObject
     [GameToggle] public bool offlineMode = false;
     [GameToggle] public bool verifySingleSession = true;
     [GameToggle] public bool UseLobbyChat = true;
-    [GameToggle] public bool UseVoiceChat = false;
     [GameToggle] public bool BulletTracer = false;
     [GameToggle] public bool DropGunOnDeath = true;
     [GameToggle] public bool SelfGrenadeDamage = true;
@@ -45,17 +44,17 @@ public class GameConfig : ScriptableObject
     [GameToggle] public bool bulletDecals = true;
     [GameToggle] public bool showProjectilesTrails = true;
     public AmmunitionType AmmoType = AmmunitionType.Bullets;
-    public KillFeedWeaponShowMode killFeedWeaponShowMode = KillFeedWeaponShowMode.WeaponIcon;
+    public KillReportWeaponShowMode killFeedWeaponShowMode = KillReportWeaponShowMode.WeaponIcon;
     public LobbyJoinMethod lobbyJoinMethod = LobbyJoinMethod.WaitingRoom;
-    public KillCam.KillCameraType killCameraType = KillCam.KillCameraType.ObserveDeath;
-    public LocalKillNotifier.LocalKillDisplay localKillsShowMode = LocalKillNotifier.LocalKillDisplay.Queqe;
-    public GunInventory.AutoChangeOnPickup switchToPickupWeapon = GunInventory.AutoChangeOnPickup.OnlyOnEmptySlots;
-    public SpectatorModeBase.LeaveSpectatorModeAction onLeaveSpectatorMode = SpectatorModeBase.LeaveSpectatorModeAction.AllowSelectTeam;
+    public DeathCam.DeathCamType killCameraType = DeathCam.DeathCamType.ObserveDeath;
+    public KillNotifier.KillNotice localKillsShowMode = KillNotifier.KillNotice.Queqe;
+    public FirearmInventory.AutoChangeOnPickup switchToPickupWeapon = FirearmInventory.AutoChangeOnPickup.OnlyOnEmptySlots;
+    public ObserverModeBase.LeaveSpectatorModeAction onLeaveSpectatorMode = ObserverModeBase.LeaveSpectatorModeAction.AllowSelectTeam;
     /// <summary>
     /// 决定机器人击杀如何计入真人玩家战绩
     /// 用于避免玩家靠刷机器人击杀来提升个人战绩。
     /// </summary>
-    public BotKillConsideration howConsiderBotsEliminations = BotKillConsideration.SameAsRealPlayers;
+    public BotKillPolicy howConsiderBotsEliminations = BotKillPolicy.SameAsRealPlayers;
 
     [Header("Rewards")]
     public ScoreRewards ScoreReward;
@@ -90,7 +89,7 @@ public class GameConfig : ScriptableObject
 #if UNITY_2020_2_OR_NEWER
     [NonReorderable] // DO NOT reorder the weapons manually, it will mess up your whole setup!
 #endif
-    public List<GunData> AllWeapons = new List<GunData>();
+    public List<FirearmData> AllWeapons = new List<FirearmData>();
 
     [Header("Default Settings")]
     [ScriptableDrawer, SerializeField] private RuntimeSettingsProfile defaultSettings;
@@ -110,13 +109,13 @@ public class GameConfig : ScriptableObject
     public PlayerNetworkHandler Player2;
 
     [Header("Bots")]
-    public AIShooter BotTeam1;
-    public AIShooter BotTeam2;
-    public AIShooter BotTeam3;
+    public AISoldierCore BotTeam1;
+    public AISoldierCore BotTeam2;
+    public AISoldierCore BotTeam3;
 
     [ScriptableDrawer] public MouseLookSettings mouseLookSettings;
 
-    [ScriptableDrawer] public WeaponSlotRuler weaponSlotRuler;
+    [ScriptableDrawer] public WeaponSlotGuide weaponSlotRuler;
 
     [ScriptableDrawer, SerializeField] private TagsAndLayersSettings tagsAndLayersSettings;
 
@@ -132,7 +131,7 @@ public class GameConfig : ScriptableObject
     [HideInInspector] public string _ProductKey = string.Empty;
     [HideInInspector] public int _DistributionType = 2;
     [HideInInspector] public string _SessionToken = "";
-    private static PhotonNetworkWrapper PhotonGameInstance = null;
+    private static NetworkWrapper PhotonGameInstance = null;
     public static bool isDataCached = false;
     private static bool isCaching = false;
     private static GameConfig m_instance;
@@ -144,13 +143,13 @@ public class GameConfig : ScriptableObject
         //检查场景里存在 Photon 对象实例
         if (PhotonGameInstance == null && Application.isPlaying)
         {
-            PhotonGameInstance = PhotonNetworkWrapper.Instance;
+            PhotonGameInstance = NetworkWrapper.Instance;
             if (PhotonGameInstance == null)
             {
                 try
                 {
                     var pgo = new GameObject("PhotonGame");
-                    PhotonGameInstance = pgo.AddComponent<PhotonNetworkWrapper>();
+                    PhotonGameInstance = pgo.AddComponent<NetworkWrapper>();
                 }
                 catch (Exception)
                 {
@@ -161,7 +160,7 @@ public class GameConfig : ScriptableObject
 
     private static void OnDataCached()
     {
-        if (!UtilityHelper.isMobile && Instance.mouseLookSettings.customCursor != null)
+        if (!CommonUtil.isMobile && Instance.mouseLookSettings.customCursor != null)
         {
             Cursor.SetCursor(Instance.mouseLookSettings.customCursor, Vector2.zero, CursorMode.ForceSoftware);
         }
@@ -185,7 +184,7 @@ public class GameConfig : ScriptableObject
     /// </summary>
     /// <param name="ID">武器 ID，即 GameData 中该武器信息的 indexOf</param>
     /// <returns></returns>
-    public GunData GetWeapon(int ID)
+    public FirearmData GetWeapon(int ID)
     {
         if (ID < 0 || ID > AllWeapons.Count - 1)
             return AllWeapons[0];

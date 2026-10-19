@@ -11,7 +11,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
 
     void Awake()
     {
-        if (!PhotonNetworkWrapper.IsConnected)
+        if (!NetworkWrapper.IsConnected)
             return;
 
         Initialize();
@@ -21,13 +21,13 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
     {
         if (isSub)
         {
-            PhotonCallbacks.PlayerPropertiesUpdate -= OnPlayerPropertiesUpdate;
+            NetworkCallbacks.PlayerPropertiesUpdate -= OnPlayerPropertiesUpdate;
         }
     }
 
     public void OnPlayerPropertiesUpdate(Player target, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        if (changedProps.ContainsKey(PropertiesKeys.KillsKey))
+        if (changedProps.ContainsKey(NetworkKeys.KillsKey))
         {
             CheckScore();
         }
@@ -44,7 +44,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         GamePlayer player = null;
         if (FFAPlayerSort.Count > 0 && FFAPlayerSort != null)
         {
-            FFAPlayerSort.Sort(UtilityHelper.GetSortPlayerByKills);
+            FFAPlayerSort.Sort(CommonUtil.GetSortPlayerByKills);
             player = FFAPlayerSort[0];
         }
         else
@@ -53,15 +53,15 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         }
         FreeForAllUI.Instance.SetScores(player);
         //检查最佳玩家是否达到最大击杀数
-        if((int)player.GetPlayerPropertie(PropertiesKeys.KillsKey) >= RoomSettings.Instance.GameGoal && !PhotonNetworkWrapper.OfflineMode)
+        if((int)player.GetPlayerPropertie(NetworkKeys.KillsKey) >= RoomSettings.Instance.GameGoal && !NetworkWrapper.OfflineMode)
         {
             MatchTimeManagerBase.Instance.FinishRound();
             return;
         }
         //检查机器人是否还没达到最大击杀数
-        if (AIMananger.Instance != null && AIMananger.Instance.BotsActive && AIMananger.Instance.BotsStatistics.Count > 0)
+        if (AIManager.Instance != null && AIManager.Instance.BotsActive && AIManager.Instance.BotsStatistics.Count > 0)
         {
-            if (AIMananger.Instance.GetBotWithMoreKills().Kills >= RoomSettings.Instance.GameGoal)
+            if (AIManager.Instance.GetBotWithMoreKills().Kills >= RoomSettings.Instance.GameGoal)
             {
                 MatchTimeManagerBase.Instance.FinishRound();
             }
@@ -86,11 +86,11 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         get
         {
             string winner = GetBestPlayer().Name;
-            if (AIMananger.Instance != null && AIMananger.Instance.GetBotWithMoreKills().Kills >= RoomSettings.Instance.GameGoal)
+            if (AIManager.Instance != null && AIManager.Instance.GetBotWithMoreKills().Kills >= RoomSettings.Instance.GameGoal)
             {
-                winner = AIMananger.Instance.GetBotWithMoreKills().Name;
+                winner = AIManager.Instance.GetBotWithMoreKills().Name;
             }
-            return winner == PhotonNetworkWrapper.LocalPlayer.NickName;
+            return winner == NetworkWrapper.LocalPlayer.NickName;
 
         }
     }
@@ -101,7 +101,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         if (GameController.Instance.IsGameMode(GameMode.FFA, this))
         {
             GameController.Instance.SetGameState(MatchState.Starting);
-            PhotonCallbacks.PlayerPropertiesUpdate += OnPlayerPropertiesUpdate;
+            NetworkCallbacks.PlayerPropertiesUpdate += OnPlayerPropertiesUpdate;
             FreeForAllUI.Instance.ShowUp();
             isSub = true;
         }

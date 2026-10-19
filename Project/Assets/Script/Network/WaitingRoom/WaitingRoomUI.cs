@@ -68,7 +68,7 @@ public class WaitingRoomUI : WaitingRoomUIBase
         {
             if (otm)
             {
-                if (PhotonNetworkWrapper.IsMasterClient)
+                if (NetworkWrapper.IsMasterClient)
                 {
                     if(list[i].GetPlayerTeam() != Team.All)
                     {
@@ -114,21 +114,21 @@ public class WaitingRoomUI : WaitingRoomUIBase
         GameMode mode = GetGameModeUpdated;
         Room room = PhotonNetwork.CurrentRoom;
         RoomNameText.text = room.Name.ToUpper();
-        string mapName = (string)room.CustomProperties[PropertiesKeys.SceneNameKey];    
+        string mapName = (string)room.CustomProperties[NetworkKeys.SceneNameKey];    
         var si = GameConfig.Instance.AllScenes.Find(x => x.RealSceneName == mapName);
         MapPreview.sprite = si.Preview;
         MapNameText.text = si.ShowName.ToUpper();
         GameModeText.text = mode.GetName().ToUpper();
-        int t = (int)room.CustomProperties[PropertiesKeys.TimeRoomKey];
+        int t = (int)room.CustomProperties[NetworkKeys.TimeRoomKey];
         TimeText.text = (t / 60).ToString().ToUpper() + ":00";
-        BotsText.text = string.Format("BOTS: {0}", (bool)room.CustomProperties[PropertiesKeys.WithBotsKey] ? "ON" : "OFF");
-        FriendlyFireText.text = string.Format("友方伤害: {0}", (bool)room.CustomProperties[PropertiesKeys.RoomFriendlyFire] ? "ON" : "OFF");       
+        BotsText.text = string.Format("BOTS: {0}", (bool)room.CustomProperties[NetworkKeys.WithBotsKey] ? "ON" : "OFF");
+        FriendlyFireText.text = string.Format("友方伤害: {0}", (bool)room.CustomProperties[NetworkKeys.RoomFriendlyFire] ? "ON" : "OFF");       
         UpdatePlayerCount();
-        readyButtons[0].gameObject.SetActive(PhotonNetworkWrapper.IsMasterClient);
-        readyButtons[1].gameObject.SetActive(!PhotonNetworkWrapper.IsMasterClient);
+        readyButtons[0].gameObject.SetActive(NetworkWrapper.IsMasterClient);
+        readyButtons[1].gameObject.SetActive(!NetworkWrapper.IsMasterClient);
         readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = WaitingRoomBase.Instance.IsLocalReady() ? "取消".Localized(67).ToUpper() : "准备".Localized(184).ToUpper();
 
-        string goal = room.CustomProperties[PropertiesKeys.RoomGoal].ToString();
+        string goal = room.CustomProperties[NetworkKeys.RoomGoal].ToString();
         if (goal == "0" || string.IsNullOrEmpty(goal))
         {
             GoalText.text = GetGameModeUpdated.GetModeInfo().GoalName.ToUpper();
@@ -146,7 +146,7 @@ public class WaitingRoomUI : WaitingRoomUIBase
         if(required > 1)
         {
             bool allRequired = (PhotonNetwork.PlayerList.Length >= required);
-            readyButtons[0].interactable = (PhotonNetworkWrapper.IsMasterClient && PhotonNetwork.PlayerList.Length >= required);
+            readyButtons[0].interactable = (NetworkWrapper.IsMasterClient && PhotonNetwork.PlayerList.Length >= required);
             PlayerCountText.text = string.Format("{0} OF {2} PLAYERS ({1} MAX)", PhotonNetwork.PlayerList.Length, PhotonNetwork.CurrentRoom.MaxPlayers, required);
             waitingRequiredPlayersUI?.SetActive(!allRequired);
         }
@@ -185,7 +185,7 @@ public class WaitingRoomUI : WaitingRoomUIBase
         LobbyUI.ShowConfirmationWindow(GameTexts.EnterAsSpectator.Localized(209), () =>
         {
             WaitingRoomBase.Instance.JoinToTeam(Team.None);
-            SpectatorModeBase.EnterAsSpectator = true;
+            ObserverModeBase.EnterAsSpectator = true;
         });
     }
 

@@ -33,7 +33,7 @@ public static class GameEvents
     /// <summary>
     /// 本地玩家在游戏中击杀或被击杀时触发。
     /// </summary>
-    public delegate void LocalKillEvent(KillInfo killInfo);
+    public delegate void LocalKillEvent(KillRecord killInfo);
     public static LocalKillEvent onLocalKill;
 
     /// <summary>
@@ -62,7 +62,7 @@ public static class GameEvents
     /// </summary>
     public static Action onLocalPlayerSpawn;
 
-    public delegate void LocalPlayerShakeEvent(ShakerPresent present, string key, float influence = 1);
+    public delegate void LocalPlayerShakeEvent(ShakerPreset present, string key, float influence = 1);
     public static LocalPlayerShakeEvent onLocalPlayerShake;
 
     /// <summary>
@@ -74,7 +74,7 @@ public static class GameEvents
     /// <summary>
     /// 本地玩家拾取武器时触发
     /// </summary>
-    public delegate void PickUpWeapon(GunPickUpData e);
+    public delegate void PickUpWeapon(FirearmPickUpData e);
     public static PickUpWeapon onPickUpGun;
 
     /// <summary>
@@ -225,7 +225,7 @@ public static class GameEvents
     /// <summary>
     /// 击杀新玩家时调用
     /// </summary>
-    public static void DispatchLocalKillEvent(KillInfo killInfo) => onLocalKill?.Invoke(killInfo);
+    public static void DispatchLocalKillEvent(KillRecord killInfo) => onLocalKill?.Invoke(killInfo);
 
     /// <summary>
     /// 房间完成一回合时调用
@@ -238,7 +238,7 @@ public static class GameEvents
 
     public static void DispatchPlayerLocalSpawnEvent() => onLocalPlayerSpawn?.Invoke();
 
-    public static void DoPlayerCameraShake(ShakerPresent present, string key, float influence = 1) => onLocalPlayerShake?.Invoke(present, key, influence);
+    public static void DoPlayerCameraShake(ShakerPreset present, string key, float influence = 1) => onLocalPlayerShake?.Invoke(present, key, influence);
 
     public static void PlayerLocalSpawnEvent(bool chrab, bool anti, bool bloom, bool ssao, bool motionBlur)
     {
@@ -248,7 +248,7 @@ public static class GameEvents
         }
     }
 
-    public static void PickUpGunEvent(GunPickUpData e)
+    public static void PickUpGunEvent(FirearmPickUpData e)
     {
         if (onPickUpGun != null)
             onPickUpGun(e);

@@ -3,7 +3,7 @@ using UnityEngine;
 using Game.GameModes.CaptureOfFlag;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class CaptureOfFlagController : PhotonHelper, IGameMode
+public class CaptureOfFlagController : NetworkHelper, IGameMode
 {
     [Header("Settings")]
     public int scorePerCapture = 500;
@@ -26,7 +26,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
 
     void Awake()
     {
-        if (!PhotonNetworkWrapper.IsConnected)
+        if (!NetworkWrapper.IsConnected)
             return;
 
         Initialize();
@@ -36,7 +36,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
     {
         if (isActive)
         {
-            PhotonNetworkWrapper.RemoveNetworkCallback(OnNetworkMessage);
+            NetworkWrapper.RemoveNetworkCallback(OnNetworkMessage);
         }
     }
 
@@ -50,8 +50,8 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
     {
         if (!RoomSettings.Instance.RoomInfoFetched) return;
 
-        int team1 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
-        int team2 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
+        int team1 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
+        int team2 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
 
         if (team1 >= CapturesToWin || team2 >= CapturesToWin)
         {
@@ -157,10 +157,10 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
         if (GameController.Instance.IsGameMode(GameMode.CTF, this))
         {
             Content.SetActive(true);
-            PhotonNetworkWrapper.Instance.AddCallback(PropertiesKeys.CaptureOfFlagMode, OnNetworkMessage);
+            NetworkWrapper.Instance.AddCallback(NetworkKeys.CaptureOfFlagMode, OnNetworkMessage);
             GameController.Instance.WaitForPlayers(GameMode.CTF.GetGameModeInfo().RequiredPlayersToStart);
             CaptureOfFlagUI.Instance.ShowUp();
-            CapturesToWin = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.RoomGoal];
+            CapturesToWin = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.RoomGoal];
             isActive = true;
         }
         else
@@ -197,14 +197,14 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
 
     public void OnLocalPoint(int points, Team teamToAddPoint)
     {
-        PhotonNetworkWrapper.CurrentRoom.SetTeamScore(teamToAddPoint);
+        NetworkWrapper.CurrentRoom.SetTeamScore(teamToAddPoint);
     }
 
     public void OnOtherPlayerEnter(Player newPlayer)
     {
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
-            var data = UtilityHelper.CreatePhotonHashTable();
+            var data = CommonUtil.CreatePhotonHashTable();
             data.Add("cmd", 3);
             data.Add("f1s", Team1Flag.State);
             data.Add("f2s", Team2Flag.State);
@@ -216,7 +216,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
             {
                 data.Add("f2ca", Team1Flag.carriyingPlayer.View.ViewID);
             }
-            PhotonNetworkWrapper.Instance.SendDataOverNetworkToPlayer(PropertiesKeys.CaptureOfFlagMode, data, newPlayer);
+            NetworkWrapper.Instance.SendDataOverNetworkToPlayer(NetworkKeys.CaptureOfFlagMode, data, newPlayer);
         }
     }
 
@@ -227,10 +227,10 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
 
     public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-        if (propertiesThatChanged.ContainsKey(PropertiesKeys.Team1Score) || propertiesThatChanged.ContainsKey(PropertiesKeys.Team2Score))
+        if (propertiesThatChanged.ContainsKey(NetworkKeys.Team1Score) || propertiesThatChanged.ContainsKey(NetworkKeys.Team2Score))
         {
-            int team1 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
-            int team2 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
+            int team1 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
+            int team2 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
             CaptureOfFlagUI.Instance.SetScores(team1, team2);
             CheckScores();
         }
@@ -240,7 +240,7 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
     {
         get
         {
-            return (PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam() == GetWinnerTeam());
+            return (NetworkWrapper.LocalPlayer.GetPlayerTeam() == GetWinnerTeam());
         }
     }
     #endregion
@@ -257,8 +257,8 @@ public class CaptureOfFlagController : PhotonHelper, IGameMode
 
     public Team GetWinnerTeam()
     {
-        int team1 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
-        int team2 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
+        int team1 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
+        int team2 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
 
         Team winner = Team.None;
         if (team1 > team2) { winner = Team.Team1; }

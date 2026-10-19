@@ -34,14 +34,14 @@ public class PlayerScoreboard : PlayerScoreboardBase
     protected override void Awake()
     {
         base.Awake();
-        PhotonCallbacks.PlayerLeftRoom += OnPlayerLeftRoom;
+        NetworkCallbacks.PlayerLeftRoom += OnPlayerLeftRoom;
     }
 
     protected override void OnEnable()
     {
         base.OnEnable();
-        PhotonCallbacks.PlayerPropertiesUpdate += OnPlayerPropertiesUpdate;
-        PhotonCallbacks.RoomPropertiesUpdate += OnRoomPropertiesUpdate;
+        NetworkCallbacks.PlayerPropertiesUpdate += OnPlayerPropertiesUpdate;
+        NetworkCallbacks.RoomPropertiesUpdate += OnRoomPropertiesUpdate;
         if (updateOnEnable) ForceUpdateAll();
         if (popUpMenu != null) popUpMenu.SetActive(false);
     }
@@ -49,21 +49,21 @@ public class PlayerScoreboard : PlayerScoreboardBase
     protected override void OnDisable()
     {
         base.OnDisable();
-        PhotonCallbacks.PlayerPropertiesUpdate -= OnPlayerPropertiesUpdate;
-        PhotonCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesUpdate;
+        NetworkCallbacks.PlayerPropertiesUpdate -= OnPlayerPropertiesUpdate;
+        NetworkCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesUpdate;
     }
 
     protected override void OnDestroy()
     {
         base.OnDestroy();
-        PhotonCallbacks.PlayerLeftRoom -= OnPlayerLeftRoom;
+        NetworkCallbacks.PlayerLeftRoom -= OnPlayerLeftRoom;
     }
     #endregion
 
     public void UpdateTables()
     {
         int spectators = 0;
-        var players = PhotonNetworkWrapper.PlayerList;
+        var players = NetworkWrapper.PlayerList;
         for (int i = 0; i < players.Length; i++)
         {
             Player p = players[i];
@@ -108,12 +108,12 @@ public class PlayerScoreboard : PlayerScoreboardBase
     /// </summary>
     void UpdateBotScoreboard()
     {
-        if (AIMananger.Instance == null || !AIMananger.Instance.BotsActive || AIMananger.Instance.BotsStatistics.Count <= 0) return;
+        if (AIManager.Instance == null || !AIManager.Instance.BotsActive || AIManager.Instance.BotsStatistics.Count <= 0) return;
 
-        int c = AIMananger.Instance.BotsStatistics.Count;
+        int c = AIManager.Instance.BotsStatistics.Count;
         for (int i = 0; i < c; i++)
         {
-            GameBotProperties stat = AIMananger.Instance.BotsStatistics[i];
+            GameBotProperties stat = AIManager.Instance.BotsStatistics[i];
             if (botsScoreInstance)
             {
                 if (cachedBotsUIBindings.ContainsKey(stat))

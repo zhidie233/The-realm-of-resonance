@@ -58,12 +58,12 @@ namespace Game.PlayerController
         public override void UpdateLook(Transform character, Transform camera, ClimbableLadder ladder = null)
         {
             // 使用移动设备或 Unity Remote 时
-            if (UtilityHelper.isMobile)
+            if (CommonUtil.isMobile)
             {
             }
             else
             {
-                if (!RoomMenu.Instance.isCursorLocked)
+                if (!LobbyMenu.Instance.isCursorLocked)
                     return;
 
                 Move(GameInput.MouseX, GameInput.MouseY, character, camera, ladder);
@@ -130,7 +130,7 @@ namespace Game.PlayerController
             if (ClampHorizontal)
             {
                 var re = m_CharacterTargetRot.eulerAngles;
-                re.y = MathUtility.Clamp360Angle(re.y, horizontalClamp.x, horizontalClamp.y);
+                re.y = MathHelpers.Clamp360Angle(re.y, horizontalClamp.x, horizontalClamp.y);
                 m_CharacterTargetRot = Quaternion.Euler(re);
             }
 
@@ -283,8 +283,8 @@ namespace Game.PlayerController
 
         public float VerticalAngle => m_CameraTransform.localEulerAngles.x;
 
-        Quaternion ClampRotationAroundXAxis(Quaternion q) => MathUtility.ClampRotationAroundAxis(q, MinimumX, MaximumX, UnityEngine.Animations.Axis.X);
-        Quaternion ClampRotationAroundYAxis(Quaternion q) => MathUtility.ClampRotationAroundAxis(q, horizontalClamp.x, horizontalClamp.y, UnityEngine.Animations.Axis.Y);
+        Quaternion ClampRotationAroundXAxis(Quaternion q) => MathHelpers.ClampRotationAroundAxis(q, MinimumX, MaximumX, UnityEngine.Animations.Axis.X);
+        Quaternion ClampRotationAroundYAxis(Quaternion q) => MathHelpers.ClampRotationAroundAxis(q, horizontalClamp.x, horizontalClamp.y, UnityEngine.Animations.Axis.Y);
 
         public override Vector2 HorizontalLimits { get => horizontalClamp; set => horizontalClamp = value; }
         public override Vector2 VerticalLimits

@@ -8,7 +8,7 @@ public class DamageArea : MonoBehaviour
     [Range(1, 100)] public int Damage = 5;
 
     private bool isPlayerCaused = false;
-    private DamageData cacheInformation;
+    private DamageInfo cacheInformation;
 
     private List<PlayerHealthManagerBase> AllHitted = new List<PlayerHealthManagerBase>();
     private bool isNetwork = false;
@@ -35,7 +35,7 @@ public class DamageArea : MonoBehaviour
                         {
                             Damage = this.Damage,
                             Rate = 1,
-                            DamageData = cacheInformation
+                            DamageInfo = cacheInformation
                         });
                         AllHitted.Add(pdm);
                     }
@@ -50,7 +50,7 @@ public class DamageArea : MonoBehaviour
                 }
                 else if (m_Type == AreaType.OneTime)
                 {
-                    DamageData info = new DamageData();
+                    DamageInfo info = new DamageInfo();
                     info.Damage = Damage;
                     info.Direction = transform.position;
                     info.Cause = DamageCause.Fire;
@@ -77,7 +77,7 @@ public class DamageArea : MonoBehaviour
                         {
                             Damage = this.Damage,
                             Rate = 1,
-                            DamageData = cacheInformation
+                            DamageInfo = cacheInformation
                         });
                         AllHitted.Add(ash);
                     }
@@ -128,8 +128,8 @@ public class DamageArea : MonoBehaviour
     {
         isPlayerCaused = true;
         this.isNetwork = isNetwork;
-        cacheInformation = new DamageData();
-        cacheInformation.Actor = PhotonNetworkWrapper.LocalPlayer;
+        cacheInformation = new DamageInfo();
+        cacheInformation.Actor = NetworkWrapper.LocalPlayer;
         cacheInformation.Cause = DamageCause.Player;
         cacheInformation.From = from;
     }

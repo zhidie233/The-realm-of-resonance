@@ -34,7 +34,7 @@ namespace Game.Runtime.UI
         {
             if (isStatic)
             {
-                if (!RoomMenu.Instance.isCursorLocked)
+                if (!LobbyMenu.Instance.isCursorLocked)
                     return;
             }
             if (GameController.Instance.CameraRendered == null)

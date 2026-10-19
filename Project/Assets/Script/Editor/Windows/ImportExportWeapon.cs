@@ -6,12 +6,12 @@ namespace GameEditor
 {
     public class ImportExportWeapon : EditorWindow
     {
-        private GunController FPWeapon = null;
+        private FirearmController FPWeapon = null;
         private PlayerNetworkHandler Player;
-        private RemoteGun NetworkGun;
+        private NetworkFirearm NetworkGun;
         private Texture goodTexture;
         private bool isExport = true;
-        private WeaponExported WeaponToImport = null;
+        private WeaponArchive WeaponToImport = null;
         private bool isDone = false;
         Texture[] stateIcons = new Texture[3];
         readonly string LAST_PATH = "last-path-ls";
@@ -107,7 +107,7 @@ namespace GameEditor
                 if (WeaponToImport == null)
                 {
                     EditorGUILayout.HelpBox("请指定要导入的武器导出预制体。", MessageType.Info);
-                    WeaponToImport = EditorGUILayout.ObjectField("待导入武器", WeaponToImport, typeof(WeaponExported), true) as WeaponExported;
+                    WeaponToImport = EditorGUILayout.ObjectField("待导入武器", WeaponToImport, typeof(WeaponArchive), true) as WeaponArchive;
                     canImport = false;
                 }
                 else
@@ -115,7 +115,7 @@ namespace GameEditor
                     GUILayout.Space(10);
                     GUI.enabled = false;
                     GUILayout.BeginHorizontal();
-                    EditorGUILayout.ObjectField("待导入武器", WeaponToImport, typeof(WeaponExported), true);
+                    EditorGUILayout.ObjectField("待导入武器", WeaponToImport, typeof(WeaponArchive), true);
                     GUILayout.Label(goodTexture, GUILayout.Width(15), GUILayout.Height(15));
                     GUILayout.EndHorizontal();
                     GUI.enabled = true;
@@ -202,7 +202,7 @@ namespace GameEditor
             }
         }
 
-        public void PrepareToExport(GunController fpweapon, PlayerNetworkHandler player)
+        public void PrepareToExport(FirearmController fpweapon, PlayerNetworkHandler player)
         {
             FPWeapon = fpweapon;
             Player = player;
@@ -214,7 +214,7 @@ namespace GameEditor
             maxSize = new Vector2(250, 200);
         }
 
-        public void PrepareToImport(PlayerNetworkHandler player, WeaponExported exportedWeapon)
+        public void PrepareToImport(PlayerNetworkHandler player, WeaponArchive exportedWeapon)
         {
             Player = player;
             WeaponToImport = exportedWeapon;
@@ -238,14 +238,14 @@ namespace GameEditor
                 playerInstance.name = Player.gameObject.name;
                 isPrefab = true;
             }
-            WeaponExported we = WeaponToImport;
+            WeaponArchive we = WeaponToImport;
             if (WeaponToImport.gameObject.scene.name == null)
             {
                 GameObject weo = PrefabUtility.InstantiatePrefab(WeaponToImport.gameObject, EditorSceneManager.GetActiveScene()) as GameObject;
 #if UNITY_2018_3_OR_NEWER
         PrefabUtility.UnpackPrefabInstance(weo, PrefabUnpackMode.Completely, InteractionMode.AutomatedAction);
 #endif
-                we = weo.GetComponent<WeaponExported>();
+                we = weo.GetComponent<WeaponArchive>();
             }
             if (we.WeaponInfo != null && !string.IsNullOrEmpty(we.WeaponInfo.Name))
             {
@@ -268,7 +268,7 @@ namespace GameEditor
                 results[0] = 0;
             }
 
-            GunInventory gm = playerInstance.GetComponentInChildren<GunInventory>();
+            FirearmInventory gm = playerInstance.GetComponentInChildren<FirearmInventory>();
             if (gm != null)
             {
                 we.FPWeapon.transform.parent = gm.transform;
@@ -313,10 +313,10 @@ namespace GameEditor
         {
             if (FPWeapon == null || Player == null) return;
 
-            GunData info = GameConfig.Instance.GetWeapon(FPWeapon.GunID);
+            FirearmData info = GameConfig.Instance.GetWeapon(FPWeapon.GunID);
             GameObject root = new GameObject(info.Name + " [Export]");
             root.transform.SetAsLastSibling();
-            WeaponExported export = root.AddComponent<WeaponExported>();
+            WeaponArchive export = root.AddComponent<WeaponArchive>();
             export.WeaponInfo = info;
 
             GameObject fpwCopy = Instantiate(FPWeapon.gameObject);
@@ -324,7 +324,7 @@ namespace GameEditor
             fpwCopy.name = info.Name + " [FP]";
             fpwCopy.transform.parent = root.transform;
             fpwCopy.transform.localPosition = Vector3.zero;
-            export.FPWeapon = fpwCopy.GetComponent<GunController>();
+            export.FPWeapon = fpwCopy.GetComponent<FirearmController>();
             export.FPWPosition = FPWeapon.transform.localPosition;
             export.FPWRotation = FPWeapon.transform.localRotation;
 
@@ -335,7 +335,7 @@ namespace GameEditor
                 tpwCopy.name = info.Name + " [TP]";
                 tpwCopy.transform.parent = root.transform;
                 tpwCopy.transform.localPosition = Vector3.zero;
-                export.TPWeapon = tpwCopy.GetComponent<RemoteGun>();
+                export.TPWeapon = tpwCopy.GetComponent<NetworkFirearm>();
                 export.TPWPosition = NetworkGun.transform.localPosition;
                 export.TPWRotation = NetworkGun.transform.localRotation;
             }

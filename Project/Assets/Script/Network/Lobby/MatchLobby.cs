@@ -11,11 +11,11 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 [DefaultExecutionOrder(-998)]
-public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, IMatchmakingCallbacks
+public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, IMatchmakingCallbacks
 {
     #region Public members
     [Header("Photon")]
-    public SeverRegionCode DefaultServer = SeverRegionCode.usw;
+    public ServerRegionCode DefaultServer = ServerRegionCode.usw;
     [GameToggle] public bool ShowPhotonStatistics;
 
     [Header("Room Options")]
@@ -46,8 +46,8 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     void Awake()
     {
         SetupPhotonSettings();
-        UtilityHelper.BlockCursorForUser = false;
-        UtilityHelper.LockCursor(false);
+        CommonUtil.BlockCursorForUser = false;
+        CommonUtil.LockCursor(false);
 
         // 加载流程
         StartCoroutine(InitialLoadProcess());
@@ -63,8 +63,8 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     {
         PhotonNetwork.AddCallbackTarget(this);
         PhotonNetwork.UseRpcMonoBehaviourCache = true;
-        PhotonNetworkWrapper.OfflineMode = false;
-        PhotonNetworkWrapper.IsMessageQueueRunning = true;
+        NetworkWrapper.OfflineMode = false;
+        NetworkWrapper.IsMessageQueueRunning = true;
         PhotonNetwork.EnableCloseConnection = true;
         PhotonNetwork.PhotonServerSettings.AppSettings.FixedRegion = DefaultServer.ToString();
     }
@@ -100,11 +100,11 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
     public void ConnectPhoton()
     {
-        if (PhotonNetworkWrapper.IsConnected) return;
+        if (NetworkWrapper.IsConnected) return;
 
         connectionState = LobbyConnectionState.Connecting;
         PhotonNetwork.GameVersion = GameConfig.Instance.GameVersion;
-        AuthenticationValues authValues = new AuthenticationValues(PhotonNetworkWrapper.NickName);
+        AuthenticationValues authValues = new AuthenticationValues(NetworkWrapper.NickName);
 
 
         PhotonNetwork.AuthValues = authValues;
@@ -146,12 +146,12 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         if (!string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime))
         {
             connectionState = LobbyConnectionState.Connecting;
-            var code = SeverRegionCode.usw;
+            var code = ServerRegionCode.usw;
             if (id > 3) { id++; } // servers ids jumps from 3 to 5
-            code = (SeverRegionCode)id;
+            code = (ServerRegionCode)id;
             PhotonNetwork.NetworkingClient.AppId = PhotonNetwork.PhotonServerSettings.AppSettings.AppIdRealtime;
             PhotonNetwork.ConnectToRegion(code.ToString());
-            PlayerPrefs.SetString(PropertiesKeys.GetUniqueKey("preferredregion"), code.ToString());
+            PlayerPrefs.SetString(NetworkKeys.GetUniqueKey("preferredregion"), code.ToString());
         }
         else
         {
@@ -162,7 +162,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     public void Disconect()
     {
         SetLobbyChat(false);
-        if (PhotonNetworkWrapper.IsConnected)
+        if (NetworkWrapper.IsConnected)
         {
             PhotonNetwork.Disconnect();
         }
@@ -183,24 +183,24 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         nick = nick.Replace("\n", "").Trim();
         if (GameConfig.Instance.verifySingleSession)
         {
-            if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+            if (string.IsNullOrEmpty(NetworkWrapper.NickName))
             {
                 // 需要会话验证，验证在连接服务器之后进行。
                 CachePlayerName = nick;
             }
-            else PhotonNetworkWrapper.NickName = nick; // in case a nick name change happens, make sure to update it.
+            else NetworkWrapper.NickName = nick; // in case a nick name change happens, make sure to update it.
         }
-        else PhotonNetworkWrapper.NickName = nick;
+        else NetworkWrapper.NickName = nick;
 
         if (rememberMe)
         {
-            PlayerPrefs.SetString(PropertiesKeys.GetUniqueKey("remembernick"), nick);
+            PlayerPrefs.SetString(NetworkKeys.GetUniqueKey("remembernick"), nick);
         }
     }
 
     void GetPlayerName()
     {
-        if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+        if (string.IsNullOrEmpty(NetworkWrapper.NickName))
         {
             GeneratePlayerName();
         }
@@ -216,7 +216,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         connectionState = LobbyConnectionState.WaitingForUserName;
         if (!rememberMe)
         {
-            string storedNick = PropertiesKeys.GetUniqueKey("playername");
+            string storedNick = NetworkKeys.GetUniqueKey("playername");
             if (!PlayerPrefs.HasKey(storedNick) || !GameConfig.Instance.RememberPlayerName)
             {
                 CachePlayerName = string.Format(GameConfig.Instance.guestNameFormat, Random.Range(1, 9999));
@@ -233,7 +233,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         else
         {
             //自动填入已保存的昵称
-            CachePlayerName = PlayerPrefs.GetString(PropertiesKeys.GetUniqueKey("remembernick"));
+            CachePlayerName = PlayerPrefs.GetString(NetworkKeys.GetUniqueKey("remembernick"));
             if (string.IsNullOrEmpty(CachePlayerName))
             {
                 rememberMe = false;
@@ -247,7 +247,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
     void GoToMainMenu()
     {
-        if (!PhotonNetworkWrapper.IsConnected)
+        if (!NetworkWrapper.IsConnected)
         {
             ConnectPhoton();
         }
@@ -263,7 +263,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
             else
             {
 
-                if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+                if (string.IsNullOrEmpty(NetworkWrapper.NickName))
                 {
                     Debug.LogError("Player nick name has not been authenticated!");
                 }
@@ -284,7 +284,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     public void SetPlayerName(string InputName)
     {
         CachePlayerName = InputName;
-        PlayerPrefs.SetString(PropertiesKeys.GetUniqueKey("playername"), CachePlayerName);
+        PlayerPrefs.SetString(NetworkKeys.GetUniqueKey("playername"), CachePlayerName);
         SetNickName(CachePlayerName);
         ConnectPhoton();
     }
@@ -345,7 +345,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         int randomGoal = Random.Range(0, gameMode.GameGoalsOptions.Length);
 
         var roomInfo = new GameRoomInfo();
-        roomInfo.roomName = string.Format("[PUBLIC] {0}{1}", PhotonNetworkWrapper.NickName.Substring(0, 2), Random.Range(0, 9999));
+        roomInfo.roomName = string.Format("[PUBLIC] {0}{1}", NetworkWrapper.NickName.Substring(0, 2), Random.Range(0, 9999));
         roomInfo.gameMode = gameMode.gameMode;
         roomInfo.time = gameMode.timeLimits[timeRandom];
         roomInfo.sceneName = mapInfo.RealSceneName;
@@ -383,17 +383,17 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
         //保存房间属性，供进入房间时加载
         var roomOption = new ExitGames.Client.Photon.Hashtable();
-        roomOption[PropertiesKeys.TimeRoomKey] = roomInfo.time;
-        roomOption[PropertiesKeys.GameModeKey] = roomInfo.gameMode.ToString();
-        roomOption[PropertiesKeys.SceneNameKey] = roomInfo.sceneName;
-        roomOption[PropertiesKeys.RoomRoundKey] = roomInfo.roundStyle;
-        roomOption[PropertiesKeys.TeamSelectionKey] = roomInfo.autoTeamSelection;
-        roomOption[PropertiesKeys.CustomSceneName] = roomInfo.mapName;
-        roomOption[PropertiesKeys.RoomGoal] = roomInfo.goal;
-        roomOption[PropertiesKeys.RoomFriendlyFire] = roomInfo.friendlyFire;
-        roomOption[PropertiesKeys.MaxPing] = roomInfo.maxPing;
-        roomOption[PropertiesKeys.RoomPassword] = roomInfo.password;
-        roomOption[PropertiesKeys.WithBotsKey] = roomInfo.withBots;
+        roomOption[NetworkKeys.TimeRoomKey] = roomInfo.time;
+        roomOption[NetworkKeys.GameModeKey] = roomInfo.gameMode.ToString();
+        roomOption[NetworkKeys.SceneNameKey] = roomInfo.sceneName;
+        roomOption[NetworkKeys.RoomRoundKey] = roomInfo.roundStyle;
+        roomOption[NetworkKeys.TeamSelectionKey] = roomInfo.autoTeamSelection;
+        roomOption[NetworkKeys.CustomSceneName] = roomInfo.mapName;
+        roomOption[NetworkKeys.RoomGoal] = roomInfo.goal;
+        roomOption[NetworkKeys.RoomFriendlyFire] = roomInfo.friendlyFire;
+        roomOption[NetworkKeys.MaxPing] = roomInfo.maxPing;
+        roomOption[NetworkKeys.RoomPassword] = roomInfo.password;
+        roomOption[NetworkKeys.WithBotsKey] = roomInfo.withBots;
 
         PhotonNetwork.CreateRoom(roomInfo.roomName, new RoomOptions()
         {
@@ -414,7 +414,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
     public void SignOut()
     {
-        PlayerPrefs.SetString(PropertiesKeys.GetUniqueKey("remembernick"), string.Empty);
+        PlayerPrefs.SetString(NetworkKeys.GetUniqueKey("remembernick"), string.Empty);
         Disconect();
         LobbyUI.Instance.ChangeWindow("player name");
     }
@@ -438,10 +438,10 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
             return false;
         }
 
-        if ((string)checkingRoom.CustomProperties[PropertiesKeys.RoomPassword] == pass && checkingRoom.PlayerCount < checkingRoom.MaxPlayers)
+        if ((string)checkingRoom.CustomProperties[NetworkKeys.RoomPassword] == pass && checkingRoom.PlayerCount < checkingRoom.MaxPlayers)
         {
             JoinedWithPassword = true;
-            if (PhotonNetwork.GetPing() < (int)checkingRoom.CustomProperties[PropertiesKeys.MaxPing])
+            if (PhotonNetwork.GetPing() < (int)checkingRoom.CustomProperties[NetworkKeys.MaxPing])
             {
                 LobbyUI.Instance.blackScreenFader.FadeIn(1);
                 if (checkingRoom.PlayerCount < checkingRoom.MaxPlayers)
@@ -461,7 +461,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
     {
         LobbyUI.Instance.blackScreenFader.FadeIn(0.75f, () =>
          {
-             UtilityHelper.LoadLevel(level);
+             CommonUtil.LoadLevel(level);
          });
     }
     #endregion
@@ -471,12 +471,12 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         //等待检查
         SetLobbyChat(false);
         if (AudioManager.Instance != null) { AudioManager.Instance.StopBackground(); }
-        while (!PhotonNetworkWrapper.InRoom)
+        while (!NetworkWrapper.InRoom)
         {
             yield return null;
         }
-        PhotonNetworkWrapper.IsMessageQueueRunning = false;
-        UtilityHelper.LoadLevel((string)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.SceneNameKey]);
+        NetworkWrapper.IsMessageQueueRunning = false;
+        CommonUtil.LoadLevel((string)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.SceneNameKey]);
     }
 
     void SetUpGameModes()
@@ -549,7 +549,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         LobbyUI.Instance.Home();
 
         // 需要会话验证
-        if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+        if (string.IsNullOrEmpty(NetworkWrapper.NickName))
         {
             connectionState = LobbyConnectionState.Authenticating;
             Debug.Log($"Player has joined to the lobby, now verifying session...");
@@ -559,7 +559,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         else
         {
             connectionState = LobbyConnectionState.Connected;
-            Debug.Log($"Player <b>{PhotonNetworkWrapper.LocalPlayer.NickName}</b> joined to the lobby, UserId: {PhotonNetworkWrapper.LocalPlayer.UserId}");
+            Debug.Log($"Player <b>{NetworkWrapper.LocalPlayer.NickName}</b> joined to the lobby, UserId: {NetworkWrapper.LocalPlayer.UserId}");
             LobbyLoadingScreenBase.Instance.SetActive(true).HideIn(2, true);
         }
 
@@ -599,7 +599,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
                 LobbyLoadingScreenBase.Instance.SetText(GameTexts.FinishingUp.Localized(198));
                 if (PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer)
                 {
-                    PhotonNetwork.AuthValues = new AuthenticationValues(PhotonNetworkWrapper.NickName);
+                    PhotonNetwork.AuthValues = new AuthenticationValues(NetworkWrapper.NickName);
                     if (ServerRegionID == -1)
                     {
                         ConnectPhoton();
@@ -654,14 +654,14 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
         if (LobbyRoomCreatorUI.Instance == null) { LobbyRoomCreatorUI.Instance = transform.GetComponentInChildren<LobbyRoomCreatorUI>(true); }
         //为玩家以后创建的房间生成一个随机名字
         LobbyRoomCreatorUI.Instance.SetupSelectors();
-        PhotonNetworkWrapper.IsMessageQueueRunning = true;
+        NetworkWrapper.IsMessageQueueRunning = true;
     }
 
     public void OnJoinedRoom()
     {
         if (!GameCore.GameData.UsingWaitingRoom())
         {
-            Debug.Log($"Local client joined to the room '{PhotonNetworkWrapper.CurrentRoom.Name}'");
+            Debug.Log($"Local client joined to the room '{NetworkWrapper.CurrentRoom.Name}'");
             StartCoroutine(MoveToGameScene());
         }
         else
@@ -703,7 +703,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
     public void OnFriendListUpdate(List<FriendInfo> friendList)
     {
-        if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+        if (string.IsNullOrEmpty(NetworkWrapper.NickName))
         {
             foreach (var player in friendList)
             {
@@ -725,7 +725,7 @@ public class MatchLobby : PhotonHelper, IConnectionCallbacks, ILobbyCallbacks, I
 
             // 该账号没有打开的会话
             connectionState = LobbyConnectionState.Authenticating;
-            PhotonNetworkWrapper.NickName = CachePlayerName;
+            NetworkWrapper.NickName = CachePlayerName;
             GameEvents.DispatchCoinUpdate(null);
             Disconect();
         }

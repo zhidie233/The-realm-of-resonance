@@ -22,9 +22,9 @@ namespace Game.InputManager
             set
             {
                 m_isFetching = value;
-                if(RoomMenu.Instance != null)
+                if(LobbyMenu.Instance != null)
                 {
-                    RoomMenu.Instance.CurrentControlFocus = m_isFetching ? RoomMenu.ControlFocus.InputBinding : RoomMenu.ControlFocus.None;
+                    LobbyMenu.Instance.CurrentControlFocus = m_isFetching ? LobbyMenu.ControlFocus.InputBinding : LobbyMenu.ControlFocus.None;
                 }
             }
         } 
@@ -41,7 +41,7 @@ namespace Game.InputManager
 
         void Awake()
         {
-            if (UtilityHelper.isMobile && autoHideOnMobile)
+            if (CommonUtil.isMobile && autoHideOnMobile)
             {
                 gameObject.SetActive(false);
             }

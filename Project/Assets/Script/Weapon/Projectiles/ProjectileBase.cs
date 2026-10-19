@@ -6,5 +6,5 @@ public abstract class ProjectileBase : MonoBehaviourBase
     /// <summary>
     /// 初始化投掷物
     /// </summary>
-    public abstract void InitProjectile(BulletData data);
+    public abstract void InitProjectile(ShotData data);
 }

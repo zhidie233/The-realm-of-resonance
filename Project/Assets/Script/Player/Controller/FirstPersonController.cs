@@ -193,7 +193,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
         GroundDetection();
         //如果玩家焦点在游戏内
-        if (RoomMenu.Instance.isCursorLocked && !GameConfig.Instance.isChating)
+        if (LobbyMenu.Instance.isCursorLocked && !GameConfig.Instance.isChating)
         {
             //确定玩家速度
             GetInput(out float s);
@@ -247,7 +247,7 @@ public class FirstPersonController : FirstPersonControllerBase
             else return;
         }
 
-        if (UtilityHelper.isMobile) return;
+        if (CommonUtil.isMobile) return;
 
         if (!_jump && State != PlayerState.Crouching && (Time.time - lastJumpTime) > JumpMinRate)
         {
@@ -509,7 +509,7 @@ public class FirstPersonController : FirstPersonControllerBase
         mouseLook.UseOnlyCameraRotation();
         this.InvokeAfter(slideTime, () =>
         {
-            if (Crounching && !UtilityHelper.isMobile)
+            if (Crounching && !CommonUtil.isMobile)
                 State = PlayerState.Crouching;
             else if (State != PlayerState.Jumping)
                 State = PlayerState.Idle;
@@ -741,7 +741,7 @@ public class FirstPersonController : FirstPersonControllerBase
                 if (VelocityMagnitude > 0)
                 {
                     float forwardVelocity = GetLocalVelocity().z;
-                    if (!UtilityHelper.isMobile)
+                    if (!CommonUtil.isMobile)
                     {
                         // 独立构建版本中，按键可切换行走/奔跑速度。
                         // 记录角色当前是行走还是奔跑

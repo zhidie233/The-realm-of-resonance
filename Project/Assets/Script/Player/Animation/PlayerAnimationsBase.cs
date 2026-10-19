@@ -23,7 +23,7 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
 
     /// <summary>
     /// 该玩家是否接触地面？
-    /// 该值应由 PhotonNetworkWrapper.cs 提供
+    /// 该值应由 NetworkWrapper.cs 提供
     /// </summary>
     public bool IsGrounded
     {
@@ -52,13 +52,13 @@ public abstract class PlayerAnimationsBase : MonoBehaviourBase
     /// <summary>
     /// 玩家切换武器时调用
     /// </summary>
-    public abstract void SetNetworkGun(GunType weaponType, RemoteGun networkGun);
+    public abstract void SetNetworkGun(FirearmType weaponType, NetworkFirearm networkGun);
 
     /// <summary>
     /// 播放指定枪械类型的开火动画。
     /// </summary>
     /// <param name="gunType"></param>
-    public abstract void PlayFireAnimation(GunType gunType);
+    public abstract void PlayFireAnimation(FirearmType gunType);
 
     /// <summary>
     /// 更新玩家动画器参数。

@@ -9,7 +9,7 @@ using Game.Internal.Structures;
 using TMPro;
 using Game.InputManager;
 
-public class UIReferences : PhotonHelper, IInRoomCallbacks
+public class UIReferences : NetworkHelper, IInRoomCallbacks
 {
     [FlagEnum, SerializeField] private RoomUILayers m_uiMask = 0;
     public RoomUILayers UIMask
@@ -40,7 +40,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
 
     private void Awake()
     {
-        if (!PhotonNetworkWrapper.IsConnected || !PhotonNetworkWrapper.InRoom)
+        if (!NetworkWrapper.IsConnected || !NetworkWrapper.InRoom)
             return;
 
         PhotonNetwork.AddCallbackTarget(this);
@@ -57,7 +57,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         GameEvents.onPickUpHealth += OnPicUpMedKit;
         GameEvents.onLocalPlayerDeath += OnLocalPlayerDeath;
         GameEvents.onRoundEnd += OnRoundFinish;
-        PhotonCallbacks.LeftRoom += OnLeftRoom;
+        NetworkCallbacks.LeftRoom += OnLeftRoom;
     }
 
     public void SetUpJoinButtons(bool forced = false)
@@ -76,7 +76,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         GameEvents.onPickUpHealth -= OnPicUpMedKit;
         GameEvents.onLocalPlayerDeath -= OnLocalPlayerDeath;
         GameEvents.onRoundEnd -= OnRoundFinish;
-        PhotonCallbacks.LeftRoom -= OnLeftRoom;
+        NetworkCallbacks.LeftRoom -= OnLeftRoom;
         PhotonNetwork.RemoveCallbackTarget(this);
     }
 
@@ -109,22 +109,21 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
        
         playerScoreboards.gameObject.SetActive(true);
         SetActiveChangeTeamButton(false);
-        PlayerUI.SpeakerIcon.SetActive(false);
         SetUpJoinButtons();
         UpdateDisplayUI();
         SuicideButton.SetActive(RoomSettings.Instance.canSuicide && GameController.Instance.IsLocalPlaying);
 
-        if (PhotonNetworkWrapper.IsConnected)
+        if (NetworkWrapper.IsConnected)
         {
             if (MaxKillsText != null)
             {
-                int MaxKills = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.RoomGoal];
+                int MaxKills = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.RoomGoal];
             MaxKillsText.text = string.Format("{0} 击杀", MaxKills);
             }
         }
         if (GameCore.GameData.UsingWaitingRoom())
         {
-            if (PhotonNetworkWrapper.OfflineMode && !PhotonNetworkWrapper.CurrentRoom.GetRoomInfo().autoTeamSelection) return;
+            if (NetworkWrapper.OfflineMode && !NetworkWrapper.CurrentRoom.GetRoomInfo().autoTeamSelection) return;
 
             SetUpJoinButtons(true);
             SpectatorButton.SetActive(false);
@@ -138,7 +137,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         else PauseMenuBase.Instance.CloseMenu();
 
         SetActiveChangeTeamButton(GameConfig.Instance.CanChangeTeam && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.MaxChangeTeamTimes 
-            && !RoomSettings.Instance.AutoTeamSelection && MatchTimeManagerBase.HaveTimeStarted() && SpectatorModeBase.Instance.CanSelectTeam());
+            && !RoomSettings.Instance.AutoTeamSelection && MatchTimeManagerBase.HaveTimeStarted() && ObserverModeBase.Instance.CanSelectTeam());
 
         SuicideButton.SetActive(RoomSettings.Instance.canSuicide && GameController.Instance.IsLocalPlaying);
 
@@ -160,9 +159,9 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     {
         if (!GameController.Instance.FirstSpawnDone) return;
 
-        UtilityHelper.LockCursor(true);
+        CommonUtil.LockCursor(true);
         ShowMenu(false);
-        CrosshairBase.Instance.Show(true);
+        ReticleBase.Instance.Show(true);
         GameEvents.DispatchGamePauseEvent(false);
     }
 
@@ -183,13 +182,13 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         if (!v)
         {
             PauseMenuBase.Instance.CloseMenu();
-            SpectatorModeBase.Instance.SetActiveUI(false);
+            ObserverModeBase.Instance.SetActiveUI(false);
             SpectatorButton.SetActive(false);
             inTeam = true;
         }
         else
         {
-            if (PhotonNetworkWrapper.OfflineMode)
+            if (NetworkWrapper.OfflineMode)
             {
                 AutoTeamUI.GetComponentInChildren<TextMeshProUGUI>().text = GameTexts.StartingOfflineRoom;
             }
@@ -200,12 +199,12 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
     {
         if (!quit)
         {
-            UtilityHelper.LockCursor(false);
+            CommonUtil.LockCursor(false);
             leaveRoomConfirmation.AskConfirmation(GameTexts.LeaveMatchWarning.Localized("areusulega"), () => { LeftRoom(true); }, () => {  });
         }
         else
         {
-            RoomMenu.Instance.LeaveRoom();
+            LobbyMenu.Instance.LeaveRoom();
         }
     }
 
@@ -215,17 +214,17 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
         {
             GameEvents.DispatchGamePauseEvent(false);
         }
-        UtilityHelper.LockCursor(true);
+        CommonUtil.LockCursor(true);
         ShowMenu(false);
     }
 
     public void JoinTeam(int id)
     {
-        RoomMenu.Instance.JoinTeam(id);
+        LobbyMenu.Instance.JoinTeam(id);
         PauseMenuBase.Instance.CloseMenu();
         inTeam = true;
         AutoTeamUI.SetActive(false);
-        SpectatorModeBase.Instance.SetActiveUI(false);
+        ObserverModeBase.Instance.SetActiveUI(false);
         SpectatorButton.SetActive(false);
 
         if (GameController.Joined) { ChangeTeamTimes++; }
@@ -312,7 +311,7 @@ public class UIReferences : PhotonHelper, IInRoomCallbacks
             yield return blackScreen.FadeIn(1);
             if (goToLobby)
             {
-                UtilityHelper.LoadLevel(GameConfig.Instance.MainMenuScene);
+                CommonUtil.LoadLevel(GameConfig.Instance.MainMenuScene);
             }
         }
         else

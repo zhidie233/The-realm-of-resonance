@@ -10,7 +10,7 @@ public class PlayerAnimations : PlayerAnimationsBase
     #endregion
 
     #region Public properties
-    public RemoteGun CurrentNetworkGun
+    public NetworkFirearm CurrentNetworkGun
     {
         get;
         set;
@@ -32,7 +32,7 @@ public class PlayerAnimations : PlayerAnimationsBase
     private Transform m_Transform;
     private Dictionary<string, int> animatorHashes;
     private bool HitType = false;
-    private GunType cacheWeaponType = GunType.Machinegun;
+    private FirearmType cacheWeaponType = FirearmType.Machinegun;
     private float vertical, horizontal;
     private Transform PlayerRoot;
     private float turnSpeed;
@@ -261,7 +261,7 @@ public class PlayerAnimations : PlayerAnimationsBase
         footstep?.UpdateStep(movementSpeed);
     }
 
-    public override void PlayFireAnimation(GunType typ)
+    public override void PlayFireAnimation(FirearmType typ)
     {
         // 检查网络武器是否使用自定义动画
         if (CurrentNetworkGun != null && CurrentNetworkGun.useCustomPlayerAnimations)
@@ -275,19 +275,19 @@ public class PlayerAnimations : PlayerAnimationsBase
 
         switch (typ)
         {
-            case GunType.Knife:
+            case FirearmType.Knife:
                 Animator.Play("FireKnife", 1, 0);
                 break;
-            case GunType.Machinegun:
+            case FirearmType.Machinegun:
                 Animator.Play("RifleFire", 1, 0);
                 break;
-            case GunType.Burst:
+            case FirearmType.Burst:
                 Animator.Play("BurstFire", 1, 0);
                 break;
-            case GunType.Pistol:
+            case FirearmType.Pistol:
                 Animator.Play("PistolFire", 1, 0);
                 break;
-            case GunType.Launcher:
+            case FirearmType.Launcher:
                 Animator.Play("LauncherFire", 1, 0);
                 break;
         }
@@ -311,7 +311,7 @@ public class PlayerAnimations : PlayerAnimationsBase
         UpperControll();
     }
 
-    public override void SetNetworkGun(GunType weaponType, RemoteGun networkGun)
+    public override void SetNetworkGun(FirearmType weaponType, NetworkFirearm networkGun)
     {
         if (Animator == null || !Animator.gameObject.activeInHierarchy) return;
         
@@ -343,7 +343,7 @@ public class PlayerAnimations : PlayerAnimationsBase
     }
     void ResetHandsIK() { PlayerReferences.playerIK.ControlArmsWithIK = true; }
 
-    public GunType GetCurretWeaponType() { return cacheWeaponType; }
+    public FirearmType GetCurretWeaponType() { return cacheWeaponType; }
 
     private PlayerReferencesHandler _playerReferences = null;
     private PlayerReferencesHandler PlayerReferences

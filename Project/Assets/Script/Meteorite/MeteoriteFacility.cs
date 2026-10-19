@@ -18,7 +18,7 @@ public class MeteoriteFacility : ResonanceFacility
         dropArea=GameObject.FindGameObjectWithTag("DropArea").GetComponent<BoxCollider>();
     }
 
-    public override void ReceiveDamage(DamageData damageData)
+    public override void ReceiveDamage(DamageInfo damageData)
     {
         if (isOnCooldown) return;
         
@@ -31,7 +31,7 @@ public class MeteoriteFacility : ResonanceFacility
         TriggerMeteorite(damageData);
     }
     
-    private void TriggerMeteorite(DamageData damageData)
+    private void TriggerMeteorite(DamageInfo damageData)
     {
         // 获取敌方队伍
         Team enemyTeam = GetEnemyTeam(damageData.GameActor.Team);
@@ -94,7 +94,7 @@ public class MeteoriteFacility : ResonanceFacility
         GameObject meteorite = Instantiate(meteoriteConfig.meteoritePrefab, spawnPos, Quaternion.identity);
         var projectile = meteorite.GetComponent<MeteoriteProjectile>();
         // 创建子弹数据
-        BulletData bulletData = new BulletData
+        ShotData bulletData = new ShotData
         {
             Damage = damage,
             GameActor = shooter,

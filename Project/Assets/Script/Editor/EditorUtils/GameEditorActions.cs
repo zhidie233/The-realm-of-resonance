@@ -7,7 +7,7 @@ public static class GameEditorActions
     [MenuItem("游戏设置/操作/重置默认服务器")]
     static void ResetDefaultServer()
     {
-        PlayerPrefs.DeleteKey(PropertiesKeys.GetUniqueKey("preferredregion"));
+        PlayerPrefs.DeleteKey(NetworkKeys.GetUniqueKey("preferredregion"));
     }
 
     [MenuItem("游戏设置/操作/清除 PlayerPrefs")]

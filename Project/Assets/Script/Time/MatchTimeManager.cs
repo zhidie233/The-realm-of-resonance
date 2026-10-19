@@ -53,9 +53,9 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     protected override void Awake()
     {
-        if (!PhotonNetworkWrapper.IsConnected && !GameConfig.Instance.offlineMode && !OfflineRoom.Instance.forceOffline)
+        if (!NetworkWrapper.IsConnected && !GameConfig.Instance.offlineMode && !SoloRoom.Instance.forceOffline)
         {
-            UtilityHelper.LoadLevel(GameConfig.Instance.MainMenuScene);
+            CommonUtil.LoadLevel(GameConfig.Instance.MainMenuScene);
             return;
         }
         base.Awake();
@@ -65,11 +65,11 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     private void Start()
     {
-        if (!PhotonNetworkWrapper.IsConnected)
+        if (!NetworkWrapper.IsConnected)
             return;
 
         //默认只有主客户端会初始化，其他玩家加入后等主客户端同步对局信息。
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
             Init();
         }
@@ -82,15 +82,15 @@ public class MatchTimeManager : MatchTimeManagerBase
     protected override void OnEnable()
     {
         base.OnEnable();
-        PhotonCallbacks.MasterClientSwitched += OnMasterClientSwitch;
-        PhotonCallbacks.RoomPropertiesUpdate += OnRoomPropertiesChange;
+        NetworkCallbacks.MasterClientSwitched += OnMasterClientSwitch;
+        NetworkCallbacks.RoomPropertiesUpdate += OnRoomPropertiesChange;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        PhotonCallbacks.MasterClientSwitched -= OnMasterClientSwitch;
-        PhotonCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesChange;
+        NetworkCallbacks.MasterClientSwitched -= OnMasterClientSwitch;
+        NetworkCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesChange;
     }
 
     public override void SetActive(bool active)
@@ -106,7 +106,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         //如果对局正在等待最少玩家数才能开始
         if (GameController.Instance.GameMatchState == MatchState.Waiting && !isThisActive)
         {
-            UIReferences.Instance.SetWaitingPlayersText(string.Format(GameTexts.WaitingPlayers, PhotonNetworkWrapper.PlayerList.Length, 2), true);
+            UIReferences.Instance.SetWaitingPlayersText(string.Format(GameTexts.WaitingPlayers, NetworkWrapper.PlayerList.Length, 2), true);
             return;
         }
         if (GameConfig.Instance.useCountDownOnStart)
@@ -136,9 +136,9 @@ public class MatchTimeManager : MatchTimeManagerBase
             return;
         }
 
-        if (PhotonNetworkWrapper.CurrentRoom.CustomProperties.ContainsKey(PropertiesKeys.TimeState))
+        if (NetworkWrapper.CurrentRoom.CustomProperties.ContainsKey(NetworkKeys.TimeState))
         {
-            TimeState = (RoomTimeState)(int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeState];
+            TimeState = (RoomTimeState)(int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeState];
             if (TimeState == RoomTimeState.Started)
             {
                 GetTime(false);
@@ -149,13 +149,13 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     public override void InitAfterCountdown()
     {
-        RoundDuration = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey];
-        m_serverTimeReference = (float)PhotonNetworkWrapper.Time;
-        if (PhotonNetworkWrapper.IsMasterClient)
+        RoundDuration = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey];
+        m_serverTimeReference = (float)NetworkWrapper.Time;
+        if (NetworkWrapper.IsMasterClient)
         {
             Hashtable startTimeProp = new Hashtable();
             startTimeProp.Add(StartTimeKey, m_serverTimeReference);
-            PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
+            NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
             SetTimeState(RoomTimeState.Started, true);
         }
         else
@@ -173,28 +173,28 @@ public class MatchTimeManager : MatchTimeManagerBase
     /// </summary>
     public void GetTime(bool ResetReference)
     {
-        if (PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey] != null)
+        if (NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey] != null)
         {
             //从房间属性获取时长
-            RoundDuration = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey];
+            RoundDuration = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey];
         }
 
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
             if (ResetReference)//get the server time again?
             {
-                m_serverTimeReference = (float)PhotonNetworkWrapper.Time;//get a reference time from the server
+                m_serverTimeReference = (float)NetworkWrapper.Time;//get a reference time from the server
 
                 Hashtable startTimeProp = new Hashtable();//create a property to store the reference time
                 startTimeProp.Add(StartTimeKey, m_serverTimeReference);
-                PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);//send to the room hash tables so other clients can access to it
+                NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);//send to the room hash tables so other clients can access to it
             }
         }
         else//Non master clients
         {
-            if (PhotonNetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey] != null)//if there's a reference time available
+            if (NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey] != null)//if there's a reference time available
             {
-                m_serverTimeReference = (float)PhotonNetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey];//get it from the room hash tables
+                m_serverTimeReference = (float)NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey];//get it from the room hash tables
             }
         }
         if (!IsInitialized) { GameController.Instance.SetGameState(MatchState.Playing); }//is this the first round?
@@ -203,11 +203,11 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     public override void SetTimeState(RoomTimeState state, bool sync = false)
     {
-        if (sync && PhotonNetworkWrapper.IsMasterClient)
+        if (sync && NetworkWrapper.IsMasterClient)
         {
             Hashtable table = new Hashtable();
-            table.Add(PropertiesKeys.TimeState, (int)state);
-            PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(table);
+            table.Add(NetworkKeys.TimeState, (int)state);
+            NetworkWrapper.CurrentRoom.SetCustomProperties(table);
         }
         TimeState = state;
         if (TimeState == RoomTimeState.Started)
@@ -228,12 +228,12 @@ public class MatchTimeManager : MatchTimeManagerBase
             return;
 
         //根据参考时间和当前服务器时间计算秒数
-        float seconds = RoundDuration - ((float)PhotonNetworkWrapper.Time - m_serverTimeReference);
+        float seconds = RoundDuration - ((float)NetworkWrapper.Time - m_serverTimeReference);
         if (seconds > 0.0001f)
         {
             CurrentTime = seconds;
             //如果游戏即将结束，关闭房间使其不再显示在大厅列表
-            if (CurrentTime <= 30 && !roomClose && PhotonNetworkWrapper.IsMasterClient)
+            if (CurrentTime <= 30 && !roomClose && NetworkWrapper.IsMasterClient)
             {
                 roomClose = true;
                 if (RoomSettings.Instance.CurrentRoomInfo.roundStyle == RoundStyle.OneMacht)
@@ -260,18 +260,18 @@ public class MatchTimeManager : MatchTimeManagerBase
     public override void RestartTime()
     {
         //从哈希表获取房间时长
-        if (PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey] != null)
+        if (NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey] != null)
         {
-            RoundDuration = (int)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.TimeRoomKey];
+            RoundDuration = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey];
         }
         //因为所有人都已在房间内，大家会直接从服务器本地取得参考时间
-        m_serverTimeReference = (float)PhotonNetworkWrapper.Time;
+        m_serverTimeReference = (float)NetworkWrapper.Time;
         //主客户端负责为后续加入的玩家保存参考时间
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
             Hashtable startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
             startTimeProp.Add(StartTimeKey, m_serverTimeReference);
-            PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
+            NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
         }
     }
 
@@ -296,7 +296,7 @@ public class MatchTimeManager : MatchTimeManagerBase
             return;
         }
 
-        if (!PhotonNetworkWrapper.IsConnected || !isThisActive)
+        if (!NetworkWrapper.IsConnected || !isThisActive)
             return;
 
         GameEvents.DispatchRoundEndEvent();
@@ -312,7 +312,7 @@ public class MatchTimeManager : MatchTimeManagerBase
             finalCountDown = GameConfig.Instance.afterMatchCountdown;
             RoundFinishScreenBase.Instance?.SetCountdown(finalCountDown);
             InvokeRepeating(nameof(FinalCountdown), 1, 1);
-            CrosshairBase.Instance.Show(false);
+            ReticleBase.Instance.Show(false);
         }
     }
 
@@ -321,7 +321,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         if (CurrentTime == 0 || !isThisActive) return;
         if (TimeText == null) return;
 
-        TimeText.text = StringUtility.GetTimeFormat(Mathf.FloorToInt(CurrentTime / SECOND), Mathf.FloorToInt(CurrentTime % SECOND));
+        TimeText.text = StringHelpers.GetTimeFormat(Mathf.FloorToInt(CurrentTime / SECOND), Mathf.FloorToInt(CurrentTime % SECOND));
     }
 
     /// <summary>
@@ -329,22 +329,22 @@ public class MatchTimeManager : MatchTimeManagerBase
     /// </summary>
     void Refresh()
     {
-        if (PhotonNetworkWrapper.CurrentRoom == null)
+        if (NetworkWrapper.CurrentRoom == null)
             return;
 
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
-            m_serverTimeReference = (float)PhotonNetworkWrapper.Time;
+            m_serverTimeReference = (float)NetworkWrapper.Time;
 
             var startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
             startTimeProp.Add(StartTimeKey, m_serverTimeReference);
-            PhotonNetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
+            NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
         }
         else
         {
-            if (PhotonNetworkWrapper.CurrentRoom.CustomProperties.ContainsKey(StartTimeKey))
+            if (NetworkWrapper.CurrentRoom.CustomProperties.ContainsKey(StartTimeKey))
             {
-                m_serverTimeReference = (float)PhotonNetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey];
+                m_serverTimeReference = (float)NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey];
             }
         }
     }
@@ -366,7 +366,7 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     public void FinishGame()
     {
-        UtilityHelper.LockCursor(false);
+        CommonUtil.LockCursor(false);
         var roundStyle = RoomSettings.Instance.CurrentRoomInfo.roundStyle;
         if (roundStyle == RoundStyle.OneMacht || roundStyle == RoundStyle.RoundsOneMatch)
         {
@@ -407,16 +407,16 @@ public class MatchTimeManager : MatchTimeManagerBase
         m_timeIsUp = false;
         GameController.Instance.GameFinish = false;
         GameController.Instance.IsLocalPlaying = false;
-        UtilityHelper.LockCursor(false);
-        KillCamBase.Instance.SetActive(false);
+        CommonUtil.LockCursor(false);
+        DeathCamBase.Instance.SetActive(false);
         finalCountDown = GameConfig.Instance.afterMatchCountdown;
-        PhotonNetworkWrapper.CurrentRoom.IsOpen = true;
-        PhotonNetworkWrapper.CurrentRoom.IsVisible = true;
-        AIMananger.Instance?.RespawnAllBots(true);
+        NetworkWrapper.CurrentRoom.IsOpen = true;
+        NetworkWrapper.CurrentRoom.IsVisible = true;
+        AIManager.Instance?.RespawnAllBots(true);
 
         if (options.RespawnPlayer)
         {
-            GameController.Instance.SpawnPlayer(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+            GameController.Instance.SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam());
         }
 
         if (!options.KeepData)
@@ -433,7 +433,7 @@ public class MatchTimeManager : MatchTimeManagerBase
     {
         if (GameCore.LocalPlayer.Team == Team.None) return;
 
-        SetTimeState(RoomTimeState.Started, PhotonNetworkWrapper.IsMasterClient);
+        SetTimeState(RoomTimeState.Started, NetworkWrapper.IsMasterClient);
         UIReferences.Instance.SetWaitingPlayersText(GameTexts.StartingMatch, true);
         Invoke(nameof(StartTime), wait);
     }
@@ -450,7 +450,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
         IsPaused = false;
         UIReferences.Instance.SetWaitingPlayersText();
-        GameController.Instance.SpawnPlayer(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+        GameController.Instance.SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
     public override void SetTimeTextRender(TextMeshProUGUI timeText, bool disableCurrent = true)
@@ -467,7 +467,7 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     void OnMasterClientSwitch(Player newMaster)
     {
-        if (newMaster.ActorNumber == PhotonNetworkWrapper.LocalPlayer.ActorNumber)
+        if (newMaster.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber)
         {
             if (TimeState == RoomTimeState.Countdown)
             {
@@ -478,7 +478,7 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     void OnRoomPropertiesChange(Hashtable props)
     {
-        if (props.ContainsKey(StartTimeKey) && !PhotonNetworkWrapper.IsMasterClient)
+        if (props.ContainsKey(StartTimeKey) && !NetworkWrapper.IsMasterClient)
         {
             RemoteInit();
         }

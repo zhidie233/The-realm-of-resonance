@@ -3,7 +3,7 @@
 namespace Game.Runtime.AI
 {
     [Serializable]
-    public enum BotGameState : byte
+    public enum BotMatchState : byte
     {
         Playing = 0,
         Death,
@@ -15,7 +15,7 @@ namespace Game.Runtime.AI
     public class GameBotProperties
     {
         public string Name;
-        public BotGameState GameState;
+        public BotMatchState GameState;
         public int Kills;
         public int Deaths;
         public int Score;

@@ -46,7 +46,7 @@ public class GamePlayer
 
     public GameBotProperties GetBotStats()
     {
-        GameBotProperties botProps = AIMananger.Instance.GetBotStatistics(Name);
+        GameBotProperties botProps = AIManager.Instance.GetBotStatistics(Name);
         if (botProps == null)
         {
             Debug.LogWarning($"Bot {Name} not found in AI Manager, this could be a de-sync issue.");
@@ -62,7 +62,7 @@ public class GamePlayer
         if (ActorView != null) return ActorView.Owner;
         else
         {
-            var playerList = PhotonNetworkWrapper.PlayerList;
+            var playerList = NetworkWrapper.PlayerList;
             for (int i = 0; i < playerList.Length; i++)
             {
                 if (playerList[i].NickName == Name) return playerList[i];
@@ -79,13 +79,13 @@ public class GamePlayer
     {
         switch (key)
         {
-            case PropertiesKeys.KillsKey:
+            case NetworkKeys.KillsKey:
                 if (isRealPlayer) return GetNetworkPlayer().GetKills();
                 else return GetBotStats().Kills;
-            case PropertiesKeys.DeathsKey:
+            case NetworkKeys.DeathsKey:
                 if (isRealPlayer) return GetNetworkPlayer().GetDeaths();
                 else return GetBotStats().Deaths;
-            case PropertiesKeys.ScoreKey:
+            case NetworkKeys.ScoreKey:
                 if (isRealPlayer) return GetNetworkPlayer().GetPlayerScore();
                 else return GetBotStats().Score;
             default:

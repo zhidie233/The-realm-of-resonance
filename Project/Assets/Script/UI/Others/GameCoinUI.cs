@@ -30,8 +30,8 @@ namespace Game.Runtime.UI
             var coinData = GameCore.Coins.GetCoinData(coin);
             if (coinData == null) return;
 
-            if (coinText != null) coinText.text = coinData.GetCoins(PhotonNetworkWrapper.NickName).ToString();
-            if (coinTextUGUI != null) coinTextUGUI.text = coinData.GetCoins(PhotonNetworkWrapper.NickName).ToString();
+            if (coinText != null) coinText.text = coinData.GetCoins(NetworkWrapper.NickName).ToString();
+            if (coinTextUGUI != null) coinTextUGUI.text = coinData.GetCoins(NetworkWrapper.NickName).ToString();
             if (coinIconImg != null) coinIconImg.sprite = coinData.CoinIcon;
         }
     }

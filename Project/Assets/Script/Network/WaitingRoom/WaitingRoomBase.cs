@@ -1,7 +1,7 @@
 using Photon.Realtime;
 using UnityEngine;
 
-public abstract class WaitingRoomBase : PhotonHelper
+public abstract class WaitingRoomBase : NetworkHelper
 {
     public abstract void StartGame();
 

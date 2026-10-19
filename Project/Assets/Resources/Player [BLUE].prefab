@@ -49485,7 +49485,6 @@ GameObject:
   - component: {fileID: 5099713072853122217}
   - component: {fileID: 7082798269984129337}
   - component: {fileID: 8834492926018220364}
-  - component: {fileID: 7586361586907480498}
   - component: {fileID: 7826565543596529963}
   m_Layer: 12
   m_Name: Player [BLUE]
@@ -49808,18 +49807,6 @@ MonoBehaviour:
   dropInstanceDistance: 1
   DropCallerPrefab: {fileID: 1934429473589762, guid: 6289f7a1f6879d54598ab9cf80ea9a36, type: 3}
   SpawnSound: {fileID: 8300000, guid: bb6d16be40c037c458f1246183a22439, type: 3}
---- !u!114 &7586361586907480498
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1878730727431709852}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec39e7a320b228542af382984ed2965a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &7826565543596529963
 AudioSource:
   m_ObjectHideFlags: 0
@@ -49927,7 +49914,7 @@ GameObject:
   - component: {fileID: 588326883474028775}
   - component: {fileID: 5786205471022032879}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143102,7 +143089,7 @@ GameObject:
   - component: {fileID: 9034717463676456531}
   - component: {fileID: 48403684061839120}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -143620,7 +143607,7 @@ GameObject:
   - component: {fileID: 1178832134009110131}
   - component: {fileID: 5487587172942604590}
   m_Layer: 0
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -184259,7 +184246,7 @@ GameObject:
   - component: {fileID: 348591492476342437}
   - component: {fileID: 3403469386597950563}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

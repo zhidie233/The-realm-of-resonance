@@ -22,7 +22,7 @@ public enum RoomUILayers
     TopScoreBoard = 1,
     WeaponData = 2,
     PlayerStats = 4,
-    KillFeed = 8,
+    KillReport = 8,
     Time = 16,
     Loadout = 32,
     Scoreboards = 64,

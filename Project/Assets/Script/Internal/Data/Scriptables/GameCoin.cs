@@ -2,9 +2,6 @@ using System;
 using System.Text;
 using UnityEngine;
 using GameEditor;
-#if ACTK_IS_HERE
-using CodeStage.AntiCheat.Storage;
-#endif
 
 namespace Game.Internal.Scriptables
 {
@@ -49,11 +46,7 @@ namespace Game.Internal.Scriptables
                 savedCoins = 0;
             }
 
-#if !ACTK_IS_HERE
-PlayerPrefs.SetInt(Key(forUser), savedCoins);
-#else
- ObscuredPrefs.Set<int>(Key(forUser), savedCoins);
-#endif                     
+            PlayerPrefs.SetInt(Key(forUser), savedCoins);
             return this;
         }
 
@@ -63,11 +56,7 @@ PlayerPrefs.SetInt(Key(forUser), savedCoins);
         /// <returns></returns>
         public int GetCoins(string endPoint = "")
         {
-#if !ACTK_IS_HERE
             int savedCoins = PlayerPrefs.GetInt(Key(endPoint), InitialCoins);
-#else
-            int savedCoins = ObscuredPrefs.Get<int>(Key(endPoint), InitialCoins);
-#endif
             return savedCoins;
         }
 

@@ -9,7 +9,7 @@ public class SpawnPointManager : MonoBehaviour
     [GameToggle] public bool drawSpawnPoints = true;
 
     [Header("References")]
-    public KillCamBase killCameraInstance;
+    public DeathCamBase killCameraInstance;
 #if UNITY_EDITOR
     public Mesh SpawnPointPlayerGizmo;
 #endif

@@ -50,7 +50,7 @@ namespace Game.Runtime.Level
             Vector3 offset = GetClimbingOffset();
             offset.y = 0;
             bottomLimit = BottomCollider.transform.position + offset;
-            float relativeDis = MathUtility.Distance(bottomLimit, TopCollider.transform.position) - (player.characterController.height * 0.5f);
+            float relativeDis = MathHelpers.Distance(bottomLimit, TopCollider.transform.position) - (player.characterController.height * 0.5f);
             topLimit = bottomLimit + transform.forward * relativeDis;
 
             Status = LadderStatus.Attaching;
@@ -90,7 +90,7 @@ namespace Game.Runtime.Level
             if (IsTopTrigger(trigger))
             {
                 // 沿用底部碰撞体的偏移，再加上顶部碰撞体的 y 位置
-                float relativeDis = MathUtility.Distance(basePos, TopCollider.transform.position) - (playerHeight * 0.75f);
+                float relativeDis = MathHelpers.Distance(basePos, TopCollider.transform.position) - (playerHeight * 0.75f);
                 basePos = basePos + transform.forward * relativeDis;
                 offset = -0.55f;
             }
@@ -104,8 +104,8 @@ namespace Game.Runtime.Level
         public Vector3 GetNearestExitPosition(Transform player)
         {
             Vector3 playerPos = player.position;
-            float topDis = MathUtility.Distance(playerPos, TopCollider.transform.position);
-            float bottomDis = MathUtility.Distance(playerPos, BottomCollider.transform.position);
+            float topDis = MathHelpers.Distance(playerPos, TopCollider.transform.position);
+            float bottomDis = MathHelpers.Distance(playerPos, BottomCollider.transform.position);
 
             if (topDis < bottomDis) return TopCollider.transform.position;
 
@@ -187,7 +187,7 @@ namespace Game.Runtime.Level
 
             Vector3 bottomPos = BottomCollider.transform.position;
             bottomPos -= GetClimbingOffset();
-            float relativeDis = (MathUtility.Distance(bottomPos, TopCollider.transform.position) - 1.5f);
+            float relativeDis = (MathHelpers.Distance(bottomPos, TopCollider.transform.position) - 1.5f);
             Vector3 upDir = transform.forward * relativeDis;
             Gizmos.DrawRay(bottomPos, upDir);
 

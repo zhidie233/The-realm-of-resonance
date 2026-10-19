@@ -21,7 +21,7 @@ namespace Game.Runtime.FriendList
         {
             FriendUI = LobbyUI.Instance.FriendUI;
             PhotonNetwork.AddCallbackTarget(this);
-            if (PhotonNetworkWrapper.IsConnected && !string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+            if (NetworkWrapper.IsConnected && !string.IsNullOrEmpty(NetworkWrapper.NickName))
             {
                 GetFriendsStore();
                 InvokeRepeating(nameof(UpdateList), 1, 1);
@@ -69,7 +69,7 @@ namespace Game.Runtime.FriendList
         /// </summary>
         void UpdateList()
         {
-            if (!PhotonNetworkWrapper.IsConnected || PhotonNetworkWrapper.InRoom)
+            if (!NetworkWrapper.IsConnected || NetworkWrapper.InRoom)
                 return;
 
             if (friendsNames.Count > 0)
@@ -116,7 +116,7 @@ namespace Game.Runtime.FriendList
                 FriendUI.ShowMessage("Already has added this friend.");
                 return;
             }
-            if (t == PhotonNetworkWrapper.NickName)
+            if (t == NetworkWrapper.NickName)
             {
                 FriendUI.ShowMessage("You can't add yourself.");
                 return;
@@ -176,12 +176,12 @@ namespace Game.Runtime.FriendList
 
         public void OnFriendListUpdate(List<FriendInfo> friendList)
         {
-            if (string.IsNullOrEmpty(PhotonNetworkWrapper.NickName)) return;
+            if (string.IsNullOrEmpty(NetworkWrapper.NickName)) return;
 
             // 修复第一个添加的好友现在才出现在列表里的问题
             foreach (var item in friendList)
             {
-                if (item.UserId == PhotonNetworkWrapper.NickName) return;
+                if (item.UserId == NetworkWrapper.NickName) return;
             }
             
             bool build = (friendList.Count != this.friendList.Count);
@@ -215,7 +215,7 @@ namespace Game.Runtime.FriendList
         {
             get
             {
-                return PropertiesKeys.GetUniqueKeyForPlayer("game.friends", PhotonNetworkWrapper.NickName);
+                return NetworkKeys.GetUniqueKeyForPlayer("game.friends", NetworkWrapper.NickName);
             }
         }
 
@@ -262,7 +262,7 @@ namespace Game.Runtime.FriendList
 
         public void OnJoinedLobby()
         {
-            if (!string.IsNullOrEmpty(PhotonNetworkWrapper.NickName))
+            if (!string.IsNullOrEmpty(NetworkWrapper.NickName))
             {
                 StartFriendsUpdate();
             }

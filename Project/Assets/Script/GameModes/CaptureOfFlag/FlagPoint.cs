@@ -4,7 +4,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 namespace Game.GameModes.CaptureOfFlag
 {
-    public class FlagPoint : PhotonHelper
+    public class FlagPoint : NetworkHelper
     {
         public Team flagTeam;
         public FlagState State = FlagState.InHome;
@@ -39,13 +39,13 @@ namespace Game.GameModes.CaptureOfFlag
         {
             if (State == newState) return;
 
-            var data = UtilityHelper.CreatePhotonHashTable();
+            var data = CommonUtil.CreatePhotonHashTable();
             data.Add("cmd", 0);
             data.Add("state", newState);
             data.Add("team", flagTeam);
-            data.Add("player", PhotonNetworkWrapper.LocalPlayer);
+            data.Add("player", NetworkWrapper.LocalPlayer);
             data.Add("viewID", GameController.LocalPlayerViewID);
-            PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CaptureOfFlagMode, data);
+            NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.CaptureOfFlagMode, data);
         }
 
         void OnTriggerEnter(Collider collider)
@@ -73,11 +73,11 @@ namespace Game.GameModes.CaptureOfFlag
             if (carriyingPlayer.View.ViewID == local.ViewID)
             {
                 // 掉落旗帜
-                var data = UtilityHelper.CreatePhotonHashTable();
+                var data = CommonUtil.CreatePhotonHashTable();
                 data.Add("cmd", 1);
                 data.Add("team", flagTeam);
                 data.Add("pos", transform.position);
-                PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CaptureOfFlagMode, data);
+                NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.CaptureOfFlagMode, data);
             }
         }
 
@@ -91,7 +91,7 @@ namespace Game.GameModes.CaptureOfFlag
                 return;
             }
 
-            if (oppositeFlag.IsHome() == true && UtilityHelper.Distance(transform.position, oppositeFlag.transform.position) <= CaptureOfFlagController.Instance.captureAreaRange)
+            if (oppositeFlag.IsHome() == true && CommonUtil.Distance(transform.position, oppositeFlag.transform.position) <= CaptureOfFlagController.Instance.captureAreaRange)
             {
                 ChangeFlagState(FlagState.Captured);
                 // 立即在本地切换状态，避免多次检测到夺旗。
@@ -123,7 +123,7 @@ namespace Game.GameModes.CaptureOfFlag
             transform.eulerAngles = originalRot;
             transform.localScale = originalScale;
 
-            if (PhotonNetworkWrapper.IsMasterClient)
+            if (NetworkWrapper.IsMasterClient)
             {
                 Invoke(nameof(ReturnInvoke), ReturnTime);
             }
@@ -138,12 +138,12 @@ namespace Game.GameModes.CaptureOfFlag
             SetFlagToOrigin();
 
             //只有夺旗的玩家更新这些属性
-            if (PhotonNetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
+            if (NetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
             {
-                KillFeedBase.Instance.SendTeamHighlightMessage(PhotonNetworkWrapper.LocalPlayer.NickName, GameTexts.CaptureTheFlag, actor.GetPlayerTeam());
+                KillReportEntry.Instance.SendTeamHighlightMessage(NetworkWrapper.LocalPlayer.NickName, GameTexts.CaptureTheFlag, actor.GetPlayerTeam());
                 GameController.Instance.SetPointFromLocalPlayer(1, GameMode.CTF);
                 //增加个人得分
-                PhotonNetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerCapture);
+                NetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerCapture);
                 CaptureOfFlagController.Instance.onCapture?.Invoke();
             }
         }
@@ -155,9 +155,9 @@ namespace Game.GameModes.CaptureOfFlag
         {
             SetFlagToOrigin();
 
-            if (actor.ActorNumber == PhotonNetworkWrapper.LocalPlayer.ActorNumber)
+            if (actor.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber)
             {
-                PhotonNetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerRecover);
+                NetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerRecover);
                 CaptureOfFlagController.Instance.onRecover?.Invoke();
             }
         }
@@ -185,7 +185,7 @@ namespace Game.GameModes.CaptureOfFlag
                 if (IsHome() == false)
                 {
                     //旗帜被掉落又被队友捡起，即为归还旗帜。
-                    if (PhotonNetworkWrapper.IsMasterClient) ChangeFlagState(FlagState.InHome);
+                    if (NetworkWrapper.IsMasterClient) ChangeFlagState(FlagState.InHome);
                 }
             }
             else
@@ -194,11 +194,11 @@ namespace Game.GameModes.CaptureOfFlag
             }
 
             //显示夺旗提示
-            if (PhotonNetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
+            if (NetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
             {
-                Team enemyTeam = CaptureOfFlagController.GetOppositeTeam(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+                Team enemyTeam = CaptureOfFlagController.GetOppositeTeam(NetworkWrapper.LocalPlayer.GetPlayerTeam());
                 string obtainedText = string.Format(GameTexts.ObtainedFlag, enemyTeam.GetTeamName());
-                KillFeedBase.Instance.SendTeamHighlightMessage(PhotonNetworkWrapper.LocalPlayer.NickName, obtainedText, PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+                KillReportEntry.Instance.SendTeamHighlightMessage(NetworkWrapper.LocalPlayer.NickName, obtainedText, NetworkWrapper.LocalPlayer.GetPlayerTeam());
                 CaptureOfFlagController.Instance.onPickUp?.Invoke();
             }
         }
@@ -216,10 +216,10 @@ namespace Game.GameModes.CaptureOfFlag
 
         void ReturnInvoke()
         {
-            var data = UtilityHelper.CreatePhotonHashTable();
+            var data = CommonUtil.CreatePhotonHashTable();
             data.Add("cmd", 2);
             data.Add("team", flagTeam);
-            PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CaptureOfFlagMode, data);
+            NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.CaptureOfFlagMode, data);
         }
 
         public bool CanBePickedUpBy(PlayerConfig logic)
@@ -272,7 +272,7 @@ namespace Game.GameModes.CaptureOfFlag
             {
                 Vector3 v = SpheCollider.bounds.center;
                 v.y = transform.position.y;
-                UtilityHelper.DrawWireArc(v, SpheCollider.radius * transform.lossyScale.x, 360, 20, Quaternion.identity);
+                CommonUtil.DrawWireArc(v, SpheCollider.radius * transform.lossyScale.x, 360, 20, Quaternion.identity);
             }
             else
             {

@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
 {
     public List<MenuOptions> options;
-    public UIListHandler listHandler;
+    public ListLayoutHelper listHandler;
     [SerializeField] private GameObject content = null;
 
     private void OnEnable()
@@ -109,7 +109,7 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
     /// <param name="option"></param>
     public void OnOptionClicked(int option)
     {
-        // 踢人事件在 KickVoteUI.cs 中处理
+        // 踢人事件在 KickPollUI.cs 中处理
         onScoreboardMenuAction?.Invoke(option);
         SetActive(false);
     }

@@ -21,11 +21,11 @@ public class ProjectileBody : ProjectileBase
     private float speed = 75.0f;              // bullet speed
     private float impactForce;        // force applied to a rigid body object
     private float damage;
-    private BulletData bulletData;
+    private ShotData bulletData;
 
     #endregion
 
-    public override void InitProjectile(BulletData data)
+    public override void InitProjectile(ShotData data)
     {
         bulletData = data;
         damage = data.Damage;

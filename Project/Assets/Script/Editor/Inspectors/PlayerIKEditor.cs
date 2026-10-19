@@ -43,7 +43,7 @@ public class PlayerIKEditor : Editor
         }
         if (GUILayout.Button("预览瞄准位置"))
         {
-            AnimatorRunner window = (AnimatorRunner)EditorWindow.GetWindow(typeof(AnimatorRunner));
+            AnimationRunner window = (AnimationRunner)EditorWindow.GetWindow(typeof(AnimationRunner));
             window.Show();
             window.SetAnim(animator, () =>
             {
@@ -59,7 +59,7 @@ public class PlayerIKEditor : Editor
                 EditorUtility.SetDirty(target);
             });
             Selection.activeObject = script.gameObject;
-            var nGun = script.transform.GetComponentInChildren<RemoteGun>();
+            var nGun = script.transform.GetComponentInChildren<NetworkFirearm>();
             if(nGun != null)
             {
                 script.GetComponentInParent<PlayerReferencesHandler>().EditorSelectedGun = nGun;

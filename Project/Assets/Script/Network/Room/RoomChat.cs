@@ -26,14 +26,14 @@ public class RoomChat : RoomChatBase
     protected override void OnEnable()
     {
         base.OnEnable();
-        PhotonNetworkWrapper.Instance.AddCallback(PropertiesKeys.ChatEvent, OnNetworkMessageReceived);
+        NetworkWrapper.Instance.AddCallback(NetworkKeys.ChatEvent, OnNetworkMessageReceived);
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (PhotonNetworkWrapper.Instance != null)
-            PhotonNetworkWrapper.Instance.RemoveCallback(OnNetworkMessageReceived);
+        if (NetworkWrapper.Instance != null)
+            NetworkWrapper.Instance.RemoveCallback(OnNetworkMessageReceived);
     }
 
     private void Start()
@@ -77,7 +77,7 @@ public class RoomChat : RoomChatBase
         var sender = (Player)data["sender"];
         var message = (string)data["chat"];
 
-        if (messageTarget == MessageTarget.Team && sender.GetPlayerTeam() != PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam())//check if team message and only team receive it
+        if (messageTarget == MessageTarget.Team && sender.GetPlayerTeam() != NetworkWrapper.LocalPlayer.GetPlayerTeam())//check if team message and only team receive it
             return;
 
         string senderName = "anonymous";
@@ -110,16 +110,16 @@ public class RoomChat : RoomChatBase
     /// <param name="txt"></param>
     public override void SetChat(string txt)
     {
-        if (!PhotonNetworkWrapper.IsConnected || !CanUseTheChat)
+        if (!NetworkWrapper.IsConnected || !CanUseTheChat)
             return;
         if (string.IsNullOrEmpty(txt)) return;
 
-        var data = UtilityHelper.CreatePhotonHashTable();
-        data.Add("sender", PhotonNetworkWrapper.LocalPlayer);
+        var data = CommonUtil.CreatePhotonHashTable();
+        data.Add("sender", NetworkWrapper.LocalPlayer);
         data.Add("target", messageTarget);
         data.Add("chat", txt);
 
-        PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.ChatEvent, data);
+        NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.ChatEvent, data);
     }
 
     /// <summary>

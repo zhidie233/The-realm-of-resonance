@@ -15,7 +15,7 @@ public class HitBoxManager : MonoBehaviour
     /// <summary>
     /// 判定盒被击中时调用
     /// </summary>
-    public void OnHit(DamageData damageData, HitBoxBase hitbox)
+    public void OnHit(DamageInfo damageData, HitBoxBase hitbox)
     {
         if(healthManager != null)
         healthManager.DoDamage(damageData);

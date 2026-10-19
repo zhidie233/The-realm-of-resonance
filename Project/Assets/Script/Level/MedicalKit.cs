@@ -2,7 +2,7 @@
 
 namespace Game.Runtime.Level
 {
-    public class MedicalKit : NetworkItem
+    public class MedicalKit : NetworkedItem
     {
         [GameToggle] public bool autoRespawn = false;
         [Range(0, 100)]
@@ -23,7 +23,7 @@ namespace Game.Runtime.Level
             //此医疗包是否在一段时间后重生？
             if (autoRespawn)
             {
-                ItemManagerBase.Instance.RespawnAfter(this);
+                ItemRespawnerBase.Instance.RespawnAfter(this);
             }
             else
             {

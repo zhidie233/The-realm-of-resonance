@@ -132,7 +132,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1505171487832858, guid: 47e8f16e00224b24c9b6429f7e655979, type: 3}
       propertyPath: m_Name
-      value: PhotonNetworkStats
+      value: NetworkStats
       objectReference: {fileID: 0}
     - target: {fileID: 4844088991340324, guid: 47e8f16e00224b24c9b6429f7e655979, type: 3}
       propertyPath: m_LocalPosition.x

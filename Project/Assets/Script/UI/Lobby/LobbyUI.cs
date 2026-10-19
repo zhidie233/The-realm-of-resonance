@@ -130,7 +130,7 @@ public class LobbyUI : MonoBehaviour
 
     private void Update()
     {
-        if (PhotonNetworkWrapper.IsConnected && GameConfig.isDataCached)
+        if (NetworkWrapper.IsConnected && GameConfig.isDataCached)
         {
             PlayerNameText.text = GameCore.LocalPlayer.FullNickName();
         }
@@ -153,12 +153,12 @@ public class LobbyUI : MonoBehaviour
     {
         ApplyRuntimeSettings();
 
-        bool km = PlayerPrefs.GetInt(PropertiesKeys.KickKey, 0) == 1;
+        bool km = PlayerPrefs.GetInt(NetworkKeys.KickKey, 0) == 1;
         if (km) { ShowPopUpWindow("kicked"); }
-        if (PhotonNetworkWrapper.Instance.hasPingKick) { ShowPopUpWindow("ping kick"); PhotonNetworkWrapper.Instance.hasPingKick = false; }
-        PlayerPrefs.SetInt(PropertiesKeys.KickKey, 0);
-        MatchLobby.Instance.rememberMe = !string.IsNullOrEmpty(PlayerPrefs.GetString(PropertiesKeys.GetUniqueKey("remembernick"), string.Empty));
-        if (PhotonNetworkWrapper.Instance.hasAFKKick) { ShowPopUpWindow("afk kick"); PhotonNetworkWrapper.Instance.hasAFKKick = false; }
+        if (NetworkWrapper.Instance.hasPingKick) { ShowPopUpWindow("ping kick"); NetworkWrapper.Instance.hasPingKick = false; }
+        PlayerPrefs.SetInt(NetworkKeys.KickKey, 0);
+        MatchLobby.Instance.rememberMe = !string.IsNullOrEmpty(PlayerPrefs.GetString(NetworkKeys.GetUniqueKey("remembernick"), string.Empty));
+        if (NetworkWrapper.Instance.hasAFKKick) { ShowPopUpWindow("afk kick"); NetworkWrapper.Instance.hasAFKKick = false; }
 
         InputHandler.Initialize();
         InputHandler.CheckGamePadRequired();
@@ -209,8 +209,8 @@ public class LobbyUI : MonoBehaviour
             ServersDropdown.gameObject.SetActive(false);
             return;
         }
-        string key = PlayerPrefs.GetString(PropertiesKeys.GetUniqueKey("preferredregion"), MatchLobby.Instance.DefaultServer.ToString());
-        string[] Regions = Enum.GetNames(typeof(SeverRegionCode));
+        string key = PlayerPrefs.GetString(NetworkKeys.GetUniqueKey("preferredregion"), MatchLobby.Instance.DefaultServer.ToString());
+        string[] Regions = Enum.GetNames(typeof(ServerRegionCode));
         for (int i = 0; i < Regions.Length; i++)
         {
             if (key == Regions[i])

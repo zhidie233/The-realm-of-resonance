@@ -3,7 +3,7 @@ using TMPro;
 
 namespace Game.Runtime.FriendList
 {
-    public abstract class FriendListBase : PhotonHelper
+    public abstract class FriendListBase : NetworkHelper
     {
         public enum Status
         {

@@ -15,7 +15,6 @@ MonoBehaviour:
   offlineMode: 0
   verifySingleSession: 1
   UseLobbyChat: 0
-  UseVoiceChat: 0
   BulletTracer: 1
   DropGunOnDeath: 1
   SelfGrenadeDamage: 1

@@ -46,16 +46,16 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     public override void JoinToTeam(Team team)
     {
-        PhotonNetworkWrapper.LocalPlayer.SetPlayerTeam(team);
-        SpectatorModeBase.EnterAsSpectator = false;
+        NetworkWrapper.LocalPlayer.SetPlayerTeam(team);
+        ObserverModeBase.EnterAsSpectator = false;
     }
 
     void OnLocalEnterInWaitingRoom()
     {
-        var table = UtilityHelper.CreatePhotonHashTable();
-        table.Add(PropertiesKeys.UserRole, GameConfig.Instance.RolePrefix);
-        table.Add(PropertiesKeys.PlayerTotalScore, GameCore.LocalPlayer.Stats.GetAllTimeScore());
-        PhotonNetworkWrapper.LocalPlayer.SetCustomProperties(table);
+        var table = CommonUtil.CreatePhotonHashTable();
+        table.Add(NetworkKeys.UserRole, GameConfig.Instance.RolePrefix);
+        table.Add(NetworkKeys.PlayerTotalScore, GameCore.LocalPlayer.Stats.GetAllTimeScore());
+        NetworkWrapper.LocalPlayer.SetCustomProperties(table);
     }
 
     /// <summary>
@@ -65,9 +65,9 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     {
         isLocalReady = !isLocalReady;
         HashTable table = new HashTable();
-        table.Add(PropertiesKeys.WaitingState, isLocalReady ? (int)PlayerState.Ready : (int)PlayerState.NoReady);
-        table.Add(PropertiesKeys.PlayerID, PhotonNetworkWrapper.LocalPlayer.ActorNumber);
-        PhotonNetwork.RaiseEvent(PropertiesKeys.WaitingPlayerReadyEvent, table, EventsAll, SendOptions.SendReliable);
+        table.Add(NetworkKeys.WaitingState, isLocalReady ? (int)PlayerState.Ready : (int)PlayerState.NoReady);
+        table.Add(NetworkKeys.PlayerID, NetworkWrapper.LocalPlayer.ActorNumber);
+        PhotonNetwork.RaiseEvent(NetworkKeys.WaitingPlayerReadyEvent, table, EventsAll, SendOptions.SendReliable);
     }
 
     /// <summary>
@@ -75,10 +75,10 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     /// </summary>
     void OnReceivePlayerState(HashTable data)
     {
-        if (!data.ContainsKey(PropertiesKeys.WaitingState)) return;
+        if (!data.ContainsKey(NetworkKeys.WaitingState)) return;
 
-        PlayerState state = (PlayerState)(int)data[PropertiesKeys.WaitingState];
-        int playerID = (int)data[PropertiesKeys.PlayerID];
+        PlayerState state = (PlayerState)(int)data[NetworkKeys.WaitingState];
+        int playerID = (int)data[NetworkKeys.PlayerID];
         if (state == PlayerState.Ready)
         {
             if (!readyPlayers.Contains(playerID)) { readyPlayers.Add(playerID); }
@@ -95,7 +95,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     /// </summary>
     public override void StartGame()
     {
-        if (!PhotonNetworkWrapper.IsMasterClient) return;
+        if (!NetworkWrapper.IsMasterClient) return;
 
         SetWaitingState(WaitingState.Started);
     }
@@ -103,13 +103,13 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     void SetWaitingState(WaitingState state)
     {
         HashTable table = new HashTable();
-        table.Add(PropertiesKeys.WaitingState, state);
+        table.Add(NetworkKeys.WaitingState, state);
 
         HashTable expectTable = new HashTable(1);
         object temp;
-        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(PropertiesKeys.WaitingState, out temp))
+        if (PhotonNetwork.CurrentRoom.CustomProperties.TryGetValue(NetworkKeys.WaitingState, out temp))
         {
-            expectTable[PropertiesKeys.WaitingState] = temp;
+            expectTable[NetworkKeys.WaitingState] = temp;
         }
 
         PhotonNetwork.CurrentRoom.SetCustomProperties(table, expectTable);
@@ -119,7 +119,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     void OnUpdateStates()
     {
         WaitingRoomUIBase.Instance.UpdateAllPlayersStates();
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
 
         }
@@ -127,7 +127,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     void OnReceiveInitialInfo(HashTable data)
     {
-        string source = (string)data[PropertiesKeys.PlayerID];
+        string source = (string)data[NetworkKeys.PlayerID];
         int[] split = source.Split(","[0]).Select(x => int.Parse(x)).ToArray();
         readyPlayers.AddRange(split);
         OnUpdateStates();
@@ -143,10 +143,10 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         HashTable t = (HashTable)data.CustomData;
         switch (data.Code)
         {
-            case PropertiesKeys.WaitingPlayerReadyEvent:
+            case NetworkKeys.WaitingPlayerReadyEvent:
                 OnReceivePlayerState(t);
                 break;
-            case PropertiesKeys.WaitingInitialSyncEvent:
+            case NetworkKeys.WaitingInitialSyncEvent:
                 OnReceiveInitialInfo(t);
                 break;
         }
@@ -154,7 +154,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
 
     public void LoadMap()
     {
-        UtilityHelper.LoadLevel((string)PhotonNetwork.CurrentRoom.CustomProperties[PropertiesKeys.SceneNameKey]);
+        CommonUtil.LoadLevel((string)PhotonNetwork.CurrentRoom.CustomProperties[NetworkKeys.SceneNameKey]);
     }
 
     IEnumerator WaitUntilFullyJoin()
@@ -167,7 +167,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         }
 
         // 检查房间是否有密码，以及玩家是否已输入
-        if ((string)PhotonNetworkWrapper.CurrentRoom.CustomProperties[PropertiesKeys.RoomPassword] != string.Empty && !MatchLobby.Instance.JoinedWithPassword)
+        if ((string)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.RoomPassword] != string.Empty && !MatchLobby.Instance.JoinedWithPassword)
         {
             // 如果没有，说明玩家是通过匹配进入带密码的房间的，
             // 匹配由 Photon 控制，选房时不会先检查房间有没有密码
@@ -178,7 +178,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         }
 
         //如果本机是主客户端，说明房间还没初始化
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
             //那就把状态设为等待
             SetWaitingState(WaitingState.Waiting);
@@ -186,7 +186,7 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         else//if is a normal client
         {
             //检查等待房间的状态
-            if ((WaitingState)PhotonNetwork.CurrentRoom.CustomProperties[PropertiesKeys.WaitingState] == WaitingState.Started)//if is started
+            if ((WaitingState)PhotonNetwork.CurrentRoom.CustomProperties[NetworkKeys.WaitingState] == WaitingState.Started)//if is started
             {
                 //直接进入游戏地图，跳过等待房间菜单
                 PhotonNetwork.IsMessageQueueRunning = false;
@@ -268,13 +268,13 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
         WaitingRoomUIBase.Instance.UpdatePlayerCount();
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
             HashTable table = new HashTable();
             string rp = string.Join(",", readyPlayers.Select(x => x.ToString()).ToArray());
-            table.Add(PropertiesKeys.PlayerID, rp);
+            table.Add(NetworkKeys.PlayerID, rp);
 
-            PhotonNetwork.RaiseEvent(PropertiesKeys.WaitingPlayerReadyEvent, table, new RaiseEventOptions() { TargetActors = new int[] { newPlayer.ActorNumber } }, SendOptions.SendReliable);
+            PhotonNetwork.RaiseEvent(NetworkKeys.WaitingPlayerReadyEvent, table, new RaiseEventOptions() { TargetActors = new int[] { newPlayer.ActorNumber } }, SendOptions.SendReliable);
         }
     }
 
@@ -287,9 +287,9 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
     public void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
     {
         //如果等待状态发生变化
-        if (propertiesThatChanged.ContainsKey(PropertiesKeys.WaitingState))
+        if (propertiesThatChanged.ContainsKey(NetworkKeys.WaitingState))
         {
-            WaitingState state = (WaitingState)propertiesThatChanged[PropertiesKeys.WaitingState];
+            WaitingState state = (WaitingState)propertiesThatChanged[NetworkKeys.WaitingState];
             if (state == WaitingState.Started)//if the master client start the game
             {
                 PhotonNetwork.IsMessageQueueRunning = false;
@@ -300,16 +300,16 @@ public class WaitingRoomHandler : WaitingRoomBase, IMatchmakingCallbacks, IInRoo
         else
         {
             WaitingRoomUIBase.Instance.UpdateRoomInfoUI();
-            if (propertiesThatChanged.ContainsKey(PropertiesKeys.GameModeKey) || propertiesThatChanged.ContainsKey(PropertiesKeys.TeamKey))
+            if (propertiesThatChanged.ContainsKey(NetworkKeys.GameModeKey) || propertiesThatChanged.ContainsKey(NetworkKeys.TeamKey))
             {
-                if (!isOneTeamModeUpdate && PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam() == Team.All)
+                if (!isOneTeamModeUpdate && NetworkWrapper.LocalPlayer.GetPlayerTeam() == Team.All)
                 {
                     AutoJoinToTeam();
                 }
                 WaitingRoomUIBase.Instance.InstancePlayerList();
             }
 
-            if (propertiesThatChanged.ContainsKey(PropertiesKeys.PlayerTotalScore) || propertiesThatChanged.ContainsKey(PropertiesKeys.UserRole))
+            if (propertiesThatChanged.ContainsKey(NetworkKeys.PlayerTotalScore) || propertiesThatChanged.ContainsKey(NetworkKeys.UserRole))
             {
                 WaitingRoomUIBase.Instance.InstancePlayerList();
             }

@@ -23,7 +23,7 @@ public class MatchInformationDisplay : MonoBehaviour
         MapNameText.text = props.mapName.ToUpper();
         DateText.text = fakeDate;
         GameModeText.text = props.gameMode.GetName().ToUpper();
-        TeamText.text = PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam().GetTeamName().ToUpper();
+        TeamText.text = NetworkWrapper.LocalPlayer.GetPlayerTeam().GetTeamName().ToUpper();
         StartCoroutine(DoDisplay());
     }
 

@@ -8,7 +8,7 @@ using Game.Runtime.AI;
 /// 想用自定义结算界面，只需让脚本实现 IGameResumeScreen 接口
 /// 并处理继承来的函数。
 /// </summary>
-public class GameFinishHandler : PhotonHelper, IGameResumeScreen
+public class GameFinishHandler : NetworkHelper, IGameResumeScreen
 {
 
     [SerializeField] private TextMeshProUGUI PlayerNameText = null;
@@ -30,10 +30,10 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
 
     public void CollectData()
     {       
-        int kills = PhotonNetworkWrapper.LocalPlayer.GetKills();
+        int kills = NetworkWrapper.LocalPlayer.GetKills();
 
         // 若机器人击杀不计入玩家数据
-        if (GameConfig.Instance.howConsiderBotsEliminations != BotKillConsideration.SameAsRealPlayers)
+        if (GameConfig.Instance.howConsiderBotsEliminations != BotKillPolicy.SameAsRealPlayers)
         {
             if (RoomSettings.TryGetMatchPersistData("bot-kills", out var value))
             {
@@ -42,8 +42,8 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
             }
         }
 
-        int deaths = PhotonNetworkWrapper.LocalPlayer.GetDeaths();
-        int score = PhotonNetworkWrapper.LocalPlayer.GetPlayerScore();
+        int deaths = NetworkWrapper.LocalPlayer.GetDeaths();
+        int score = NetworkWrapper.LocalPlayer.GetPlayerScore();
         int kd = kills;
         if (kills <= 0) { kd = -deaths; }
         else if (deaths > 0) { kd = kills / deaths; }
@@ -52,7 +52,7 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
         int hsscore = GameController.Instance.Headshots * GameConfig.Instance.ScoreReward.ScorePerHeadShot;
         bool winner = GameController.Instance.isLocalPlayerWinner();
         int winScore = (winner) ? GameConfig.Instance.ScoreReward.ScoreForWinMatch : 0;
-        PlayerNameText.text = PhotonNetworkWrapper.NickName;
+        PlayerNameText.text = NetworkWrapper.NickName;
         int tscore = score + winScore + scorePerTime;
 
         int coins = 0;
@@ -65,18 +65,18 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
         ScoreText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Score.Localized(59).ToUpper(), score - hsscore);
         WinScoreText.text = string.Format(GameTexts.WinMatch.Localized(61), winScore);
         KDRText.text = string.Format("{0}\n<size=10>KDR</size>", kd);
-        TimePlayedText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.TimePlayed.Localized(60).ToUpper(), StringUtility.GetTimeFormat((float)timePlayed / 60, timePlayed), scorePerTime);
+        TimePlayedText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.TimePlayed.Localized(60).ToUpper(), StringHelpers.GetTimeFormat((float)timePlayed / 60, timePlayed), scorePerTime);
         HeadshotsText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.HeadShot.Localized(16, true).ToUpper(), GameController.Instance.Headshots, hsscore);
         TotalScoreText.text = string.Format("{0}\n<size=9>{1}</size>", tscore, GameTexts.TotalScore.Localized(35).ToUpper());
         CoinsText.text = string.Format("+{0}\n<size=9>COINS</size>", coins);
 
         if (coins > 0)
         {
-            GameConfig.Instance.VirtualCoins.AddCoins(coins, PhotonNetworkWrapper.NickName);
+            GameConfig.Instance.VirtualCoins.AddCoins(coins, NetworkWrapper.NickName);
         }
-        int oldsavedScore = PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", LocalName), 0);
+        int oldsavedScore = PlayerPrefs.GetInt(NetworkKeys.GetUniqueKeyForPlayer("score", LocalName), 0);
         oldsavedScore += tscore;
-        PlayerPrefs.SetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", LocalName), oldsavedScore);
+        PlayerPrefs.SetInt(NetworkKeys.GetUniqueKeyForPlayer("score", LocalName), oldsavedScore);
     }
 
     public void Show()
@@ -88,13 +88,13 @@ public class GameFinishHandler : PhotonHelper, IGameResumeScreen
     public void GoToLobby()
     {
         CancelInvoke();
-        if (PhotonNetworkWrapper.IsConnected && PhotonNetworkWrapper.InRoom)
+        if (NetworkWrapper.IsConnected && NetworkWrapper.InRoom)
         {
-            PhotonNetworkWrapper.LeaveRoom();
+            NetworkWrapper.LeaveRoom();
         }
         else
         {
-            UtilityHelper.LoadLevel(GameConfig.Instance.MainMenuScene);
+            CommonUtil.LoadLevel(GameConfig.Instance.MainMenuScene);
         }
     }
 }

@@ -2,12 +2,12 @@ using Photon.Realtime;
 using UnityEngine;
 using Game.GameModes.TeamDeathMatch;
 
-public class TeamDeathMatchMode : PhotonHelper, IGameMode
+public class TeamDeathMatchMode : NetworkHelper, IGameMode
 {
 
     void Awake()
     {
-        if (!PhotonNetworkWrapper.IsConnected)
+        if (!NetworkWrapper.IsConnected)
             return;
 
         Initialize();
@@ -32,7 +32,7 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
     {
         //判定胜者
         string finalText = "";
-        if(!PhotonNetworkWrapper.OfflineMode && GetWinnerTeam() != Team.None)
+        if(!NetworkWrapper.OfflineMode && GetWinnerTeam() != Team.None)
         {
             finalText = GetWinnerTeam().GetTeamName();
         }
@@ -46,20 +46,20 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
 
     public void OnLocalPlayerKill()
     {
-        PhotonNetworkWrapper.CurrentRoom.SetTeamScore(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+        NetworkWrapper.CurrentRoom.SetTeamScore(NetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
     public void OnLocalPoint(int points, Team team)
     {
-        PhotonNetworkWrapper.CurrentRoom.SetTeamScore(team);
+        NetworkWrapper.CurrentRoom.SetTeamScore(team);
     }
 
     public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
-        if (propertiesThatChanged.ContainsKey(PropertiesKeys.Team1Score) || propertiesThatChanged.ContainsKey(PropertiesKeys.Team2Score))
+        if (propertiesThatChanged.ContainsKey(NetworkKeys.Team1Score) || propertiesThatChanged.ContainsKey(NetworkKeys.Team2Score))
         {
-            int team1 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
-            int team2 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
+            int team1 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
+            int team2 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
             TeamDeathMatchUI.Instance.SetScores(team1, team2);
             CheckScores(team1, team2);
         }
@@ -81,14 +81,14 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
     {
         get
         {         
-            return GetWinnerTeam() == PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam();
+            return GetWinnerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam();
         }
     }
 
     public Team GetWinnerTeam()
     {
-        int team1 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
-        int team2 = PhotonNetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
+        int team1 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team1);
+        int team2 = NetworkWrapper.CurrentRoom.GetRoomScore(Team.Team2);
 
         Team winner = Team.None;
         if (team1 > team2) { winner = Team.Team1; }
@@ -100,7 +100,7 @@ public class TeamDeathMatchMode : PhotonHelper, IGameMode
 
     void CheckScores(int team1, int team2)
     {
-        if (PhotonNetworkWrapper.OfflineMode || !RoomSettings.Instance.RoomInfoFetched) return;
+        if (NetworkWrapper.OfflineMode || !RoomSettings.Instance.RoomInfoFetched) return;
         
         //检查是否有队伍达到最大击杀数
         if (team1 >= RoomSettings.Instance.GameGoal)

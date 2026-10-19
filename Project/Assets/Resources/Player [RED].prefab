@@ -69424,7 +69424,7 @@ GameObject:
   - component: {fileID: 5337452121753716271}
   - component: {fileID: 874694117825654461}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131463,7 +131463,7 @@ GameObject:
   - component: {fileID: 4613226464661740173}
   - component: {fileID: 5030954542040789199}
   m_Layer: 0
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132811,7 +132811,7 @@ GameObject:
   - component: {fileID: 2006222130062199770}
   - component: {fileID: 7814889453979694711}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133501,7 +133501,7 @@ GameObject:
   - component: {fileID: 9015358179120950658}
   - component: {fileID: 3212479132910921601}
   m_Layer: 8
-  m_Name: WeaponFX [FP]
+  m_Name: WeaponEffects [FP]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133818,7 +133818,6 @@ GameObject:
   - component: {fileID: 2050339110456359193}
   - component: {fileID: 5409649720615495890}
   - component: {fileID: 6556538444465710349}
-  - component: {fileID: 8548592278565556252}
   - component: {fileID: 4305629292479470399}
   - component: {fileID: 7177561217160589689}
   m_Layer: 12
@@ -134108,18 +134107,6 @@ MonoBehaviour:
   dropInstanceDistance: 1
   DropCallerPrefab: {fileID: 1934429473589762, guid: 6289f7a1f6879d54598ab9cf80ea9a36, type: 3}
   SpawnSound: {fileID: 8300000, guid: bb6d16be40c037c458f1246183a22439, type: 3}
---- !u!114 &8548592278565556252
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4712638238966768460}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ec39e7a320b228542af382984ed2965a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &4305629292479470399
 AudioSource:
   m_ObjectHideFlags: 0

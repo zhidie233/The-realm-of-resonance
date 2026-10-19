@@ -3,7 +3,7 @@ using TMPro;
 
 namespace Game.Runtime.Level
 {
-    public class DeathZone : PhotonHelper
+    public class DeathZone : NetworkHelper
     {
         [GameToggle] public bool instaKill = false;
         public int countDown = 5;

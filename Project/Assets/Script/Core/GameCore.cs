@@ -5,7 +5,7 @@ using Game.Runtime.Settings;
 using Game.Internal.Scriptables;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
-using static CameraRayBase;
+using static ViewRayBase;
 
 public static class GameCore
 {
@@ -13,7 +13,7 @@ public static class GameCore
 
     public static RuntimeSettingsProfile Settings => GameConfig.Instance.RuntimeSettings;
     public static PlayerReferencesHandler LocalPlayerReferences => GameController.Instance.LocalPlayerReferences;
-    public static List<GunData> AllWeapons => GameConfig.Instance.AllWeapons;
+    public static List<FirearmData> AllWeapons => GameConfig.Instance.AllWeapons;
 
     public const string LOCAL_PLAYER_TAG = "Player";
     public const string REMOTE_PLAYER_TAG = "Remote";
@@ -48,7 +48,7 @@ public static class GameCore
             /// <returns></returns>
             public static int GetAllTimeKills()
             {
-                return PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("kills", PhotonNetworkWrapper.NickName));
+                return PlayerPrefs.GetInt(NetworkKeys.GetUniqueKeyForPlayer("kills", NetworkWrapper.NickName));
             }
 
             /// <summary>
@@ -57,7 +57,7 @@ public static class GameCore
             /// <returns></returns>
             public static int GetAllTimeDeaths()
             {
-                return PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("deaths", PhotonNetworkWrapper.NickName));
+                return PlayerPrefs.GetInt(NetworkKeys.GetUniqueKeyForPlayer("deaths", NetworkWrapper.NickName));
             }
 
             /// <summary>
@@ -66,7 +66,7 @@ public static class GameCore
             /// <returns></returns>
             public static int GetAllTimeScore()
             {
-                return PlayerPrefs.GetInt(PropertiesKeys.GetUniqueKeyForPlayer("score", PhotonNetworkWrapper.NickName));
+                return PlayerPrefs.GetInt(NetworkKeys.GetUniqueKeyForPlayer("score", NetworkWrapper.NickName));
             }
         }
 
@@ -80,15 +80,15 @@ public static class GameCore
             var pdm = GameController.Instance.LocalPlayerReferences.playerHealthManager;
             if (!pdm.Suicide()) return false;
 
-            UtilityHelper.LockCursor(true);
+            CommonUtil.LockCursor(true);
             if(increaseWarnings)
             GameController.SuicideCount++;
             //如果玩家消极送死或滥杀自己，就踢出房间
             if (GameController.SuicideCount > GameConfig.Instance.maxSuicideAttempts)
             {              
                 IsAlive = false;
-                UtilityHelper.LockCursor(false);
-                RoomMenu.Instance.LeaveRoom();
+                CommonUtil.LockCursor(false);
+                LobbyMenu.Instance.LeaveRoom();
             }
             return true;
         }
@@ -114,7 +114,7 @@ public static class GameCore
         /// <returns></returns>
         public static string FullNickName()
         {
-            string nick = $"{GameConfig.Instance.RolePrefix} {PhotonNetworkWrapper.NickName}";
+            string nick = $"{GameConfig.Instance.RolePrefix} {NetworkWrapper.NickName}";
             return nick;
         }
 
@@ -151,7 +151,7 @@ public static class GameCore
         /// <summary>
         /// 向同一房间内的所有其他客户端发送类 RPC 调用（无需 PhotonView）。
         /// </summary>
-        public static void SendNetworkCall(byte code, Hashtable data) => PhotonNetworkWrapper.Instance.SendDataOverNetwork(code, data);
+        public static void SendNetworkCall(byte code, Hashtable data) => NetworkWrapper.Instance.SendDataOverNetwork(code, data);
     }
 
     /// <summary>
@@ -194,7 +194,7 @@ public static class GameCore
         /// <returns></returns>
         public static bool IsLocalPlayer(Player player)
         {
-            return player.ActorNumber == PhotonNetworkWrapper.LocalPlayer.ActorNumber;
+            return player.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber;
         }
 
         /// <summary>

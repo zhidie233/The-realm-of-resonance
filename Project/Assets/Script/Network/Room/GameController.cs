@@ -7,7 +7,7 @@ using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 // 处理玩家生成、游戏模式选择及通用游戏工具函数
-public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbacks
+public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallbacks
 {
     // 当前游戏状态
     public MatchState GameMatchState;
@@ -46,7 +46,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     public PlayerReferencesHandler LocalPlayerReferences { get; set; }
 
     // 覆盖 GameData 中玩家预制体
-    public PrefabOverride OverridePlayerPrefab { get; set; }
+    public PrefabPatch OverridePlayerPrefab { get; set; }
 
     // 本机玩家出生时所用玩家预制体的名字
     public string LastInstancedPlayerPrefabName { get; private set; }
@@ -67,8 +67,8 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         if (!registered) { PhotonNetwork.AddCallbackTarget(this); registered = true; }
 
         PhotonNetwork.IsMessageQueueRunning = true;
-        UtilityHelper.BlockCursorForUser = false;
-        NamePlateBase.BlockDraw = false;
+        CommonUtil.BlockCursorForUser = false;
+        PlayerTagBase.BlockDraw = false;
         Joined = false;
         SuicideCount = 0;
         StartPlayTime = Time.time;
@@ -76,12 +76,12 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         LocalActor.isRealPlayer = true;
         LocalActor.Name = PhotonNetwork.NickName;
 
-        CrosshairBase.Instance.Show(false);
-        if (GameCore.GameData.UsingWaitingRoom() && PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam() != Team.None)
+        ReticleBase.Instance.Show(false);
+        if (GameCore.GameData.UsingWaitingRoom() && NetworkWrapper.LocalPlayer.GetPlayerTeam() != Team.None)
         {
             Invoke(nameof(SpawnPlayerWithCurrentTeam), 2);
         }
-        Debug.Log($"Game Started, Online: {!PhotonNetworkWrapper.OfflineMode} Master: {PhotonNetworkWrapper.IsMasterClient} State: {GameMatchState.ToString()} TimeState: {MatchTimeManagerBase.Instance.TimeState.ToString()}");
+        Debug.Log($"Game Started, Online: {!NetworkWrapper.OfflineMode} Master: {NetworkWrapper.IsMasterClient} State: {GameMatchState.ToString()} TimeState: {MatchTimeManagerBase.Instance.TimeState.ToString()}");
     }
 
     void Start()
@@ -104,9 +104,9 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
             PhotonNetwork.RemoveCallbackTarget(this);
         if (GameModeLogic != null)
         {
-            PhotonCallbacks.PlayerEnteredRoom -= GameModeLogic.OnOtherPlayerEnter;
-            PhotonCallbacks.RoomPropertiesUpdate -= GameModeLogic.OnRoomPropertiesUpdate;
-            PhotonCallbacks.PlayerLeftRoom -= GameModeLogic.OnOtherPlayerLeave;
+            NetworkCallbacks.PlayerEnteredRoom -= GameModeLogic.OnOtherPlayerEnter;
+            NetworkCallbacks.RoomPropertiesUpdate -= GameModeLogic.OnRoomPropertiesUpdate;
+            NetworkCallbacks.PlayerLeftRoom -= GameModeLogic.OnOtherPlayerLeave;
             GameEvents.onLocalPlayerDeath -= GameModeLogic.OnLocalPlayerDeath;
         }
     }
@@ -127,16 +127,16 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         //如果游戏已结束
         if (GameFinish)
         {
-            RoomCameraBase.Instance?.SetActive(false);
+            LobbyCameraBase.Instance?.SetActive(false);
             return false;
         }
 
         //把玩家队伍写入玩家属性
         var PlayerTeam = new Hashtable
         {
-            { PropertiesKeys.TeamKey, playerTeam.ToString() }
+            { NetworkKeys.TeamKey, playerTeam.ToString() }
         };
-        PhotonNetworkWrapper.LocalPlayer.SetCustomProperties(PlayerTeam);
+        NetworkWrapper.LocalPlayer.SetCustomProperties(PlayerTeam);
         GameCore.LocalPlayer.Team = playerTeam;
 
         //生成玩家模型
@@ -179,7 +179,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     // 返回: Succeed instancing the player.
     public bool InstancePlayer(GameObject prefab, Vector3 position, Quaternion rotation, Team team)
     {
-        if (!PhotonNetworkWrapper.InRoom) return false;
+        if (!NetworkWrapper.InRoom) return false;
 
         // 检查是否有出生过滤器
         if (VerifySpawnFilter(prefab, position, rotation, team, out bool filterResult))
@@ -252,9 +252,9 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     {
         Hashtable PlayerTeam = new Hashtable
         {
-            { PropertiesKeys.TeamKey, team.ToString() }
+            { NetworkKeys.TeamKey, team.ToString() }
         };
-        PhotonNetworkWrapper.LocalPlayer.SetCustomProperties(PlayerTeam, null);
+        NetworkWrapper.LocalPlayer.SetCustomProperties(PlayerTeam, null);
         GameCore.LocalPlayer.Team = team;
         Joined = true;
     }
@@ -265,7 +265,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         if (LocalPlayer == null)
             return;
 
-        Team t = PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam();
+        Team t = NetworkWrapper.LocalPlayer.GetPlayerTeam();
         SpawnPlayer(t);
     }
 
@@ -282,18 +282,18 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
             float wait = Mathf.Max(0.5f, (respawnTime - fadeDuration) - 0.5f);
 
             yield return new WaitForSeconds(wait);
-            NamePlateBase.BlockDraw = true;
+            PlayerTagBase.BlockDraw = true;
             if (!GameFinish && doFadeIn)
             {
                 UIReferences.Instance.blackScreen.FadeIn(fadeDuration);
             }
             yield return new WaitForSeconds(fadeDuration);
-            if (SpawnPlayer(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam()))
+            if (SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam()))
             {
-                KillCamBase.Instance.SetActive(false);
+                DeathCamBase.Instance.SetActive(false);
             }
             UIReferences.Instance.blackScreen.FadeOut(fadeDuration);
-            NamePlateBase.BlockDraw = false;
+            PlayerTagBase.BlockDraw = false;
         }
     }
 
@@ -306,7 +306,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
 
         if (!Instance.FirstSpawnDone && MatchInformationDisplay.Instance != null) { MatchInformationDisplay.Instance.DisplayInfo(); }
         Instance.FirstSpawnDone = true;
-        CrosshairBase.Instance.Show(true);
+        ReticleBase.Instance.Show(true);
     }
 
     // 如果玩家已存在就销毁
@@ -316,7 +316,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         {
             PhotonNetwork.Destroy(LocalPlayer);
         }
-        RoomCameraBase.Instance?.SetActive(ActiveCamera);
+        LobbyCameraBase.Instance?.SetActive(ActiveCamera);
     }
 
     // 房间回合时间结束时调用
@@ -330,16 +330,16 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     // 让本机玩家在当前队伍的随机出生点出生
     public void SpawnPlayerWithCurrentTeam()
     {
-        if (SpawnPlayer(PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam()))
-            RoomMenu.Instance.OnAutoTeam();
+        if (SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam()))
+            LobbyMenu.Instance.OnAutoTeam();
     }
 
     // 本机玩家出生后调用
     public void AfterSpawnSetup(bool skipFade = false)
     {
-        RoomCameraBase.Instance?.SetActive(false);
+        LobbyCameraBase.Instance?.SetActive(false);
         if (!skipFade) StartCoroutine(UIReferences.Instance.FinalFade(false, false, 0));
-        UtilityHelper.LockCursor(true);
+        CommonUtil.LockCursor(true);
         if (!Joined) { StartPlayTime = Time.time; }
         Joined = true;
     }
@@ -355,9 +355,9 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
                 return false;
             }
             GameModeLogic = logic;
-            PhotonCallbacks.PlayerEnteredRoom += logic.OnOtherPlayerEnter;
-            PhotonCallbacks.RoomPropertiesUpdate += logic.OnRoomPropertiesUpdate;
-            PhotonCallbacks.PlayerLeftRoom += logic.OnOtherPlayerLeave;
+            NetworkCallbacks.PlayerEnteredRoom += logic.OnOtherPlayerEnter;
+            NetworkCallbacks.RoomPropertiesUpdate += logic.OnRoomPropertiesUpdate;
+            NetworkCallbacks.PlayerLeftRoom += logic.OnOtherPlayerLeave;
             GameEvents.onLocalPlayerDeath += GameModeLogic.OnLocalPlayerDeath;
             Debug.Log("Game Mode: " + mode.GetName());
         }
@@ -370,7 +370,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
         if (GameModeLogic == null) return;
         if (mode != GetGameMode) return;
 
-        GameModeLogic.OnLocalPoint(points, PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+        GameModeLogic.OnLocalPoint(points, NetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
     // 非玩家对象（如 AI）得分时应调用，只能由主客户端调用
@@ -577,7 +577,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     // <returns></returns>
     public List<GamePlayer> GetNonTeamMatePlayers(bool includeBots = true)
     {
-        Team playerTeam = PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam();
+        Team playerTeam = NetworkWrapper.LocalPlayer.GetPlayerTeam();
         List<GamePlayer> list = new List<GamePlayer>();
         bool oneTeamMode = isOneTeamMode;
         for (int i = 0; i < OthersActorsInScene.Count; i++)
@@ -606,7 +606,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     {
         Debug.Log("Game sync by master, match state: " + state.ToString());
         GameMatchState = state;
-        if (!PhotonNetworkWrapper.IsMasterClient)
+        if (!NetworkWrapper.IsMasterClient)
         {
             MatchTimeManagerBase.Instance.Init();
         }
@@ -614,7 +614,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
 
     public void SetGameState(MatchState state)
     {
-        if (!PhotonNetworkWrapper.IsMasterClient)
+        if (!NetworkWrapper.IsMasterClient)
         {
             return;
         }
@@ -662,11 +662,11 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
                 int team2Count = PhotonNetwork.PlayerList.GetPlayersInTeam(Team.Team2).Length;
                 int totalPlayers = PhotonNetwork.PlayerList.Length;
 
-                if (AIMananger.Instance.BotsActive)
+                if (AIManager.Instance.BotsActive)
                 {
-                    totalPlayers += AIMananger.Instance.BotsStatistics.Count;
-                    team1Count += AIMananger.Instance.GetAllBotsInTeam(Team.Team1).Count;
-                    team2Count += AIMananger.Instance.GetAllBotsInTeam(Team.Team2).Count;
+                    totalPlayers += AIManager.Instance.BotsStatistics.Count;
+                    team1Count += AIManager.Instance.GetAllBotsInTeam(Team.Team1).Count;
+                    team2Count += AIManager.Instance.GetAllBotsInTeam(Team.Team2).Count;
                 }
 
                 //如果游戏内玩家数达到最少要求
@@ -689,7 +689,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
             if (ready)//all needed players in game
             {
                 //主客户端调用开始比赛
-                if (PhotonNetworkWrapper.IsMasterClient)
+                if (NetworkWrapper.IsMasterClient)
                 {
                     MatchTimeManagerBase.Instance.InitAfterWaiting();
                 }
@@ -718,7 +718,7 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
         Debug.Log("Player connected: " + newPlayer.NickName);
-        if (PhotonNetworkWrapper.IsMasterClient)
+        if (NetworkWrapper.IsMasterClient)
         {
             //主客户端同步必要的比赛信息，确保开局时所有玩家信息一致
             photonView.RPC(nameof(RPCSyncGame), newPlayer, GameMatchState);
@@ -754,10 +754,10 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     public void OnPlayerPropertiesUpdate(Player targetPlayer, Hashtable changedProps)
     {
         //玩家加入队伍时
-        if (changedProps.ContainsKey(PropertiesKeys.TeamKey))
+        if (changedProps.ContainsKey(NetworkKeys.TeamKey))
         {
             //确保已加入队伍
-            if ((string)changedProps[PropertiesKeys.TeamKey] != Team.None.ToString())
+            if ((string)changedProps[NetworkKeys.TeamKey] != Team.None.ToString())
             {
                 CheckPlayersInMatch();
             }
@@ -788,11 +788,11 @@ public class GameController : PhotonHelper, IInRoomCallbacks, IConnectionCallbac
     public void OnDisconnected(DisconnectCause cause)
     {
 #if UNITY_EDITOR
-        if (RoomMenu.Instance.isApplicationQuitting) { return; }
+        if (LobbyMenu.Instance.isApplicationQuitting) { return; }
 #endif
         Debug.Log("Clean up a bit after server quit, cause: " + cause.ToString());
         PhotonNetwork.IsMessageQueueRunning = false;
-        UtilityHelper.LoadLevel(GameConfig.Instance.OnDisconnectScene);
+        CommonUtil.LoadLevel(GameConfig.Instance.OnDisconnectScene);
     }
 
     public void OnRegionListReceived(RegionHandler regionHandler)

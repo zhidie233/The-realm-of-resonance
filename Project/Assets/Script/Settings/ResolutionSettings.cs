@@ -88,7 +88,7 @@ namespace Game.Runtime.Settings
 
             for (int i = 0; i < modes.Length; i++)
             {
-                names[i] = StringUtility.NicifyVariableName(modes[i]);
+                names[i] = StringHelpers.NicifyVariableName(modes[i]);
                 if (settingsBinding.autoUpperCase)
                 {
                     names[i] = names[i].ToUpper();

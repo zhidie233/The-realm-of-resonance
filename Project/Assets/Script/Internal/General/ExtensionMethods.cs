@@ -18,7 +18,7 @@ public static class ExtensionMethods
         current = current + ScoreToAdd;
 
         Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-        score[PropertiesKeys.ScoreKey] = current;
+        score[NetworkKeys.ScoreKey] = current;
 
         player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
     }
@@ -30,9 +30,9 @@ public static class ExtensionMethods
     {
         int s = 0;
 
-        if (player.CustomProperties.ContainsKey(PropertiesKeys.ScoreKey))
+        if (player.CustomProperties.ContainsKey(NetworkKeys.ScoreKey))
         {
-            s = (int)player.CustomProperties[PropertiesKeys.ScoreKey];
+            s = (int)player.CustomProperties[NetworkKeys.ScoreKey];
             return s;
         }
 
@@ -42,9 +42,9 @@ public static class ExtensionMethods
     public static int GetKills(this Player p)
     {
         int k = 0;
-        if (p.CustomProperties.ContainsKey(PropertiesKeys.KillsKey))
+        if (p.CustomProperties.ContainsKey(NetworkKeys.KillsKey))
         {
-            k = (int)p.CustomProperties[PropertiesKeys.KillsKey];
+            k = (int)p.CustomProperties[NetworkKeys.KillsKey];
             return k;
         }
         return k;
@@ -53,9 +53,9 @@ public static class ExtensionMethods
     public static int GetDeaths(this Player p)
     {
         int d = 0;
-        if (p.CustomProperties.ContainsKey(PropertiesKeys.DeathsKey))
+        if (p.CustomProperties.ContainsKey(NetworkKeys.DeathsKey))
         {
-            d = (int)p.CustomProperties[PropertiesKeys.DeathsKey];
+            d = (int)p.CustomProperties[NetworkKeys.DeathsKey];
             return d;
         }
         return d;
@@ -67,7 +67,7 @@ public static class ExtensionMethods
         current = current + kills;
 
         Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-        score[PropertiesKeys.KillsKey] = current;
+        score[NetworkKeys.KillsKey] = current;
 
         p.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
     }
@@ -78,7 +78,7 @@ public static class ExtensionMethods
         current = current + deaths;
 
         Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
-        score[PropertiesKeys.DeathsKey] = current;
+        score[NetworkKeys.DeathsKey] = current;
 
         p.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
     }
@@ -92,13 +92,13 @@ public static class ExtensionMethods
         object teamId;
         if (team == Team.Team1)
         {
-            if (room.CustomProperties.TryGetValue(PropertiesKeys.Team1Score, out teamId))
+            if (room.CustomProperties.TryGetValue(NetworkKeys.Team1Score, out teamId))
             {
                 return (int)teamId;
             }
         } else if (team == Team.Team2)
         {
-            if (room.CustomProperties.TryGetValue(PropertiesKeys.Team2Score, out teamId))
+            if (room.CustomProperties.TryGetValue(NetworkKeys.Team2Score, out teamId))
             {
                 return (int)teamId;
             }
@@ -117,7 +117,7 @@ public static class ExtensionMethods
         int score = 0;
         score = r.GetRoomScore(t);
         score += scoreToAdd;
-        string key = (t == Team.Team1) ? PropertiesKeys.Team1Score : PropertiesKeys.Team2Score;
+        string key = (t == Team.Team1) ? NetworkKeys.Team1Score : NetworkKeys.Team2Score;
         Hashtable h = new Hashtable();
         h.Add(key, score);
         r.SetCustomProperties(h);
@@ -131,8 +131,8 @@ public static class ExtensionMethods
     {
         if (p == null) return Team.None;
         object teamId;
-        string t = (string)p.CustomProperties[PropertiesKeys.TeamKey];
-        if (p.CustomProperties.TryGetValue(PropertiesKeys.TeamKey, out teamId))
+        string t = (string)p.CustomProperties[NetworkKeys.TeamKey];
+        if (p.CustomProperties.TryGetValue(NetworkKeys.TeamKey, out teamId))
         {
             switch ((string)teamId)
             {
@@ -156,7 +156,7 @@ public static class ExtensionMethods
     public static void SetPlayerTeam(this Player player, Team team)
     {
         Hashtable PlayerTeam = new Hashtable();
-        PlayerTeam.Add(PropertiesKeys.TeamKey, team.ToString());
+        PlayerTeam.Add(NetworkKeys.TeamKey, team.ToString());
         player.SetCustomProperties(PlayerTeam);
     }
 
@@ -240,7 +240,7 @@ public static class ExtensionMethods
     public static string NickNameAndRole(this Player p)
     {
         object role = "";
-        if (p.CustomProperties.TryGetValue(PropertiesKeys.UserRole, out role))
+        if (p.CustomProperties.TryGetValue(NetworkKeys.UserRole, out role))
         {
             return string.Format("<b>{1}</b> {0}", p.NickName, (string)role);
         }
@@ -274,7 +274,7 @@ public static class ExtensionMethods
     public static bool isTeamMate(this Player p)
     {
         bool b = false;
-        if(p.GetPlayerTeam() == PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam()) { b = true; }
+        if(p.GetPlayerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam()) { b = true; }
         return b;
     }
 
@@ -285,9 +285,9 @@ public static class ExtensionMethods
     public static Player[] GetPlayersInTeam(this Player[] player, Team team)
     {
         List<Player> list = new List<Player>();
-        for(int i = 0; i < PhotonNetworkWrapper.PlayerList.Length; i++)
+        for(int i = 0; i < NetworkWrapper.PlayerList.Length; i++)
         {
-            if(PhotonNetworkWrapper.PlayerList[i].GetPlayerTeam() == team) { list.Add(PhotonNetworkWrapper.PlayerList[i]); }
+            if(NetworkWrapper.PlayerList[i].GetPlayerTeam() == team) { list.Add(NetworkWrapper.PlayerList[i]); }
         }
         return list.ToArray();
     }
@@ -316,7 +316,7 @@ public static class ExtensionMethods
     /// </summary>
     public static GameMode GetGameMode(this RoomInfo room)
     {
-        string gm = (string)room.CustomProperties[PropertiesKeys.GameModeKey];
+        string gm = (string)room.CustomProperties[NetworkKeys.GameModeKey];
         GameMode mode = (GameMode)Enum.Parse(typeof(GameMode), gm);
         return mode;
     }

@@ -19,17 +19,17 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     // 平滑插值量
     public float SmoothingDelay = 8f;
     // 所有远程武器列表
-    public List<RemoteGun> NetworkGuns = new List<RemoteGun>();
+    public List<NetworkFirearm> NetworkGuns = new List<NetworkFirearm>();
     [SerializeField]
     PhotonTransformViewPositionModel m_PositionModel = new PhotonTransformViewPositionModel();
     [SerializeField]
     PhotonTransformViewRotationModel m_RotationModel = new PhotonTransformViewRotationModel();
     public Material InvicibleMat;
 
-    private NamePlateBase DrawName;
+    private PlayerTagBase DrawName;
     private bool SendInfo = false;
     private bool isWeaponBlocked = false;
-    private RemoteGun currentGun;
+    private NetworkFirearm currentGun;
     private Transform _transform;
     private Vector3 networkHeadLookAt = Vector3.zero;// Head Look to
     private bool networkIsGrounded;
@@ -48,7 +48,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     public int networkGunID { get; set; }
 
     // 此玩家手中的当前第三人称武器
-    public RemoteGun CurrenGun { get; set; }
+    public NetworkFirearm CurrenGun { get; set; }
 
     // 从此玩家客户端侧接收的当前状态
     public PlayerState NetworkBodyState { get; set; }
@@ -56,13 +56,13 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     protected override void Awake()
     {
         base.Awake();
-        PhotonCallbacks.PlayerEnteredRoom += OnPhotonPlayerConnected;
+        NetworkCallbacks.PlayerEnteredRoom += OnPhotonPlayerConnected;
         if (!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom) return;
 
         _transform = transform;
         _positionControl = new PhotonTransformViewPositionControl(m_PositionModel);
         _rotationControl = new PhotonTransformViewRotationControl(m_RotationModel);
-        DrawName = GetComponent<NamePlateBase>();
+        DrawName = GetComponent<PlayerTagBase>();
         NetworkGuns.ForEach(x =>
         {
             if (x != null) x.gameObject.SetActive(false);
@@ -113,11 +113,11 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (GameConfig.Instance.DropGunOnDeath && RoomMenu.Instance != null && !RoomMenu.Instance.isApplicationQuitting)
+        if (GameConfig.Instance.DropGunOnDeath && LobbyMenu.Instance != null && !LobbyMenu.Instance.isApplicationQuitting)
         {
             if (NetGunsRoot != null) NetGunsRoot.gameObject.SetActive(false);
         }
-        PhotonCallbacks.PlayerEnteredRoom -= OnPhotonPlayerConnected;
+        NetworkCallbacks.PlayerEnteredRoom -= OnPhotonPlayerConnected;
     }
 
     public override void OnUpdate()
@@ -184,7 +184,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     void OnEnemyPlayer()
     {
         playerHealthManager.DamageEnabled = true;
-        DrawName.SetActive(SpectatorModeBase.Instance.isActive);
+        DrawName.SetActive(ObserverModeBase.Instance.isActive);
     }
 
     // 该远程玩家是队友时每帧调用
@@ -243,17 +243,17 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         RemoteTeam = photonView.Owner.GetPlayerTeam();
         gameObject.name = RemotePlayerName;
         if (DrawName != null) { DrawName.SetName(RemotePlayerName); }
-        isFriend = (RemoteTeam == PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam());
+        isFriend = (RemoteTeam == NetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 
     // 修改该远程玩家当前的 TPWeapon
-    public void SetNetworkWeapon(GunType weaponType, RemoteGun networkGun)
+    public void SetNetworkWeapon(FirearmType weaponType, NetworkFirearm networkGun)
     {
         PlayerReferences.playerAnimations?.SetNetworkGun(weaponType, networkGun);
     }
 
     // 通知所有其他客户端同步一发子弹
-    public void ReplicateFire(GunType weaponType, Vector3 hitPosition, Vector3 inacuracity)
+    public void ReplicateFire(FirearmType weaponType, Vector3 hitPosition, Vector3 inacuracity)
     {
         photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inacuracity);
     }
@@ -266,27 +266,27 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
 
     // 用当前远程武器同步这次射击，发送必要信息，使弹着方向与本机一致
     [PunRPC]
-    void FireSync(GunType weaponType, Vector3 hitPosition, Vector3 inaccuracity)
+    void FireSync(FirearmType weaponType, Vector3 hitPosition, Vector3 inaccuracity)
     {
         if (CurrenGun == null) return;
         switch (weaponType)
         {
-            case GunType.Machinegun:
+            case FirearmType.Machinegun:
                 CurrenGun.Fire(hitPosition, inaccuracity);
-                PlayerReferences.playerAnimations.PlayFireAnimation(GunType.Machinegun);
+                PlayerReferences.playerAnimations.PlayFireAnimation(FirearmType.Machinegun);
                 break;
-            case GunType.Pistol:
+            case FirearmType.Pistol:
                 CurrenGun.Fire(hitPosition, inaccuracity);
-                PlayerReferences.playerAnimations.PlayFireAnimation(GunType.Pistol);
+                PlayerReferences.playerAnimations.PlayFireAnimation(FirearmType.Pistol);
                 break;
-            case GunType.Burst:
-            case GunType.Sniper:
-            case GunType.Shotgun:
+            case FirearmType.Burst:
+            case FirearmType.Sniper:
+            case FirearmType.Shotgun:
                 CurrenGun.Fire(hitPosition, inaccuracity);
                 break;
-            case GunType.Knife:
+            case FirearmType.Knife:
                 CurrenGun.KnifeFire();//if you need add your custom fire launcher in networkgun
-                PlayerReferences.playerAnimations.PlayFireAnimation(GunType.Knife);
+                PlayerReferences.playerAnimations.PlayFireAnimation(FirearmType.Knife);
                 break;
             default:
                 Debug.LogWarning("Not defined weapon type to sync bullets.");

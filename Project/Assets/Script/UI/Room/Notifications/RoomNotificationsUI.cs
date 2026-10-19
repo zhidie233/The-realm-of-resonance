@@ -7,7 +7,7 @@ namespace Game.Runtime.UI
 {
     public class RoomNotificationsUI : MonoBehaviour
     {
-        public UIListHandler listHandler;
+        public ListLayoutHelper listHandler;
         public float showTime = 5;
 
         private void OnEnable()

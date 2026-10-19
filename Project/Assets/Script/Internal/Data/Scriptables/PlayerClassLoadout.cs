@@ -3,10 +3,10 @@
 [DisallowMultipleComponent, CreateAssetMenu(fileName = "Player Class Loadout", menuName = "Game/Player Class/Loadout")]
 public class PlayerClassLoadout : ScriptableObject
 {
-    [GunID] public int Primary = 0;
-    [GunID] public int Secondary = 1;
-    [GunID] public int Perks = 2;
-    [GunID] public int Letal = 3;
+    [FirearmID] public int Primary = 0;
+    [FirearmID] public int Secondary = 1;
+    [FirearmID] public int Perks = 2;
+    [FirearmID] public int Letal = 3;
 
     public void FromString(string str)
     {
@@ -27,9 +27,9 @@ public class PlayerClassLoadout : ScriptableObject
         Letal = int.Parse(split[3]);
     }
 
-    public GunData GetPrimaryGunInfo() => GameConfig.Instance.GetWeapon(Primary);
-    public GunData GetSecondaryGunInfo() => GameConfig.Instance.GetWeapon(Secondary);
-    public GunData GetPerksGunInfo() => GameConfig.Instance.GetWeapon(Perks);
-    public GunData GetLetalGunInfo() => GameConfig.Instance.GetWeapon(Letal);
+    public FirearmData GetPrimaryGunInfo() => GameConfig.Instance.GetWeapon(Primary);
+    public FirearmData GetSecondaryGunInfo() => GameConfig.Instance.GetWeapon(Secondary);
+    public FirearmData GetPerksGunInfo() => GameConfig.Instance.GetWeapon(Perks);
+    public FirearmData GetLetalGunInfo() => GameConfig.Instance.GetWeapon(Letal);
     public override string ToString() => $"{Primary}&{Secondary}&{Perks}&{Letal}";
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public abstract class WaitingRoomUIBase : PhotonHelper
+public abstract class WaitingRoomUIBase : NetworkHelper
 {
 
     public abstract void UpdateAllPlayersStates();

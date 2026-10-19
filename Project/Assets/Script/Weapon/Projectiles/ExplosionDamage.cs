@@ -16,11 +16,11 @@ public class ExplosionDamage : ExplosionBase
     public float explosionRadius = 50f;
     public float DisappearIn = 3f;
     public LayerMask detectLayers;
-    public ShakerPresent shakerPresent;
+    public ShakerPreset shakerPresent;
     public string shakerKey = "explosion";
 
     private RaycastHit hitInfo;
-    private BulletData cachedData;
+    private ShotData cachedData;
     private GamePlayer creator;
 
     // 不是远程受击
@@ -30,7 +30,7 @@ public class ExplosionDamage : ExplosionBase
         {
             if (explosionType == ExplosionType.Level)
             {
-                cachedData = new BulletData()
+                cachedData = new ShotData()
                 {
                     GameActor = GameController.Instance.LocalActor,
                     isNetwork = false,
@@ -56,7 +56,7 @@ public class ExplosionDamage : ExplosionBase
         StartCoroutine(Init());
     }
 
-    public override void InitExplosion(BulletData bulletData, GamePlayer fromPlayer)
+    public override void InitExplosion(ShotData bulletData, GamePlayer fromPlayer)
     {
         cachedData = bulletData;
         creator = fromPlayer;
@@ -105,14 +105,14 @@ public class ExplosionDamage : ExplosionBase
 
             var pdm = p.transform.GetComponentInParent<PlayerHealthManagerBase>();
 
-            var odi = new DamageData();
+            var odi = new DamageInfo();
             odi.Damage = CalculatePlayerDamage(p.transform, player);
             odi.Direction = transform.position;
             odi.From = creator.Name;
             odi.isHeadShot = false;
             odi.Cause = (!creator.isRealPlayer) ? DamageCause.Bot : DamageCause.Explosion;
             odi.GunID = cachedData.WeaponID;
-            odi.Actor = PhotonNetworkWrapper.LocalPlayer;
+            odi.Actor = NetworkWrapper.LocalPlayer;
             
             // 检查团队关系并调整共鸣值
             if (!isOneTeamMode && player.GetPlayerTeam() == creator.Team)
@@ -175,7 +175,7 @@ public class ExplosionDamage : ExplosionBase
             }
 
             int damage = CalculatePlayerDamage(c.transform, null);
-            DamageData damageData = new DamageData()
+            DamageInfo damageData = new DamageInfo()
             {
                 Damage = (int)damage,
                 Direction = transform.position,
@@ -211,20 +211,20 @@ public class ExplosionDamage : ExplosionBase
         {
             if (!isOneTeamMode)
             {
-                if (GameConfig.Instance.SelfGrenadeDamage && p == PhotonNetworkWrapper.LocalPlayer)
+                if (GameConfig.Instance.SelfGrenadeDamage && p == NetworkWrapper.LocalPlayer)
                 {
 
                 }
                 else
                 {
-                    if ((string)p.CustomProperties[PropertiesKeys.TeamKey] == myTeam)
+                    if ((string)p.CustomProperties[NetworkKeys.TeamKey] == myTeam)
                     {
                         return 0;
                     }
                 }
             }
         }
-        float distance = UtilityHelper.Distance(transform.position, trans.position);
+        float distance = CommonUtil.Distance(transform.position, trans.position);
         return Mathf.Clamp((int)(explosionDamage * ((explosionRadius - distance) / explosionRadius)), 0, (int)explosionDamage);
     }
 
@@ -272,13 +272,13 @@ public class ExplosionDamage : ExplosionBase
     private List<Player> GetPlayersInRange()
     {
         List<Player> list = new List<Player>();
-        foreach (Player p in PhotonNetworkWrapper.PlayerList)
+        foreach (Player p in NetworkWrapper.PlayerList)
         {
             GameObject player = FindPhotonPlayer(p);
             if (player == null)
                 return null;
 
-            float distance = UtilityHelper.Distance(transform.position, player.transform.position);
+            float distance = CommonUtil.Distance(transform.position, player.transform.position);
             if (!isOneTeamMode)
             {
                 if (!creator.isRealPlayer)
@@ -290,9 +290,9 @@ public class ExplosionDamage : ExplosionBase
                 }
                 else
                 {
-                    if (p != PhotonNetworkWrapper.LocalPlayer)
+                    if (p != NetworkWrapper.LocalPlayer)
                     {
-                        if (p.GetPlayerTeam() != PhotonNetworkWrapper.LocalPlayer.GetPlayerTeam() && (distance <= explosionRadius))
+                        if (p.GetPlayerTeam() != NetworkWrapper.LocalPlayer.GetPlayerTeam() && (distance <= explosionRadius))
                         {
                             list.Add(p);
                         }
@@ -311,7 +311,7 @@ public class ExplosionDamage : ExplosionBase
             }
             else
             {
-                if (p != PhotonNetworkWrapper.LocalPlayer)
+                if (p != NetworkWrapper.LocalPlayer)
                 {
                     if (distance <= explosionRadius)
                     {
@@ -343,7 +343,7 @@ public class ExplosionDamage : ExplosionBase
         {
             return false;
         }
-        if ((UtilityHelper.Distance(this.transform.position, p.transform.position) <= this.explosionRadius))
+        if ((CommonUtil.Distance(this.transform.position, p.transform.position) <= this.explosionRadius))
         {
             return true;
         }

@@ -13,12 +13,12 @@ public class CountDownHandler : CountDownBase
 
     private void OnEnable()
     {
-        PhotonNetworkWrapper.AddNetworkCallback(PropertiesKeys.CountdownEvent, OnNetworkEvent);
+        NetworkWrapper.AddNetworkCallback(NetworkKeys.CountdownEvent, OnNetworkEvent);
     }
 
     private void OnDisable()
     {
-        PhotonNetworkWrapper.RemoveNetworkCallback(OnNetworkEvent);
+        NetworkWrapper.RemoveNetworkCallback(OnNetworkEvent);
     }
 
     void OnNetworkEvent(ExitGames.Client.Photon.Hashtable data)
@@ -28,7 +28,7 @@ public class CountDownHandler : CountDownBase
 
     public override void StartCountDown(bool overrideIfStarted = false)
     {
-        if (!PhotonNetworkWrapper.IsMasterClient) return;
+        if (!NetworkWrapper.IsMasterClient) return;
         if (IsCounting && !overrideIfStarted)
         {
             Debug.Log($"Countdown has already started.");
@@ -58,14 +58,14 @@ public class CountDownHandler : CountDownBase
             IsCounting = false;
         }
 
-        var data = UtilityHelper.CreatePhotonHashTable();
+        var data = CommonUtil.CreatePhotonHashTable();
         data.Add("c", countDown);
-        PhotonNetworkWrapper.Instance.SendDataOverNetwork(PropertiesKeys.CountdownEvent, data);
+        NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.CountdownEvent, data);
     }
 
     void OnReceiveCount(int count)
     {
-        if (!PhotonNetworkWrapper.IsMasterClient)
+        if (!NetworkWrapper.IsMasterClient)
         {
             countDown = count;
         }

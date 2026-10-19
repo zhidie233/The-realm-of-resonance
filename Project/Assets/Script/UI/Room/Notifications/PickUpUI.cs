@@ -15,7 +15,7 @@ public class PickUpUI : PickUpUIBase
     public Image iconImg;
     public TextMeshProUGUI keyText;
 
-    private GunPickUpBase CacheGunPickUp = null;
+    private FirearmPickUpBase CacheGunPickUp = null;
 
 
     private void OnEnable()
@@ -33,7 +33,7 @@ public class PickUpUI : PickUpUIBase
         Hide();
     }
 
-    public override void OnOverWeapon(GunPickUpBase gunPickUp)
+    public override void OnOverWeapon(FirearmPickUpBase gunPickUp)
     {
         if (gunPickUp == null) return;
 
@@ -54,7 +54,7 @@ public class PickUpUI : PickUpUIBase
         mainText.text = information.Text;
         iconImg.sprite = information.Icon;
         iconImg.gameObject.SetActive(information.Icon != null);
-        if (!UtilityHelper.isMobile)
+        if (!CommonUtil.isMobile)
             keyText.text = information.InputName.ToUpper();
         else
             keyText.text = GameTexts.Touch.ToUpper();

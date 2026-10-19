@@ -7,7 +7,7 @@ using UnityEngine;
 
 public class LobbyRoomList : LobbyRoomListBase
 {
-    public UIListHandler roomListHandler;
+    public ListLayoutHelper roomListHandler;
     [SerializeField] private TextMeshProUGUI NoRoomText = null;
 
     private Dictionary<string, RoomInfo> cachedRoomList = new Dictionary<string, RoomInfo>();

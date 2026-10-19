@@ -55,7 +55,7 @@ public class Footstep : MonoBehaviour
         if (Physics.Raycast(m_Transform.position, -Vector3.up, out m_raycastHit, 5, surfaceLayers, QueryTriggerInteraction.Ignore))
         {
             surfaceTag = m_raycastHit.transform.tag;
-            TerrainSurfaceSet ts = m_raycastHit.transform.GetComponent<TerrainSurfaceSet>();
+            TerrainSurfaceLibrary ts = m_raycastHit.transform.GetComponent<TerrainSurfaceLibrary>();
             if (ts != null)
             {
                 surfaceTag = ts.GetSurfaceTag(m_raycastHit.point);

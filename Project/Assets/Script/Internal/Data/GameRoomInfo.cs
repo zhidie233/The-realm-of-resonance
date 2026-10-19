@@ -30,19 +30,19 @@ public struct GameRoomInfo
     {
         room = roomTarget;
         roomName = room.Name;
-        mapName = (string)roomTarget.CustomProperties[PropertiesKeys.CustomSceneName];
-        sceneName = (string)roomTarget.CustomProperties[PropertiesKeys.SceneNameKey];
-        password = (string)roomTarget.CustomProperties[PropertiesKeys.RoomPassword];
-        string gm = (string)room.CustomProperties[PropertiesKeys.GameModeKey];
+        mapName = (string)roomTarget.CustomProperties[NetworkKeys.CustomSceneName];
+        sceneName = (string)roomTarget.CustomProperties[NetworkKeys.SceneNameKey];
+        password = (string)roomTarget.CustomProperties[NetworkKeys.RoomPassword];
+        string gm = (string)room.CustomProperties[NetworkKeys.GameModeKey];
         gameMode = (GameMode)Enum.Parse(typeof(GameMode), gm);
-        time = (int)room.CustomProperties[PropertiesKeys.TimeRoomKey];
-        goal = (int)room.CustomProperties[PropertiesKeys.RoomGoal];
-        maxPing = (int)room.CustomProperties[PropertiesKeys.MaxPing];
+        time = (int)room.CustomProperties[NetworkKeys.TimeRoomKey];
+        goal = (int)room.CustomProperties[NetworkKeys.RoomGoal];
+        maxPing = (int)room.CustomProperties[NetworkKeys.MaxPing];
         maxPlayers = room.MaxPlayers;
-        friendlyFire = (bool)room.CustomProperties[PropertiesKeys.RoomFriendlyFire];
-        withBots = (bool)room.CustomProperties[PropertiesKeys.WithBotsKey];
-        autoTeamSelection = (bool)room.CustomProperties[PropertiesKeys.TeamSelectionKey];
-        roundStyle = (RoundStyle)room.CustomProperties[PropertiesKeys.RoomRoundKey];
+        friendlyFire = (bool)room.CustomProperties[NetworkKeys.RoomFriendlyFire];
+        withBots = (bool)room.CustomProperties[NetworkKeys.WithBotsKey];
+        autoTeamSelection = (bool)room.CustomProperties[NetworkKeys.TeamSelectionKey];
+        roundStyle = (RoundStyle)room.CustomProperties[NetworkKeys.RoomRoundKey];
     }
 
     public MapInfo GetMapInfo()
