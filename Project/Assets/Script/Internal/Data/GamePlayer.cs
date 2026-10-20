@@ -2,7 +2,6 @@
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using Game.Runtime.AI;
 
 [Serializable]
 public class GamePlayer

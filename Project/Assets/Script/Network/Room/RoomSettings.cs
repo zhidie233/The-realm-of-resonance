@@ -1,7 +1,6 @@
 using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
-using Game.Runtime.Settings;
 using System.Collections.Generic;
 
 /// <summary>

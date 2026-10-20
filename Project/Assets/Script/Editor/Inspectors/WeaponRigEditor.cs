@@ -228,11 +228,11 @@ public class WeaponRigEditor : Editor
 
     void CreateAnimator()
     {
-        string lastFolder = PlayerPrefs.GetString("gameeditor.wanimator.save", "Assets/");
+        string lastFolder = PlayerPrefs.GetString("resonancerealm.wanimator.save", "Assets/");
         string path = EditorUtility.SaveFolderPanel("动画器保存文件夹", lastFolder, script.gameObject.name);
         if (string.IsNullOrEmpty(path)) { Debug.Log("设置已取消"); return; }
 
-        PlayerPrefs.SetString("gameeditor.wanimator.save", path);
+        PlayerPrefs.SetString("resonancerealm.wanimator.save", path);
 
         path += string.Format("/{0}.controller", Gun.gameObject.name);
         string relativepath = "Assets" + path.Substring(Application.dataPath.Length);

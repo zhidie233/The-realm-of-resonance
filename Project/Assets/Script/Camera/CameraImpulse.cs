@@ -2,13 +2,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
-using Game.Core.Motion;
 
 public class CameraImpulse : CameraImpulseBase
 {
     #region Private members
     private Vector3 OrigiPosition;
-    private Dictionary<string, ShakerPreset> shakersRunning = new Dictionary<string, ShakerPreset>();
+    private Dictionary<string, ShakePreset> shakersRunning = new Dictionary<string, ShakePreset>();
     private Transform m_Transform;
     private Vector3 tempVector = Vector3.zero;
     float valX = 0;
@@ -40,7 +39,7 @@ public class CameraImpulse : CameraImpulseBase
         GameEvents.onLocalPlayerShake -= OnShake;
     }
 
-    public override void SetShake(ShakerPreset present, string key)
+    public override void SetShake(ShakePreset present, string key)
     {
         AddShake(present, key, 1);
     }
@@ -52,12 +51,12 @@ public class CameraImpulse : CameraImpulseBase
         m_Transform.localRotation = Quaternion.Euler(OrigiPosition);
     }
 
-    void OnShake(ShakerPreset present, string key, float influence)
+    void OnShake(ShakePreset present, string key, float influence)
     {
         AddShake(present, key, influence);
     }
 
-    public void AddShake(ShakerPreset present, string key, float influenced = 1)
+    public void AddShake(ShakePreset present, string key, float influenced = 1)
     {
         if (present == null) return;
         bool first = shakersRunning.Count <= 0;
@@ -91,7 +90,7 @@ public class CameraImpulse : CameraImpulseBase
         {
             if (shakersRunning.Count <= 0) { yield break; }
             pos = Vector2.zero;
-            ShakerPreset p;
+            ShakePreset p;
             for (int i = 0; i < shakersRunning.Count; i++)
             {
                 p = shakersRunning.Values.ElementAt(i);
@@ -107,9 +106,9 @@ public class CameraImpulse : CameraImpulseBase
                 }
                 float amplitude = p.amplitude * p.currentTime;
 
-                if (p.shakeMethod == ShakerPreset.ShakeMethod.PerlinNoise)
+                if (p.shakeMethod == ShakePreset.ShakeMethod.PerlinNoise)
                     pos += Shake(amplitude, p.frequency, p.octaves, p.persistance, p.lacunarity, p.burstFrequency, p.burstContrast, p.influence);
-                else if (p.shakeMethod == ShakerPreset.ShakeMethod.RandomSet)
+                else if (p.shakeMethod == ShakePreset.ShakeMethod.RandomSet)
                     pos += ShakeSimple(amplitude);
 
                 if (!p.starting && p.currentTime <= 0)

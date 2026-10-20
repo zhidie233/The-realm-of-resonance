@@ -2,12 +2,7 @@ using System.Collections;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
-using Game.Internal;
-using Game.Runtime.UI;
-using Game.Internal.Interfaces;
-using Game.Internal.Structures;
 using TMPro;
-using Game.InputManager;
 
 public class UIReferences : NetworkHelper, IInRoomCallbacks
 {

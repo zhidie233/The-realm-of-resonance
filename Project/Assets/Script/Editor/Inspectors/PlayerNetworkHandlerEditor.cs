@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEditor;
-using GameEditor;
 using Photon.Pun;
 
 [CustomEditor(typeof(PlayerNetworkHandler))]
@@ -155,7 +154,7 @@ public class PlayerNetworkHandlerEditor : Editor
         float containerElementHeight = 22;
         float containerHeight = listProperty.arraySize * containerElementHeight;
 
-        bool isOpen = GameEditorStyles.ContainerHeaderFoldout("网络武器 (" + GetGunsCount() + ")", gunListProp.isExpanded);
+        bool isOpen = ResonanceRealmEditorStyles.ContainerHeaderFoldout("网络武器 (" + GetGunsCount() + ")", gunListProp.isExpanded);
         gunListProp.isExpanded = isOpen;
 
         if (isOpen == false)
@@ -181,7 +180,7 @@ public class PlayerNetworkHandlerEditor : Editor
                                                         PhotonGUI.DefaultRemoveButtonStyle.fixedHeight);
 
                     GUI.enabled = listProperty.arraySize > 1;
-                    if (GUI.Button(removeButtonRect, new GUIContent(GameEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
+                    if (GUI.Button(removeButtonRect, new GUIContent(ResonanceRealmEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
                     {
                         listProperty.DeleteArrayElementAtIndex(i);
                     }

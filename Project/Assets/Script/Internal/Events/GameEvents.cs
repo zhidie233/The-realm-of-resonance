@@ -1,8 +1,5 @@
 ﻿using UnityEngine;
 using System;
-using Game.Core.Motion;
-using Game.Internal.Structures;
-using Game.Internal.Scriptables;
 using UnityEngine.Events;
 using Photon.Pun;
 
@@ -62,7 +59,7 @@ public static class GameEvents
     /// </summary>
     public static Action onLocalPlayerSpawn;
 
-    public delegate void LocalPlayerShakeEvent(ShakerPreset present, string key, float influence = 1);
+    public delegate void LocalPlayerShakeEvent(ShakePreset present, string key, float influence = 1);
     public static LocalPlayerShakeEvent onLocalPlayerShake;
 
     /// <summary>
@@ -238,7 +235,7 @@ public static class GameEvents
 
     public static void DispatchPlayerLocalSpawnEvent() => onLocalPlayerSpawn?.Invoke();
 
-    public static void DoPlayerCameraShake(ShakerPreset present, string key, float influence = 1) => onLocalPlayerShake?.Invoke(present, key, influence);
+    public static void DoPlayerCameraShake(ShakePreset present, string key, float influence = 1) => onLocalPlayerShake?.Invoke(present, key, influence);
 
     public static void PlayerLocalSpawnEvent(bool chrab, bool anti, bool bloom, bool ssao, bool motionBlur)
     {

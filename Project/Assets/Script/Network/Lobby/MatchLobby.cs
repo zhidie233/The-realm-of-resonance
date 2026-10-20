@@ -1,6 +1,3 @@
-using Game.Audio;
-using Game.Internal.Structures;
-using Game.Runtime.UI;
 using Photon.Pun;
 using Photon.Realtime;
 using System;
@@ -161,7 +158,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
     public void Disconect()
     {
-        SetLobbyChat(false);
+        SetLobbyMessenger(false);
         if (NetworkWrapper.IsConnected)
         {
             PhotonNetwork.Disconnect();
@@ -270,7 +267,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
                 connectionState = LobbyConnectionState.Connected;
                 if (!alreadyLoadHome) { LobbyUI.Instance.Home(); alreadyLoadHome = true; }
-                SetLobbyChat(true);
+                SetLobbyMessenger(true);
                 ResetValues();
                 LobbyLoadingScreenBase.Instance.HideIn(0.2f, true);
 
@@ -377,7 +374,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     /// <param name="roomInfo"></param>
     public void CreateRoom(GameRoomInfo roomInfo)
     {
-        SetLobbyChat(false);
+        SetLobbyMessenger(false);
         justCreatedRoomName = roomInfo.roomName;
         JoinedWithPassword = true;
 
@@ -469,7 +466,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     private IEnumerator MoveToGameScene()
     {
         //等待检查
-        SetLobbyChat(false);
+        SetLobbyMessenger(false);
         if (AudioManager.Instance != null) { AudioManager.Instance.StopBackground(); }
         while (!NetworkWrapper.InRoom)
         {
@@ -499,13 +496,13 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         Disconect();
     }
 
-    void SetLobbyChat(bool connect)
+    void SetLobbyMessenger(bool connect)
     {
-        if (LobbyChat.Instance == null) return;
-        if (!GameConfig.Instance.UseLobbyChat) return;
+        if (LobbyMessenger.Instance == null) return;
+        if (!GameConfig.Instance.UseLobbyMessenger) return;
 
-        if (connect) { LobbyChat.Instance.Connect(GameConfig.Instance.GameVersion); }
-        else { LobbyChat.Instance.Disconnect(); }
+        if (connect) { LobbyMessenger.Instance.Connect(GameConfig.Instance.GameVersion); }
+        else { LobbyMessenger.Instance.Disconnect(); }
     }
 
     #region Photon Callbacks
@@ -563,7 +560,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             LobbyLoadingScreenBase.Instance.SetActive(true).HideIn(2, true);
         }
 
-        SetLobbyChat(true);
+        SetLobbyMessenger(true);
         ResetValues();
     }
 
@@ -666,7 +663,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         }
         else
         {
-            SetLobbyChat(false);
+            SetLobbyMessenger(false);
         }
     }
 

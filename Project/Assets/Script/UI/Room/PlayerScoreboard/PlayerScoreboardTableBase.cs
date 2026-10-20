@@ -1,5 +1,4 @@
-﻿using Game.Runtime.AI;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using UnityEngine;
 
 public abstract class PlayerScoreboardTableBase : MonoBehaviour

@@ -1,7 +1,6 @@
 ﻿using System;
 using Photon.Realtime;
 using UnityEngine;
-using Game.Internal.Structures;
 
 /// <summary>
 /// 用于便捷获取所有房间属性

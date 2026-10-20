@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Game.InputManager
-{
-    [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game/Input/Input Mapped")]
-    public class ButtonMapped : ScriptableObject
-    {
-        public InputType inputType = InputType.Keyboard;
-        public Mapped mapped = new Mapped();
-        public List<ButtonData> ButtonMap { get { return mapped.ButtonMap; } }
-    }
-}
+   [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game/Input/Input Mapped")]
+   public class ButtonMapped : ScriptableObject
+   {
+       public InputType inputType = InputType.Keyboard;
+       public Mapped mapped = new Mapped();
+       public List<ButtonData> ButtonMap { get { return mapped.ButtonMap; } }
+   }

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GameEditor;
 using UnityEditor.AnimatedValues;
 using Photon.Pun;
 
@@ -181,7 +180,7 @@ public class FirearmInventoryEditor : Editor
         GUILayout.Space(5);
         if (GUILayout.Button(new GUIContent("IMPORT", EditorGUIUtility.IconContent("ol plus").image), EditorStyles.toolbarButton, GUILayout.Width(70)))
         {
-            EditorWindow.GetWindow<ImportExportWeapon>("Import", true).PrepareToImport(script.transform.root.GetComponent<PlayerNetworkHandler>(), null);
+            EditorWindow.GetWindow<WeaponTransfer>("Import", true).PrepareToImport(script.transform.root.GetComponent<PlayerNetworkHandler>(), null);
         }
         GUILayout.EndHorizontal();
         SerializedProperty listProperty = serializedObject.FindProperty("AllGuns");
@@ -218,7 +217,7 @@ public class FirearmInventoryEditor : Editor
                                                         PhotonGUI.DefaultRemoveButtonStyle.fixedHeight);
 
                     GUI.enabled = listProperty.arraySize > 1;
-                    if (GUI.Button(removeButtonRect, new GUIContent(GameEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
+                    if (GUI.Button(removeButtonRect, new GUIContent(ResonanceRealmEditorUtils.texRemoveButton), PhotonGUI.DefaultRemoveButtonStyle))
                     {
                         listProperty.DeleteArrayElementAtIndex(i);
                     }

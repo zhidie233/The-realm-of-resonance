@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.Serialization;
-using Game.Internal.BaseClass;
 
 /// <summary>
 /// 默认游戏名称牌（头顶名称）脚本

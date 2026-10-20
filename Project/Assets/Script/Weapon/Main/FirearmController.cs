@@ -1,5 +1,3 @@
-using Game.Core.Motion;
-using Game.Internal.Structures;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,7 +19,7 @@ public class FirearmController : FirearmBase
     public Vector3 aimRotation = Vector3.zero;
     public bool useSmooth = true;
     public float AimSmooth;
-    public ShakerPreset shakerPresent;
+    public ShakePreset shakerPresent;
     [Range(0, 179)]
     public float aimZoom = 50;
     public bool CanAuto = true;
@@ -565,7 +563,7 @@ public class FirearmController : FirearmBase
         float time = Time.time;
 
         if (nextFireTime > time) return;
-        nextFireTime = time + (Info.FireRate * 0.1f); // multiply by 0.1 just to add compatibility (keep the same fire rate) with older versions of Game.
+        nextFireTime = time + (Info.FireRate * 0.1f); // multiply by 0.1 just to add compatibility (keep the same fire rate) with older versions of ResonanceRealm.
 
         FireOneShot();
 

@@ -1,6 +1,5 @@
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
-using Game.Internal.Structures;
 using Photon.Realtime;
 
 public class KillReportManager : KillReportEntry

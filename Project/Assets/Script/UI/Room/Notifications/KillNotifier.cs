@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Game.Internal.Structures;
 
 public class KillNotifier : MonoBehaviour
 {

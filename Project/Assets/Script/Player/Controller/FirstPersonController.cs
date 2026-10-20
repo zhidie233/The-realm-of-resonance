@@ -1,5 +1,3 @@
-using Game.PlayerController;
-using Game.Runtime.Level;
 using System;
 using System.Collections;
 using UnityEngine;

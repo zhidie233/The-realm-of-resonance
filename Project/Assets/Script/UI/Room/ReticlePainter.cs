@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-using Game.Internal.Structures;
 using System.Linq;
 
 /// <summary>

@@ -1,6 +1,4 @@
-﻿using Game.Internal;
-using Game.Runtime.UI;
-using Photon.Realtime;
+﻿using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;

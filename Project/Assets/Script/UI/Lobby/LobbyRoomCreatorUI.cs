@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Game.Runtime.Settings;
 using System.Linq;
 using TMPro;
 

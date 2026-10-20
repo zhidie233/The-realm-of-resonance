@@ -1,6 +1,3 @@
-using Game.Audio;
-using Game.Core.Motion;
-using GameEditor;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections;
@@ -25,7 +22,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     public Gradient HealthColorGradient;
     private Color CurColor = new Color(0, 0, 0);
     [Header("Shake")]
-    [ScriptableDrawer] public ShakerPreset damageShakerPresent;
+    [ScriptableDrawer] public ShakePreset damageShakerPresent;
 
     [Header("Effects")]
     public AudioClip[] HitsSound;
@@ -330,7 +327,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             if (cause == DamageCause.Bot)
             {
                 // 增加本地玩家的死亡数
-                if (GameConfig.Instance.howConsiderBotsEliminations == Game.Runtime.AI.BotKillPolicy.SameAsRealPlayers)
+                if (GameConfig.Instance.howConsiderBotsEliminations == BotKillPolicy.SameAsRealPlayers)
                     NetworkWrapper.LocalPlayer.PostDeaths(1);
             }
             else

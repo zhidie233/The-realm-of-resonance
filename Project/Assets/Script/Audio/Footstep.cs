@@ -1,5 +1,4 @@
-﻿using Game.Audio;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Footstep : MonoBehaviour
 {

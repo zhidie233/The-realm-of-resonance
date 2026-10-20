@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Game.Core.Motion;
 
 public abstract class CameraImpulseBase : MonoBehaviour
 {
@@ -8,7 +7,7 @@ public abstract class CameraImpulseBase : MonoBehaviour
     /// 添加或开始一个抖动
     /// </summary>
     /// <param name="present"></param>
-    public abstract void SetShake(ShakerPreset present, string key = "global");
+    public abstract void SetShake(ShakePreset present, string key = "global");
 
     /// <summary>
     /// 移除/停止指定的抖动

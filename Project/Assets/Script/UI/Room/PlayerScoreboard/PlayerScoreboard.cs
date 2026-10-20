@@ -3,7 +3,6 @@ using UnityEngine;
 using Photon.Realtime;
 using System.Linq;
 using TMPro;
-using Game.Runtime.AI;
 
 public class PlayerScoreboard : PlayerScoreboardBase
 {

@@ -1,205 +1,200 @@
 ﻿using System;
 using System.Collections.Generic;
-using Game.Internal.Scriptables;
 using UnityEngine;
-using GameEditor;
 using System.Linq;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Game.Internal.Structures
-{
-    [Serializable]
-    public class GameItemUnlockability
-    {
-        public UnlockabilityMethod UnlockMethod = UnlockabilityMethod.UnlockedByDefault;
-        public ItemTypeEnum ItemType = ItemTypeEnum.Weapon;
-        public int Price = 0;
-        public int UnlockAtLevel = 0;
-        [Tooltip("Coins with which can't purchase this item; leave empty if all coins are available.")]
-        [GameCoinID] public int[] NoAllowedCoins;
+   [Serializable]
+   public class GameItemUnlockability
+   {
+       public UnlockabilityMethod UnlockMethod = UnlockabilityMethod.UnlockedByDefault;
+       public ItemTypeEnum ItemType = ItemTypeEnum.Weapon;
+       public int Price = 0;
+       public int UnlockAtLevel = 0;
+       [Tooltip("Coins with which can't purchase this item; leave empty if all coins are available.")]
+       [ItemCoinID] public int[] NoAllowedCoins;
 
-        /// <summary>
-        /// 此物品对本地玩家是否已解锁？
-        /// </summary>
-        public bool IsUnlocked(int itemID)
-        {
-            if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault) return true;
-            return GetLockReason(itemID) == LockReason.None;
-        }
+       /// <summary>
+       /// 此物品对本地玩家是否已解锁？
+       /// </summary>
+       public bool IsUnlocked(int itemID)
+       {
+           if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault) return true;
+           return GetLockReason(itemID) == LockReason.None;
+       }
 
-        /// <summary>
-        /// 锁定时返回原因，否则返回 LockReason.None
-        /// </summary>
-        public LockReason GetLockReason(int itemID)
-        {
-            var reason = LockReason.None;
-            if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault) return reason;
-            if (UnlockMethod == UnlockabilityMethod.Hidden) return LockReason.Hidden;
+       /// <summary>
+       /// 锁定时返回原因，否则返回 LockReason.None
+       /// </summary>
+       public LockReason GetLockReason(int itemID)
+       {
+           var reason = LockReason.None;
+           if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault) return reason;
+           if (UnlockMethod == UnlockabilityMethod.Hidden) return LockReason.Hidden;
 
-            bool isPurchased = false;
-            if (isPurchased) { }
-            return reason;
-        }
+           bool isPurchased = false;
+           if (isPurchased) { }
+           return reason;
+       }
 
-        public bool IsFree() => Price <= 0;
+       public bool IsFree() => Price <= 0;
 
-        public bool CanBePurchased()
-        {
-            if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault || UnlockMethod == UnlockabilityMethod.LevelUpOnly) return false;
-            return true;
-        }
+       public bool CanBePurchased()
+       {
+           if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault || UnlockMethod == UnlockabilityMethod.LevelUpOnly) return false;
+           return true;
+       }
 
-        public bool CanBeUnlockedByLevel()
-        {
-            if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault || UnlockMethod == UnlockabilityMethod.PurchasedOnly) return false;
-            return true;
-        }
+       public bool CanBeUnlockedByLevel()
+       {
+           if (UnlockMethod == UnlockabilityMethod.UnlockedByDefault || UnlockMethod == UnlockabilityMethod.PurchasedOnly) return false;
+           return true;
+       }
 
-        public bool AllowUnlockByLevel()
-        {
-            if (!CanBeUnlockedByLevel() || UnlockAtLevel <= 0) return false;
-            return true;
-        }
+       public bool AllowUnlockByLevel()
+       {
+           if (!CanBeUnlockedByLevel() || UnlockAtLevel <= 0) return false;
+           return true;
+       }
 
-        /// <summary>
-        /// 获取可用于此物品的硬币
-        /// 与游戏内所有可用硬币比较（在 GameData -> Game Coins 中指定）
-        /// </summary>
-        /// <param name="originalCoins"></param>
-        /// <returns></returns>
-        public List<GameCoin> GetAllowedCoins()
-        {
-            var all = GameCore.Coins.GetAllCoins();
-            var copy = new List<GameCoin>();
-            foreach (var c in all)
-            {
-                copy.Add(c);
-            }
+       /// <summary>
+       /// 获取可用于此物品的硬币
+       /// 与游戏内所有可用硬币比较（在 GameData -> Game Coins 中指定）
+       /// </summary>
+       /// <param name="originalCoins"></param>
+       /// <returns></returns>
+       public List<GameCoin> GetAllowedCoins()
+       {
+           var all = GameCore.Coins.GetAllCoins();
+           var copy = new List<GameCoin>();
+           foreach (var c in all)
+           {
+               copy.Add(c);
+           }
 
-            if (NoAllowedCoins == null || NoAllowedCoins.Length <= 0) return copy;
+           if (NoAllowedCoins == null || NoAllowedCoins.Length <= 0) return copy;
 
-            return copy.Except(GetNoAllowedCoins()).ToList();
-        }
+           return copy.Except(GetNoAllowedCoins()).ToList();
+       }
 
-        public List<GameCoin> GetNoAllowedCoins()
-        {
-            var copy = new List<GameCoin>();
-            for (int i = 0; i < NoAllowedCoins.Length; i++)
-            {
-                copy.Add((GameCoin)NoAllowedCoins[i]);
-            }
-            return copy;
-        }
+       public List<GameCoin> GetNoAllowedCoins()
+       {
+           var copy = new List<GameCoin>();
+           for (int i = 0; i < NoAllowedCoins.Length; i++)
+           {
+               copy.Add((GameCoin)NoAllowedCoins[i]);
+           }
+           return copy;
+       }
 
-        [Serializable]
-        public enum UnlockabilityMethod
-        {
-            UnlockedByDefault = 0,
-            PurchasedOnly = 1,
-            LevelUpOnly,
-            PurchasedOrLevelUp,
-            Hidden, // for items that are unlocked only by special events
-        }
+       [Serializable]
+       public enum UnlockabilityMethod
+       {
+           UnlockedByDefault = 0,
+           PurchasedOnly = 1,
+           LevelUpOnly,
+           PurchasedOrLevelUp,
+           Hidden, // for items that are unlocked only by special events
+       }
 
-        [System.Serializable]
-        public enum ItemTypeEnum
-        {
-            Weapon = 0,
-            WeaponCamo = 1,
-            PlayerSkin = 2,
-            PlayerAccesory = 3,
-            Emblem = 4,
-            CallingCard = 5,
-            Emote = 6,
-            SeasonPass = 7,
-            LootBox = 8,
-            Bundle = 9,
-            CoinPack = 10,
-            None = 99,
-        }
+       [System.Serializable]
+       public enum ItemTypeEnum
+       {
+           Weapon = 0,
+           WeaponCamo = 1,
+           PlayerSkin = 2,
+           PlayerAccesory = 3,
+           Emblem = 4,
+           CallingCard = 5,
+           Emote = 6,
+           SeasonPass = 7,
+           LootBox = 8,
+           Bundle = 9,
+           CoinPack = 10,
+           None = 99,
+       }
 
-        public enum LockReason
-        {
-            None,
-            NoPurchased,
-            Level,
-            NoPurchasedAndLevel,
-            Hidden,
-        }
-    }
+       public enum LockReason
+       {
+           None,
+           NoPurchased,
+           Level,
+           NoPurchasedAndLevel,
+           Hidden,
+       }
+   }
 
 #if UNITY_EDITOR
-    [CustomPropertyDrawer(typeof(GameItemUnlockability))]
-    public class GameItemUnlockabilityDrawer : PropertyDrawer
-    {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            // 在父属性上使用 BeginProperty / EndProperty，可以让
-            // 预制体覆盖逻辑作用于整个属性。
-            EditorGUI.BeginProperty(position, label, property);
+   [CustomPropertyDrawer(typeof(GameItemUnlockability))]
+   public class GameItemUnlockabilityDrawer : PropertyDrawer
+   {
+       public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+       {
+           // 在父属性上使用 BeginProperty / EndProperty，可以让
+           // 预制体覆盖逻辑作用于整个属性。
+           EditorGUI.BeginProperty(position, label, property);
 
-            EditorGUI.DrawRect(position, new Color(0, 0, 0, 0.1f));
-            var r = position;
+           EditorGUI.DrawRect(position, new Color(0, 0, 0, 0.1f));
+           var r = position;
 
-            r.height = EditorGUIUtility.singleLineHeight;
-            property.isExpanded = EditorGUI.Foldout(r, property.isExpanded, label);
+           r.height = EditorGUIUtility.singleLineHeight;
+           property.isExpanded = EditorGUI.Foldout(r, property.isExpanded, label);
 
-            // 不让子字段缩进
-            var indent = EditorGUI.indentLevel;
-            EditorGUI.indentLevel++;
+           // 不让子字段缩进
+           var indent = EditorGUI.indentLevel;
+           EditorGUI.indentLevel++;
 
-            if (property.isExpanded)
-            {
-                r.y += EditorGUIUtility.singleLineHeight;
-                var unlockMethod = property.FindPropertyRelative("UnlockMethod");
-                EditorGUI.PropertyField(r, unlockMethod);
+           if (property.isExpanded)
+           {
+               r.y += EditorGUIUtility.singleLineHeight;
+               var unlockMethod = property.FindPropertyRelative("UnlockMethod");
+               EditorGUI.PropertyField(r, unlockMethod);
 
-                r.y += EditorGUIUtility.singleLineHeight;
-                var itemType = property.FindPropertyRelative("ItemType");
-                EditorGUI.PropertyField(r, itemType);
+               r.y += EditorGUIUtility.singleLineHeight;
+               var itemType = property.FindPropertyRelative("ItemType");
+               EditorGUI.PropertyField(r, itemType);
 
-                var um = (GameItemUnlockability.UnlockabilityMethod)unlockMethod.enumValueIndex;
-                GUI.enabled = um != GameItemUnlockability.UnlockabilityMethod.UnlockedByDefault;
-                if (um != GameItemUnlockability.UnlockabilityMethod.LevelUpOnly)
-                {
-                    r.y += EditorGUIUtility.singleLineHeight;
-                    EditorGUI.PropertyField(r, property.FindPropertyRelative("Price"));
-                }
+               var um = (GameItemUnlockability.UnlockabilityMethod)unlockMethod.enumValueIndex;
+               GUI.enabled = um != GameItemUnlockability.UnlockabilityMethod.UnlockedByDefault;
+               if (um != GameItemUnlockability.UnlockabilityMethod.LevelUpOnly)
+               {
+                   r.y += EditorGUIUtility.singleLineHeight;
+                   EditorGUI.PropertyField(r, property.FindPropertyRelative("Price"));
+               }
 
-                if (um != GameItemUnlockability.UnlockabilityMethod.PurchasedOnly)
-                {
-                    r.y += EditorGUIUtility.singleLineHeight;
-                    EditorGUI.PropertyField(r, property.FindPropertyRelative("UnlockAtLevel"));
-                }
+               if (um != GameItemUnlockability.UnlockabilityMethod.PurchasedOnly)
+               {
+                   r.y += EditorGUIUtility.singleLineHeight;
+                   EditorGUI.PropertyField(r, property.FindPropertyRelative("UnlockAtLevel"));
+               }
 
-                if (um != GameItemUnlockability.UnlockabilityMethod.LevelUpOnly)
-                {
-                    r.y += EditorGUIUtility.singleLineHeight;
-                    EditorGUI.PropertyField(r, property.FindPropertyRelative("NoAllowedCoins"), true);
-                }
-                GUI.enabled = true;
-            }
-            // 恢复原有缩进
-            EditorGUI.indentLevel = indent;
-            EditorGUI.EndProperty();
-        }
+               if (um != GameItemUnlockability.UnlockabilityMethod.LevelUpOnly)
+               {
+                   r.y += EditorGUIUtility.singleLineHeight;
+                   EditorGUI.PropertyField(r, property.FindPropertyRelative("NoAllowedCoins"), true);
+               }
+               GUI.enabled = true;
+           }
+           // 恢复原有缩进
+           EditorGUI.indentLevel = indent;
+           EditorGUI.EndProperty();
+       }
 
-        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
-        {
-            if (!property.isExpanded)
-                return base.GetPropertyHeight(property, label);
-            else
-            {
-                float less = 0;
-                var unlockMethod = property.FindPropertyRelative("UnlockMethod").enumValueIndex;
-                if (unlockMethod == 2) less = EditorGUIUtility.singleLineHeight * 2;
-                else if (unlockMethod == 1) less = EditorGUIUtility.singleLineHeight;
+       public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+       {
+           if (!property.isExpanded)
+               return base.GetPropertyHeight(property, label);
+           else
+           {
+               float less = 0;
+               var unlockMethod = property.FindPropertyRelative("UnlockMethod").enumValueIndex;
+               if (unlockMethod == 2) less = EditorGUIUtility.singleLineHeight * 2;
+               else if (unlockMethod == 1) less = EditorGUIUtility.singleLineHeight;
 
-                return EditorGUI.GetPropertyHeight(property, label, true) - less;
-            }
-        }
-    }
+               return EditorGUI.GetPropertyHeight(property, label, true) - less;
+           }
+       }
+   }
 #endif
-}

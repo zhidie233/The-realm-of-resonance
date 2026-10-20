@@ -243,7 +243,7 @@ public class ShotController : ProjectileBase
             }
             
             //不是真人
-            var botRefs = hit.transform.root.GetComponent<AISoldierReferences>();//判断是不是人机
+            var botRefs = hit.transform.root.GetComponent<AIBotReferences>();//判断是不是人机
             
             if (botRefs != null && !isOneTeamMode)//是人机
             {
@@ -306,7 +306,7 @@ public class ShotController : ProjectileBase
                 //回调在 HitBox.cs 中
                 var damageData = BuildBaseDamageData();
                 //不是真人
-                var botRefs = hit.transform.root.GetComponent<AISoldierReferences>();//判断是不是人机
+                var botRefs = hit.transform.root.GetComponent<AIBotReferences>();//判断是不是人机
                 if (botRefs != null)//是人机
                 {
                     if (isOneTeamMode)
@@ -421,7 +421,7 @@ public class ShotController : ProjectileBase
         // 生成粒子
         GameObject go = ObjectRecyclerBase.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
         // 生成弹痕
-        ImpactMarkManagerBase.InstantiateDecal(hit);
+        BulletMarkManagerBase.InstantiateDecal(hit);
 
         if (go != null)
             go.transform.parent = hit.transform;

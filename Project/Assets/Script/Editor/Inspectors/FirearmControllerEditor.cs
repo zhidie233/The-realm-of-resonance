@@ -1,5 +1,3 @@
-using Game.Core.Motion;
-using GameEditor;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -259,7 +257,7 @@ public class FirearmControllerEditor : Editor
             GUILayout.Space(2);
             if (GUILayout.Button("导出", EditorStyles.toolbarButton, GUILayout.Width(50)))
             {
-                EditorWindow.GetWindow<ImportExportWeapon>("导出", true).PrepareToExport(script, playerReferences.playerNetwork);
+                EditorWindow.GetWindow<WeaponTransfer>("导出", true).PrepareToExport(script, playerReferences.playerNetwork);
             }
         }
         GUILayout.EndHorizontal();
@@ -377,7 +375,7 @@ public class FirearmControllerEditor : Editor
 
     void DrawRecoil()
     {
-        script.shakerPresent = EditorGUILayout.ObjectField("震动程度", script.shakerPresent, typeof(ShakerPreset), false) as ShakerPreset;
+        script.shakerPresent = EditorGUILayout.ObjectField("震动程度", script.shakerPresent, typeof(ShakePreset), false) as ShakePreset;
         script.RecoilAmount = EditorGUILayout.Slider("Recoil", script.RecoilAmount, 0.1f, 10);
         script.RecoilSpeed = EditorGUILayout.Slider("后坐力速度", script.RecoilSpeed, 1, 10);
     }

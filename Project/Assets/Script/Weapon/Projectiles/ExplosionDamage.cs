@@ -2,9 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
-using Game.Core.Motion;
 using UnityEngine.Serialization;
-using Game.Audio;
 using Photon.Pun;
 
 public class ExplosionDamage : ExplosionBase
@@ -16,7 +14,7 @@ public class ExplosionDamage : ExplosionBase
     public float explosionRadius = 50f;
     public float DisappearIn = 3f;
     public LayerMask detectLayers;
-    public ShakerPreset shakerPresent;
+    public ShakePreset shakerPresent;
     public string shakerKey = "explosion";
 
     private RaycastHit hitInfo;

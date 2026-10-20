@@ -1,7 +1,5 @@
 ﻿using System;
 using UnityEngine;
-using Game.Internal.Structures;
-using GameEditor;
 
 [Serializable]
 public class FirearmData

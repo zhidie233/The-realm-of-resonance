@@ -3,13 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-using GameEditor;
 using UnityEngine.Serialization;
-using Game.Runtime.Settings;
-using Game.Internal.Structures;
-using Game.Internal.Scriptables;
-using Game.Internal.BaseClass;
-using Game.Runtime.AI;
 
 public class GameConfig : ScriptableObject
 {
@@ -17,7 +11,7 @@ public class GameConfig : ScriptableObject
     [Header("Game Settings")]
     [GameToggle] public bool offlineMode = false;
     [GameToggle] public bool verifySingleSession = true;
-    [GameToggle] public bool UseLobbyChat = true;
+    [GameToggle] public bool UseLobbyMessenger = true;
     [GameToggle] public bool BulletTracer = false;
     [GameToggle] public bool DropGunOnDeath = true;
     [GameToggle] public bool SelfGrenadeDamage = true;
@@ -109,9 +103,9 @@ public class GameConfig : ScriptableObject
     public PlayerNetworkHandler Player2;
 
     [Header("Bots")]
-    public AISoldierCore BotTeam1;
-    public AISoldierCore BotTeam2;
-    public AISoldierCore BotTeam3;
+    public AIBotCore BotTeam1;
+    public AIBotCore BotTeam2;
+    public AIBotCore BotTeam3;
 
     [ScriptableDrawer] public MouseLookSettings mouseLookSettings;
 
@@ -350,7 +344,7 @@ public class GameConfig : ScriptableObject
     [Serializable]
     public class VirtualCoin
     {
-        [GameCoinID] public int XPCoin;
+        [ItemCoinID] public int XPCoin;
         [Tooltip("how much score/xp worth one coin")]
         public int CoinScoreValue = 1000;//how much score/xp worth one coin
         public int InitialCoins

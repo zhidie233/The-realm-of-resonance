@@ -1,6 +1,5 @@
 using Photon.Realtime;
 using UnityEngine;
-using Game.GameModes.TeamDeathMatch;
 
 public class TeamDeathMatchMode : NetworkHelper, IGameMode
 {

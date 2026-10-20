@@ -6,43 +6,40 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-namespace Game.Tween
-{
-    public class TweenBase : MonoBehaviour
-    {
+   public class TweenBase : MonoBehaviour
+   {
 
-        [SerializeField] public class UEvent : UnityEvent { }
+       [SerializeField] public class UEvent : UnityEvent { }
 
-        public float Delta
-        {
-            get
-            {
+       public float Delta
+       {
+           get
+           {
 #if UNITY_EDITOR
-                if (Application.isPlaying)
-                {
-                    return Time.deltaTime;
-                }
-                else { return Time.deltaTime; }
+               if (Application.isPlaying)
+               {
+                   return Time.deltaTime;
+               }
+               else { return Time.deltaTime; }
 #else
-             return Time.unscaledDeltaTime;
+            return Time.unscaledDeltaTime;
 #endif
-            }
-        }
+           }
+       }
 
-        [Serializable]
-        public enum TweenOrigin
-        {
-            From,
-            To
-        }
+       [Serializable]
+       public enum TweenOrigin
+       {
+           From,
+           To
+       }
 
 
 #if UNITY_EDITOR
-        public virtual void CacheDefaultValues() { }
-        public virtual void ResetDefault() { }
-        public virtual void InitInEditor() { }
-        public virtual void PlayEditor() { }
-        public virtual void PlayReverseEditor() { }
+       public virtual void CacheDefaultValues() { }
+       public virtual void ResetDefault() { }
+       public virtual void InitInEditor() { }
+       public virtual void PlayEditor() { }
+       public virtual void PlayReverseEditor() { }
 #endif
-    }
-}
+   }

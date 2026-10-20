@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using Photon.Realtime;
 using UnityEngine;
-using Game.GameModes.FreeForAll;
 
 public class FreeForAllMode : MonoBehaviour, IGameMode
 {

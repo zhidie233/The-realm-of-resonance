@@ -1,4 +1,3 @@
-using GameEditor;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
@@ -200,9 +199,9 @@ public class GameManagerWindow : EditorWindow
         float lw = EditorGUIUtility.labelWidth;
         EditorGUIUtility.labelWidth = 75;
         var sls = GUI.skin.horizontalSlider;
-        GUI.skin.horizontalSlider = GameEditorStyles.HorizontalSliderStyle;
+        GUI.skin.horizontalSlider = ResonanceRealmEditorStyles.HorizontalSliderStyle;
         var slt = GUI.skin.horizontalSliderThumb;
-        GUI.skin.horizontalSliderThumb = GameEditorStyles.HorizontalSliderThumbStyle;
+        GUI.skin.horizontalSliderThumb = ResonanceRealmEditorStyles.HorizontalSliderThumbStyle;
 
         var all = GameConfig.Instance.AllWeapons;
         int rowID = 0;
@@ -289,13 +288,13 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("取消", GameEditorStyles.WindowButtonStyle, GUILayout.Width(100)))
+            if (GUILayout.Button("取消", ResonanceRealmEditorStyles.WindowButtonStyle, GUILayout.Width(100)))
             {
                 editWeaponId = -1;
                 editGunInfo = null;
             }
             GUILayout.Space(10);
-            if (GUILayout.Button("保存", GameEditorStyles.WindowButtonStyle, GUILayout.Width(110)))
+            if (GUILayout.Button("保存", ResonanceRealmEditorStyles.WindowButtonStyle, GUILayout.Width(110)))
             {
                 EditorUtility.SetDirty(GameConfig.Instance);
                 editWeaponId = -1;
@@ -412,22 +411,22 @@ public class GameManagerWindow : EditorWindow
         m.ModeName = EditorGUILayout.TextField("游戏模式名称", m.ModeName);
         m.gameMode = (GameMode)EditorGUILayout.EnumPopup("模式标识", m.gameMode);
         var r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.isEnabled = GameEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
+        m.isEnabled = ResonanceRealmEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
 
         GUILayout.Space(10);
         DrawTitleText("SETTINGS");
         m.GoalName = EditorGUILayout.TextField("模式目标名称", m.GoalName);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.supportBots = GameEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
+        m.supportBots = ResonanceRealmEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.AutoTeamSelection = GameEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
+        m.AutoTeamSelection = ResonanceRealmEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.allowedPickupWeapons = GameEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
+        m.allowedPickupWeapons = ResonanceRealmEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.UnlistGameAfterStarted = GameEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
+        m.UnlistGameAfterStarted = ResonanceRealmEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
 
         m.RequiredPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.RequiredPlayersToStart, 1, 64);
         m.onRoundStartedSpawn = (GameModeSettings.OnRoundStartedSpawn)EditorGUILayout.EnumPopup("回合开始时", m.onRoundStartedSpawn);
@@ -492,7 +491,7 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.BeginHorizontal();
         {
             GUILayout.FlexibleSpace();
-            if (GUILayout.Button("返回", GameEditorStyles.WindowButtonStyle, GUILayout.Width(100)))
+            if (GUILayout.Button("返回", ResonanceRealmEditorStyles.WindowButtonStyle, GUILayout.Width(100)))
             {
                 selectedGameMode = null;
             }
@@ -545,7 +544,7 @@ public class GameManagerWindow : EditorWindow
                         {
                             EditorGUI.DrawRect(br, altColor);
                             GUI.color = new Color(1, 1, 1, 0.2f);
-                            GUI.Box(br, GUIContent.none, GameEditorStyles.OutlineButtonStyle);
+                            GUI.Box(br, GUIContent.none, ResonanceRealmEditorStyles.OutlineButtonStyle);
                             GUI.color = Color.white;
                         }
                         if (GUI.Button(br, slotsNames[i], styles["textC"]))
@@ -874,7 +873,7 @@ public class GameManagerWindow : EditorWindow
     #endregion
 
     #region Utils
-    private GUIStyle GetStyle(string name, GameEditorStyles.OnCreateStyleOp onCreate, string overlap = "") => GameEditorStyles.GetUnityStyle(name, onCreate, overlap);
+    private GUIStyle GetStyle(string name, ResonanceRealmEditorStyles.OnCreateStyleOp onCreate, string overlap = "") => ResonanceRealmEditorStyles.GetUnityStyle(name, onCreate, overlap);
 
     private static Dictionary<string, Texture2D> cachedUnityIcons;
     public static Texture2D GetUnityIcon(string iconName)
@@ -888,7 +887,7 @@ public class GameManagerWindow : EditorWindow
         return cachedUnityIcons[iconName];
     }
 
-    public static Color GetHexColor(string hex) => GameEditorStyles.GetColorFromHex(hex);
+    public static Color GetHexColor(string hex) => ResonanceRealmEditorStyles.GetColorFromHex(hex);
 
     private static Dictionary<string, Color> cachedColors;
     public static Color GetCachedColor(string key, Color color)

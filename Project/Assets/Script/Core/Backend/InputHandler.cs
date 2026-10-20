@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using Game.InputManager;
 using UnityEngine.UI;
 
 public static class InputHandler

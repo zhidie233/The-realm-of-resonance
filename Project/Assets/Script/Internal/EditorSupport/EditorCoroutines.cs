@@ -2,24 +2,21 @@
 using System.Collections;
 using UnityEditor;
 
-namespace GameEditor
-{
-    /// <summary>
-    /// 在编辑器的更新循环里跑一个协程迭代器。
-    /// </summary>
-    public static class EditorCoroutines
-    {
-        public static void StartBackgroundTask(IEnumerator task)
-        {
-            if (task == null) { return; }
+   /// <summary>
+   /// 在编辑器的更新循环里跑一个协程迭代器。
+   /// </summary>
+   public static class EditorCoroutines
+   {
+       public static void StartBackgroundTask(IEnumerator task)
+       {
+           if (task == null) { return; }
 
-            void Step()
-            {
-                if (!task.MoveNext()) { EditorApplication.update -= Step; }
-            }
+           void Step()
+           {
+               if (!task.MoveNext()) { EditorApplication.update -= Step; }
+           }
 
-            EditorApplication.update += Step;
-        }
-    }
-}
+           EditorApplication.update += Step;
+       }
+   }
 #endif

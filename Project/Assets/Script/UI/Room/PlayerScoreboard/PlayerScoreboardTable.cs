@@ -2,7 +2,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Game.Runtime.AI;
 
 public class PlayerScoreboardTable : PlayerScoreboardTableBase
 {

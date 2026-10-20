@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using GameEditor;
 #endif
 
 public class HitBoxManager : MonoBehaviour
@@ -104,7 +103,7 @@ public class BodyHitBoxManagerEditor: Editor
             EditorGUILayout.HelpBox("No Health Manager has been assigned, therefore none damage will be applied from the hitboxes", MessageType.Warning);
         }
         var rect = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.toolbarButton);
-        script.managerPerSegments = GameEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
+        script.managerPerSegments = ResonanceRealmEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
         DrawBodyMultiplier();
         DrawHitBoxesList();
 

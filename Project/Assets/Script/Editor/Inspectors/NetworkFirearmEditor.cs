@@ -1,7 +1,6 @@
 ﻿using UnityEditor;
 using System.Collections.Generic;
 using UnityEngine;
-using GameEditor;
 
 [CustomEditor(typeof(NetworkFirearm))]
 public class NetworkFirearmEditor : Editor

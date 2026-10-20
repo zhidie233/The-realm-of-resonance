@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Pun;
-using GameEditor;
 
 public class PlayerConfig : NetworkHelper
 {

@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Realtime;
 using TMPro;
-using Game.Runtime.AI;
 
 public class PlayerScoreboardUI : PlayerScoreboardUIBase
 {

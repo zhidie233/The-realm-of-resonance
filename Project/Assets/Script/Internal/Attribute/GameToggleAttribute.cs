@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
-using GameEditor;
 #endif
 
 public class GameToggleAttribute : PropertyAttribute
@@ -34,7 +33,7 @@ public class GameToggleAttributeDrawer : PropertyDrawer
         float lw = EditorGUIUtility.labelWidth;
         EditorGUIUtility.labelWidth += script.ExtraWidth;
         position.x += 15 * EditorGUI.indentLevel;
-        property.boolValue = GameEditorStyles.FeatureToogle(position, property.boolValue, t);
+        property.boolValue = ResonanceRealmEditorStyles.FeatureToogle(position, property.boolValue, t);
         EditorGUIUtility.labelWidth = lw;
     }
 }

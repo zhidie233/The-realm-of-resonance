@@ -1,5 +1,4 @@
-﻿using Game.InputManager;
-using UnityEngine;
+﻿using UnityEngine;
 
 public enum GameInputType
 {

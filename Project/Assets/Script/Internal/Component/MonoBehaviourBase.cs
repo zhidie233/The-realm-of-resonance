@@ -1,5 +1,4 @@
-﻿using Game.Internal;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MonoBehaviourBase : NetworkHelper
 {

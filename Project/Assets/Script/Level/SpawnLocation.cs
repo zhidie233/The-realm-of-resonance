@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 #if UNITY_EDITOR
-using GameEditor;
 #endif
 
 /// <summary>

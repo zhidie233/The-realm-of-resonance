@@ -1,37 +1,33 @@
 ﻿using UnityEngine;
-using Game.Runtime.Settings;
 
-namespace Game.InputManager
-{
-    public class InputDeviceSwitcher : MonoBehaviour
-    {
-        private bool init = false;
-        private SingleSettingsBinding settingsBinding;
+   public class InputDeviceSwitcher : MonoBehaviour
+   {
+       private bool init = false;
+       private SingleSettingsBinding settingsBinding;
 
-        private void Awake()
-        {
-            settingsBinding = GetComponent<SingleSettingsBinding>();           
-        }
+       private void Awake()
+       {
+           settingsBinding = GetComponent<SingleSettingsBinding>();           
+       }
 
-        private void OnEnable()
-        {
-            InitialSetup();
-        }
+       private void OnEnable()
+       {
+           InitialSetup();
+       }
 
-        void InitialSetup()
-        {
-            if (init) return;
+       void InitialSetup()
+       {
+           if (init) return;
 
-            InputType currentType = InputBindings.Instance.mappedInstance.inputType;
-            int id = 0; // keyboard
-            if(currentType == InputType.Xbox || currentType == InputType.Playstation)
-            {
-                id = 1;
-            }
+           InputType currentType = InputBindings.Instance.mappedInstance.inputType;
+           int id = 0; // keyboard
+           if(currentType == InputType.Xbox || currentType == InputType.Playstation)
+           {
+               id = 1;
+           }
 
-            settingsBinding.currentOption = id;
-            settingsBinding.ApplyCurrentValue();
-            init = true;
-        }
-    }
-}
+           settingsBinding.currentOption = id;
+           settingsBinding.ApplyCurrentValue();
+           init = true;
+       }
+   }

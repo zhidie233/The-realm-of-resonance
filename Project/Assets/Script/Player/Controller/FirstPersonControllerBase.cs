@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Game.PlayerController;
 
 /// <summary>
 /// 玩家控制器的基类

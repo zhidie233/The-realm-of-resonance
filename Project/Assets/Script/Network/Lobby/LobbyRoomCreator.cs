@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
-using Game.Internal.Structures;
 
 public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallbacks
 {

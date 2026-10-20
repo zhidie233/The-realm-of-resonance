@@ -1,4 +1,3 @@
-using Game.Runtime.AI;
 using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
@@ -31,10 +30,10 @@ public class AIManager : NetworkHelper
     private List<PlayersSlots> Team1PlayersSlots = new List<PlayersSlots>();
     private List<PlayersSlots> Team2PlayersSlots = new List<PlayersSlots>();
     private List<string> BotsNames = new List<string>();
-    private List<AISoldierCore> SpawningBots = new List<AISoldierCore>();
+    private List<AIBotCore> SpawningBots = new List<AIBotCore>();
     private List<string> lastLifeBots = new List<string>();
     private int NumberOfBots = 5;
-    private List<AISoldierCore> AllBots = new List<AISoldierCore>();
+    private List<AIBotCore> AllBots = new List<AIBotCore>();
     private List<PlayerReferencesCommon> targetsLists = new List<PlayerReferencesCommon>();
     private bool isMasterAlredyInTeam = false;
 
@@ -230,7 +229,7 @@ public class AIManager : NetworkHelper
     }
 
     //在指定队伍出生一个机器人，首次实例化时 agent 传 null
-    public AISoldierCore SpawnBot(AISoldierCore agent = null, Team _team = Team.None)
+    public AIBotCore SpawnBot(AIBotCore agent = null, Team _team = Team.None)
     {
         var spawnPoint = SpawnPointManager.Instance.GetSingleRandom();
         string AiName = GameConfig.Instance.BotTeam1.name;
@@ -288,7 +287,7 @@ public class AIManager : NetworkHelper
         //用 InstantiateSceneObject 让机器人由主客户端控制，主客户端离开房间时也不会销毁它们。
         GameObject bot = PhotonNetwork.InstantiateRoomObject(AiName, spawnPosition, spawnRot, 0, botEssentialData);
 
-        AISoldierCore newAgent = bot.GetComponent<AISoldierCore>();
+        AIBotCore newAgent = bot.GetComponent<AIBotCore>();
         //如果这个机器人已在局中
         if (agent != null)
         {
@@ -339,7 +338,7 @@ public class AIManager : NetworkHelper
 
     //检查机器人是否已分配到队伍槽位
     // <returns></returns>
-    private bool VerifyTeamAffiliation(AISoldierCore agent, Team team)
+    private bool VerifyTeamAffiliation(AIBotCore agent, Team team)
     {
         var playerSlots = team == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
         //检查机器人是否已分配到该队伍
@@ -386,7 +385,7 @@ public class AIManager : NetworkHelper
         }
     }
 
-    public void GetTargetsFor(AISoldierCore bot, ref List<Transform> list)
+    public void GetTargetsFor(AIBotCore bot, ref List<Transform> list)
     {
         list.Clear();
         PlayerReferencesCommon t;
@@ -409,7 +408,7 @@ public class AIManager : NetworkHelper
     }
 
     //把死亡的机器人从可用列表移出，放进等待重生列表
-    public void OnBotDeath(AISoldierCore agent, AISoldierCore killer)
+    public void OnBotDeath(AIBotCore agent, AIBotCore killer)
     {
         if (!NetworkWrapper.IsMasterClient)
             return;
@@ -447,7 +446,7 @@ public class AIManager : NetworkHelper
                 SpawnBot(AllBots[i]);
                 if (AllBots[i] != null)
                 {
-                    AllBots[i].GetComponent<AISoldierHealth>().DestroyEntity();
+                    AllBots[i].GetComponent<AIBotHealth>().DestroyEntity();
                 }
             }
         }
@@ -457,13 +456,13 @@ public class AIManager : NetworkHelper
             if (SpawningBots[i] == null || SpawningBots[i].gameObject == null) continue;
 
             SpawnBot(SpawningBots[i]);
-            SpawningBots[i].GetComponent<AISoldierHealth>().DestroyEntity();
+            SpawningBots[i].GetComponent<AIBotHealth>().DestroyEntity();
             SpawningBots.RemoveAt(i);
         }
     }
 
     //把机器人放入待重生列表，等最短重生时间过去后重生。
-    public void AddBotToRespawn(AISoldierCore bot)
+    public void AddBotToRespawn(AIBotCore bot)
     {
         SpawningBots.Add(bot);
         //重生时间到后自动出生
@@ -532,7 +531,7 @@ public class AIManager : NetworkHelper
         if (NetworkWrapper.IsMasterClient) photonView.RPC(nameof(SyncBotStat), RpcTarget.All, BotsStatistics[index].Name, 0, (byte)1);
     }
 
-    public static void UpdateBotView(AISoldierCore bot, int viewID)
+    public static void UpdateBotView(AIBotCore bot, int viewID)
     {
         var stat = Instance.GetBotStatistics(bot.AIName);
         if (stat == null) return;
@@ -540,7 +539,7 @@ public class AIManager : NetworkHelper
         stat.ViewID = viewID;
     }
 
-    public static void SetBotGameState(AISoldierCore bot, BotMatchState gameState)
+    public static void SetBotGameState(AIBotCore bot, BotMatchState gameState)
     {
         var stat = Instance.GetBotStatistics(bot.AIName);
         if (stat == null) return;
@@ -617,7 +616,7 @@ public class AIManager : NetworkHelper
         //删除被主客户端替换掉的那个机器人
         if (newPlayer.IsMasterClient && NetworkWrapper.IsMasterClient && !isMasterAlredyInTeam && !string.IsNullOrEmpty(remplaceBot))
         {
-            AISoldierCore bot = AllBots.Find(x => x.AIName == remplaceBot);
+            AIBotCore bot = AllBots.Find(x => x.AIName == remplaceBot);
             if (bot != null)
             {
                 PhotonView bv = bot.GetComponent<PhotonView>();
@@ -639,7 +638,7 @@ public class AIManager : NetworkHelper
                 SetUpSlots(false);
 
             //机器人没有在新主客户端上收集，这里手动取出来
-            AISoldierCore[] allBots = FindObjectsOfType<AISoldierCore>();
+            AIBotCore[] allBots = FindObjectsOfType<AIBotCore>();
             foreach (var bot in allBots)
             {
                 if (bot.isDeath)//if the bot was death when master client leave the game
@@ -868,7 +867,7 @@ public class AIManager : NetworkHelper
                 if (AllBotsTransforms[i] == null) continue;
 
                 Transform t = AllBotsTransforms[i].root;
-                AISoldierCore asa = t.GetComponent<AISoldierCore>();
+                AIBotCore asa = t.GetComponent<AIBotCore>();
                 if (t.name.Contains("(die)") || asa.isDeath) continue;
 
                 if (asa.AITeam != _team && asa.AITeam != Team.None && t != bot.root)
@@ -928,9 +927,9 @@ public class AIManager : NetworkHelper
         }
     }
 
-    public AISoldierCore GetBot(int viewID)
+    public AIBotCore GetBot(int viewID)
     {
-        foreach (AISoldierCore agent in AllBots)
+        foreach (AIBotCore agent in AllBots)
         {
             if (agent.photonView.ViewID == viewID)
             {

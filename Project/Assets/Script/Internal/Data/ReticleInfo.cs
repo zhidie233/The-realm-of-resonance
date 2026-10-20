@@ -1,44 +1,41 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Internal.Structures
-{
-    public class ReticleInfo : MonoBehaviour
-    {
+   public class ReticleInfo : MonoBehaviour
+   {
 
-        [Header("Info")]
-        public bool isStatic = false;
-        [Range(15, 150)] public float NormalScaleAmount = 50;
-        [Range(15, 150)] public float OnFireScaleAmount = 75;
-        [Range(10, 100)] public float OnAimScaleAmount = 35;
+       [Header("Info")]
+       public bool isStatic = false;
+       [Range(15, 150)] public float NormalScaleAmount = 50;
+       [Range(15, 150)] public float OnFireScaleAmount = 75;
+       [Range(10, 100)] public float OnAimScaleAmount = 35;
 
-        private Graphic[] m_Graphics;
-        private Color[] defaultsColors;
-        private void Awake()
-        {
-            m_Graphics = transform.GetComponentsInChildren<Graphic>(true);
-            defaultsColors = new Color[m_Graphics.Length];
-            for (int i = 0; i < m_Graphics.Length; i++)
-            {
-                defaultsColors[i] = m_Graphics[i].color;
-                m_Graphics[i].color = Color.white;
-                m_Graphics[i].canvasRenderer.SetColor(defaultsColors[i]);
-            }
-        }
+       private Graphic[] m_Graphics;
+       private Color[] defaultsColors;
+       private void Awake()
+       {
+           m_Graphics = transform.GetComponentsInChildren<Graphic>(true);
+           defaultsColors = new Color[m_Graphics.Length];
+           for (int i = 0; i < m_Graphics.Length; i++)
+           {
+               defaultsColors[i] = m_Graphics[i].color;
+               m_Graphics[i].color = Color.white;
+               m_Graphics[i].canvasRenderer.SetColor(defaultsColors[i]);
+           }
+       }
 
-        public void SetColor(Color c, float speed)
-        {
-            foreach (Graphic g in m_Graphics) { g.CrossFadeColor(c, speed, true, true); }
-        }
+       public void SetColor(Color c, float speed)
+       {
+           foreach (Graphic g in m_Graphics) { g.CrossFadeColor(c, speed, true, true); }
+       }
 
-        public void SetDefaultColors(float speed)
-        {
-            for (int i = 0; i < m_Graphics.Length; i++)
-            {
-                m_Graphics[i].CrossFadeColor(defaultsColors[i], speed, true, true);
-            }
-        }
+       public void SetDefaultColors(float speed)
+       {
+           for (int i = 0; i < m_Graphics.Length; i++)
+           {
+               m_Graphics[i].CrossFadeColor(defaultsColors[i], speed, true, true);
+           }
+       }
 
-        public void SetActive(bool active) => gameObject.SetActive(active);
-    }
-}
+       public void SetActive(bool active) => gameObject.SetActive(active);
+   }

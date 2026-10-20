@@ -1,6 +1,5 @@
 using Photon.Realtime;
 using UnityEngine;
-using Game.GameModes.CaptureOfFlag;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class CaptureOfFlagController : NetworkHelper, IGameMode

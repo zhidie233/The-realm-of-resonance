@@ -1,8 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
-using Game.Runtime.Settings;
-using Game.Internal.Scriptables;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
 using static ViewRayBase;
@@ -212,7 +210,7 @@ public static class GameCore
     {
         public static bool UsingWaitingRoom()
         {
-            return GameConfig.Instance.lobbyJoinMethod == Game.Internal.Structures.LobbyJoinMethod.WaitingRoom;
+            return GameConfig.Instance.lobbyJoinMethod == LobbyJoinMethod.WaitingRoom;
         }
     }
 }

@@ -3,42 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-namespace Game.InputManager
-{
-    [CustomEditor(typeof(ButtonMapped))]
-    public class ButtonMappedEditor : Editor
-    {
-        ButtonMapped script;
+   [CustomEditor(typeof(ButtonMapped))]
+   public class ButtonMappedEditor : Editor
+   {
+       ButtonMapped script;
 
-        private void OnEnable()
-        {
-            script = (ButtonMapped)target;
-        }
+       private void OnEnable()
+       {
+           script = (ButtonMapped)target;
+       }
 
-        public override void OnInspectorGUI()
-        {
-            EditorGUI.BeginChangeCheck();
-            GUILayout.Space(10);
-            base.OnInspectorGUI();
-            GUILayout.Space(10);
-            string key = $"{InputBindings.KEYS}.{(short)script.inputType}";
-            if (PlayerPrefs.HasKey(key))
-            {
-                if(GUILayout.Button("删除已保存的输入绑定"))
-                {
-                    PlayerPrefs.DeleteKey(key);
-                }
-            }
-            if (EditorGUI.EndChangeCheck())
-            {
-                serializedObject.ApplyModifiedProperties();
-                EditorUtility.SetDirty(target);
+       public override void OnInspectorGUI()
+       {
+           EditorGUI.BeginChangeCheck();
+           GUILayout.Space(10);
+           base.OnInspectorGUI();
+           GUILayout.Space(10);
+           string key = $"{InputBindings.KEYS}.{(short)script.inputType}";
+           if (PlayerPrefs.HasKey(key))
+           {
+               if(GUILayout.Button("删除已保存的输入绑定"))
+               {
+                   PlayerPrefs.DeleteKey(key);
+               }
+           }
+           if (EditorGUI.EndChangeCheck())
+           {
+               serializedObject.ApplyModifiedProperties();
+               EditorUtility.SetDirty(target);
 
-                if (PlayerPrefs.HasKey(key))
-                {
-                    PlayerPrefs.DeleteKey(key);
-                }
-            }
-        }
-    }
-}
+               if (PlayerPrefs.HasKey(key))
+               {
+                   PlayerPrefs.DeleteKey(key);
+               }
+           }
+       }
+   }

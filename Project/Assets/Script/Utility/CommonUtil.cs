@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using Game.Runtime.Level;
 using System.Linq;
 using UnityEngine.Networking;
 #if UNITY_EDITOR
@@ -253,7 +252,7 @@ public static class CommonUtil
     {
         if (go == null) return;
 
-        var all = go.transform.GetComponents<ImpactMarkBase>();
+        var all = go.transform.GetComponents<BulletMarkBase>();
         for (int i = 0; i < all.Length; i++)
         {
             all[i].BackToOrigin();

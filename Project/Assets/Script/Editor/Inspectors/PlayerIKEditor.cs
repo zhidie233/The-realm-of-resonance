@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
-using GameEditor;
 
 [CustomEditor(typeof(PlayerIK))]
 public class PlayerIKEditor : Editor

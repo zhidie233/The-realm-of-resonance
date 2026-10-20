@@ -1,5 +1,4 @@
-﻿using Game.Audio;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class NetworkFirearm : MonoBehaviour
