@@ -327,7 +327,7 @@ public class FirearmController : FirearmBase
     // 全部输入事件
     void InputUpdate()
     {
-        if (GameConfig.Instance.isChating || !gunManager.isGameStarted || !LobbyMenu.Instance.isCursorLocked) return;
+        if (GameConfig.Instance.isChatOpen || !gunManager.isGameStarted || !LobbyMenu.Instance.isCursorLocked) return;
 
         bool fireDown = GameInput.Fire(GameInputType.Down);
         if (CommonUtil.isMobile)
@@ -1536,7 +1536,7 @@ public class FirearmController : FirearmBase
     {
         get
         {
-            if (GameConfig.Instance.CanFireWhileRunning)
+            if (GameConfig.Instance.fireWhileSprinting)
             {
                 return true;
             }
@@ -1558,12 +1558,12 @@ public class FirearmController : FirearmBase
     public PlayerNetworkHandler PlayerNetwork => PlayerReferences.playerNetwork;
     private FirearmInventory gunManager => PlayerReferences.gunManager;
 
-    private PlayerReferencesHandler _playerReferences;
-    public PlayerReferencesHandler PlayerReferences
+    private PlayerRig _playerReferences;
+    public PlayerRig PlayerReferences
     {
         get
         {
-            if (_playerReferences == null) _playerReferences = transform.root.GetComponent<PlayerReferencesHandler>();
+            if (_playerReferences == null) _playerReferences = transform.root.GetComponent<PlayerRig>();
             return _playerReferences;
         }
     }

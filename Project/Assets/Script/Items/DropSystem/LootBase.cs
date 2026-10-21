@@ -8,7 +8,7 @@ public abstract class LootBase : MonoBehaviour
 {
     public struct LootData
     {
-        public int KitID;
+        public int PackID;
         public Vector3 DropPosition;
         public float DeliveryDuration;
         public GameObject DropPrefab;

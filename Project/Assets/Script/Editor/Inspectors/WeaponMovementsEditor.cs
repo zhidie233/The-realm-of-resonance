@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(WeaponMotionSet))]
+[CustomEditor(typeof(SwayPreset))]
 public class WeaponMovementsEditor : Editor
 {
     private bool isRecording = false;
     Vector3 defaultPosition = Vector3.zero;
     Quaternion defaultRotation = Quaternion.identity;
-    WeaponMotionSet script;
+    SwayPreset script;
     SerializedProperty previewProp;
     public bool isPreviwing = false;
 
@@ -20,7 +20,7 @@ public class WeaponMovementsEditor : Editor
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
-        script = (WeaponMotionSet)target;
+        script = (SwayPreset)target;
 
         EditorGUILayout.BeginVertical("box");
         GUILayout.BeginHorizontal("box");

@@ -24,7 +24,7 @@ public enum RoomUILayers
     PlayerStats = 4,
     KillReport = 8,
     Time = 16,
-    Loadout = 32,
+    Equipment = 32,
     Scoreboards = 64,
     Misc = 128,
 }

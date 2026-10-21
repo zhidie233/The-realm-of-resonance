@@ -59,7 +59,7 @@
        {
            if (decalPool != null) return;
 
-           showDecals = GameConfig.Instance.bulletDecals;
+           showDecals = GameConfig.Instance.impactDecals;
 
            if (!showDecals) return;
 

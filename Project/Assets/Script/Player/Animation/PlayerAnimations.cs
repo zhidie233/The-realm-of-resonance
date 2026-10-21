@@ -46,7 +46,7 @@ public class PlayerAnimations : PlayerAnimationsBase
         base.Awake();
 
         m_Transform = transform;
-        useFootSteps = GameConfig.Instance.CalculateNetworkFootSteps;
+        useFootSteps = GameConfig.Instance.syncRemoteFootsteps;
         if (PlayerReferences != null) PlayerRoot = PlayerReferences.transform;
         if (useFootSteps)
         {
@@ -344,12 +344,12 @@ public class PlayerAnimations : PlayerAnimationsBase
 
     public FirearmType GetCurretWeaponType() { return cacheWeaponType; }
 
-    private PlayerReferencesHandler _playerReferences = null;
-    private PlayerReferencesHandler PlayerReferences
+    private PlayerRig _playerReferences = null;
+    private PlayerRig PlayerReferences
     {
         get
         {
-            if (_playerReferences == null) _playerReferences = transform.GetComponentInParent<PlayerReferencesHandler>();
+            if (_playerReferences == null) _playerReferences = transform.GetComponentInParent<PlayerRig>();
             return _playerReferences;
         }
     }

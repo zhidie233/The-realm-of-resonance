@@ -19,13 +19,13 @@ using System.Linq;
            return this;
        }
 
-       public GameCoinPriceUI SetPrice(GameItemUnlockability unlockability)
+       public GameCoinPriceUI SetPrice(GameItemAccessRules unlockability)
        {
-           var noallowedCoins = unlockability.NoAllowedCoins.ToList();
+           var blockedCoins = unlockability.BlockedCoins.ToList();
            foreach (var item in coins)
            {
                item.ParsePrice(unlockability.Price);
-               if(item.PriceText != null && noallowedCoins.Contains(GameCore.Coins.GetCoinData(item.CoinID)))
+               if(item.PriceText != null && blockedCoins.Contains(GameCore.Coins.GetCoinData(item.CoinID)))
                {
                    item.PriceText.gameObject.SetActive(false);
                }

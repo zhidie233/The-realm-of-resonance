@@ -27,7 +27,7 @@ public class PlayerUIBank : MonoBehaviour
         TimeUIRoot.SetActive(UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.Time));
         WeaponStatsUI.SetActive(UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.WeaponData));
         playerStatsUI.SetActive(UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.PlayerStats));
-        if (LoadoutScreenBase.Instance != null) LoadoutScreenBase.Instance.SetActive(UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.Loadout));
+        if (EquipmentScreenBase.Instance != null) EquipmentScreenBase.Instance.SetActive(UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.Equipment));
         GameEvents.DispatchUIMaskChange(UIReferences.Instance.UIMask);
     }
 }

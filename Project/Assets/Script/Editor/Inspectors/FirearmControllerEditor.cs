@@ -11,7 +11,7 @@ public class FirearmControllerEditor : Editor
     private FirearmController script;
     bool allowSceneObjects;
     private GameObject AimReference;
-    PlayerReferencesHandler playerReferences;
+    PlayerRig playerReferences;
     FirearmInventory GunManager;
     Texture2D aimIcon;
     private int oldID = -1;
@@ -28,7 +28,7 @@ public class FirearmControllerEditor : Editor
         list.drawHeaderCallback = (Rect rect) => { EditorGUI.LabelField(rect, "无弹药时禁用"); };
         GameData = GameConfig.Instance;
         script = (FirearmController)target;
-        playerReferences = script.transform.GetComponentInParent<PlayerReferencesHandler>();
+        playerReferences = script.transform.GetComponentInParent<PlayerRig>();
         if (playerReferences != null) { AimReference = playerReferences.playerSettings.AimPositionReference; }
         aimIcon = Resources.Load("content/Images/editor-aim-icon", typeof(Texture2D)) as Texture2D;
         if (script != null)
@@ -263,7 +263,7 @@ public class FirearmControllerEditor : Editor
         GUILayout.EndHorizontal();
 
         EditorGUILayout.Space();
-        script.GunID = EditorGUILayout.Popup("枪械 ID ", script.GunID, GameData.AllWeaponStringList());
+        script.GunID = EditorGUILayout.Popup("枪械 ID ", script.GunID, GameData.WeaponStringList());
         if (oldID != script.GunID)
         {
             script.Info = null;

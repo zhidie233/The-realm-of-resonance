@@ -41,10 +41,10 @@ public class NetworkStatistics : NetworkHelper, IConnectionCallbacks, ILobbyCall
     void OnEnable()
     {
         Refresh();
-        InvokeRepeating("UpdateRepeting", 0, UpdateEach);
+        InvokeRepeating("UpdateNetworkStats", 0, UpdateEach);
     }
 
-    void UpdateRepeting()
+    void UpdateNetworkStats()
     {
         Refresh();
     }

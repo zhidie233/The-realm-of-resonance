@@ -61,7 +61,7 @@ public class AIManager : NetworkHelper
     private void Start()
     {
         FirstSpawn();
-        if (GameCore.GameData.UsingWaitingRoom() && NetworkWrapper.IsMasterClient)
+        if (GameCore.GameData.UsingReadyRoom() && NetworkWrapper.IsMasterClient)
         {
             this.InvokeAfter(2, SyncBotsDataToAllOthers);
         }
@@ -278,7 +278,7 @@ public class AIManager : NetworkHelper
         }
 
         int rbn = Random.Range(0, BotsNames.Count);
-        string AIName = agent == null ? string.Format(GameConfig.Instance.botsNameFormat, BotsNames[rbn]) : agent.AIName;
+        string AIName = agent == null ? string.Format(GameConfig.Instance.botTagFormat, BotsNames[rbn]) : agent.AIName;
         Team AITeam = agent == null ? _team : agent.AITeam;
 
         spawnPoint.GetSpawnPosition(out Vector3 spawnPosition, out Quaternion spawnRot);
@@ -466,9 +466,9 @@ public class AIManager : NetworkHelper
     {
         SpawningBots.Add(bot);
         //重生时间到后自动出生
-        if (GetGameMode.GetGameModeInfo().onPlayerDie == GameModeSettings.OnPlayerDie.SpawnAfterDelay)
+        if (GetGameMode.GetGameModeInfo().onDeath == GameModeSettings.OnDeath.SpawnAfterDelay)
         {
-            Invoke(nameof(SpawnPendingBot), GameConfig.Instance.PlayerRespawnTime);
+            Invoke(nameof(SpawnPendingBot), GameConfig.Instance.respawnDelay);
         }
     }
 
@@ -492,8 +492,8 @@ public class AIManager : NetworkHelper
 
         photonView.RPC(nameof(SyncBotStat), RpcTarget.All, stats.Name, 0, (byte)0);
 
-        GameController.Instance.SetPoint(1, GameMode.FFA, Team.All);
-        GameController.Instance.SetPoint(1, GameMode.TDM, stats.Team);
+        GameController.Instance.SetPoint(1, GameMode.FreeMatch, Team.All);
+        GameController.Instance.SetPoint(1, GameMode.TeamMatch, stats.Team);
     }
 
     public void SetBotScore(string botName, int score)
@@ -689,7 +689,7 @@ public class AIManager : NetworkHelper
         if (cmd == 0)//add kill
         {
             bs.Kills++;
-            bs.Score += GameConfig.Instance.ScoreReward.ScorePerKill;
+            bs.Score += GameConfig.Instance.matchScore.KillReward;
         }
         else if (cmd == 1)//death
         {
@@ -860,7 +860,7 @@ public class AIManager : NetworkHelper
                 }
             }
         }
-        else //if TDM game mode
+        else //team match
         {
             for (int i = 0; i < AllBotsTransforms.Count; i++)
             {

@@ -10,8 +10,8 @@ public static class GameCore
     public static float MusicVolume = 1;
 
     public static RuntimeSettingsProfile Settings => GameConfig.Instance.RuntimeSettings;
-    public static PlayerReferencesHandler LocalPlayerReferences => GameController.Instance.LocalPlayerReferences;
-    public static List<FirearmData> AllWeapons => GameConfig.Instance.AllWeapons;
+    public static PlayerRig LocalPlayerReferences => GameController.Instance.LocalPlayerReferences;
+    public static List<FirearmData> WeaponTable => GameConfig.Instance.WeaponTable;
 
     public const string LOCAL_PLAYER_TAG = "Player";
     public const string REMOTE_PLAYER_TAG = "Remote";
@@ -82,7 +82,7 @@ public static class GameCore
             if(increaseWarnings)
             GameController.SuicideCount++;
             //如果玩家消极送死或滥杀自己，就踢出房间
-            if (GameController.SuicideCount > GameConfig.Instance.maxSuicideAttempts)
+            if (GameController.SuicideCount > GameConfig.Instance.selfKillLimit)
             {              
                 IsAlive = false;
                 CommonUtil.LockCursor(false);
@@ -208,9 +208,9 @@ public static class GameCore
 
     public static class GameData
     {
-        public static bool UsingWaitingRoom()
+        public static bool UsingReadyRoom()
         {
-            return GameConfig.Instance.lobbyJoinMethod == LobbyJoinMethod.WaitingRoom;
+            return GameConfig.Instance.lobbyAccess == LobbyAccess.ReadyRoom;
         }
     }
 }

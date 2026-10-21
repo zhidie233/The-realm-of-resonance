@@ -53,7 +53,7 @@ public class MatchTimeManager : MatchTimeManagerBase
 
     protected override void Awake()
     {
-        if (!NetworkWrapper.IsConnected && !GameConfig.Instance.offlineMode && !SoloRoom.Instance.forceOffline)
+        if (!NetworkWrapper.IsConnected && !GameConfig.Instance.directConnectMode && !SoloRoom.Instance.forceOffline)
         {
             CommonUtil.LoadLevel(GameConfig.Instance.MainMenuScene);
             return;
@@ -106,10 +106,10 @@ public class MatchTimeManager : MatchTimeManagerBase
         //如果对局正在等待最少玩家数才能开始
         if (GameController.Instance.GameMatchState == MatchState.Waiting && !isThisActive)
         {
-            UIReferences.Instance.SetWaitingPlayersText(string.Format(GameTexts.WaitingPlayers, NetworkWrapper.PlayerList.Length, 2), true);
+            UIReferences.Instance.SetReadyPlayersText(string.Format(GameTexts.ReadyPlayers, NetworkWrapper.PlayerList.Length, 2), true);
             return;
         }
-        if (GameConfig.Instance.useCountDownOnStart)
+        if (GameConfig.Instance.prematchCountdownEnabled)
         {
             CountDownBase.Instance.StartCountDown();
             return;
@@ -309,7 +309,7 @@ public class MatchTimeManager : MatchTimeManagerBase
             // 保存本局获得的经验值
             UIReferences.Instance.ResumeScreen.CollectData();
 
-            finalCountDown = GameConfig.Instance.afterMatchCountdown;
+            finalCountDown = GameConfig.Instance.endMatchDelay;
             RoundFinishScreenBase.Instance?.SetCountdown(finalCountDown);
             InvokeRepeating(nameof(FinalCountdown), 1, 1);
             ReticleBase.Instance.Show(false);
@@ -360,7 +360,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         {
             FinishGame();
             CancelInvoke(nameof(FinalCountdown));
-            finalCountDown = GameConfig.Instance.afterMatchCountdown;
+            finalCountDown = GameConfig.Instance.endMatchDelay;
         }
     }
 
@@ -388,7 +388,7 @@ public class MatchTimeManager : MatchTimeManagerBase
     /// </summary>
     public override void StartNewRound(NewRoundOptions options)
     {
-        if (GameConfig.Instance.useCountDownOnStart)
+        if (GameConfig.Instance.prematchCountdownEnabled)
         {
             CountDownBase.Instance.StartCountDown();
         }
@@ -409,7 +409,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         GameController.Instance.IsLocalPlaying = false;
         CommonUtil.LockCursor(false);
         DeathCamBase.Instance.SetActive(false);
-        finalCountDown = GameConfig.Instance.afterMatchCountdown;
+        finalCountDown = GameConfig.Instance.endMatchDelay;
         NetworkWrapper.CurrentRoom.IsOpen = true;
         NetworkWrapper.CurrentRoom.IsVisible = true;
         AIManager.Instance?.RespawnAllBots(true);
@@ -423,7 +423,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         {
             UIReferences.Instance.ResetRound();
 
-            if (RoomSettings.Instance.AutoTeamSelection)
+            if (RoomSettings.Instance.AutoAssignTeams)
                 RoomSettings.Instance.CheckAutoSpawn();
         }
     }
@@ -434,13 +434,13 @@ public class MatchTimeManager : MatchTimeManagerBase
         if (GameCore.LocalPlayer.Team == Team.None) return;
 
         SetTimeState(RoomTimeState.Started, NetworkWrapper.IsMasterClient);
-        UIReferences.Instance.SetWaitingPlayersText(GameTexts.StartingMatch, true);
+        UIReferences.Instance.SetReadyPlayersText(GameTexts.StartingMatch, true);
         Invoke(nameof(StartTime), wait);
     }
 
     void StartTime()
     {
-        if (GameConfig.Instance.useCountDownOnStart)
+        if (GameConfig.Instance.prematchCountdownEnabled)
         {
             CountDownBase.Instance.StartCountDown();
         }
@@ -449,7 +449,7 @@ public class MatchTimeManager : MatchTimeManagerBase
             GetTime(false);
         }
         IsPaused = false;
-        UIReferences.Instance.SetWaitingPlayersText();
+        UIReferences.Instance.SetReadyPlayersText();
         GameController.Instance.SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
 

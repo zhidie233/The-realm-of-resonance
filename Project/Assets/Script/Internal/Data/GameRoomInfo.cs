@@ -20,7 +20,7 @@ public struct GameRoomInfo
     public int maxPlayers { get; set; }
     public bool friendlyFire { get; set; }
     public bool withBots { get; set; }
-    public bool autoTeamSelection { get; set; }
+    public bool autoAssignTeams { get; set; }
     public RoundStyle roundStyle { get; set; }
 
     public bool isPrivate { get { return !string.IsNullOrEmpty(password); } }
@@ -40,14 +40,14 @@ public struct GameRoomInfo
         maxPlayers = room.MaxPlayers;
         friendlyFire = (bool)room.CustomProperties[NetworkKeys.RoomFriendlyFire];
         withBots = (bool)room.CustomProperties[NetworkKeys.WithBotsKey];
-        autoTeamSelection = (bool)room.CustomProperties[NetworkKeys.TeamSelectionKey];
+        autoAssignTeams = (bool)room.CustomProperties[NetworkKeys.TeamSelectionKey];
         roundStyle = (RoundStyle)room.CustomProperties[NetworkKeys.RoomRoundKey];
     }
 
     public MapInfo GetMapInfo()
     {
         var mapName = sceneName;
-        var map = GameConfig.Instance.AllScenes.Find(x => x.RealSceneName == mapName);
+        var map = GameConfig.Instance.SceneTable.Find(x => x.RealSceneName == mapName);
         return map;
     }
 }

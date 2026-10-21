@@ -44,10 +44,10 @@ using UnityEditor;
                GUILayout.BeginHorizontal();
                GUILayout.FlexibleSpace();
                GUILayout.BeginVertical();
-               if (script.WeaponInfo.GunIcon != null)
+               if (script.WeaponInfo.WeaponIcon != null)
                {
-                   float aspect = 256f / (float)script.WeaponInfo.GunIcon.texture.width;
-                   GUILayout.Label(script.WeaponInfo.GunIcon.texture, GUILayout.Width(256),GUILayout.Height(script.WeaponInfo.GunIcon.texture.height * aspect));
+                   float aspect = 256f / (float)script.WeaponInfo.WeaponIcon.texture.width;
+                   GUILayout.Label(script.WeaponInfo.WeaponIcon.texture, GUILayout.Width(256),GUILayout.Height(script.WeaponInfo.WeaponIcon.texture.height * aspect));
                }
                GUILayout.EndVertical();
                GUILayout.FlexibleSpace();

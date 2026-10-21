@@ -23,7 +23,7 @@ public class LauncherProjectile : ProjectileBase
         _rigidbody.AddForce(transform.forward * bulletData.Speed, ForceMode.Impulse);
         instanceTime = Time.time;
 
-        if (trailRenderer != null && !GameConfig.Instance.showProjectilesTrails)
+        if (trailRenderer != null && !GameConfig.Instance.projectileTrailsEnabled)
         {
             trailRenderer.Clear();
             trailRenderer.enabled = false;

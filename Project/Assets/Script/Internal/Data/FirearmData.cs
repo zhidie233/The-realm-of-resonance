@@ -16,11 +16,11 @@ public class FirearmData
     [Range(0, 1000)] public int Range;
     [Range(0.01f, 5)] public int Accuracy;
     [Range(0, 4)] public float Weight;
-    public GameItemUnlockability Unlockability;
+    public GameItemAccessRules AccessRules;
 
     [Header("References")]
-    public FirearmPickUpBase PickUpPrefab;
-    [SpritePreview(30, true)] public Sprite GunIcon;
+    public FirearmPickUpBase WorldPrefab;
+    [SpritePreview(30, true)] public Sprite WeaponIcon;
 
     /// <summary>
     /// 此武器是否显示在游戏菜单中（配装、解锁等）
@@ -28,6 +28,6 @@ public class FirearmData
     /// <returns></returns>
     public bool CanShowWeapon()
     {
-        return Active && Unlockability.UnlockMethod != GameItemUnlockability.UnlockabilityMethod.Hidden;
+        return Active && AccessRules.UnlockMethod != GameItemAccessRules.AccessRulesMethod.Hidden;
     }
 }

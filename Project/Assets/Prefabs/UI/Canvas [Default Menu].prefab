@@ -6874,7 +6874,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba051f74444648459f78bbbc1ed3036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StringID: loadout
+  StringID: preset
   StringIDs: []
   ExtraString: 
   m_UIType: 0
@@ -12107,7 +12107,7 @@ GameObject:
   - component: {fileID: 2284519300544583242}
   - component: {fileID: 2286578857751703186}
   m_Layer: 5
-  m_Name: Waiting Room
+  m_Name: Ready Room
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12159,7 +12159,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Content: {fileID: 6630395746718107476}
-  WaitingPlayerPrefab: {fileID: 1789915819525554, guid: f35d85f768594ac49ab73956cf395cbd, type: 3}
+  ReadyPlayerPrefab: {fileID: 1789915819525554, guid: f35d85f768594ac49ab73956cf395cbd, type: 3}
   LoadingMapUI: {fileID: 7578110631714512068}
   StartScreen: {fileID: 7578712052387223758}
   waitingRequiredPlayersUI: {fileID: 6631396264379465702}
@@ -27213,13 +27213,13 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: ASSAULT
+    - m_Text: VANGUARD
       m_Image: {fileID: 21300000, guid: b0352e7b0e89e984684cea8e468cbe8d, type: 3}
-    - m_Text: RECON
+    - m_Text: PATHFINDER
       m_Image: {fileID: 21300000, guid: 694d13ff81af88746ae8c1c7e22f5870, type: 3}
-    - m_Text: SUPPORT
+    - m_Text: GUARDIAN
       m_Image: {fileID: 21300000, guid: 94023acb2bb71dc48803d59834b5dde9, type: 3}
-    - m_Text: ENGINEER
+    - m_Text: ARTIFICER
       m_Image: {fileID: 21300000, guid: 70031709382732e4c9afec25d00a19e5, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -38198,7 +38198,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: RECON
+  m_text: PATHFINDER
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 5a2f667984e135a46a2d5ac196dd9701, type: 2}
   m_sharedMaterial: {fileID: -1921993507190256839, guid: 5a2f667984e135a46a2d5ac196dd9701, type: 2}
@@ -58060,7 +58060,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ASSAULT
+  m_text: VANGUARD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
   m_sharedMaterial: {fileID: -4344200340605112947, guid: 9a88bdf4e0577c54095e97f187197340, type: 2}

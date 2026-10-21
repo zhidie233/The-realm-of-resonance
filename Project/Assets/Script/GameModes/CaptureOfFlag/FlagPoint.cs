@@ -139,7 +139,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            if (NetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
            {
                KillReportEntry.Instance.SendTeamHighlightMessage(NetworkWrapper.LocalPlayer.NickName, GameTexts.CaptureTheFlag, actor.GetPlayerTeam());
-               GameController.Instance.SetPointFromLocalPlayer(1, GameMode.CTF);
+               GameController.Instance.SetPointFromLocalPlayer(1, GameMode.CaptureMatch);
                //增加个人得分
                NetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerCapture);
                CaptureOfFlagController.Instance.onCapture?.Invoke();

@@ -1179,13 +1179,13 @@ public class AIBotAgent : AIBotCore
         Vector3 position = (Vector3)data["direction"];
         References.aiAnimation.Ragdolled(position, data.ContainsKey("explosion"));
 
-        if ((NetworkWrapper.Time - info.SentServerTime) > GameConfig.Instance.PlayerRespawnTime + 1)
+        if ((NetworkWrapper.Time - info.SentServerTime) > GameConfig.Instance.respawnDelay + 1)
         {
             Debug.LogWarning("The death call get with too much delay.");
         }
-        this.InvokeAfter(GameConfig.Instance.PlayerRespawnTime + 2, () =>
+        this.InvokeAfter(GameConfig.Instance.respawnDelay + 2, () =>
          {
-             if (GetGameMode.GetGameModeInfo().onRoundStartedSpawn != GameModeSettings.OnRoundStartedSpawn.WaitUntilRoundFinish)
+             if (GetGameMode.GetGameModeInfo().spawnOnRoundBegin != GameModeSettings.OnRoundBegin.WaitUntilRoundFinish)
                  Debug.LogWarning("For some reason this bot has not been destroyed yet.");
          });
     }

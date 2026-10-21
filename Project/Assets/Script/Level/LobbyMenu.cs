@@ -178,7 +178,7 @@ public class LobbyMenu : MonoBehaviourBase
         }
         CommonUtil.LockCursor(true);
         //若玩家只在新回合开始时出生
-        if (GetGameMode.GetGameModeInfo().onRoundStartedSpawn == GameModeSettings.OnRoundStartedSpawn.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
+        if (GetGameMode.GetGameModeInfo().spawnOnRoundBegin == GameModeSettings.OnRoundBegin.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
         {
             //订阅回合开始事件
             if (onWaitUntilRoundFinish != null) { onWaitUntilRoundFinish.Invoke(team); }

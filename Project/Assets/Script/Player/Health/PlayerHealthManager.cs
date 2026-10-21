@@ -28,8 +28,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     public AudioClip[] HitsSound;
     [SerializeField] private AudioClip[] InjuredSounds = null;
 
-    private bool m_HealthRegeneration = false;
-    public bool HealthRegeneration { get => m_HealthRegeneration; set => m_HealthRegeneration = value; }
+    private bool m_autoHealthRecovery = false;
+    public bool autoHealthRecovery { get => m_autoHealthRecovery; set => m_autoHealthRecovery = value; }
     #endregion
 
     #region Private members
@@ -39,19 +39,19 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     private CharacterController m_CharacterController;
     private bool isDead = false;
     private string lastDamageGiverActor;
-    private int ScorePerKill, ScorePerHeatShot;
+    private int KillReward, ScorePerHeatShot;
     private PlayerNetworkHandler PlayerSync;
     private float TimeToRegenerate = 4;
     private FirearmInventory GunManager;
     private bool isSuscribed = false;
     private int protecTime = 0;
-    private RepetingDamageInfo repetingDamageInfo;
+    private RepeatHitDamage repeatHitDamage;
     private CanvasGroup DamageAlpha;
     private float damageAlphaValue, uiFadeDelay = 0;
     private Team thisPlayerTeam = Team.None;
     private bool showIndicator = false;
     private float nextHealthSend = 0;
-    private PlayerReferencesHandler playerReferences;
+    private PlayerRig playerReferences;
     private int currentHealth = 100;
     #endregion
 
@@ -61,14 +61,14 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         if (!PhotonNetwork.IsConnected) return;
 
         base.Awake();
-        playerReferences = GetComponent<PlayerReferencesHandler>();
+        playerReferences = GetComponent<PlayerRig>();
         m_CharacterController = playerReferences.characterController;
         PlayerSync = playerReferences.playerNetwork;
         GunManager = playerReferences.gunManager;
         DamageAlpha = UIReferences.Instance.PlayerUI.DamageAlpha;
-        m_HealthRegeneration = GameConfig.Instance.HealthRegeneration;
-        protecTime = GameConfig.Instance.SpawnProtectedTime;
-        showIndicator = GameConfig.Instance.showDamageIndicator;
+        m_autoHealthRecovery = GameConfig.Instance.autoHealthRecovery;
+        protecTime = GameConfig.Instance.spawnShieldTime;
+        showIndicator = GameConfig.Instance.hitDirectionIndicator;
     }
 
     void Start()
@@ -158,7 +158,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// </summary>
     public override void DoFallDamage(int damage)
     {
-        if (!GameConfig.Instance.allowFallDamage || isProtectionEnable || playerReferences.firstPersonController.State == PlayerState.InVehicle || GameController.Instance.GameMatchState == MatchState.Waiting)
+        if (!GameConfig.Instance.fallDamageEnabled || isProtectionEnable || playerReferences.firstPersonController.State == PlayerState.InVehicle || GameController.Instance.GameMatchState == MatchState.Waiting)
             return;
 
         Vector3 downpos = transform.position - transform.TransformVector(new Vector3(0, 5, 1));
@@ -273,7 +273,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         else
         {
             //让远程玩家掉落武器
-            Transform ngr = (GameConfig.Instance.DropGunOnDeath) ? null : PlayerSync.NetGunsRoot;
+            Transform ngr = (GameConfig.Instance.DiscardWeaponOnDeath) ? null : PlayerSync.NetGunsRoot;
             playerReferences.playerRagdoll.SetLocalRagdoll(new PlayerRagdollBase.RagdollInfo()
             {
                 ForcePosition = hitPos,
@@ -304,7 +304,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 AddKill(isHeadshot, weapon, gunID);
             }
 
-            if (GameConfig.Instance.showDeathIcons && !isOneTeamMode)
+            if (GameConfig.Instance.deathIconsEnabled && !isOneTeamMode)
             {
                 if (photonView.Owner.GetPlayerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam())
                 {
@@ -319,7 +319,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         {
 
             //设为可以再次重生
-            if (GetGameMode.GetGameModeInfo().onPlayerDie == GameModeSettings.OnPlayerDie.SpawnAfterDelay)
+            if (GetGameMode.GetGameModeInfo().onDeath == GameModeSettings.OnDeath.SpawnAfterDelay)
             {
                 GameController.Instance.RespawnLocalPlayerAfter();
             }
@@ -327,7 +327,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             if (cause == DamageCause.Bot)
             {
                 // 增加本地玩家的死亡数
-                if (GameConfig.Instance.howConsiderBotsEliminations == BotKillPolicy.SameAsRealPlayers)
+                if (GameConfig.Instance.botKillCredit == BotKillPolicy.SameAsRealPlayers)
                     NetworkWrapper.LocalPlayer.PostDeaths(1);
             }
             else
@@ -362,7 +362,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 }
             }
 
-            if (GameConfig.Instance.DropGunOnDeath)
+            if (GameConfig.Instance.DiscardWeaponOnDeath)
             {
                 GunManager.ThrowCurrent(true, PlayerSync.NetGunsRoot.position + transform.forward);
             }
@@ -406,7 +406,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         //新增一次击杀并更新玩家信息
         NetworkWrapper.LocalPlayer.PostKill(1);
         // 计算这次击杀获得的得分
-        int score = (isHeadshot) ? GameConfig.Instance.ScoreReward.ScorePerKill + GameConfig.Instance.ScoreReward.ScorePerHeadShot : GameConfig.Instance.ScoreReward.ScorePerKill;
+        int score = (isHeadshot) ? GameConfig.Instance.matchScore.KillReward + GameConfig.Instance.matchScore.HeadshotExtraReward : GameConfig.Instance.matchScore.KillReward;
 
         //显示本地击杀通知
         var localKillInfo = new KillRecord();
@@ -433,38 +433,38 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// <summary>
     /// 循环对玩家持续造成伤害，直到取消。
     /// </summary>
-    public override void DoRepetingDamage(RepetingDamageInfo info)
+    public override void DoRepeatHitDamage(RepeatHitDamage info)
     {
-        repetingDamageInfo = info;
-        InvokeRepeating(nameof(MakeDamageRepeting), 0, info.Rate);
+        repeatHitDamage = info;
+        InvokeRepeating(nameof(MakeRepeatHitDamage), 0, info.Rate);
     }
 
     /// <summary>
     /// 从自定义循环中施加伤害
     /// </summary>
-    void MakeDamageRepeting()
+    void MakeRepeatHitDamage()
     {
-        if (repetingDamageInfo == null)
+        if (repeatHitDamage == null)
         {
-            CancelRepetingDamage();
+            CancelRepeatHit();
             return;
         }
 
-        var damageinfo = repetingDamageInfo.DamageInfo;
+        var damageinfo = repeatHitDamage.DamageInfo;
         if (damageinfo == null)
         {
             damageinfo = new DamageInfo();
             damageinfo.Direction = Vector3.zero;
             damageinfo.Cause = DamageCause.Map;
         }
-        damageinfo.Damage = repetingDamageInfo.Damage;
+        damageinfo.Damage = repeatHitDamage.Damage;
 
         GetDamage(damageinfo);
     }
 
-    public override void CancelRepetingDamage()
+    public override void CancelRepeatHit()
     {
-        CancelInvoke(nameof(MakeDamageRepeting));
+        CancelInvoke(nameof(MakeRepeatHitDamage));
     }
 
     /// <summary>
@@ -505,7 +505,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
     void RegenerateHealth()
     {
-        if (!m_HealthRegeneration || currentHealth < 1) return;
+        if (!m_autoHealthRecovery || currentHealth < 1) return;
         if (currentHealth >= RegenerateUpTo) return;
 
         int projectedHealth = currentHealth;

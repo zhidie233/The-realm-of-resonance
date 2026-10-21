@@ -71,7 +71,7 @@ public class ExplosionDamage : ExplosionBase
     // 对敌人施加爆炸的冲击伤害
     private void DoDamage()
     {
-        if (explosionType == ExplosionType.Shake && !GameConfig.Instance.ArriveKitsCauseDamage)
+        if (explosionType == ExplosionType.Shake && !GameConfig.Instance.AirSupplyCausesDamage)
             return;
 
         DoPlayersDamage();
@@ -209,7 +209,7 @@ public class ExplosionDamage : ExplosionBase
         {
             if (!isOneTeamMode)
             {
-                if (GameConfig.Instance.SelfGrenadeDamage && p == NetworkWrapper.LocalPlayer)
+                if (GameConfig.Instance.selfExplosionDamage && p == NetworkWrapper.LocalPlayer)
                 {
 
                 }
@@ -297,7 +297,7 @@ public class ExplosionDamage : ExplosionBase
                     }
                     else
                     {
-                        if (GameConfig.Instance.SelfGrenadeDamage)
+                        if (GameConfig.Instance.selfExplosionDamage)
                         {
                             if (distance <= explosionRadius)
                             {
@@ -318,7 +318,7 @@ public class ExplosionDamage : ExplosionBase
                 }
                 else
                 {
-                    if (GameConfig.Instance.SelfGrenadeDamage)
+                    if (GameConfig.Instance.selfExplosionDamage)
                     {
                         if (distance <= explosionRadius)
                         {

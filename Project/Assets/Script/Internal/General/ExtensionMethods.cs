@@ -203,9 +203,9 @@ public static class ExtensionMethods
 
     public static GameModeSettings GetModeInfo(this GameMode mode)
     {
-        for (int i = 0; i < GameConfig.Instance.gameModes.Count; i++)
+        for (int i = 0; i < GameConfig.Instance.gameModeTable.Count; i++)
         {
-            if(GameConfig.Instance.gameModes[i].gameMode == mode) { return GameConfig.Instance.gameModes[i]; }
+            if(GameConfig.Instance.gameModeTable[i].gameMode == mode) { return GameConfig.Instance.gameModeTable[i]; }
         }
         return null;
     }
@@ -264,7 +264,7 @@ public static class ExtensionMethods
     /// <returns></returns>
     public static GameModeSettings GetGameModeInfo(this GameMode mode)
     {
-        return GameConfig.Instance.gameModes.Find(x => x.gameMode == mode);
+        return GameConfig.Instance.gameModeTable.Find(x => x.gameMode == mode);
     }
 
     /// <summary>

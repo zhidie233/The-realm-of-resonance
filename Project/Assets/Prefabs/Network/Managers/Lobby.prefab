@@ -5575,7 +5575,7 @@ GameObject:
   - component: {fileID: 224888342893269078}
   - component: {fileID: 114309910200151866}
   m_Layer: 5
-  m_Name: FriendList
+  m_Name: ContactList
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -32415,7 +32415,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: RECON
+  m_Text: PATHFINDER
 --- !u!114 &2872105871601063307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -36350,7 +36350,7 @@ GameObject:
   - component: {fileID: 8546448994656170126}
   - component: {fileID: 8544638546080106582}
   m_Layer: 5
-  m_Name: Waiting Room [Default]
+  m_Name: Ready Room [Default]
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -36402,7 +36402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Content: {fileID: 2873106463923618864}
-  WaitingPlayerPrefab: {fileID: 1789915819525554, guid: f35d85f768594ac49ab73956cf395cbd,
+  ReadyPlayerPrefab: {fileID: 1789915819525554, guid: f35d85f768594ac49ab73956cf395cbd,
     type: 3}
   LoadingMapUI: {fileID: 1674965337651712}
   StartScreen: {fileID: 1080074610769418}

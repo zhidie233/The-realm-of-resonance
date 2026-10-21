@@ -22,7 +22,7 @@ public class DeathCam : DeathCamBase
     private int CurrentTarget = 0;
     private GameController Manager;
     private bool canManipulate = false;
-    private DeathCamType cameraType = DeathCamType.ObserveDeath;
+    private DeathCamType cameraType = DeathCamType.WatchBody;
     #endregion
 
     protected override void OnEnable()
@@ -41,7 +41,7 @@ public class DeathCam : DeathCamBase
     {
         transform.parent = null;
         Manager = GameController.Instance;
-        cameraType = GameConfig.Instance.killCameraType;
+        cameraType = GameConfig.Instance.deathReplayMode;
         if (target != null)
         {
             transform.LookAt(target);
@@ -113,7 +113,7 @@ public class DeathCam : DeathCamBase
     public override DeathCamBase SetTarget(DeathCamInfo info)
     {
         //如果玩家传入了目标
-        if(info.Target != null && (GameConfig.Instance.killCameraType == DeathCamType.ObserveDeath || string.IsNullOrEmpty(info.TargetName)))
+        if(info.Target != null && (GameConfig.Instance.deathReplayMode == DeathCamType.WatchBody || string.IsNullOrEmpty(info.TargetName)))
         {
             target = info.Target;
             ReadyToShow(info);
@@ -143,7 +143,7 @@ public class DeathCam : DeathCamBase
             }
         }
 
-        if(targetInstance == null && GameConfig.Instance.killCameraType == DeathCamType.OrbitTarget && info.FallbackTarget)
+        if(targetInstance == null && GameConfig.Instance.deathReplayMode == DeathCamType.OrbitTarget && info.FallbackTarget)
         {
             targetInstance = info.FallbackTarget.gameObject;
         }
@@ -164,7 +164,7 @@ public class DeathCam : DeathCamBase
     {
         canManipulate = true;
         DeathCamUIBase.Instance?.Show(info);
-        if(GameConfig.Instance.killCameraType == DeathCamType.ObserveDeath && target != null)
+        if(GameConfig.Instance.deathReplayMode == DeathCamType.WatchBody && target != null)
         {
             PositionedAndLookAt(target);
         }
@@ -222,6 +222,6 @@ public class DeathCam : DeathCamBase
     public enum DeathCamType
     {
         OrbitTarget,
-        ObserveDeath,
+        WatchBody,
     }
 }

@@ -21,7 +21,7 @@
        protected override void Awake()
        {
            base.Awake();
-           enabled = GameConfig.Instance.showDamageIndicator;
+           enabled = GameConfig.Instance.hitDirectionIndicator;
            GameEvents.onLocalPlayerSpawn += OnLocalSpawn;
        }
 

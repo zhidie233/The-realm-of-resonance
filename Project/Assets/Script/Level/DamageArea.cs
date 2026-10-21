@@ -20,7 +20,7 @@ public class DamageArea : MonoBehaviour
             var pdm = other.transform.GetComponent<PlayerHealthManagerBase>();
             if (pdm != null)
             {
-                if (m_Type == AreaType.Repeting)
+                if (m_Type == AreaType.Repeat)
                 {
                     if (isPlayerCaused)
                     {
@@ -31,7 +31,7 @@ public class DamageArea : MonoBehaviour
                             cacheInformation.GunID = gi;
                         }
 
-                        pdm.DoRepetingDamage(new PlayerHealthManagerBase.RepetingDamageInfo()
+                        pdm.DoRepeatHitDamage(new PlayerHealthManagerBase.RepeatHitDamage()
                         {
                             Damage = this.Damage,
                             Rate = 1,
@@ -41,7 +41,7 @@ public class DamageArea : MonoBehaviour
                     }
                     else
                     {
-                        pdm.DoRepetingDamage(new PlayerHealthManagerBase.RepetingDamageInfo()
+                        pdm.DoRepeatHitDamage(new PlayerHealthManagerBase.RepeatHitDamage()
                         {
                             Damage = this.Damage,
                             Rate = 1,
@@ -73,7 +73,7 @@ public class DamageArea : MonoBehaviour
                         {
                             cacheInformation.GunID = gi;
                         }
-                        ash.DoRepetingDamage(new PlayerHealthManagerBase.RepetingDamageInfo()
+                        ash.DoRepeatHitDamage(new PlayerHealthManagerBase.RepeatHitDamage()
                         {
                             Damage = this.Damage,
                             Rate = 1,
@@ -93,9 +93,9 @@ public class DamageArea : MonoBehaviour
             var pdm = other.transform.GetComponent<PlayerHealthManagerBase>();
             if (pdm != null)
             {
-                if (m_Type == AreaType.Repeting)
+                if (m_Type == AreaType.Repeat)
                 {
-                    pdm.CancelRepetingDamage();
+                    pdm.CancelRepeatHit();
                     AllHitted.Remove(pdm);
                 }
             }
@@ -106,9 +106,9 @@ public class DamageArea : MonoBehaviour
             if (ash != null)
             {
                 if (AllHitted.Contains(ash)) { AllHitted.Remove(ash); }
-                if (m_Type == AreaType.Repeting)
+                if (m_Type == AreaType.Repeat)
                 {
-                    ash.CancelRepetingDamage();
+                    ash.CancelRepeatHit();
                 }
             }
         }
@@ -120,7 +120,7 @@ public class DamageArea : MonoBehaviour
         foreach(var p in AllHitted)
         {
             if (p == null) continue;
-            p.CancelRepetingDamage();
+            p.CancelRepeatHit();
         }
     }
 
@@ -146,7 +146,7 @@ public class DamageArea : MonoBehaviour
     [System.Serializable]
     public enum AreaType
     {
-        Repeting,
+        Repeat,
         OneTime,
     }
 }

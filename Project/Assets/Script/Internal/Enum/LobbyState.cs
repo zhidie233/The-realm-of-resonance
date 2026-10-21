@@ -11,10 +11,10 @@
        Quit
    }
 
-   public enum LobbyJoinMethod
+   public enum LobbyAccess
    {
        DirectToMap = 1,
-       WaitingRoom = 2,
+       ReadyRoom = 2,
    }
 
    public enum LobbyConnectionState

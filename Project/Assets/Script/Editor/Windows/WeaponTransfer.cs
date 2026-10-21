@@ -135,12 +135,12 @@ using UnityEditor.SceneManagement;
                    GUILayout.EndHorizontal();
                    GUI.enabled = true;
                }
-               if (WeaponToImport != null && WeaponToImport.WeaponInfo != null && WeaponToImport.WeaponInfo.GunIcon != null)
+               if (WeaponToImport != null && WeaponToImport.WeaponInfo != null && WeaponToImport.WeaponInfo.WeaponIcon != null)
                {
                    GUILayout.Space(25);
                    GUILayout.BeginHorizontal();
                    GUILayout.FlexibleSpace();
-                   Texture2D icon = WeaponToImport.WeaponInfo.GunIcon.texture;
+                   Texture2D icon = WeaponToImport.WeaponInfo.WeaponIcon.texture;
                    float aspet = 100f / (float)icon.width;
                    GUILayout.Space(50);
                    GUILayout.Label(icon, GUILayout.Width(100), GUILayout.Height(icon.height * aspet));
@@ -247,16 +247,16 @@ using UnityEditor.SceneManagement;
            }
            if (we.WeaponInfo != null && !string.IsNullOrEmpty(we.WeaponInfo.Name))
            {
-               if (!GameConfig.Instance.AllWeapons.Exists(x => x.Name == we.WeaponInfo.Name))
+               if (!GameConfig.Instance.WeaponTable.Exists(x => x.Name == we.WeaponInfo.Name))
                {
-                   GameConfig.Instance.AllWeapons.Add(we.WeaponInfo);
-                   we.FPWeapon.GunID = GameConfig.Instance.AllWeapons.Count - 1;
+                   GameConfig.Instance.WeaponTable.Add(we.WeaponInfo);
+                   we.FPWeapon.GunID = GameConfig.Instance.WeaponTable.Count - 1;
                    EditorUtility.SetDirty(GameConfig.Instance);
                    results[0] = 1;
                }
                else
                {
-                   we.FPWeapon.GunID = GameConfig.Instance.AllWeapons.FindIndex(x => x.Name == we.WeaponInfo.Name);
+                   we.FPWeapon.GunID = GameConfig.Instance.WeaponTable.FindIndex(x => x.Name == we.WeaponInfo.Name);
                    EditorUtility.SetDirty(GameConfig.Instance);
                    results[0] = 2;
                }

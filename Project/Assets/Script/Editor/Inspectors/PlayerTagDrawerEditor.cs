@@ -82,11 +82,11 @@ public class PlayerTagDrawerEditor : Editor
             float distanceDifference = Mathf.Clamp(distance - 0.1f, 1, 12);
             vector.y += distanceDifference * (script.distanceModifier + 3.3f);
 
-            int vertical = GameConfig.Instance.ShowTeamMateHealthBar ? 15 : 10;
+            int vertical = GameConfig.Instance.allyHealthBars ? 15 : 10;
             if (distance < script.hideDistance)
             {
                 GUI.Label(new Rect(vector.x - 5, (Screen.height - vector.y) - vertical, 10, 11), simulatedName, script.StylePresent.style);
-                if (GameConfig.Instance.ShowTeamMateHealthBar)
+                if (GameConfig.Instance.allyHealthBars)
                 {
                     float mh = 100;
                     float h = simulatedHealth;

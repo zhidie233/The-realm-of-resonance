@@ -13,7 +13,7 @@ public class KillNotifier : MonoBehaviour
 
     private void Start()
     {
-        multipleNotifierRoot.SetActive(GameConfig.Instance.localKillsShowMode == KillNotice.List);
+        multipleNotifierRoot.SetActive(GameConfig.Instance.personalKillFeedDisplay == KillNotice.List);
     }
 
     private void OnEnable()
@@ -30,8 +30,8 @@ public class KillNotifier : MonoBehaviour
 
     void OnLocalKill(KillRecord info)
     {
-        if (GameConfig.Instance.localKillsShowMode == KillNotice.List) InstanceSingleNotification(info);
-        else if (GameConfig.Instance.localKillsShowMode == KillNotice.Queqe) ShowNotification(info);
+        if (GameConfig.Instance.personalKillFeedDisplay == KillNotice.List) InstanceSingleNotification(info);
+        else if (GameConfig.Instance.personalKillFeedDisplay == KillNotice.Queqe) ShowNotification(info);
     }
 
     void OnLocalNotification(GameLocalNotification notification)

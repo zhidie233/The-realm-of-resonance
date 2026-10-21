@@ -14,14 +14,14 @@ public class LootDispatcher : MonoBehaviour
     public float DeliveryTime = 10;
 
     [Header("Available Kits")]
-    public List<LootInfo> AvailableDrops = new List<LootInfo>();
+    public List<LootInfo> AvailablePacks = new List<LootInfo>();
 
     /// <summary>
     /// 激活时将该实例登记到事件中
     /// </summary>
     void OnEnable()
     {
-        GameEvents.onAirKit += SendDevilery;
+        GameEvents.onAirSupply += SendDelivery;
         NetworkWrapper.AddNetworkCallback(NetworkKeys.DropManager, OnNetworkMessage);
     }
 
@@ -30,7 +30,7 @@ public class LootDispatcher : MonoBehaviour
     /// </summary>
     void OnDisable()
     {
-        GameEvents.onAirKit -= SendDevilery;
+        GameEvents.onAirSupply -= SendDelivery;
         NetworkWrapper.RemoveNetworkCallback(OnNetworkMessage);
     }
 
@@ -40,7 +40,7 @@ public class LootDispatcher : MonoBehaviour
 
         newInstance.GetComponent<LootBase>().Dispatch(new LootBase.LootData()
         {
-            DropPrefab = AvailableDrops[(int)data["kit"]].Prefab,
+            DropPrefab = AvailablePacks[(int)data["pack"]].Prefab,
             DropPosition = (Vector3)data["pos"],
             DeliveryDuration = DeliveryTime,
         });
@@ -49,11 +49,11 @@ public class LootDispatcher : MonoBehaviour
     /// <summary>
     /// 由内部事件调用
     /// </summary>
-    public void SendDevilery(Vector3 position, int kitID)
+    public void SendDelivery(Vector3 position, int packID)
     {
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("pos", position);
-        data.Add("kit", kitID);
+        data.Add("pack", packID);
 
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.DropManager, data);
     }

@@ -50,8 +50,8 @@ public class ShotController : ProjectileBase
         velocity += direction;
         gravity = MathHelpers.Gravity * data.DropFactor;
 
-        realisticBallistics = GameConfig.Instance.realisticBullets;
-        detectionStep = GameConfig.Instance.BulletHitDetectionStep;
+        realisticBallistics = GameConfig.Instance.simulatedBallistics;
+        detectionStep = GameConfig.Instance.hitTestFrameStep;
 
         bulletMask = HittableLayers;
         if (data.IsLocalPlayer)
@@ -60,7 +60,7 @@ public class ShotController : ProjectileBase
             bulletMask = HittableLayers & ~(1 << localLayer);
         }
 
-        if (Trail != null) { if (!GameConfig.Instance.BulletTracer) { Destroy(Trail); } }
+        if (Trail != null) { if (!GameConfig.Instance.tracerRoundsVisual) { Destroy(Trail); } }
         // 子弹什么都没打中时安排销毁
         Invoke(nameof(Disable), 5);//TTL
 
@@ -214,7 +214,7 @@ public class ShotController : ProjectileBase
         {
             DamageInfo damageData = BuildBaseDamageData();
             // 检查是否是真人
-            var playerRefs = hit.transform.root.GetComponent<PlayerReferencesHandler>();
+            var playerRefs = hit.transform.root.GetComponent<PlayerRig>();
             if (playerRefs != null)//是真人
             {
                 if (isOneTeamMode)
@@ -279,7 +279,7 @@ public class ShotController : ProjectileBase
             damageable.ReceiveDamage(damageData);
         }
 
-        if (GameConfig.Instance.ShowBlood)
+        if (GameConfig.Instance.showGore)
         {
             GameObject go = ObjectRecyclerBase.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
             go.transform.parent = hit.transform;
@@ -349,7 +349,7 @@ public class ShotController : ProjectileBase
         
         //机器人不像其他真人玩家那样击中玩家的判定盒，而是击中角色控制器碰撞体，
         //所以不通过判定盒脚本，而是直接和玩家生命值脚本通信
-        var pdm = hit.transform.GetComponent<PlayerReferencesHandler>();
+        var pdm = hit.transform.GetComponent<PlayerRig>();
         if (pdm != null && bulletData.GameActor != null)
         {
             DamageInfo info = BuildBaseDamageData();

@@ -1309,7 +1309,7 @@ GameObject:
   m_Component:
   - component: {fileID: 224738367273227698}
   m_Layer: 5
-  m_Name: TDM
+  m_Name: TeamMatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1877,7 +1877,7 @@ MonoBehaviour:
   GameModeText: {fileID: 9086242808209169482}
   MaxPlayerText: {fileID: 9086482896834092310}
   MaxKillsText: {fileID: 3116534640610223573}
-  WaitingPlayersText: {fileID: 6928233874479117170}
+  ReadyPlayersText: {fileID: 6928233874479117170}
   blackScreen: {fileID: 3108708805829116920}
   leaveRoomConfirmation: {fileID: 7489010081291640553}
 --- !u!1 &1347617747013792
@@ -5108,7 +5108,7 @@ GameObject:
   - component: {fileID: 222784808723783080}
   - component: {fileID: 114934829236065942}
   m_Layer: 5
-  m_Name: GunIcon
+  m_Name: WeaponIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5444,7 +5444,7 @@ GameObject:
   - component: {fileID: 222295785309260342}
   - component: {fileID: 114619357107232246}
   m_Layer: 5
-  m_Name: Waiting Players
+  m_Name: Ready Players
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5519,7 +5519,7 @@ GameObject:
   - component: {fileID: 224414467621434282}
   - component: {fileID: 114898432356870366}
   m_Layer: 5
-  m_Name: Loadout
+  m_Name: Equipment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8786,7 +8786,7 @@ GameObject:
   - component: {fileID: 8442520853555686576}
   - component: {fileID: 2350364516368253565}
   m_Layer: 5
-  m_Name: FFA
+  m_Name: FreeMatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15281,7 +15281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ba051f74444648459f78bbbc1ed3036, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StringID: loadout
+  StringID: preset
   StringIDs: []
   ExtraString: 
   m_UIType: 0
@@ -17755,7 +17755,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ASSAULT
+  m_text: VANGUARD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
   m_sharedMaterial: {fileID: -4344200340605112947, guid: 9a88bdf4e0577c54095e97f187197340, type: 2}
@@ -18090,7 +18090,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ASSAULT
+  m_text: VANGUARD
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
   m_sharedMaterial: {fileID: -2996529710204131526, guid: 2e474356a0e33e8488d2a4cea45460a3, type: 2}
@@ -18378,13 +18378,13 @@ MonoBehaviour:
   m_Value: 0
   m_Options:
     m_Options:
-    - m_Text: ASSAULT
+    - m_Text: VANGUARD
       m_Image: {fileID: 21300000, guid: b0352e7b0e89e984684cea8e468cbe8d, type: 3}
-    - m_Text: RECON
+    - m_Text: PATHFINDER
       m_Image: {fileID: 21300000, guid: 694d13ff81af88746ae8c1c7e22f5870, type: 3}
-    - m_Text: SUPPORT
+    - m_Text: GUARDIAN
       m_Image: {fileID: 21300000, guid: 94023acb2bb71dc48803d59834b5dde9, type: 3}
-    - m_Text: ENGINEER
+    - m_Text: ARTIFICER
       m_Image: {fileID: 21300000, guid: 70031709382732e4c9afec25d00a19e5, type: 3}
   m_OnValueChanged:
     m_PersistentCalls:
@@ -26408,7 +26408,7 @@ GameObject:
   - component: {fileID: 8639114783795896549}
   - component: {fileID: 6123952025785099565}
   m_Layer: 5
-  m_Name: FFA
+  m_Name: FreeMatch
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

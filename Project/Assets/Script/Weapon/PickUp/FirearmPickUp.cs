@@ -17,7 +17,7 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
 
     #region Private members
     private bool isFocus = false;
-    private PlayerReferencesHandler localPlayerIn = null;
+    private PlayerRig localPlayerIn = null;
     private bool localInsideTrigger = false;
     private byte uniqueLocal = 0;
     #endregion
@@ -69,11 +69,11 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
     {
         if (!PickupOnCollide || GameController.Instance.GameMatchState == MatchState.Waiting)
             return;
-        if (!GetGameMode.GetGameModeInfo().allowedPickupWeapons) return;
+        if (!GetGameMode.GetGameModeInfo().allowWeaponPickup) return;
         // 若不是本地玩家，直接忽略。
         if (!c.isLocalPlayerCollider()) return;
 
-        var playerReferences = c.GetComponent<PlayerReferencesHandler>();
+        var playerReferences = c.GetComponent<PlayerRig>();
         if (playerReferences != null)
         {
             localInsideTrigger = true;
@@ -142,7 +142,7 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
     /// </summary>
     public override void PickUp()
     {
-        if (!GetGameMode.GetGameModeInfo().allowedPickupWeapons) return;
+        if (!GetGameMode.GetGameModeInfo().allowWeaponPickup) return;
 
         FirearmPickUpManagerBase.Instance?.SendPickUp(new FirearmPickUpManagerBase.PickUpData()
         {

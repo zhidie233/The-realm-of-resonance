@@ -73,7 +73,7 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         DeathsText.text = player.GetDeaths().ToString();
         ScoreText.text = player.GetPlayerScore().ToString();
 
-        if (GameConfig.Instance.MasterCanKickPlayers && player.ActorNumber != NetworkWrapper.LocalPlayer.ActorNumber)
+        if (GameConfig.Instance.hostCanRemovePlayers && player.ActorNumber != NetworkWrapper.LocalPlayer.ActorNumber)
         {
             if (KickButton != null) KickButton.SetActive(NetworkWrapper.IsMasterClient);
         }

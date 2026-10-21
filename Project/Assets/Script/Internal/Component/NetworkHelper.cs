@@ -5,7 +5,7 @@ using Photon.Realtime;
 
 public class NetworkHelper : MonoBehaviourPun {
 
-    protected GameMode mGameMode = GameMode.FFA;
+    protected GameMode mGameMode = GameMode.FreeMatch;
     private List<Player> PlayerList = new List<Player>();
     private bool GameModeDownloaded = false;
 
@@ -157,7 +157,7 @@ public class NetworkHelper : MonoBehaviourPun {
         get
         {
             if (!isConnected || !PhotonNetwork.InRoom)
-                return GameMode.FFA;
+                return GameMode.FreeMatch;
 
             if (!GameModeDownloaded)
             {
@@ -184,7 +184,7 @@ public class NetworkHelper : MonoBehaviourPun {
         get
         {
             if (!isConnected || !PhotonNetwork.InRoom)
-                return GameMode.FFA;
+                return GameMode.FreeMatch;
 
             GameMode[] result = (GameMode[])System.Enum.GetValues(typeof(GameMode));
             string gm = (string)PhotonNetwork.CurrentRoom.CustomProperties[NetworkKeys.GameModeKey];
@@ -240,7 +240,7 @@ public class NetworkHelper : MonoBehaviourPun {
         {
             bool b = false;
             GameMode m = GetGameMode;
-            if (m == GameMode.FFA) { b = true; }
+            if (m == GameMode.FreeMatch) { b = true; }
             return b;
         }
     }
@@ -252,7 +252,7 @@ public class NetworkHelper : MonoBehaviourPun {
         {
             bool b = false;
             GameMode m = GetGameModeUpdated;
-            if (m == GameMode.FFA) { b = true; }
+            if (m == GameMode.FreeMatch) { b = true; }
             return b;
         }
     }

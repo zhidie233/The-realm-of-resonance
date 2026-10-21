@@ -79,7 +79,7 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             yield break;
         }
         while (!GameConfig.isDataCached) { yield return null; }
-        if (!GameConfig.Instance.UseLobbyMessenger)
+        if (!GameConfig.Instance.lobbyChatEnabled)
         {
             ChatRoot.SetActive(false);
             this.enabled = false;
@@ -330,7 +330,7 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
         this.ChatPanel.gameObject.SetActive(true);
         this.chatClient.SetOnlineStatus(ChatUserStatus.Online); // You can set your online state (without a mesage).
         ChannelText.text = selectedChannelName.ToUpper();
-        ChatButton.SetActive(GameConfig.Instance.UseLobbyMessenger);
+        ChatButton.SetActive(GameConfig.Instance.lobbyChatEnabled);
         this.chatClient.SetOnlineStatus(ChatUserStatus.Online);
         Debug.Log("Lobby Chat connected");
     }

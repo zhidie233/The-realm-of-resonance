@@ -93,7 +93,7 @@ public class PlayerConfig : NetworkHelper
         gameObject.layer = GameConfig.TagsAndLayerSettings.GetLocalPlayerLayerIndex();
 
         armsMaterial?.SelectTeamMaterial(PlayerTeam);
-        if (GameConfig.Instance.doSpawnHandMeshEffect)
+        if (GameConfig.Instance.spawnHandsVisual)
         {
             StartCoroutine(DoSpawnLoop());
         }
@@ -133,7 +133,7 @@ public class PlayerConfig : NetworkHelper
     {
         if(carrierPoint == null)
         {
-            var pa = GetComponent<PlayerReferencesHandler>().playerAnimations;
+            var pa = GetComponent<PlayerRig>().playerAnimations;
             if (pa != null)
             {
                 Animator animator = pa.Animator;
@@ -153,7 +153,7 @@ public class PlayerConfig : NetworkHelper
 
     public void DoSpawnWeaponRenderEffect(Renderer[] renderers)
     {
-        if (!GameConfig.Instance.doSpawnHandMeshEffect) return;
+        if (!GameConfig.Instance.spawnHandsVisual) return;
         if (currentWeaponMaterials.Count > 0)
         {
             //设置默认颜色
@@ -180,7 +180,7 @@ public class PlayerConfig : NetworkHelper
     IEnumerator DoSpawnLoop()
     {
         float d = 0;
-        float st = GameConfig.Instance.SpawnProtectedTime;
+        float st = GameConfig.Instance.spawnShieldTime;
         float value = 0;
         Color teamColor = PlayerTeam.GetTeamColor();
         while (d < 1)
@@ -215,12 +215,12 @@ public class PlayerConfig : NetworkHelper
     public PhotonView View { get { return photonView; } }
     public bool isTeamMate { get { return (PlayerTeam == NetworkWrapper.LocalPlayer.GetPlayerTeam() && !isOneTeamMode); } }
 
-    private PlayerReferencesHandler _playerReferences;
-    public PlayerReferencesHandler playerReferences
+    private PlayerRig _playerReferences;
+    public PlayerRig playerReferences
     {
         get
         {
-            if (_playerReferences == null) _playerReferences = GetComponentInParent<PlayerReferencesHandler>();
+            if (_playerReferences == null) _playerReferences = GetComponentInParent<PlayerRig>();
             return _playerReferences;
         }
     }

@@ -45,13 +45,13 @@ public class FirearmPickUpEditor : Editor
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.BeginVertical("box");
         if (!serializedObject.isEditingMultipleObjects)
-            script.GunID = EditorGUILayout.Popup("Gun ID ", script.GunID, GameConfig.Instance.AllWeaponStringList(), EditorStyles.toolbarDropDown);
-        if (info != null && info.GunIcon != null)
+            script.GunID = EditorGUILayout.Popup("Gun ID ", script.GunID, GameConfig.Instance.WeaponStringList(), EditorStyles.toolbarDropDown);
+        if (info != null && info.WeaponIcon != null)
         {
             GUILayout.Space(5);
             GUILayout.BeginHorizontal();
             GUILayout.FlexibleSpace();
-            Texture2D t = info.GunIcon.texture;
+            Texture2D t = info.WeaponIcon.texture;
             GUILayout.Label(t, GUILayout.MaxWidth(150), GUILayout.Height(75));
             GUILayout.FlexibleSpace();
             EditorGUILayout.EndHorizontal();

@@ -11,7 +11,7 @@ using Object = UnityEngine.Object;
        public Object m_Scene;
        [HideInInspector] public string RealSceneName;
        [SpritePreview] public Sprite Preview;
-       public List<GameMode> NoAllowedGameModes = new List<GameMode>();
+       public List<GameMode> BlockedModes = new List<GameMode>();
 
        /// <summary>
        /// 从给定模式列表中返回此地图允许的游戏模式。
@@ -22,7 +22,7 @@ using Object = UnityEngine.Object;
            var list = new List<GameModeSettings>();
            for (int i = 0; i < allAvailables.Length; i++)
            {
-               if (!NoAllowedGameModes.Contains(allAvailables[i].gameMode))
+               if (!BlockedModes.Contains(allAvailables[i].gameMode))
                {
                    list.Add(allAvailables[i]);
                }

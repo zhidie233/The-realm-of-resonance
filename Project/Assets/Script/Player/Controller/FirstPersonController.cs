@@ -112,7 +112,7 @@ public class FirstPersonController : FirstPersonControllerBase
     private readonly Vector3 feetPositionOffset = new Vector3(0, 0.8f, 0);
     private float slideForce = 0;
     private float lastSlideTime = 0;
-    private PlayerReferencesHandler playerReferences;
+    private PlayerRig playerReferences;
     private Vector3 forwardVector = Vector3.forward;
     private PlayerState lastState = PlayerState.Idle;
     private bool forcedCrouch = false;
@@ -129,7 +129,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
         base.Awake();
         _transform = transform;
-        playerReferences = GetComponent<PlayerReferencesHandler>();
+        playerReferences = GetComponent<PlayerRig>();
         _characterController = playerReferences.characterController;
         defaultCameraRPosition = CameraRoot.localPosition;
         _audioSource = gameObject.AddComponent<AudioSource>();
@@ -191,7 +191,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
         GroundDetection();
         //如果玩家焦点在游戏内
-        if (LobbyMenu.Instance.isCursorLocked && !GameConfig.Instance.isChating)
+        if (LobbyMenu.Instance.isCursorLocked && !GameConfig.Instance.isChatOpen)
         {
             //确定玩家速度
             GetInput(out float s);

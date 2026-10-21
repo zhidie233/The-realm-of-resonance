@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class PlayerReferencesHandler : PlayerReferencesCommon
+public class PlayerRig : PlayerReferencesCommon
 {
     public PlayerNetworkHandler playerNetwork;
     public FirstPersonControllerBase firstPersonController;
@@ -14,7 +14,7 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
     public KickbackBase recoil;
     public CameraImpulseBase cameraShaker;
     public ViewRayBase cameraRay;
-    public WeaponStrideBase weaponBob;
+    public SwayStrideBase weaponBob;
     public WeaponDriftBase weaponSway;
     public HitBoxManager hitBoxManager;
     public CameraMotionRigBase cameraMotion;
@@ -84,7 +84,7 @@ public class PlayerReferencesHandler : PlayerReferencesCommon
         }
     }
 
-    public static PlayerReferencesHandler LocalPlayer
+    public static PlayerRig LocalPlayer
     {
         get
         {

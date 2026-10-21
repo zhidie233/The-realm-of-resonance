@@ -16,8 +16,8 @@ public static class GameEvents
     /// <summary>
     /// 本地玩家呼叫空投时触发
     /// </summary>
-    public delegate void EventAirDrop(Vector3 m_position, int type);
-    public static EventAirDrop onAirKit;
+    public delegate void EventAirSupply(Vector3 m_position, int type);
+    public static EventAirSupply onAirSupply;
 
     /// <summary>
     /// 本地玩家在游戏中拾取弹药时触发
@@ -209,7 +209,7 @@ public static class GameEvents
     /// <summary>
     /// 呼叫新补给时触发
     /// </summary>
-    public static void DispatchDropEvent(Vector3 t_position, int type) => onAirKit?.Invoke(t_position, type);
+    public static void DispatchDropEvent(Vector3 t_position, int type) => onAirSupply?.Invoke(t_position, type);
 
     /// <summary>
     /// 拾取弹药时触发

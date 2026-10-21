@@ -29,7 +29,7 @@ public class NetworkStats : MonoBehaviour, IConnectionCallbacks
     IEnumerator Start()
     {
         while (!GameConfig.isDataCached) { yield return null; }
-        if (!GameConfig.Instance.ShowNetworkStats) { Destroy(gameObject); yield break; }
+        if (!GameConfig.Instance.showNetGraph) { Destroy(gameObject); yield break; }
 
         PhotonNetwork.AddCallbackTarget(this);
         NetworkStats pns = FindObjectOfType<NetworkStats>();

@@ -25,7 +25,7 @@ public class DeathCamUI :  DeathCamUIBase
         
         content.SetActive(true);
         FirearmData info = GameConfig.Instance.GetWeapon(kcinfo.GunID);
-        GunImage.sprite = info.GunIcon;
+        GunImage.sprite = info.WeaponIcon;
         GunNameText.text = info.Name.ToUpper();
         killer = killer.Replace("(die)", "");
         KillerNameText.text = killer;
@@ -57,7 +57,7 @@ public class DeathCamUI :  DeathCamUIBase
     IEnumerator RespawnCountDown()
     {
         float d = 0;
-        float rt = GameConfig.Instance.PlayerRespawnTime;
+        float rt = GameConfig.Instance.respawnDelay;
         while (d < 1)
         {
             d += Time.deltaTime / rt;

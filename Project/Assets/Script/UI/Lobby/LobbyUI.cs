@@ -26,7 +26,7 @@ public class LobbyUI : MonoBehaviour
     public Image LevelIcon;
     public TMP_InputField PlayerNameField = null;
     [SerializeField] private TMP_Dropdown ServersDropdown = null;
-    public FriendListUI FriendUI;
+    public ContactListUI FriendUI;
     public LevelUI m_LevelUI;
     public GameObject overAllEmptyLoading;
     public ConfirmationWindow confirmationWindow;
@@ -159,7 +159,7 @@ public class LobbyUI : MonoBehaviour
         InputHandler.Initialize();
         InputHandler.CheckGamePadRequired();
 
-        if (GameConfig.Instance.MasterCanKickPlayers)
+        if (GameConfig.Instance.hostCanRemovePlayers)
         {
             PhotonNetwork.EnableCloseConnection = true;
         }

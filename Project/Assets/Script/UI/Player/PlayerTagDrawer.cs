@@ -14,7 +14,7 @@ public class PlayerTagDrawer : PlayerTagBase
     public float hideDistance = 25;
 
     [Header("References")]
-    public PlayerTagStyle StylePresent;
+    public NameplateStyle StylePresent;
     [FormerlySerializedAs("m_Target")]
     public Transform positionReference;
     #endregion
@@ -33,7 +33,7 @@ public class PlayerTagDrawer : PlayerTagBase
     {
         base.Awake();
         healthManager = GetComponent<PlayerHealthManagerBase>();
-        ShowHealthBar = GameConfig.Instance.ShowTeamMateHealthBar;
+        ShowHealthBar = GameConfig.Instance.allyHealthBars;
         isFinish = MatchTimeManagerBase.Instance.IsTimeUp();
         this.myTransform = this.transform;
 

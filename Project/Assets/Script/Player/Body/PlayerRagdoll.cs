@@ -5,7 +5,7 @@ public class PlayerRagdoll : PlayerRagdollBase
 {
     #region Public members
     [GameToggle] public bool ApplyVelocityToRagdoll = true;
-    public PlayerReferencesHandler playerReferences;
+    public PlayerRig playerReferences;
     public Transform RightHand;
     public Transform PelvisBone;
     public Collider[] playerColliders;
@@ -90,7 +90,7 @@ public class PlayerRagdoll : PlayerRagdollBase
             }
         }
 
-        if (info.AutoDestroy) Destroy(gameObject, GameConfig.Instance.PlayerRespawnTime);
+        if (info.AutoDestroy) Destroy(gameObject, GameConfig.Instance.respawnDelay);
     }
 
     /// <summary>

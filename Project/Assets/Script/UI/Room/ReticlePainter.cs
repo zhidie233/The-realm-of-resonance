@@ -87,7 +87,7 @@ public class ReticlePainter : ReticleBase
         }
         GameEvents.onLocalPlayerDeath += OnLocalDeath;
         GameEvents.onLocalPlayerStateChanged += OnLocalPlayerStateChange;
-        RootContent.gameObject.SetActive(GameConfig.Instance.showCrosshair);
+        RootContent.gameObject.SetActive(GameConfig.Instance.reticleEnabled);
     }
 
     protected override void OnDisable()
@@ -162,7 +162,7 @@ public class ReticlePainter : ReticleBase
 
     public override void Show(bool show)
     {
-        if (Block || !GameConfig.Instance.showCrosshair)
+        if (Block || !GameConfig.Instance.reticleEnabled)
             return;
 
         RootContent.gameObject.SetActive(show);

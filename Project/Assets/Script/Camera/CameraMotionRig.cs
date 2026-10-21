@@ -14,13 +14,13 @@ public class CameraMotionRig : CameraMotionRigBase
     private float sideTilt = 0;
     private Quaternion rotationMotion, extraRotation;
     private bool isSliding = false;
-    private PlayerReferencesHandler playerRefs;
+    private PlayerRig playerRefs;
     #endregion
 
     protected override void Awake()
     {
         base.Awake();
-        playerRefs = GetComponentInParent<PlayerReferencesHandler>();
+        playerRefs = GetComponentInParent<PlayerRig>();
         m_breatingAmplitude = motionSettings.breatheAmplitude;
         rotationMotion = CachedTransform.localRotation;
     }
@@ -29,7 +29,7 @@ public class CameraMotionRig : CameraMotionRigBase
     {
         base.OnEnable();
         GameEvents.onPlayerLand += OnSmallImpact;
-        wiggleMotion = GameConfig.Instance.playerCameraWiggle;
+        wiggleMotion = GameConfig.Instance.cameraSwayEnabled;
         GameEvents.onLocalPlayerStateChanged += OnPlayerStateChanged;
     }
 

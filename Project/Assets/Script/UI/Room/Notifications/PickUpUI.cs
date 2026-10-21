@@ -43,7 +43,7 @@ public class PickUpUI : PickUpUIBase
         Show(new DisplayInformation()
         {
             Text = t,
-            Icon = info.GunIcon,
+            Icon = info.WeaponIcon,
             InputName = inputName
         });
         CacheGunPickUp = gunPickUp;

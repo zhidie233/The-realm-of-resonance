@@ -1,13 +1,13 @@
 ﻿public enum GameMode
 {
-    TDM,
-    FFA,
-    CTF,
-    SND,
-    CP,
-    GR,
-    BR,
-    ELIM,
-    DM,
-    KC,
+    TeamMatch,
+    FreeMatch,
+    CaptureMatch,
+    BombMatch,
+    PointMatch,
+    RaceMatch,
+    RoyaleMatch,
+    Wipeout,
+    BreachMatch,
+    TallyMatch,
 }

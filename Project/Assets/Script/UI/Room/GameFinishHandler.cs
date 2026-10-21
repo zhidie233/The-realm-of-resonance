@@ -31,7 +31,7 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
         int kills = NetworkWrapper.LocalPlayer.GetKills();
 
         // 若机器人击杀不计入玩家数据
-        if (GameConfig.Instance.howConsiderBotsEliminations != BotKillPolicy.SameAsRealPlayers)
+        if (GameConfig.Instance.botKillCredit != BotKillPolicy.SameAsRealPlayers)
         {
             if (RoomSettings.TryGetMatchPersistData("bot-kills", out var value))
             {
@@ -46,17 +46,17 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
         if (kills <= 0) { kd = -deaths; }
         else if (deaths > 0) { kd = kills / deaths; }
         int timePlayed = Mathf.RoundToInt(GameController.Instance.PlayedTime);
-        int scorePerTime = timePlayed * GameConfig.Instance.ScoreReward.ScorePerTimePlayed;
-        int hsscore = GameController.Instance.Headshots * GameConfig.Instance.ScoreReward.ScorePerHeadShot;
+        int scorePerTime = timePlayed * GameConfig.Instance.matchScore.PerMinuteScore;
+        int hsscore = GameController.Instance.Headshots * GameConfig.Instance.matchScore.HeadshotExtraReward;
         bool winner = GameController.Instance.isLocalPlayerWinner();
-        int winScore = (winner) ? GameConfig.Instance.ScoreReward.ScoreForWinMatch : 0;
+        int winScore = (winner) ? GameConfig.Instance.matchScore.WinMatchReward : 0;
         PlayerNameText.text = NetworkWrapper.NickName;
         int tscore = score + winScore + scorePerTime;
 
         int coins = 0;
-        if (tscore > 0 && GameConfig.Instance.VirtualCoins.CoinScoreValue > 0 && tscore > GameConfig.Instance.VirtualCoins.CoinScoreValue)
+        if (tscore > 0 && GameConfig.Instance.wallet.CoinScoreValue > 0 && tscore > GameConfig.Instance.wallet.CoinScoreValue)
         {
-            coins = tscore / GameConfig.Instance.VirtualCoins.CoinScoreValue;
+            coins = tscore / GameConfig.Instance.wallet.CoinScoreValue;
         }
         KillsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Kills.Localized(126).ToUpper(), kills);
         DeathsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Deaths.Localized(58, true).ToUpper(), deaths);
@@ -70,7 +70,7 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
 
         if (coins > 0)
         {
-            GameConfig.Instance.VirtualCoins.AddCoins(coins, NetworkWrapper.NickName);
+            GameConfig.Instance.wallet.AddCoins(coins, NetworkWrapper.NickName);
         }
         int oldsavedScore = PlayerPrefs.GetInt(NetworkKeys.GetUniqueKeyForPlayer("score", LocalName), 0);
         oldsavedScore += tscore;

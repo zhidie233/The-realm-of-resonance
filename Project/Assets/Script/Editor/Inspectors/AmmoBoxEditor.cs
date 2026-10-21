@@ -32,7 +32,7 @@ using UnityEditor;
                GUILayout.Space(2);
                if (!script.isGlobal)
                {
-                   script.ForGun = EditorGUILayout.Popup("适用枪械", script.ForGun, GameConfig.Instance.AllWeaponStringList(), EditorStyles.toolbarPopup);
+                   script.ForGun = EditorGUILayout.Popup("适用枪械", script.ForGun, GameConfig.Instance.WeaponStringList(), EditorStyles.toolbarPopup);
                    GUILayout.Space(2);
                }
                script.Bullets = EditorGUILayout.IntField("子弹数", script.Bullets);

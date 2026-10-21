@@ -100,7 +100,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         if (NetworkWrapper.IsConnected) return;
 
         connectionState = LobbyConnectionState.Connecting;
-        PhotonNetwork.GameVersion = GameConfig.Instance.GameVersion;
+        PhotonNetwork.buildVersion = GameConfig.Instance.buildVersion;
         AuthenticationValues authValues = new AuthenticationValues(NetworkWrapper.NickName);
 
 
@@ -178,7 +178,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     public void SetNickName(string nick)
     {
         nick = nick.Replace("\n", "").Trim();
-        if (GameConfig.Instance.verifySingleSession)
+        if (GameConfig.Instance.guardDuplicateSessions)
         {
             if (string.IsNullOrEmpty(NetworkWrapper.NickName))
             {
@@ -214,13 +214,13 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         if (!rememberMe)
         {
             string storedNick = NetworkKeys.GetUniqueKey("playername");
-            if (!PlayerPrefs.HasKey(storedNick) || !GameConfig.Instance.RememberPlayerName)
+            if (!PlayerPrefs.HasKey(storedNick) || !GameConfig.Instance.persistNickname)
             {
-                CachePlayerName = string.Format(GameConfig.Instance.guestNameFormat, Random.Range(1, 9999));
+                CachePlayerName = string.Format(GameConfig.Instance.visitorNameFormat, Random.Range(1, 9999));
             }
-            else if (GameConfig.Instance.RememberPlayerName)
+            else if (GameConfig.Instance.persistNickname)
             {
-                CachePlayerName = PlayerPrefs.GetString(storedNick, string.Format(GameConfig.Instance.guestNameFormat, Random.Range(1, 9999)));
+                CachePlayerName = PlayerPrefs.GetString(storedNick, string.Format(GameConfig.Instance.visitorNameFormat, Random.Range(1, 9999)));
             }
             LobbyUI.Instance.PlayerNameField.text = CachePlayerName;
             SetNickName(CachePlayerName);
@@ -330,30 +330,30 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     {
         Debug.Log("No games to join found on matchmaking, creating one.");
         //创建随机房间属性
-        int scid = Random.Range(0, GameConfig.Instance.AllScenes.Count);
-        var mapInfo = GameConfig.Instance.AllScenes[scid];
+        int scid = Random.Range(0, GameConfig.Instance.SceneTable.Count);
+        var mapInfo = GameConfig.Instance.SceneTable[scid];
 
         var allModes = mapInfo.GetAllowedGameModes(GameModes);
         int modeRandom = Random.Range(0, allModes.Length);
         var gameMode = allModes[modeRandom];
 
         int maxPlayersRandom = Random.Range(0, gameMode.maxPlayers.Length);
-        int timeRandom = Random.Range(0, gameMode.timeLimits.Length);
-        int randomGoal = Random.Range(0, gameMode.GameGoalsOptions.Length);
+        int timeRandom = Random.Range(0, gameMode.roundTimes.Length);
+        int randomGoal = Random.Range(0, gameMode.GoalValueOptions.Length);
 
         var roomInfo = new GameRoomInfo();
         roomInfo.roomName = string.Format("[PUBLIC] {0}{1}", NetworkWrapper.NickName.Substring(0, 2), Random.Range(0, 9999));
         roomInfo.gameMode = gameMode.gameMode;
-        roomInfo.time = gameMode.timeLimits[timeRandom];
+        roomInfo.time = gameMode.roundTimes[timeRandom];
         roomInfo.sceneName = mapInfo.RealSceneName;
         roomInfo.roundStyle = gameMode.GetAllowedRoundMode();
-        roomInfo.autoTeamSelection = gameMode.AutoTeamSelection;
+        roomInfo.autoAssignTeams = gameMode.AutoAssignTeams;
         roomInfo.mapName = mapInfo.ShowName;
         roomInfo.goal = gameMode.GetGoalValue(randomGoal);
         roomInfo.friendlyFire = true;
         roomInfo.maxPing = MaxPing[CurrentMaxPing];
         roomInfo.password = string.Empty;
-        roomInfo.withBots = gameMode.supportBots;
+        roomInfo.withBots = gameMode.botsEnabled;
         roomInfo.maxPlayers = gameMode.maxPlayers[maxPlayersRandom];
 
         CreateRoom(roomInfo);
@@ -384,7 +384,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         roomOption[NetworkKeys.GameModeKey] = roomInfo.gameMode.ToString();
         roomOption[NetworkKeys.SceneNameKey] = roomInfo.sceneName;
         roomOption[NetworkKeys.RoomRoundKey] = roomInfo.roundStyle;
-        roomOption[NetworkKeys.TeamSelectionKey] = roomInfo.autoTeamSelection;
+        roomOption[NetworkKeys.TeamSelectionKey] = roomInfo.autoAssignTeams;
         roomOption[NetworkKeys.CustomSceneName] = roomInfo.mapName;
         roomOption[NetworkKeys.RoomGoal] = roomInfo.goal;
         roomOption[NetworkKeys.RoomFriendlyFire] = roomInfo.friendlyFire;
@@ -478,15 +478,15 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
     void SetUpGameModes()
     {
-        var gameModes = new List<GameModeSettings>();
-        for (int i = 0; i < GameConfig.Instance.gameModes.Count; i++)
+        var gameModeTable = new List<GameModeSettings>();
+        for (int i = 0; i < GameConfig.Instance.gameModeTable.Count; i++)
         {
-            if (GameConfig.Instance.gameModes[i].isEnabled)
+            if (GameConfig.Instance.gameModeTable[i].isEnabled)
             {
-                gameModes.Add(GameConfig.Instance.gameModes[i]);
+                gameModeTable.Add(GameConfig.Instance.gameModeTable[i]);
             }
         }
-        GameModes = gameModes.ToArray();
+        GameModes = gameModeTable.ToArray();
     }
 
     private void OnApplicationQuit()
@@ -499,9 +499,9 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     void SetLobbyMessenger(bool connect)
     {
         if (LobbyMessenger.Instance == null) return;
-        if (!GameConfig.Instance.UseLobbyMessenger) return;
+        if (!GameConfig.Instance.lobbyChatEnabled) return;
 
-        if (connect) { LobbyMessenger.Instance.Connect(GameConfig.Instance.GameVersion); }
+        if (connect) { LobbyMessenger.Instance.Connect(GameConfig.Instance.buildVersion); }
         else { LobbyMessenger.Instance.Disconnect(); }
     }
 
@@ -656,7 +656,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
     public void OnJoinedRoom()
     {
-        if (!GameCore.GameData.UsingWaitingRoom())
+        if (!GameCore.GameData.UsingReadyRoom())
         {
             Debug.Log($"Local client joined to the room '{NetworkWrapper.CurrentRoom.Name}'");
             StartCoroutine(MoveToGameScene());
@@ -698,11 +698,11 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         }
     }
 
-    public void OnFriendListUpdate(List<FriendInfo> friendList)
+    public void OnContactListUpdate(List<ContactInfo> contactList)
     {
         if (string.IsNullOrEmpty(NetworkWrapper.NickName))
         {
-            foreach (var player in friendList)
+            foreach (var player in contactList)
             {
                 if (player.UserId == CachePlayerName && player.IsOnline)
                 {

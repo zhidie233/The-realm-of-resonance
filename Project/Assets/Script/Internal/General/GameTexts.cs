@@ -1,15 +1,15 @@
 ﻿public static class GameTexts 
 {
     public static string Players = "玩家";
-    public static string TDM = "团队竞赛";
-    public static string FFA = "自由混战";
-    public static string CTF = "夺旗模式";
-    public static string SND = "搜索与摧毁";
-    public static string CP = "占领据点";
-    public static string GR = "枪械竞速";
-    public static string LSM = "最后一人";
-    public static string ELIM = "歼灭模式";
-    public static string KC = "确认击杀";
+    public static string TeamMatch = "团队竞赛";
+    public static string FreeMatch = "自由混战";
+    public static string CaptureMatch = "夺旗模式";
+    public static string BombSiteRescue = "搜索与摧毁";
+    public static string PointMatch = "占领据点";
+    public static string RaceMatch = "枪械竞速";
+    public static string LastStand = "最后一人";
+    public static string WipeoutMode = "歼灭模式";
+    public static string TallyMode = "确认击杀";
 
     public static string PickUpMedicalKit = "拾取医疗包";
     public static string PickUpAmmoKit = "拾取弹药";
@@ -51,7 +51,7 @@
     public static string FinalWinner = "赢得了本回合!";
     public static string NoRoomsCreated = "尚未创建房间，请创建一个房间以开始游戏";
     public static string Spectators = "<b>{0}</b> 名旁观者";
-    public static string WaitingPlayers = "等待玩家加入 <b>{0}/{1}</b>";
+    public static string ReadyPlayers = "等待玩家加入 <b>{0}/{1}</b>";
     public static string RespawnIn = "复活剩余: {0}";
     public static string LoadingLocalContent = "正在加载本地游戏内容...";
     public static string ConnectingToGameServer = "正在连接到服务器...";

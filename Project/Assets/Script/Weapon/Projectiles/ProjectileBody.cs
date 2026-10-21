@@ -44,7 +44,7 @@ public class ProjectileBody : ProjectileBase
         {
             trailRenderer.Clear();
             trailRenderer.enabled = false;
-            if (GameConfig.Instance.showProjectilesTrails)
+            if (GameConfig.Instance.projectileTrailsEnabled)
             {
                 this.InvokeAfter(0.2f, () =>
                 {

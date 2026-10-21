@@ -14,7 +14,7 @@ public class AIBotHealth : PlayerHealthManagerBase
     #region Private members
     private AIBotCore m_AIShooter;
     private int LastActorEnemy = -1;
-    private RepetingDamageInfo repetingDamageInfo;
+    private RepeatHitDamage repeatHitDamage;
     private AIBotReferences references;
     private AIBotCore shooterAgent;
     #endregion
@@ -167,7 +167,7 @@ public class AIBotHealth : PlayerHealthManagerBase
 
             KillReportEntry.Instance.SendKillMessageEvent(feed);
 
-            var killConsideration = GameConfig.Instance.howConsiderBotsEliminations;
+            var killConsideration = GameConfig.Instance.botKillCredit;
             if (killConsideration != BotKillPolicy.DoNotCountAtAll)
             {
                 if (isOneTeamMode)
@@ -190,11 +190,11 @@ public class AIBotHealth : PlayerHealthManagerBase
                 if (ishead)
                 {
                     GameController.Instance.Headshots++;
-                    score = GameConfig.Instance.ScoreReward.ScorePerKill + GameConfig.Instance.ScoreReward.ScorePerHeadShot;
+                    score = GameConfig.Instance.matchScore.KillReward + GameConfig.Instance.matchScore.HeadshotExtraReward;
                 }
                 else
                 {
-                    score = GameConfig.Instance.ScoreReward.ScorePerKill;
+                    score = GameConfig.Instance.matchScore.KillReward;
                 }
 
                 if (isOneTeamMode) NetworkWrapper.LocalPlayer.PostScore(score);
@@ -213,7 +213,7 @@ public class AIBotHealth : PlayerHealthManagerBase
             GameEvents.DispatchLocalKillEvent(localKillInfo);
 
             //更新队伍得分
-            GameController.Instance.SetPoint(1, GameMode.TDM, team);
+            GameController.Instance.SetPoint(1, GameMode.TeamMatch, team);
 
         }
         //如果被另一个机器人击杀
@@ -260,7 +260,7 @@ public class AIBotHealth : PlayerHealthManagerBase
             }
         }//else, (if other player kill this bot) -> do nothing.
 
-        if (GameConfig.Instance.showDeathIcons && !isOneTeamMode)
+        if (GameConfig.Instance.deathIconsEnabled && !isOneTeamMode)
         {
             if (m_AIShooter.AITeam == NetworkWrapper.LocalPlayer.GetPlayerTeam())
             {
@@ -302,34 +302,34 @@ public class AIBotHealth : PlayerHealthManagerBase
         this.photonView.RPC(AIBotAgent.RPC_NAME, RpcTarget.AllBuffered, deathData);//callback is in AIBotAgent.cs
     }
 
-    public override void DoRepetingDamage(RepetingDamageInfo info)
+    public override void DoRepeatHitDamage(RepeatHitDamage info)
     {
-        repetingDamageInfo = info;
-        InvokeRepeating(nameof(MakeDamageRepeting), 0, info.Rate);
+        repeatHitDamage = info;
+        InvokeRepeating(nameof(MakeRepeatHitDamage), 0, info.Rate);
     }
 
-    void MakeDamageRepeting()
+    void MakeRepeatHitDamage()
     {
-        if (repetingDamageInfo == null)
+        if (repeatHitDamage == null)
         {
-            CancelRepetingDamage();
+            CancelRepeatHit();
             return;
         }
 
-        var damageinfo = repetingDamageInfo.DamageInfo;
+        var damageinfo = repeatHitDamage.DamageInfo;
         if (damageinfo == null)
         {
             damageinfo = new DamageInfo();
             damageinfo.Direction = Vector3.zero;
             damageinfo.Cause = DamageCause.Map;
         }
-        damageinfo.Damage = repetingDamageInfo.Damage;
+        damageinfo.Damage = repeatHitDamage.Damage;
         DoDamage(damageinfo.Damage, "[Burn]", damageinfo.Direction, GameController.LocalPlayerViewID, false, NetworkWrapper.LocalPlayer.GetPlayerTeam(), false);
     }
 
-    public override void CancelRepetingDamage()
+    public override void CancelRepeatHit()
     {
-        CancelInvoke(nameof(MakeDamageRepeting));
+        CancelInvoke(nameof(MakeRepeatHitDamage));
     }
 
     public override void SetHealth(int healthToAdd, bool overrideHealth)

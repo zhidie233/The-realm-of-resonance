@@ -36,7 +36,7 @@ public class CountDownHandler : CountDownBase
         }
 
 
-        countDown = GameConfig.Instance.CountDownTime;
+        countDown = GameConfig.Instance.prematchTime;
         MatchTimeManagerBase.Instance.SetTimeState(RoomTimeState.Countdown, true);
         GameController.Instance.SetGameState(MatchState.Starting);
         IsCounting = true;

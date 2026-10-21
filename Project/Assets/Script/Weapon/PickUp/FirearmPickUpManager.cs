@@ -62,14 +62,14 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
     void NetworkInstanceWeapon(Hashtable data)
     {
         FirearmData ginfo = GameConfig.Instance.GetWeapon((int)data["gunID"]);
-        if (ginfo.PickUpPrefab == null)
+        if (ginfo.WorldPrefab == null)
         {
             Debug.LogError(string.Format("The weapon: '{0}' not have a pick up prefab in Gun info", ginfo.Name));
             return;
         }
 
         GameObject trow;
-        trow = ginfo.PickUpPrefab.gameObject;
+        trow = ginfo.WorldPrefab.gameObject;
 
         int[] info = (int[])data["info"];
         GameObject p = FindPlayerRoot(info[2]);

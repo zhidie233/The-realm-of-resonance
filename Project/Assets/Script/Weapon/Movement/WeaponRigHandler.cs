@@ -41,7 +41,7 @@ public class WeaponRigHandler : WeaponRigBase
     #region Private members
     private FirearmInventory GunManager;
     private bool cancelReload = false;
-    private PlayerReferencesHandler playerReferences;
+    private PlayerRig playerReferences;
     private AudioSource m_source;
     private FirearmType gunType = FirearmType.Machinegun;
     [NonSerialized] private FirearmController m_linkWeapon = null;

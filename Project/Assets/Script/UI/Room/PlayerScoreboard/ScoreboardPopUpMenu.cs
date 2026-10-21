@@ -108,7 +108,7 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
     /// <param name="option"></param>
     public void OnOptionClicked(int option)
     {
-        // 踢人事件在 KickPollUI.cs 中处理
+        // 踢人事件在 EjectPollUI.cs 中处理
         onScoreboardMenuAction?.Invoke(option);
         SetActive(false);
     }

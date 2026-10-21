@@ -153,11 +153,11 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
     public void Initialize()
     {
         //检查这是否是当前房间的游戏模式
-        if (GameController.Instance.IsGameMode(GameMode.CTF, this))
+        if (GameController.Instance.IsGameMode(GameMode.CaptureMatch, this))
         {
             Content.SetActive(true);
             NetworkWrapper.Instance.AddCallback(NetworkKeys.CaptureOfFlagMode, OnNetworkMessage);
-            GameController.Instance.WaitForPlayers(GameMode.CTF.GetGameModeInfo().RequiredPlayersToStart);
+            GameController.Instance.WaitForPlayers(GameMode.CaptureMatch.GetGameModeInfo().MinPlayersToStart);
             CaptureOfFlagUI.Instance.ShowUp();
             CapturesToWin = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.RoomGoal];
             isActive = true;

@@ -26,7 +26,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
     [SerializeField] private TextMeshProUGUI GameModeText = null;
     [SerializeField] private TextMeshProUGUI MaxPlayerText = null;
     [SerializeField] private TextMeshProUGUI MaxKillsText = null;
-    [SerializeField] private TextMeshProUGUI WaitingPlayersText = null;
+    [SerializeField] private TextMeshProUGUI ReadyPlayersText = null;
     public CanvasGroupFader blackScreen;
     public ConfirmationWindow leaveRoomConfirmation;
 
@@ -97,7 +97,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
 
     public void SetUpUI()
     {
-        if (!RoomSettings.Instance.CurrentRoomInfo.autoTeamSelection)
+        if (!RoomSettings.Instance.CurrentRoomInfo.autoAssignTeams)
         {
             PauseMenuBase.Instance.OpenMenu();
         }
@@ -116,9 +116,9 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
             MaxKillsText.text = string.Format("{0} 击杀", MaxKills);
             }
         }
-        if (GameCore.GameData.UsingWaitingRoom())
+        if (GameCore.GameData.UsingReadyRoom())
         {
-            if (NetworkWrapper.OfflineMode && !NetworkWrapper.CurrentRoom.GetRoomInfo().autoTeamSelection) return;
+            if (NetworkWrapper.OfflineMode && !NetworkWrapper.CurrentRoom.GetRoomInfo().autoAssignTeams) return;
 
             SetUpJoinButtons(true);
             SpectatorButton.SetActive(false);
@@ -131,8 +131,8 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         if (active) PauseMenuBase.Instance.OpenMenu();
         else PauseMenuBase.Instance.CloseMenu();
 
-        SetActiveChangeTeamButton(GameConfig.Instance.CanChangeTeam && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.MaxChangeTeamTimes 
-            && !RoomSettings.Instance.AutoTeamSelection && MatchTimeManagerBase.HaveTimeStarted() && ObserverModeBase.Instance.CanSelectTeam());
+        SetActiveChangeTeamButton(GameConfig.Instance.allowTeamSwitch && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.teamSwitchLimit 
+            && !RoomSettings.Instance.AutoAssignTeams && MatchTimeManagerBase.HaveTimeStarted() && ObserverModeBase.Instance.CanSelectTeam());
 
         SuicideButton.SetActive(RoomSettings.Instance.canSuicide && GameController.Instance.IsLocalPlaying);
 
@@ -223,7 +223,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         SpectatorButton.SetActive(false);
 
         if (GameController.Joined) { ChangeTeamTimes++; }
-        if (GameConfig.Instance.CanChangeTeam && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.MaxChangeTeamTimes && MatchTimeManagerBase.HaveTimeStarted())
+        if (GameConfig.Instance.allowTeamSwitch && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.teamSwitchLimit && MatchTimeManagerBase.HaveTimeStarted())
         {
             SetActiveChangeTeamButton(true);
         }
@@ -266,10 +266,10 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
 
     void OnPicUpMedKit(int Amount) => new GameLocalNotification(string.Format("+{0} 血量", Amount));
 
-    public void SetWaitingPlayersText(string text = "", bool show = false)
+    public void SetReadyPlayersText(string text = "", bool show = false)
     {
-        WaitingPlayersText.text = text;
-        WaitingPlayersText.transform.parent.gameObject.SetActive(show);
+        ReadyPlayersText.text = text;
+        ReadyPlayersText.transform.parent.gameObject.SetActive(show);
     }
 
     public void ResetRound()
@@ -279,7 +279,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         blackScreen.FadeOut(1);
         SetUpUI();
         ShowMenu(true);
-        if (!RoomSettings.Instance.AutoTeamSelection)
+        if (!RoomSettings.Instance.AutoAssignTeams)
         {
             playerScoreboards.ResetJoinButtons();
             SetUpJoinButtons();
@@ -318,7 +318,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
 
     private bool CanSelectTeamToJoin()
     {
-        return !inTeam && (!RoomSettings.Instance.AutoTeamSelection || !GameCore.GameData.UsingWaitingRoom());
+        return !inTeam && (!RoomSettings.Instance.AutoAssignTeams || !GameCore.GameData.UsingReadyRoom());
     }
 
     #region Photon Callbacks

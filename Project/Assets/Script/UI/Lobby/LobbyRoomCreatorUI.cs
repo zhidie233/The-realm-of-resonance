@@ -47,15 +47,15 @@ public class LobbyRoomCreatorUI : MonoBehaviour
         var gameMode = allModes[GameMode];
 
         MaxPlayersSelector.SetOptions(gameMode.maxPlayers.AsStringArray($" {endPoints[0]}"));
-        TimeLimitSelector.SetOptions(gameMode.timeLimits.Select(x => $"{(x / 60)} {endPoints[1]}").ToArray());
+        TimeLimitSelector.SetOptions(gameMode.roundTimes.Select(x => $"{(x / 60)} {endPoints[1]}").ToArray());
 
-        if (gameMode.GameGoalsOptions.Length > 0)
-            GameGoalSelector.SetOptions(gameMode.GameGoalsOptions.AsStringArray($" {gameMode.GoalName}"));
+        if (gameMode.GoalValueOptions.Length > 0)
+            GameGoalSelector.SetOptions(gameMode.GoalValueOptions.AsStringArray($" {gameMode.GoalName}"));
         else GameGoalSelector.SetOptions(new string[1] { gameMode.GoalName });
 
-        BotsActiveSelector.gameObject.SetActive(gameMode.supportBots);
-        TeamSelectionSelector.SetActive(!gameMode.AutoTeamSelection);
-        PerRoundSelector.SetActive(gameMode.RoundModeAllowed == GameModeSettings.RoundModeAllowedOptions.AllowBoth);
+        BotsActiveSelector.gameObject.SetActive(gameMode.botsEnabled);
+        TeamSelectionSelector.SetActive(!gameMode.AutoAssignTeams);
+        PerRoundSelector.SetActive(gameMode.RoundFormat == GameModeSettings.RoundFormatOptions.AllowBoth);
     }
 
     public void OnChangeGameMode(int id)
@@ -104,7 +104,7 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     public bool IsPrivate => !string.IsNullOrEmpty(roomPasswordInputField.text);
     public bool FriendlyFire => FriendlyFireSelector.CurrentSelectionAsBool();
     public bool BotsActive => BotsActiveSelector.CurrentSelectionAsBool();
-    public bool AutoTeamSelection => TeamSelectionSelector.CurrentSelectionAsBool();
+    public bool AutoAssignTeams => TeamSelectionSelector.CurrentSelectionAsBool();
     public RoundStyle GamePerRound => PerRoundSelector.CurrentSelectionAsBool() == true ? RoundStyle.Rounds : RoundStyle.OneMacht;
     #endregion
 

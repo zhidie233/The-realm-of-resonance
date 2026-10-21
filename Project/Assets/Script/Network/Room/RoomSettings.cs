@@ -14,7 +14,7 @@ public class RoomSettings : MonoBehaviourBase
     #region Public properties
     public GameMode CurrentGameMode => CurrentRoomInfo.gameMode;
     public int GameGoal => CurrentRoomInfo.goal;
-    public bool AutoTeamSelection => CurrentRoomInfo.autoTeamSelection;
+    public bool AutoAssignTeams => CurrentRoomInfo.autoAssignTeams;
     public GameRoomInfo CurrentRoomInfo { get; set; }
     public bool RoomInfoFetched { get; set; } = false;
     #endregion
@@ -24,7 +24,7 @@ public class RoomSettings : MonoBehaviourBase
     protected override void Awake()
     {
         base.Awake();
-        if ((!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom) && !GameConfig.Instance.offlineMode)
+        if ((!PhotonNetwork.IsConnected || !PhotonNetwork.InRoom) && !GameConfig.Instance.directConnectMode)
             return;
 
         ResetRoom();
@@ -52,7 +52,7 @@ public class RoomSettings : MonoBehaviourBase
         }
         table.Clear();
         //初始化存放玩家级信息的新属性
-        if (!GameCore.GameData.UsingWaitingRoom() || PhotonNetwork.OfflineMode)
+        if (!GameCore.GameData.UsingReadyRoom() || PhotonNetwork.OfflineMode)
         {
             table.Add(NetworkKeys.TeamKey, Team.None.ToString());
         }
@@ -86,15 +86,15 @@ public class RoomSettings : MonoBehaviourBase
     /// </summary>
     public void CheckAutoSpawn()
     {
-        if (CurrentRoomInfo.autoTeamSelection && !GameCore.GameData.UsingWaitingRoom())
+        if (CurrentRoomInfo.autoAssignTeams && !GameCore.GameData.UsingReadyRoom())
         {
             UIReferences.Instance.AutoTeam(true);
             UIReferences.Instance.ShowMenu(false);
             Invoke(nameof(SelectTeamAutomatically), 3);
         }
-        else if (GameCore.GameData.UsingWaitingRoom() && LocalPlayer.GetPlayerTeam() == Team.None)
+        else if (GameCore.GameData.UsingReadyRoom() && LocalPlayer.GetPlayerTeam() == Team.None)
         {
-            if (PhotonNetwork.OfflineMode && !CurrentRoomInfo.autoTeamSelection)
+            if (PhotonNetwork.OfflineMode && !CurrentRoomInfo.autoAssignTeams)
             {
                 UIReferences.Instance.SetUpUI();
                 UIReferences.Instance.SetUpJoinButtons(true);
@@ -121,20 +121,20 @@ public class RoomSettings : MonoBehaviourBase
     {
         string joinText = isOneTeamMode ? GameTexts.JoinedInMatch.Localized(17) : GameTexts.JoinIn.Localized(23);
         int teamDelta = PhotonNetwork.PlayerList.GetPlayersInTeam(Team.Team1).Length;
-        int teamRecon = PhotonNetwork.PlayerList.GetPlayersInTeam(Team.Team2).Length;
+        int teamTwoCount = PhotonNetwork.PlayerList.GetPlayersInTeam(Team.Team2).Length;
         Team team = Team.All;
 
         if (!isOneTeamMode)
         {
-            if (teamDelta > teamRecon)
+            if (teamDelta > teamTwoCount)
             {
                 team = Team.Team2;
             }
-            else if (teamDelta < teamRecon)
+            else if (teamDelta < teamTwoCount)
             {
                 team = Team.Team1;
             }
-            else if (teamDelta == teamRecon)
+            else if (teamDelta == teamTwoCount)
             {
                 team = Team.Team1;
             }
@@ -149,7 +149,7 @@ public class RoomSettings : MonoBehaviourBase
         LobbyMenu.Instance.OnAutoTeam();
         UIReferences.Instance.AutoTeam(false);
 
-        if (GetGameMode.GetGameModeInfo().onRoundStartedSpawn == GameModeSettings.OnRoundStartedSpawn.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
+        if (GetGameMode.GetGameModeInfo().spawnOnRoundBegin == GameModeSettings.OnRoundBegin.WaitUntilRoundFinish && GameController.Instance.GameMatchState == MatchState.Playing)
         {
             if (LobbyMenu.Instance.onWaitUntilRoundFinish != null) { LobbyMenu.Instance.onWaitUntilRoundFinish.Invoke(team); }
             GameController.Instance.SetLocalPlayerToTeam(team);

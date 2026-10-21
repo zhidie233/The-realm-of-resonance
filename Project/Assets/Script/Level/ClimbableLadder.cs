@@ -38,10 +38,10 @@ using UnityEditor;
 
        private float LastTime = 0;
        private Vector3 topLimit, bottomLimit;
-       private PlayerReferencesHandler activePlayer;
+       private PlayerRig activePlayer;
        const float BOUND_OFFSET = 0.1f;
 
-       public void SetUpBounds(PlayerReferencesHandler player)
+       public void SetUpBounds(PlayerRig player)
        {
            activePlayer = player;
 
@@ -55,7 +55,7 @@ using UnityEditor;
 
            if (hideWeapons)
            {
-               player.gunManager.BlockAllWeapons();
+               player.gunManager.BlockWeaponTable();
            }
        }
 

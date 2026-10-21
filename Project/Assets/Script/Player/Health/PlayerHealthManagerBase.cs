@@ -40,15 +40,15 @@ public abstract class PlayerHealthManagerBase : MonoBehaviourBase
     /// <param name="replace">为 true 时用该数量替换当前生命值，否则在其上增加</param>
     public abstract void SetHealth(int amount, bool replace = false);
 
-    public abstract void DoRepetingDamage(RepetingDamageInfo info);
+    public abstract void DoRepeatHitDamage(RepeatHitDamage info);
 
-    public abstract void CancelRepetingDamage();
+    public abstract void CancelRepeatHit();
 
     public abstract void DestroyEntity();
 
     public abstract bool IsDeath();
 
-    public class RepetingDamageInfo
+    public class RepeatHitDamage
     {
         public int Damage;
         public float Rate;

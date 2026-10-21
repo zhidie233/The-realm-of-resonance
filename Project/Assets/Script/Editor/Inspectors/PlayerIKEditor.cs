@@ -61,7 +61,7 @@ public class PlayerIKEditor : Editor
             var nGun = script.transform.GetComponentInChildren<NetworkFirearm>();
             if(nGun != null)
             {
-                script.GetComponentInParent<PlayerReferencesHandler>().EditorSelectedGun = nGun;
+                script.GetComponentInParent<PlayerRig>().EditorSelectedGun = nGun;
             }
             else
             {

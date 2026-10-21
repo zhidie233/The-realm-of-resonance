@@ -249,7 +249,7 @@ MonoBehaviour:
       PrimaryIsAxis: 0
       AlternativeIsAxis: 0
       AxisValue: 1
-    - KeyName: KillStreak 1
+    - KeyName: RunStreak 1
       Description: Execute Kill Streak 1
       PrimaryKey: 257
       AlternativeKey: 0
@@ -258,7 +258,7 @@ MonoBehaviour:
       PrimaryIsAxis: 0
       AlternativeIsAxis: 0
       AxisValue: 1
-    - KeyName: KillStreak 2
+    - KeyName: RunStreak 2
       Description: Execute Kill Streak 2
       PrimaryKey: 258
       AlternativeKey: 0
@@ -267,7 +267,7 @@ MonoBehaviour:
       PrimaryIsAxis: 0
       AlternativeIsAxis: 0
       AxisValue: 1
-    - KeyName: KillStreak 3
+    - KeyName: RunStreak 3
       Description: Execute Kill Streak 3
       PrimaryKey: 259
       AlternativeKey: 0

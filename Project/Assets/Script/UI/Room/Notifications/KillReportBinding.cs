@@ -38,9 +38,9 @@ using TMPro;
        {
            KillerText.text = info.Killer;
            KilledText.text = info.Killed;
-           KillerText.color = isLocalPlayerName(info.Killer) ? GameConfig.Instance.highLightColor : info.KillerTeam.GetTeamColor();
-           KilledText.color = isLocalPlayerName(info.Killed) ? GameConfig.Instance.highLightColor : GetOppositeTeam(info.KillerTeam).GetTeamColor();
-           if (GameConfig.Instance.killFeedWeaponShowMode == KillReportWeaponShowMode.WeaponName)
+           KillerText.color = isLocalPlayerName(info.Killer) ? GameConfig.Instance.focusColor : info.KillerTeam.GetTeamColor();
+           KilledText.color = isLocalPlayerName(info.Killed) ? GameConfig.Instance.focusColor : GetOppositeTeam(info.KillerTeam).GetTeamColor();
+           if (GameConfig.Instance.deathFeedWeaponDisplay == KillReportWeaponShowMode.WeaponName)
            {
                WeaponIconImg.gameObject.SetActive(false);
                WeaponText.text = info.Message;
@@ -51,7 +51,7 @@ using TMPro;
                Sprite icon = null;
                if (info.GunID >= 0)
                {
-                   icon = GameConfig.Instance.GetWeapon(info.GunID).GunIcon;
+                   icon = GameConfig.Instance.GetWeapon(info.GunID).WeaponIcon;
                }
                else
                {

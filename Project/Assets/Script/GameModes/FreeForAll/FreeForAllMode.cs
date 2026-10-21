@@ -97,7 +97,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
     public void Initialize()
     {
         //检查这是否是当前房间的游戏模式
-        if (GameController.Instance.IsGameMode(GameMode.FFA, this))
+        if (GameController.Instance.IsGameMode(GameMode.FreeMatch, this))
         {
             GameController.Instance.SetGameState(MatchState.Starting);
             NetworkCallbacks.PlayerPropertiesUpdate += OnPlayerPropertiesUpdate;

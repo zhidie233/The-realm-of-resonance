@@ -6,7 +6,7 @@ using UnityEngine;
 public class NetworkFirearmEditor : Editor
 {
     private NetworkFirearm script;
-    private PlayerReferencesHandler playerReferences;
+    private PlayerRig playerReferences;
     private List<string> FPWeaponsAvailable = new List<string>();
     private FirearmController[] LocalGuns;
     private int selectLG = 0;
@@ -14,7 +14,7 @@ public class NetworkFirearmEditor : Editor
     private void OnEnable()
     {
         script = (NetworkFirearm)target;
-        playerReferences = script.transform.root.GetComponent<PlayerReferencesHandler>();
+        playerReferences = script.transform.root.GetComponent<PlayerRig>();
         if (playerReferences != null && playerReferences.gunManager != null)
         {
             LocalGuns = playerReferences.gunManager.transform.GetComponentsInChildren<FirearmController>(true);
@@ -175,7 +175,7 @@ public class NetworkFirearmEditor : Editor
     {
         AnimationRunner window = (AnimationRunner)EditorWindow.GetWindow(typeof(AnimationRunner));
         window.Show();
-        PlayerReferencesHandler pa = script.transform.root.GetComponent<PlayerReferencesHandler>();
+        PlayerRig pa = script.transform.root.GetComponent<PlayerRig>();
         Animator anim = pa.playerAnimations.Animator;
         pa.EditorSelectedGun = script;
 

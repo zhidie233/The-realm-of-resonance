@@ -9,87 +9,87 @@ public class GameConfig : ScriptableObject
 {
     #region Public members
     [Header("Game Settings")]
-    [GameToggle] public bool offlineMode = false;
-    [GameToggle] public bool verifySingleSession = true;
-    [GameToggle] public bool UseLobbyMessenger = true;
-    [GameToggle] public bool BulletTracer = false;
-    [GameToggle] public bool DropGunOnDeath = true;
-    [GameToggle] public bool SelfGrenadeDamage = true;
-    [GameToggle] public bool CanFireWhileRunning = true;
-    [GameToggle] public bool HealthRegeneration = true;
-    [GameToggle] public bool ShowTeamMateHealthBar = true;
-    [GameToggle] public bool CanChangeTeam = false;
-    [GameToggle] public bool ShowBlood = true;
-    [GameToggle] public bool DetectAFK = false;
-    [GameToggle] public bool MasterCanKickPlayers = true;
-    [GameToggle] public bool ArriveKitsCauseDamage = true;
-    [GameToggle] public bool CalculateNetworkFootSteps = false;
-    [GameToggle] public bool ShowNetworkStats = false;
-    [GameToggle] public bool RememberPlayerName = true;
-    [GameToggle] public bool ShowWeaponLoadout = true;
-    [GameToggle] public bool useCountDownOnStart = true;
-    [GameToggle] public bool showCrosshair = true;
-    [GameToggle] public bool showDamageIndicator = true;
-    [GameToggle] public bool doSpawnHandMeshEffect = true;
-    [GameToggle] public bool playerCameraWiggle = true;
-    [GameToggle] public bool showDeathIcons = true;
-    [GameToggle] public bool allowFallDamage = true;
-    [GameToggle] public bool realisticBullets = true;
-    [GameToggle] public bool bulletDecals = true;
-    [GameToggle] public bool showProjectilesTrails = true;
+    [GameToggle] public bool directConnectMode = false;
+    [GameToggle] public bool guardDuplicateSessions = true;
+    [GameToggle] public bool lobbyChatEnabled = true;
+    [GameToggle] public bool tracerRoundsVisual = false;
+    [GameToggle] public bool DiscardWeaponOnDeath = true;
+    [GameToggle] public bool selfExplosionDamage = true;
+    [GameToggle] public bool fireWhileSprinting = true;
+    [GameToggle] public bool autoHealthRecovery = true;
+    [GameToggle] public bool allyHealthBars = true;
+    [GameToggle] public bool allowTeamSwitch = false;
+    [GameToggle] public bool showGore = true;
+    [GameToggle] public bool watchIdlePlayers = false;
+    [GameToggle] public bool hostCanRemovePlayers = true;
+    [GameToggle] public bool AirSupplyCausesDamage = true;
+    [GameToggle] public bool syncRemoteFootsteps = false;
+    [GameToggle] public bool showNetGraph = false;
+    [GameToggle] public bool persistNickname = true;
+    [GameToggle] public bool ShowWeaponEquipment = true;
+    [GameToggle] public bool prematchCountdownEnabled = true;
+    [GameToggle] public bool reticleEnabled = true;
+    [GameToggle] public bool hitDirectionIndicator = true;
+    [GameToggle] public bool spawnHandsVisual = true;
+    [GameToggle] public bool cameraSwayEnabled = true;
+    [GameToggle] public bool deathIconsEnabled = true;
+    [GameToggle] public bool fallDamageEnabled = true;
+    [GameToggle] public bool simulatedBallistics = true;
+    [GameToggle] public bool impactDecals = true;
+    [GameToggle] public bool projectileTrailsEnabled = true;
     public AmmunitionType AmmoType = AmmunitionType.Bullets;
-    public KillReportWeaponShowMode killFeedWeaponShowMode = KillReportWeaponShowMode.WeaponIcon;
-    public LobbyJoinMethod lobbyJoinMethod = LobbyJoinMethod.WaitingRoom;
-    public DeathCam.DeathCamType killCameraType = DeathCam.DeathCamType.ObserveDeath;
-    public KillNotifier.KillNotice localKillsShowMode = KillNotifier.KillNotice.Queqe;
-    public FirearmInventory.AutoChangeOnPickup switchToPickupWeapon = FirearmInventory.AutoChangeOnPickup.OnlyOnEmptySlots;
+    public KillReportWeaponShowMode deathFeedWeaponDisplay = KillReportWeaponShowMode.WeaponIcon;
+    public LobbyAccess lobbyAccess = LobbyAccess.ReadyRoom;
+    public DeathCam.DeathCamType deathReplayMode = DeathCam.DeathCamType.WatchBody;
+    public KillNotifier.KillNotice personalKillFeedDisplay = KillNotifier.KillNotice.Queqe;
+    public FirearmInventory.SwapOnPickup swapOnPickupMode = FirearmInventory.SwapOnPickup.OnlyOnEmptySlots;
     public ObserverModeBase.LeaveSpectatorModeAction onLeaveSpectatorMode = ObserverModeBase.LeaveSpectatorModeAction.AllowSelectTeam;
     /// <summary>
     /// 决定机器人击杀如何计入真人玩家战绩
     /// 用于避免玩家靠刷机器人击杀来提升个人战绩。
     /// </summary>
-    public BotKillPolicy howConsiderBotsEliminations = BotKillPolicy.SameAsRealPlayers;
+    public BotKillPolicy botKillCredit = BotKillPolicy.SameAsRealPlayers;
 
     [Header("Rewards")]
-    public ScoreRewards ScoreReward;
-    public VirtualCoin VirtualCoins;
+    public ScoreScale matchScore;
+    public WalletEntry wallet;
 #if UNITY_2020_2_OR_NEWER
     [NonReorderable]
 #endif
     [ScriptableDrawer] public List<GameCoin> gameCoins;
 
     [Header("Settings")]
-    public string GameVersion = "1.0.0";
-    public string guestNameFormat = "Guest {0}";
-    public string botsNameFormat = "BOT {0}";
-    [Range(0, 10)] public int SpawnProtectedTime = 5; // Time were the player can't receive damage after spawn.
-    [Range(1, 60)] public int CountDownTime = 7; // Initial countdown time (when countdown is enabled)
-    [Range(1, 10)] public float PlayerRespawnTime = 5.0f; // Time that takes to respawn after the player die
-    [Range(1, 100)] public int MaxFriendsAdded = 25; // Maximum number of friends that players can add (and save)
-    [Range(1, 10)] public int BulletHitDetectionStep = 2; // Each how many frames detect bullets hits? 1 = each frame
-    public int afterMatchCountdown = 10; // The time that the game resume shown after the match finish.
-    public float AFKTimeLimit = 60; // Time limit that a player can be AFK in a match.
-    public int MaxChangeTeamTimes = 3; // Max number of times that a player can change of team per match.
-    public int maxSuicideAttempts = 3; // Max number of times that a player can suicide per match.
+    public string buildVersion = "1.0.0";
+    public string visitorNameFormat = "Guest {0}";
+    public string botTagFormat = "BOT {0}";
+    [Range(0, 10)] public int spawnShieldTime = 5; // Time were the player can't receive damage after spawn.
+    [Range(1, 60)] public int prematchTime = 7; // Initial countdown time (when countdown is enabled)
+    [Range(1, 10)] public float respawnDelay = 5.0f; // Time that takes to respawn after the player die
+    [Range(1, 100)] public int contactLimit = 25; // Maximum number of friends that players can add (and save)
+    [Range(1, 10)] public int hitTestFrameStep = 2; // Each how many frames detect bullets hits? 1 = each frame
+    public int endMatchDelay = 10; // The time that the game resume shown after the match finish.
+    public float idleKickTime = 60; // Time limit that a player can be AFK in a match.
+    public int teamSwitchLimit = 3; // Max number of times that a player can change of team per match.
+    public int selfKillLimit = 3; // Max number of times that a player can suicide per match.
     public string MainMenuScene = "MainMenu";
     public string OnDisconnectScene = "MainMenu";
-    public Color highLightColor = Color.green; // Color to highlight the local player in different UI elements.
+    public Color focusColor = Color.green; // Color to highlight the local player in different UI elements.
 
     [Header("Levels Manager")]
     [Reorderable]
-    public List<MapInfo> AllScenes = new List<MapInfo>();
+    public List<MapInfo> SceneTable = new List<MapInfo>();
 
     [Header("Weapons")]
 #if UNITY_2020_2_OR_NEWER
     [NonReorderable] // DO NOT reorder the weapons manually, it will mess up your whole setup!
 #endif
-    public List<FirearmData> AllWeapons = new List<FirearmData>();
+    public List<FirearmData> WeaponTable = new List<FirearmData>();
 
     [Header("Default Settings")]
     [ScriptableDrawer, SerializeField] private RuntimeSettingsProfile defaultSettings;
 
     [Header("Game Modes Available"), Reorderable, FormerlySerializedAs("AllGameModes")]
-    public List<GameModeSettings> gameModes = new List<GameModeSettings>();
+    public List<GameModeSettings> gameModeTable = new List<GameModeSettings>();
 
     [Header("Teams")]
     public string Team1Name = "Team1";
@@ -109,7 +109,7 @@ public class GameConfig : ScriptableObject
 
     [ScriptableDrawer] public MouseLookSettings mouseLookSettings;
 
-    [ScriptableDrawer] public WeaponSlotGuide weaponSlotRuler;
+    [ScriptableDrawer] public WeaponSlotGuide weaponSlotGuide;
 
     [ScriptableDrawer, SerializeField] private TagsAndLayersSettings tagsAndLayersSettings;
 
@@ -121,10 +121,10 @@ public class GameConfig : ScriptableObject
 
     #region Private Members
     public GameTeamInfo CurrentTeamUser { get; set; } = null;
-    [HideInInspector] public bool isChating = false;
-    [HideInInspector] public string _ProductKey = string.Empty;
-    [HideInInspector] public int _DistributionType = 2;
-    [HideInInspector] public string _SessionToken = "";
+    [HideInInspector] public bool isChatOpen = false;
+    [HideInInspector] public string appKey = string.Empty;
+    [HideInInspector] public int channelId = 2;
+    [HideInInspector] public string sessionTicket = "";
     private static NetworkWrapper PhotonGameInstance = null;
     public static bool isDataCached = false;
     private static bool isCaching = false;
@@ -180,10 +180,10 @@ public class GameConfig : ScriptableObject
     /// <returns></returns>
     public FirearmData GetWeapon(int ID)
     {
-        if (ID < 0 || ID > AllWeapons.Count - 1)
-            return AllWeapons[0];
+        if (ID < 0 || ID > WeaponTable.Count - 1)
+            return WeaponTable[0];
 
-        return AllWeapons[ID];
+        return WeaponTable[ID];
     }
 
     /// <summary>
@@ -194,16 +194,16 @@ public class GameConfig : ScriptableObject
     public int GetWeaponID(string gunName)
     {
         int id = -1;
-        if (AllWeapons.Exists(x => x.Name == gunName))
+        if (WeaponTable.Exists(x => x.Name == gunName))
         {
-            id = AllWeapons.FindIndex(x => x.Name == gunName);
+            id = WeaponTable.FindIndex(x => x.Name == gunName);
         }
         return id;
     }
 
-    public string[] AllWeaponStringList()
+    public string[] WeaponStringList()
     {
-        return AllWeapons.Select(x => x.Name).ToList().ToArray();
+        return WeaponTable.Select(x => x.Name).ToList().ToArray();
     }
 
     public int CheckPlayerName(string pName)
@@ -316,33 +316,33 @@ public class GameConfig : ScriptableObject
 #if UNITY_EDITOR
     void OnValidate()
     {
-        for (int i = 0; i < AllScenes.Count; i++)
+        for (int i = 0; i < SceneTable.Count; i++)
         {
-            if (AllScenes[i].m_Scene == null) continue;
-            AllScenes[i].RealSceneName = AllScenes[i].m_Scene.name;
+            if (SceneTable[i].m_Scene == null) continue;
+            SceneTable[i].RealSceneName = SceneTable[i].m_Scene.name;
         }
     }
 #endif
 
     #region Local Classes
     [Serializable]
-    public class ScoreRewards
+    public class ScoreScale
     {
-        public int ScorePerKill = 50;
-        public int ScorePerHeadShot = 25;
-        public int ScoreForWinMatch = 100;
+        public int KillReward = 50;
+        public int HeadshotExtraReward = 25;
+        public int WinMatchReward = 100;
         [Tooltip("Per minute played")]
-        public int ScorePerTimePlayed = 3;
+        public int PerMinuteScore = 3;
 
-        public int GetScorePerTimePlayed(int time)
+        public int GetPerMinuteScore(int time)
         {
-            if (ScorePerTimePlayed <= 0) return 0;
-            return time * ScorePerTimePlayed;
+            if (PerMinuteScore <= 0) return 0;
+            return time * PerMinuteScore;
         }
     }
 
     [Serializable]
-    public class VirtualCoin
+    public class WalletEntry
     {
         [ItemCoinID] public int XPCoin;
         [Tooltip("how much score/xp worth one coin")]

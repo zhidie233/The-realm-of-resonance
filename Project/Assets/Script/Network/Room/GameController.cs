@@ -43,7 +43,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
     public new GameObject LocalPlayer { get; set; }
 
     // 本地玩家脚本引用
-    public PlayerReferencesHandler LocalPlayerReferences { get; set; }
+    public PlayerRig LocalPlayerReferences { get; set; }
 
     // 覆盖 GameData 中玩家预制体
     public PrefabPatch OverridePlayerPrefab { get; set; }
@@ -55,7 +55,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
     public static int SuicideCount = 0;
     public static bool Joined = false;
 
-    private int WaitingPlayersAmount = 1;
+    private int ReadyPlayersAmount = 1;
     private float StartPlayTime;
     private bool registered = false;
     // 需要过滤玩家出生时使用。该函数在实例化玩家预制体之前调用：返回 true 则不生成玩家，返回 false 同样不生成，需要你在自定义函数里完成实例化。
@@ -77,7 +77,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         LocalActor.Name = PhotonNetwork.NickName;
 
         ReticleBase.Instance.Show(false);
-        if (GameCore.GameData.UsingWaitingRoom() && NetworkWrapper.LocalPlayer.GetPlayerTeam() != Team.None)
+        if (GameCore.GameData.UsingReadyRoom() && NetworkWrapper.LocalPlayer.GetPlayerTeam() != Team.None)
         {
             Invoke(nameof(SpawnPlayerWithCurrentTeam), 2);
         }
@@ -204,7 +204,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         //实例化玩家预制体
         LocalPlayer = PhotonNetwork.Instantiate(prefab.name, position, rotation, 0, commonData);
 
-        LocalPlayerReferences = LocalPlayer.GetComponent<PlayerReferencesHandler>();
+        LocalPlayerReferences = LocalPlayer.GetComponent<PlayerRig>();
         LocalActor.Actor = LocalPlayer.transform;
         LocalActor.ActorView = LocalPlayer.GetComponent<PhotonView>();
         LocalActor.Team = team;
@@ -273,7 +273,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
     // 自定义延迟，填 -1 则使用 GameData 中的固定重生延迟
     public void RespawnLocalPlayerAfter(float respawnTime = -1, bool doFadeIn = true)
     {
-        if (respawnTime < 0) respawnTime = GameConfig.Instance.PlayerRespawnTime;
+        if (respawnTime < 0) respawnTime = GameConfig.Instance.respawnDelay;
 
         StartCoroutine(DoWait());
         IEnumerator DoWait()
@@ -415,7 +415,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
                 }
             }
         }
-        WaitingPlayersAmount = MinPlayers;
+        ReadyPlayersAmount = MinPlayers;
         SetGameState(MatchState.Waiting);
         return true;
     }
@@ -623,7 +623,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
             if (state == MatchState.Starting)
             {
                 // 游戏模式设置为开始后隐藏房间时，取消房间的公开列出
-                if (GetGameMode.GetGameModeInfo().UnlistGameAfterStarted)
+                if (GetGameMode.GetGameModeInfo().HideRoomAfterStart)
                 {
                     PhotonNetwork.CurrentRoom.IsVisible = false;
                     PhotonNetwork.CurrentRoom.IsOpen = false;
@@ -654,7 +654,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
             bool ready = false;
             if (isOneTeamMode)
             {
-                ready = PhotonNetwork.PlayerList.Length >= WaitingPlayersAmount;
+                ready = PhotonNetwork.PlayerList.Length >= ReadyPlayersAmount;
             }
             else
             {
@@ -670,10 +670,10 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
                 }
 
                 //如果游戏内玩家数达到最少要求
-                if (totalPlayers >= WaitingPlayersAmount)
+                if (totalPlayers >= ReadyPlayersAmount)
                 {
                     //并且两队都有人
-                    if ((team1Count > 0 && team2Count > 0) || WaitingPlayersAmount <= 1)
+                    if ((team1Count > 0 && team2Count > 0) || ReadyPlayersAmount <= 1)
                     {
                         //可以开始了
                         ready = true;
@@ -681,7 +681,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
                     else
                     {
                         //否则等待玩家分到两队
-                        UIReferences.Instance.SetWaitingPlayersText(GameTexts.WaitingTeamBalance, true);
+                        UIReferences.Instance.SetReadyPlayersText(GameTexts.WaitingTeamBalance, true);
                         return;
                     }
                 }
@@ -696,16 +696,16 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
                 SetGameState(MatchState.Starting);
                 MatchTimeManagerBase.Instance.SetTimeState(RoomTimeState.Started, true);
                 onAllPlayersRequiredIn?.Invoke();
-                UIReferences.Instance.SetWaitingPlayersText("", false);
+                UIReferences.Instance.SetReadyPlayersText("", false);
             }
             else
             {
-                UIReferences.Instance.SetWaitingPlayersText(string.Format(GameTexts.WaitingPlayers, PhotonNetwork.PlayerList.Length, 2), true);
+                UIReferences.Instance.SetReadyPlayersText(string.Format(GameTexts.ReadyPlayers, PhotonNetwork.PlayerList.Length, 2), true);
             }
         }
         else
         {
-            UIReferences.Instance.SetWaitingPlayersText("", false);
+            UIReferences.Instance.SetReadyPlayersText("", false);
         }
     }
 
@@ -765,7 +765,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
             {
                 if (GameMatchState == MatchState.Waiting)
                 {
-                    UIReferences.Instance.SetWaitingPlayersText(string.Format(GameTexts.WaitingPlayers, PhotonNetwork.PlayerList.Length, WaitingPlayersAmount), true);
+                    UIReferences.Instance.SetReadyPlayersText(string.Format(GameTexts.ReadyPlayers, PhotonNetwork.PlayerList.Length, ReadyPlayersAmount), true);
                 }
             }
         }

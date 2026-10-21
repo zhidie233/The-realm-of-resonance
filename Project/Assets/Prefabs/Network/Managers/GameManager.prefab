@@ -246,7 +246,7 @@ MonoBehaviour:
   gameMode: 0
   forceOffline: 1
   withBots: 1
-  autoTeamSelection: 1
+  autoAssignTeams: 1
   friendlyFire: 1
   maxPlayers: 1
   MatchTime: 3800

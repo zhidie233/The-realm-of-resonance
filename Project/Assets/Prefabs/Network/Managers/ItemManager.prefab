@@ -83,7 +83,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DropDeliveryPrefab: {fileID: 1187361804682778, guid: 57c5e25308c593c4e88da8f6b8cf8f08, type: 3}
   DeliveryTime: 12
-  AvailableDrops:
+  AvailablePacks:
   - Name: Medkit
     Prefab: {fileID: 1670520125747750, guid: 841f9660846be714081f22e9114f29d5, type: 3}
   - Name: Ammo

@@ -2,7 +2,7 @@
 
 public class Footstep : MonoBehaviour
 {
-    public FootstepLibrary footStepsLibrary;
+    public FootstepSet footStepsLibrary;
     public LayerMask surfaceLayers;
 
     [Header("Settings")]
@@ -54,7 +54,7 @@ public class Footstep : MonoBehaviour
         if (Physics.Raycast(m_Transform.position, -Vector3.up, out m_raycastHit, 5, surfaceLayers, QueryTriggerInteraction.Ignore))
         {
             surfaceTag = m_raycastHit.transform.tag;
-            TerrainSurfaceLibrary ts = m_raycastHit.transform.GetComponent<TerrainSurfaceLibrary>();
+            SurfaceMaterialTable ts = m_raycastHit.transform.GetComponent<SurfaceMaterialTable>();
             if (ts != null)
             {
                 surfaceTag = ts.GetSurfaceTag(m_raycastHit.point);

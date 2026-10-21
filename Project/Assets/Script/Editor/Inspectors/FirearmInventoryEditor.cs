@@ -8,27 +8,27 @@ using Photon.Pun;
 [CustomEditor(typeof(FirearmInventory))]
 public class FirearmInventoryEditor : Editor
 {
-    private AnimBool AssaultAnim;
-    protected static bool ShowAssault;
+    private AnimBool VanguardAnim;
+    protected static bool ShowVanguard;
     private AnimBool EnginnerAnim;
     protected static bool ShowEngi;
-    private AnimBool ReconAnim;
-    protected static bool ShowRecon;
-    private AnimBool SupportAnim;
-    protected static bool ShowSupport;
+    private AnimBool PathfinderAnim;
+    protected static bool ShowPathfinder;
+    private AnimBool GuardianAnim;
+    protected static bool ShowGuardian;
 
     private void OnEnable()
     {
         FirearmInventory script = (FirearmInventory)target;
 
-        AssaultAnim = new AnimBool(ShowAssault);
-        AssaultAnim.valueChanged.AddListener(Repaint);
+        VanguardAnim = new AnimBool(ShowVanguard);
+        VanguardAnim.valueChanged.AddListener(Repaint);
         EnginnerAnim = new AnimBool(ShowEngi);
         EnginnerAnim.valueChanged.AddListener(Repaint);
-        ReconAnim = new AnimBool(ShowRecon);
-        ReconAnim.valueChanged.AddListener(Repaint);
-        SupportAnim = new AnimBool(ShowSupport);
-        SupportAnim.valueChanged.AddListener(Repaint);
+        PathfinderAnim = new AnimBool(ShowPathfinder);
+        PathfinderAnim.valueChanged.AddListener(Repaint);
+        GuardianAnim = new AnimBool(ShowGuardian);
+        GuardianAnim.valueChanged.AddListener(Repaint);
     }
 
     public override void OnInspectorGUI()
@@ -43,15 +43,15 @@ public class FirearmInventoryEditor : Editor
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        string[] weaponList = GameConfig.Instance.AllWeaponStringList();
+        string[] weaponList = GameConfig.Instance.WeaponStringList();
 
         EditorGUILayout.BeginVertical("box");
-        ShowAssault = PhotonGUI.ContainerHeaderFoldout("突击兵兵种", ShowAssault);
-        AssaultAnim.target = ShowAssault;
-        if (EditorGUILayout.BeginFadeGroup(AssaultAnim.faded))
+        ShowVanguard = PhotonGUI.ContainerHeaderFoldout("突击兵兵种", ShowVanguard);
+        VanguardAnim.target = ShowVanguard;
+        if (EditorGUILayout.BeginFadeGroup(VanguardAnim.faded))
         {
-            var so = serializedObject.FindProperty("m_AssaultClass");
-            DrawLoadoutField(so);
+            var so = serializedObject.FindProperty("m_VanguardClass");
+            DrawPresetField(so);
             DrawEditorOf(so);
         }
         EditorGUILayout.EndFadeGroup();
@@ -62,32 +62,32 @@ public class FirearmInventoryEditor : Editor
         EnginnerAnim.target = ShowEngi;
         if (EditorGUILayout.BeginFadeGroup(EnginnerAnim.faded))
         {
-            var so = serializedObject.FindProperty("m_EngineerClass");
-            DrawLoadoutField(so);
+            var so = serializedObject.FindProperty("m_ArtificerClass");
+            DrawPresetField(so);
             DrawEditorOf(so);
         }
         EditorGUILayout.EndFadeGroup();
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        ShowRecon = PhotonGUI.ContainerHeaderFoldout("侦察兵兵种", ShowRecon);
-        ReconAnim.target = ShowRecon;
-        if (EditorGUILayout.BeginFadeGroup(ReconAnim.faded))
+        ShowPathfinder = PhotonGUI.ContainerHeaderFoldout("侦察兵兵种", ShowPathfinder);
+        PathfinderAnim.target = ShowPathfinder;
+        if (EditorGUILayout.BeginFadeGroup(PathfinderAnim.faded))
         {
-            var so = serializedObject.FindProperty("m_ReconClass");
-            DrawLoadoutField(so);
+            var so = serializedObject.FindProperty("m_PathfinderClass");
+            DrawPresetField(so);
             DrawEditorOf(so);
         }
         EditorGUILayout.EndFadeGroup();
         EditorGUILayout.EndVertical();
 
         EditorGUILayout.BeginVertical("box");
-        ShowSupport = PhotonGUI.ContainerHeaderFoldout("支援兵兵种", ShowSupport);
-        SupportAnim.target = ShowSupport;
-        if (EditorGUILayout.BeginFadeGroup(SupportAnim.faded))
+        ShowGuardian = PhotonGUI.ContainerHeaderFoldout("支援兵兵种", ShowGuardian);
+        GuardianAnim.target = ShowGuardian;
+        if (EditorGUILayout.BeginFadeGroup(GuardianAnim.faded))
         {
-            var so = serializedObject.FindProperty("m_SupportClass");
-            DrawLoadoutField(so);
+            var so = serializedObject.FindProperty("m_GuardianClass");
+            DrawPresetField(so);
             DrawEditorOf(so);
         }
         EditorGUILayout.EndFadeGroup();
@@ -130,7 +130,7 @@ public class FirearmInventoryEditor : Editor
         }
     }
 
-    void DrawLoadoutField(SerializedProperty so)
+    void DrawPresetField(SerializedProperty so)
     {
         EditorGUILayout.BeginHorizontal("box");
         EditorGUILayout.PropertyField(so);
@@ -138,13 +138,13 @@ public class FirearmInventoryEditor : Editor
         {
             if (GUILayout.Button("Create", EditorStyles.toolbarButton, GUILayout.Width(60)))
             {
-                string path = "Assets/Prefabs/Weapons/Loadouts";
+                string path = "Assets/Prefabs/Weapons/Equipments";
                 if (!AssetDatabase.IsValidFolder(path))
                 {
                     path = EditorUtility.OpenFolderPanel("保存文件夹", "Assets", "Assets");
                 }
-                path = CommonUtil.CreateAsset<PlayerClassLoadout>(path, false, "玩家兵种武器配置");
-                PlayerClassLoadout pcl = AssetDatabase.LoadAssetAtPath(path, typeof(PlayerClassLoadout)) as PlayerClassLoadout;
+                path = CommonUtil.CreateAsset<PlayerClassPreset>(path, false, "玩家兵种武器配置");
+                PlayerClassPreset pcl = AssetDatabase.LoadAssetAtPath(path, typeof(PlayerClassPreset)) as PlayerClassPreset;
                 so.objectReferenceValue = pcl;
                 EditorUtility.SetDirty(target);
             }
@@ -153,14 +153,14 @@ public class FirearmInventoryEditor : Editor
         {
             if (GUILayout.Button("NEW", EditorStyles.toolbarButton, GUILayout.Width(50)))
             {
-                PlayerClassLoadout old = so.objectReferenceValue as PlayerClassLoadout;
-                string path = "Assets/Prefabs/Weapons/Loadouts";
+                PlayerClassPreset old = so.objectReferenceValue as PlayerClassPreset;
+                string path = "Assets/Prefabs/Weapons/Equipments";
                 if (!AssetDatabase.IsValidFolder(path))
                 {
                     path = EditorUtility.OpenFolderPanel("保存文件夹", "Assets", "Assets");
                 }
-                path = CommonUtil.CreateAsset<PlayerClassLoadout>(path, false, $"{so.objectReferenceValue.name} 副本");
-                PlayerClassLoadout pcl = AssetDatabase.LoadAssetAtPath(path, typeof(PlayerClassLoadout)) as PlayerClassLoadout;
+                path = CommonUtil.CreateAsset<PlayerClassPreset>(path, false, $"{so.objectReferenceValue.name} 副本");
+                PlayerClassPreset pcl = AssetDatabase.LoadAssetAtPath(path, typeof(PlayerClassPreset)) as PlayerClassPreset;
                 so.objectReferenceValue = pcl;
                 pcl.Primary = old.Primary;
                 pcl.Secondary = old.Primary;

@@ -18,7 +18,7 @@ public class RoomChat : RoomChatBase
     protected override void Awake()
     {
         base.Awake();
-        GameConfig.Instance.isChating = false;
+        GameConfig.Instance.isChatOpen = false;
         this.InvokeAfter(5, HideChat);
         if (chatInputField != null) chatInputField.gameObject.SetActive(false);
     }
@@ -45,7 +45,7 @@ public class RoomChat : RoomChatBase
     {
         if (!CanUseTheChat) return;
 
-        if (!GameConfig.Instance.isChating)
+        if (!GameConfig.Instance.isChatOpen)
         {
             if (GameInput.GeneralChat())
             {
@@ -142,10 +142,10 @@ public class RoomChat : RoomChatBase
 
     public override void OnSubmit()
     {
-        GameConfig.Instance.isChating = !GameConfig.Instance.isChating;
-        chatInputField.gameObject.SetActive(GameConfig.Instance.isChating);
+        GameConfig.Instance.isChatOpen = !GameConfig.Instance.isChatOpen;
+        chatInputField.gameObject.SetActive(GameConfig.Instance.isChatOpen);
 
-        if (GameConfig.Instance.isChating)
+        if (GameConfig.Instance.isChatOpen)
         {
             chatInputField.text = string.Empty;
             chatInputField.ActivateInputField();

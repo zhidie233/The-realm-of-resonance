@@ -106,12 +106,12 @@ public class KickbackHandler : KickbackBase
     private FirearmInventory GunManager => PlayerReferences.gunManager;
     private FirstPersonControllerBase fpController => PlayerReferences.firstPersonController;
 
-    private PlayerReferencesHandler playerReferences;
-    public PlayerReferencesHandler PlayerReferences
+    private PlayerRig playerReferences;
+    public PlayerRig PlayerReferences
     {
         get
         {
-            if (playerReferences == null) playerReferences = transform.root.GetComponent<PlayerReferencesHandler>();
+            if (playerReferences == null) playerReferences = transform.root.GetComponent<PlayerRig>();
             return playerReferences;
         }
     }

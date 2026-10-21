@@ -300,7 +300,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a99b4d6e207432143925596de5e9033a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AmountOfKits: 3
+  AmountOfPacks: 3
   ForceImpulse: 350
   CallDelay: 2.4
   dropInstanceDistance: 1
@@ -34526,10 +34526,10 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  m_AssaultClass: {fileID: 11400000, guid: f64f6ef1a1ba9914ca69cad53407af10, type: 2}
-  m_EngineerClass: {fileID: 11400000, guid: 98bf65ee47906b248b1ae54e655e53b3, type: 2}
-  m_ReconClass: {fileID: 11400000, guid: 8d9543e72ab6d624c9decadfb20a85e5, type: 2}
-  m_SupportClass: {fileID: 11400000, guid: fdad84172808cd74ab8f8b8a628442dc, type: 2}
+  m_VanguardClass: {fileID: 11400000, guid: f64f6ef1a1ba9914ca69cad53407af10, type: 2}
+  m_ArtificerClass: {fileID: 11400000, guid: 98bf65ee47906b248b1ae54e655e53b3, type: 2}
+  m_PathfinderClass: {fileID: 11400000, guid: 8d9543e72ab6d624c9decadfb20a85e5, type: 2}
+  m_GuardianClass: {fileID: 11400000, guid: fdad84172808cd74ab8f8b8a628442dc, type: 2}
   currentWeaponIndex: 0
   SwichTime: 0.3
   PickUpTime: 0.25

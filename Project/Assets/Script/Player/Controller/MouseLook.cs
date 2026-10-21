@@ -24,7 +24,7 @@ using UnityEngine;
        private float rotAverageY;
        private bool ClampHorizontal = false;
        private Vector2 horizontalClamp = new Vector2(-360, 360);
-       private PlayerReferencesHandler playerReferences;
+       private PlayerRig playerReferences;
        private MouseLookSettings lookSettings;
        private float tiltValue, tiltTarget = 0;
        private float verticalOffset = 0;
@@ -44,7 +44,7 @@ using UnityEngine;
            m_CameraTargetRot = camera.localRotation;
            FetchSettings();
            CurrentSensitivity = sensitivity;
-           playerReferences = character.GetComponent<PlayerReferencesHandler>();
+           playerReferences = character.GetComponent<PlayerRig>();
            lookSettings = GameConfig.Instance.mouseLookSettings;
        }
 

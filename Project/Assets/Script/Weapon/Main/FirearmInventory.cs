@@ -9,10 +9,10 @@ public class FirearmInventory : MonoBehaviourBase
     [HideInInspector] public List<FirearmController> PlayerEquip = new List<FirearmController>();
 
     [Header("玩家职业")]
-    public PlayerClassLoadout m_AssaultClass;
-    public PlayerClassLoadout m_EngineerClass;
-    public PlayerClassLoadout m_ReconClass;
-    public PlayerClassLoadout m_SupportClass;
+    public PlayerClassPreset m_VanguardClass;
+    public PlayerClassPreset m_ArtificerClass;
+    public PlayerClassPreset m_PathfinderClass;
+    public PlayerClassPreset m_GuardianClass;
 
     [Header("设置")]
     // 初始武器 ID
@@ -35,7 +35,7 @@ public class FirearmInventory : MonoBehaviourBase
     public bool isGameStarted { get; set; }
 
     // 从 GameData 缓存的选项
-    public AutoChangeOnPickup EquipPickUpMode { get; set; } = AutoChangeOnPickup.Always;
+    public SwapOnPickup EquipPickUpMode { get; set; } = SwapOnPickup.Always;
 
     private int PreviousGun = 0;
     private bool isFastFire = false;
@@ -48,7 +48,7 @@ public class FirearmInventory : MonoBehaviourBase
         ASource = GetComponent<AudioSource>();
         isGameStarted = MatchTimeManagerBase.HaveTimeStarted();
         //玩家实例创建后应用 LobbyMenu 中选定的玩家职业
-        SetupLoadout();
+        SetupEquipment();
     }
 
     private void Start()
@@ -56,8 +56,8 @@ public class FirearmInventory : MonoBehaviourBase
         //禁用所有子武器并取第一个
         foreach (FirearmController g in PlayerEquip) { g?.Setup(true); }
         foreach (FirearmController guns in AllGuns) { guns.gameObject?.SetActive(false); }
-        LoadoutScreenBase.Instance?.SetLoadout(PlayerEquip);
-        EquipPickUpMode = GameConfig.Instance.switchToPickupWeapon;
+        EquipmentScreenBase.Instance?.SetEquipment(PlayerEquip);
+        EquipPickUpMode = GameConfig.Instance.swapOnPickupMode;
         var firstWeapon = PlayerEquip[currentWeaponIndex];
         TakeWeapon(firstWeapon);
 
@@ -66,35 +66,35 @@ public class FirearmInventory : MonoBehaviourBase
 
         if (GameController.Instance.GameMatchState == MatchState.Waiting && !GameController.Instance.FirstSpawnDone)
         {
-            BlockAllWeapons();
+            BlockWeaponTable();
         }
     }
 
     // 按所选玩家职业设置玩家已装备的武器
-    void SetupLoadout()
+    void SetupEquipment()
     {
         //玩家实例创建后应用 LobbyMenu 中选定的玩家职业
-        PlayerClassLoadout pcl = null;
-        var currentClass = PlayerClass.Assault.GetSavePlayerClass();
+        PlayerClassPreset pcl = null;
+        var currentClass = PlayerClass.Vanguard.GetSavePlayerClass();
         switch (currentClass)
         {
-            case PlayerClass.Assault:
-                pcl = m_AssaultClass;
+            case PlayerClass.Vanguard:
+                pcl = m_VanguardClass;
                 break;
-            case PlayerClass.Recon:
-                pcl = m_ReconClass;
+            case PlayerClass.Pathfinder:
+                pcl = m_PathfinderClass;
                 break;
-            case PlayerClass.Engineer:
-                pcl = m_EngineerClass;
+            case PlayerClass.Artificer:
+                pcl = m_ArtificerClass;
                 break;
-            case PlayerClass.Support:
-                pcl = m_SupportClass;
+            case PlayerClass.Guardian:
+                pcl = m_GuardianClass;
                 break;
         }
 
         if (pcl == null)
         {
-            Debug.LogError($"Player Class Loadout has not been assigned for the class {currentClass.ToString()}");
+            Debug.LogError($"Player Class Preset has not been assigned for the class {currentClass.ToString()}");
             return;
         }
 
@@ -140,7 +140,7 @@ public class FirearmInventory : MonoBehaviourBase
 
     void InputControl()
     {
-        if (!CanSwich || GameConfig.Instance.isChating)
+        if (!CanSwich || GameConfig.Instance.isChatOpen)
             return;
 
         if (GameInput.WeaponSlot(1))
@@ -265,7 +265,7 @@ public class FirearmInventory : MonoBehaviourBase
     }
 
     // 调用后本地玩家没有武器，且不能选择任何武器
-    public void BlockAllWeapons()
+    public void BlockWeaponTable()
     {
         foreach (FirearmController g in PlayerEquip) { g.gameObject.SetActive(false); }
         ReticleBase.Instance.Show(false);
@@ -313,18 +313,18 @@ public class FirearmInventory : MonoBehaviourBase
     }
 
     // 把当前武器（若有）换成指定武器
-    public void ChangeTo(int AllWeaponsIndex)
+    public void ChangeTo(int WeaponTableIndex)
     {
-        StartCoroutine(ChangeGun(currentWeaponIndex, AllGuns[AllWeaponsIndex].gameObject, currentWeaponIndex));
-        PlayerEquip[currentWeaponIndex] = AllGuns[AllWeaponsIndex];
+        StartCoroutine(ChangeGun(currentWeaponIndex, AllGuns[WeaponTableIndex].gameObject, currentWeaponIndex));
+        PlayerEquip[currentWeaponIndex] = AllGuns[WeaponTableIndex];
     }
 
     // 无延迟/无动画地切换武器
-    public void ChangeToInstant(int AllWeaponsIndex)
+    public void ChangeToInstant(int WeaponTableIndex)
     {
         PlayerEquip[currentWeaponIndex].gameObject.SetActive(false);
-        AllGuns[AllWeaponsIndex].gameObject.SetActive(true);
-        PlayerEquip[currentWeaponIndex] = AllGuns[AllWeaponsIndex];
+        AllGuns[WeaponTableIndex].gameObject.SetActive(true);
+        PlayerEquip[currentWeaponIndex] = AllGuns[WeaponTableIndex];
         GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].GunID);
     }
 
@@ -333,7 +333,7 @@ public class FirearmInventory : MonoBehaviourBase
     public void ChangeCurrentWeaponTo(int nextSlotID)
     {
         if (currentWeaponIndex == nextSlotID || PlayerEquip[nextSlotID] == null) return;
-        if (!CanSwich || GameConfig.Instance.isChating)
+        if (!CanSwich || GameConfig.Instance.isChatOpen)
             return;
 
         var next = PlayerEquip[nextSlotID];
@@ -349,7 +349,7 @@ public class FirearmInventory : MonoBehaviourBase
     public IEnumerator ChangeGun(int IDfrom, GameObject t_next, int newID)
     {
         CanSwich = false;
-        LoadoutScreenBase.Instance?.SetEquippedSlot(newID);
+        EquipmentScreenBase.Instance?.SetEquippedSlot(newID);
         float hideTime = PlayerEquip[IDfrom].DisableWeapon();
         //立即禁用当前武器并启用下一把
         if (changeWeaponStyle == ChangeWeaponStyle.CounterStrike)
@@ -405,10 +405,10 @@ public class FirearmInventory : MonoBehaviourBase
                 if (PlayerEquip[i] == null)
                 {
                     //检查这把武器能否装备在该槽位
-                    if (GameConfig.Instance.weaponSlotRuler.CanBeOnSlot(gunInfo.Type, i))
+                    if (GameConfig.Instance.weaponSlotGuide.CanBeOnSlot(gunInfo.Type, i))
                     {
                         SetUpPickUpWeapon(e, pickedLocalGun, i);
-                        if (EquipPickUpMode.IsEnumFlagPresent(AutoChangeOnPickup.OnlyOnEmptySlots | AutoChangeOnPickup.Always))
+                        if (EquipPickUpMode.IsEnumFlagPresent(SwapOnPickup.OnlyOnEmptySlots | SwapOnPickup.Always))
                         {
                             StartCoroutine(SwitchToPickUpGun(null, pickedLocalGun, null, i));
                             currentWeaponIndex = i;
@@ -432,18 +432,18 @@ public class FirearmInventory : MonoBehaviourBase
 
             FirearmController oldGun;
             //若拾取的武器不能替换当前槽位
-            if (!GameConfig.Instance.weaponSlotRuler.CanBeOnSlot(gunInfo.Type, currentWeaponIndex))
+            if (!GameConfig.Instance.weaponSlotGuide.CanBeOnSlot(gunInfo.Type, currentWeaponIndex))
             {
                 //就找一个兼容的槽位并在那里替换武器
                 for (int i = 0; i < 4; i++)
                 {
                     //找到这把拾取武器的槽位时
-                    if (GameConfig.Instance.weaponSlotRuler.CanBeOnSlot(gunInfo.Type, i))
+                    if (GameConfig.Instance.weaponSlotGuide.CanBeOnSlot(gunInfo.Type, i))
                     {
                         oldGun = PlayerEquip[i];
                         //用拾取的武器替换该槽位上的武器
                         SetUpPickUpWeapon(e, pickedLocalGun, i);
-                        if (EquipPickUpMode == (AutoChangeOnPickup.OnlyOnReplacements | AutoChangeOnPickup.Always))
+                        if (EquipPickUpMode == (SwapOnPickup.OnlyOnReplacements | SwapOnPickup.Always))
                         {
                             StartCoroutine(SwitchToPickUpGun(oldGun, pickedLocalGun, info, i));
                             currentWeaponIndex = i;
@@ -499,7 +499,7 @@ public class FirearmInventory : MonoBehaviourBase
             gun.bulletsLeft = data.Bullets;
             gun.RemainingClips = data.Clips;
         }
-        LoadoutScreenBase.Instance?.ReplaceSlot(slotID, gun);
+        EquipmentScreenBase.Instance?.ReplaceSlot(slotID, gun);
     }
 
     public IEnumerator SwitchToPickUpGun(FirearmController currentGun, FirearmController nextGun, int[] info, int newSlotID)
@@ -507,7 +507,7 @@ public class FirearmInventory : MonoBehaviourBase
         HeadAnimator?.Play("TakeGun", 0, 0);
         currentGun?.DisableWeapon();
 
-        if (currentWeaponIndex != newSlotID) LoadoutScreenBase.Instance?.SetEquippedSlot(newSlotID);
+        if (currentWeaponIndex != newSlotID) EquipmentScreenBase.Instance?.SetEquippedSlot(newSlotID);
 
         yield return new WaitForSeconds(PickUpTime);
 
@@ -696,12 +696,12 @@ public class FirearmInventory : MonoBehaviourBase
         return false;
     }
 
-    private PlayerReferencesHandler _playerReferences;
-    public PlayerReferencesHandler playerReferences
+    private PlayerRig _playerReferences;
+    public PlayerRig playerReferences
     {
         get
         {
-            if (_playerReferences == null) _playerReferences = GetComponentInParent<PlayerReferencesHandler>();
+            if (_playerReferences == null) _playerReferences = GetComponentInParent<PlayerRig>();
             return _playerReferences;
         }
     }
@@ -715,7 +715,7 @@ public class FirearmInventory : MonoBehaviourBase
     }
 
     [System.Serializable, System.Flags]
-    public enum AutoChangeOnPickup
+    public enum SwapOnPickup
     {
         Always = 0,
         OnlyOnEmptySlots,

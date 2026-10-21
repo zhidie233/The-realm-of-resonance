@@ -387,12 +387,12 @@ public class PlayerIK : PlayerIKBase
     }
 #endif
 
-    private PlayerReferencesHandler m_playerReferences;
-    private PlayerReferencesHandler playerReferences
+    private PlayerRig m_playerReferences;
+    private PlayerRig playerReferences
     {
         get
         {
-            if (m_playerReferences == null) m_playerReferences = CachedTransform.GetComponentInParent<PlayerReferencesHandler>();
+            if (m_playerReferences == null) m_playerReferences = CachedTransform.GetComponentInParent<PlayerRig>();
             return m_playerReferences;
         }
     }

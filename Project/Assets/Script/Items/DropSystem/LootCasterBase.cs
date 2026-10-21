@@ -4,7 +4,7 @@ public abstract class LootCasterBase : MonoBehaviour
 {
     public struct LootData
     {
-        public int KitID;
+        public int PackID;
         public float Delay;
     }
 

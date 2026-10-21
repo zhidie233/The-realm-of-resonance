@@ -28,12 +28,12 @@ public class GameManagerWindow : EditorWindow
     private Vector2 bodyScroll = Vector2.zero;
     SearchField weaponSearchfield, managerSearchField;
     private string weaponSearchKey, managerSearchKey = "";
-    readonly string[] slotsNames = new string[] { "Assault", "Recon", "Support", "Engineer" };
+    readonly string[] slotsNames = new string[] { "Vanguard", "Pathfinder", "Guardian", "Artificer" };
     public int currentSlot, currentSlot2 = 0;
-    private PlayerClassLoadout selectedLoadout = null;
+    private PlayerClassPreset selectedPreset = null;
     private int selectedSlot = -1;
     private Vector2 weaponScroll, managersScroll = Vector2.zero;
-    private PlayerClass currentPlayerClass = PlayerClass.Assault;
+    private PlayerClass currentPlayerClass = PlayerClass.Vanguard;
     private Dictionary<ScriptableObject, Editor> cachedEditors = new Dictionary<ScriptableObject, Editor>();
     public int editWeaponId = -1;
     public FirearmData editGunInfo;
@@ -98,7 +98,7 @@ public class GameManagerWindow : EditorWindow
     {
         WindowButton("管理器", WindowType.Managers);
         WindowButton("武器", WindowType.Weapons);
-        WindowButton("装备配置", WindowType.Loadouts);
+        WindowButton("装备配置", WindowType.Equipments);
         WindowButton("游戏模式", WindowType.GameModes);
 
         GUILayout.Space(25);
@@ -142,7 +142,7 @@ public class GameManagerWindow : EditorWindow
         bodyScroll = GUILayout.BeginScrollView(bodyScroll, false, false);
         if (currentWindow == WindowType.Managers) DrawManagersBody();
         else if (currentWindow == WindowType.Weapons) DrawWeaponsBody();
-        else if (currentWindow == WindowType.Loadouts) DrawLoadoutsBody();
+        else if (currentWindow == WindowType.Equipments) DrawEquipmentBody();
         else if (currentWindow == WindowType.Home) DrawHomeBody();
         else if (currentWindow == WindowType.GameModes) DrawGameModes();
         GUILayout.FlexibleSpace();
@@ -203,7 +203,7 @@ public class GameManagerWindow : EditorWindow
         var slt = GUI.skin.horizontalSliderThumb;
         GUI.skin.horizontalSliderThumb = ResonanceRealmEditorStyles.HorizontalSliderThumbStyle;
 
-        var all = GameConfig.Instance.AllWeapons;
+        var all = GameConfig.Instance.WeaponTable;
         int rowID = 0;
         int SpaceBetweenRow = 20;
         int rowCapacity = Mathf.FloorToInt((position.width - 150) / (370 + SpaceBetweenRow));
@@ -253,9 +253,9 @@ public class GameManagerWindow : EditorWindow
         {
             GUILayout.Space(20);
             Rect iconR = GUILayoutUtility.GetRect(120, 70);
-            GUI.DrawTexture(iconR, w.GunIcon.texture, ScaleMode.ScaleToFit);
+            GUI.DrawTexture(iconR, w.WeaponIcon.texture, ScaleMode.ScaleToFit);
             GUILayout.Space(20);
-            w.GunIcon = EditorGUILayout.ObjectField(w.GunIcon, typeof(Sprite), false, GUILayout.Width(120), GUILayout.Height(70)) as Sprite;
+            w.WeaponIcon = EditorGUILayout.ObjectField(w.WeaponIcon, typeof(Sprite), false, GUILayout.Width(120), GUILayout.Height(70)) as Sprite;
             GUILayout.FlexibleSpace();
         }
         EditorGUILayout.EndHorizontal();
@@ -275,14 +275,14 @@ public class GameManagerWindow : EditorWindow
         w.Weight = EditorGUILayout.FloatField("重量", w.Weight);
 
         GUILayout.Space(18);
-        DrawTitleText("Unlockability");
+        DrawTitleText("AccessRules");
 
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("editGunInfo").FindPropertyRelative("Unlockability"), true);
+        EditorGUILayout.PropertyField(serializedObject.FindProperty("editGunInfo").FindPropertyRelative("AccessRules"), true);
 
         GUILayout.Space(18);
         DrawTitleText("Others");
 
-        w.PickUpPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.PickUpPrefab, typeof(FirearmPickUpBase), false) as FirearmPickUpBase;
+        w.WorldPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.WorldPrefab, typeof(FirearmPickUpBase), false) as FirearmPickUpBase;
 
         GUILayout.Space(18);
         EditorGUILayout.BeginHorizontal();
@@ -305,14 +305,14 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
-    void DrawLoadoutsBody()
+    void DrawEquipmentBody()
     {
         GUILayout.Space(10);
         var player = GameConfig.Instance.Player1.PlayerReferences;
-        DrawPlayerLoadout(player, ref currentSlot);
+        DrawPlayerPreset(player, ref currentSlot);
         GUILayout.Space(15);
         player = GameConfig.Instance.Player2.PlayerReferences;
-        DrawPlayerLoadout(player, ref currentSlot2);
+        DrawPlayerPreset(player, ref currentSlot2);
         GUILayout.Space(10);
         var latpc = currentPlayerClass;
         currentPlayerClass = (PlayerClass)EditorGUILayout.EnumPopup("当前玩家兵种", currentPlayerClass);
@@ -336,16 +336,16 @@ public class GameManagerWindow : EditorWindow
         float rowWidth = 160;
         int horizontalRows = Mathf.FloorToInt(areaWidth / rowWidth);
 
-        var gameModes = GameConfig.Instance.gameModes;
+        var gameModeTable = GameConfig.Instance.gameModeTable;
         int hRow = 0;
-        for (int i = 0; i < gameModes.Count; i++)
+        for (int i = 0; i < gameModeTable.Count; i++)
         {
             if (hRow == 0) EditorGUILayout.BeginHorizontal();
 
-            DrawGameModeBox(gameModes[i]);
+            DrawGameModeBox(gameModeTable[i]);
             GUILayout.Space(10);
             hRow++;
-            if (hRow >= horizontalRows || i == gameModes.Count - 1)
+            if (hRow >= horizontalRows || i == gameModeTable.Count - 1)
             {
                 EditorGUILayout.EndHorizontal();
                 GUILayout.Space(10);
@@ -373,7 +373,7 @@ public class GameManagerWindow : EditorWindow
         {
             maxPlayers = Mathf.Max(maxPlayers, item);
         }
-        DrawText($"<b><size=10>所需玩家数</size></b>\n<color=#A4A4A4FF><size=9>{gameMode.RequiredPlayersToStart}，最多 {maxPlayers}</size></color>");
+        DrawText($"<b><size=10>所需玩家数</size></b>\n<color=#A4A4A4FF><size=9>{gameMode.MinPlayersToStart}，最多 {maxPlayers}</size></color>");
         GUILayout.Space(10);
         EditorGUILayout.EndVertical();
 
@@ -417,21 +417,21 @@ public class GameManagerWindow : EditorWindow
         DrawTitleText("SETTINGS");
         m.GoalName = EditorGUILayout.TextField("模式目标名称", m.GoalName);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.supportBots = ResonanceRealmEditorStyles.FeatureToogle(r, m.supportBots, "支持机器人？");
+        m.botsEnabled = ResonanceRealmEditorStyles.FeatureToogle(r, m.botsEnabled, "支持机器人？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.AutoTeamSelection = ResonanceRealmEditorStyles.FeatureToogle(r, m.AutoTeamSelection, "强制自动分配阵营？");
+        m.AutoAssignTeams = ResonanceRealmEditorStyles.FeatureToogle(r, m.AutoAssignTeams, "强制自动分配阵营？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.allowedPickupWeapons = ResonanceRealmEditorStyles.FeatureToogle(r, m.allowedPickupWeapons, "允许拾取武器？");
+        m.allowWeaponPickup = ResonanceRealmEditorStyles.FeatureToogle(r, m.allowWeaponPickup, "允许拾取武器？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.UnlistGameAfterStarted = ResonanceRealmEditorStyles.FeatureToogle(r, m.UnlistGameAfterStarted, "开始后隐藏或关闭房间？");
+        m.HideRoomAfterStart = ResonanceRealmEditorStyles.FeatureToogle(r, m.HideRoomAfterStart, "开始后隐藏或关闭房间？");
 
-        m.RequiredPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.RequiredPlayersToStart, 1, 64);
-        m.onRoundStartedSpawn = (GameModeSettings.OnRoundStartedSpawn)EditorGUILayout.EnumPopup("回合开始时", m.onRoundStartedSpawn);
-        m.onPlayerDie = (GameModeSettings.OnPlayerDie)EditorGUILayout.EnumPopup("本地玩家死亡时", m.onPlayerDie);
-        m.RoundModeAllowed = (GameModeSettings.RoundModeAllowedOptions)EditorGUILayout.EnumPopup("允许的回合模式", m.RoundModeAllowed);
+        m.MinPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.MinPlayersToStart, 1, 64);
+        m.spawnOnRoundBegin = (GameModeSettings.OnRoundBegin)EditorGUILayout.EnumPopup("回合开始时", m.spawnOnRoundBegin);
+        m.onDeath = (GameModeSettings.OnDeath)EditorGUILayout.EnumPopup("本地玩家死亡时", m.onDeath);
+        m.RoundFormat = (GameModeSettings.RoundFormatOptions)EditorGUILayout.EnumPopup("允许的回合模式", m.RoundFormat);
 
         GUILayout.Space(10);
         DrawTitleText("模式选项");
@@ -456,13 +456,13 @@ public class GameManagerWindow : EditorWindow
 
         EditorGUILayout.BeginHorizontal();
         {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("selectedGameMode").FindPropertyRelative("GameGoalsOptions"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("selectedGameMode").FindPropertyRelative("GoalValueOptions"), true);
             r = GUILayoutUtility.GetLastRect();
             r.x += 150;
             r.width -= 150;
             r.height = EditorGUIUtility.singleLineHeight;
             string options = "";
-            foreach (var item in m.GameGoalsOptions)
+            foreach (var item in m.GoalValueOptions)
             {
                 options += $"({item} {m.GoalName}) ";
             }
@@ -472,13 +472,13 @@ public class GameManagerWindow : EditorWindow
 
         EditorGUILayout.BeginHorizontal();
         {
-            EditorGUILayout.PropertyField(serializedObject.FindProperty("selectedGameMode").FindPropertyRelative("timeLimits"), true);
+            EditorGUILayout.PropertyField(serializedObject.FindProperty("selectedGameMode").FindPropertyRelative("roundTimes"), true);
             r = GUILayoutUtility.GetLastRect();
             r.x += 150;
             r.width -= 150;
             r.height = EditorGUIUtility.singleLineHeight;
             string options = "";
-            foreach (var item in m.timeLimits)
+            foreach (var item in m.roundTimes)
             {
                 if (item < 60) options += $"({item} 秒) ";
                 else options += $"({Mathf.FloorToInt(item / 60)} 分钟) ";
@@ -509,13 +509,13 @@ public class GameManagerWindow : EditorWindow
 
     public bool isOneTeamMode(GameMode mode)
     {
-        if (mode == GameMode.BR || mode == GameMode.GR || mode == GameMode.FFA)
+        if (mode == GameMode.RoyaleMatch || mode == GameMode.RaceMatch || mode == GameMode.FreeMatch)
             return true;
 
         return false;
     }
 
-    void DrawPlayerLoadout(PlayerReferencesHandler player, ref int slotID)
+    void DrawPlayerPreset(PlayerRig player, ref int slotID)
     {
         EditorGUILayout.BeginHorizontal(GUILayout.MaxHeight(256));
         {
@@ -551,7 +551,7 @@ public class GameManagerWindow : EditorWindow
                         {
                             if (slotID != i)
                             {
-                                selectedLoadout = null;
+                                selectedPreset = null;
                                 selectedSlot = -1;
                             }
                             slotID = i;
@@ -561,12 +561,12 @@ public class GameManagerWindow : EditorWindow
                 }
                 GUILayout.Space(20);
 
-                var loadout = player.gunManager.m_AssaultClass;
-                if (slotID == 1) loadout = player.gunManager.m_ReconClass;
-                if (slotID == 2) loadout = player.gunManager.m_SupportClass;
-                if (slotID == 3) loadout = player.gunManager.m_EngineerClass;
+                var preset = player.gunManager.m_VanguardClass;
+                if (slotID == 1) preset = player.gunManager.m_PathfinderClass;
+                if (slotID == 2) preset = player.gunManager.m_GuardianClass;
+                if (slotID == 3) preset = player.gunManager.m_ArtificerClass;
                 // 配装
-                DrawSlots(loadout);
+                DrawSlots(preset);
 
             }
             EditorGUILayout.EndVertical();
@@ -576,31 +576,31 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.EndHorizontal();
     }
 
-    void DrawSlots(PlayerClassLoadout loadout)
+    void DrawSlots(PlayerClassPreset preset)
     {
-        if (loadout == null) return;
+        if (preset == null) return;
 
-        if (selectedLoadout != null && selectedLoadout == loadout)
+        if (selectedPreset != null && selectedPreset == preset)
         {
             DrawWeaponSelectionList();
             return;
         }
 
-        var gun = loadout.GetPrimaryGunInfo();
-        DrawSlot(gun, "PRIMARY", loadout, 0);
+        var gun = preset.GetPrimaryGunInfo();
+        DrawSlot(gun, "PRIMARY", preset, 0);
         GUILayout.Space(10);
-        gun = loadout.GetSecondaryGunInfo();
-        DrawSlot(gun, "SECONDARY", loadout, 1);
+        gun = preset.GetSecondaryGunInfo();
+        DrawSlot(gun, "SECONDARY", preset, 1);
         GUILayout.Space(10);
-        gun = loadout.GetPerksGunInfo();
-        DrawSlot(gun, "PERK", loadout, 2);
+        gun = preset.GetPerksGunInfo();
+        DrawSlot(gun, "PERK", preset, 2);
         GUILayout.Space(10);
-        gun = loadout.GetLetalGunInfo();
-        DrawSlot(gun, "LETAL", loadout, 3);
+        gun = preset.GetLetalGunInfo();
+        DrawSlot(gun, "LETAL", preset, 3);
         GUILayout.Space(10);
     }
 
-    void DrawSlot(FirearmData gun, string Title, PlayerClassLoadout loadout, int slotID)
+    void DrawSlot(FirearmData gun, string Title, PlayerClassPreset preset, int slotID)
     {
         if (gun == null) return;
 
@@ -609,15 +609,15 @@ public class GameManagerWindow : EditorWindow
             GUILayout.Space(25);
             GUILayout.Label($"<b>{Title}:</b>", styles["textC"], GUILayout.Width(100));
             GUILayout.Label(gun.Name, styles["textC"], GUILayout.Width(150));
-            if (gun.GunIcon != null)
-                GUILayout.Label(gun.GunIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
+            if (gun.WeaponIcon != null)
+                GUILayout.Label(gun.WeaponIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
 
             Rect br = GUILayoutUtility.GetRect(new GUIContent("更改"), styles["textC"], GUILayout.Width(100));
             EditorGUI.DrawRect(br, altColor);
             if (GUI.Button(br, "更改", styles["textC"]))
             {
                 selectedSlot = slotID;
-                selectedLoadout = loadout;
+                selectedPreset = preset;
             }
             GUILayout.FlexibleSpace();
         }
@@ -626,7 +626,7 @@ public class GameManagerWindow : EditorWindow
 
     void DrawWeaponSelectionList()
     {
-        var all = GameCore.AllWeapons;
+        var all = GameCore.WeaponTable;
         weaponScroll = GUILayout.BeginScrollView(weaponScroll);
         GUILayout.Space(10);
         Color c = new Color(0, 0, 0, 0.1f);
@@ -637,24 +637,24 @@ public class GameManagerWindow : EditorWindow
             GUILayout.Space(20);
             GUILayout.Label(all[i].Name, styles["textC"], GUILayout.Width(120), GUILayout.Height(20));
             GUILayout.Space(25);
-            if (all[i].GunIcon != null)
-                GUILayout.Label(all[i].GunIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
+            if (all[i].WeaponIcon != null)
+                GUILayout.Label(all[i].WeaponIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
 
             GUILayout.Space(25);
             Rect br = GUILayoutUtility.GetRect(new GUIContent("选择"), styles["textC"], GUILayout.Width(100));
             EditorGUI.DrawRect(br, altColor);
             if (GUI.Button(br, "选择", styles["textC"]))
             {
-                if (selectedSlot == 0) selectedLoadout.Primary = i;
-                else if (selectedSlot == 1) selectedLoadout.Secondary = i;
-                else if (selectedSlot == 2) selectedLoadout.Perks = i;
-                else if (selectedSlot == 3) selectedLoadout.Letal = i;
+                if (selectedSlot == 0) selectedPreset.Primary = i;
+                else if (selectedSlot == 1) selectedPreset.Secondary = i;
+                else if (selectedSlot == 2) selectedPreset.Perks = i;
+                else if (selectedSlot == 3) selectedPreset.Letal = i;
 
-                EditorUtility.SetDirty(selectedLoadout);
+                EditorUtility.SetDirty(selectedPreset);
                 AssetDatabase.SaveAssets();
 
                 selectedSlot = -1;
-                selectedLoadout = null;
+                selectedPreset = null;
             }
             EditorGUILayout.EndHorizontal();
             GUILayout.Space(4);
@@ -677,7 +677,7 @@ public class GameManagerWindow : EditorWindow
                     GUILayout.Label($"<size=9><color=#727272>{gun.Type.ToString()}</color></size>", styles["titleH2"], GUILayout.Height(18));
                     GUILayout.FlexibleSpace();
                     Rect iconR = GUILayoutUtility.GetRect(120, 70);
-                    GUI.DrawTexture(iconR, gun.GunIcon.texture, ScaleMode.ScaleToFit);
+                    GUI.DrawTexture(iconR, gun.WeaponIcon.texture, ScaleMode.ScaleToFit);
                     GUILayout.FlexibleSpace();
                 }
                 GUILayout.FlexibleSpace();
@@ -691,7 +691,7 @@ public class GameManagerWindow : EditorWindow
                 gun.ReloadTime = EditorGUILayout.Slider("RELOAD", gun.ReloadTime, 0.5f, 10);
                 gun.Range = EditorGUILayout.IntSlider("RANGE", gun.Range, 1, 700);
                 gun.Weight = EditorGUILayout.Slider("WEIGHT", gun.Weight, 0, 4);
-                gun.Unlockability.Price = EditorGUILayout.IntField("价格", gun.Unlockability.Price);
+                gun.AccessRules.Price = EditorGUILayout.IntField("价格", gun.AccessRules.Price);
                 GUILayout.Space(5);
             }
             EditorGUILayout.EndVertical();
@@ -982,7 +982,7 @@ public class GameManagerWindow : EditorWindow
         Managers,
         Weapons,
         Players,
-        Loadouts,
+        Equipments,
         Levels,
         GameModes,
     }

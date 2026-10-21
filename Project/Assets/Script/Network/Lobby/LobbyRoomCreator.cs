@@ -21,7 +21,7 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
         room.time = TimeLimit;
         room.password = Password;
         room.friendlyFire = FriendlyFire;
-        room.autoTeamSelection = AutoTeamSelection;
+        room.autoAssignTeams = AutoAssignTeams;
         room.withBots = BotsActive;
         room.roundStyle = PerRoundGame;
         return room;
@@ -75,12 +75,12 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
     public int MaxPlayers => GameModeInfo.maxPlayers[LobbyRoomCreatorUI.Instance.MaxPlayer];
     public int MaxPing => MatchLobby.Instance.MaxPing[LobbyRoomCreatorUI.Instance.MaxPing];
     public int Goal => GameModeInfo.GetGoalValue(LobbyRoomCreatorUI.Instance.Goal);
-    public int TimeLimit => GameModeInfo.timeLimits[LobbyRoomCreatorUI.Instance.TimeLimit];
+    public int TimeLimit => GameModeInfo.roundTimes[LobbyRoomCreatorUI.Instance.TimeLimit];
     public GameModeSettings GameModeInfo => LobbyRoomCreatorUI.Instance.CurrentGameMode;
     public bool IsPrivate => LobbyRoomCreatorUI.Instance.IsPrivate;
     public bool FriendlyFire => LobbyRoomCreatorUI.Instance.FriendlyFire;
-    public bool BotsActive => GameModeInfo.supportBots ? LobbyRoomCreatorUI.Instance.BotsActive : false;
-    public bool AutoTeamSelection => GameModeInfo.AutoTeamSelection ? true :  LobbyRoomCreatorUI.Instance.AutoTeamSelection;
+    public bool BotsActive => GameModeInfo.botsEnabled ? LobbyRoomCreatorUI.Instance.BotsActive : false;
+    public bool AutoAssignTeams => GameModeInfo.AutoAssignTeams ? true :  LobbyRoomCreatorUI.Instance.AutoAssignTeams;
     public RoundStyle PerRoundGame => GameModeInfo.HasForcedRoundMode() ? GameModeInfo.GetAllowedRoundMode() : LobbyRoomCreatorUI.Instance.GamePerRound;
     public string Password => LobbyRoomCreatorUI.Instance.RoomPassword;
     public string RoomName => LobbyRoomCreatorUI.Instance.RoomName;
@@ -90,7 +90,7 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
     {
         get
         {
-            if (m_mapList == null) m_mapList = GameConfig.Instance.AllScenes;
+            if (m_mapList == null) m_mapList = GameConfig.Instance.SceneTable;
             return m_mapList;
         }
     }

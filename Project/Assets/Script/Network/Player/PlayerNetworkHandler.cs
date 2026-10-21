@@ -113,7 +113,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (GameConfig.Instance.DropGunOnDeath && LobbyMenu.Instance != null && !LobbyMenu.Instance.isApplicationQuitting)
+        if (GameConfig.Instance.DiscardWeaponOnDeath && LobbyMenu.Instance != null && !LobbyMenu.Instance.isApplicationQuitting)
         {
             if (NetGunsRoot != null) NetGunsRoot.gameObject.SetActive(false);
         }
@@ -419,7 +419,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     {
         get
         {
-            if (!GameConfig.Instance.DropGunOnDeath) { CurrentTPVGun(true); }
+            if (!GameConfig.Instance.DiscardWeaponOnDeath) { CurrentTPVGun(true); }
             var ng = NetworkGuns.FirstOrDefault(x => x != null);
             if (ng != null) return ng.transform.parent;
 
@@ -427,12 +427,12 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         }
     }
 
-    private PlayerReferencesHandler _playerReferences;
-    public PlayerReferencesHandler PlayerReferences
+    private PlayerRig _playerReferences;
+    public PlayerRig PlayerReferences
     {
         get
         {
-            if (_playerReferences == null) _playerReferences = GetComponent<PlayerReferencesHandler>();
+            if (_playerReferences == null) _playerReferences = GetComponent<PlayerRig>();
             return _playerReferences;
         }
     }

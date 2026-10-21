@@ -16,12 +16,12 @@ public class KillNoticeUI : MonoBehaviour
         if (!headShot)
         {
             NameText.text = info.Killed;
-            ValueText.text = GameConfig.Instance.ScoreReward.ScorePerKill.ToString();
+            ValueText.text = GameConfig.Instance.matchScore.KillReward.ToString();
         }
         else
         {
             NameText.text = GameTexts.HeatShotBonus;
-            ValueText.text = GameConfig.Instance.ScoreReward.ScorePerHeadShot.ToString();
+            ValueText.text = GameConfig.Instance.matchScore.HeadshotExtraReward.ToString();
         }
         Alpha = GetComponent<CanvasGroup>();
         StartCoroutine(Hide(true));
@@ -32,10 +32,10 @@ public class KillNoticeUI : MonoBehaviour
         if(Anim == null) { Anim = GetComponent<Animator>(); }
         NameText.text = info.Killed;
         ValueText.text = (info.byHeadShot) ? GameTexts.HeadShot.ToUpper() : GameTexts.KillingInAction.ToUpper();
-        int spk = GameConfig.Instance.ScoreReward.ScorePerKill;
+        int spk = GameConfig.Instance.matchScore.KillReward;
         if (info.byHeadShot)
         {
-            ExtraText.text = string.Format("{0} <b>+{1}</b>\n{2} +{3}", info.KillMethod.ToUpper(), spk, GameTexts.HeadShot.ToUpper(), GameConfig.Instance.ScoreReward.ScorePerHeadShot);
+            ExtraText.text = string.Format("{0} <b>+{1}</b>\n{2} +{3}", info.KillMethod.ToUpper(), spk, GameTexts.HeadShot.ToUpper(), GameConfig.Instance.matchScore.HeadshotExtraReward);
         }
         else
         {

@@ -9,10 +9,10 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 public class SoloRoom : MonoBehaviour, IConnectionCallbacks
 {
     [Header("Offline Room")]
-    public GameMode gameMode = GameMode.FFA;
+    public GameMode gameMode = GameMode.FreeMatch;
     [GameToggle] public bool forceOffline = false;
     [GameToggle] public bool withBots = false;
-    [GameToggle] public bool autoTeamSelection = true;
+    [GameToggle] public bool autoAssignTeams = true;
     [GameToggle] public bool friendlyFire = false;
     [Range(1, 64)] public int maxPlayers = 1;
     public int MatchTime = 9989;
@@ -26,7 +26,7 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
         PhotonNetwork.AddCallbackTarget(this);
         if (!NetworkWrapper.IsConnectedInRoom)
         {
-            if (GameConfig.Instance.offlineMode || forceOffline)
+            if (GameConfig.Instance.directConnectMode || forceOffline)
             {
                 InputHandler.Initialize();
                 PhotonNetwork.OfflineMode = true;
@@ -52,10 +52,10 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
         Hashtable roomOption = new Hashtable();
         roomOption[NetworkKeys.TimeRoomKey] = MatchTime;
         roomOption[NetworkKeys.GameModeKey] = gameMode.ToString();
-        roomOption[NetworkKeys.SceneNameKey] = GameConfig.Instance.AllScenes[0].RealSceneName;
+        roomOption[NetworkKeys.SceneNameKey] = GameConfig.Instance.SceneTable[0].RealSceneName;
         roomOption[NetworkKeys.RoomRoundKey] = roundStyle;
-        roomOption[NetworkKeys.TeamSelectionKey] = autoTeamSelection;
-        roomOption[NetworkKeys.CustomSceneName] = GameConfig.Instance.AllScenes[0].ShowName;
+        roomOption[NetworkKeys.TeamSelectionKey] = autoAssignTeams;
+        roomOption[NetworkKeys.CustomSceneName] = GameConfig.Instance.SceneTable[0].ShowName;
         roomOption[NetworkKeys.RoomGoal] = gameModeGoal;
         roomOption[NetworkKeys.RoomFriendlyFire] = friendlyFire;
         roomOption[NetworkKeys.MaxPing] = 1000;
