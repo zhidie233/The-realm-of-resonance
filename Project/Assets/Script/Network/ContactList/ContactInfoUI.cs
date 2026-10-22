@@ -17,7 +17,7 @@ using System.Collections.Generic;
        public Color OffLineColor = new Color(0.9f, 0, 0, 0.9f);
 
        private string roomName = string.Empty;
-       private ContactInfo cacheInfo;
+       private FriendInfo cacheInfo;
        private string OffLineText = "OFFLINE";
        private string OnlineText = "ONLINE";
        private ContactListUIBase UIManager;
@@ -31,7 +31,7 @@ using System.Collections.Generic;
        {
        }
        
-       public override void SetFriendData(ContactInfo info, ContactListUIBase uiManager)
+       public override void SetFriendData(FriendInfo info, ContactListUIBase uiManager)
        {
            UIManager = uiManager;
            cacheInfo = info;
@@ -43,9 +43,9 @@ using System.Collections.Generic;
            Expand(UIManager.IsOpen());
        }
 
-       public override void UpdateContactInfo(ContactInfo[] infos)
+       public override void UpdateContactInfo(FriendInfo[] infos)
        {
-           ContactInfo info = FindMe(infos);
+           FriendInfo info = FindMe(infos);
            if (info == null) return;
            NameText.text = info.UserId;
            UpdateStatusUI(info.IsOnline);
@@ -64,7 +64,7 @@ using System.Collections.Generic;
            if (StatusText != null) { StatusText.text = string.Format("[{0}]", online ? OnlineText : OffLineText); }
        }
 
-       private ContactInfo FindMe(ContactInfo[] info)
+       private FriendInfo FindMe(FriendInfo[] info)
        {
            for (int i = 0; i < info.Length; i++)
            {

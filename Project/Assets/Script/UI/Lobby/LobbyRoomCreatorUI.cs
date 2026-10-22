@@ -28,14 +28,12 @@ public class LobbyRoomCreatorUI : MonoBehaviour
 
     public void SetupSelectors()
     {
-        endPoints[0] = endPoints[0].Localized("人", true);
-        endPoints[1] = endPoints[1].Localized("分钟", true);
         defaultRoomName = $"{LobbyRoomCreator.Instance.defaultRoomPrefix} {Random.Range(10, 9999)}";
         roomInputField.text = defaultRoomName;
 
         MapSettingsSelector.SetOptions(LobbyRoomCreator.Instance.MapList.Select(x => x.ShowName).ToArray());
         var allModes = GetModesForCurrentMap();
-        GameModeSelector.SetOptions(allModes.Select(x => x.ModeName.Localized(x.gameMode.ToString().ToLower())).ToArray());
+        GameModeSelector.SetOptions(allModes.Select(x => x.ModeName).ToArray());
         MaxPingSelector.SetOptions(MatchLobby.Instance.MaxPing.AsStringArray(" ms"));
 
         SetupGameModeDependentsSelectors();
@@ -70,7 +68,7 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     {
         roomPreview?.Show(LobbyRoomCreator.Instance.BuildRoomInfo());
         var allModes = GetModesForCurrentMap();
-        GameModeSelector.SetOptions(allModes.Select(x => x.ModeName.Localized(x.gameMode.ToString().ToLower())).ToArray());
+        GameModeSelector.SetOptions(allModes.Select(x => x.ModeName).ToArray());
         SetupGameModeDependentsSelectors();
     }
 

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -137,10 +136,6 @@ using TMPro;
                    break;
                }
            }
-       }
-
-       void Localize(Dictionary<string,string> data)
-       {
        }
 
 #if UNITY_EDITOR

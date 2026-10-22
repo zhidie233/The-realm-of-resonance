@@ -41,7 +41,7 @@ public class LobbyRoomList : LobbyRoomListBase
         }
         else
         {
-            NoRoomText.text = GameTexts.NoRoomsCreated.Localized("norooms");
+            NoRoomText.text = GameTexts.NoRoomsCreated;
         }
     }
 

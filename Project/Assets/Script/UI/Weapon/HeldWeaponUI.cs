@@ -41,9 +41,9 @@ public class HeldWeaponUI : HeldWeaponUIBase
         string fireName = "--";
         switch (fireType)
         {
-            case FirearmBase.FireType.Auto:   fireName = GameTexts.FireTypeAuto.Localized(45);   break;
-            case FirearmBase.FireType.Semi:   fireName = GameTexts.FireTypeSemi.Localized(47);   break;
-            case FirearmBase.FireType.Single: fireName = GameTexts.FireTypeSingle.Localized(46); break;
+            case FirearmBase.FireType.Auto:   fireName = GameTexts.FireTypeAuto;   break;
+            case FirearmBase.FireType.Semi:   fireName = GameTexts.FireTypeSemi;   break;
+            case FirearmBase.FireType.Single: fireName = GameTexts.FireTypeSingle; break;
         }
         FireTypeText.text = fireName;
     }

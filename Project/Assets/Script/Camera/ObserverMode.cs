@@ -39,7 +39,7 @@ public class ObserverMode : ObserverModeBase
             if (GameConfig.Instance.onLeaveSpectatorMode == LeaveSpectatorModeAction.ReturnToLobby)
             {
                 CommonUtil.LockCursor(false);
-                UIReferences.Instance.leaveRoomConfirmation.AskConfirmation(GameTexts.LeaveMatchWarning.Localized("areusulega"), () =>
+                UIReferences.Instance.leaveRoomConfirmation.AskConfirmation(GameTexts.LeaveMatchWarning, () =>
                 {
                     LobbyMenu.Instance.LeaveRoom(false);
                 }, () => { CommonUtil.LockCursor(true); });

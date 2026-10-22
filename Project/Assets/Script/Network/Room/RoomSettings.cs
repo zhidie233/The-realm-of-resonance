@@ -119,7 +119,7 @@ public class RoomSettings : MonoBehaviourBase
     /// </summary>
     void SelectTeamAutomatically()
     {
-        string joinText = isOneTeamMode ? GameTexts.JoinedInMatch.Localized(17) : GameTexts.JoinIn.Localized(23);
+        string joinText = isOneTeamMode ? GameTexts.JoinedInMatch : GameTexts.JoinIn;
         int teamDelta = PhotonNetwork.PlayerList.GetPlayersInTeam(Team.Team1).Length;
         int teamTwoCount = PhotonNetwork.PlayerList.GetPlayersInTeam(Team.Team2).Length;
         Team team = Team.All;

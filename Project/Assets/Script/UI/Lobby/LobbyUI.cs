@@ -186,10 +186,6 @@ public class LobbyUI : MonoBehaviour
         SetRegionDropdown();
     }
 
-    void OnLanguageChange(Dictionary<string, string> lang)
-    {
-    }
-
     public void ResetSettings()
     {
         LoadSettings();
@@ -275,7 +271,7 @@ public class LobbyUI : MonoBehaviour
     public void ChangeServerCloud(int id)
     {
         requestedRegionID = id;
-        confirmationWindow.AskConfirmation(GameTexts.ChangeRegionAsk.Localized(200), () =>
+        confirmationWindow.AskConfirmation(GameTexts.ChangeRegionAsk, () =>
          {
              MatchLobby.Instance.ConnectToServerRegion(id);
          });
@@ -342,10 +338,6 @@ public class LobbyUI : MonoBehaviour
 
         var btnText = btn.GetComponentInChildren<TextMeshProUGUI>(true);
         btnText.text = name.ToUpper();
-        if (btnText.TryGetComponent(out LocalizationUI lui))
-        {
-            DestroyImmediate(lui);
-        }
 
         var windowUI = new WindowUI()
         {

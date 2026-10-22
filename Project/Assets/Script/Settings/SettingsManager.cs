@@ -39,7 +39,7 @@ using TMPro;
 
            if(titleText != null)
            {
-               titleText.text = windows[id].Window.name.Localized(windows[id].Window.name.ToLower()).ToUpper();
+               titleText.text = windows[id].Window.name.ToUpper();
            }
        }
 

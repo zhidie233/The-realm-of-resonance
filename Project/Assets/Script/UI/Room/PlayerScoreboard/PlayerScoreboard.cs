@@ -97,7 +97,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         UpdateBotScoreboard();
         if (SpectatorsCountText != null)
         {
-            SpectatorsCountText.text = string.Format(GameTexts.Spectators.Localized(36), spectators);
+            SpectatorsCountText.text = string.Format(GameTexts.Spectators, spectators);
         }
         SortScoreboard();
     }

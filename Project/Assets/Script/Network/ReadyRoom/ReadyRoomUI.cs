@@ -126,7 +126,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
         UpdatePlayerCount();
         readyButtons[0].gameObject.SetActive(NetworkWrapper.IsMasterClient);
         readyButtons[1].gameObject.SetActive(!NetworkWrapper.IsMasterClient);
-        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomBase.Instance.IsLocalReady() ? "取消".Localized(67).ToUpper() : "准备".Localized(184).ToUpper();
+        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomBase.Instance.IsLocalReady() ? "取消".ToUpper() : "准备".ToUpper();
 
         string goal = room.CustomProperties[NetworkKeys.RoomGoal].ToString();
         if (goal == "0" || string.IsNullOrEmpty(goal))
@@ -172,7 +172,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
     public void SetLocalReady()
     {
         ReadyRoomBase.Instance.SetLocalPlayerReady();
-        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomBase.Instance.IsLocalReady() ? "取消".Localized(67).ToUpper() : "准备".Localized(184).ToUpper();
+        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomBase.Instance.IsLocalReady() ? "取消".ToUpper() : "准备".ToUpper();
     }
 
     public void MasterStartTheGame()
@@ -182,7 +182,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
 
     public void EnterAsSpectator()
     {
-        LobbyUI.ShowConfirmationWindow(GameTexts.EnterAsSpectator.Localized(209), () =>
+        LobbyUI.ShowConfirmationWindow(GameTexts.EnterAsSpectator, () =>
         {
             ReadyRoomBase.Instance.JoinToTeam(Team.None);
             ObserverModeBase.EnterAsSpectator = true;
@@ -212,7 +212,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
         }
         else
         {
-            LobbyUI.ShowConfirmationWindow(GameTexts.LeaveRoomConfirmation.Localized(211), () =>
+            LobbyUI.ShowConfirmationWindow(GameTexts.LeaveRoomConfirmation, () =>
             {
                 LeaveRoom(true);
             });

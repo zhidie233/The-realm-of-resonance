@@ -110,15 +110,15 @@ using TMPro;
                return;
            }
 
-           ContactInfo[] friends = ContactListBase.Instance.GetFriends();
+           FriendInfo[] friends = ContactListBase.Instance.GetFriends();
            if (emptyRow != null) emptyRow.SetActive(friends.Length <= 0);
            if (friends.Length <= 0) return;
 
            if (instance)
            {
                CleanCacheList();
-               List<ContactInfo> OnlineFriends = new List<ContactInfo>();
-               List<ContactInfo> OfflineFriends = new List<ContactInfo>();
+               List<FriendInfo> OnlineFriends = new List<FriendInfo>();
+               List<FriendInfo> OfflineFriends = new List<FriendInfo>();
 
                for (int i = 0; i < friends.Length; i++)
                {
@@ -180,7 +180,7 @@ using TMPro;
            UpdateCount(friends);
        }
 
-       void InstanceFriend(ContactInfo[] friends)
+       void InstanceFriend(FriendInfo[] friends)
        {
            for (int i = 0; i < friends.Length; i++)
            {
@@ -194,10 +194,10 @@ using TMPro;
            }
        }
 
-       void UpdateCount(ContactInfo[] friends)
+       void UpdateCount(FriendInfo[] friends)
        {
            OnlineCount = 0;
-           foreach (ContactInfo info in friends)
+           foreach (FriendInfo info in friends)
            {
                if (info.IsOnline)
                {

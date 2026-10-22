@@ -353,12 +353,12 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             {
                 if (cause == DamageCause.FallDamage)
                 {
-                    KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.DeathByFall.Localized(20), NetworkWrapper.LocalPlayer.GetPlayerTeam());
+                    KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.DeathByFall, NetworkWrapper.LocalPlayer.GetPlayerTeam());
 
                 }
                 else
                 {
-                    KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.CommittedSuicide.Localized(19), NetworkWrapper.LocalPlayer.GetPlayerTeam());
+                    KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.CommittedSuicide, NetworkWrapper.LocalPlayer.GetPlayerTeam());
                 }
             }
 

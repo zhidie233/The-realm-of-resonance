@@ -532,7 +532,6 @@ GameObject:
   - component: {fileID: 978024336220691450}
   - component: {fileID: 978024336220691455}
   - component: {fileID: 978024336220691452}
-  - component: {fileID: 978024336220691453}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -599,28 +598,6 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: TARGET FRAME RATE
---- !u!114 &978024336220691453
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 978024336220691451}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ba051f74444648459f78bbbc1ed3036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StringID: quality
-  StringIDs: []
-  ExtraString: 
-  m_UIType: 0
-  StringCase: 1
-  Plural: 0
-  Extra: 0
-  FormatedText: 0
-  ManuallyAssignId: 0
-  _arrayID: 104
 --- !u!1 &978024336242877726
 GameObject:
   m_ObjectHideFlags: 0

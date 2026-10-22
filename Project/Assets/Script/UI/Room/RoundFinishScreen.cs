@@ -14,8 +14,8 @@ using TMPro;
        public override void Show(string winner)
        {
            content.SetActive(true);
-           FinalUIText.text = (RoomSettings.Instance.CurrentRoomInfo.roundStyle == RoundStyle.OneMacht) ? GameTexts.FinalOneMatch.Localized(38) : GameTexts.FinalRounds.Localized(32);
-           FinalWinnerText.text = string.Format("{0} {1}", winner, GameTexts.FinalWinner).Localized(33).ToUpper();
+           FinalUIText.text = (RoomSettings.Instance.CurrentRoomInfo.roundStyle == RoundStyle.OneMacht) ? GameTexts.FinalOneMatch : GameTexts.FinalRounds;
+           FinalWinnerText.text = string.Format("{0} {1}", winner, GameTexts.FinalWinner).ToUpper();
        }
 
        public override void Hide()

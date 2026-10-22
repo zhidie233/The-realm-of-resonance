@@ -20,7 +20,7 @@ using UnityEngine;
        {
            DoorCoordinator.AddUpdateDoor(this);
 
-           string doorAction = DoorState == State.Close ? GameTexts.OpenDoor.Localized(207) : GameTexts.CloseDoor.Localized(208);
+           string doorAction = DoorState == State.Close ? GameTexts.OpenDoor : GameTexts.CloseDoor;
            string inputName = CommonUtil.isMobile ? GameTexts.Touch : InputHandler.GetButtonName("Interact");
            InputInteractionIndicator.ShowIndication(inputName, doorAction, () =>
            {

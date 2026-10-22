@@ -21,7 +21,7 @@ using TMPro;
 
        public abstract bool CanAddMoreFriends();
 
-       public abstract ContactInfo[] GetFriends();
+       public abstract FriendInfo[] GetFriends();
 
        public abstract int FriendsCount { get; }
 

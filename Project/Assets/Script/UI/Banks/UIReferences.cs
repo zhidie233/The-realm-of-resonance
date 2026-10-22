@@ -195,7 +195,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         if (!quit)
         {
             CommonUtil.LockCursor(false);
-            leaveRoomConfirmation.AskConfirmation(GameTexts.LeaveMatchWarning.Localized("areusulega"), () => { LeftRoom(true); }, () => {  });
+            leaveRoomConfirmation.AskConfirmation(GameTexts.LeaveMatchWarning, () => { LeftRoom(true); }, () => {  });
         }
         else
         {

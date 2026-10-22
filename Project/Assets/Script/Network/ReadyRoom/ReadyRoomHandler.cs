@@ -231,7 +231,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
     {
     }
 
-    public void OnContactListUpdate(List<ContactInfo> contactList)
+    public void OnFriendListUpdate(List<FriendInfo> contactList)
     {
     }
 

@@ -58,14 +58,14 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
         {
             coins = tscore / GameConfig.Instance.wallet.CoinScoreValue;
         }
-        KillsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Kills.Localized(126).ToUpper(), kills);
-        DeathsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Deaths.Localized(58, true).ToUpper(), deaths);
-        ScoreText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Score.Localized(59).ToUpper(), score - hsscore);
-        WinScoreText.text = string.Format(GameTexts.WinMatch.Localized(61), winScore);
+        KillsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Kills.ToUpper(), kills);
+        DeathsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Deaths.ToUpper(), deaths);
+        ScoreText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Score.ToUpper(), score - hsscore);
+        WinScoreText.text = string.Format(GameTexts.WinMatch, winScore);
         KDRText.text = string.Format("{0}\n<size=10>KDR</size>", kd);
-        TimePlayedText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.TimePlayed.Localized(60).ToUpper(), StringHelpers.GetTimeFormat((float)timePlayed / 60, timePlayed), scorePerTime);
-        HeadshotsText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.HeadShot.Localized(16, true).ToUpper(), GameController.Instance.Headshots, hsscore);
-        TotalScoreText.text = string.Format("{0}\n<size=9>{1}</size>", tscore, GameTexts.TotalScore.Localized(35).ToUpper());
+        TimePlayedText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.TimePlayed.ToUpper(), StringHelpers.GetTimeFormat((float)timePlayed / 60, timePlayed), scorePerTime);
+        HeadshotsText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.HeadShot.ToUpper(), GameController.Instance.Headshots, hsscore);
+        TotalScoreText.text = string.Format("{0}\n<size=9>{1}</size>", tscore, GameTexts.TotalScore.ToUpper());
         CoinsText.text = string.Format("+{0}\n<size=9>COINS</size>", coins);
 
         if (coins > 0)

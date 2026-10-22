@@ -70,7 +70,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     {
         LobbyLoadingScreenBase.Instance
             .SetActive(true)
-            .SetText(GameTexts.LoadingLocalContent.Localized(39));
+            .SetText(GameTexts.LoadingLocalContent);
 
         if (!GameConfig.isDataCached)
         {
@@ -100,7 +100,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         if (NetworkWrapper.IsConnected) return;
 
         connectionState = LobbyConnectionState.Connecting;
-        PhotonNetwork.buildVersion = GameConfig.Instance.buildVersion;
+        PhotonNetwork.GameVersion = GameConfig.Instance.buildVersion;
         AuthenticationValues authValues = new AuthenticationValues(NetworkWrapper.NickName);
 
 
@@ -120,7 +120,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
         LobbyLoadingScreenBase.Instance
             .SetActive(true)
-            .SetText(GameTexts.ConnectingToGameServer.Localized(40));
+            .SetText(GameTexts.ConnectingToGameServer);
     }
 
     /// <summary>
@@ -133,7 +133,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             // 玩家手动切换区域时
             connectionState = LobbyConnectionState.ChangingRegion;
             LobbyLoadingScreenBase.Instance.SetActive(true)
-           .SetText(GameTexts.ConnectingToGameServer.Localized(40));
+           .SetText(GameTexts.ConnectingToGameServer);
 
             ServerRegionID = id;
             Invoke(nameof(DelayDisconnect), 0.2f);
@@ -551,7 +551,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             connectionState = LobbyConnectionState.Authenticating;
             Debug.Log($"Player has joined to the lobby, now verifying session...");
             RequestSessionVerification();
-            LobbyLoadingScreenBase.Instance.SetText(GameTexts.VerifyingSession.Localized(199));
+            LobbyLoadingScreenBase.Instance.SetText(GameTexts.VerifyingSession);
         }
         else
         {
@@ -593,7 +593,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             else if (connectionState == LobbyConnectionState.Authenticating)
             {
                 Debug.Log($"Authentication complete, finishing connection...");
-                LobbyLoadingScreenBase.Instance.SetText(GameTexts.FinishingUp.Localized(198));
+                LobbyLoadingScreenBase.Instance.SetText(GameTexts.FinishingUp);
                 if (PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer)
                 {
                     PhotonNetwork.AuthValues = new AuthenticationValues(NetworkWrapper.NickName);
@@ -625,7 +625,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             // CustomAuthenticationFailed 在 OnCustomAuthenticationFailed(...) 中处理
             if (cause != DisconnectCause.CustomAuthenticationFailed)
             {
-                LobbyUI.Instance.connectionPopupMessage.AskConfirmation(string.Format(GameTexts.DisconnectCause.Localized(41), cause.ToString()), () =>
+                LobbyUI.Instance.connectionPopupMessage.AskConfirmation(string.Format(GameTexts.DisconnectCause, cause.ToString()), () =>
                 {
                     ConnectPhoton();
                     Debug.LogWarning("Failed to connect to server, cause: " + cause);
@@ -698,7 +698,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         }
     }
 
-    public void OnContactListUpdate(List<ContactInfo> contactList)
+    public void OnFriendListUpdate(List<FriendInfo> contactList)
     {
         if (string.IsNullOrEmpty(NetworkWrapper.NickName))
         {
@@ -709,7 +709,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
                     // 该账号已有其他会话打开
                     Debug.Log("This account has a session open.");
                     LobbyUI.Instance.connectionPopupMessage.SetConfirmationText(GameTexts.Ok.ToUpper());
-                    LobbyUI.Instance.connectionPopupMessage.AskConfirmation(GameTexts.AnotherSessionOpen.Localized(197), () =>
+                    LobbyUI.Instance.connectionPopupMessage.AskConfirmation(GameTexts.AnotherSessionOpen, () =>
                     {
                         connectionState = LobbyConnectionState.Disconnected;
                         Disconect();

@@ -29,7 +29,7 @@ public class DeathCamUI :  DeathCamUIBase
         GunNameText.text = info.Name.ToUpper();
         killer = killer.Replace("(die)", "");
         KillerNameText.text = killer;
-        KillCamSpectatingText.text = string.Format("<size=8>{0}:</size>\n{1}", GameTexts.Spectating.Localized(26).ToUpper(), killer);
+        KillCamSpectatingText.text = string.Format("<size=8>{0}:</size>\n{1}", GameTexts.Spectating.ToUpper(), killer);
 
         levelIcon.gameObject.SetActive(false);
         StartCoroutine(RespawnCountDown());
@@ -63,7 +63,7 @@ public class DeathCamUI :  DeathCamUIBase
             d += Time.deltaTime / rt;
             int remaing = Mathf.FloorToInt(rt * (1 - d));
             remaing = Mathf.Max(0, remaing);
-            respawnCountdown.text = string.Format(GameTexts.RespawnIn.Localized(38), remaing);
+            respawnCountdown.text = string.Format(GameTexts.RespawnIn, remaing);
             yield return null;
         }
     }

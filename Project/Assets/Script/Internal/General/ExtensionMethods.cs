@@ -413,26 +413,6 @@ public static class ExtensionMethods
     }
 
     /// <summary>
-    /// 本地化辅助
-    /// 获取指定键的本地化文本
-    /// </summary>
-    /// <returns></returns>
-    public static string Localized(this string str, string key, bool plural = false)
-    {
-        return str;
-    }
-
-    /// <summary>
-    /// 本地化辅助
-    /// 获取指定键的本地化文本
-    /// </summary>
-    /// <returns></returns>
-    public static string Localized(this string str, int id, bool plural = false)
-    {
-        return str;
-    }
-
-    /// <summary>
     /// 将 int 数组按指定字符拼接为字符串数组
     /// </summary>
     /// <returns></returns>

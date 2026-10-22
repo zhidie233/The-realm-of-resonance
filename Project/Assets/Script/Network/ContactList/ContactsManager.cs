@@ -10,7 +10,7 @@ using TMPro;
        private ContactListUIBase FriendUI;
        private char splitChar = '/';
        private bool firstBuild = false;
-       private List<ContactInfo> contactList = new List<ContactInfo>();
+       private List<FriendInfo> contactList = new List<FriendInfo>();
        private Status m_status = Status.Idle;
        
        public override int FriendsCount => contactList.Count;
@@ -157,7 +157,7 @@ using TMPro;
            else { Debug.Log("This user doesn't exist"); }
        }
 
-       public override ContactInfo[] GetFriends()
+       public override FriendInfo[] GetFriends()
        {
            return contactList.ToArray();
        }
@@ -172,7 +172,7 @@ using TMPro;
            return friendsNames.Count < GameConfig.Instance.contactLimit;
        }
 
-       public void OnContactListUpdate(List<ContactInfo> contactList)
+       public void OnFriendListUpdate(List<FriendInfo> contactList)
        {
            if (string.IsNullOrEmpty(NetworkWrapper.NickName)) return;
 
