@@ -37,11 +37,11 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     PhotonTransformViewRotationControl _rotationControl;
     bool _receivedNetworkUpdate = false;
     private Vector3 headEuler = Vector3.zero;
-    private int currentGunID = -1;
+    private int currentWeaponID = -1;
     // 此玩家是否为本地玩家的队友
     public bool isFriend { get; set; }
     // 当前第三人称武器 ID
-    public int networkGunID { get; set; }
+    public int networkWeaponID { get; set; }
     // 此玩家手中的当前第三人称武器
     public NetworkFirearm CurrenGun { get; set; }
     // 从此玩家客户端侧接收的当前状态
@@ -86,7 +86,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
             stream.SendNext(GetHeadLookPosition());
             stream.SendNext(fpControler.State);
             stream.SendNext(fpControler.isGrounded);
-            stream.SendNext((byte)PlayerReferences.gunManager.GetCurrentGunID);
+            stream.SendNext((byte)PlayerReferences.gunManager.GetCurrentWeaponID);
             stream.SendNext(FPState);
             stream.SendNext(fpControler.Velocity);
         }
@@ -96,7 +96,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
             networkHeadLookAt = (Vector3)stream.ReceiveNext();
             NetworkBodyState = (PlayerState)stream.ReceiveNext();
             networkIsGrounded = (bool)stream.ReceiveNext();
-            networkGunID = (int)((byte)stream.ReceiveNext());
+            networkWeaponID = (int)((byte)stream.ReceiveNext());
             FPState = (PlayerFPState)stream.ReceiveNext();
             networkVelocity = (Vector3)stream.ReceiveNext();
             _receivedNetworkUpdate = true;
@@ -166,7 +166,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         if (!isWeaponBlocked)
         {
             CurrentTPVGun();
-            currentGunID = networkGunID;
+            currentWeaponID = networkWeaponID;
         }
     }
     // 该远程玩家是敌人时每帧调用
@@ -196,14 +196,14 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     {
         if (PlayerReferences.gunManager == null)
             return;
-        if (networkGunID == currentGunID && !force) return;
+        if (networkWeaponID == currentWeaponID && !force) return;
         //获取本机当前武器 ID 并与远程同步
         for (int i = 0; i < NetworkGuns.Count; i++)
         {
             currentGun = NetworkGuns[i];
             if (currentGun == null) continue;
 
-            int currentID = (local) ? PlayerReferences.gunManager.GetCurrentWeapon().WeaponID : networkGunID;
+            int currentID = (local) ? PlayerReferences.gunManager.GetCurrentWeapon().WeaponID : networkWeaponID;
             if (currentGun.GetWeaponID == currentID)
             {
                 currentGun.gameObject.SetActive(true);
@@ -330,7 +330,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
             CurrentTPVGun(false, true);
         }
         PlayerReferences.playerAnimations.BlockWeapons(blockState);
-        currentGunID = -1;
+        currentWeaponID = -1;
     }
     [PunRPC]
     void SyncCustomizer(int weaponID, string line, PhotonMessageInfo info)

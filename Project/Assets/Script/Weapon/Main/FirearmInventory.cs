@@ -622,7 +622,7 @@ public class FirearmInventory : MonoBehaviourBase
         }
     }
     // 当前已装备武器的 WeaponID，-1 表示玩家还没有装备武器
-    public int GetCurrentGunID
+    public int GetCurrentWeaponID
     {
         get
         {
