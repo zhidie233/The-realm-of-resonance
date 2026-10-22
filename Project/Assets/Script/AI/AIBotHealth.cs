@@ -159,7 +159,7 @@ public class AIBotHealth : PlayerHealthManagerBase
                 RightText = m_AIShooter.AIName,
                 Team = team
             };
-            feed.AddData("gunid", weaponID);
+            feed.AddData("weaponId", weaponID);
             feed.AddData("headshot", ishead);
 
             KillReportEntry.Instance.SendKillMessageEvent(feed);
@@ -237,7 +237,7 @@ public class AIBotHealth : PlayerHealthManagerBase
                     RightText = m_AIShooter.AIName,
                     Team = bot.AITeam
                 };
-                feed.AddData("gunid", weaponID);
+                feed.AddData("weaponId", weaponID);
                 feed.AddData("headshot", ishead);
                 KillReportEntry.Instance.SendKillMessageEvent(feed);
                 if (bot != null)

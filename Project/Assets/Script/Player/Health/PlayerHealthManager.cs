@@ -349,7 +349,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     RightText = gameObject.name,
                     Team = NetworkWrapper.LocalPlayer.GetPlayerTeam()
                 };
-                feed.AddData("gunid", weaponID);
+                feed.AddData("weaponId", weaponID);
                 feed.AddData("headshot", isHeadshot);
                 KillReportEntry.Instance.SendKillMessageEvent(feed);
                 //这种情况下由本地玩家而不是主客户端更新机器人统计。
@@ -368,7 +368,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             RightText = gameObject.name,
             Team = NetworkWrapper.LocalPlayer.GetPlayerTeam()
         };
-        feed.AddData("gunid", weaponID);
+        feed.AddData("weaponId", weaponID);
         feed.AddData("headshot", isHeadshot);
         KillReportEntry.Instance.SendKillMessageEvent(feed);
         //新增一次击杀并更新玩家信息

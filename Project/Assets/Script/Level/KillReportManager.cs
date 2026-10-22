@@ -34,7 +34,7 @@ public class KillReportManager : KillReportEntry
         HashTable data = new HashTable();
         data.Add("killer", feedData.LeftText);
         data.Add("killed", feedData.RightText);
-        data.Add("gunid", (int)feedData.Data["gunid"]);
+        data.Add("weaponId", (int)feedData.Data["weaponId"]);
         data.Add("team", feedData.Team);
         data.Add("headshot", (bool)feedData.Data["headshot"]);
         data.Add("mt", KillReportMessageType.WeaponKillEvent);
@@ -88,7 +88,7 @@ public class KillReportManager : KillReportEntry
         KillReport kf = new KillReport();
         kf.Killer = (string)data["killer"];
         kf.Killed = (string)data["killed"];
-        kf.WeaponID = (int)data["gunid"];
+        kf.WeaponID = (int)data["weaponId"];
         kf.HeadShot = (bool)data["headshot"];
         kf.KillerTeam = (Team)data["team"];
         kf.messageType = KillReportMessageType.WeaponKillEvent;

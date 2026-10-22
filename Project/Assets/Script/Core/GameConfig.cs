@@ -67,7 +67,7 @@ public class GameConfig : ScriptableObject
     public int endMatchDelay = 10;
     public float idleKickTime = 60;
     public int teamSwitchLimit = 3;
-    public int suicideLimit = 3;
+    public int suicideLimit = 4;
     public string MainMenuScene = "MainMenu";
     public string OnDisconnectScene = "MainMenu";
     public Color focusColor = Color.green;

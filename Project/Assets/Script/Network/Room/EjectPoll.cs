@@ -4,8 +4,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class EjectPoll : MonoBehaviourBase
 {
-    [SerializeField] private KeyCode YesKey = KeyCode.F1;
-    [SerializeField] private KeyCode NoKey = KeyCode.F2;
+    [SerializeField] private KeyCode YesKey = KeyCode.F5;
+    [SerializeField] private KeyCode NoKey = KeyCode.F6;
 
     private bool IsOpen = false;
     private int YesCount = 0;

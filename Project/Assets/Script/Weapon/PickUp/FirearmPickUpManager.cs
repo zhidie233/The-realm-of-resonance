@@ -44,7 +44,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", 1);
         data.Add("name", prefix);
-        data.Add("gunID", throwData.WeaponID);
+        data.Add("weaponId", throwData.WeaponID);
         data.Add("info", i);
         data.Add("destroy", throwData.AutoDestroy);
         data.Add("origin", throwData.Origin);
@@ -55,7 +55,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
     /// 玩家生成武器（拾取武器）时在所有客户端调用
     void NetworkInstanceWeapon(Hashtable data)
     {
-        FirearmData ginfo = GameConfig.Instance.GetWeapon((int)data["gunID"]);
+        FirearmData ginfo = GameConfig.Instance.GetWeapon((int)data["weaponId"]);
         if (ginfo.WorldPrefab == null)
         {
             Debug.LogError(string.Format("武器“{0}”的配置中没有拾取预制体。", ginfo.Name));
@@ -92,7 +92,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", 0);
         data.Add("name", pickUpData.Identifier);
-        data.Add("gunID", pickUpData.WeaponID);
+        data.Add("weaponId", pickUpData.WeaponID);
         data.Add("bullets", pickUpData.Ammunition.Bullets);
         data.Add("clips", pickUpData.Ammunition.Clips);
         data.Add("actorID", NetworkWrapper.LocalPlayer.ActorNumber);
@@ -114,7 +114,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         if ((int)data["actorID"] == NetworkWrapper.LocalPlayer.ActorNumber)
         {
             FirearmPickUpData pi = new FirearmPickUpData();
-            pi.ID = (int)data["gunID"];
+            pi.ID = (int)data["weaponId"];
             pi.ItemObject = g;
             pi.Clips = (int)data["clips"];
             pi.Bullets = (int)data["bullets"];

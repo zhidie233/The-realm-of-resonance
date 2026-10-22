@@ -36,7 +36,7 @@ public class DamageInfo
     {
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("d", Damage);
-        data.Add("gi", WeaponID);
+        data.Add("weaponId", WeaponID);
         data.Add("vi", ActorViewID);
         data.Add("c", Cause);
         data.Add("f", From);
@@ -49,7 +49,7 @@ public class DamageInfo
     public DamageInfo(ExitGames.Client.Photon.Hashtable data)
     {
         Damage = (int)data["d"];
-        WeaponID = (int)data["gi"];
+        WeaponID = (int)data["weaponId"];
         ActorViewID = (int)data["vi"];
         Cause = (DamageCause)data["c"];
         From = (string)data["f"];
