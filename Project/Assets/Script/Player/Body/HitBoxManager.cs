@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -10,20 +10,14 @@ public class HitBoxManager : MonoBehaviour
     public List<HitBoxBase> hitBoxes = new List<HitBoxBase>();
     public bool managerPerSegments = true;
     public PlayerHealthManagerBase healthManager;
-
-    /// <summary>
     /// 判定盒被击中时调用
-    /// </summary>
     public void OnHit(DamageInfo damageData, HitBoxBase hitbox)
     {
         if(healthManager != null)
         healthManager.DoDamage(damageData);
     }
-
-    /// <summary>
     /// 仅编辑器调用
     /// 不要在运行时使用。
-    /// </summary>
     public void SetupHitboxes(Animator animator)
     {
         hitBoxes.Clear();
@@ -45,7 +39,7 @@ public class HitBoxManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("This player has not been ragdolled yet.");
+            Debug.LogWarning("该玩家尚未启用布娃娃。");
         }
     }
 
@@ -53,7 +47,7 @@ public class HitBoxManager : MonoBehaviour
     {
         HitBoxInfo box = new HitBoxInfo();
         Collider col = animator.GetBoneTransform(bone).GetComponent<Collider>();
-        if (col == null) { Debug.LogWarning("The bone: " + bone.ToString() + " doesn't have a collider."); return; }
+        if (col == null) { Debug.LogWarning("骨骼 " + bone + " 没有碰撞体。"); return; }
 
         col.gameObject.layer = LayerMask.NameToLayer("Player");
         col.gameObject.tag = GameCore.HITBOX_TAG;
@@ -267,25 +261,20 @@ public class BodyHitBoxManagerEditor: Editor
 
     protected static Color[] m_MaskBodyPartPicker =
       {
-            new Color(255 / 255.0f,   144 / 255.0f,     0 / 255.0f), // root
-            new Color(0 / 255.0f, 174 / 255.0f, 240 / 255.0f), // body
-            new Color(171 / 255.0f, 160 / 255.0f,   0 / 255.0f), // head
-
-            new Color(0 / 255.0f, 255 / 255.0f,     255 / 255.0f), // ll
-            new Color(247 / 255.0f,   151 / 255.0f, 121 / 255.0f), // rl
-
-            new Color(0 / 255.0f, 255 / 255.0f, 0 / 255.0f), // la
-            new Color(86 / 255.0f, 116 / 255.0f, 185 / 255.0f), // ra
-
-            new Color(255 / 255.0f,   255 / 255.0f,     0 / 255.0f), // lh
-            new Color(130 / 255.0f,   202 / 255.0f, 156 / 255.0f), // rh
-
-            new Color(82 / 255.0f,    82 / 255.0f,      82 / 255.0f), // lfi
-            new Color(255 / 255.0f,   115 / 255.0f,     115 / 255.0f), // rfi
-            new Color(159 / 255.0f,   159 / 255.0f,     159 / 255.0f), // lhi
-            new Color(202 / 255.0f,   202 / 255.0f, 202 / 255.0f), // rhi
-
-            new Color(101 / 255.0f,   101 / 255.0f, 101 / 255.0f), // hi
+            new Color(255 / 255.0f,   144 / 255.0f,     0 / 255.0f),
+            new Color(0 / 255.0f, 174 / 255.0f, 240 / 255.0f),
+            new Color(171 / 255.0f, 160 / 255.0f,   0 / 255.0f),
+            new Color(0 / 255.0f, 255 / 255.0f,     255 / 255.0f),
+            new Color(247 / 255.0f,   151 / 255.0f, 121 / 255.0f),
+            new Color(0 / 255.0f, 255 / 255.0f, 0 / 255.0f),
+            new Color(86 / 255.0f, 116 / 255.0f, 185 / 255.0f),
+            new Color(255 / 255.0f,   255 / 255.0f,     0 / 255.0f),
+            new Color(130 / 255.0f,   202 / 255.0f, 156 / 255.0f),
+            new Color(82 / 255.0f,    82 / 255.0f,      82 / 255.0f),
+            new Color(255 / 255.0f,   115 / 255.0f,     115 / 255.0f),
+            new Color(159 / 255.0f,   159 / 255.0f,     159 / 255.0f),
+            new Color(202 / 255.0f,   202 / 255.0f, 202 / 255.0f),
+            new Color(101 / 255.0f,   101 / 255.0f, 101 / 255.0f),
         };
 
     static string sAvatarBodyMaskStr = "AvatarMask";
@@ -361,7 +350,6 @@ public class BodyHitBoxManagerEditor: Editor
                                 if (m_MaskBodyPartPicker[i] == color)
                                 {
                                     GUI.changed = true;
-                                    Debug.Log("Pick " + i);
                                     anyBodyPartPick = true;
                                 }
                             }

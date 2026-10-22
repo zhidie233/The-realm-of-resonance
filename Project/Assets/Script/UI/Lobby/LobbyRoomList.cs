@@ -1,4 +1,4 @@
-﻿using Photon.Realtime;
+using Photon.Realtime;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -14,10 +14,7 @@ public class LobbyRoomList : LobbyRoomListBase
     {
         if (!roomListHandler.IsInitialize) roomListHandler.Initialize();
     }
-
-    /// <summary>
     /// 显示所有可用房间
-    /// </summary>
     public override void SetRoomList(List<RoomInfo> rooms)
     {
         //移除旧列表

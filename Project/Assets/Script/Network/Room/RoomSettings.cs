@@ -2,11 +2,8 @@ using System.Collections;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using System.Collections.Generic;
-
-/// <summary>
 /// 该脚本处理所有房间属性，初始化所需的本地玩家数据容器
 /// 并处理自动选队逻辑。
-/// </summary>
 public class RoomSettings : MonoBehaviourBase
 {
     [GameToggle] public bool canSuicide = true;
@@ -36,10 +33,7 @@ public class RoomSettings : MonoBehaviourBase
         while (!GameConfig.isDataCached) yield return null;
         if (GameCore.Settings != null) GameCore.Settings.ApplySettings(RuntimeSettingsProfile.ResolutionApplication.NoApply, true);
     }
-
-    /// <summary>
     /// 把所有房间属性重置为默认值
-    /// </summary>
     public void ResetRoom()
     {
         Hashtable table = new Hashtable();
@@ -68,22 +62,16 @@ public class RoomSettings : MonoBehaviourBase
 
         GameEvents.DispatchRoomPropertiesReset();
     }
-
-    /// <summary>
     /// 获取本房间的自定义房间属性
     /// 这些属性由房间创建者（Host）设置
-    /// </summary>
     void GetRoomInfo()
     {
         CurrentRoomInfo = PhotonNetwork.CurrentRoom.GetRoomInfo();
         CheckAutoSpawn();
         RoomInfoFetched = true;
     }
-
-    /// <summary>
     /// 检查本机玩家是应自动出生
     /// 还是由他自己决定何时出生。
-    /// </summary>
     public void CheckAutoSpawn()
     {
         if (CurrentRoomInfo.autoAssignTeams && !GameCore.GameData.UsingReadyRoom())
@@ -113,10 +101,7 @@ public class RoomSettings : MonoBehaviourBase
             }
         }
     }
-
-    /// <summary>
     /// 把刚进房间的玩家自动分配到人数较少的队伍
-    /// </summary>
     void SelectTeamAutomatically()
     {
         string joinText = isOneTeamMode ? GameTexts.JoinedInMatch : GameTexts.JoinIn;
@@ -155,7 +140,6 @@ public class RoomSettings : MonoBehaviourBase
             GameController.Instance.SetLocalPlayerToTeam(team);
             return;
         }
-
         //生成玩家
         GameController.Instance.SpawnPlayer(team);
     }

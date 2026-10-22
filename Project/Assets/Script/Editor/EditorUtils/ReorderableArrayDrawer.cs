@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
@@ -32,11 +32,8 @@ using Object = UnityEngine.Object;
        }
 
        private static GUIStyle styleHighlight;
-
-       /// <summary>
        /// 内部类，为每个可重排的 SerializedProperty 管理 ReorderableList
        /// 该 SerializedProperty 位于 SerializedObject 的直接子级
-       /// </summary>
        protected class SortableListData
        {
            public string Parent { get; private set; }
@@ -216,46 +213,37 @@ using Object = UnityEngine.Object;
                else
                    propDropHandlers.Add(path, handler);
            }
-       } // End SortableListData
-
+       }
        public bool isSubEditor;
-
        private readonly List<SortableListData> listIndex = new List<SortableListData>();
        private readonly Dictionary<string, Editor> editableIndex = new Dictionary<string, Editor>();
-
        protected bool alwaysDrawInspector = false;
        protected bool isInitialized = false;
        protected bool hasSortableArrays = false;
        protected bool hasEditable = false;
-
        ~ReorderableArrayInspector()
        {
            listIndex.Clear();
            editableIndex.Clear();
            isInitialized = false;
        }
-
        #region Initialization
        private void OnEnable()
        {
            InitInspector();
        }
-
        protected virtual void InitInspector(bool force)
        {
            if (force)
                isInitialized = false;
            InitInspector();
        }
-
        protected virtual void InitInspector()
        {
            if (isInitialized && FORCE_INIT == false)
                return;
-
            FindTargetProperties();
        }
-
        protected void FindTargetProperties()
        {
            listIndex.Clear();
@@ -281,18 +269,15 @@ using Object = UnityEngine.Object;
                            CreateListData(serializedObject.FindProperty(iterProp.propertyPath));
                        }
                    }
-
                    if (iterProp.propertyType == SerializedPropertyType.ObjectReference)
                    {
                        Type propType = iterProp.GetTypeReflection();
                        if (propType == null)
                            continue;
-
                        bool isScriptable = propType.IsSubclassOf(typeScriptable);
                        if (isScriptable)
                        {
                            bool makeEditable = true;
-
                            if (makeEditable)
                            {
                                Editor scriptableEditor = null;
@@ -316,18 +301,15 @@ using Object = UnityEngine.Object;
                    }
                } while (iterProp.NextVisible(true));
            }
-
            isInitialized = true;
            if (hasSortableArrays == false)
            {
                listIndex.Clear();
            }
        }
-
        private void CreateListData(SerializedProperty property)
        {
            string parent = GetGrandParentPath(property);
-
            //尝试在 SortableListData 中查找祖父级
            SortableListData data = listIndex.Find(listData => listData.Parent.Equals(parent));
            if (data == null)
@@ -335,7 +317,6 @@ using Object = UnityEngine.Object;
                data = new SortableListData(parent);
                listIndex.Add(data);
            }
-
            data.AddProperty(property);
            object[] attr = property.GetAttributes<ReorderableAttribute>();
            if (attr != null && attr.Length == 1)
@@ -347,7 +328,6 @@ using Object = UnityEngine.Object;
                }
            }
        }
-
        private void HandleReorderableOptions(ReorderableAttribute arrayAttr, SerializedProperty property, SortableListData data)
        {
            //自定义元素表头
@@ -355,7 +335,6 @@ using Object = UnityEngine.Object;
            {
                data.ElementHeaderCallback = i => string.Format("{0} {1}", arrayAttr.ElementHeader, (arrayAttr.HeaderZeroIndex ? i : i + 1));
            }
-
            //按单行绘制属性
            if (arrayAttr.ElementSingleLine)
            {
@@ -371,89 +350,63 @@ using Object = UnityEngine.Object;
                    GUI.Box(rect, GUIContent.none, styleHighlight);
                };
 #endif
-
                list.drawElementCallback = (rect, index, active, focused) =>
                {
                    var element = property.GetArrayElementAtIndex(index);
                    element.isExpanded = false;
-
                    int childCount = data.GetElementCount(property);
                    if (childCount < 1)
                        return;
-
                    rect.y += 3;
                    rect.height -= 6;
-
                    if (element.NextVisible(true))
                    {
                        float restoreWidth = EditorGUIUtility.labelWidth;
                        EditorGUIUtility.labelWidth /= childCount;
-
                        float padding = 5f;
                        float width = rect.width - padding * (childCount - 1);
                        width /= childCount;
-
                        Rect childRect = new Rect(rect) { width = width };
                        int depth = element.Copy().depth;
                        do
                        {
                            if (element.depth != depth)
                                break;
-
                            if (childCount <= 2)
                                EditorGUI.PropertyField(childRect, element, false);
                            else
                                EditorGUI.PropertyField(childRect, element, GUIContent.none, false);
                            childRect.x += width + padding;
                        } while (element.NextVisible(false));
-
                        EditorGUIUtility.labelWidth = restoreWidth;
                    }
                };
            }
        }
-
-       /// <summary>
        /// 给定一个 SerializedProperty，返回分配给它的自动 ReorderableList（如果有）
-       /// </summary>
-       /// <param name="property"></param>
-       /// <returns></returns>
        protected ReorderableList GetSortableList(SerializedProperty property)
        {
            if (listIndex.Count == 0)
                return null;
-
            string parent = GetGrandParentPath(property);
-
            SortableListData data = listIndex.Find(listData => listData.Parent.Equals(parent));
            if (data == null)
                return null;
-
            return data.GetPropertyList(property);
        }
-
-       /// <summary>
        /// 在 SerializedObject 的 ReorderableList 上设置拖放处理函数（如果有）
-       /// </summary>
-       /// <param name="property"></param>
-       /// <param name="handler"></param>
-       /// <returns></returns>
        protected bool SetDragDropHandler(SerializedProperty property, Action<SerializedProperty, Object[]> handler)
        {
            if (listIndex.Count == 0)
                return false;
-
            string parent = GetGrandParentPath(property);
-
            SortableListData data = listIndex.Find(listData => listData.Parent.Equals(parent));
            if (data == null)
                return false;
-
            data.SetDropHandler(property, handler);
            return true;
        }
        #endregion
-
        protected bool InspectorGUIStart(bool force = false)
        {
            //未初始化，尝试初始化
@@ -461,7 +414,6 @@ using Object = UnityEngine.Object;
                InitInspector();
            if (hasEditable && editableIndex.Count == 0)
                InitInspector();
-
            //没有可排序数组或列表索引未初始化
            bool cannotDrawOrderable = (hasSortableArrays == false || listIndex.Count == 0);
            bool cannotDrawEditable = (hasEditable == false || editableIndex.Count == 0);
@@ -473,39 +425,31 @@ using Object = UnityEngine.Object;
                    base.OnInspectorGUI();
                return false;
            }
-
            serializedObject.Update();
            return true;
        }
-
        protected virtual void DrawInspector()
        {
            DrawPropertiesAll();
        }
-
        public override void OnInspectorGUI()
        {
            if (InspectorGUIStart(alwaysDrawInspector) == false)
                return;
-
            EditorGUI.BeginChangeCheck();
-
            DrawInspector();
-
            if (EditorGUI.EndChangeCheck())
            {
                serializedObject.ApplyModifiedProperties();
                InitInspector(true);
            }
        }
-
        protected enum IterControl
        {
            Draw,
            Continue,
            Break
        }
-
        protected void IterateDrawProperty(SerializedProperty property, Func<IterControl> filter = null)
        {
            if (property.NextVisible(true))
@@ -519,7 +463,6 @@ using Object = UnityEngine.Object;
                        break;
                    if (isSubEditor && property.name.Equals("m_Script"))
                        continue;
-
                    if (filter != null)
                    {
                        var filterResult = filter();
@@ -528,24 +471,18 @@ using Object = UnityEngine.Object;
                        if (filterResult == IterControl.Continue)
                            continue;
                    }
-
                    DrawPropertySortableArray(property);
                } while (property.NextVisible(false));
            }
        }
-
-       /// <summary>
        /// 如果初始化时找到了，就把 SerializedProperty 绘制成 ReorderableList
        /// 否则用 EditorGUILayout.PropertyField
-       /// </summary>
-       /// <param name="property"></param>
        protected void DrawPropertySortableArray(SerializedProperty property)
        {
            //尝试获取该属性所属的可排序列表
            SortableListData listData = null;
            if (listIndex.Count > 0)
                listData = listIndex.Find(data => property.propertyPath.StartsWith(data.Parent));
-
            //有 ReorderableList
            if (listData != null)
            {
@@ -565,7 +502,6 @@ using Object = UnityEngine.Object;
            else
            {
                SerializedProperty targetProp = serializedObject.FindProperty(property.propertyPath);
-
                bool isStartProp = targetProp.propertyPath.StartsWith("m_");
                using (new EditorGUI.DisabledScope(isStartProp))
                {
@@ -577,25 +513,17 @@ using Object = UnityEngine.Object;
                }
            }
        }
-
        #region Helper functions
-       /// <summary>
        /// 绘制默认 inspector，并带上可排序数组
-       /// </summary>
        public void DrawPropertiesAll()
        {
            SerializedProperty iterProp = serializedObject.GetIterator();
            IterateDrawProperty(iterProp);
        }
-
-       /// <summary>
        /// 绘制默认 inspector，但跳过给定的属性名
-       /// </summary>
-       /// <param name="propertyNames"></param>
        public void DrawPropertiesExcept(params string[] propertyNames)
        {
            SerializedProperty iterProp = serializedObject.GetIterator();
-
            IterateDrawProperty(iterProp,
                filter: () =>
                {
@@ -604,10 +532,7 @@ using Object = UnityEngine.Object;
                    return IterControl.Draw;
                });
        }
-
-       /// <summary>
        /// 绘制默认 inspector，从给定属性开始
-       /// </summary>
        /// <param name="propertyStart">起始属性名</param>
        public void DrawPropertiesFrom(string propertyStart)
        {
@@ -623,10 +548,7 @@ using Object = UnityEngine.Object;
                    return IterControl.Continue;
                });
        }
-
-       /// <summary>
        /// 绘制默认 inspector，到给定属性为止
-       /// </summary>
        /// <param name="propertyStop">结束属性名</param>
        public void DrawPropertiesUpTo(string propertyStop)
        {
@@ -639,10 +561,7 @@ using Object = UnityEngine.Object;
                    return IterControl.Draw;
                });
        }
-
-       /// <summary>
        /// 绘制默认 inspector，从起始属性到结束属性
-       /// </summary>
        /// <param name="propertyStart">起始属性名</param>
        /// <param name="propertyStop">结束属性名</param>
        public void DrawPropertiesFromUpTo(string propertyStart, string propertyStop)
@@ -654,13 +573,10 @@ using Object = UnityEngine.Object;
                {
                    if (iterProp.name.Equals(propertyStop))
                        return IterControl.Break;
-
                    if (iterProp.name.Equals(propertyStart))
                        canDraw = true;
-
                    if (canDraw == false)
                        return IterControl.Continue;
-
                    return IterControl.Draw;
                });
        }

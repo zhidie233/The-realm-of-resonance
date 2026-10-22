@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -27,11 +27,8 @@ public class InputInteractionIndicator : MonoBehaviour
 
         Instance.content.SetActive(active);
     }
-
-    /// <summary>
     /// 仅当当前显示文本与之相同时，Set active 才会执行
     /// 与传入值一致。
-    /// </summary>
     public static void SetActiveIfSame(bool active, string description)
     {
         if (Instance == null) return;
@@ -39,10 +36,7 @@ public class InputInteractionIndicator : MonoBehaviour
 
         Instance.content.SetActive(active);
     }
-
-    /// <summary>
     /// 
-    /// </summary>
     /// <param name="inputName">执行该操作的输入名称</param>
     /// <param name="description">操作说明。</param>
     public static void ShowIndication(string inputName, string description, Action clickCallback = null)

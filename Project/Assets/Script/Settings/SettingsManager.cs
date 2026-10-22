@@ -1,4 +1,4 @@
-﻿﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,10 +22,7 @@ using TMPro;
        {
            ChangeWindow(defaultWindow);
        }
-
-       /// <summary>
        /// 切换设置 UI 窗口
-       /// </summary>
        public void ChangeWindow(int id)
        {
            if (currentWindow == id) return;

@@ -3,7 +3,7 @@ using Photon.Realtime;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Hashtable = ExitGames.Client.Photon.Hashtable; //Replace default Hashtables with Photon hashtables
+using Hashtable = ExitGames.Client.Photon.Hashtable;
 
 public class AIManager : NetworkHelper
 {
@@ -11,13 +11,10 @@ public class AIManager : NetworkHelper
     public int updateBotsLookAtEach = 50;
     //场景中当前所有已实例化机器人的引用
     [HideInInspector] public List<Transform> AllBotsTransforms = new List<Transform>();
-
     //当前所有在局机器人的信息和战绩
     [HideInInspector] public List<GameBotProperties> BotsStatistics = new List<GameBotProperties>();
-
     //本局是否使用机器人？
     public bool BotsActive { get; set; }
-
     //机器人信息是否已由主客户端同步？
     public bool HasMasterInfo { get; set; } = false;
 
@@ -66,7 +63,6 @@ public class AIManager : NetworkHelper
             this.InvokeAfter(2, SyncBotsDataToAllOthers);
         }
     }
-
     //首次实例化所有机器人
     void FirstSpawn()
     {
@@ -110,7 +106,6 @@ public class AIManager : NetworkHelper
         GameEvents.onLocalPlayerDeath -= OnLocalDeath;
         GameEvents.onLocalPlayerSpawn -= OnLocalPlayerSpawn;
     }
-
     //把机器人数据发给房间内其他所有客户端，新玩家会自动收到这些数据
     void SyncBotsDataToAllOthers()
     {
@@ -120,16 +115,13 @@ public class AIManager : NetworkHelper
         string line = GetCompiledBotsData();
         //再发给新玩家，让他拿到数据在本地更新。
         photonView.RPC(nameof(SyncAllBotsStats), RpcTarget.Others, line, 0);
-
         //同时发送槽位数据，保证主客户端退出后所有玩家的列表一致
         line = GetCompiledSlotsData();
         //再发给新玩家，让他拿到数据在本地更新。
         photonView.RPC(nameof(SyncAllBotsStats), RpcTarget.Others, line, 1);
         GameEvents.onBotsInitializated?.Invoke();
     }
-
     //把机器人数据取成一行字符串
-    // <returns></returns>
     public string GetCompiledBotsData()
     {
         //先从主客户端收集全部战绩，拼成一行字符串
@@ -141,9 +133,7 @@ public class AIManager : NetworkHelper
         }
         return line;
     }
-
     //把槽位列表取成一行字符串
-    // <returns></returns>
     public string GetCompiledSlotsData()
     {
         string line = string.Empty;
@@ -163,7 +153,6 @@ public class AIManager : NetworkHelper
         }
         return line;
     }
-
     //设置队伍槽位，用来分配玩家和机器人。
     void SetUpSlots(bool addExistingPlayers)
     {
@@ -217,7 +206,6 @@ public class AIManager : NetworkHelper
                 {
                     s.Player = team1Players[0].NickName;
                     team1Players.RemoveAt(0);
-                    Debug.Log("Set default player in slot: " + s.Player);
                 }
                 else
                 {
@@ -227,25 +215,21 @@ public class AIManager : NetworkHelper
             }
         }
     }
-
     //在指定队伍出生一个机器人，首次实例化时 agent 传 null
     public AIBotCore SpawnBot(AIBotCore agent = null, Team _team = Team.None)
     {
         var spawnPoint = SpawnPointManager.Instance.GetSingleRandom();
         string AiName = GameConfig.Instance.BotTeam1.name;
-        if (agent != null)//if is a already instanced bot
+        if (agent != null)
         {
             AiName = (agent.AITeam == Team.Team2) ? GameConfig.Instance.BotTeam2.name : GameConfig.Instance.BotTeam1.name;
-
-
-            if (agent.AITeam == Team.None) { Debug.LogError($"bot {agent.AIName} has not team"); }
-
+            if (agent.AITeam == Team.None) { Debug.LogError($"机器人 {agent.AIName} 未分配阵营"); }
             //检查机器人是否已分配队伍，没有就看看有没有空位给它
             if (VerifyTeamAffiliation(agent, agent.AITeam))
             {
                 spawnPoint = SpawnPointManager.Instance.GetSpawnPointForTeam(agent.AITeam, SpawnPointManager.SpawnMode.Sequential);
             }
-            else // there's not space in the team for this bot
+            else
             {
                 //检查机器人之前是否注册过队伍
                 int ind = BotsStatistics.FindIndex(x => x.Name == agent.AIName);
@@ -271,22 +255,18 @@ public class AIManager : NetworkHelper
                     AiName = GameConfig.Instance.BotTeam3.name;
                     break;
             }
-            if (!isOneTeamMode)//if team mode, spawn bots in the respective team spawn points.
+            if (!isOneTeamMode)
             {
                 spawnPoint = SpawnPointManager.Instance.GetSpawnPointForTeam(_team, SpawnPointManager.SpawnMode.Sequential);
             }
         }
-
         int rbn = Random.Range(0, BotsNames.Count);
         string AIName = agent == null ? string.Format(GameConfig.Instance.botTagFormat, BotsNames[rbn]) : agent.AIName;
         Team AITeam = agent == null ? _team : agent.AITeam;
-
         spawnPoint.GetSpawnPosition(out Vector3 spawnPosition, out Quaternion spawnRot);
-
         object[] botEssentialData = new object[] { AIName, AITeam };
         //用 InstantiateSceneObject 让机器人由主客户端控制，主客户端离开房间时也不会销毁它们。
         GameObject bot = PhotonNetwork.InstantiateRoomObject(AiName, spawnPosition, spawnRot, 0, botEssentialData);
-
         AIBotCore newAgent = bot.GetComponent<AIBotCore>();
         //如果这个机器人已在局中
         if (agent != null)
@@ -295,7 +275,7 @@ public class AIManager : NetworkHelper
             newAgent.AITeam = agent.AITeam;
             photonView.RPC(nameof(SyncBotStat), RpcTarget.Others, agent.AIName, bot.GetComponent<PhotonView>().ViewID, (byte)3);
         }
-        else//if this is the first time instancing this bot
+        else
         {
             newAgent.AIName = AIName;
             newAgent.AITeam = _team;
@@ -310,7 +290,6 @@ public class AIManager : NetworkHelper
             VerifyTeamAffiliation(newAgent, _team);
         }
         newAgent.Init();
-
         //构建玩家数据
         GamePlayer playerData = new GamePlayer()
         {
@@ -321,7 +300,6 @@ public class AIManager : NetworkHelper
             isRealPlayer = false,
             isAlive = true,
         };
-
         GameEvents.DispatchRemoteActorChange(new GameEvents.PlayerChangeData()
         {
             PlayerName = newAgent.AIName,
@@ -329,15 +307,11 @@ public class AIManager : NetworkHelper
             IsAlive = true,
             NetworkView = newAgent.GetComponent<PhotonView>()
         });
-
         AllBots.Add(newAgent);
         AllBotsTransforms.Add(newAgent.AimTarget);
-
         return newAgent;
     }
-
     //检查机器人是否已分配到队伍槽位
-    // <returns></returns>
     private bool VerifyTeamAffiliation(AIBotCore agent, Team team)
     {
         var playerSlots = team == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
@@ -353,38 +327,31 @@ public class AIManager : NetworkHelper
                 playerSlots[index].Bot = agent.AIName;
                 return true;
             }
-            else { return false; }//bot can't be assigned in team
+            else { return false; }
         }
     }
-
     //获取地图上所有可用的（存活）玩家。
     private void UpdateTargetList()
     {
         if (!NetworkWrapper.IsMasterClient || GameController.Instance == null) return;
-
         targetsLists.Clear();
         var all = GameController.Instance.OthersActorsInScene;
-
         for (int i = 0; i < all.Count; i++)
         {
             if (all[i].Actor == null) continue;
             targetsLists.Add(all[i].Actor.GetComponent<PlayerReferencesCommon>());
         }
-
         if (GameCore.LocalPlayerReferences != null)
         {
             targetsLists.Add(GameCore.LocalPlayerReferences);
         }
-
         //刷新每个机器人的目标
         for (int i = 0; i < AllBots.Count; i++)
         {
             if (AllBots[i] == null) continue;
-
             AllBots[i].UpdateTargetList();
         }
     }
-
     public void GetTargetsFor(AIBotCore bot, ref List<Transform> list)
     {
         list.Clear();
@@ -393,7 +360,6 @@ public class AIManager : NetworkHelper
         {
             t = targetsLists[i];
             if (t == null || t.name == bot.AIName) continue;
-
             if (isOneTeamMode)
             {
                 list.Add(t.BotAimTarget);
@@ -401,34 +367,27 @@ public class AIManager : NetworkHelper
             else
             {
                 if (t.PlayerTeam != Team.None && t.PlayerTeam == bot.AITeam) continue;
-
                 list.Add(t.BotAimTarget);
             }
         }
     }
-
     //把死亡的机器人从可用列表移出，放进等待重生列表
     public void OnBotDeath(AIBotCore agent, AIBotCore killer)
     {
         if (!NetworkWrapper.IsMasterClient)
             return;
-
         AllBots.Remove(agent);
         AllBotsTransforms.Remove(agent.AimTarget);
         for (int i = 0; i < AllBots.Count; i++)
         {
             AllBots[i].CheckTargets();
         }
-
         AddBotToRespawn(agent);
-
         UpdateTargetList();
     }
-
     public void RespawnAllBots(bool forcedRespawn = false)
     {
         if (!NetworkWrapper.IsMasterClient) return;
-
         for (int i = AllBots.Count - 1; i >= 0; i--)
         {
             if (forcedRespawn)
@@ -439,7 +398,6 @@ public class AIManager : NetworkHelper
                     AllBots[i].Respawn();
                 }
             }
-
             //如果机器人已死亡
             if (AllBots[i].gameObject == null)
             {
@@ -450,17 +408,14 @@ public class AIManager : NetworkHelper
                 }
             }
         }
-
         for (int i = SpawningBots.Count - 1; i >= 0; i--)
         {
             if (SpawningBots[i] == null || SpawningBots[i].gameObject == null) continue;
-
             SpawnBot(SpawningBots[i]);
             SpawningBots[i].GetComponent<AIBotHealth>().DestroyEntity();
             SpawningBots.RemoveAt(i);
         }
     }
-
     //把机器人放入待重生列表，等最短重生时间过去后重生。
     public void AddBotToRespawn(AIBotCore bot)
     {
@@ -471,7 +426,6 @@ public class AIManager : NetworkHelper
             Invoke(nameof(SpawnPendingBot), GameConfig.Instance.respawnDelay);
         }
     }
-
     void SpawnPendingBot()
     {
         if (SpawningBots == null || SpawningBots.Count <= 0) return;
@@ -483,27 +437,21 @@ public class AIManager : NetworkHelper
             SpawningBots.RemoveAt(0);
         }
     }
-
     //更新凶手机器人的击杀数并同步给所有人
     public void SetBotKill(string botName)
     {
         var stats = GetBotStatistics(botName);
         if (stats == null) return;
-
         photonView.RPC(nameof(SyncBotStat), RpcTarget.All, stats.Name, 0, (byte)0);
-
         GameController.Instance.SetPoint(1, GameMode.FreeMatch, Team.All);
         GameController.Instance.SetPoint(1, GameMode.TeamMatch, stats.Team);
     }
-
     public void SetBotScore(string botName, int score)
     {
         var stat = GetBotStatistics(botName);
         if (stat == null) return;
-
         stat.Score += score;
     }
-
     //机器人死亡时在所有客户端调用，更新其死亡数并同步给所有人。
     //死亡的机器人
     public void SetBotDeath(string killed)
@@ -524,34 +472,26 @@ public class AIManager : NetworkHelper
         }
         int index = BotsStatistics.FindIndex(x => x.Name == killed);
         if (index <= -1) return;
-
         GameEvents.EventBotDeath(killed);
-
         //这里难道不该只由主客户端调用？
         if (NetworkWrapper.IsMasterClient) photonView.RPC(nameof(SyncBotStat), RpcTarget.All, BotsStatistics[index].Name, 0, (byte)1);
     }
-
     public static void UpdateBotView(AIBotCore bot, int viewID)
     {
         var stat = Instance.GetBotStatistics(bot.AIName);
         if (stat == null) return;
-
         stat.ViewID = viewID;
     }
-
     public static void SetBotGameState(AIBotCore bot, BotMatchState gameState)
     {
         var stat = Instance.GetBotStatistics(bot.AIName);
         if (stat == null) return;
-
         stat.GameState = gameState;
     }
-
     //新玩家进入对局时触发的事件
     void OnPlayerEnter(Player player)
     {
         if (player.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber) return;
-
         //机器人战绩不像玩家数据那样用 Hashtable 同步，所以要用 RPC 同步
         //只需同步一次（之后由本地客户端更新），因此在新玩家进入时发送（只发给新玩家）
         if (NetworkWrapper.IsMasterClient)
@@ -560,38 +500,28 @@ public class AIManager : NetworkHelper
             string line = GetCompiledBotsData();
             //再发给新玩家，让他拿到数据在本地更新。
             photonView.RPC(nameof(SyncAllBotsStats), player, line, 0);
-
             //同时发送槽位数据，保证主客户端退出后所有玩家的列表一致
             line = GetCompiledSlotsData();
             photonView.RPC(nameof(SyncAllBotsStats), player, line, 1);
         }
     }
-
     //玩家修改属性时触发的事件，用来监听玩家换队
     public void OnPhotonPlayerPropertiesChanged(Player player, Hashtable changedProps)
     {
         if (!BotsActive)
             return;
         if (!changedProps.ContainsKey(NetworkKeys.TeamKey)) return;
-
         string teamName = (string)changedProps[NetworkKeys.TeamKey];
         var team = teamName == Team.Team2.ToString() ? Team.Team2 : Team.Team1;
-
         if (teamName == Team.None.ToString()) return;
-
         ReplaceBotWithPlayer(player, team);
     }
-
     //用指定玩家替换指定队伍里的一个机器人。玩家不会立刻替换，而是在他死亡且不再重生后才替换。
-    // <param name="newPlayer"></param>
-    // <param name="playerTeam"></param>
     public void ReplaceBotWithPlayer(Player newPlayer, Team playerTeam)
     {
         if (!BotsActive) return;
-
         string remplaceBot = string.Empty;
         var slotList = playerTeam == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
-
         //检查这个玩家是否已分配过（可能只是换了队伍）
         if (slotList.Exists(x => x.Player == newPlayer.NickName)) return;
         //在队伍里找一个空位
@@ -603,16 +533,13 @@ public class AIManager : NetworkHelper
             DeleteBot(remplaceBot);
             slotList[index].Player = newPlayer.NickName;
             slotList[index].Bot = string.Empty;
-
             //把槽位变更同步给其他玩家
             if (NetworkWrapper.IsMasterClient)
             {
                 int teamCmdID = playerTeam == Team.Team2 ? 2 : 1;
                 photonView.RPC(nameof(SyncBotStat), RpcTarget.Others, $"{teamCmdID}|{newPlayer.NickName}", index, (byte)4);
             }
-            Debug.Log($"<color=yellow>Bot {remplaceBot} was replaced by {newPlayer.NickName}</color>");
         }
-
         //删除被主客户端替换掉的那个机器人
         if (newPlayer.IsMasterClient && NetworkWrapper.IsMasterClient && !isMasterAlredyInTeam && !string.IsNullOrEmpty(remplaceBot))
         {
@@ -620,7 +547,7 @@ public class AIManager : NetworkHelper
             if (bot != null)
             {
                 PhotonView bv = bot.GetComponent<PhotonView>();
-                bot.References.shooterHealth.DestroyEntity();//destroy on remote clients
+                bot.References.shooterHealth.DestroyEntity();
                 AllBots.Remove(bot);
                 AllBotsTransforms.Remove(bot.AimTarget);
                 PhotonNetwork.Destroy(bv.gameObject);
@@ -628,7 +555,6 @@ public class AIManager : NetworkHelper
             isMasterAlredyInTeam = true;
         }
     }
-
     public void OnMasterClientSwitched(Player newMasterClient)
     {
         //如果新的主客户端就是本地客户端
@@ -636,12 +562,11 @@ public class AIManager : NetworkHelper
         {
             if (Team1PlayersSlots == null || Team1PlayersSlots.Count <= 0)
                 SetUpSlots(false);
-
             //机器人没有在新主客户端上收集，这里手动取出来
             AIBotCore[] allBots = FindObjectsOfType<AIBotCore>();
             foreach (var bot in allBots)
             {
-                if (bot.isDeath)//if the bot was death when master client leave the game
+                if (bot.isDeath)
                 {
                     AddBotToRespawn(bot);
                     continue;
@@ -652,76 +577,69 @@ public class AIManager : NetworkHelper
             }
         }
     }
-
     public void OnPlayerLeft(Player player)
     {
         if (!BotsActive || GameController.Instance.GameFinish) return;
-
         //检查玩家是否占用了某个槽位
         Team team = player.GetPlayerTeam();
         var slotList = team == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
         int index = slotList.FindIndex(x => x.Player == player.NickName);
         //清空被占用的槽位
         if (index != -1) { slotList[index].Player = ""; }
-
         //让主客户端实例化一个新机器人，补上刚离开的玩家
         if (NetworkWrapper.IsMasterClient)
         {
             //尝试实例化新机器人
             var newAgent = SpawnBot(null, team);
             if (newAgent == null) return;
-
             //找到机器人被分配到的槽位 ID
             int botIndex = slotList.FindIndex(x => x.Bot == newAgent.AIName);
             //把新槽位同步给其他所有玩家
             photonView.RPC(nameof(SyncBotStat), RpcTarget.Others, $"{(int)team}|{newAgent.AIName}|{newAgent.photonView.ViewID}", botIndex, (byte)5);
             //向所有玩家显示新机器人的名字通知
             KillReportEntry.Instance.SendMessageEvent($"{newAgent.AIName} has joined to {team.GetTeamName()}");
-            Debug.Log($"<color=blue>Bot {newAgent.AIName} has replace the player {player.NickName}.</color>");
         }
     }
-
     [PunRPC]
     public void SyncBotStat(string data, int value, byte cmd)
     {
         GameBotProperties bs = BotsStatistics.Find(x => x.Name == data);
         if (bs == null && cmd != 5) return;
-        if (cmd == 0)//add kill
+        if (cmd == 0)
         {
             bs.Kills++;
             bs.Score += GameConfig.Instance.matchScore.KillReward;
         }
-        else if (cmd == 1)//death
+        else if (cmd == 1)
         {
             bs.Deaths++;
             bs.GameState = BotMatchState.Death;
         }
-        else if (cmd == 2)//remove bot
+        else if (cmd == 2)
         {
             RemoveBotInfo(data);
         }
-        else if (cmd == 3)//update view id
+        else if (cmd == 3)
         {
             bs.ViewID = value;
             OnBotStatUpdate?.Invoke(bs);
         }
-        else if (cmd == 4)//replace bot slot with a player
+        else if (cmd == 4)
         {
             string[] dataSplit = data.Split('|');
             var list = int.Parse(dataSplit[0]) == 1 ? Team1PlayersSlots : Team2PlayersSlots;
-            if (list.Count <= 0) { Debug.LogWarning("Team slots has not been setup yet."); return; }
+            if (list.Count <= 0) { Debug.LogWarning("队伍槽位尚未配置。"); return; }
             list[value].Player = dataSplit[1];
             list[value].Bot = "";
         }
-        else if (cmd == 5)//add single new bot
+        else if (cmd == 5)
         {
             string[] dataSplit = data.Split('|');
             Team team = (Team)int.Parse(dataSplit[0]);
             var list = team == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
-            if (list.Count <= 0) { Debug.LogWarning("Team slots has not been setup yet."); return; }
+            if (list.Count <= 0) { Debug.LogWarning("队伍槽位尚未配置。"); return; }
             list[value].Player = "";
             list[value].Bot = dataSplit[1];
-
             //添加机器人战绩
             bs = new GameBotProperties();
             bs.Name = dataSplit[1];
@@ -730,11 +648,10 @@ public class AIManager : NetworkHelper
             BotsStatistics.Add(bs);
         }
     }
-
     [PunRPC]
     void SyncAllBotsStats(string data, int cmd)
     {
-        if (cmd == 0)//bots statistics
+        if (cmd == 0)
         {
             BotsStatistics.Clear();
             string[] split = data.Split("|"[0]);
@@ -750,7 +667,6 @@ public class AIManager : NetworkHelper
                 bs.Team = (Team)int.Parse(info[4]);
                 bs.ViewID = int.Parse(info[5]);
                 BotsStatistics.Add(bs);
-
                 if (!GameController.Instance.OthersActorsInScene.Exists(x => x.Name == bs.Name))
                 {
                     GameController.Instance.OthersActorsInScene.Add(new GamePlayer()
@@ -764,26 +680,24 @@ public class AIManager : NetworkHelper
             OnMaterStatsReceived?.Invoke(BotsStatistics);
             HasMasterInfo = true;
         }
-        else if (cmd == 1)//team slots info
+        else if (cmd == 1)
         {
             SetUpSlots(false);
             string[] teams = data.Split('&');
-            string[] teamInfo = teams[0].Split('|');//get the first team slots
+            string[] teamInfo = teams[0].Split('|');
             for (int i = 0; i < teamInfo.Length; i++)
             {
                 if (string.IsNullOrEmpty(teamInfo[i])) continue;
-
                 string[] slot = teamInfo[i].Split(',');
                 Team1PlayersSlots[i].Player = slot[0];
                 Team1PlayersSlots[i].Bot = slot[1];
             }
             if (!isOneTeamMode)
             {
-                teamInfo = teams[1].Split('|');//get the second team slots
+                teamInfo = teams[1].Split('|');
                 for (int i = 0; i < teamInfo.Length; i++)
                 {
                     if (string.IsNullOrEmpty(teamInfo[i])) continue;
-
                     string[] slot = teamInfo[i].Split(',');
                     Team2PlayersSlots[i].Player = slot[0];
                     Team2PlayersSlots[i].Bot = slot[1];
@@ -792,21 +706,17 @@ public class AIManager : NetworkHelper
             GameEvents.onBotsInitializated?.Invoke();
         }
     }
-
     void RemoveBotInfo(string botName)
     {
         int bi = BotsStatistics.FindIndex(x => x.Name == botName);
         if (bi != -1) BotsStatistics.RemoveAt(bi);
-
         bi = GameController.Instance.OthersActorsInScene.FindIndex(x => x.Name == botName);
         if (bi != -1)
         {
             GameController.Instance.OthersActorsInScene.RemoveAt(bi);
         }
-
         lastLifeBots.Add(botName);
     }
-
     void DeleteBot(string Name)
     {
         if (BotsStatistics.Exists(x => x.Name == Name))
@@ -814,29 +724,24 @@ public class AIManager : NetworkHelper
             photonView.RPC(nameof(SyncBotStat), RpcTarget.All, Name, 0, (byte)2);
         }
     }
-
     private void OnRemotePlayerChange(GameEvents.PlayerChangeData changeData)
     {
         UpdateTargetList();
     }
-
     private void OnLocalDeath()
     {
         UpdateTargetList();
     }
-
     private void OnLocalPlayerSpawn()
     {
         UpdateTargetList();
     }
-
     public List<GamePlayer> GetAllBotsInTeam(Team team)
     {
         List<GamePlayer> list = new List<GamePlayer>();
         for (int i = 0; i < GameController.Instance.OthersActorsInScene.Count; i++)
         {
             if (GameController.Instance.OthersActorsInScene[i].isRealPlayer) continue;
-
             if (GameController.Instance.OthersActorsInScene[i].Team == team)
             {
                 list.Add(GameController.Instance.OthersActorsInScene[i]);
@@ -844,7 +749,6 @@ public class AIManager : NetworkHelper
         }
         return list;
     }
-
     public List<Transform> GetOtherBots(Transform bot, Team _team)
     {
         List<Transform> all = new List<Transform>();
@@ -860,16 +764,14 @@ public class AIManager : NetworkHelper
                 }
             }
         }
-        else //team match
+        else
         {
             for (int i = 0; i < AllBotsTransforms.Count; i++)
             {
                 if (AllBotsTransforms[i] == null) continue;
-
                 Transform t = AllBotsTransforms[i].root;
                 AIBotCore asa = t.GetComponent<AIBotCore>();
                 if (t.name.Contains("(die)") || asa.isDeath) continue;
-
                 if (asa.AITeam != _team && asa.AITeam != Team.None && t != bot.root)
                 {
                     all.Add(AllBotsTransforms[i]);
@@ -882,16 +784,13 @@ public class AIManager : NetworkHelper
         }
         return all;
     }
-
     public GameBotProperties GetBotStatistics(string botName)
     {
         var id = BotsStatistics.FindIndex(x => x.Name == botName);
         if (id < 0) return null;
         return BotsStatistics[id];
     }
-
     //统计空槽位数量（没有被真人玩家占用的）
-    // <returns></returns>
     public int EmptySlotsCount(Team team)
     {
         int count = 0;
@@ -902,7 +801,6 @@ public class AIManager : NetworkHelper
         }
         return count;
     }
-
     private bool hasSpaceInTeam(Team team)
     {
         if (team == Team.Team2)
@@ -914,7 +812,6 @@ public class AIManager : NetworkHelper
             return Team1PlayersSlots.Exists(x => x.Player == string.Empty);
         }
     }
-
     private bool hasSpaceInTeamForBot(Team team)
     {
         if (team == Team.Team2)
@@ -926,7 +823,6 @@ public class AIManager : NetworkHelper
             return Team1PlayersSlots.Exists(x => x.Player == string.Empty && x.Bot == string.Empty);
         }
     }
-
     public AIBotCore GetBot(int viewID)
     {
         foreach (AIBotCore agent in AllBots)
@@ -938,7 +834,6 @@ public class AIManager : NetworkHelper
         }
         return null;
     }
-
     public GameBotProperties GetBotWithMoreKills()
     {
         if (BotsStatistics == null || BotsStatistics.Count <= 0)
@@ -964,14 +859,12 @@ public class AIManager : NetworkHelper
         }
         return BotsStatistics[id];
     }
-
     [System.Serializable]
     public class PlayersSlots
     {
         public string Player;
         public string Bot;
     }
-
     private static AIManager _instance;
     public static AIManager Instance
     {

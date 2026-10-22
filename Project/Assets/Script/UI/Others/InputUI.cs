@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Text.RegularExpressions;
@@ -71,7 +71,7 @@ using System.Collections;
        void InstanceKeys()
        {
            InputBindings.Instance.Initialize();
-           if (InputBindings.Instance.mappedInstance == null) { Debug.Log("Button Mapped has not been assigned in Input Manager."); return; }
+           if (InputBindings.Instance.mappedInstance == null) {  return; }
            cachedBindings.ForEach(x => { Destroy(x.gameObject); });
            cachedBindings.Clear();
            List<ButtonData> buttons = InputBindings.Instance.mappedInstance.ButtonMap;
@@ -113,7 +113,7 @@ using System.Collections;
                {
                    if (Input.GetKeyDown(vKey))
                    {
-                       if (vKey == KeyCode.Escape || vKey == KeyCode.JoystickButton6)//cancel
+                       if (vKey == KeyCode.Escape || vKey == KeyCode.JoystickButton6)
                        {
                            currentFetchInput.CancelChange();
                            isFetchingKey = false;
@@ -125,8 +125,7 @@ using System.Collections;
                            isAKey = true,
                            Key = vKey,
                        };
-
-                       if (isKeyUsed(vKey))//the key is already used, wait for change confirmation
+                       if (isKeyUsed(vKey))
                        {
                            confirmationWindow.AskConfirmation(confirmMessage, () => { ConfirmChange(true); }, () => { ConfirmChange(false); });
                            isFetchingKey = false;
@@ -149,7 +148,6 @@ using System.Collections;
                        isAKey = false,
                        Axis = GamePadButtonsNames.TriggerAxis[i],
                    };
-                   Debug.Log($"detected: {GamePadButtonsNames.TriggerAxis[i]} value: {Input.GetAxis(GamePadButtonsNames.TriggerAxis[i])}");
                    if (isAxisUsed(GamePadButtonsNames.TriggerAxis[i]))
                    {
                        confirmationWindow.AskConfirmation(confirmMessage, () => { ConfirmChange(true); }, () => { ConfirmChange(false); });
@@ -170,10 +168,7 @@ using System.Collections;
            if (ApplyButton != null) ApplyButton.SetActive(true);
            if (RevertButton != null) RevertButton.SetActive(true);
        }
-
-       /// <summary>
        /// 该按键已被其他按键绑定占用时确认修改
-       /// </summary>
        public void ConfirmChange(bool confirm)
        {
            if (confirm)
@@ -249,7 +244,7 @@ using System.Collections;
            {
                if (data.PrimaryKey == key || data.AlternativeKey == key)
                {
-                   if (data.KeyName.Equals(currentFetchInput.CachedData.KeyName)) continue;//if this is the same button
+                   if (data.KeyName.Equals(currentFetchInput.CachedData.KeyName)) continue;
 
                    string keyName = Regex.Replace(key.ToString(), "[A-Z]", " $0").Trim();
                    confirmMessage = $"The key <b>{keyName}</b> is already used for <b>{data.Description}</b>, you want to change it anyway?";
@@ -266,7 +261,7 @@ using System.Collections;
            {
                if (data.PrimaryAxis == axis)
                {
-                   if (data.KeyName.Equals(currentFetchInput.CachedData.KeyName)) continue;//if this is the same button
+                   if (data.KeyName.Equals(currentFetchInput.CachedData.KeyName)) continue;
 
                    confirmMessage = $"The key <b>{axis}</b> is already used for <b>{data.Description}</b>, you want to change it anyway?";
                    pendingResetButton = data;

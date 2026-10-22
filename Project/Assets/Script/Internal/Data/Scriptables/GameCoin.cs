@@ -1,23 +1,18 @@
 using System;
 using System.Text;
 using UnityEngine;
-
-   [CreateAssetMenu(menuName = "Game/Coin", fileName = "Coin")]
+   [CreateAssetMenu(menuName = "项目/Coin", fileName = "Coin")]
    public class GameCoin : ScriptableObject
    {
        public string CoinName;
        public string Acronym;
-       [Tooltip("The value of this coin with respect to 1, e.g items priced 100 can be purchase with 1000 coins with value of 0.1")]
+       [Tooltip("该货币相对 1 的币值，例如价值 0.1 时，标价 100 的商品需要 1000 枚该货币")]
        public float CoinValue = 1;
        public int InitialCoins = 0;
        [TextArea(2, 3)] public string Description;
        [SpritePreview] public Sprite CoinIcon;
-
-       /// <summary>
        /// 增加并保存硬币
-       /// </summary>
        /// <param name="coins">要增加的硬币数</param>
-       /// <returns></returns>
        public GameCoin Add(int coins, string forUser = "")
        {
            int savedCoins = GetCoins(forUser);
@@ -26,12 +21,8 @@ using UnityEngine;
            PlayerPrefs.SetInt(Key(forUser), savedCoins);
            return this;
        }
-
-       /// <summary>
        /// 增加并保存硬币
-       /// </summary>
        /// <param name="coins">要增加的硬币数</param>
-       /// <returns></returns>
        public GameCoin Deduct(int coins, string forUser = "")
        {
            int savedCoins = GetCoins(forUser);
@@ -39,29 +30,20 @@ using UnityEngine;
 
            if(savedCoins < 0)
            {
-               Debug.LogWarning("Something weird happen, funds where not verified before execute a transaction");
+               Debug.LogWarning("交易执行前资金校验未通过。");
                savedCoins = 0;
            }
 
            PlayerPrefs.SetInt(Key(forUser), savedCoins);
            return this;
        }
-
-       /// <summary>
        /// 获取本地保存的硬币
-       /// </summary>
-       /// <returns></returns>
        public int GetCoins(string endPoint = "")
        {
            int savedCoins = PlayerPrefs.GetInt(Key(endPoint), InitialCoins);
            return savedCoins;
        }
-
-       /// <summary>
        /// 返回此硬币相对基准价格（值为 1）的换算比
-       /// </summary>
-       /// <param name="realPrice"></param>
-       /// <returns></returns>
        public int DoConversion(int realPrice)
        {
            return Mathf.FloorToInt(realPrice / CoinValue);

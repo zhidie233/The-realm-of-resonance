@@ -31,10 +31,8 @@ public class CountDownHandler : CountDownBase
         if (!NetworkWrapper.IsMasterClient) return;
         if (IsCounting && !overrideIfStarted)
         {
-            Debug.Log($"Countdown has already started.");
             return;
         }
-
 
         countDown = GameConfig.Instance.prematchTime;
         MatchTimeManagerBase.Instance.SetTimeState(RoomTimeState.Countdown, true);

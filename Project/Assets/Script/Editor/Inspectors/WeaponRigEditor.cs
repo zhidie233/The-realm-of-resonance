@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEditor.Animations;
@@ -230,7 +230,7 @@ public class WeaponRigEditor : Editor
     {
         string lastFolder = PlayerPrefs.GetString("resonancerealm.wanimator.save", "Assets/");
         string path = EditorUtility.SaveFolderPanel("动画器保存文件夹", lastFolder, script.gameObject.name);
-        if (string.IsNullOrEmpty(path)) { Debug.Log("设置已取消"); return; }
+        if (string.IsNullOrEmpty(path)) {  return; }
 
         PlayerPrefs.SetString("resonancerealm.wanimator.save", path);
 

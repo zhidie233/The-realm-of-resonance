@@ -1,12 +1,9 @@
-﻿using System.Collections;
+using System.Collections;
 using TMPro;
 using UnityEngine;
-
-   /// <summary>
    /// 默认的大厅连接加载界面
    /// 继承 LobbyLoadingScreenBase 即可使用自定义实现
    /// 并替换 Lobby 画布中的 'Loading' UI。
-   /// </summary>
    public class LobbyLoadingScreen : LobbyLoadingScreenBase
    {
        public GameObject content;

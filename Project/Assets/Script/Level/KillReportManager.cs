@@ -23,10 +23,7 @@ public class KillReportManager : KillReportEntry
     {
         NetworkCallbacks.PlayerLeftRoom -= OnPhotonPlayerDisconnected;
     }
-
-    /// <summary>
     /// 玩家加入了？同步
-    /// </summary>
     void OnJoined()
     {
         SendMessageEvent(string.Format("{0} {1}", NetworkWrapper.LocalPlayer.NickName, GameTexts.JoinedInMatch));
@@ -105,7 +102,6 @@ public class KillReportManager : KillReportEntry
         kf.Message = (string)data["message"];
         kf.messageType = KillReportMessageType.Message;
 
-
         KillReportUIBase.Instance.SetKillFeed(kf);
     }
 
@@ -124,7 +120,7 @@ public class KillReportManager : KillReportEntry
     {
         SendMessageEvent(string.Format("{0} {1}", otherPlayer.NickName, GameTexts.LeftOfMatch), true);
     }
-  
+
     public override void AddCustomIcon(string keyName, Sprite icon)
     {
         if (customIcons.Exists(x => x.Name.Equals(keyName))) return;
@@ -150,7 +146,7 @@ public class KillReportManager : KillReportEntry
         {
             spr = customIcons.Find(x => x.Name == keyName).Icon;
         }
-        else { Debug.LogWarning($"Custom icon {keyName} has not been register in the custom icons list"); }
+        else { Debug.LogWarning($"自定义图标 {keyName} 未登记在图标列表中。"); }
 
         return spr;
     }

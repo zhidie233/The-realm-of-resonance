@@ -1,11 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 #if UNITY_EDITOR
 #endif
-
-/// <summary>
 /// 默认出生点实现
 /// 若要使用自己的出生点系统，让脚本从 SpawnPointBase.cs 继承即可
-/// </summary>
 public class SpawnLocation : SpawnPointBase
 {
 
@@ -18,13 +15,13 @@ public class SpawnLocation : SpawnPointBase
 
     public Shape shape = Shape.Dome;
     public float SpawnSpace = 3f;
-    [Tooltip("Detection ground limit")]
+    [Tooltip("地面检测高度上限")]
     public float groundSnapLimit = 1.5f;
-    [Tooltip("Should the player spawn looking at the spawn direction or a random direction?")]
+    [Tooltip("玩家出生时朝向出生方向还是随机方向")]
     [GameToggle] public bool randomRotation = false;
 
     RaycastHit hitInfo;
-    private const float BASE_VERTICAL_THRESHOLD = 0.01f; // if your players fall of the map after spawn, try to increase this value.
+    private const float BASE_VERTICAL_THRESHOLD = 0.01f;
 
     void OnEnable()
     {
@@ -32,18 +29,12 @@ public class SpawnLocation : SpawnPointBase
         // 否则你的出生点永远不会被使用。
         Initialize();
     }
-
-    /// <summary>
     /// 返回符合此出生点设置的出生位置
-    /// </summary>
     public override void GetSpawnPosition(out Vector3 position, out Quaternion Rotation)
     {
         GetSpawnPosition(SpawnSpace, out position, out Rotation);
     }
-
-    /// <summary>
     /// 返回带指定偏移的出生位置
-    /// </summary>
     public void GetSpawnPosition(float radiusSpace, out Vector3 position, out Quaternion Rotation)
     {
         position = GetPositionInsideShape(radiusSpace);
@@ -63,7 +54,7 @@ public class SpawnLocation : SpawnPointBase
         }
         else if (shape == Shape.Cube)
         {
-            Vector3 localSize = transform.InverseTransformDirection(transform.localScale * 0.45f); // 0.05 of offset for the player collider radius
+            Vector3 localSize = transform.InverseTransformDirection(transform.localScale * 0.45f);
             s.x += Random.Range(-localSize.x, localSize.x);
             s.z += Random.Range(-localSize.z, localSize.z);
         }

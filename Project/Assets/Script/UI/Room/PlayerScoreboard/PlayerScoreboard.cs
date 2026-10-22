@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using System.Linq;
@@ -92,7 +92,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
                     cachedUIBindings.Add(p.ActorNumber, script);
                 }
             }
-            else { spectators++; }//if has not team
+            else { spectators++; }
         }
         UpdateBotScoreboard();
         if (SpectatorsCountText != null)
@@ -101,10 +101,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
         SortScoreboard();
     }
-
-    /// <summary>
     /// 更新记分板中的玩家和机器人字段
-    /// </summary>
     void UpdateBotScoreboard()
     {
         if (AIManager.Instance == null || !AIManager.Instance.BotsActive || AIManager.Instance.BotsStatistics.Count <= 0) return;
@@ -148,10 +145,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
         cachedBotsUIBindings.Add(info, script);
     }
-
-    /// <summary>
     /// 强制刷新记分板信息
-    /// </summary>
     public override void ForceUpdateAll()
     {
         List<PlayerScoreboardUIBase> ailist = cachedBotsUIBindings.Values.ToList();
@@ -161,10 +155,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
         UpdateTables();
     }
-
-    /// <summary>
     /// 按得分对记分板玩家排序
-    /// </summary>
     void SortScoreboard()
     {
         if (isOneTeamMode)

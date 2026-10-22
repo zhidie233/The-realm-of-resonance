@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
@@ -11,7 +11,7 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
     [Space]
     [GameToggle] public bool ShowDistance = true;
     [Space]
-    [Tooltip("Objects to disable when the scope shown, usually the weapon and arms meshes.")]
+    [Tooltip("开镜时禁用的对象，通常是武器和手臂模型")]
     public List<GameObject> OnScopeDisable = new List<GameObject>();
     #endregion
 
@@ -88,7 +88,7 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
                            if(wasFullAiming) m_gun.SetToAim();
                            returnedAim = true;
                        }
-                      
+
                        foreach (GameObject go in OnScopeDisable)
                        {
                            if (go == null) continue;
@@ -105,10 +105,7 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
             DistanceText.text = m_dist.ToString("00") + "<size=10>m</size>";
         }
     }
-
-    /// <summary>
     /// 计算射线首次命中物体的距离
-    /// </summary>  
     void GetDistance()
     {
         if (!ShowDistance) return;

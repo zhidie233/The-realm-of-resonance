@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
-
-   [System.Serializable, CreateAssetMenu(fileName = "Shaker Preset", menuName = "Game/Presets/Shaker", order = 302)]
+   [System.Serializable, CreateAssetMenu(fileName = "Shaker Preset", menuName = "项目/Presets/Shaker", order = 302)]
    public class ShakePreset : ScriptableObject
    {
        public ShakeMethod shakeMethod = ShakeMethod.PerlinNoise;

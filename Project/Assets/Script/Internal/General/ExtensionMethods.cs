@@ -9,23 +9,16 @@ using System.Linq;
 
 public static class ExtensionMethods
 {
-    /// <summary>
     /// 为指定玩家记分并在网络上同步
-    /// </summary>
     public static void PostScore(this Player player, int ScoreToAdd = 0)
     {
         int current = player.GetPlayerScore();
         current = current + ScoreToAdd;
-
-        Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+        Hashtable score = new Hashtable();
         score[NetworkKeys.ScoreKey] = current;
-
-        player.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
+        player.SetCustomProperties(score);
     }
-
-    /// <summary>
     /// 获取指定玩家的得分
-    /// </summary>
     public static int GetPlayerScore(this Player player)
     {
         int s = 0;
@@ -65,28 +58,20 @@ public static class ExtensionMethods
     {
         int current = p.GetKills();
         current = current + kills;
-
-        Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+        Hashtable score = new Hashtable();
         score[NetworkKeys.KillsKey] = current;
-
-        p.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
+        p.SetCustomProperties(score);
     }
 
     public static void PostDeaths(this Player p, int deaths)
     {
         int current = p.GetDeaths();
         current = current + deaths;
-
-        Hashtable score = new Hashtable();  // using PUN's implementation of Hashtable
+        Hashtable score = new Hashtable();
         score[NetworkKeys.DeathsKey] = current;
-
-        p.SetCustomProperties(score);  // this locally sets the score and will sync it in-game asap.
+        p.SetCustomProperties(score);
     }
-
-    /// <summary>
     /// 获取指定队伍的得分
-    /// </summary>
-    /// <returns></returns>
     public static int GetRoomScore(this Room room, Team team)
     {
         object teamId;
@@ -106,10 +91,7 @@ public static class ExtensionMethods
 
         return 0;
     }
-
-    /// <summary>
     /// 为指定队伍增加得分并在网络上同步
-    /// </summary>
     public static void SetTeamScore(this Room r, Team t, int scoreToAdd = 1)
     {
         if (t == Team.None) return;
@@ -122,11 +104,7 @@ public static class ExtensionMethods
         h.Add(key, score);
         r.SetCustomProperties(h);
     }
-
-    /// <summary>
     /// 获取指定玩家所属的队伍
-    /// </summary>
-    /// <returns></returns>
     public static Team GetPlayerTeam(this Player p)
     {
         if (p == null) return Team.None;
@@ -149,21 +127,14 @@ public static class ExtensionMethods
         }
         return Team.None;
     }
-
-    /// <summary>
     /// 同步指定玩家所属的队伍
-    /// </summary>
     public static void SetPlayerTeam(this Player player, Team team)
     {
         Hashtable PlayerTeam = new Hashtable();
         PlayerTeam.Add(NetworkKeys.TeamKey, team.ToString());
         player.SetCustomProperties(PlayerTeam);
     }
-
-    /// <summary>
     /// 按标识获取队伍名称
-    /// </summary>
-    /// <returns></returns>
     public static string GetTeamName(this Team t)
     {
         switch (t)
@@ -176,14 +147,10 @@ public static class ExtensionMethods
                 return "Solo";
         }
     }
-
-    /// <summary>
     /// 按标识获取队伍颜色
-    /// </summary>
-    /// <returns></returns>
     public static Color GetTeamColor(this Team t, float alpha = 0)
     {
-        Color c = Color.white;//default color
+        Color c = Color.white;
         switch (t)
         {
             case Team.Team1:
@@ -209,21 +176,14 @@ public static class ExtensionMethods
         }
         return null;
     }
-
-    /// <summary>
     /// 将指定玩家职业（本地）保存为默认值
-    /// </summary>
     private const string PLAYER_CLASS_KEY = "{0}.playerclass";
     public static void SavePlayerClass(this PlayerClass pc)
     {
         string key = string.Format(PLAYER_CLASS_KEY, Application.productName);
         PlayerPrefs.SetInt(key, (int)pc);
     }
-
-    /// <summary>
     /// 获取本地保存的玩家职业
-    /// </summary>
-    /// <returns></returns>
     public static PlayerClass GetSavePlayerClass(this PlayerClass pc)
     {
         string key = string.Format(PLAYER_CLASS_KEY, Application.productName);
@@ -232,11 +192,7 @@ public static class ExtensionMethods
 
         return pclass;
     }
-
-    /// <summary>
     /// 获取玩家名称及其用户角色（若有）
-    /// </summary>
-    /// <returns></returns>
     public static string NickNameAndRole(this Player p)
     {
         object role = "";
@@ -246,42 +202,26 @@ public static class ExtensionMethods
         }
         return p.NickName;
     }
-
-    /// <summary>
     /// 按标识获取完整的游戏模式名称
-    /// </summary>
-    /// <returns></returns>
     public static string GetName(this GameMode mode)
     {
         GameModeSettings info = mode.GetModeInfo();
         if(info != null) { return info.ModeName; }
         else { return string.Format("Not define: " + mode.ToString()); }
     }
-
-    /// <summary>
     /// 按标识获取游戏模式信息
-    /// </summary>
-    /// <returns></returns>
     public static GameModeSettings GetGameModeInfo(this GameMode mode)
     {
         return GameConfig.Instance.gameModeTable.Find(x => x.gameMode == mode);
     }
-
-    /// <summary>
     /// 此玩家是否与本地玩家同队？
-    /// </summary>
-    /// <returns></returns>
     public static bool isTeamMate(this Player p)
     {
         bool b = false;
         if(p.GetPlayerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam()) { b = true; }
         return b;
     }
-
-    /// <summary>
     /// 获取指定队伍的玩家列表
-    /// </summary>
-    /// <returns></returns>
     public static Player[] GetPlayersInTeam(this Player[] player, Team team)
     {
         List<Player> list = new List<Player>();
@@ -310,30 +250,19 @@ public static class ExtensionMethods
 
         return playerList[index];
     }
-
-    /// <summary>
     /// 获取当前游戏模式
-    /// </summary>
     public static GameMode GetGameMode(this RoomInfo room)
     {
         string gm = (string)room.CustomProperties[NetworkKeys.GameModeKey];
         GameMode mode = (GameMode)Enum.Parse(typeof(GameMode), gm);
         return mode;
     }
-
-    /// <summary>
     /// 获取已解析到自定义 Game 类中的当前房间信息
-    /// </summary>
-    /// <returns></returns>
     public static GameRoomInfo GetRoomInfo(this Room room)
     {
         return new GameRoomInfo(room);
     }
-
-    /// <summary>
     /// 检查指定队伍是否为本地玩家的敌方队伍
-    /// </summary>
-    /// <returns></returns>
     public static Team OppsositeTeam(this Team team)
     {
         if (team == Team.Team1) { return Team.Team2; }
@@ -343,10 +272,7 @@ public static class ExtensionMethods
             return Team.All;
         }
     }
-
-    /// <summary>
     /// 延时调用方法的更好方案
-    /// </summary>
     public static void InvokeAfter(this MonoBehaviour mono, float time, Action callback)
     {
         mono.StartCoroutine(WaitToExecute(time, callback));
@@ -357,21 +283,16 @@ public static class ExtensionMethods
         yield return new WaitForSeconds(time);
         if (callback != null) callback.Invoke();
     }
-
-    /// <summary>
     /// 调整 RawImage 尺寸以适配父 RectTransform 大小
-    /// </summary>
-    /// <returns></returns>
     public static Vector2 SizeToParent(this RawImage image, float padding = 0)
     {
         float w = 0, h = 0;
         var parent = image.transform.parent.GetComponent<RectTransform>();
         var imageTransform = image.GetComponent<RectTransform>();
-
         // 检查是否有需要处理的内容
         if (image.texture != null)
         {
-            if (!parent) { return imageTransform.sizeDelta; } //if we don't have a parent, just return our current width;
+            if (!parent) { return imageTransform.sizeDelta; }
             padding = 1 - padding;
             float ratio = image.texture.width / (float)image.texture.height;
             var bounds = new Rect(0, 0, parent.rect.width, parent.rect.height);
@@ -384,7 +305,7 @@ public static class ExtensionMethods
             h = bounds.height * padding;
             w = h * ratio;
             if (w > bounds.width * padding)
-            { //If it doesn't fit, fallback to width;
+            {
                 w = bounds.width * padding;
                 h = w / ratio;
             }
@@ -393,42 +314,26 @@ public static class ExtensionMethods
         imageTransform.SetSizeWithCurrentAnchors(RectTransform.Axis.Vertical, h);
         return imageTransform.sizeDelta;
     }
-
-    /// <summary>
     /// 随机化部分 AudioSource 属性以获得不同的音效结果
-    /// </summary>
     public static void RandomizeAudioOutput(this AudioSource source)
     {
         source.pitch = UnityEngine.Random.Range(0.92f, 1.1f);
         source.spread = UnityEngine.Random.Range(0.98f, 1.25f);
     }
-
-    /// <summary>
     /// 检查该碰撞体是否属于本地玩家
-    /// </summary>
-    /// <returns></returns>
     public static bool isLocalPlayerCollider(this Collider collider)
     {
         return collider.CompareTag(GameCore.LOCAL_PLAYER_TAG);
     }
-
-    /// <summary>
     /// 将 int 数组按指定字符拼接为字符串数组
-    /// </summary>
-    /// <returns></returns>
     public static string[] AsStringArray(this int[] array, string endoint = "") => array.Select(x => (x.ToString() + endoint)).ToArray();
-
-    /// <summary>
     /// 检查指定枚举标志属性中是否选中某个标志
-    /// </summary>
-    /// <returns></returns>
     public static bool IsEnumFlagPresent<T>(this T value, T lookingForFlag) where T : Enum
     {
         int intValue = (int)(object)value;
         int intLookingForFlag = (int)(object)lookingForFlag;
         return ((intValue & intLookingForFlag) == intLookingForFlag);
     }
-
     public static GamePlayer[] ToGamePlayerList(this Player[] list)
     {
         var gameList = new GamePlayer[list.Length];

@@ -1,13 +1,10 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-/// <summary>
 /// 默认游戏拾取 UI 处理器
 /// 此脚本负责接收武器拾取事件的信息并显示给玩家
 /// 要改行为请不要修改此脚本，新建自己的脚本并继承 PickUpUIBase
 /// 以此作为参考。
-/// </summary>
 public class PickUpUI : PickUpUIBase
 {
     public GameObject content;
@@ -16,7 +13,6 @@ public class PickUpUI : PickUpUIBase
     public TextMeshProUGUI keyText;
 
     private FirearmPickUpBase CacheGunPickUp = null;
-
 
     private void OnEnable()
     {
@@ -66,10 +62,7 @@ public class PickUpUI : PickUpUIBase
     {
         content.SetActive(false);
     }
-
-    /// <summary>
     /// 由拾取 UI 按钮调用
-    /// </summary>
     public void OnPickUpClicked()
     {
         if (CacheGunPickUp != null)

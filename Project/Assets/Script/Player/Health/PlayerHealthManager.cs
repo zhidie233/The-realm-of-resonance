@@ -16,9 +16,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     [Range(10, 100)] public int RegenerateUpTo = 100;
 
     [Header("GUI")]
-    /// <summary>
     /// 玩家生命值偏低时的 UI 颜色
-    /// </summary>
     public Gradient HealthColorGradient;
     private Color CurColor = new Color(0, 0, 0);
     [Header("Shake")]
@@ -127,10 +125,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     {
         GetDamage(damageData);
     }
-
-    /// <summary>
     /// 调用它对玩家造成一次新伤害
-    /// </summary>
     public void GetDamage(DamageInfo e)
     {
         bool canDamage = true;
@@ -152,10 +147,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
         photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, e.Damage, e.From, e.Cause, e.Direction, e.isHeadShot, e.GunID, NetworkWrapper.LocalPlayer);
     }
-
-    /// <summary>
     /// 玩家受到坠落冲击伤害时调用
-    /// </summary>
     public override void DoFallDamage(int damage)
     {
         if (!GameConfig.Instance.fallDamageEnabled || isProtectionEnable || playerReferences.firstPersonController.State == PlayerState.InVehicle || GameController.Instance.GameMatchState == MatchState.Waiting)
@@ -164,10 +156,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         Vector3 downpos = transform.position - transform.TransformVector(new Vector3(0, 5, 1));
         photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, damage, NetworkWrapper.NickName, DamageCause.FallDamage, downpos, false, 103, NetworkWrapper.LocalPlayer);
     }
-
-    /// <summary>
     /// 该玩家受到伤害时会在所有客户端调用此函数
-    /// </summary>
     [PunRPC]
     void SyncDamage(int damage, string killer, DamageCause cause, Vector3 hitDirection, bool isHeatShot, int weaponID, Player m_sender)
     {
@@ -207,7 +196,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
             if (cause != DamageCause.FallDamage && cause != DamageCause.Fire)
             {
-                if (HitsSound.Length > 0)//Audio effect of hit
+                if (HitsSound.Length > 0)
                 {
                     AudioSource.PlayClipAtPoint(HitsSound[Random.Range(0, HitsSound.Length)], transform.position, 1.0f);
                 }
@@ -246,11 +235,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             Die(lastDamageGiverActor, isHeatShot, cause, weaponID, hitDirection, m_sender);
         }
     }
-
-    /// <summary>
     /// 该玩家在对局中死亡时调用
     /// 此函数判断死因并更新所需统计
-    /// </summary>
 	void Die(string killer, bool isHeadshot, DamageCause cause, int gunID, Vector3 hitPos, Player sender)
     {
         isDead = true;
@@ -268,7 +254,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 ForcePosition = hitPos,
                 IsFromExplosion = isExplosion,
                 AutoDestroy = true
-            });// convert into ragdoll the remote player
+            });
         }
         else
         {
@@ -282,28 +268,25 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 AutoDestroy = true,
                 RightHandChild = ngr
             });
-        }
 
+        }
         //禁用玩家预制体其余子对象
         for (int i = 0; i < transform.childCount; i++)
         {
             transform.GetChild(i).gameObject.SetActive(false);
         }
-
         string weapon = cause.ToString();
         if (cause == DamageCause.Player || cause == DamageCause.Bot || cause == DamageCause.Explosion)
         {
             weapon = gunInfo.Name;
         }
-
-        if (!isMine)// when player is not ours
+        if (!isMine)
         {
             //如果杀死该玩家的是本地玩家
             if (lastDamageGiverActor == LocalName)
             {
                 AddKill(isHeadshot, weapon, gunID);
             }
-
             if (GameConfig.Instance.deathIconsEnabled && !isOneTeamMode)
             {
                 if (photonView.Owner.GetPlayerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam())
@@ -311,19 +294,17 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     ObjectRecyclerBase.Instance.Instantiate("deathicon", transform.position, transform.rotation);
                 }
             }
-
             var mplayer = new GamePlayer(photonView, true, false);
             GameEvents.DispatchRemotePlayerDeath(mplayer);
-        }
-        else//when is local player who dies
-        {
 
+        }
+        else
+        {
             //设为可以再次重生
             if (GetGameMode.GetGameModeInfo().onDeath == GameModeSettings.OnDeath.SpawnAfterDelay)
             {
                 GameController.Instance.RespawnLocalPlayerAfter();
             }
-
             if (cause == DamageCause.Bot)
             {
                 // 增加本地玩家的死亡数
@@ -335,9 +316,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 // 增加本地玩家的死亡数
                 NetworkWrapper.LocalPlayer.PostDeaths(1);
             }
-
             playerReferences.playerRagdoll.gameObject.name = "YOU";
-
             //显示击杀摄像机
             DeathCamBase.Instance.SetTarget(new DeathCamBase.DeathCamInfo()
             {
@@ -347,26 +326,21 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 Target = transform,
                 FallbackTarget = playerReferences.playerRagdoll.transform
             }).SetActive(true);
-
-
             if (killer == LocalName)
             {
                 if (cause == DamageCause.FallDamage)
                 {
                     KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.DeathByFall, NetworkWrapper.LocalPlayer.GetPlayerTeam());
-
                 }
                 else
                 {
                     KillReportEntry.Instance.SendTeamHighlightMessage(LocalName, GameTexts.CommittedSuicide, NetworkWrapper.LocalPlayer.GetPlayerTeam());
                 }
             }
-
             if (GameConfig.Instance.DiscardWeaponOnDeath)
             {
                 GunManager.ThrowCurrent(true, PlayerSync.NetGunsRoot.position + transform.forward);
             }
-
             if (cause == DamageCause.Bot)
             {
                 var feed = new KillReportEntry.FeedData()
@@ -377,7 +351,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 };
                 feed.AddData("gunid", gunID);
                 feed.AddData("headshot", isHeadshot);
-
                 KillReportEntry.Instance.SendKillMessageEvent(feed);
                 //这种情况下由本地玩家而不是主客户端更新机器人统计。
                 AIManager.Instance.SetBotKill(killer);
@@ -385,10 +358,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             StartCoroutine(DestroyThis());
         }
     }
-
-    /// <summary>
     /// 获得新击杀时同步并给玩家加分
-    /// </summary>
     public void AddKill(bool isHeadshot, string m_weapon, int gunID)
     {
         //发送击杀提示消息
@@ -400,14 +370,11 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         };
         feed.AddData("gunid", gunID);
         feed.AddData("headshot", isHeadshot);
-
         KillReportEntry.Instance.SendKillMessageEvent(feed);
-
         //新增一次击杀并更新玩家信息
         NetworkWrapper.LocalPlayer.PostKill(1);
         // 计算这次击杀获得的得分
         int score = (isHeadshot) ? GameConfig.Instance.matchScore.KillReward + GameConfig.Instance.matchScore.HeadshotExtraReward : GameConfig.Instance.matchScore.KillReward;
-
         //显示本地击杀通知
         var localKillInfo = new KillRecord();
         localKillInfo.Killer = lastDamageGiverActor;
@@ -415,7 +382,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         localKillInfo.byHeadShot = isHeadshot;
         localKillInfo.KillMethod = m_weapon;
         GameEvents.DispatchLocalKillEvent(localKillInfo);
-
         var elimatedTeam = photonView.Owner.GetPlayerTeam();
         if (isOneTeamMode)
         {
@@ -425,23 +391,15 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         {
             NetworkWrapper.LocalPlayer.PostScore(score);
         }
-
         GameController.Instance.OnLocalPlayerKill();
-
     }
-
-    /// <summary>
     /// 循环对玩家持续造成伤害，直到取消。
-    /// </summary>
     public override void DoRepeatHitDamage(RepeatHitDamage info)
     {
         repeatHitDamage = info;
         InvokeRepeating(nameof(MakeRepeatHitDamage), 0, info.Rate);
     }
-
-    /// <summary>
     /// 从自定义循环中施加伤害
-    /// </summary>
     void MakeRepeatHitDamage()
     {
         if (repeatHitDamage == null)
@@ -449,7 +407,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             CancelRepeatHit();
             return;
         }
-
         var damageinfo = repeatHitDamage.DamageInfo;
         if (damageinfo == null)
         {
@@ -458,18 +415,13 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             damageinfo.Cause = DamageCause.Map;
         }
         damageinfo.Damage = repeatHitDamage.Damage;
-
         GetDamage(damageinfo);
     }
-
     public override void CancelRepeatHit()
     {
         CancelInvoke(nameof(MakeRepeatHitDamage));
     }
-
-    /// <summary>
     /// 用该玩家的数据更新玩家生命值 UI
-    /// </summary>
     void UpdateUI()
     {
         float h = Mathf.Max(currentHealth, 0);
@@ -482,7 +434,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
         if (HealthBar != null) { HealthBar.fillAmount = deci; HealthBar.color = CurColor; }
     }
-
     void DamageUI()
     {
         if (damageAlphaValue <= 0)
@@ -490,9 +441,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             DamageAlpha.alpha = 0;
             return;
         }
-
         DamageAlpha.alpha = Mathf.Lerp(DamageAlpha.alpha, damageAlphaValue, Time.deltaTime * 6);
-
         if (uiFadeDelay <= 0)
         {
             damageAlphaValue -= Time.deltaTime;
@@ -502,12 +451,10 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             uiFadeDelay -= Time.deltaTime;
         }
     }
-
     void RegenerateHealth()
     {
         if (!m_autoHealthRecovery || currentHealth < 1) return;
         if (currentHealth >= RegenerateUpTo) return;
-
         int projectedHealth = currentHealth;
         if (TimeToRegenerate <= 0)
         {
@@ -519,7 +466,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         {
             TimeToRegenerate -= Time.deltaTime * 1.15f;
         }
-
         if (Time.time - nextHealthSend >= (1 / RegenerationSpeed))
         {
             nextHealthSend = Time.time;
@@ -527,15 +473,11 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
         UpdateUI();
     }
-
-    /// <summary>
     /// 让本地玩家自杀
-    /// </summary>
     public override bool Suicide()
     {
         if (!isMine || !GameCore.LocalPlayer.IsAlive) return false;
         if (isProtectionEnable) return false;
-
         DamageInfo e = new DamageInfo();
         e.Damage = 500;
         e.From = base.LocalName;
@@ -544,7 +486,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         GetDamage(e);
         return true;
     }
-
     void OnProtectCount()
     {
         protecTime--;
@@ -557,41 +498,29 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             CancelInvoke(nameof(OnProtectCount));
         }
     }
-
     IEnumerator DestroyThis()
     {
         yield return new WaitForSeconds(0.3f);
         DestroyEntity();
     }
-
     public override void DestroyEntity()
     {
         PhotonNetwork.Destroy(this.gameObject);
     }
-
-    /// <summary>
     /// 玩家拾取医疗包时调用此事件
-    /// </summary>
     /// <param name="amount"> 在当前生命值上增加的数量</param>
     void OnPickUp(int amount)
     {
         SetHealth(amount);
     }
-
-    /// <summary>
     /// 为该玩家增加生命值并同步给所有客户端
-    /// </summary>
-    /// <param name="amount"></param>
-    /// <param name="replace"></param>
     public override void SetHealth(int amount, bool replace = false)
     {
         if (currentHealth < 1 || isDead) return;
-
         if (photonView.IsMine)
         {
             int newHealth = currentHealth + amount;
             if (replace) newHealth = amount;
-
             currentHealth = newHealth;
             if (currentHealth > maxHealth)
             {
@@ -603,7 +532,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             photonView.RPC(nameof(PickUpHealth), RpcTarget.OthersBuffered, newHealth);
         }
     }
-
     [PunRPC]
     void RpcSyncHealth(int newHealth, PhotonMessageInfo info)
     {
@@ -612,33 +540,24 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             currentHealth = (int)newHealth;
         }
     }
-
-    /// <summary>
     /// 拾取医疗包时同步生命值。
-    /// </summary>
     [PunRPC]
     void PickUpHealth(int t_amount)
     {
         if (currentHealth < 1 || isDead) return;
-
         currentHealth = (int)t_amount;
         if (currentHealth > maxHealth)
         {
             currentHealth = maxHealth;
         }
     }
-
     private bool isProtectionEnable { get { return (protecTime > 0); } }
-
     public override int GetHealth() => currentHealth;
-
     public override int GetMaxHealth() => maxHealth;
-
     public override bool IsDeath()
     {
         return isDead;
     }
-
     public void OnPhotonPlayerConnected(Player newPlayer)
     {
         if (photonView.IsMine)
@@ -646,11 +565,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             photonView.RPC(nameof(RpcSyncHealth), newPlayer, (int)currentHealth);
         }
     }
-
-    /// <summary>
     /// 回合结束时
     /// 停用部分功能
-    /// </summary>
     void OnRoundEnd()
     {
         DamageEnabled = false;

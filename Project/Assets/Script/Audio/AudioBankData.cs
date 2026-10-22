@@ -1,8 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-   [CreateAssetMenu(fileName = "Audio Bank", menuName = "Game/Audio/Bank", order = 301)]
+   [CreateAssetMenu(fileName = "Audio Bank", menuName = "项目/Audio/Bank", order = 301)]
    public class AudioBankData : ScriptableObject
    {
        [Reorderable] public List<AudioInfo> AudioBank = new List<AudioInfo>();

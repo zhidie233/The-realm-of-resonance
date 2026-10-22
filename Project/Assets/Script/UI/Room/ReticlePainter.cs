@@ -1,12 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
-
-/// <summary>
 /// 默认准星实现
 /// 主准星脚本继承 <see cref="ReticleBase"/> 即可使用自己的准星系统
-/// </summary>
 public class ReticlePainter : ReticleBase
 {
 

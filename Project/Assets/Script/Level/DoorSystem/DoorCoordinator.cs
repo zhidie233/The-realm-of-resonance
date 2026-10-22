@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 #if UNITY_EDITOR
@@ -52,7 +52,7 @@ using UnityEditor;
 
            if (door.DoorID == -1)
            {
-               Debug.LogWarning("This door is not listed in DoorCoordinator -> All Doors.", door);
+               Debug.LogWarning("该门未登记在 DoorCoordinator 的全部门列表中。", door);
                return;
            }
 
@@ -71,12 +71,9 @@ using UnityEditor;
 
            allDoors[doorId].SetDoorState(state);
        }
-
-       /// <summary>
        /// 仅在需要时更新门
        /// 门会动态加入更新列表，以便只在需要时更新
        /// 从而让地图容纳大量门而不带来性能开销。
-       /// </summary>
        void UpdateDoors()
        {
            if (toUpdateDoors == null || toUpdateDoors.Count <= 0) return;

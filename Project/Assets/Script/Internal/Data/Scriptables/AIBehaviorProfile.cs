@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
-
-   [CreateAssetMenu(fileName = "AI Behavior Settings", menuName = "Game/AI/Behavior Settings")]
+   [CreateAssetMenu(fileName = "AI Behavior Settings", menuName = "项目/AI/Behavior Settings")]
    public class AIBehaviorProfile : ScriptableObject
    {
        [Header("Settings")]
@@ -15,6 +14,6 @@ using UnityEngine;
        [Header("Cover")]
        public float maxCoverTime = 10;
        public float coverColdDown = 15;
-       [Tooltip("probability of get a cover point as random destination")]
+       [Tooltip("随机选择掩体点作为目标的概率")]
        [Range(0, 1)] public float randomCoverProbability = 0.1f;
    }

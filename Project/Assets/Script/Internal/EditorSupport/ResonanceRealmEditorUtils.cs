@@ -1,18 +1,12 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-
-   /// <summary>
    /// 项目编辑器工具共用的贴图与绘制辅助。
-   /// </summary>
    public static class ResonanceRealmEditorUtils
    {
        static Texture2D m_RemoveButton;
        static Texture2D m_GrabHandle;
-
-       /// <summary>
        /// 列表 Inspector 用的移除按钮图标。
-       /// </summary>
        public static Texture2D texRemoveButton
        {
            get
@@ -21,10 +15,7 @@ using UnityEngine;
                return m_RemoveButton;
            }
        }
-
-       /// <summary>
        /// 列表 Inspector 用的拖拽手柄图标。
-       /// </summary>
        public static Texture2D texGrabHandle
        {
            get

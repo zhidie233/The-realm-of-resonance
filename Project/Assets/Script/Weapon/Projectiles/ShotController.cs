@@ -1,4 +1,4 @@
-﻿using Photon.Pun;
+using Photon.Pun;
 using UnityEngine;
 
 // Game 默认的子弹处理脚本。想用自己的子弹脚本，就继承 ProjectileBase 类，实现要覆盖的函数，再挂到子弹预制体上。使用自定义子弹预制体请查看 Bullet 文档。可以参考本脚本了解如何对玩家和机器人施加伤害。
@@ -17,11 +17,11 @@ public class ShotController : ProjectileBase
     private float distanceSinceLastCheck = 0;
     private float totalTraveledDistance = 0;
     private ShotData bulletData;
-    private Vector3 velocity, newVelEuler = Vector3.zero; // bullet velocity
-    private Vector3 newPos = Vector3.zero;   // bullet's new position
-    private Vector3 oldPos = Vector3.zero;   // bullet's previous location
-    private bool hasHit = false;             // has the bullet hit something?
-    private Vector3 direction, gravity;               // direction bullet is travelling
+    private Vector3 velocity, newVelEuler = Vector3.zero;
+    private Vector3 newPos = Vector3.zero;
+    private Vector3 oldPos = Vector3.zero;
+    private bool hasHit = false;
+    private Vector3 direction, gravity;
     private float bulletRange, timeStep = 0;
     private bool realisticBallistics = false;
     private int fixedFrame = 0;
@@ -45,7 +45,7 @@ public class ShotController : ProjectileBase
         bulletRange = data.Range;
         newPos = _transform.position;
         oldPos = newPos;
-        velocity = data.Speed * _transform.forward; // bullet's velocity determined by direction and bullet speed
+        velocity = data.Speed * _transform.forward;
         // 应用散布方向
         velocity += direction;
         gravity = MathHelpers.Gravity * data.DropFactor;
@@ -62,7 +62,7 @@ public class ShotController : ProjectileBase
 
         if (Trail != null) { if (!GameConfig.Instance.tracerRoundsVisual) { Destroy(Trail); } }
         // 子弹什么都没打中时安排销毁
-        Invoke(nameof(Disable), 5);//TTL
+        Invoke(nameof(Disable), 5);
 
     }
 
@@ -79,11 +79,9 @@ public class ShotController : ProjectileBase
     public override void OnFixedUpdate()
     {
         if (hasHit)
-            return; // if bullet has already hit its max hits... exit
-
+            return;
         Travel();
     }
-
     // 计算弹道运动并检测子弹飞行途中是否命中物体。
     void Travel()
     {
@@ -101,21 +99,17 @@ public class ShotController : ProjectileBase
             //其中 f(t_k+1, y_k+1) 用前向欧拉法计算：y_k+1 = y_k + timeStep * f(t_k, y_k)
             newVelEuler = velocity + timeStep * gravity;
             Vector3 newVel = velocity + timeStep * 0.5f * (gravity + gravity);
-
             newPos = newPos + timeStep * 0.5f * (velocity + newVelEuler);
             velocity = newVel;
         }
-
         if (fixedFrame % detectionStep == 0)
         {
             // 获取上次检测以来走过的轨迹
             dir = newPos - oldPos;
             distanceSinceLastCheck = dir.magnitude;
             totalTraveledDistance += distanceSinceLastCheck;
-
             if (distanceSinceLastCheck > 0)
             {
-
                 // 检测途中是否命中物体
                 dir /= distanceSinceLastCheck;
                 if (Physics.Raycast(oldPos, dir, out hit, distanceSinceLastCheck, bulletMask, QueryTriggerInteraction.Ignore))
@@ -128,45 +122,39 @@ public class ShotController : ProjectileBase
                     }
                 }
             }
-
             if (bulletRange > 0 && totalTraveledDistance > bulletRange)
             {
                 Disable();
             }
-
-            oldPos = _transform.position;  // set old position to current position
+            oldPos = _transform.position;
         }
-
         fixedFrame++;
-        _transform.position = newPos;  // set current position to the new position
+        _transform.position = newPos;
     }
-
     private void Disable()
     {
         ResetBullet();
         gameObject.SetActive(false);
     }
-
     private bool OnHit(RaycastHit hit)
     {
         Ray mRay = new Ray(_transform.position, _transform.forward);
         if (!bulletData.isNetwork)
         {
-            if (hit.rigidbody != null && !hit.rigidbody.isKinematic) // if we hit a rigi body... apply a force
+            if (hit.rigidbody != null && !hit.rigidbody.isKinematic)
             {
                 float mAdjust = 1.0f / (Time.timeScale * (0.02f / Time.fixedDeltaTime));
                 hit.rigidbody.AddForceAtPosition(((mRay.direction * bulletData.ImpactForce) / Time.timeScale) / mAdjust, hit.point);
             }
         }
-        
-        switch (hit.transform.tag) // decide what the bullet collided with and what to do with it
+        switch (hit.transform.tag)
         {
             case "IgnoreBullet":
                 return false;
             case "Projectile":
                 // 两颗子弹相撞时不处理
                 break;
-            case GameCore.HITBOX_TAG://Send Damage for other players
+            case GameCore.HITBOX_TAG:
                 SendPlayerDamage(hit);
                 break;
             case "AI":
@@ -203,12 +191,10 @@ public class ShotController : ProjectileBase
         Disable();
         return true;
     }
-
     // 对真人玩家施加来自机器人或其他真人玩家的伤害
     void SendPlayerDamage(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
-        
         IGameDamageable damageable = hit.transform.GetComponent<IGameDamageable>();
         if (damageable != null)
         {
@@ -224,7 +210,7 @@ public class ShotController : ProjectileBase
                 }
                 else if (playerRefs.playerSettings.PlayerTeam == bulletData.GameActor.Team)
                 {
-                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
+                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
                     {
                         Disable();
                         return;
@@ -241,15 +227,13 @@ public class ShotController : ProjectileBase
                     NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
                 }
             }
-            
             //不是真人
             var botRefs = hit.transform.root.GetComponent<AIBotReferences>();//判断是不是人机
-            
             if (botRefs != null && !isOneTeamMode)//是人机
             {
                 if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                 {
-                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
+                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
                     {
                         Disable();
                         return;
@@ -266,7 +250,6 @@ public class ShotController : ProjectileBase
                     ResonanceManager.Instance.ChangeResonance("Enemy", damageData.Damage);
                 }
             }
-            
             //检查子弹来自机器人还是真人玩家。
             if (bulletData.GameActor != null)
             {
@@ -278,7 +261,6 @@ public class ShotController : ProjectileBase
             }
             damageable.ReceiveDamage(damageData);
         }
-
         if (GameConfig.Instance.showGore)
         {
             GameObject go = ObjectRecyclerBase.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
@@ -286,7 +268,6 @@ public class ShotController : ProjectileBase
         }
         Disable();
     }
-
     // 对机器人施加来自真人玩家或其他机器人的伤害
     void SendBotDamage(RaycastHit hit)
     {
@@ -296,11 +277,10 @@ public class ShotController : ProjectileBase
         {
             if (bulletData.GameActor == null)
             {
-                Debug.LogWarning($"Bullet ownerID {bulletData.ActorViewID} not found, ignore this if a player just enter in the match.");
+                Debug.LogWarning($"未找到子弹归属者 {bulletData.ActorViewID}；若玩家刚进入对局可忽略。");
             }
             if (hit.transform.root != null && bulletData.GameActor.Name == hit.transform.root.name) { return; }
             IGameDamageable damageable = hit.transform.GetComponent<IGameDamageable>();
-            
             if (damageable != null)
             {
                 //回调在 HitBox.cs 中
@@ -316,7 +296,7 @@ public class ShotController : ProjectileBase
                     }
                     else if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                     {
-                        if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
+                        if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
                         {
                             Disable();
                             return;
@@ -336,17 +316,14 @@ public class ShotController : ProjectileBase
                 damageable.ReceiveDamage(damageData);
             }
         }
-
         GameObject go = ObjectRecyclerBase.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
         go.transform.parent = hit.transform;
         Disable();
     }
-
     // 对真人玩家施加来自机器人的伤害。
     void SendPlayerDamageFromBot(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
-        
         //机器人不像其他真人玩家那样击中玩家的判定盒，而是击中角色控制器碰撞体，
         //所以不通过判定盒脚本，而是直接和玩家生命值脚本通信
         var pdm = hit.transform.GetComponent<PlayerRig>();
@@ -360,7 +337,7 @@ public class ShotController : ProjectileBase
             }
             else if (pdm.playerSettings.PlayerTeam == bulletData.GameActor.Team)
             {
-                if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)//if hit a team mate player
+                if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
                 {
                     Disable();
                     return;
@@ -382,7 +359,6 @@ public class ShotController : ProjectileBase
             Disable();
         }
     }
-
     void SendFacilityDamage(RaycastHit hit)
     {
         if (bulletData.isNetwork) return;
@@ -396,11 +372,9 @@ public class ShotController : ProjectileBase
             damageable.ReceiveDamage(damageData);
         }
     }
-    
     void NotifyMasterClientResonanceChange(string resonanceKey, float damage)
     {
         if (ResonanceManager.Instance == null) return;
-
         if (PhotonNetwork.IsMasterClient)
         {
             // 如果自己就是房主，直接修改
@@ -415,17 +389,14 @@ public class ShotController : ProjectileBase
                 resonanceKey, damage);
         }
     }
-
     void InstanceHitParticle(string poolPrefab, RaycastHit hit, bool overrideDamageable = false)
     {
         // 生成粒子
         GameObject go = ObjectRecyclerBase.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
         // 生成弹痕
         BulletMarkManagerBase.InstantiateDecal(hit);
-
         if (go != null)
             go.transform.parent = hit.transform;
-
         if (checkDamageables || overrideDamageable)
         {
             var damageable = hit.transform.GetComponent<IGameDamageable>();
@@ -435,7 +406,6 @@ public class ShotController : ProjectileBase
             damageable.ReceiveDamage(damageData);
         }
     }
-
     DamageInfo BuildBaseDamageData()
     {
         DamageInfo data = new DamageInfo()

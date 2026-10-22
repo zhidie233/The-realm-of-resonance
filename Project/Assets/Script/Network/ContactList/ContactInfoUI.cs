@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 using Photon.Realtime;
@@ -26,11 +26,10 @@ using System.Collections.Generic;
        {
        }
 
-
        private void OnDisable()
        {
        }
-       
+
        public override void SetFriendData(FriendInfo info, ContactListUIBase uiManager)
        {
            UIManager = uiManager;
@@ -86,7 +85,6 @@ using System.Collections.Generic;
            }
            else
            {
-               Debug.Log("This room doesn't exits more");
            }
        }
 

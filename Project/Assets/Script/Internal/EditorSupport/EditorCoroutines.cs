@@ -1,10 +1,7 @@
 #if UNITY_EDITOR
 using System.Collections;
 using UnityEditor;
-
-   /// <summary>
    /// 在编辑器的更新循环里跑一个协程迭代器。
-   /// </summary>
    public static class EditorCoroutines
    {
        public static void StartBackgroundTask(IEnumerator task)

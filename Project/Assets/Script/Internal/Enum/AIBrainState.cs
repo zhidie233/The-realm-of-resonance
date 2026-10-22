@@ -1,6 +1,4 @@
-﻿   /// <summary>
    /// 机器人默认状态
-   /// </summary>
    public enum AIBrainState
    {
        Idle = 0,
@@ -11,30 +9,21 @@
        Searching = 5,
        HoldingPosition = 6,
    }
-
-   /// <summary>
    /// 机器人行为模式
-   /// </summary>
    public enum AIBrainAction
    {
        Agressive = 0,
        Pasive = 1,
        Protective = 2,
    }
-
-   /// <summary>
    /// 仅供内部使用
-   /// </summary>
    public enum AICoverZone
    {
        ToPoint = 0,
        ToTarget = 1,
        ToRandomPoint = 2,
    }
-
-   /// <summary>
    /// 仅供内部使用
-   /// </summary>
    public enum AIOutOfRangeAction
    {
        SearchNewNearestTarget,
@@ -66,18 +55,10 @@
 
    public enum BotKillPolicy
    {
-       /// <summary>
        /// 机器人击杀计入对局记分板，击杀/得分归于击杀者。
-       /// </summary>
        SameAsRealPlayers,
-
-       /// <summary>
        /// 机器人击杀计入该玩家的对局记分板，但不增加账号统计（得分与击杀数）
-       /// </summary>
        OnlyAffectMatchScoreboard,
-
-       /// <summary>
        /// 机器人击杀连对局记分板都不计入
-       /// </summary>
        DoNotCountAtAll,
    }

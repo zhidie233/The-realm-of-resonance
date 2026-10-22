@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Photon.Realtime;
 
 // 包含全部伤害信息的游戏类
@@ -32,7 +32,6 @@ public class DamageInfo
     public int ActorViewID { get; set; }
 
     // 用该伤害数据创建哈希表
-    // <returns></returns>
     public ExitGames.Client.Photon.Hashtable GetAsHashtable()
     {
         var data = CommonUtil.CreatePhotonHashTable();

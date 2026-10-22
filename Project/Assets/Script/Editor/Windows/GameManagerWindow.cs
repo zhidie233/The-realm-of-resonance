@@ -46,7 +46,7 @@ public class GameManagerWindow : EditorWindow
     private void OnEnable()
     {
         serializedObject = new SerializedObject(this);
-        titleContent = new GUIContent("游戏管理", GetUnityIcon("音频混音器"));
+        titleContent = new GUIContent("配置中心", GetUnityIcon("音频混音器"));
         minSize = new Vector2(720, 570);
         weaponSearchfield = new SearchField();
         managerSearchField = new SearchField();
@@ -81,7 +81,6 @@ public class GameManagerWindow : EditorWindow
         EditorGUILayout.EndVertical();
         GUILayout.EndHorizontal();
         GUI.contentColor = cColor;
-
 
     }
 
@@ -260,13 +259,11 @@ public class GameManagerWindow : EditorWindow
         }
         EditorGUILayout.EndHorizontal();
         GUILayout.Space(18);
-
         w.Name = EditorGUILayout.TextField("武器名称", w.Name);
         w.Type = (FirearmType)EditorGUILayout.EnumPopup("武器类型", w.Type);
 
         GUILayout.Space(18);
         DrawTitleText("Specs");
-
         w.Damage = EditorGUILayout.IntField("伤害", w.Damage);
         w.FireRate = EditorGUILayout.FloatField("射速", w.FireRate);
         w.ReloadTime = EditorGUILayout.FloatField("换弹时间", w.ReloadTime);
@@ -281,7 +278,6 @@ public class GameManagerWindow : EditorWindow
 
         GUILayout.Space(18);
         DrawTitleText("Others");
-
         w.WorldPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.WorldPrefab, typeof(FirearmPickUpBase), false) as FirearmPickUpBase;
 
         GUILayout.Space(18);
@@ -382,7 +378,6 @@ public class GameManagerWindow : EditorWindow
         {
             selectedGameMode = gameMode;
         }
-
         // 激活图标
         sr = r;
         sr.x = sr.x + sr.width - 16;
@@ -427,7 +422,6 @@ public class GameManagerWindow : EditorWindow
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
         m.HideRoomAfterStart = ResonanceRealmEditorStyles.FeatureToogle(r, m.HideRoomAfterStart, "开始后隐藏或关闭房间？");
-
         m.MinPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.MinPlayersToStart, 1, 64);
         m.spawnOnRoundBegin = (GameModeSettings.OnRoundBegin)EditorGUILayout.EnumPopup("回合开始时", m.spawnOnRoundBegin);
         m.onDeath = (GameModeSettings.OnDeath)EditorGUILayout.EnumPopup("本地玩家死亡时", m.onDeath);
@@ -611,7 +605,6 @@ public class GameManagerWindow : EditorWindow
             GUILayout.Label(gun.Name, styles["textC"], GUILayout.Width(150));
             if (gun.WeaponIcon != null)
                 GUILayout.Label(gun.WeaponIcon.texture, GUILayout.Height(22), GUILayout.Width(100));
-
             Rect br = GUILayoutUtility.GetRect(new GUIContent("更改"), styles["textC"], GUILayout.Width(100));
             EditorGUI.DrawRect(br, altColor);
             if (GUI.Button(br, "更改", styles["textC"]))
@@ -716,7 +709,6 @@ public class GameManagerWindow : EditorWindow
     void DrawGameDataSettings()
     {
         if (gameData == null) gameData = GameConfig.Instance;
-
         DrawTitleText("游戏数据");
         if (gameData == null) return;
         DrawEditorOf(gameData);
@@ -899,11 +891,10 @@ public class GameManagerWindow : EditorWindow
         }
         return cachedColors[key];
     }
-
-    [MenuItem("游戏设置/管理器 %m")]
+    [MenuItem("项目工具/配置中心")]
     static void Open()
     {
-        GetWindow<GameManagerWindow>("Game 管理器");
+        GetWindow<GameManagerWindow>("配置中心");
     }
 
     void FetchCustomTabs()
@@ -923,7 +914,6 @@ public class GameManagerWindow : EditorWindow
                 }
                 else continue;
             }
-
             // 从 classInfo 转换出 GameManagerTabData 类型
             var tab = (GameManagerTabData)Activator.CreateInstance(classInfo);
             var data = tab.GetData();

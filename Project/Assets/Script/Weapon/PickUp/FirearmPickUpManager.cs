@@ -20,19 +20,16 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
     void OnNetworkCall(Hashtable data)
     {
         int code = (int)data["type"];
-        if (code == 0)//Pick up a weapon from the map
+        if (code == 0)
         {
             NetworkPickUp(data);
         }
-        else if (code == 1)//Instance a weapon in all clients
+        else if (code == 1)
         {
             NetworkInstanceWeapon(data);
         }
     }
-
-    /// <summary>
     /// 调用后同步拾取武器的生成
-    /// </summary>
     public override void ThrowGun(ThrowData throwData)
     {
         int[] i = new int[3];
@@ -55,16 +52,13 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
 
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.WeaponPickUpEvent, data);
     }
-
-    /// <summary>
     /// 玩家生成武器（拾取武器）时在所有客户端调用
-    /// </summary>
     void NetworkInstanceWeapon(Hashtable data)
     {
         FirearmData ginfo = GameConfig.Instance.GetWeapon((int)data["gunID"]);
         if (ginfo.WorldPrefab == null)
         {
-            Debug.LogError(string.Format("The weapon: '{0}' not have a pick up prefab in Gun info", ginfo.Name));
+            Debug.LogError(string.Format("武器“{0}”的配置中没有拾取预制体。", ginfo.Name));
             return;
         }
 
@@ -92,10 +86,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         gun.name += (string)data["name"];
         gun.transform.parent = transform;
     }
-
-    /// <summary>
     /// 通知房间内所有客户端该玩家将要拾取武器
-    /// </summary>
     public override void SendPickUp(PickUpData pickUpData)
     {
         var data = CommonUtil.CreatePhotonHashTable();
@@ -108,11 +99,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
 
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.WeaponPickUpEvent, data);
     }
-
-    /// <summary>
     /// 玩家从地图上拾取武器时在所有客户端调用
-    /// </summary>
-    /// <param name="data"></param>
     void NetworkPickUp(Hashtable data)
     {
         // 其中一条消息可能就是我们自己的
@@ -120,7 +107,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         GameObject g = GameObject.Find((string)data["name"]);
         if (g == null)
         {
-            Debug.LogWarning("This Gun does not exist in this scene");
+            Debug.LogWarning("该武器不存在于当前场景。");
             return;
         }
         //是我的
@@ -131,7 +118,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
             pi.ItemObject = g;
             pi.Clips = (int)data["clips"];
             pi.Bullets = (int)data["bullets"];
-            GameEvents.onPickUpGun(pi);//that call will be received in FirearmInventory.cs
+            GameEvents.onPickUpGun(pi);
         }
         Destroy(g);
     }

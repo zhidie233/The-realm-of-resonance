@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class Footstep : MonoBehaviour
 {
@@ -82,11 +82,7 @@ public class Footstep : MonoBehaviour
     {
         volumeMultiplier = multiplier;
     }
-
-    /// <summary> 
     /// 根据给定 tag 随机取一个脚步音效
-    /// </summary>
-    /// <returns></returns>
     public AudioClip GetStepSoundFor(string tag)
     {
         if (footStepsLibrary == null) return null;

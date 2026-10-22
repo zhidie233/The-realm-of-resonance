@@ -1,11 +1,8 @@
 using UnityEngine;
 using TMPro;
-
-/// <summary>
 /// 默认的游戏赛后结算界面
 /// 想用自定义结算界面，只需让脚本实现 IGameResumeScreen 接口
 /// 并处理继承来的函数。
-/// </summary>
 public class GameFinishHandler : NetworkHelper, IGameResumeScreen
 {
 
@@ -29,7 +26,6 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
     public void CollectData()
     {       
         int kills = NetworkWrapper.LocalPlayer.GetKills();
-
         // 若机器人击杀不计入玩家数据
         if (GameConfig.Instance.botKillCredit != BotKillPolicy.SameAsRealPlayers)
         {
@@ -80,7 +76,7 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
     public void Show()
     {
         Content.SetActive(true);
-        Invoke(nameof(GoToLobby), 60);//maximum time out to leave.
+        Invoke(nameof(GoToLobby), 60);
     }
 
     public void GoToLobby()

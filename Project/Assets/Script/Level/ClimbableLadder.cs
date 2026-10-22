@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -15,9 +15,9 @@ using UnityEditor;
        }
 
        [GameToggle] public bool hideWeapons = true;
-       [Tooltip("Climbing position offset (x,z) relative to the ladder transform.")]
+       [Tooltip("攀爬位置相对梯子变换的偏移（x、z）")]
        public Vector3 climbOffset;
-       [Tooltip("Direction where the player will look at when climbing, indicated by the yellow arrow gizmo.")]
+       [Tooltip("攀爬时玩家的朝向，由黄色箭头 Gizmo 指示")]
        public Vector3 lookDirection = new Vector3(0, -1, 0);
 
        [Header("References")]

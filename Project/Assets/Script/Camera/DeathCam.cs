@@ -77,10 +77,7 @@ public class DeathCam : DeathCamBase
         }
         target = Manager.OthersActorsInScene[CurrentTarget].Actor;
     }
-
-    /// <summary>
     /// 更新相机运动
-    /// </summary>
     void Orbit()
     {
         if (!canManipulate || cameraType != DeathCamType.OrbitTarget)
@@ -105,11 +102,7 @@ public class DeathCam : DeathCamBase
         transform.rotation = quaternion;
         transform.position = vector3;
     }
-
-    /// <summary>
     /// 设置击杀回放聚焦/观察的目标
-    /// </summary>
-    /// <param name="targetName"></param>
     public override DeathCamBase SetTarget(DeathCamInfo info)
     {
         //如果玩家传入了目标
@@ -119,11 +112,9 @@ public class DeathCam : DeathCamBase
             ReadyToShow(info);
             return this;
         }
-
         //如果玩家只传了目标的名字
         var targetName = info.TargetName;
         if (string.IsNullOrEmpty(targetName)) return this;
-
         //尝试按名字查找
         var targetInstance = GameObject.Find(targetName);
 
@@ -150,7 +141,7 @@ public class DeathCam : DeathCamBase
 
         if (targetInstance == null)
         {
-            Debug.LogWarning($"Couldn't found the kill cam target '{targetName}'.");
+            Debug.LogWarning($"未找到击杀镜头目标“{targetName}”。");
         }
         else
         {

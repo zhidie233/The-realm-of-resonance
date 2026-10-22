@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 [Serializable]
@@ -21,11 +21,7 @@ public class FirearmData
     [Header("References")]
     public FirearmPickUpBase WorldPrefab;
     [SpritePreview(30, true)] public Sprite WeaponIcon;
-
-    /// <summary>
     /// 此武器是否显示在游戏菜单中（配装、解锁等）
-    /// </summary>
-    /// <returns></returns>
     public bool CanShowWeapon()
     {
         return Active && AccessRules.UnlockMethod != GameItemAccessRules.AccessRulesMethod.Hidden;

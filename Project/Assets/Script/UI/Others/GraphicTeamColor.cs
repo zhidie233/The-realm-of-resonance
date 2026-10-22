@@ -1,11 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-
-/// <summary>
 /// 自动为 UI 元素应用队伍颜色
 /// 或为 UI 文本设置队伍名称
-/// </summary>
 public class GraphicTeamColor : MonoBehaviour
 {
     public Team team = Team.All;

@@ -96,20 +96,12 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
                State = FlagState.Captured;
            }
        }
-
-       /// <summary>
        /// 判断此实例是否在己方基地
-       /// </summary>
-       /// <returns></returns>
        public bool IsHome()
        {
            return transform.position == originalPos;
        }
-
-       /// <summary>
        /// 玩家掉落旗帜时在所有客户端调用。
-       /// </summary>
-       /// <param name="data"></param>
        public void DropFlag(Hashtable data)
        {
            var position = (Vector3)data["pos"];
@@ -126,15 +118,11 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
                Invoke(nameof(ReturnInvoke), ReturnTime);
            }
        }
-
-       /// <summary>
        /// 玩家成功夺旗时在所有客户端调用。
-       /// </summary>
        public void OnCapture(Player actor)
        {
            carriyingPlayer = null;
            SetFlagToOrigin();
-
            //只有夺旗的玩家更新这些属性
            if (NetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
            {
@@ -145,25 +133,17 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
                CaptureOfFlagController.Instance.onCapture?.Invoke();
            }
        }
-
-       /// <summary>
        /// 玩家归还旗帜时在所有客户端调用。
-       /// </summary>
        public void Recover(Player actor)
        {
            SetFlagToOrigin();
-
            if (actor.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber)
            {
                NetworkWrapper.LocalPlayer.PostScore(CaptureOfFlagController.Instance.scorePerRecover);
                CaptureOfFlagController.Instance.onRecover?.Invoke();
            }
        }
-
-       /// <summary>
        /// 玩家拾取这面旗帜时在所有客户端调用。
-       /// </summary>
-       /// <param name="actor"></param>
        public void OnPickup(Player actor, int viewID)
        {
            Transform actorTransform = GameController.Instance.FindActor(viewID);
@@ -171,13 +151,11 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            {
                return;
            }
-
            var logic = actorTransform.GetComponent<PlayerConfig>();
            if (!CanBePickedUpBy(logic))
            {
                return;
            }
-
            if (logic.PlayerTeam == flagTeam)
            {
                if (IsHome() == false)
@@ -190,7 +168,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            {
                SetFlagToCarrier(logic);
            }
-
            //显示夺旗提示
            if (NetworkWrapper.LocalPlayer.ActorNumber == actor.ActorNumber)
            {
@@ -200,7 +177,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
                CaptureOfFlagController.Instance.onPickUp?.Invoke();
            }
        }
-
        public void SetFlagToCarrier(PlayerConfig carrier)
        {
            carriyingPlayer = carrier;
@@ -211,7 +187,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            if (CaptureOfFlagController.Instance.moveFlagWithCarrierMotion && carrier.carrierPoint != null)
                transform.parent = carrier.carrierPoint;
        }
-
        void ReturnInvoke()
        {
            var data = CommonUtil.CreatePhotonHashTable();
@@ -219,7 +194,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            data.Add("team", flagTeam);
            NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.CaptureOfFlagMode, data);
        }
-
        public bool CanBePickedUpBy(PlayerConfig logic)
        {
            //旗帜在己方基地位置时，只有敌方队伍能拿
@@ -227,16 +201,13 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            {
                return logic.PlayerTeam != flagTeam;
            }
-
            //如果已有其他玩家持旗，其他人不能拿
            if (carriyingPlayer != null)
            {
                return false;
            }
-
            return true;
        }
-
        public void SetFlagToOrigin()
        {
            transform.parent = null;
@@ -245,12 +216,10 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            transform.localScale = originalScale;
            State = FlagState.InHome;
        }
-
        #region GUI
        void OnGUI()
        {
            if (carriyingPlayer != null && carriyingPlayer.View.ViewID == GameCore.LocalPlayer.ViewID) return;
-
            GUI.color = IconColor;
            if (GameController.Instance.CameraRendered)
            {
@@ -262,7 +231,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            }
            GUI.color = Color.white;
        }
-
        private SphereCollider SpheCollider;
        private void OnDrawGizmos()
        {
@@ -278,7 +246,6 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
            }
        }
        #endregion
-
        [System.Serializable]
        public enum FlagState
        {

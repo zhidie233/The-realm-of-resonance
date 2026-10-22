@@ -3,13 +3,10 @@ using System;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-/// <summary>
 /// 默认武器行走摇晃运动
 /// 脚本继承基类 SwayStrideBase.cs 即可用自己的武器脚本
 /// 注意：该默认脚本也控制头部摇晃，若用自己的脚本替换
 /// 要确保同时处理头部摇晃。
-/// </summary>
 public class SwayStride : SwayStrideBase
 {
     public SwaySettings settings;
@@ -183,7 +180,7 @@ public class SwayStride : SwayStrideBase
                     CachedTransform.localRotation = Quaternion.Slerp(CachedTransform.localRotation, Quaternion.Euler(currentRotation), time * lerp);
                     bobRotation = Quaternion.Slerp(bobRotation, Quaternion.Euler(bobEuler), time * lerp);
                 }
-                else//if player is idle
+                else
                 {
                     currentPosition.Set(midpoint.x, midpoint.y + verticalMovement, midpoint.z);
                     CachedTransform.localRotation = Quaternion.Slerp(CachedTransform.localRotation, Quaternion.Euler(Vector3.zero), time * 10);
@@ -204,18 +201,15 @@ public class SwayStride : SwayStrideBase
         CachedTransform.localPosition = Vector3.Lerp(CachedTransform.localPosition, currentPosition, time * lerp);
         playerReferences.cameraMotion.AddCameraRotation(bobRotation);
     }
-
     void MoveToDefault()
     {
         currentPosition = midpoint;
         CachedTransform.localRotation = Quaternion.Slerp(CachedTransform.localRotation, Quaternion.Euler(Vector3.zero), Time.smoothDeltaTime * 12);
         bobRotation = Quaternion.Slerp(bobRotation, Quaternion.Euler(Vector3.zero), Time.smoothDeltaTime * lerp);
     }
-
     void UpdateFootStep()
     {
         if (!motor.isGrounded || motor.State == PlayerState.InVehicle) return;
-
         if (motor.VelocityMagnitude > 0.1f)
         {
             if (waveslice2 >= 0.97f && !rightFoot)
@@ -230,37 +224,30 @@ public class SwayStride : SwayStrideBase
             }
         }
     }
-
     void OnLocalAimChange(bool aiming)
     {
         Intensitity = aiming ? settings.AimIntensity : 1;
         rotationIntensity = aiming ? settings.aimRotationIntensity : 1;
     }
-
     public override void AnimatedThis(Action<PlayerState> callback, bool useAnim)
     {
         AnimateCallback = callback;
         useAnimation = useAnim;
+
     }
-
-
 }
-
 #if UNITY_EDITOR
 [CustomEditor(typeof(SwayStride))]
 public class SwayStridePreview : Editor
 {
     SwayStride script;
-
     private void OnEnable()
     {
         script = (SwayStride)target;
     }
-
     public override void OnInspectorGUI()
     {
         EditorGUI.BeginChangeCheck();
-
         GUILayout.Space(5);
         SerializedProperty so = serializedObject.FindProperty("settings");
         EditorGUILayout.PropertyField(so);
@@ -274,13 +261,11 @@ public class SwayStridePreview : Editor
                 EditorGUILayout.EndVertical();
             }
         }
-
         if (EditorGUI.EndChangeCheck())
         {
             serializedObject.ApplyModifiedProperties();
             EditorUtility.SetDirty(target);
         }
     }
-
 }
 #endif

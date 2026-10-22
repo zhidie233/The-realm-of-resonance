@@ -22,9 +22,7 @@ public class NetworkHelper : MonoBehaviourPun {
     {
         get { return (NetworkWrapper.IsConnected && NetworkWrapper.InRoom); }
     }
-
     // 按 ViewID 查找玩家 GameObject
-    // <returns></returns>
     public GameObject FindPlayerRoot(int view)
     {
         PhotonView _view = PhotonView.Find(view);
@@ -38,8 +36,6 @@ public class NetworkHelper : MonoBehaviourPun {
         }
     }
     // 按 ViewID 获取 PhotonView
-    // <param name="view"></param>
-    // <returns></returns>
     public PhotonView FindPlayerView(int view)
     {
         PhotonView _view = PhotonView.Find(view);
@@ -86,13 +82,10 @@ public class NetworkHelper : MonoBehaviourPun {
             return transform.parent;
         }
     }
-
     // 当 PhotonView 属于本客户端并可被其控制时为 true。
-    // <remarks>
     // PUN 有所有权概念，规定谁能控制和销毁各 PhotonView。
     // 所有者与本地 PhotonPlayer 一致时为 true。
     // 这是主客户端上的场景 PhotonView 时为 true。
-    // </remarks>
     public bool isMine
     {
         get
@@ -100,7 +93,6 @@ public class NetworkHelper : MonoBehaviourPun {
             return photonView.IsMine;
         }
     }
-
     // 获取 Photon 连接
     public bool isConnected
     {
@@ -119,10 +111,7 @@ public class NetworkHelper : MonoBehaviourPun {
         }
           return player;
     }
-
     // 获取玩家所属队伍
-    // <param name="p"></param>
-    // <returns></returns>
     public string GetTeam(Player p)
     {
         if (p == null || !isConnected)
@@ -130,17 +119,14 @@ public class NetworkHelper : MonoBehaviourPun {
 
             return (string)p.CustomProperties[NetworkKeys.TeamKey];
     }
-
     // 获取玩家所属队伍
-    // <param name="p"></param>
-    // <returns></returns>
     public Team GetTeamEnum(Player p)
     {
         if (p == null || !isConnected)
             return Team.All;
 
         string t = (string)p.CustomProperties[NetworkKeys.TeamKey];
-        
+
         switch (t)
         {
             case "Team2":
@@ -150,7 +136,6 @@ public class NetworkHelper : MonoBehaviourPun {
         }
         return Team.All;
     }
-
     // 获取当前游戏模式
     public GameMode GetGameMode
     {
@@ -177,7 +162,6 @@ public class NetworkHelper : MonoBehaviourPun {
             return mGameMode;
         }
     }
-
     // 获取当前游戏模式
     public GameMode GetGameModeUpdated
     {
@@ -213,10 +197,7 @@ public class NetworkHelper : MonoBehaviourPun {
             }
         }
     }
-
     // 获取房间内指定队伍的所有玩家
-    // <param name="team"></param>
-    // <returns></returns>
     public List<Player> GetPlayersInTeam(string team)
     {
         PlayerList.Clear();
@@ -232,7 +213,6 @@ public class NetworkHelper : MonoBehaviourPun {
         }
         return PlayerList;
     }
-
     // 是否为单队伍游戏模式？
     public bool isOneTeamMode
     {
@@ -244,7 +224,6 @@ public class NetworkHelper : MonoBehaviourPun {
             return b;
         }
     }
-
     // 是否为单队伍游戏模式？
     public bool isOneTeamModeUpdate
     {

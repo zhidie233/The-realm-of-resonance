@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
@@ -15,12 +15,8 @@ using TMPro;
        public GameObject FullText = null;
        [SerializeField] private GameObject PrivateUI = null;
        private RoomInfo cacheInfo = null;
-
-       /// <summary>
        /// 此方法赋值 RoomInfo 并读取其属性
        /// 用于在 UI 中显示
-       /// </summary>
-       /// <param name="info"></param>
        public override void SetInfo(RoomInfo info)
        {
            cacheInfo = info;
@@ -36,10 +32,7 @@ using TMPro;
            JoinButton.SetActive(_active);
            FullText.SetActive(!_active);
        }
-
-       /// <summary>
        /// 加入此行 UI 所代表的房间
-       /// </summary>
        public void JoinRoom()
        {
            //本地玩家延迟高于房间允许的上限时

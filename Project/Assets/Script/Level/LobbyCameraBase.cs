@@ -7,10 +7,7 @@ public abstract class LobbyCameraBase : MonoBehaviourBase
         MapPreview,
         Spectator
     }
-
-    /// <summary>
     /// 不要通过此脚本（或其子类）移动或旋转相机
-    /// </summary>
     public bool BlockSelfMovement
     {
         get;
@@ -34,7 +31,6 @@ public abstract class LobbyCameraBase : MonoBehaviourBase
         }
         return _cameraComponent;
     }
-
 
     private static LobbyCameraBase _instance;
     public static LobbyCameraBase Instance

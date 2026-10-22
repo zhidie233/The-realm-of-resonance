@@ -19,15 +19,9 @@ public abstract class FirearmPickUpManagerBase : NetworkHelper
     }
 
     public FirearmPickUpBase LastTrigger { get; set; }
-
-    /// <summary>
     /// 在所有客户端上投掷武器
-    /// </summary>
     public abstract void ThrowGun(ThrowData throwData);
-
-    /// <summary>
     /// 通知房间内所有客户端该玩家将要拾取武器
-    /// </summary>
     public abstract void SendPickUp(PickUpData pickUpData);
 
     private static FirearmPickUpManagerBase _instance;

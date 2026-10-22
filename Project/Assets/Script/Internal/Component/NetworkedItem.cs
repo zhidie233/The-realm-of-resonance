@@ -37,10 +37,7 @@ public class NetworkedItem : MonoBehaviour
         m_itemName = string.Empty;
         isInitializated = false;
     }
-
-    /// <summary>
     /// 本地玩家创建此物品时执行
-    /// </summary>
     void Init()
     {
         if (isInitializated)
@@ -54,10 +51,8 @@ public class NetworkedItem : MonoBehaviour
         gameObject.name = ItemName;
         OwnerActorID = NetworkWrapper.LocalPlayer.ActorNumber;
         isInitializated = true;
-
         //在此把物品加入池中，因为本地玩家不会走添加流程
         ItemRespawnerBase.Instance.PoolItem(ItemName, this);
-
         //不为每个物品各用一个 PhotonView，而是直接同步信息
         //并通过唯一名称识别物品
         var data = CommonUtil.CreatePhotonHashTable();
@@ -66,14 +61,10 @@ public class NetworkedItem : MonoBehaviour
         data.Add("actorID", OwnerActorID);
         data.Add("position", transform.position);
         data.Add("rotation", transform.rotation);
-
         //该调用由 PickupSpawner.cs 的 OnNetworkItemInstance() 接收并处理
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.NetworkItemInstance, data);
     }
-
-    /// <summary>
     /// 此物品是为其他玩家创建时执行
-    /// </summary>
     public void OnNetworkInstance(ExitGames.Client.Photon.Hashtable data)
     {
         isSceneItem = false;
@@ -83,10 +74,7 @@ public class NetworkedItem : MonoBehaviour
         gameObject.name = ItemName;
         isInitializated = true;
     }
-
-    /// <summary>
     /// 为所有客户端销毁此网络物品
-    /// </summary>
     public void DestroySync()
     {
         if (!isAuthorized()) return;
@@ -97,10 +85,7 @@ public class NetworkedItem : MonoBehaviour
 
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.NetworkItemChange, data);
     }
-
-    /// <summary>
     /// 为所有客户端启用或禁用此网络物品
-    /// </summary>
     public void SetActiveSync(bool active)
     {
         if (!isAuthorized()) return;

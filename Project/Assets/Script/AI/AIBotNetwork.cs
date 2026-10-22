@@ -11,8 +11,8 @@ public sealed class AIBotNetwork : MonoBehaviourBase, IPunObservable
 
     private Transform m_Transform;
     private int receivePackages = 0;
-    private Vector3 correctPlayerPos = Vector3.zero; // We lerp towards this
-    private Quaternion correctPlayerRot = Quaternion.identity; // We lerp towards this
+    private Vector3 correctPlayerPos = Vector3.zero;
+    private Quaternion correctPlayerRot = Quaternion.identity;
     private Vector3 networkLookAtPosition = Vector3.zero;
 
     private GameBotProperties BotStat = null;
@@ -75,7 +75,6 @@ public sealed class AIBotNetwork : MonoBehaviourBase, IPunObservable
             correctPlayerRot = (Quaternion)stream.ReceiveNext();
             Velocity = (Vector3)stream.ReceiveNext();
             networkLookAtPosition = (Vector3)stream.ReceiveNext();
-
             //修复远程客户端的位移效果
             if (receivePackages < 5)
             {
@@ -88,7 +87,7 @@ public sealed class AIBotNetwork : MonoBehaviourBase, IPunObservable
 
     public override void OnUpdate()
     {
-        if (!NetworkWrapper.IsMasterClient)//if not master client, then get position from server
+        if (!NetworkWrapper.IsMasterClient)
         {
             m_Transform.localPosition = Vector3.Lerp(m_Transform.localPosition, correctPlayerPos, Time.deltaTime * 7);
             m_Transform.localRotation = Quaternion.Lerp(m_Transform.localRotation, correctPlayerRot, Time.deltaTime * 7);

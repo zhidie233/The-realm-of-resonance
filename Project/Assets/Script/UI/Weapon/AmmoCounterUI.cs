@@ -1,12 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
-
-   /// <summary>
    /// 默认游戏弹药指示器处理器
    /// 此脚本用于显示文本，指示当前装备武器的弹药状态
    /// 让玩家知道需要换弹、弹药不足还是已打空。
    /// 此脚本无引用依赖，不想用或想换成自定义实现时，直接从 UI 实例上移除即可。
-   /// </summary>
    public class AmmoCounterUI : MonoBehaviour
    {
        [GameToggle] public bool forceUpperCase = true;
@@ -59,7 +56,6 @@ using TMPro;
            if (max <= 4) { SetActive(false); return; }
 
            int third = Mathf.FloorToInt(max / 3);
-
 
            //武器状态正常。
            if (bullets > third) { SetActive(false); return; }

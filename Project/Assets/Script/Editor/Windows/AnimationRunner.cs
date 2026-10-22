@@ -3,10 +3,7 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-
-   /// <summary>
    /// 编辑器里预览 Animator 的动作：挑一个状态，逐帧拖或连续播放。
-   /// </summary>
    public class AnimationRunner : EditorWindow
    {
        class StateEntry
@@ -49,10 +46,7 @@ using UnityEngine;
            onFinish = null;
            if (callback != null) { callback(); }
        }
-
-       /// <summary>
        /// 指定要预览的 Animator，可选一个窗口关闭时执行的回调。
-       /// </summary>
        public void SetAnim(Animator target, Action callback = null, bool autoPlay = false)
        {
            animator = target;
@@ -193,7 +187,6 @@ using UnityEngine;
                EditorGUILayout.HelpBox("未指定 Animator。", MessageType.Info);
                return;
            }
-
            EditorGUILayout.LabelField("目标", animator.gameObject.name + " / " + animator.name);
 
            if (!animator.isActiveAndEnabled)
@@ -218,23 +211,19 @@ using UnityEngine;
        void DrawToolbar()
        {
            EditorGUILayout.BeginHorizontal();
-
            if (GUILayout.Button(playing ? "暂停" : "播放", GUILayout.Width(60f)))
            {
                playing = !playing;
                lastTick = EditorApplication.timeSinceStartup;
            }
-
            if (GUILayout.Button("上一帧", GUILayout.Width(60f))) { Step(-1f); }
            if (GUILayout.Button("下一帧", GUILayout.Width(60f))) { Step(1f); }
-
            if (GUILayout.Button("回到开头", GUILayout.Width(80f)))
            {
                playing = false;
                position = 0f;
                Sample();
            }
-
            loop = GUILayout.Toggle(loop, "循环", GUILayout.Width(50f));
 
            GUILayout.Space(8f);
@@ -246,7 +235,6 @@ using UnityEngine;
        void DrawProgress()
        {
            EditorGUI.BeginChangeCheck();
-
            position = EditorGUILayout.Slider("进度", position, 0f, 1f);
 
            if (EditorGUI.EndChangeCheck())

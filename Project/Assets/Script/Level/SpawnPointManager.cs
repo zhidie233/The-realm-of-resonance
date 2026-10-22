@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -23,10 +23,7 @@ public class SpawnPointManager : MonoBehaviour
         if (Instance.spawnPoints.Contains(point)) return;
         Instance.spawnPoints.Add(point);
     }
-
-    /// <summary>
     /// 从场景中该队伍的某个出生点获取实例化玩家的位置和旋转
-    /// </summary>
     public void GetPlayerSpawnPosition(Team team, out Vector3 position, out Quaternion rotation)
     {
         var point = GetSpawnPointForTeam(team);
@@ -34,23 +31,15 @@ public class SpawnPointManager : MonoBehaviour
         {
             position = Vector3.zero;
             rotation = Quaternion.identity;
-            Debug.LogWarning($"Couldn't found spawnpoint for team {team.ToString()} in this scene.");
+            Debug.LogWarning($"场景中没有找到阵营 {team} 的出生点。");
             return;
         }
 
         point.GetSpawnPosition(out position, out rotation);
     }
-
-    /// <summary>
     /// 按默认选择模式从所有已注册出生点中获取一个出生点。
-    /// </summary>
-    /// <returns></returns>
     public SpawnPointBase GetSpawnPointForTeam(Team team) => GetSpawnPointForTeam(team, spawnMode);
-
-    /// <summary>
     /// 按指定选择模式从所有已注册出生点中获取一个出生点。
-    /// </summary>
-    /// <returns></returns>
     public SpawnPointBase GetSpawnPointForTeam(Team team, SpawnMode m_spawnMode)
     {
         if(spawnPoints.Count <= 0)
@@ -65,7 +54,7 @@ public class SpawnPointManager : MonoBehaviour
             }
             else
             {
-                Debug.LogWarning("There's not spawnpoints in this scene.");
+                Debug.LogWarning("场景中没有出生点。");
                 return null;
             }
         }
@@ -96,10 +85,7 @@ public class SpawnPointManager : MonoBehaviour
         currentSpawnpoint = (currentSpawnpoint + 1) % teamPoints.Count;
         return teamPoints[currentSpawnpoint];
     }
-
-    /// <summary>
     /// 获取指定队伍可用的所有出生点列表
-    /// </summary>
     public List<SpawnPointBase> GetListOfPointsForTeam(Team team)
     {
         if (team == Team.None) team = Team.All;
@@ -107,7 +93,7 @@ public class SpawnPointManager : MonoBehaviour
         var teamPoints = spawnPoints.FindAll(x => x.team == team);
         if (teamPoints.Count <= 0)
         {
-            Debug.LogWarning("There's not spawnpoints for the team: " + team.GetTeamName());
+            Debug.LogWarning("该阵营没有出生点：" + team.GetTeamName());
             return null;
         }
         return teamPoints;

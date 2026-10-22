@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
    [System.Serializable]
@@ -51,7 +51,7 @@ using UnityEngine;
            if (audioBank == null || audioBank.AudioBank == null) return null;
 
            int index = audioBank.AudioBank.FindIndex(x => x.Name.ToLower() == audioName.ToLower());
-           if (index < 0) { Debug.LogWarning("Clip: " + audioName + " not found"); return null; }
+           if (index < 0) { Debug.LogWarning("音频片段 " + audioName + " 未找到"); return null; }
            return PlayClip(index);
        }
 

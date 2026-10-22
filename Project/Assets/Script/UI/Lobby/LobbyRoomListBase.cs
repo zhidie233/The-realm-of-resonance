@@ -6,10 +6,7 @@ public abstract class LobbyRoomListBase : MonoBehaviour
 {
 
     public abstract void SetRoomList(List<RoomInfo> rooms);
-
-    /// <summary>
     /// 清空列表中的所有房间（含缓存）。
-    /// </summary>
     public abstract void ClearList();
 
     private static LobbyRoomListBase _instance;

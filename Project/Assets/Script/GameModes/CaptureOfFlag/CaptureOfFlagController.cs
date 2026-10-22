@@ -63,22 +63,21 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
         var command = (int)data["cmd"];
         switch (command)
         {
-            case 0: // Change Flag State
+            case 0:
                 OnFlagStateChanged(data);
                 break;
-            case 1: // Drop a flag
+            case 1:
                 var flag = (Team)data["team"] == Team.Team1 ? Team1Flag : Team2Flag;
                 flag.DropFlag(data);
                 break;
-            case 2: // Return flag to origin position
+            case 2:
                 flag = (Team)data["team"] == Team.Team1 ? Team1Flag : Team2Flag;
                 flag.SetFlagToOrigin();
                 break;
-            case 3: // Sync flags states
+            case 3:
                 SyncFlags(data);
                 break;
             default:
-                Debug.Log("Not defined command: " + command);
                 return;
         }
     }
@@ -103,7 +102,6 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
                 flag.Recover(player);
                 break;
         }
-
         // 夺旗模式共鸣值事件（ChangeResonance 内部仅房主生效，天然防止多端重复累加）
         switch (newState)
         {
@@ -121,10 +119,7 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
                 break;
         }
     }
-
-    /// <summary>
     /// 由旗帜事件触发共鸣值变化（数值在 ResonanceConfig 中配置）
-    /// </summary>
     private void AddResonance(string resonanceKey)
     {
         if (ResonanceManager.Instance == null) return;

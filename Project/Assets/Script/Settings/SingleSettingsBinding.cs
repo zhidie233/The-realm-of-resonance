@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
@@ -21,7 +21,6 @@ using TMPro;
        [Header("References")]
        public Text optionText;
        public TextMeshProUGUI optionTextTMP;
-
 
        private void Awake()
        {
@@ -54,7 +53,7 @@ using TMPro;
            }
            else
            {
-               Debug.LogWarning($"Setting {SettingKeyName} is a invalid type"); return;
+               Debug.LogWarning($"设置项 {SettingKeyName} 的类型无效。"); return;
            }
            currentOption = v;
            ApplyCurrentValue();

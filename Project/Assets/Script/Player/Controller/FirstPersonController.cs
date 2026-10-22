@@ -48,7 +48,6 @@ public class FirstPersonController : FirstPersonControllerBase
     [Range(3, 25)]
     public float DeathFallDistance = 15;
     public PlayerRunToAimBehave runToAimBehave = PlayerRunToAimBehave.StopRunning;
-
     [Header("空中控制")]
     public float dropControlSpeed = 25;
     public Vector2 dropTiltSpeedRange = new Vector2(20, 60);
@@ -64,10 +63,9 @@ public class FirstPersonController : FirstPersonControllerBase
     public LerpControlledBob m_JumpBob = new LerpControlledBob();
     [Header("脚步声")]
     public Footstep footstep;
-    public AudioClip jumpSound;           // the sound played when character leaves the ground.
-    public AudioClip landSound;           // the sound played when character touches back on ground.
+    public AudioClip jumpSound;
+    public AudioClip landSound;
     public AudioClip slideSound;
-
     [Header("界面")]
     public Sprite StandIcon;
     public Sprite CrouchIcon;
@@ -178,17 +176,14 @@ public class FirstPersonController : FirstPersonControllerBase
         if (_characterController == null || !_characterController.enabled) return;
 
         moveDirection = Vector3.Lerp(moveDirection, targetDirection, acceleration * Time.deltaTime);
-
         // 把移动方向应用到 Character Controller
         // 在 LateUpdate 里应用移动，避免移动并旋转玩家摄像机时画面抖动。
         m_CollisionFlags = _characterController.Move(moveDirection * Time.deltaTime);
     }
-
     public void FixedUpdate()
     {
         if (Finish || _characterController == null || !_characterController.enabled || MoveToStarted)
             return;
-
         GroundDetection();
         //如果玩家焦点在游戏内
         if (LobbyMenu.Instance.isCursorLocked && !GameConfig.Instance.isChatOpen)
@@ -198,11 +193,10 @@ public class FirstPersonController : FirstPersonControllerBase
             desiredSpeed = Mathf.Lerp(desiredSpeed, s, Time.fixedDeltaTime * 8);
             speed = desiredSpeed;
         }
-        else if (State != PlayerState.Sliding)//if player is not focus in game
+        else if (State != PlayerState.Sliding)
         {
             _input = Vector2.zero;
         }
-
         if (isClimbing && _ladder != null)
         {
             //攀爬控制
@@ -214,7 +208,6 @@ public class FirstPersonController : FirstPersonControllerBase
             Move();
         }
     }
-
     // 该玩家控制器的状态变化时触发。
     private void OnStateChanged(PlayerState from, PlayerState to)
     {
@@ -228,7 +221,6 @@ public class FirstPersonController : FirstPersonControllerBase
         }
         GameEvents.DispatchLocalPlayerStateChange(from, to);
     }
-
     // 处理玩家控制器的按键输入
     void MovementInput()
     {
@@ -244,14 +236,11 @@ public class FirstPersonController : FirstPersonControllerBase
             }
             else return;
         }
-
         if (CommonUtil.isMobile) return;
-
         if (!_jump && State != PlayerState.Crouching && (Time.time - lastJumpTime) > JumpMinRate)
         {
             _jump = GameInput.Jump();
         }
-
         if (State != PlayerState.Jumping && State != PlayerState.Climbing)
         {
             if (forcedCrouch) return;
@@ -274,7 +263,6 @@ public class FirstPersonController : FirstPersonControllerBase
             }
         }
     }
-
     // 检查玩家是否站在地面上（不在跳跃或下落）
     void GroundDetection()
     {
@@ -283,7 +271,7 @@ public class FirstPersonController : FirstPersonControllerBase
         {
             OnLand();
         }
-        else if (_previouslyGrounded && !_characterController.isGrounded)//when the player start jumping
+        else if (_previouslyGrounded && !_characterController.isGrounded)
         {
             PostGroundVerticalPos = _transform.position.y;
             if (!isFalling)
@@ -292,17 +280,14 @@ public class FirstPersonController : FirstPersonControllerBase
                 fallingTime = Time.time;
             }
         }
-
         if (isFalling)
         {
             VerticalDirectionCheck();
         }
-
         if (!_characterController.isGrounded && !_jumping && _previouslyGrounded)
         {
             targetDirection.y = 0f;
         }
-
         if (forcedCrouch)
         {
             if ((Time.frameCount % 10) == 0)
@@ -314,10 +299,8 @@ public class FirstPersonController : FirstPersonControllerBase
                 }
             }
         }
-
         _previouslyGrounded = _characterController.isGrounded;
     }
-
     // 把移动方向应用到 CharacterController
     void Move()
     {
@@ -334,7 +317,7 @@ public class FirstPersonController : FirstPersonControllerBase
                 DoJump();
             }
         }
-        else//if the player is not touching the ground
+        else
         {
             //如果玩家正在下坠
             if (State == PlayerState.Dropping)
@@ -349,59 +332,46 @@ public class FirstPersonController : FirstPersonControllerBase
                 OnGliding();
                 return;
             }
-
             OnAir();
         }
     }
-
     // 玩家在地面上时的控制
     void OnSurface()
     {
         // 始终沿摄像机前方移动，因为那是瞄准方向
-
         desiredMove.Set(_input.x, 0.0f, _input.y);
         desiredMove = _transform.TransformDirection(desiredMove);
-
         // 获取所接触地面的法线，以便沿地面移动
         Physics.SphereCastNonAlloc(_transform.localPosition, capsuleRadious, Vector3.down, SurfaceRay, _characterController.height * 0.5f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
-
         //根据当前玩家所踩地面的法线确定移动角度
         desiredMove = Vector3.ProjectOnPlane(desiredMove, SurfaceRay[0].normal);
         targetDirection.x = desiredMove.x * speed;
         targetDirection.z = desiredMove.z * speed;
-
         SlopeControl();
     }
-
     // 玩家在空中时的控制（既不在下坠也不在滑翔）
     void OnAir()
     {
         desiredMove = (_transform.forward * Mathf.Clamp01(_input.y)) + (_transform.right * _input.x);
         desiredMove += momentum;
-
         targetDirection += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
         targetDirection.x = (desiredMove.x * speed) * AirControlMultiplier;
         targetDirection.z = (desiredMove.z * speed) * AirControlMultiplier;
-
         momentum = Vector3.Lerp(momentum, Vector3.zero, Time.fixedDeltaTime * momentunDecaySpeed);
     }
-
     // 玩家下落/跳跃后撞到地面时调用
     void OnLand()
     {
         if (isClimbing) return;
-
         if (!overrideNextLandEvent)
         {
             //落地摄像机效果
             StartCoroutine(m_JumpBob.DoBobCycle());
-
             isFalling = false;
             float fallDistance = CalculateFall();
             if (fallDistance > 0.05f) GameEvents.DispatchPlayerLandEvent(fallDistance);
         }
         else overrideNextLandEvent = false;
-
         haslanding = true;
         JumpDirection = 0;
         targetDirection.y = 0f;
@@ -412,14 +382,12 @@ public class FirstPersonController : FirstPersonControllerBase
         if (State != PlayerState.Crouching)
             State = PlayerState.Idle;
     }
-
     void OnCrouchChanged()
     {
         if (Crounching)
         {
             State = PlayerState.Crouching;
             UIReferences.Instance.PlayerUI.PlayerStateIcon.sprite = CrouchIcon;
-
             //滑铲实现
             if (canSlide && VelocityMagnitude > WalkSpeed && GetLocalVelocity().z > 0.1f)
             {
@@ -436,13 +404,11 @@ public class FirstPersonController : FirstPersonControllerBase
             else forcedCrouch = true;
         }
     }
-
     public void DoCrouchTransition()
     {
         StopCoroutine(nameof(CrouchTransition));
         StartCoroutine(nameof(CrouchTransition));
     }
-
     IEnumerator CrouchTransition()
     {
         bool isCrouch = Crounching || State == PlayerState.Sliding;
@@ -450,11 +416,9 @@ public class FirstPersonController : FirstPersonControllerBase
         Vector3 center = new Vector3(0, height * 0.5f, 0);
         Vector3 cameraPosition = CameraRoot.localPosition;
         Vector3 verticalCameraPos = isCrouch ? new Vector3(cameraPosition.x, defaultCameraRPosition.y - (defaultHeight - height), cameraPosition.z) : defaultCameraRPosition;
-
         float originHeight = _characterController.height;
         Vector3 originCenter = _characterController.center;
         Vector3 originCameraPosition = cameraPosition;
-
         float d = 0;
         while (d < 1)
         {
@@ -465,7 +429,6 @@ public class FirstPersonController : FirstPersonControllerBase
             yield return null;
         }
     }
-
     // 让玩家跳跃
     public override void DoJump()
     {
@@ -483,18 +446,15 @@ public class FirstPersonController : FirstPersonControllerBase
         _characterController.stepOffset = 0;
         m_CollisionFlags = _characterController.Move(moveDirection * Time.deltaTime);
     }
-
     // 让玩家滑铲
     public override void DoSlide()
     {
-        if ((Time.time - lastSlideTime) < slideTime * slideCoolDown) return;//wait the equivalent of one extra slide before be able to slide again
+        if ((Time.time - lastSlideTime) < slideTime * slideCoolDown) return;
         if (_jumping) return;
-
         Vector3 startPosition = (_transform.position - feetPositionOffset) + (_transform.forward * _characterController.radius);
-        if (Physics.Linecast(startPosition, startPosition + _transform.forward)) return;//there is something in front of the feet's
-
+        if (Physics.Linecast(startPosition, startPosition + _transform.forward)) return;
         State = PlayerState.Sliding;
-        slideForce = slideSpeed;//slide force will be continually decreasing
+        slideForce = slideSpeed;
         speed = slideSpeed;
         //playerReferences.gunManager.HeadAnimator.Play("slide-start", 0, 0); // 想改用动画播放就解开这行
         mouseLook.SetTiltAngle(slideCameraTiltAngle);
@@ -511,7 +471,6 @@ public class FirstPersonController : FirstPersonControllerBase
                 State = PlayerState.Crouching;
             else if (State != PlayerState.Jumping)
                 State = PlayerState.Idle;
-
             Crounching = false;
             DoCrouchTransition();
             lastSlideTime = Time.time;
@@ -519,32 +478,25 @@ public class FirstPersonController : FirstPersonControllerBase
             mouseLook.PortBodyOrientationToCamera();
         });
     }
-
     // 检测坡度上限并应用滑铲物理。
     void SlopeControl()
     {
         float angle = Vector3.Angle(Vector3.up, surfaceNormal);
-
         if (angle <= _characterController.slopeLimit || angle >= 75) return;
-
         Vector3 direction = Vector3.up - surfaceNormal * Vector3.Dot(Vector3.up, surfaceNormal);
         float speed = slideSpeed + 1 + Time.deltaTime;
-
         targetDirection += direction * -speed;
         targetDirection.y = targetDirection.y - surfacePoint.y;
     }
-
     // 让玩家进入下坠
     public override void DoDrop()
     {
         if (isGrounded)
         {
-            Debug.Log("Can't drop when player is in a surface");
             return;
         }
         State = PlayerState.Dropping;
     }
-
     // 玩家下坠时每帧调用（下落控制开启）
     void OnDropping()
     {
@@ -556,28 +508,23 @@ public class FirstPersonController : FirstPersonControllerBase
         //获取玩家摄像机的前方向
         desiredMove = headRoot.forward * Mathf.Clamp01(_input.y);
         if (desiredMove.y > 0) desiredMove.y = 0;
-
         //根据摄像机倒置角度计算下坠速度
         float dropSpeed = Mathf.Lerp(m_GravityMultiplier * dropTiltSpeedRange.x, m_GravityMultiplier * dropTiltSpeedRange.y, tilt);
         targetDirection = Physics.gravity * dropSpeed * Time.fixedDeltaTime;
         //如果玩家按下纵向输入 -> 沿摄像机注视方向加速
         targetDirection += desiredMove * dropControlSpeed;
-
         //把移动方向应用到 Character Controller
         m_CollisionFlags = _characterController.Move(targetDirection * Time.fixedDeltaTime);
     }
-
     // 让玩家滑翔
     public override void DoGliding()
     {
         if (isGrounded)
         {
-            Debug.Log("Can't gliding when player is in a surface");
             return;
         }
         State = PlayerState.Gliding;
     }
-
     // 玩家滑翔时每帧调用
     void OnGliding()
     {
@@ -586,14 +533,11 @@ public class FirstPersonController : FirstPersonControllerBase
         float airControlMult = AirControlMultiplier * 5;
         //下落重力大小
         float gravity = m_GravityMultiplier * 15;
-
         targetDirection = Physics.gravity * gravity * Time.fixedDeltaTime;
         targetDirection.x = (desiredMove.x * speed) * airControlMult;
         targetDirection.z = (desiredMove.z * speed) * airControlMult;
-
         m_CollisionFlags = _characterController.Move(targetDirection * Time.fixedDeltaTime);
     }
-
     void OnClimbing()
     {
         if (_ladder.Status == ClimbableLadder.LadderStatus.Detaching)
@@ -603,7 +547,6 @@ public class FirstPersonController : FirstPersonControllerBase
                 _ladder.Exiting = true;
                 bool wasControllable = isControlable;
                 isControlable = false;
-
                 StartCoroutine(MoveTo(_ladder.GetNearestExitPosition(_transform), () =>
                 {
                     SetActiveClimbing(false);
@@ -620,13 +563,11 @@ public class FirstPersonController : FirstPersonControllerBase
             targetDirection.y = desiredMove.y * climbSpeed;
             targetDirection.x = desiredMove.x * climbSpeed;
             targetDirection.z = desiredMove.z * climbSpeed;
-
             if (jumpPressed)
             {
                 SetActiveClimbing(false);
                 _ladder.JumpOut();
                 _ladder = null;
-
                 targetDirection = -_transform.forward * 20;
                 targetDirection.y = jumpSpeed;
                 lastJumpTime = Time.time;
@@ -634,11 +575,9 @@ public class FirstPersonController : FirstPersonControllerBase
                 _jump = false;
             }
             m_CollisionFlags = _characterController.Move(targetDirection * Time.smoothDeltaTime);
-
             if (_ladder != null) _ladder.WatchLimits();
         }
     }
-
     // 坠落伤害计算原理
     private float CalculateFall()
     {
@@ -648,7 +587,6 @@ public class FirstPersonController : FirstPersonControllerBase
             float normalized = PostGroundVerticalPos - _transform.position.y;
             fallDistance = Mathf.Abs(normalized);
         }
-
         if (FallDamage && hasTouchGround && haslanding)
         {
             if (JumpInmune)
@@ -661,26 +599,22 @@ public class FirstPersonController : FirstPersonControllerBase
                 if (fallDistance > 0.05f) GameEvents.DispatchPlayerLandEvent(0.2f);
                 return fallDistance;
             }
-
             float ave = fallDistance / DeathFallDistance;
             if (fallDistance > SafeFallDistance && State != PlayerState.InVehicle)
             {
                 int damage = Mathf.FloorToInt(ave * 100);
                 playerReferences.playerHealthManager.DoFallDamage(damage);
             }
-
             PlayLandingSound(ave);
             fallingTime = Time.time;
         }
         else PlayLandingSound(1);
         return fallDistance;
     }
-
     // 检查玩家正朝哪个纵向方向移动
     void VerticalDirectionCheck()
     {
         if (_transform.position.y == PostGroundVerticalPos) return;
-
         //如果方向还没确定
         if (JumpDirection == 0)
         {
@@ -688,7 +622,7 @@ public class FirstPersonController : FirstPersonControllerBase
             // 1 = 上方（跳跃），-1 = 下方（下落）
             JumpDirection = (_transform.position.y > PostGroundVerticalPos) ? 1 : -1;
         }
-        else if (JumpDirection == 1)//if the player jump
+        else if (JumpDirection == 1)
         {
             //但还没开始下落
             if (_transform.position.y < PostGroundVerticalPos)
@@ -696,17 +630,15 @@ public class FirstPersonController : FirstPersonControllerBase
                 //获取跳跃到达的最高点
                 HigherPointOnJump = PostGroundVerticalPos;
             }
-            else//if still going up
+            else
             {
                 PostGroundVerticalPos = _transform.position.y;
             }
         }
-        else//if the player was falling without jumping
+        else
         {
-
         }
     }
-
     private void GetInput(out float outputSpeed)
     {
         if (!isControlable)
@@ -715,23 +647,18 @@ public class FirstPersonController : FirstPersonControllerBase
             outputSpeed = 0;
             return;
         }
-
         // 读取输入
         HorizontalInput = GameInput.Horizontal;
         VerticalInput = GameInput.Vertical;
-
         if (State == PlayerState.Sliding)
         {
             VerticalInput = 1;
             HorizontalInput = 0;
         }
-
         _input.Set(HorizontalInput, VerticalInput);
-
         float inputMagnitude = _input.magnitude;
         //如果玩家正在下坠，速度在下坠函数里计算
         if (State == PlayerState.Dropping || State == PlayerState.Gliding) { outputSpeed = 0; return; }
-
         if (State != PlayerState.Climbing && State != PlayerState.Sliding)
         {
             if (inputMagnitude > 0 && State != PlayerState.Crouching)
@@ -782,7 +709,6 @@ public class FirstPersonController : FirstPersonControllerBase
                         State = PlayerState.Idle;
                     }
                 }
-
             }
             else if (_characterController.isGrounded)
             {
@@ -792,7 +718,6 @@ public class FirstPersonController : FirstPersonControllerBase
                 }
             }
         }
-
         if (Crounching)
         {
             outputSpeed = (State == PlayerState.Crouching) ? crouchSpeed : runSpeed;
@@ -815,14 +740,12 @@ public class FirstPersonController : FirstPersonControllerBase
         {
             _input.Normalize();
         }
-
         if (RunFovEffect)
         {
             float rf = (State == PlayerState.Running && _characterController.isGrounded) ? runFOVAmount : 0;
             RunFov = Mathf.Lerp(RunFov, rf, Time.deltaTime * 6);
         }
     }
-
     // 本帧强制玩家停下
     public override void Stop()
     {
@@ -832,13 +755,11 @@ public class FirstPersonController : FirstPersonControllerBase
         targetDirection = Vector3.zero;
         State = PlayerState.Idle;
     }
-
     public override void PlayFootStepSound()
     {
         if (State == PlayerState.Sliding || footstep == null) return;
         if (!_characterController.isGrounded && !isClimbing)
             return;
-
         if (!isClimbing)
         {
             if (State == PlayerState.Stealth || State == PlayerState.Crouching)
@@ -846,7 +767,6 @@ public class FirstPersonController : FirstPersonControllerBase
                 footstep?.SetVolumeMuliplier(footstep.stealthModeVolumeMultiplier);
             }
             else footstep?.SetVolumeMuliplier(1f);
-
             footstep?.DetectAndPlaySurface();
         }
         else
@@ -854,21 +774,16 @@ public class FirstPersonController : FirstPersonControllerBase
             footstep?.PlayStepForTag("Generic");
         }
     }
-
     public override void PlatformJump(float force)
     {
         hasPlatformJump = true;
         PlatformJumpForce = force;
         JumpInmune = true;
     }
-
-
     public override void UpdateMouseLook()
     {
         mouseLook.Update();
-
         if (GameInput.InputFocus != GameInputFocus.Player) return;
-
         if (!isClimbing)
         {
             mouseLook.UpdateLook(_transform, headRoot);
@@ -878,14 +793,12 @@ public class FirstPersonController : FirstPersonControllerBase
             mouseLook.UpdateLook(_transform, headRoot, _ladder);
         }
     }
-
     private void CheckStates()
     {
         if (lastState == State) return;
         OnStateChanged(lastState, State);
         lastState = State;
     }
-
     private void PlayLandingSound(float vol = 1)
     {
         vol = Mathf.Clamp(vol, 0.05f, 1);
@@ -893,30 +806,25 @@ public class FirstPersonController : FirstPersonControllerBase
         _audioSource.volume = vol;
         _audioSource.Play();
     }
-
     private void PlayJumpSound()
     {
         _audioSource.volume = 1;
         _audioSource.clip = jumpSound;
         _audioSource.Play();
     }
-
     // 检查玩家头顶是否有障碍物
-    // <returns></returns>
     public bool IsHeadHampered()
     {
         Vector3 origin = _transform.localPosition + _characterController.center + Vector3.up * _characterController.height * 0.5F;
         float dist = 2.05f - _characterController.height;
         return Physics.Raycast(origin, Vector3.up, dist);
     }
-
     void OnRoundEnd()
     {
         Finish = true;
         isControlable = false;
         Stop();
     }
-
     void OnChangeWeapon(int id)
     {
         isAiming = false;
@@ -940,7 +848,6 @@ public class FirstPersonController : FirstPersonControllerBase
         isAiming = aim;
         mouseLook.OnAimChange(aim);
     }
-
     private void SetActiveClimbing(bool active)
     {
         isClimbing = active;
@@ -948,11 +855,9 @@ public class FirstPersonController : FirstPersonControllerBase
         if (isClimbing) InputInteractionIndicator.ShowIndication(InputHandler.GetButtonName("Jump"), GameTexts.JumpOffLadder);
         else InputInteractionIndicator.SetActiveIfSame(false, GameTexts.JumpOffLadder);
     }
-
     IEnumerator MoveTo(Vector3 position, Action onFinish)
     {
         if (_transform == null) _transform = transform;
-
         float t = 0;
         Vector3 from = _transform.localPosition;
         _characterController.enabled = false;
@@ -965,31 +870,24 @@ public class FirstPersonController : FirstPersonControllerBase
         _characterController.enabled = true;
         onFinish?.Invoke();
     }
-
     private void CheckLadderTrigger(Collider other)
     {
         // 碰撞体没有父节点就不是有效梯子
         if (isClimbing || other.transform.parent == null)
             return;
-
         var ladder = other.GetComponentInParent<ClimbableLadder>();
         if (ladder == null || !ladder.CanUse)
             return;
-
         // 进入梯子触发器
-
         Stop();
         _ladder = ladder;
         // 根据玩家身高设置上梯和下梯位置
         ladder.SetUpBounds(playerReferences);
-
         bool wasControllable = isControlable;
         isControlable = false;
         JumpInmune = true;
         jumpPressed = false;
-
         SetActiveClimbing(true);
-
         // 获取让玩家自动移动到开始爬梯/下梯的位置
         Vector3 startPos = ladder.GetAttachPosition(other, _characterController.height);
         overrideNextLandEvent = true;
@@ -999,24 +897,19 @@ public class FirstPersonController : FirstPersonControllerBase
             // 位置调整完成之后
             isControlable = wasControllable;
             ladder.Status = ClimbableLadder.LadderStatus.Climbing;
-
             // 之后的移动由 OnClimbing() 函数处理
         }));
     }
-
     void OnTriggerEnter(Collider other)
     {
         if (!photonView.IsMine) return;
-
         CheckLadderTrigger(other);
     }
-
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
         surfaceNormal = hit.normal;
         surfacePoint = hit.point;
     }
-
     internal float _speed = 0;
     public float speed
     {
@@ -1035,12 +928,10 @@ public class FirstPersonController : FirstPersonControllerBase
             _speed = Mathf.Max(_speed, min);
         }
     }
-
     public override float GetCurrentSpeed()
     {
         return speed;
     }
-
     public override float GetSpeedOnState(PlayerState playerState, bool includeModifiers)
     {
         switch (playerState)
@@ -1056,51 +947,41 @@ public class FirstPersonController : FirstPersonControllerBase
         }
         return includeModifiers ? WalkSpeed - WeaponWeight : WalkSpeed;
     }
-
     public override PlayerRunToAimBehave GetRunToAimBehave()
     {
         return runToAimBehave;
     }
-
     public override MouseLookBase GetMouseLook()
     {
         return mouseLook;
     }
-
     public override Footstep GetFootStep()
     {
         return footstep;
     }
-
     public override float GetSprintFov()
     {
         return RunFov;
     }
-
     public override float GetHeadBobMagnitudes(bool vertical)
     {
         if (vertical) return headVerticalBobMagnitude;
         return headBobMagnitude;
     }
-
     public Vector3 GetLocalVelocity() => _transform.InverseTransformDirection(Velocity);
     public Vector3 MovementDirection => targetDirection;
     public override bool isGrounded { get { return _characterController.isGrounded; } }
-
     [SerializeField]
     public class LerpControlledBob
     {
         public float BobDuration;
         public float BobAmount;
-
         private float _offset = 0f;
-
         // 提供可用的偏移量
         public float Offset()
         {
             return _offset;
         }
-
         public IEnumerator DoBobCycle()
         {
             // 让摄像机略微下移
@@ -1111,7 +992,6 @@ public class FirstPersonController : FirstPersonControllerBase
                 t += Time.deltaTime;
                 yield return new WaitForFixedUpdate();
             }
-
             // 让它回到中位
             t = 0f;
             while (t < BobDuration)

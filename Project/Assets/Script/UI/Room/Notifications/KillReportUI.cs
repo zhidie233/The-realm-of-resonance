@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
    public class KillReportUI : KillReportUIBase
    {
@@ -28,10 +28,7 @@
            }
            KillfeedPrefab.SetActive(false);
        }
-
-       /// <summary>
        /// 击杀他人时在右上角弹出全局提示
-       /// </summary>
        public override void SetKillFeed(KillReport feed)
        {
            if (!UIReferences.Instance.UIMask.IsEnumFlagPresent(RoomUILayers.KillReport)) return;

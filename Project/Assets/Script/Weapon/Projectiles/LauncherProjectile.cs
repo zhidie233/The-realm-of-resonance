@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class LauncherProjectile : ProjectileBase
 {
@@ -49,7 +49,7 @@ public class LauncherProjectile : ProjectileBase
             if (!bulletData.isNetwork)
             {
                 PlayerNetworkHandler pn = collision.gameObject.GetComponent<PlayerNetworkHandler>();
-                if (pn != null && pn.isMine) { return; }//if the player hit itself
+                if (pn != null && pn.isMine) { return; }
             }
             else
             {

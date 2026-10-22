@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 // 包含一颗已实例化子弹的全部信息
 public class ShotData 
@@ -44,7 +44,6 @@ public class ShotData
     public GamePlayer GameActor { get; set; }
 
     // 创建子弹数据并从 <see cref="DamageInfo"/> 取信息
-    // <param name="data"></param>
     public ShotData(DamageInfo data)
     {
         GameActor = data.GameActor;
@@ -55,9 +54,6 @@ public class ShotData
     }
 
     // 计算并设置弹道散布向量
-    // <param name="spreadBase"></param>
-    // <param name="maxSpread"></param>
-    // <returns></returns>
     public ShotData SetInaccuracity(float spreadBase, float maxSpread)
     {
         Inaccuracity = new Vector3(Random.Range(-maxSpread, maxSpread) * spreadBase, Random.Range(-maxSpread, maxSpread) * spreadBase, 1);

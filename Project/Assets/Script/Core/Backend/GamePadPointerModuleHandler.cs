@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
@@ -43,7 +43,6 @@ using UnityEngine.EventSystems;
                {
                    defaultModule = sim.gameObject;
                    sim.gameObject.SetActive(false);
-                   Debug.Log("Disabled StandaloneInputModule since GamePadPointerModule is used.");
                }
            }
            else

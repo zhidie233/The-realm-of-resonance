@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
@@ -13,21 +13,15 @@ using UnityEditor;
        public ItemTypeEnum ItemType = ItemTypeEnum.Weapon;
        public int Price = 0;
        public int UnlockAtLevel = 0;
-       [Tooltip("Coins with which can't purchase this item; leave empty if all coins are available.")]
+       [Tooltip("禁止用于购买该物品的货币；留空表示所有货币均可购买")]
        [ItemCoinID] public int[] BlockedCoins;
-
-       /// <summary>
        /// 此物品对本地玩家是否已解锁？
-       /// </summary>
        public bool IsUnlocked(int itemID)
        {
            if (UnlockMethod == AccessRulesMethod.UnlockedByDefault) return true;
            return GetLockReason(itemID) == LockReason.None;
        }
-
-       /// <summary>
        /// 锁定时返回原因，否则返回 LockReason.None
-       /// </summary>
        public LockReason GetLockReason(int itemID)
        {
            var reason = LockReason.None;
@@ -58,13 +52,8 @@ using UnityEditor;
            if (!CanBeUnlockedByLevel() || UnlockAtLevel <= 0) return false;
            return true;
        }
-
-       /// <summary>
        /// 获取可用于此物品的硬币
        /// 与游戏内所有可用硬币比较（在 GameData -> Game Coins 中指定）
-       /// </summary>
-       /// <param name="originalCoins"></param>
-       /// <returns></returns>
        public List<GameCoin> GetAllowedCoins()
        {
            var all = GameCore.Coins.GetAllCoins();
@@ -96,9 +85,8 @@ using UnityEditor;
            PurchasedOnly = 1,
            LevelUpOnly,
            PurchasedOrLevelUp,
-           Hidden, // for items that are unlocked only by special events
+           Hidden,
        }
-
        [System.Serializable]
        public enum ItemTypeEnum
        {
@@ -115,7 +103,6 @@ using UnityEditor;
            CoinPack = 10,
            None = 99,
        }
-
        public enum LockReason
        {
            None,
@@ -125,7 +112,6 @@ using UnityEditor;
            Hidden,
        }
    }
-
 #if UNITY_EDITOR
    [CustomPropertyDrawer(typeof(GameItemAccessRules))]
    public class GameItemAccessRulesDrawer : PropertyDrawer
@@ -135,27 +121,21 @@ using UnityEditor;
            // 在父属性上使用 BeginProperty / EndProperty，可以让
            // 预制体覆盖逻辑作用于整个属性。
            EditorGUI.BeginProperty(position, label, property);
-
            EditorGUI.DrawRect(position, new Color(0, 0, 0, 0.1f));
            var r = position;
-
            r.height = EditorGUIUtility.singleLineHeight;
            property.isExpanded = EditorGUI.Foldout(r, property.isExpanded, label);
-
            // 不让子字段缩进
            var indent = EditorGUI.indentLevel;
            EditorGUI.indentLevel++;
-
            if (property.isExpanded)
            {
                r.y += EditorGUIUtility.singleLineHeight;
                var unlockMethod = property.FindPropertyRelative("UnlockMethod");
                EditorGUI.PropertyField(r, unlockMethod);
-
                r.y += EditorGUIUtility.singleLineHeight;
                var itemType = property.FindPropertyRelative("ItemType");
                EditorGUI.PropertyField(r, itemType);
-
                var um = (GameItemAccessRules.AccessRulesMethod)unlockMethod.enumValueIndex;
                GUI.enabled = um != GameItemAccessRules.AccessRulesMethod.UnlockedByDefault;
                if (um != GameItemAccessRules.AccessRulesMethod.LevelUpOnly)
@@ -163,13 +143,11 @@ using UnityEditor;
                    r.y += EditorGUIUtility.singleLineHeight;
                    EditorGUI.PropertyField(r, property.FindPropertyRelative("Price"));
                }
-
                if (um != GameItemAccessRules.AccessRulesMethod.PurchasedOnly)
                {
                    r.y += EditorGUIUtility.singleLineHeight;
                    EditorGUI.PropertyField(r, property.FindPropertyRelative("UnlockAtLevel"));
                }
-
                if (um != GameItemAccessRules.AccessRulesMethod.LevelUpOnly)
                {
                    r.y += EditorGUIUtility.singleLineHeight;
@@ -181,7 +159,6 @@ using UnityEditor;
            EditorGUI.indentLevel = indent;
            EditorGUI.EndProperty();
        }
-
        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
        {
            if (!property.isExpanded)
@@ -192,7 +169,6 @@ using UnityEditor;
                var unlockMethod = property.FindPropertyRelative("UnlockMethod").enumValueIndex;
                if (unlockMethod == 2) less = EditorGUIUtility.singleLineHeight * 2;
                else if (unlockMethod == 1) less = EditorGUIUtility.singleLineHeight;
-
                return EditorGUI.GetPropertyHeight(property, label, true) - less;
            }
        }

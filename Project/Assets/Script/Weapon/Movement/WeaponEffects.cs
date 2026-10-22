@@ -6,10 +6,7 @@ public class WeaponEffects : WeaponEffectsBase
     public ParticleSystem[] lowFxParticles;
 
     private ParticleSystem[] targetParticles;
-
-    /// <summary>
     /// 播放武器开火特效
-    /// </summary>
     public override void PlayFireFX()
     {
         if (targetParticles == null) ActiveDependOfTarget();
@@ -20,12 +17,9 @@ public class WeaponEffects : WeaponEffectsBase
             item.Play();
         }
     }
-
-    /// <summary>
     /// 根据目标平台使用对应粒子
     /// 高配用于 PC 和主机平台
     /// 低配用于移动平台
-    /// </summary>
     public void ActiveDependOfTarget()
     {
         if (CommonUtil.isMobile)

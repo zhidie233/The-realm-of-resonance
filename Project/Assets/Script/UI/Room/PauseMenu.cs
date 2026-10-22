@@ -24,10 +24,7 @@ public class PauseMenu : PauseMenuBase
     {
         if (!IsMenuOpen) CloseMenu();
     }
-
-    /// <summary>
     /// 打开暂停菜单
-    /// </summary>
     public override void OpenMenu(string windowOpen = "")
     {
         var win = string.IsNullOrEmpty(windowOpen) ? firstWindow : windowOpen;
@@ -41,7 +38,7 @@ public class PauseMenu : PauseMenuBase
         var id = windows.FindIndex(x => x.Name == windowName);
         if(id == -1)
         {
-            Debug.LogWarning($"Pause window {windowName} doesn't exist.");
+            Debug.LogWarning($"暂停窗口 {windowName} 不存在。");
             return;
         }
         OpenWindow(id);
@@ -77,11 +74,7 @@ public class PauseMenu : PauseMenuBase
             if (win.Window != null) win.SetActive(false);
         }
     }
-
-    /// <summary>
     /// 仅启用给定的菜单布局部分（禁用其余部分）
-    /// </summary>
-    /// <param name="layouts"></param>
     public override void SetActiveLayouts(LayoutPart layouts)
     {
         layoutRoots[0].SetActive(layouts.IsEnumFlagPresent(LayoutPart.Header));

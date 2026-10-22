@@ -4,11 +4,8 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 using System;
-
-/// <summary>
 /// 默认时间管理脚本，负责对局时间
 /// 需要修改时，从 <see cref="MatchTimeManagerBase"/> 继承新脚本
-/// </summary>
 public class MatchTimeManager : MatchTimeManagerBase
 {
     #region Public properties
@@ -67,7 +64,6 @@ public class MatchTimeManager : MatchTimeManagerBase
     {
         if (!NetworkWrapper.IsConnected)
             return;
-
         //默认只有主客户端会初始化，其他玩家加入后等主客户端同步对局信息。
         if (NetworkWrapper.IsMasterClient)
         {
@@ -78,29 +74,23 @@ public class MatchTimeManager : MatchTimeManagerBase
             RemoteInit();
         }
     }
-
     protected override void OnEnable()
     {
         base.OnEnable();
         NetworkCallbacks.MasterClientSwitched += OnMasterClientSwitch;
         NetworkCallbacks.RoomPropertiesUpdate += OnRoomPropertiesChange;
     }
-
     protected override void OnDisable()
     {
         base.OnDisable();
         NetworkCallbacks.MasterClientSwitched -= OnMasterClientSwitch;
         NetworkCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesChange;
     }
-
     public override void SetActive(bool active)
     {
         isThisActive = active;
     }
-
-    /// <summary>
     /// 主客户端初始化房间时间
-    /// </summary>
     public override void Init()
     {
         //如果对局正在等待最少玩家数才能开始
@@ -120,13 +110,11 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
         GetTime(true);
     }
-
     public override void InitAfterWaiting()
     {
         GetTime(true);
         photonView.RPC(nameof(RpcStartTime), RpcTarget.AllBuffered, 3);
     }
-
     void RemoteInit()
     {
         if (TimeState == RoomTimeState.StartedAfterCountdown)
@@ -135,7 +123,6 @@ public class MatchTimeManager : MatchTimeManagerBase
             GetTime(false);
             return;
         }
-
         if (NetworkWrapper.CurrentRoom.CustomProperties.ContainsKey(NetworkKeys.TimeState))
         {
             TimeState = (RoomTimeState)(int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeState];
@@ -146,7 +133,6 @@ public class MatchTimeManager : MatchTimeManagerBase
             SetTimeState(TimeState);
         }
     }
-
     public override void InitAfterCountdown()
     {
         RoundDuration = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey];
@@ -167,10 +153,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         IsInitialized = true;
         IsPaused = false;
     }
-
-    /// <summary>
     /// 获取当前时间并校验是否正确
-    /// </summary>
     public void GetTime(bool ResetReference)
     {
         if (NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey] != null)
@@ -178,29 +161,26 @@ public class MatchTimeManager : MatchTimeManagerBase
             //从房间属性获取时长
             RoundDuration = (int)NetworkWrapper.CurrentRoom.CustomProperties[NetworkKeys.TimeRoomKey];
         }
-
         if (NetworkWrapper.IsMasterClient)
         {
-            if (ResetReference)//get the server time again?
+            if (ResetReference)
             {
-                m_serverTimeReference = (float)NetworkWrapper.Time;//get a reference time from the server
-
-                Hashtable startTimeProp = new Hashtable();//create a property to store the reference time
+                m_serverTimeReference = (float)NetworkWrapper.Time;
+                Hashtable startTimeProp = new Hashtable();
                 startTimeProp.Add(StartTimeKey, m_serverTimeReference);
-                NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);//send to the room hash tables so other clients can access to it
+                NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
             }
         }
-        else//Non master clients
+        else
         {
-            if (NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey] != null)//if there's a reference time available
+            if (NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey] != null)
             {
-                m_serverTimeReference = (float)NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey];//get it from the room hash tables
+                m_serverTimeReference = (float)NetworkWrapper.CurrentRoom.CustomProperties[StartTimeKey];
             }
         }
-        if (!IsInitialized) { GameController.Instance.SetGameState(MatchState.Playing); }//is this the first round?
+        if (!IsInitialized) { GameController.Instance.SetGameState(MatchState.Playing); }
         IsInitialized = true;
     }
-
     public override void SetTimeState(RoomTimeState state, bool sync = false)
     {
         if (sync && NetworkWrapper.IsMasterClient)
@@ -215,18 +195,15 @@ public class MatchTimeManager : MatchTimeManagerBase
             GameEvents.CallOnMatchStart();
         }
     }
-
     public override void OnUpdate()
     {
         UpdateTime();
         DisplayTime();
     }
-
     private void UpdateTime()
     {
         if (!IsInitialized || IsPaused || m_timeIsUp || !isThisActive)
             return;
-
         //根据参考时间和当前服务器时间计算秒数
         float seconds = RoundDuration - ((float)NetworkWrapper.Time - m_serverTimeReference);
         if (seconds > 0.0001f)
@@ -241,22 +218,20 @@ public class MatchTimeManager : MatchTimeManagerBase
                 }
             }
         }
-        else if (seconds <= 0.001 && GetTimeServed == true)//Round Finished
+        else if (seconds <= 0.001 && GetTimeServed == true)
         {
             CurrentTime = 0;
             FinishRound(RoundFinishCause.TimeUp);
         }
-        else//if we cant get the server time yet
+        else
         {
             Refresh();
         }
     }
-
     public override void Pause(bool doPause)
     {
         IsPaused = doPause;
     }
-
     public override void RestartTime()
     {
         //从哈希表获取房间时长
@@ -269,74 +244,57 @@ public class MatchTimeManager : MatchTimeManagerBase
         //主客户端负责为后续加入的玩家保存参考时间
         if (NetworkWrapper.IsMasterClient)
         {
-            Hashtable startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
+            Hashtable startTimeProp = new Hashtable();
             startTimeProp.Add(StartTimeKey, m_serverTimeReference);
             NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
         }
     }
-
     public override void SetFinishRoundHandler(Action<RoundFinishCause> finishRoundHandler)
     {
         finishRoundCallback = finishRoundHandler;
     }
-
-    /// <summary>
     /// 调用它以结束对局
     /// 如果房间设置为一局制 -> 会出现对局结算界面。
-    /// </summary>
     public override void FinishRound(RoundFinishCause cause)
     {
         // 如果房间时间已到但倒计时还在跑，就不结束对局。
         if (TimeState == RoomTimeState.Countdown) return;
-        
         if(finishRoundCallback != null && cause != RoundFinishCause.GameFinish)
         {
             // 在自定义回调里处理结束回合逻辑
             finishRoundCallback?.Invoke(cause);
             return;
         }
-
         if (!NetworkWrapper.IsConnected || !isThisActive)
             return;
-
         GameEvents.DispatchRoundEndEvent();
-        Debug.Log($"Round Finish ({cause.ToString()}), mode: {RoomSettings.Instance.CurrentRoomInfo.roundStyle.ToString()}");
         if (!m_timeIsUp)
         {
             m_timeIsUp = true;
             GameController.Instance.OnGameTimeFinish(RoomSettings.Instance.CurrentRoomInfo.roundStyle == RoundStyle.OneMacht || cause == RoundFinishCause.GameFinish);
-
             // 保存本局获得的经验值
             UIReferences.Instance.ResumeScreen.CollectData();
-
             finalCountDown = GameConfig.Instance.endMatchDelay;
             RoundFinishScreenBase.Instance?.SetCountdown(finalCountDown);
             InvokeRepeating(nameof(FinalCountdown), 1, 1);
             ReticleBase.Instance.Show(false);
         }
     }
-
     void DisplayTime()
     {
         if (CurrentTime == 0 || !isThisActive) return;
         if (TimeText == null) return;
-
         TimeText.text = StringHelpers.GetTimeFormat(Mathf.FloorToInt(CurrentTime / SECOND), Mathf.FloorToInt(CurrentTime % SECOND));
     }
-
-    /// <summary>
     /// 用它修复了 Photon 时间延迟的问题
-    /// </summary>
     void Refresh()
     {
         if (NetworkWrapper.CurrentRoom == null)
             return;
-
         if (NetworkWrapper.IsMasterClient)
         {
             m_serverTimeReference = (float)NetworkWrapper.Time;
-
-            var startTimeProp = new Hashtable();  // only use ExitGames.Client.Photon.Hashtable for Photon
+            var startTimeProp = new Hashtable();
             startTimeProp.Add(StartTimeKey, m_serverTimeReference);
             NetworkWrapper.CurrentRoom.SetCustomProperties(startTimeProp);
         }
@@ -348,10 +306,7 @@ public class MatchTimeManager : MatchTimeManagerBase
             }
         }
     }
-
-    /// <summary>
     /// 游戏结束后离开房间前的倒计时
-    /// </summary>
     void FinalCountdown()
     {
         finalCountDown--;
@@ -363,7 +318,6 @@ public class MatchTimeManager : MatchTimeManagerBase
             finalCountDown = GameConfig.Instance.endMatchDelay;
         }
     }
-
     public void FinishGame()
     {
         CommonUtil.LockCursor(false);
@@ -381,11 +335,8 @@ public class MatchTimeManager : MatchTimeManagerBase
             });
         }
     }
-
-    /// <summary>
     /// 开始新回合并保留玩家和队伍得分
     /// 时间会重置为初始值
-    /// </summary>
     public override void StartNewRound(NewRoundOptions options)
     {
         if (GameConfig.Instance.prematchCountdownEnabled)
@@ -397,13 +348,11 @@ public class MatchTimeManager : MatchTimeManagerBase
             GetTime(true);
             IsPaused = false;
         }
-
         if (!options.KeepData)
         {
             RoomSettings.Instance.ResetRoom();
             GameController.Instance.DestroyPlayer(true);
         }
-
         m_timeIsUp = false;
         GameController.Instance.GameFinish = false;
         GameController.Instance.IsLocalPlaying = false;
@@ -413,31 +362,25 @@ public class MatchTimeManager : MatchTimeManagerBase
         NetworkWrapper.CurrentRoom.IsOpen = true;
         NetworkWrapper.CurrentRoom.IsVisible = true;
         AIManager.Instance?.RespawnAllBots(true);
-
         if (options.RespawnPlayer)
         {
             GameController.Instance.SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam());
         }
-
         if (!options.KeepData)
         {
             UIReferences.Instance.ResetRound();
-
             if (RoomSettings.Instance.AutoAssignTeams)
                 RoomSettings.Instance.CheckAutoSpawn();
         }
     }
-
     [PunRPC]
     void RpcStartTime(int wait)
     {
         if (GameCore.LocalPlayer.Team == Team.None) return;
-
         SetTimeState(RoomTimeState.Started, NetworkWrapper.IsMasterClient);
         UIReferences.Instance.SetReadyPlayersText(GameTexts.StartingMatch, true);
         Invoke(nameof(StartTime), wait);
     }
-
     void StartTime()
     {
         if (GameConfig.Instance.prematchCountdownEnabled)
@@ -452,7 +395,6 @@ public class MatchTimeManager : MatchTimeManagerBase
         UIReferences.Instance.SetReadyPlayersText();
         GameController.Instance.SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam());
     }
-
     public override void SetTimeTextRender(TextMeshProUGUI timeText, bool disableCurrent = true)
     {
         if (disableCurrent)
@@ -462,9 +404,7 @@ public class MatchTimeManager : MatchTimeManagerBase
         }
         TimeText = timeText;
     }
-
     public override bool IsTimeUp() => m_timeIsUp;
-
     void OnMasterClientSwitch(Player newMaster)
     {
         if (newMaster.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber)
@@ -475,7 +415,6 @@ public class MatchTimeManager : MatchTimeManagerBase
             }
         }
     }
-
     void OnRoomPropertiesChange(Hashtable props)
     {
         if (props.ContainsKey(StartTimeKey) && !NetworkWrapper.IsMasterClient)
@@ -483,6 +422,5 @@ public class MatchTimeManager : MatchTimeManagerBase
             RemoteInit();
         }
     }
-
     private bool GetTimeServed => Time.timeSinceLevelLoad > 7;
 }

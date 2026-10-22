@@ -4,8 +4,7 @@ using System.Globalization;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-
-   [CreateAssetMenu(fileName = "Settings Profile", menuName = "Game/Settings/Profile")]
+   [CreateAssetMenu(fileName = "Settings Profile", menuName = "项目/Settings/Profile")]
    public class RuntimeSettingsProfile : ScriptableObject
    {
        public enum ResolutionApplication
@@ -18,44 +17,30 @@ using UnityEditor;
        [Reorderable]
        public List<SettingValue> settingValues = new List<SettingValue>();
        public int[] RefreshRates = new int[] { 30, 60, 120, 144, 200, 260, 0 };
-
-       /// <summary>
        /// 获取某项设置的已保存值
        /// 不存在时返回默认值
-       /// </summary>
        public object GetSettingOf(string settingName)
        {
            int index = settingValues.FindIndex(x => x.Name.ToLower() == settingName.ToLower());
-
-           if (index == -1) { Debug.LogWarning($"The setting {settingName} has not been defined in the current setting profile in GameData."); return null; }
+           if (index == -1) { Debug.LogWarning($"当前配置档案中没有定义设置项 {settingName}。"); return null; }
 
            return settingValues[index].GetValue();
        }
-
-       /// <summary>
        /// 保存某项设置的值
-       /// </summary>
        public void SetSettingOf(string settingName, object value, bool autoSave = false)
        {
            int index = settingValues.FindIndex(x => x.Name.ToLower() == settingName.ToLower());
-           if (index == -1) { Debug.LogWarning($"The setting {settingName} has not been defined in the current setting profile in GameData."); return; }
+           if (index == -1) { Debug.LogWarning($"当前配置档案中没有定义设置项 {settingName}。"); return; }
 
            settingValues[index].SetSettingValue(value, autoSave);
        }
-
-       /// <summary>
        /// <see cref="settingValues"/> 列表里是否定义了该设置？
        /// 不检查该设置是否已保存过值。
-       /// </summary>
-       /// <param name="settingName"></param>
        public bool HasSettingDefinedFor(string settingName)
        {
            return settingValues.Exists(x => x.Name.ToLower() == settingName.ToLower());
        }
-
-       /// <summary>
        /// 保存当前设置
-       /// </summary>
        public void SaveSettings()
        {
            foreach (var item in settingValues)
@@ -63,10 +48,7 @@ using UnityEditor;
                item.SaveValue();
            }
        }
-
-       /// <summary>
        /// 应用该配置档的设置
-       /// </summary>
        public void ApplySettings(ResolutionApplication resolutionApplication, bool fireCallback = true)
        {
            QualitySettings.SetQualityLevel((int)GetSettingOf("质量"), true);
@@ -79,7 +61,6 @@ using UnityEditor;
            bool antialising = antiA == 0 ? false : true;
            GameEvents.SetEffectChange((bool)GetSettingOf("CrAberration"), antialising, (bool)GetSettingOf("Bloom"),
                (bool)GetSettingOf("SSAO"), (bool)GetSettingOf("动态模糊"));
-
            // webgl 下分辨率必须改网页 canvas，需要默认不支持的外部调用集成。
 #if !UNITY_WEBGL
            if (!CommonUtil.isMobile)
@@ -99,7 +80,7 @@ using UnityEditor;
            if (resolutionApplication == ResolutionApplication.ApplyCurrent) ResolutionSettings.FetchResolutions();
 
            int displayModeID = (int)GetSettingOf("Display Mode");
-           if (displayModeID != -1) // if not the default value
+           if (displayModeID != -1)
            {
                var currentResolution = Screen.currentResolution;
                if (resolutionApplication == ResolutionApplication.ApplyUserSelected)
@@ -152,7 +133,7 @@ using UnityEditor;
                        }
                        else
                        {
-                           Debug.LogWarning($"Can't parse the settings '{Name}' with the value: {v}");
+                           Debug.LogWarning($"无法解析设置项“{Name}”的值：{v}");
                            return f;
                        }
                    case ValueType.Integer:
@@ -163,7 +144,7 @@ using UnityEditor;
                        }
                        else
                        {
-                           Debug.LogWarning($"Can't parse the settings '{Name}' with the value: {v}");
+                           Debug.LogWarning($"无法解析设置项“{Name}”的值：{v}");
                            return iv;
                        }
                    case ValueType.String:
@@ -227,7 +208,6 @@ using UnityEditor;
 
                if (property.isExpanded)
                {
-
                    // 绘制字段 - 每个都传 GUIContent.none，这样绘制时不带标签
                    EditorGUI.PropertyField(r, property.FindPropertyRelative("Name"), new GUIContent("Name"));
                    r.y += EditorGUIUtility.singleLineHeight + 2;

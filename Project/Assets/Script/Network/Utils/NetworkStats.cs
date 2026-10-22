@@ -162,16 +162,13 @@ public class NetworkStats : MonoBehaviour, IConnectionCallbacks
     static readonly string[] SizeSuffixes = { "bytes", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
     static string SizeSuffix(int value, int decimalPlaces = 1)
     {
-        if (decimalPlaces < 0) { Debug.LogError("decimalPlaces"); }
+        if (decimalPlaces < 0) { Debug.LogError("小数位数不能为负。"); }
         if (value < 0) { return "-" + SizeSuffix(-value); }
         if (value == 0) { return string.Format("{0:n" + decimalPlaces + "} bytes", 0); }
-
         // mag 为 0 表示字节，1 表示 KB，2 表示 MB，以此类推
         int mag = (int)Mathf.Log(value, 1024);
-
         // [即 mag 对应单位下的字节数]
         decimal adjustedSize = (decimal)value / (1L << (mag * 10));
-
         // 当数值大到会进位到 1000 以上时
         // 做一下调整，即达到 1000 或以上时
         if (System.Math.Round(adjustedSize, decimalPlaces) >= 1000)

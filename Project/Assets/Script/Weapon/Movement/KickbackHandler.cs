@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-
-/// <summary>
+using UnityEngine;
 /// Game 默认后坐力运动
 /// 想用自己的后坐力脚本，就让脚本继承 KickbackBase.cs
 /// 此脚本仅供参考。
-/// </summary>
 public class KickbackHandler : KickbackBase
 {
     [Range(1, 25)] public float MaxRecoil = 5;
@@ -91,13 +88,10 @@ public class KickbackHandler : KickbackBase
         m_Transform.localRotation = Quaternion.Slerp(m_Transform.localRotation, q, Time.deltaTime * RecoilSpeed);
         Recoil = m_Transform.localEulerAngles.x;
     }
-
-    /// <summary>
     /// 添加后坐力
-    /// </summary>
     public override void SetRecoil(KickbackData data)
     {
-        
+
         Recoil += data.Amount;
         Recoil = Mathf.Clamp(Recoil, 0, MaxRecoil);
         RecoilSpeed = data.Speed;

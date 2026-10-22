@@ -15,17 +15,9 @@ public abstract class AIBotAnimationBase : MonoBehaviourBase
             return _animator;
         }
     }
-
-    /// <summary>
     /// 让机器人变成布娃娃
-    /// </summary>
-    /// <param name="from"></param>
-    /// <param name="isExplosion"></param>
     public abstract void Ragdolled(Vector3 from, bool isExplosion = false);
-
-    /// <summary>
     /// 处理机器人受伤
-    /// </summary>
     public abstract void OnGetHit();
 
     public virtual Transform GetHumanBone(HumanBodyBones bodyBone)

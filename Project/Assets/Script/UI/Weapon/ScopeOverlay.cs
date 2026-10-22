@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System;
@@ -22,12 +22,7 @@ using TMPro;
            scopeImage.sprite = weapon.ScopeTexture;
            scopeAlpha.alpha = 0;
        }
-
-       /// <summary>
        /// 淡入淡出显示/隐藏瞄准镜 UI
-       /// </summary>
-       /// <param name="fadeIn"></param>
-       /// <param name="speed"></param>
        public override void Crossfade(bool fadeIn, float speed, float delay = 0, Action onFinish = null, Action onStart = null)
        {
            StopAllCoroutines();

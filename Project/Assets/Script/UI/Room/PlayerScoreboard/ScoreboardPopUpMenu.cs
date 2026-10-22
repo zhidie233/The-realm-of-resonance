@@ -101,11 +101,7 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
 
         return id;
     }
-
-    /// <summary>
     /// 玩家点击弹窗按钮之一时调用
-    /// </summary>
-    /// <param name="option"></param>
     public void OnOptionClicked(int option)
     {
         // 踢人事件在 EjectPollUI.cs 中处理

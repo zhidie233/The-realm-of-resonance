@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
@@ -77,7 +77,7 @@ public class PlayerIKEditor : Editor
                 script.editor_previewMode = 1;
                 script.editor_weight = 1;
             }
-            else { Debug.Log("未挂载动画器，无法预览"); }
+            else {  }
         }
     }
 

@@ -101,7 +101,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         {
             PauseMenuBase.Instance.OpenMenu();
         }
-       
+
         playerScoreboards.gameObject.SetActive(true);
         SetActiveChangeTeamButton(false);
         SetUpJoinButtons();
@@ -228,10 +228,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
             SetActiveChangeTeamButton(true);
         }
     }
-
-    /// <summary>
     /// 由 Change Team 按钮调用
-    /// </summary>
     public void ActiveChangeTeam()
     {
         playerScoreboards.SetActive(false, true);
@@ -263,7 +260,6 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
             GamePadPointer.Instance?.SetActive(false);
         }
     }
-
     void OnPicUpMedKit(int Amount) => new GameLocalNotification(string.Format("+{0} 血量", Amount));
 
     public void SetReadyPlayersText(string text = "", bool show = false)

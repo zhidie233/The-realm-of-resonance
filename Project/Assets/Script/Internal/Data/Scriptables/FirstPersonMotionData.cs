@@ -1,7 +1,6 @@
 using UnityEngine;
 using System;
-
-   [CreateAssetMenu(fileName = "CameraMotionData", menuName = "Game/Camera/MotionData")]
+   [CreateAssetMenu(fileName = "CameraMotionData", menuName = "项目/Camera/MotionData")]
    public class FirstPersonMotionData : ScriptableObject
    {
        public string Name = "Motion Name";
@@ -27,11 +26,7 @@ using System;
            public AnimationCurve Z = AnimationCurve.EaseInOut(0, 0, 1, 0);
 
            public Vector3 Vector(float time = 0) => new Vector3(X.Evaluate(time), Y.Evaluate(time), Z.Evaluate(time));
-
-           /// <summary>
            /// 获取动画曲线的最终旋转
-           /// </summary>
-           /// <returns></returns>
            public Vector3 FinalVector()
            {
                return new Vector3(X.Evaluate(1), Y.Evaluate(1), Z.Evaluate(1));

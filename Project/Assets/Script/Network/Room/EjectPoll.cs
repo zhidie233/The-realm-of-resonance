@@ -59,12 +59,10 @@ public class EjectPoll : MonoBehaviourBase
             return;
         if(NetworkWrapper.PlayerList.Length < 3)
         {
-            Debug.Log("there are not enough players.");
             return;
         }
         if (player.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber)
         {
-            Debug.Log("You can not send a vote for yourself.");
             return;
         }
 
@@ -124,7 +122,7 @@ public class EjectPoll : MonoBehaviourBase
             NoCount++;
         }
         UI.OnReceiveVote(YesCount, NoCount);
-        if (NetworkWrapper.IsMasterClient)//master count all votes to determine if kick or not
+        if (NetworkWrapper.IsMasterClient)
         {
             CountVotes();
         }
@@ -162,8 +160,7 @@ public class EjectPoll : MonoBehaviourBase
         bool kicked = false;
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", CallType.VoteEnd);
-
-        if (YesCount > half)//kick
+        if (YesCount > half)
         {
             NetworkWrapper.Instance.KickPlayer(TargetPlayer);
             kicked = true;

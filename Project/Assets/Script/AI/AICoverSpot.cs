@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AICoverSpot : MonoBehaviour
 {
-    [Tooltip("Should the bot crouch when reach this cover point?")]
+    [Tooltip("机器人到达该掩体点时是否蹲下")]
     [GameToggle] public bool Crouch = false;
     public float lastUseTime { get; set; } = 0;
     public List<AICoverSpot> NeighbordPoints = new List<AICoverSpot>();

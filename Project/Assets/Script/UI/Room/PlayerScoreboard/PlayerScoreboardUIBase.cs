@@ -1,4 +1,4 @@
-﻿using Photon.Realtime;
+using Photon.Realtime;
 using UnityEngine;
 
 public abstract class PlayerScoreboardUIBase : MonoBehaviour
@@ -22,11 +22,7 @@ public abstract class PlayerScoreboardUIBase : MonoBehaviour
     }
 
     public abstract void Init(Player player, GameBotProperties bot = null);
-
-    /// <summary>
     /// 记分板每次刷新时调用（记分板打开期间）
-    /// </summary>
-    /// <returns></returns>
     public abstract bool Refresh();
 
     public abstract bool UpdateBot();

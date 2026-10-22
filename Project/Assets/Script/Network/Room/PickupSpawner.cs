@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-
-/// <summary>
 /// 该脚本负责网络物品的实例化
 /// 网络物品指实例化和销毁会同步到房间内其他所有客户端的 game object。
 /// 有了该脚本，这些网络物品不必挂 PhotonView，也不必放进 Resources 目录
@@ -9,7 +7,6 @@ using UnityEngine;
 /// 
 /// 实例化网络物品只有一个要求：
 /// 1. 物品预制体必须列在 'Network Items Prefabs' 列表中
-/// </summary>
 public class PickupSpawner : ItemRespawnerBase
 {
     [Header("Network Prefabs")]
@@ -17,11 +14,9 @@ public class PickupSpawner : ItemRespawnerBase
 
     [Header("Settings")]
     public float respawnItemsAfter = 12;
-
     //私有
     private Dictionary<string, NetworkedItem> networkItemsPool = new Dictionary<string, NetworkedItem>();
     private List<RespawnItems> respawnItems = new List<RespawnItems>();
-
 
     protected override void OnEnable()
     {
@@ -53,7 +48,7 @@ public class PickupSpawner : ItemRespawnerBase
 
         if (prefab == null)
         {
-            Debug.LogWarning($"The network prefab {prefabName} is not listed in the PickupSpawner of this scene.");
+            Debug.LogWarning($"网络预制体 {prefabName} 未登记在场景的 PickupSpawner 中。");
             return;
         }
 
@@ -68,17 +63,14 @@ public class PickupSpawner : ItemRespawnerBase
         if (networkItemsPool.ContainsKey(itemName)) return;
         networkItemsPool.Add(itemName, item);
     }
-
-    /// <summary>
     /// 网络物品状态变化时调用，如 OnDestroy、OnEnable 或 OnDisable
-    /// </summary>
     void OnNetworkItemChange(ExitGames.Client.Photon.Hashtable data)
     {
         string itemName = (string)data["name"];
 
         if (!networkItemsPool.ContainsKey(itemName))
         {
-            Debug.LogWarning($"The network item {itemName} couldn't be found, maybe was instanced before this player enter in the room.");
+            Debug.LogWarning($"未找到网络物品 {itemName}，可能在玩家进入房间前已生成。");
             return;
         }
 
@@ -113,10 +105,7 @@ public class PickupSpawner : ItemRespawnerBase
             }
         }
     }
-
-    /// <summary>
     /// 将物品加入等待列表，在指定时间后重生
-    /// </summary>
     public override void RespawnAfter(NetworkedItem item, float respawnAfter = 0)
     {
         respawnItems.Add(new RespawnItems()

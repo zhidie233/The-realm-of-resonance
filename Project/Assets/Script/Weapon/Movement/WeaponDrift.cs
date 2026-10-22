@@ -54,10 +54,7 @@ public class WeaponDrift : WeaponDriftBase
 
         m_Transform.localRotation = Quaternion.Slerp(m_Transform.localRotation, defaultRotation * delayRotation, deltaTime * m_ReturnSpeed);
     }
-
-    /// <summary>
     /// 用鼠标移动相机时的延迟跟随运动。
-    /// </summary>
     void DelayMovement()
     {
         factorX = (-GameInput.MouseX * deltaTime * Amount) * amplitudeMultiplier;
@@ -69,10 +66,7 @@ public class WeaponDrift : WeaponDriftBase
         delayRotation = Quaternion.Euler((factorY * 100), (-factorX * 100), 0);
         m_Transform.localPosition = Vector3.Slerp(m_Transform.localPosition, targetVector, deltaTime * Smoothness);
     }
-
-    /// <summary>
     /// 玩家横向移动时的角度摆动
-    /// </summary>
     void SideMovement()
     {
         factorX = GameInput.Horizontal;
@@ -99,10 +93,7 @@ public class WeaponDrift : WeaponDriftBase
         GameEvents.onChangeWeapon -= OnLocalWeaponChanged;
         GameEvents.onLocalPlayerStateChanged -= OnLocalStateChange;
     }
-
-    /// <summary>
     /// 碰撞事件
-    /// </summary>
     void OnSmallImpact(float impactAmount)
     {
         StartCoroutine(FallEffect(impactAmount));
@@ -134,11 +125,7 @@ public class WeaponDrift : WeaponDriftBase
     {
         amplitudeMultiplier = aimMultiplier;
     }
-
-    /// <summary>
     /// 创建轻微的碰撞效果
-    /// </summary>
-    /// <returns></returns>
     public IEnumerator FallEffect(float amount)
     {
         float mul = Mathf.Clamp01(amount / 3.3f);

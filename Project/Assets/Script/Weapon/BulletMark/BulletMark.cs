@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
    public class BulletMark : BulletMarkBase
    {
@@ -43,11 +43,7 @@
            meshRender.sharedMaterial = mat;
            return this;
        }
-
-       /// <summary>
        /// 平移到射线检测命中点并旋转
-       /// </summary>
-       /// <returns></returns>
        public override BulletMarkBase SetToHit(RaycastHit hit, bool asPendingParent = false)
        {
            Transform.position = hit.point;
@@ -58,11 +54,7 @@
 
            return this;
        }
-
-       /// <summary>
        /// 随机化弹痕大小
-       /// </summary>
-       /// <returns></returns>
        public override BulletMarkBase SetScaleVariation(Vector3 scaleBase, Vector2 Range)
        {
            if(pendingParent != null) Transform.parent = null;
@@ -75,10 +67,7 @@
 
            return this;
        }
-
-       /// <summary>
        /// 禁用并设回默认父节点
-       /// </summary>
        public override void BackToOrigin()
        {
            Transform.parent = defaultParent;

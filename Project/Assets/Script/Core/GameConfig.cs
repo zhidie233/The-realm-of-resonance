@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.Serialization;
 
 public class GameConfig : ScriptableObject
 {
     #region Public members
-    [Header("Game Settings")]
+    [Header("游戏规则")]
     [GameToggle] public bool directConnectMode = false;
     [GameToggle] public bool guardDuplicateSessions = true;
     [GameToggle] public bool lobbyChatEnabled = true;
@@ -44,65 +46,54 @@ public class GameConfig : ScriptableObject
     public KillNotifier.KillNotice personalKillFeedDisplay = KillNotifier.KillNotice.Queqe;
     public FirearmInventory.SwapOnPickup swapOnPickupMode = FirearmInventory.SwapOnPickup.OnlyOnEmptySlots;
     public ObserverModeBase.LeaveSpectatorModeAction onLeaveSpectatorMode = ObserverModeBase.LeaveSpectatorModeAction.AllowSelectTeam;
-    /// <summary>
     /// 决定机器人击杀如何计入真人玩家战绩
     /// 用于避免玩家靠刷机器人击杀来提升个人战绩。
-    /// </summary>
     public BotKillPolicy botKillCredit = BotKillPolicy.SameAsRealPlayers;
-
-    [Header("Rewards")]
+    [Header("奖励")]
     public ScoreScale matchScore;
     public WalletEntry wallet;
 #if UNITY_2020_2_OR_NEWER
     [NonReorderable]
 #endif
     [ScriptableDrawer] public List<GameCoin> gameCoins;
-
-    [Header("Settings")]
+    [Header("参数")]
     public string buildVersion = "1.0.0";
     public string visitorNameFormat = "Guest {0}";
     public string botTagFormat = "BOT {0}";
-    [Range(0, 10)] public int spawnShieldTime = 5; // Time were the player can't receive damage after spawn.
-    [Range(1, 60)] public int prematchTime = 7; // Initial countdown time (when countdown is enabled)
-    [Range(1, 10)] public float respawnDelay = 5.0f; // Time that takes to respawn after the player die
-    [Range(1, 100)] public int contactLimit = 25; // Maximum number of friends that players can add (and save)
-    [Range(1, 10)] public int hitTestFrameStep = 2; // Each how many frames detect bullets hits? 1 = each frame
-    public int endMatchDelay = 10; // The time that the game resume shown after the match finish.
-    public float idleKickTime = 60; // Time limit that a player can be AFK in a match.
-    public int teamSwitchLimit = 3; // Max number of times that a player can change of team per match.
-    public int selfKillLimit = 3; // Max number of times that a player can suicide per match.
+    [Range(0, 10)] public int spawnShieldTime = 5;
+    [Range(1, 60)] public int prematchTime = 7;
+    [Range(1, 10)] public float respawnDelay = 5.0f;
+    [Range(1, 100)] public int contactLimit = 25;
+    [Range(1, 10)] public int hitTestFrameStep = 2;
+    public int endMatchDelay = 10;
+    public float idleKickTime = 60;
+    public int teamSwitchLimit = 3;
+    public int selfKillLimit = 3;
     public string MainMenuScene = "MainMenu";
     public string OnDisconnectScene = "MainMenu";
-    public Color focusColor = Color.green; // Color to highlight the local player in different UI elements.
-
-    [Header("Levels Manager")]
+    public Color focusColor = Color.green;
+    [Header("地图列表")]
     [Reorderable]
     public List<MapInfo> SceneTable = new List<MapInfo>();
-
-    [Header("Weapons")]
+    [Header("武器列表")]
 #if UNITY_2020_2_OR_NEWER
-    [NonReorderable] // DO NOT reorder the weapons manually, it will mess up your whole setup!
+    [NonReorderable]
 #endif
     public List<FirearmData> WeaponTable = new List<FirearmData>();
-
-    [Header("Default Settings")]
+    [Header("默认画质")]
     [ScriptableDrawer, SerializeField] private RuntimeSettingsProfile defaultSettings;
-
-    [Header("Game Modes Available"), Reorderable, FormerlySerializedAs("AllGameModes")]
+    [Header("可用模式"), Reorderable, FormerlySerializedAs("AllGameModes")]
     public List<GameModeSettings> gameModeTable = new List<GameModeSettings>();
-
-    [Header("Teams")]
+    [Header("阵营")]
     public string Team1Name = "Team1";
     public Color Team1Color = Color.blue;
     [Space(5)]
     public string Team2Name = "Team2";
     public Color Team2Color = Color.green;
-
-    [Header("Players")]
+    [Header("玩家预制体")]
     public PlayerNetworkHandler Player1;
     public PlayerNetworkHandler Player2;
-
-    [Header("Bots")]
+    [Header("机器人预制体")]
     public AIBotCore BotTeam1;
     public AIBotCore BotTeam2;
     public AIBotCore BotTeam3;
@@ -114,8 +105,7 @@ public class GameConfig : ScriptableObject
     [ScriptableDrawer, SerializeField] private TagsAndLayersSettings tagsAndLayersSettings;
 
     public SceneLoaderBase sceneLoader;
-
-    [Header("Game Team")]
+    [Header("后台账号")]
     public List<GameTeamInfo> GameTeam = new List<GameTeamInfo>();
     #endregion
 
@@ -129,8 +119,13 @@ public class GameConfig : ScriptableObject
     public static bool isDataCached = false;
     private static bool isCaching = false;
     private static GameConfig m_instance;
-    #endregion
+    private static AsyncOperationHandle<GameConfig> m_handle;
+    public const string DataAddress = "GameConfigData";
 
+#if UNITY_EDITOR
+    private const string EditorAssetPath = "Assets/Config/GameConfigData.asset";
+#endif
+    #endregion
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void OnRuntimeInit()
     {
@@ -151,46 +146,41 @@ public class GameConfig : ScriptableObject
             }
         }
     }
-
     private static void OnDataCached()
     {
+        if (Instance == null || Instance.mouseLookSettings == null) return;
         if (!CommonUtil.isMobile && Instance.mouseLookSettings.customCursor != null)
         {
             Cursor.SetCursor(Instance.mouseLookSettings.customCursor, Vector2.zero, CursorMode.ForceSoftware);
         }
     }
-
     void OnDisable()
     {
         isDataCached = false;
         RolePrefix = "";
     }
-
     public void ResetInstance()
     {
         m_settingProfile = null;
+        m_tagsAndLayerSettings = null;
         isDataCached = false;
+        if (m_handle.IsValid())
+        {
+            Addressables.Release(m_handle);
+            m_handle = default;
+        }
+        m_instance = null;
     }
-
     #region Getters
-    /// <summary>
     /// 按 ID 获取武器信息
-    /// </summary>
     /// <param name="ID">武器 ID，即 GameData 中该武器信息的 indexOf</param>
-    /// <returns></returns>
     public FirearmData GetWeapon(int ID)
     {
         if (ID < 0 || ID > WeaponTable.Count - 1)
             return WeaponTable[0];
-
         return WeaponTable[ID];
     }
-
-    /// <summary>
     /// 按名称获取武器信息
-    /// </summary>
-    /// <param name="gunName"></param>
-    /// <returns></returns>
     public int GetWeaponID(string gunName)
     {
         int id = -1;
@@ -200,12 +190,10 @@ public class GameConfig : ScriptableObject
         }
         return id;
     }
-
     public string[] WeaponStringList()
     {
         return WeaponTable.Select(x => x.Name).ToList().ToArray();
     }
-
     public int CheckPlayerName(string pName)
     {
         for (int i = 0; i < GameTeam.Count; i++)
@@ -222,7 +210,6 @@ public class GameConfig : ScriptableObject
         CurrentTeamUser = null;
         return 0;
     }
-
     public bool CheckPasswordUse(string PName, string Pass)
     {
         for (int i = 0; i < GameTeam.Count; i++)
@@ -238,7 +225,6 @@ public class GameConfig : ScriptableObject
         }
         return false;
     }
-
     private string _role = string.Empty;
     public string RolePrefix
     {
@@ -255,7 +241,6 @@ public class GameConfig : ScriptableObject
         }
         private set => _role = value;
     }
-
     private RuntimeSettingsProfile m_settingProfile;
     public RuntimeSettingsProfile RuntimeSettings
     {
@@ -265,54 +250,76 @@ public class GameConfig : ScriptableObject
             return m_settingProfile;
         }
     }
-
     private static TagsAndLayersSettings m_tagsAndLayerSettings;
     public static TagsAndLayersSettings TagsAndLayerSettings
     {
         get
         {
-            if (m_tagsAndLayerSettings == null) m_tagsAndLayerSettings = Instance.tagsAndLayersSettings;
+            if (m_tagsAndLayerSettings == null && Instance != null)
+            {
+                m_tagsAndLayerSettings = Instance.tagsAndLayersSettings;
+            }
             return m_tagsAndLayerSettings;
         }
     }
-
     public static GameConfig Instance
     {
         get
         {
             if (m_instance == null && !isCaching)
             {
-                if (!isDataCached && Application.isPlaying)
+#if UNITY_EDITOR
+                if (!Application.isPlaying)
                 {
-                    Debug.Log("GameData was cached synchronous, that could cause bottleneck on load, try caching it asynchronous with AsyncLoadData()");
+                    m_instance = UnityEditor.AssetDatabase.LoadAssetAtPath<GameConfig>(EditorAssetPath);
+                    return m_instance;
+                }
+#endif
+                m_handle = Addressables.LoadAssetAsync<GameConfig>(DataAddress);
+                m_instance = m_handle.WaitForCompletion();
+                if (m_instance != null)
+                {
                     isDataCached = true;
                     OnDataCached();
                 }
-                m_instance = Resources.Load("GameData", typeof(GameConfig)) as GameConfig;
             }
             return m_instance;
         }
     }
     #endregion
-
-    /// <summary>
-    /// 异步从 Resources 缓存 GameData，避免首次访问实例时卡顿和阻塞主线程
-    /// </summary>
-    /// <returns></returns>
+    /// 异步从 Addressables 加载全局配置资产
     public static IEnumerator AsyncLoadData()
     {
         if (m_instance == null)
         {
             isCaching = true;
-            ResourceRequest rr = Resources.LoadAsync("GameData", typeof(GameConfig));
-            while (!rr.isDone) { yield return null; }
-            m_instance = rr.asset as GameConfig;
+#if UNITY_EDITOR
+            if (!Application.isPlaying)
+            {
+                m_instance = UnityEditor.AssetDatabase.LoadAssetAtPath<GameConfig>(EditorAssetPath);
+                isCaching = false;
+                isDataCached = true;
+                yield break;
+            }
+#endif
+            m_handle = Addressables.LoadAssetAsync<GameConfig>(DataAddress);
+            yield return m_handle;
+            if (m_handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                m_instance = m_handle.Result;
+            }
+            else
+            {
+                Debug.LogError($"配置资产加载失败：{DataAddress}");
+                m_instance = null;
+                Addressables.Release(m_handle);
+                m_handle = default;
+            }
             isCaching = false;
-            OnDataCached();
+            if (m_instance != null) OnDataCached();
         }
         isDataCached = true;
     }
-
 #if UNITY_EDITOR
     void OnValidate()
     {
@@ -323,7 +330,6 @@ public class GameConfig : ScriptableObject
         }
     }
 #endif
-
     #region Local Classes
     [Serializable]
     public class ScoreScale
@@ -331,22 +337,20 @@ public class GameConfig : ScriptableObject
         public int KillReward = 50;
         public int HeadshotExtraReward = 25;
         public int WinMatchReward = 100;
-        [Tooltip("Per minute played")]
+        [Tooltip("每游玩一分钟的得分")]
         public int PerMinuteScore = 3;
-
         public int GetPerMinuteScore(int time)
         {
             if (PerMinuteScore <= 0) return 0;
             return time * PerMinuteScore;
         }
     }
-
     [Serializable]
     public class WalletEntry
     {
         [ItemCoinID] public int XPCoin;
-        [Tooltip("how much score/xp worth one coin")]
-        public int CoinScoreValue = 1000;//how much score/xp worth one coin
+        [Tooltip("多少分数或经验折算一枚金币")]
+        public int CoinScoreValue = 1000;
         public int InitialCoins
         {
             get
@@ -355,17 +359,13 @@ public class GameConfig : ScriptableObject
                 return coin == null ? 0 : coin.InitialCoins;
             }
         }
-
         public void AddCoins(int newCoins, string endPoint = "") => GameCore.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
-
         public int GetCoinsPerScore(int score)
         {
             if (score <= 0 || score < CoinScoreValue || CoinScoreValue <= 0) return 0;
-
             return score / CoinScoreValue;
         }
     }
-
     [Serializable]
     public class GameTeamInfo
     {
@@ -373,7 +373,6 @@ public class GameConfig : ScriptableObject
         public Role m_Role = Role.Moderator;
         public string Password;
         public Color m_Color;
-
         public enum Role
         {
             Admin = 0,

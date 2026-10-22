@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -38,7 +38,7 @@ using TMPro;
            var id = windows.FindIndex(x => x.Name == windowName);
            if (id == -1)
            {
-               Debug.LogWarning($"Pause window {windowName} doesn't exist.");
+               Debug.LogWarning($"暂停窗口 {windowName} 不存在。");
                return;
            }
            OpenWindow(id);

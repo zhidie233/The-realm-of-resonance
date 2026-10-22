@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
@@ -48,7 +48,7 @@ public class GamePlayer
         GameBotProperties botProps = AIManager.Instance.GetBotStatistics(Name);
         if (botProps == null)
         {
-            Debug.LogWarning($"Bot {Name} not found in AI Manager, this could be a de-sync issue.");
+            Debug.LogWarning($"AI 管理器中没有找到机器人 {Name}，可能是状态不同步。");
             //返回空容器以防报错
             botProps = new GameBotProperties();
             botProps.Name = Name;
@@ -71,9 +71,6 @@ public class GamePlayer
     }
 
     // 获取真实玩家或机器人的属性值
-    // <param name="key"></param>
-    // <param name="defaultValue"></param>
-    // <returns></returns>
     public object GetPlayerPropertie(string key, object defaultValue = null)
     {
         switch (key)
@@ -88,7 +85,7 @@ public class GamePlayer
                 if (isRealPlayer) return GetNetworkPlayer().GetPlayerScore();
                 else return GetBotStats().Score;
             default:
-                Debug.LogWarning($"Property {key} has not been setup yet.");
+                Debug.LogWarning($"属性 {key} 尚未配置。");
                 return defaultValue;
         }
     }

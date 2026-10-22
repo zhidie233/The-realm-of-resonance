@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
    public class RoundFinishScreen : RoundFinishScreenBase
@@ -7,10 +7,7 @@ using TMPro;
        [SerializeField] private TextMeshProUGUI FinalUIText = null;
        [SerializeField] private TextMeshProUGUI FinalCountText = null;
        [SerializeField] private TextMeshProUGUI FinalWinnerText = null;
-
-       /// <summary>
        /// 显示最后一局 UI
-       /// </summary>
        public override void Show(string winner)
        {
            content.SetActive(true);

@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-   [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "Game/Settings/TagsAndLayers")]
+using UnityEngine;
+   [CreateAssetMenu(fileName = "TagsAndLayerSettings", menuName = "项目/Settings/TagsAndLayers")]
    public class TagsAndLayersSettings : ScriptableObject
    {
        public LayerMask LocalPlayerHitableLayers;

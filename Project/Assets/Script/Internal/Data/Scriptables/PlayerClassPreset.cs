@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-[DisallowMultipleComponent, CreateAssetMenu(fileName = "Player Class Preset", menuName = "Game/Player Class/Equipment")]
+using UnityEngine;
+[DisallowMultipleComponent, CreateAssetMenu(fileName = "Player Class Preset", menuName = "项目/Player Class/Equipment")]
 public class PlayerClassPreset : ScriptableObject
 {
     [FirearmID] public int Primary = 0;

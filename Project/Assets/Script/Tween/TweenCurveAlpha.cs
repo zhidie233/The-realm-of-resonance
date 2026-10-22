@@ -1,4 +1,4 @@
-﻿﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using UnityEngine.Events;
 
@@ -32,7 +32,7 @@ using UnityEngine.Events;
        {
            if(m_Canvas == null)
            m_Canvas = GetComponent<CanvasGroup>();
-           if (m_Canvas == null) { Debug.Log("Not canvas", gameObject); return; }
+           if (m_Canvas == null) {  return; }
 
            if (!isInitializated)
            {
@@ -58,7 +58,6 @@ using UnityEngine.Events;
            StopAllCoroutines();
            StartCoroutine(DoTweenReverse(desactive));
        }
-
 
        void OnDisable()
        {

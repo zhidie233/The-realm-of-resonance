@@ -1,10 +1,10 @@
-﻿using TMPro;
+using TMPro;
 using UnityEngine;
 
    public class PingMonitor : MonoBehaviour
    {
        public int fetchPingEach = 5;
-       public int kickAfter = 10; // Timeout after detect high ping limit, before kick the player.
+       public int kickAfter = 10;
        public string displayFormat = "PING: {0}";
 
        [SerializeField] private GameObject highPingIndicator = null;

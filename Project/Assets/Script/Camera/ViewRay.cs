@@ -68,7 +68,6 @@ public class ViewRay : ViewRayBase
         {
             hasDectected = true;
             OnHit();
-
             //逐个检查注册的触发器
             if (triggers.Count > 0)
             {
@@ -86,7 +85,6 @@ public class ViewRay : ViewRayBase
         {
             //如果玩家之前聚焦着某个物体，现在不再聚焦
             UnDetectCurrentItem();
-
             if (triggers.Count > 0 && hasDectected)
             {
                 foreach (var item in triggers.Values)
@@ -97,10 +95,7 @@ public class ViewRay : ViewRayBase
             hasDectected = false;
         }
     }
-
-    /// <summary>
     /// 玩家相机射线击中地图上的物体时
-    /// </summary>
     void OnHit()
     {
         var item = RayHit.transform.GetComponent<IRayDetectable>();
@@ -112,7 +107,6 @@ public class ViewRay : ViewRayBase
                 //通知那个物体它不再被聚焦了。
                 m_currentDetectedItem.OnUnDetectedByPlayer();
             }
-
             m_currentDetectedItem = item;
             m_currentDetectedItem.OnRayDetectedByPlayer();
         }
@@ -121,37 +115,27 @@ public class ViewRay : ViewRayBase
             UnDetectCurrentItem();
         }
     }
-
     public void UnDetectCurrentItem()
     {
         if (m_currentDetectedItem == null) return;
-
         m_currentDetectedItem.OnUnDetectedByPlayer();
         m_currentDetectedItem = null;
     }
-
-    /// <summary>
     /// 想检测物体是否出现在本地玩家视野前方时
     /// 在这个函数里注册一个回调
-    /// </summary>
     public override byte AddTrigger(DetecableInfo info)
     {
         if (triggers.ContainsKey(info.Name)) { return 0; }
-
         triggers.Add(info.Name, info.Callback);
         return SetActiver(true, info.ID);
     }
-
-    /// <summary>
     /// 不再需要检测时记得移除触发器。
-    /// </summary>
     public override void RemoveTrigger(DetecableInfo info)
     {
         if (!triggers.ContainsKey(info.Name)) return;
         triggers.Remove(info.Name);
         SetActiver(false, info.ID);
     }
-
     public override byte SetActiver(bool add, byte id)
     {
         if (add)
@@ -181,9 +165,7 @@ public class ViewRay : ViewRayBase
         }
         return id;
     }
-
     private float RayDistance => DistanceCheck + ExtraRayDistance;
-
     [Serializable]
     public enum CastMethod
     {

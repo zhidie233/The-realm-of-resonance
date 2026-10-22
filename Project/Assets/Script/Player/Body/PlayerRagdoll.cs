@@ -21,10 +21,7 @@ public class PlayerRagdoll : PlayerRagdollBase
             SetKinematic();
         }
     }
-
-    /// <summary>
     /// 设置本地玩家的布娃娃状态
-    /// </summary>
     public override void SetLocalRagdoll(RagdollInfo info)
     {
         if (RightHand != null && info.RightHandChild != null)
@@ -35,10 +32,7 @@ public class PlayerRagdoll : PlayerRagdollBase
         }
         Ragdolled(info);
     }
-
-    /// <summary>
     /// 修改布娃娃的运动学状态
-    /// </summary>
     /// <param name="kinematic">是否为运动学刚体？</param>
     public void SetKinematic(bool kinematic = true)
     {
@@ -51,12 +45,9 @@ public class PlayerRagdoll : PlayerRagdollBase
             r.isKinematic = kinematic;
         }
     }
-
-    /// <summary>
     /// 把当前玩家变成布娃娃
     /// 玩家不再由 Character Controller 控制
     /// 并会从玩家根节点上分离
-    /// </summary>
     public override void Ragdolled(RagdollInfo info)
     {
         gameObject.SetActive(true);
@@ -92,10 +83,7 @@ public class PlayerRagdoll : PlayerRagdollBase
 
         if (info.AutoDestroy) Destroy(gameObject, GameConfig.Instance.respawnDelay);
     }
-
-    /// <summary>
     /// 让本地玩家忽略自身的 Character Controller 碰撞体。
-    /// </summary>
     public override void IgnorePlayerCollider()
     {
         GameObject p = GameController.Instance.LocalPlayer;
@@ -113,10 +101,7 @@ public class PlayerRagdoll : PlayerRagdollBase
             }
         }
     }
-
-    /// <summary>
     /// 启用/停用玩家的刚体和碰撞体
-    /// </summary>
     public override void SetActiveRagdollPhysics(bool active)
     {
         for (int i = 0; i < playerColliders.Length; i++)
@@ -132,12 +117,7 @@ public class PlayerRagdoll : PlayerRagdollBase
             item.isKinematic = !active;
         }
     }
-
-    /// <summary>
     /// 让该玩家的碰撞体忽略指定的碰撞体
-    /// </summary>
-    /// <param name="list"></param>
-    /// <param name="ignore"></param>
     public override void IgnoreColliders(Collider[] list, bool ignore)
     {
         if (allPlayerCollider == null || allPlayerCollider.Length <= 0)

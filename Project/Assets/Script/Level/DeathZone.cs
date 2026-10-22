@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using TMPro;
 
    public class DeathZone : NetworkHelper
@@ -20,7 +20,7 @@ using TMPro;
 
            if (m_Collider == null)
            {
-               Debug.LogWarning($"Kill Zone object doesn't have a collider attached!", gameObject);
+               Debug.LogWarning("死亡区域对象没有碰撞体。", gameObject);
            }
 
            m_killZoneUI = UIReferences.Instance.PlayerUI.KillZoneUI;
@@ -28,7 +28,7 @@ using TMPro;
 
        void OnTriggerEnter(Collider mCol)
        {
-           if (mCol.isLocalPlayerCollider())//when is player local enter
+           if (mCol.isLocalPlayerCollider())
            {
                DoPlayerDamage(mCol.transform.root);
            }
@@ -39,7 +39,7 @@ using TMPro;
 
        private void DoPlayerDamage(Transform root)
        {
-           var pdm = root.GetComponentInChildren<PlayerHealthManagerBase>(true);// get the component damage
+           var pdm = root.GetComponentInChildren<PlayerHealthManagerBase>(true);
            if (pdm != null && pdm.isMine && pdm.GetHealth() > 0 && !mOn)
            {
                if (instaKill)
@@ -55,21 +55,19 @@ using TMPro;
 
        void OnTriggerExit(Collider mCol)
        {
-           if (mCol.isLocalPlayerCollider())// if player exit of zone then cancel countdown
+           if (mCol.isLocalPlayerCollider())
            {
                CancelInvoke(nameof(DoCountDown));
-               CountDown = countDown; // restart time
+               CountDown = countDown;
                if (m_killZoneUI != null)
                {
                    m_killZoneUI.SetActive(false);
+
                }
                mOn = false;
            }
        }
-
-       /// <summary>
        /// 玩家进入触发器时开始倒计时
-       /// </summary>
        void DoCountDown()
        {
            CountDown--;
@@ -87,24 +85,19 @@ using TMPro;
                mOn = false;
            }
        }
-
        private void UpdateUI()
        {
            if (m_killZoneUI == null) return;
-
            m_killZoneUI.SetActive(true);
            var text = m_killZoneUI.GetComponentInChildren<TextMeshProUGUI>();
            var message = string.IsNullOrEmpty(CustomMessage) ? string.Format(GameTexts.KillZoneMessage, CountDown) : string.Format(CustomMessage, CountDown);
            text.text = message;
-
        }
-
 #if UNITY_EDITOR
        void OnDrawGizmosSelected()
        {
            var c = GetComponent<BoxCollider>();
            if (c == null) return;
-
            Gizmos.matrix = transform.localToWorldMatrix;
            if (gameObject == UnityEditor.Selection.activeGameObject)
            {
@@ -115,7 +108,6 @@ using TMPro;
            }
            Gizmos.color = new Color(1.0f, 0.5f, 0.5f, 0.3f);
            Gizmos.DrawCube(c.center, c.size);
-
            UnityEditor.Handles.Label(transform.position, "KILL ZONE");
        }
 #endif

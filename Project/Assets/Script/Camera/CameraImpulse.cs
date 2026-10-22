@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
@@ -146,8 +146,7 @@ public class CameraImpulse : CameraImpulseBase
 
         //用幂运算给爆发倍率加对比度，让数值更多贴近 0，较少接近 1
         burstMultiplier = Mathf.Pow(burstMultiplier, burstContrast);
-
-        for (int i = 0; i < octaves; i++) // Iterate trough octaves
+        for (int i = 0; i < octaves; i++)
         {
             float noiseFrequency = time / (1 - iFrequency) / 10;
 

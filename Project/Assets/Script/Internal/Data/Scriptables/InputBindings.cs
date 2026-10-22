@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
-
-   [CreateAssetMenu(fileName = "InputManager", menuName = "Game/Input/Manager")]
+   [CreateAssetMenu(fileName = "InputManager", menuName = "项目/Input/Manager")]
    public class InputBindings : ScriptableObject
    {
 
@@ -78,12 +77,7 @@ using UnityEngine;
            if (!IsCached(key)) return false;
            return cachedKeys[key].isButtonUp();
        }
-
-       /// <summary>
        /// 获取主按键名称
-       /// </summary>
-       /// <param name="key"></param>
-       /// <returns></returns>
        public string GetButtonName(string key)
        {
            if (!IsCached(key)) return "None";
@@ -99,7 +93,6 @@ using UnityEngine;
                if (index >= 0) { cachedKeys.Add(key, mappedInstance.ButtonMap[index]); }
                else
                {
-                   Debug.Log($"Key <color=yellow>{key}</color> has not been mapped in the InputManager.");
                    return false;
                }
            }

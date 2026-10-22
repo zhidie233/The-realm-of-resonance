@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine.UI;
@@ -65,7 +65,7 @@ using UnityEngine.UI;
 
            if (textComponent == null)
            {
-               Debug.LogWarning("LetterSpacing: Missing Text component");
+               Debug.LogWarning("字距调整：缺少 Text 组件。");
                return;
            }
 

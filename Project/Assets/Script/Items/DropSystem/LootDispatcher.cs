@@ -1,11 +1,8 @@
 using UnityEngine;
 using System.Collections.Generic;
 using HashData = ExitGames.Client.Photon.Hashtable;
-
-/// <summary>
 /// 此脚本负责实例化并同步玩家请求的空投/包裹。
 /// 此类没有直接引用，可直接替换为自定义脚本
-/// </summary>
 public class LootDispatcher : MonoBehaviour
 {
 
@@ -15,19 +12,13 @@ public class LootDispatcher : MonoBehaviour
 
     [Header("Available Kits")]
     public List<LootInfo> AvailablePacks = new List<LootInfo>();
-
-    /// <summary>
     /// 激活时将该实例登记到事件中
-    /// </summary>
     void OnEnable()
     {
         GameEvents.onAirSupply += SendDelivery;
         NetworkWrapper.AddNetworkCallback(NetworkKeys.DropManager, OnNetworkMessage);
     }
-
-    /// <summary>
     /// 禁用时从事件中移除
-    /// </summary>
     void OnDisable()
     {
         GameEvents.onAirSupply -= SendDelivery;
@@ -45,10 +36,7 @@ public class LootDispatcher : MonoBehaviour
             DeliveryDuration = DeliveryTime,
         });
     }
-
-    /// <summary>
     /// 由内部事件调用
-    /// </summary>
     public void SendDelivery(Vector3 position, int packID)
     {
         var data = CommonUtil.CreatePhotonHashTable();

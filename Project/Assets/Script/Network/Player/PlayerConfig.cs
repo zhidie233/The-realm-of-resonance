@@ -37,10 +37,7 @@ public class PlayerConfig : NetworkHelper
             OnRemotePlayer();
         }
     }
-
-    /// <summary>
     /// 仅在远程玩家上调用
-    /// </summary>
     public void OnRemotePlayer()
     {
         for (int i = 0; i < LocalOnlyScripts.Count; i++)
@@ -53,7 +50,6 @@ public class PlayerConfig : NetworkHelper
         LocalObjects.SetActive(false);
         gameObject.tag = GameCore.REMOTE_PLAYER_TAG;
         gameObject.layer = (int)Mathf.Log(GameConfig.TagsAndLayerSettings.RemotePlayerRootLayer.value, 2);
-
         //构建玩家数据
         GamePlayer playerData = new GamePlayer()
         {
@@ -74,10 +70,7 @@ public class PlayerConfig : NetworkHelper
             NetworkView = photonView
         });
     }
-
-    /// <summary>
     /// 仅在本机玩家上调用
-    /// </summary>
     public void OnLocalPlayer()
     {
         gameObject.name = NetworkWrapper.NickName;

@@ -1,8 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-   [CreateAssetMenu(fileName = "Door Setting", menuName = "Game/Level/Door Setting")]
+   [CreateAssetMenu(fileName = "Door Setting", menuName = "项目/Level/Door Setting")]
    public class DoorStateConfig : ScriptableObject
    {
        public float TransitionDuration = 1;

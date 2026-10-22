@@ -10,24 +10,23 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
 {
 
     [Header("Settings")]
-    public string[] ChannelsToJoinOnConnect; // set in inspector. Demo channels to join automatically.
-
-    public int HistoryLengthToFetch; // set in inspector. Up to a certain degree, previously sent messages can be fetched for context
-    private string selectedChannelName = ""; // mainly used for GUI/input
+    public string[] ChannelsToJoinOnConnect;
+    public int HistoryLengthToFetch;
+    private string selectedChannelName = "";
     public bool ShowState = true;
 
     [Header("References")]
     public GameObject ChatRoot;
     public GameObject ChatButton;
-    public RectTransform ChatPanel;     // set in inspector (to enable/disable panel)
-    public TMP_InputField InputFieldChat;   // set in inspector
-    public TextMeshProUGUI CurrentChannelText;     // set in inspector
+    public RectTransform ChatPanel;
+    public TMP_InputField InputFieldChat;
+    public TextMeshProUGUI CurrentChannelText;
     [SerializeField] private TextMeshProUGUI ChannelText = null;
     [SerializeField] private Animator ChatAnimator;
     private readonly Dictionary<string, Toggle> channelToggles = new Dictionary<string, Toggle>();
     public GameObject Title;
-    public TextMeshProUGUI StateText; // set in inspector
-    public TextMeshProUGUI UserIdText; // set in inspector
+    public TextMeshProUGUI StateText;
+    public TextMeshProUGUI UserIdText;
     public ChatClient chatClient = null;
     private bool isShow = false;
     private bool subscribed = false;
@@ -89,7 +88,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
         subscribed = true;
     }
 
-
     public void Connect(string version)
     {
         if (string.IsNullOrEmpty(PhotonNetwork.PhotonServerSettings.AppSettings.AppIdChat)) return;
@@ -131,7 +129,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
         PhotonNetwork.RemoveCallbackTarget(this);
         subscribed = false;
     }
-
     /// <summary>避免编辑器卡死，在 OnApplicationQuit 中断开所有 Photon 连接。</summary>
     public void OnApplicationQuit()
     {
@@ -148,12 +145,10 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
     {
         if (this.chatClient != null)
         {
-            this.chatClient.Service(); // make sure to call this regularly! it limits effort internally, so calling often is ok!
+            this.chatClient.Service();
         }
-
-        this.StateText.gameObject.SetActive(ShowState); // this could be handled more elegantly, but for the demo it's ok.
+        this.StateText.gameObject.SetActive(ShowState);
     }
-
 
     public void OnEnterSend()
     {
@@ -192,7 +187,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             this.chatClient.SendPrivateMessage(this.chatClient.AuthValues.UserId, testBytes, true);
         }
 
-
         bool doingPrivateChat = this.chatClient.PrivateChannels.ContainsKey(this.selectedChannelName);
         string privateChatTarget = string.Empty;
         if (doingPrivateChat)
@@ -204,7 +198,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             privateChatTarget = splitNames[1];
         }
 
-
         if (inputLine[0].Equals('\\'))
         {
             string[] tokens = inputLine.Split(new char[] { ' ' }, 2);
@@ -215,7 +208,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             if (tokens[0].Equals("\\state"))
             {
                 int newState = 0;
-
 
                 List<string> messages = new List<string>();
                 messages.Add("i am state " + newState);
@@ -230,8 +222,7 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
                 {
                     messages.Add(subtokens[1]);
                 }
-
-                this.chatClient.SetOnlineStatus(newState, messages.ToArray()); // this is how you set your own state and (any) message
+                this.chatClient.SetOnlineStatus(newState, messages.ToArray());
             }
             else if ((tokens[0].Equals("\\subscribe") || tokens[0].Equals("\\s")) && !string.IsNullOrEmpty(tokens[1]))
             {
@@ -268,7 +259,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             else if ((tokens[0].Equals("\\join") || tokens[0].Equals("\\j")) && !string.IsNullOrEmpty(tokens[1]))
             {
                 string[] subtokens = tokens[1].Split(new char[] { ' ', ',' }, 2);
-
                 // 如果已订阅该频道就直接切换，否则先订阅再隐式切换过去
                 if (channelToggles.ContainsKey(subtokens[0]))
                 {
@@ -281,7 +271,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             }
             else
             {
-                Debug.Log("The command '" + tokens[0] + "' is invalid.");
             }
         }
         else
@@ -314,7 +303,6 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
         }
         else
         {
-            UnityEngine.Debug.Log(message);
         }
     }
 
@@ -328,47 +316,37 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
 
         UserIdText.text = "Connected as " + PhotonNetwork.NickName;
         this.ChatPanel.gameObject.SetActive(true);
-        this.chatClient.SetOnlineStatus(ChatUserStatus.Online); // You can set your online state (without a mesage).
+        this.chatClient.SetOnlineStatus(ChatUserStatus.Online);
         ChannelText.text = selectedChannelName.ToUpper();
         ChatButton.SetActive(GameConfig.Instance.lobbyChatEnabled);
         this.chatClient.SetOnlineStatus(ChatUserStatus.Online);
-        Debug.Log("Lobby Chat connected");
     }
-
     public void OnDisconnected()
     {
-        Debug.Log("Lobby chat disconnected");
     }
-
     public void OnChatStateChange(ChatState state)
     {
         // 请使用 OnConnected() 和 OnDisconnected()
         // 以后用到更复杂的状态时，这个方法可能会更有用。
-
         this.StateText.text = state.ToString();
     }
-
     public void OnSubscribed(string[] channels, bool[] results)
     {
         // 这个示例只是往每个频道各发一条消息，并非必须这么做
         foreach (string channel in channels)
         {
-            this.chatClient.PublishMessage(channel, "says 'hi'."); // you don't HAVE to send a msg on join but you could.
+            this.chatClient.PublishMessage(channel, "says 'hi'.");
         }
-
         // 切换到第一个新建的频道
         ShowChannel(channels[0]);
     }
-
     private void InstantiateChannelButton(string channelName)
     {
         if (this.channelToggles.ContainsKey(channelName))
         {
-            Debug.Log("Skipping creation for an existing channel toggle.");
             return;
         }
     }
-
     public void OnUnsubscribed(string[] channels)
     {
         foreach (string channelName in channels)
@@ -377,29 +355,21 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             {
                 Toggle t = this.channelToggles[channelName];
                 Destroy(t.gameObject);
-
                 this.channelToggles.Remove(channelName);
-
-                Debug.Log("Unsubscribed from channel '" + channelName + "'.");
-
                 // 如果当前频道正是刚取消订阅的那个，就显示另一个频道
                 if (channelName == selectedChannelName && channelToggles.Count > 0)
                 {
                     IEnumerator<KeyValuePair<string, Toggle>> firstEntry = channelToggles.GetEnumerator();
                     firstEntry.MoveNext();
-
                     ShowChannel(firstEntry.Current.Key);
-
                     firstEntry.Current.Value.isOn = true;
                 }
             }
             else
             {
-                Debug.Log("Can't unsubscribe from channel '" + channelName + "' because you are currently not subscribed to it.");
             }
         }
     }
-
     public void OnGetMessages(string channelName, string[] senders, object[] messages)
     {
         if (channelName.Equals(this.selectedChannelName))
@@ -408,27 +378,21 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
             ShowChannel(this.selectedChannelName);
         }
     }
-
     public void OnPrivateMessage(string sender, object message, string channelName)
     {
         // ChatClient 已经帮你缓存了消息，这个 GUI 不用做任何处理
         // 自己发的消息也会收到，这时 channelName 由消息目标决定
         this.InstantiateChannelButton(channelName);
-
         byte[] msgBytes = message as byte[];
         if (msgBytes != null)
         {
-            Debug.Log("Message with byte[].Length: " + msgBytes.Length);
         }
         if (this.selectedChannelName.Equals(channelName))
         {
             ShowChannel(channelName);
         }
     }
-
-    /// <summary>
     /// 其他用户的新状态（只会收到好友列表里用户的状态更新）
-    /// </summary>
     /// <param name="user">用户名。</param>
     /// <param name="status">该用户的新状态。</param>
     /// <param name="gotMessage">为 true 表示状态里带有需要本地缓存的消息。为 false 表示本次状态更新不含消息
@@ -436,61 +400,48 @@ public class LobbyMessenger : MonoBehaviour, IChatClientListener
     /// <param name="message">用户设置的消息。</param>
     public void OnStatusUpdate(string user, int status, bool gotMessage, object message)
     {
-
-        Debug.LogWarning("status: " + string.Format("{0} is {1}. Msg:{2}", user, status, message));
+        Debug.LogWarning("状态：" + string.Format("{0} 为 {1}，消息：{2}", user, status, message));
     }
-
     public void AddMessageToSelectedChannel(string msg)
     {
         ChatChannel channel = null;
         bool found = this.chatClient.TryGetChannel(this.selectedChannelName, out channel);
         if (!found)
         {
-            Debug.Log("AddMessageToSelectedChannel failed to find channel: " + this.selectedChannelName);
             return;
         }
-
         if (channel != null)
         {
             channel.Add("Bot", msg, 0);
         }
     }
-
     public void ShowChannel(string channelName)
     {
         if (string.IsNullOrEmpty(channelName))
         {
             return;
         }
-
         ChatChannel channel = null;
         bool found = this.chatClient.TryGetChannel(channelName, out channel);
         if (!found)
         {
-            Debug.Log("ShowChannel failed to find channel: " + channelName);
             return;
         }
-
         this.selectedChannelName = channelName;
         ChannelText.text = selectedChannelName.ToUpper();
         this.CurrentChannelText.text = channel.ToStringMessages();
-
         foreach (KeyValuePair<string, Toggle> pair in channelToggles)
         {
             pair.Value.isOn = pair.Key == channelName ? true : false;
         }
     }
-
     public void OnUserSubscribed(string channel, string user)
     {     
     }
-
     public void OnUserUnsubscribed(string channel, string user)
     {     
     }
-
     public bool isConnected() { if (chatClient == null) { return false; } return chatClient.State == ChatState.ConnectedToFrontEnd; }
-
     private static LobbyMessenger _instance;
     public static LobbyMessenger Instance
     {

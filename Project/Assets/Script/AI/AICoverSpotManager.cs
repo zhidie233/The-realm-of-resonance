@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -29,7 +29,7 @@ public class AICoverSpotManager : MonoBehaviour
     {
         if (AllCovers == null || AllCovers.Count <= 0)
         {
-            Debug.LogWarning("There is no Cover Points for bots in this scene, bots behave will be limited.");
+            Debug.LogWarning("场景中没有机器人掩体点，机器人行为将受到限制。");
             return null;
         }
 
@@ -52,7 +52,7 @@ public class AICoverSpotManager : MonoBehaviour
     {
         if (AllCovers == null || AllCovers.Count <= 0)
         {
-            Debug.LogWarning("There is no Cover Points for bots in this scene, bots behave will be limited.");
+            Debug.LogWarning("场景中没有机器人掩体点，机器人行为将受到限制。");
             return null;
         }
 
@@ -79,7 +79,7 @@ public class AICoverSpotManager : MonoBehaviour
     {
         if (AllCovers == null || AllCovers.Count <= 0)
         {
-            Debug.LogWarning("There is no Cover Points for bots in this scene, bots behave will be limited.");
+            Debug.LogWarning("场景中没有机器人掩体点，机器人行为将受到限制。");
             return null;
         }
 

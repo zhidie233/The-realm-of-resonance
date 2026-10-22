@@ -42,7 +42,7 @@ public class LobbyUI : MonoBehaviour
     public void InitialSetup()
     {
         GameEvents.onGameSettingsChange += ApplyRuntimeSettings;
-        windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } });//disable all windows
+        windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } });
         if (PhotonStaticticsUI != null) { PhotonStaticticsUI.SetActive(MatchLobby.Instance.ShowPhotonStatistics); }
         blackScreenFader.SetAlpha(1);
     }
@@ -58,9 +58,9 @@ public class LobbyUI : MonoBehaviour
 
     public void ChangeWindow(string window)
     {
-        if (window == currentWindow) return;//return if we are trying to open the opened window
+        if (window == currentWindow) return;
         WindowUI w = windows.Find(x => x.Name == window);
-        if (w == null) return;//the window with that windowName doesn't exist
+        if (w == null) return;
 
         StopCoroutine("DoChangeWindow");
         StartCoroutine("DoChangeWindow", w);
@@ -70,14 +70,14 @@ public class LobbyUI : MonoBehaviour
     public void SetEnableWindow(string windowName, bool active)
     {
         WindowUI w = windows.Find(x => x.Name == windowName);
-        if (w == null || w.UIRoot == null) return;//the window with that windowName doesn't exist
+        if (w == null || w.UIRoot == null) return;
 
         w.UIRoot.SetActive(active);
         if (w.MenuButton != null) w.MenuButton.interactable = !active;
     }
 
     public void Home() { ChangeWindow(MainWindowName); MatchLobby.Instance.onShowMenu?.Invoke(); }
-    public void HideAll() { currentWindow = ""; windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } }); }//disable all windows 
+    public void HideAll() { currentWindow = ""; windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } }); }
 
     IEnumerator DoChangeWindow(WindowUI window)
     {
@@ -208,14 +208,13 @@ public class LobbyUI : MonoBehaviour
             if (key == Regions[i])
             {
                 int id = i;
-                if (id > 4) { id--; } // ids jumps from 3 to 5
+                if (id > 4) { id--; }
                 ServersDropdown.value = id;
                 MatchLobby.Instance.ServerRegionID = id;
                 break;
             }
         }
         ServersDropdown.RefreshShownValue();
-
         // 下拉框设置完成后再绑定回调，避免意外触发监听。
         ServersDropdown.onValueChanged.AddListener(ChangeServerCloud);
     }
@@ -376,9 +375,8 @@ public class LobbyUI : MonoBehaviour
         public string Name;
         public GameObject UIRoot;
         public Button MenuButton;
-
-        public bool isPersistent = false;//this window will stay show up when change window?
-        public bool hidePersistents = false;//force hide persistent windows
+        public bool isPersistent = false;
+        public bool hidePersistents = false;
         public bool playFadeInOut = false;
         public bool showTopMenu = true;
     }

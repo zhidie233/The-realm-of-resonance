@@ -1,11 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.Serialization;
-
-/// <summary>
 /// 默认游戏名称牌（头顶名称）脚本
 /// 若想改用其他方案，例如用 UGUI 代替 OnGUI
 /// 新建自定义脚本并继承 PlayerTagBase.cs
-/// </summary>
 public class PlayerTagDrawer : PlayerTagBase
 {
     #region Public members

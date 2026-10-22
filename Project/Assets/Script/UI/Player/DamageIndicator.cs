@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
    public class DamageIndicator : DamageIndicatorBase
    {
@@ -38,10 +38,7 @@
            indicatorAlpha.alpha = 0;
            alpha = 0;
        }
-
-       /// <summary>
        /// 用于发送新的受击方向
-       /// </summary>
        public override void SetHit(Vector3 direction)
        {
            if (direction == Vector3.zero)
@@ -50,10 +47,7 @@
            attackDirection = direction;
            alpha = 3f;
        }
-
-       /// <summary>
        /// 可见时更新位置
-       /// </summary>
        public override void OnUpdate()
        {
            if (alpha <= 0) return;
@@ -62,10 +56,7 @@
            alpha -= Time.deltaTime;
            UpdateDirection();
        }
-
-       /// <summary>
        /// 按箭头指示更新方向
-       /// </summary>
        void UpdateDirection()
        {
            rhs = attackDirection - GameCore.LocalPlayerReferences.PlayerCameraTransform.position;

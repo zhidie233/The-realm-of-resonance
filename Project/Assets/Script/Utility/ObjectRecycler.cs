@@ -1,13 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
-
-/// <summary>
 /// 默认游戏对象池系统
 /// 想用自己的对象池系统，继承 ObjectRecyclerBase.cs 即可
 /// 并确保默认池系统中的预制体使用相同的键/标识。
-/// </summary>
 public class ObjectRecycler : ObjectRecyclerBase
 {
     [SerializeField, FormerlySerializedAs("RegistreOnStart")]
@@ -22,18 +19,13 @@ public class ObjectRecycler : ObjectRecyclerBase
             RegisterObject(pooledPrefabs[i].Name, pooledPrefabs[i].Prefab, pooledPrefabs[i].Lenght);
         }
     }
-
-    /// <summary>
     /// 添加一个新的池化预制体
-    /// </summary>
     /// <param name="poolName">此对象池的标识</param>
-    /// <param name="prefab"></param>
-    /// <param name="count"></param>
     public void RegisterObject(string poolName, GameObject prefab, int count)
     {
         if (prefab == null)
         {
-            Debug.LogWarning("Can't pooled the prefab for: " + poolName + " because the prefab has not been assigned.");
+            Debug.LogWarning("无法回收 " + poolName + "，尚未指定预制体。");
             return;
         }
 
@@ -51,19 +43,15 @@ public class ObjectRecycler : ObjectRecyclerBase
         }
         pools.Add(poolName, p);
     }
-
-    /// <summary>
     /// 实例化池化预制体
     /// 用它代替 GameObject.Instantiate(...)
-    /// </summary>
-    /// <returns></returns>
     public override GameObject Instantiate(string objectName, Vector3 position, Quaternion rotation)
     {
         PooledInstance pool = pools[objectName];
         if(pool != null)
         {
             GameObject g = pool.GetCurrent();
-            if(g == null)//in case a pool object get destroyed, replace it 
+            if(g == null)
             {
                 g = Instantiate(pool.Prefab, transform);
                 pool.ReplaceCurrent(g);
@@ -75,7 +63,7 @@ public class ObjectRecycler : ObjectRecyclerBase
         }
         else
         {
-            Debug.LogError(string.Format("Object {0} has not been register for pooling.", objectName));
+            Debug.LogError(string.Format("对象 {0} 未登记到对象池。", objectName));
             return null;
         }
     }

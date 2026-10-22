@@ -25,11 +25,8 @@ public class SpringUtility
         startValue = start;
         endValue = end;
     }
-
-    /// <summary>
     /// 运动过程中更新目标值。
     /// 会复用当前速度，之后平滑插值到新值。
-    /// </summary>
     /// <param name="value">目标值</param>
     public void UpdateEndValue(float value, float velocity)
     {
@@ -38,10 +35,7 @@ public class SpringUtility
         initialVelocity = velocity;
         springTime = 0f;
     }
-
-    /// <summary>
     /// 按 deltaTime（秒）推进一步。
-    /// </summary>
     /// <param name="deltaTime">距上一帧的时间间隔</param>
     /// <returns>计算出的值</returns>
     public float Evaluate(float deltaTime)
@@ -53,18 +47,16 @@ public class SpringUtility
         var k = stiffness;
         var v0 = -initialVelocity;
         var t = springTime;
-
-        var zeta = c / (2 * Mathf.Sqrt(k * m)); // damping ratio
-        var omega0 = Mathf.Sqrt(k / m); // undamped angular frequency of the oscillator (rad/s)
+        var zeta = c / (2 * Mathf.Sqrt(k * m));
+        var omega0 = Mathf.Sqrt(k / m);
         var x0 = endValue - startValue;
 
         var omegaZeta = omega0 * zeta;
         var x = 0f;
         var v = 0f;
-
-        if (zeta < 1) // Under damped
+        if (zeta < 1)
         {
-            var omega1 = omega0 * Mathf.Sqrt(1.0f - zeta * zeta); // exponential decay
+            var omega1 = omega0 * Mathf.Sqrt(1.0f - zeta * zeta);
             var e = Mathf.Exp(-omegaZeta * t);
             var c1 = x0;
             var c2 = (v0 + omegaZeta * x0) / omega1;
@@ -73,9 +65,9 @@ public class SpringUtility
             x = e * (c1 * cos + c2 * sin);
             v = -e * ((x0 * omegaZeta - c2 * omega1) * cos + (x0 * omega1 + c2 * omegaZeta) * sin);
         }
-        else if (zeta > 1) // Over damped
+        else if (zeta > 1)
         {
-            var omega2 = omega0 * Mathf.Sqrt(zeta * zeta - 1.0f); // frequency of damped oscillation
+            var omega2 = omega0 * Mathf.Sqrt(zeta * zeta - 1.0f);
             var z1 = -omegaZeta - omega2;
             var z2 = -omegaZeta + omega2;
             var e1 = Mathf.Exp(z1 * t);
@@ -85,7 +77,7 @@ public class SpringUtility
             x = c1 * e1 + c2 * e2;
             v = c1 * z1 * e1 + c2 * z2 * e2;
         }
-        else // Critically damped
+        else
         {
             var e = Mathf.Exp(-omega0 * t);
             x = e * (x0 + (v0 + omega0 * x0) * t);

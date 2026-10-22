@@ -1,14 +1,10 @@
-﻿//#define LOADING_SCREEN
 using UnityEngine;
 using UnityEngine.SceneManagement;
-
-/// <summary>
 /// 默认游戏场景加载器
 /// 使用 Unity 默认的场景加载方式
 /// 想用自己的场景加载器，例如游戏的加载界面
 /// 新建一个脚本并继承 <see cref="SceneLoaderBase"/>
-/// </summary>
-[CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "Game/Level/Simple Loader")]
+[CreateAssetMenu(fileName = "Simple Scene Loader", menuName = "项目/Level/Simple Loader")]
 public class SimpleSceneLoader : SceneLoaderBase
 {
 

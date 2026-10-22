@@ -32,10 +32,7 @@ using UnityEngine;
 
        public float CurrentSensitivity { get; set; } = 3;
        public bool onlyCameraTransform { get; set; } = false;
-
-       /// <summary>
        ///  用角色初始旋转初始化摄像机控制器。
-       /// </summary>
        public override void Init(Transform character, Transform camera)
        {
            m_CameraTransform = camera;
@@ -47,10 +44,7 @@ using UnityEngine;
            playerReferences = character.GetComponent<PlayerRig>();
            lookSettings = GameConfig.Instance.mouseLookSettings;
        }
-
-       /// <summary>
        /// 根据玩家输入更新角色和摄像机旋转。
-       /// </summary>
        public override void UpdateLook(Transform character, Transform camera, ClimbableLadder ladder = null)
        {
            // 使用移动设备或 Unity Remote 时
@@ -174,20 +168,14 @@ using UnityEngine;
                m_CameraTargetRot = ClampRotationAroundXAxis(m_CameraTargetRot);
            }
        }
-
-       /// <summary>
        /// 只旋转摄像机/头部，不旋转角色身体
-       /// </summary>
        public void UseOnlyCameraRotation()
        {
            onlyCameraTransform = true;
        }
-
-       /// <summary>
        /// 把当前摄像机旋转拆分为身体的水平旋转和头部的垂直旋转
        /// 身体负责水平旋转，摄像机/头部负责垂直旋转
        /// 只应在之前用过 OnlyCameraRotation 时调用。
-       /// </summary>
        public void PortBodyOrientationToCamera()
        {
            onlyCameraTransform = false;
@@ -204,10 +192,7 @@ using UnityEngine;
 
            m_CameraTransform.localRotation *= extraRotation;
        }
-
-       /// <summary>
        /// 强制角色注视世界中的某个位置。
-       /// </summary>
        public override void LookAt(Transform reference, bool extrapolate = true)
        {
            m_CharacterTargetRot = Quaternion.Euler(0f, reference.eulerAngles.y, 0f);
@@ -257,10 +242,7 @@ using UnityEngine;
            if (isAiming && lookSettings.aimSensitivityAdjust == MouseLookSettings.AimSensitivityAdjust.Relative)
                AdjustSensitivityBasedOnFOV();
        }
-
-       /// <summary>
        /// 根据摄像机视场角调整鼠标灵敏度。
-       /// </summary>
        public void AdjustSensitivityBasedOnFOV()
        {
            if (playerReferences == null) return;

@@ -1,23 +1,20 @@
 using UnityEngine;
-
-/// <summary>
 /// 玩家冲刺时控制第一人称武器的旋转
 /// 此类没有直接引用，可以换成自己的脚本。
-/// </summary>
 public class SwayPreset : MonoBehaviourBase
 {
 
     #region Public members
     [Header("Weapon On Run Position")]
-    [Tooltip("Weapon Position and Position On Run")]
+    [Tooltip("武器常规位置与奔跑位置")]
     public Vector3 moveTo;
-    [Tooltip("Weapon Rotation and Position On Run")]
+    [Tooltip("武器常规旋转与奔跑位置")]
     public Vector3 rotateTo;
     [Space(5)]
     [Header("Weapon On Run and Reload Position")]
-    [Tooltip("Weapon Position and Position On Run and Reload")]
+    [Tooltip("武器常规位置、奔跑位置与换弹位置")]
     public Vector3 moveToReload;
-    [Tooltip("Weapon Rotation and Position On Run and Reload")]
+    [Tooltip("武器常规旋转、奔跑位置与换弹位置")]
     public Vector3 rotateToReload;
     [Space(5)]
     public float accelerationMultiplier = 2.5f;

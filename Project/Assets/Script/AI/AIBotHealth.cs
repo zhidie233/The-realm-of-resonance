@@ -1,11 +1,8 @@
 using Photon.Pun;
 using UnityEngine;
-
-/// <summary>
 /// 处理机器人的生命值相关逻辑
 /// 本脚本没有直接引用，你可以替换成自己的脚本
 /// 只要让你的脚本继承 <see cref="PlayerHealthManagerBase"/> 即可
-/// </summary>
 public class AIBotHealth : PlayerHealthManagerBase
 {
 
@@ -79,7 +76,7 @@ public class AIBotHealth : PlayerHealthManagerBase
         {
             shooterAgent?.OnGetHit(direction);
         }
-        if (viewID == GameController.LocalPlayerViewID)//if was me that make damage
+        if (viewID == GameController.LocalPlayerViewID)
         {
             ReticleBase.Instance.OnHit();
             AudioManager.Instance.PlayClip("body-hit");
@@ -181,7 +178,6 @@ public class AIBotHealth : PlayerHealthManagerBase
                     RoomSettings.IncreaseMatchPersistData("bot-kills", 1);
                 }
             }
-
             //只有在机器人击杀计入真人玩家的前提下，才给击杀者加分。
             if (killConsideration == BotKillPolicy.SameAsRealPlayers)
             {
@@ -203,7 +199,6 @@ public class AIBotHealth : PlayerHealthManagerBase
                     NetworkWrapper.LocalPlayer.PostScore(score);
                 }
             }
-
             //显示本地击杀提示
             var localKillInfo = new KillRecord();
             localKillInfo.Killer = NetworkWrapper.LocalPlayer.NickName;
@@ -211,7 +206,6 @@ public class AIBotHealth : PlayerHealthManagerBase
             localKillInfo.byHeadShot = ishead;
             localKillInfo.KillMethod = weaponName;
             GameEvents.DispatchLocalKillEvent(localKillInfo);
-
             //更新队伍得分
             GameController.Instance.SetPoint(1, GameMode.TeamMatch, team);
 
@@ -220,6 +214,7 @@ public class AIBotHealth : PlayerHealthManagerBase
         else if (fromBot)
         {
             //让主客户端作为所有者处理
+
             if (NetworkWrapper.IsMasterClient)
             {
                 //在场景中找到凶手
@@ -228,16 +223,14 @@ public class AIBotHealth : PlayerHealthManagerBase
                 string killer = "Unknown";
                 if (p != null)
                 {
-                    bot = p.GetComponent<AIBotCore>();//killer bot
+                    bot = p.GetComponent<AIBotCore>();
                     killer = bot.AIName;
                     if (string.IsNullOrEmpty(killer)) { killer = p.gameObject.name.Replace(" (die)", ""); }
                     //更新机器人战绩
                     AIManager.Instance.SetBotKill(killer);
                 }
-
                 //发送击杀提示消息
                 int gunID = GameConfig.Instance.GetWeaponID(weaponName);
-
                 var feed = new KillReportEntry.FeedData()
                 {
                     LeftText = killer,
@@ -246,20 +239,16 @@ public class AIBotHealth : PlayerHealthManagerBase
                 };
                 feed.AddData("gunid", gunID);
                 feed.AddData("headshot", ishead);
-
                 KillReportEntry.Instance.SendKillMessageEvent(feed);
-
                 if (bot != null)
                 {
                     killerBot = bot;
                 }
                 else
                 {
-                    Debug.Log("Bot who kill this bot can't be found");
                 }
             }
-        }//else, (if other player kill this bot) -> do nothing.
-
+        }
         if (GameConfig.Instance.deathIconsEnabled && !isOneTeamMode)
         {
             if (m_AIShooter.AITeam == NetworkWrapper.LocalPlayer.GetPlayerTeam())
@@ -267,19 +256,15 @@ public class AIBotHealth : PlayerHealthManagerBase
                 GameObject di = ObjectRecyclerBase.Instance.Instantiate("deathicon", transform.position, transform.rotation);
             }
         }
-
         var mplayer = new GamePlayer(photonView, false, false);
         GameEvents.DispatchRemotePlayerDeath(mplayer);
-
         //更新机器人死亡数。
         AIManager.Instance.SetBotDeath(m_AIShooter.AIName);
-
         if (NetworkWrapper.IsMasterClient)
         {
             //重生逻辑在这里处理
             //只由主客户端调用，因为出生会通过 PhotonNetwork.Instantiate() 同步
             AIManager.Instance.OnBotDeath(m_AIShooter, killerBot);
-
             //只有主客户端应该发送这个 RPC
             var deathData = CommonUtil.CreatePhotonHashTable();
             deathData.Add("type", AIRemoteCallKind.DestroyBot);
@@ -288,26 +273,22 @@ public class AIBotHealth : PlayerHealthManagerBase
             {
                 deathData.Add("explosion", true);
             }
-
             //这个 RPC 需要缓存吗？
-            this.photonView.RPC(AIBotAgent.RPC_NAME, RpcTarget.All, deathData);//callback is in AIBotAgent.cs -> DestroyBot(...)
+            this.photonView.RPC(AIBotAgent.RPC_NAME, RpcTarget.All, deathData);
         }
     }
-
     public override void DestroyEntity()
     {
         var deathData = CommonUtil.CreatePhotonHashTable();
         deathData.Add("type", AIRemoteCallKind.DestroyBot);
         deathData.Add("instant", true);
-        this.photonView.RPC(AIBotAgent.RPC_NAME, RpcTarget.AllBuffered, deathData);//callback is in AIBotAgent.cs
+        this.photonView.RPC(AIBotAgent.RPC_NAME, RpcTarget.AllBuffered, deathData);
     }
-
     public override void DoRepeatHitDamage(RepeatHitDamage info)
     {
         repeatHitDamage = info;
         InvokeRepeating(nameof(MakeRepeatHitDamage), 0, info.Rate);
     }
-
     void MakeRepeatHitDamage()
     {
         if (repeatHitDamage == null)
@@ -315,7 +296,6 @@ public class AIBotHealth : PlayerHealthManagerBase
             CancelRepeatHit();
             return;
         }
-
         var damageinfo = repeatHitDamage.DamageInfo;
         if (damageinfo == null)
         {
@@ -326,32 +306,25 @@ public class AIBotHealth : PlayerHealthManagerBase
         damageinfo.Damage = repeatHitDamage.Damage;
         DoDamage(damageinfo.Damage, "[Burn]", damageinfo.Direction, GameController.LocalPlayerViewID, false, NetworkWrapper.LocalPlayer.GetPlayerTeam(), false);
     }
-
     public override void CancelRepeatHit()
     {
         CancelInvoke(nameof(MakeRepeatHitDamage));
     }
-
     public override void SetHealth(int healthToAdd, bool overrideHealth)
     {
         if (overrideHealth) Health = healthToAdd;
         else Health += healthToAdd;
     }
-
     public override bool Suicide()
     {
         return false;
     }
-
     public override int GetHealth() => Health;
-
     public override int GetMaxHealth() => 100;
-
     public override bool IsDeath()
     {
         return m_AIShooter.isDeath;
     }
-
     [PunRPC]
     void RpcSyncHealth(int _health)
     {

@@ -32,7 +32,7 @@ public class AIBotAgent : AIBotCore
     public AIBotAttackBase AIWeapon { get; set; }
     public PlayerHealthManagerBase AIHealth { get; set; }
     public override float CachedTargetDistance { get; set; } = 0;
-    public string DebugLine { get; set; }//last ID 38 
+    public string DebugLine { get; set; }
     public bool IsCrouch { get; set; } = false;
     #endregion
 
@@ -93,7 +93,6 @@ public class AIBotAgent : AIBotCore
         AIManager.SetBotGameState(this, BotMatchState.Playing);
         headBoneReference = References.aiAnimation.GetHumanBone(HumanBodyBones.Head);
     }
-
     public override void Init()
     {
         isMaster = NetworkWrapper.IsMasterClient;
@@ -101,16 +100,13 @@ public class AIBotAgent : AIBotCore
         References.shooterNetwork.CheckNamePlate();
         References.Agent.enabled = isMaster;
     }
-    
     public override void OnUpdate()
     {  
         time = Time.time;
         delta = Time.deltaTime;
         if (isDeath) return;
         isNewDebug = true;
-
         if (!isGameStarted) return;
-
         if (Target != null && isMaster)
         {
             if (AgentState != AIBrainState.Covering)
@@ -131,10 +127,7 @@ public class AIBotAgent : AIBotCore
         }
         LookAtControl();
     }
-
-    /// <summary>
     /// 每秒调用一次，而不是每帧
-    /// </summary>
     public override void OnSlowUpdate()
     {
         if (isDeath) return;
@@ -142,9 +135,7 @@ public class AIBotAgent : AIBotCore
         {
             return;
         }
-
         velocityMagnitud = Agent.velocity.magnitude;
-
         if (isMaster)
         {
             if (!HasATarget)
@@ -161,48 +152,37 @@ public class AIBotAgent : AIBotCore
                 CheckVision();
             }
         }
-
         FootStep();
     }
-
     private void OnAgentStateChanged(AIBrainState from, AIBrainState to)
     {
-        
     }
-
     private void OnTargetChanged(Transform from, Transform to)
     {
-
     }
-
-    /// <summary>
     /// 机器人在对目标失去直视线与重新获得直视线时调用
-    /// </summary>
     /// <param name="from">是否看得见？</param>
     /// <param name="to">是否看得见？</param>
     private void OnTargetLineOfSightChanged(bool from, bool to)
     {
-        if (from == true)//the player lost the line of vision with the target
+        if (from == true)
         {
-            if (HasATarget && TargetDistance > 5)//he lost the target but not because it is death.
-                Invoke(nameof(CorrectLookAt), 3);//if after 3 second of loss the target, still now found it -> don't look at it (trough walls for example)
+            if (HasATarget && TargetDistance > 5)
+                Invoke(nameof(CorrectLookAt), 3);
         }
-        else//player now has direct vision to the target
+        else
         {
             if (AgentState == AIBrainState.Following)
                 CancelInvoke(nameof(CorrectLookAt));
         }
     }
-
     void CorrectLookAt()
     {
         SetLookAtState(AIGaze.PathToTarget);
     }
-
     void TargetControll()
     {
         if (Time.frameCount % precisionRate != 0) return;
-
         CachedTargetDistance = CommonUtil.Distance(Target.position, m_Transform.localPosition);
         if (CachedTargetDistance >= soldierSettings.limitRange)
         {
@@ -222,11 +202,9 @@ public class AIBotAgent : AIBotCore
         }
         else
         {
-            Debug.Log("Unknown state: " + CachedTargetDistance);
             SetDebugState(101, true);
         }
     }
-
     void WhenTargetOutOfRange()
     {
         if (behaviorSettings.targetOutRangeBehave == AIOutOfRangeAction.SearchNewNearestTarget)
@@ -246,7 +224,7 @@ public class AIBotAgent : AIBotCore
                 //每 300 帧更新一次目标位置
                 if (!Agent.hasPath || (Time.frameCount % 300) == 0)
                 {
-                    if (CommonUtil.Distance(TargetPosition, Agent.destination) > 1)//update the path only if the target has moved substantially
+                    if (CommonUtil.Distance(TargetPosition, Agent.destination) > 1)
                     {
                         SetDestination(TargetPosition, 3);
                     }
@@ -278,36 +256,31 @@ public class AIBotAgent : AIBotCore
             Anim.SetInteger("UpperState", 4);
         }
     }
-
     void WhenTargetOnMediumRange()
     {
         SetDebugState(3, true);
         precisionRate = 4;
         OnTargeContest(false);
     }
-
     void WhenTargetOnCloseRange()
     {
         SetDebugState(4, true);
         precisionRate = 2;
         Follow();
     }
-
     void WhenTargetOnLimitRange()
     {
         SetDebugState(5, true);
         OnTargeContest(true);
         precisionRate = 1;
     }
-
     void OnCovering()
     {
         if (Time.frameCount % precisionRate != 0) return;
-
         if (Target != null)
         {
             CachedTargetDistance = TargetDistance;
-            if (CachedTargetDistance <= soldierSettings.mediumRange && playerInFront)//if in look range and in front, start follow him and shot
+            if (CachedTargetDistance <= soldierSettings.mediumRange && playerInFront)
             {
                 if (behaviorSettings.agentBehave == AIBrainAction.Agressive)
                 {
@@ -322,17 +295,14 @@ public class AIBotAgent : AIBotCore
                         if (AgentState == AIBrainState.Covering)
                         {
                             SetDebugState(6, true);
-
                             if (!ObstacleBetweenTarget)
                             {
                                 TriggerFire(playerInFront ? AIBotAttackBase.FireReason.Forced : AIBotAttackBase.FireReason.OnMove);
                             }
-
                             if(CachedTargetDistance < soldierSettings.mediumRange)
                             {
                                 SetCrouch(false);
                             }
-
                             if (AIHealth.GetHealth() <= 30 && CachedTargetDistance < soldierSettings.closeRange)
                             {
                                 SetState(AIBrainState.Following);
@@ -345,7 +315,7 @@ public class AIBotAgent : AIBotCore
                         }
                     }
                 }
-                else //to covert point and looking to it
+                else
                 {
                     SetDebugState(7, true);
                     SetState(AIBrainState.Covering);
@@ -356,25 +326,24 @@ public class AIBotAgent : AIBotCore
                 }
                 TriggerFire(AIBotAttackBase.FireReason.OnMove);
             }
-            else if (CachedTargetDistance > soldierSettings.limitRange && CanCover(7))// if out of line of sight, start searching him
+            else if (CachedTargetDistance > soldierSettings.limitRange && CanCover(7))
             {
                 SetDebugState(8, true);
                 SetState(AIBrainState.Searching);
                 SetCrouch(false);
                 TriggerFire(AIBotAttackBase.FireReason.OnMove);
             }
-            else if (ForceCoverFire && !ObstacleBetweenTarget)//if bot is cover and still get damage, start shoot at the target (panic)
+            else if (ForceCoverFire && !ObstacleBetweenTarget)
             {
                 SetDebugState(9, true);
                 SetLookAtState(AIGaze.Target);
                 TriggerFire(AIBotAttackBase.FireReason.Forced);
-
                 if (behaviorSettings.agentBehave == AIBrainAction.Protective || CachedTargetDistance > soldierSettings.mediumRange)
                 {
                     if (CanCover(behaviorSettings.maxCoverTime)) { SwitchCover(); }
                 }
             }
-            else if (CanCover(behaviorSettings.maxCoverTime) && CachedTargetDistance >= 7)//if has been a time since cover and nothing happen, try a new spot.
+            else if (CanCover(behaviorSettings.maxCoverTime) && CachedTargetDistance >= 7)
             {
                 SetDebugState(10, true);
                 SwitchCover();
@@ -399,12 +368,11 @@ public class AIBotAgent : AIBotCore
                 }
             }
         }
-        if (Agent.pathStatus == NavMeshPathStatus.PathComplete)//once the bot reach the target cover point
+        if (Agent.pathStatus == NavMeshPathStatus.PathComplete)
         {
-            if (CoverPoint != null && CoverPoint.Crouch) { SetCrouch(true); }//and the point required crouch -> do crouch
+            if (CoverPoint != null && CoverPoint.Crouch) { SetCrouch(true); }
         }
     }
-
     private bool Cover(bool overridePoint, AICoverZone coverArea = AICoverZone.ToPoint)
     {
         // 添加空检查
@@ -423,10 +391,10 @@ public class AIBotAgent : AIBotCore
         switch (coverArea)
         {
             case AICoverZone.ToTarget:
-                t = Target;//find a point near the target
+                t = Target;
                 break;
         }
-        if (overridePoint)//override the current cover point
+        if (overridePoint)
         {
             //如果机器人已到达当前目的地
             if (Agent.pathStatus == NavMeshPathStatus.PathComplete)
@@ -451,8 +419,7 @@ public class AIBotAgent : AIBotCore
             //找一个附近的掩体点
             CoverPoint = AICoverSpotManager.Instance.GetCloseCover(t);
         }
-
-        if (CoverPoint != null && (time - CoverTime) > behaviorSettings.coverColdDown)//if a point was found
+        if (CoverPoint != null && (time - CoverTime) > behaviorSettings.coverColdDown)
         {
             SetDebugState(15);
             Speed = playerInFront ? soldierSettings.walkSpeed : soldierSettings.runSpeed;
@@ -465,16 +432,16 @@ public class AIBotAgent : AIBotCore
         else
         {
             //附近没有掩体点
-            if (Target != null)//and have a target
+            if (Target != null)
             {
                 SetDebugState(16);
                 //跟随目标
                 SetDestination(TargetPosition, 3);
                 DetermineSpeedBaseOnRange();
-                FocusOnSingleTarget = true;//and follow not matter the distance
+                FocusOnSingleTarget = true;
                 SetState(AIBrainState.Searching);
             }
-            else//if don't have a target
+            else
             {
                 SetDebugState(17);
                 //强制获取一个掩体点
@@ -488,7 +455,6 @@ public class AIBotAgent : AIBotCore
             return false;
         }
     }
-
     public override void OnGetHit(Vector3 pos)
     {
         LastHitDirection = pos;
@@ -530,10 +496,8 @@ public class AIBotAgent : AIBotCore
             }
         }
     }
-
     void OnHoldingPosition()
     {
-
         SetDebugState(37, true);
         if (time > lastHoldPositionTime)
         {
@@ -541,12 +505,10 @@ public class AIBotAgent : AIBotCore
             return;
         }
     }
-
     void SwitchCover()
     {
         if (Agent.pathStatus != NavMeshPathStatus.PathComplete)
             return;
-
         if (SwitchCoverTimes <= 3)
         {
             Cover(true, AICoverZone.ToTarget);
@@ -557,13 +519,10 @@ public class AIBotAgent : AIBotCore
             SetState(AIBrainState.Following);
             SetDestination(TargetPosition, 3);
             SwitchCoverTimes = 0;
-            AllOrNothing = true;//go straight to the target to confront him
+            AllOrNothing = true;
         }
     }
-
-    /// <summary>
     /// 目标进入视距时
-    /// </summary>
     void OnTargeContest(bool overrideCover)
     {
         if (AgentState == AIBrainState.Following || ForceFollowAtHalfHealth)
@@ -606,15 +565,11 @@ public class AIBotAgent : AIBotCore
         }
         else
         {
-
             OnDirectConfrontation();
         }
     }
-
-    /// <summary>
     //目标靠近时
     //判断能否攻击它
-    /// </summary>
     void OnDirectConfrontation()
     {
         precisionRate = 1;
@@ -643,17 +598,13 @@ public class AIBotAgent : AIBotCore
             SetDebugState(35);
             DetermineSpeedBaseOnRange();
         }
-
         CheckConfrontation();
     }
-
     void SearchPlayers()
     {
         SetDebugState(-2);
-
         Transform target = behaviorSettings.agentBehave == AIBrainAction.Agressive ? GetNearestPlayer() : GetTargetOnRange();
         if (target != null) SetTarget(target);
-
         //开局随机选一个目标
         if (NetworkWrapper.IsMasterClient && !randomOnStartTake && availableTargets.Count > 0)
         {
@@ -663,13 +614,11 @@ public class AIBotAgent : AIBotCore
                 randomOnStartTake = true;
             }
         }
-
         if (!HasATarget)
         {
             if (AgentState == AIBrainState.Following || AgentState == AIBrainState.Looking) { SetState(AIBrainState.Searching); }
         }
     }
-
     void CheckVision()
     {
         if (!HasATarget || !NetworkWrapper.IsMasterClient)
@@ -677,42 +626,31 @@ public class AIBotAgent : AIBotCore
             ObstacleBetweenTarget = false;
             return;
         }
-
         Vector3 relative = m_Transform.InverseTransformPoint(TargetPosition);
         playerInFront = (relative.x < 2f && relative.x > -2f) || (relative.x > -2f && relative.x < 2f);
-
         if (Physics.Linecast(AIWeapon.GetFirePosition(), TargetPosition, out obsRay, ObstaclesLayer, QueryTriggerInteraction.Ignore))
         {
             ObstacleBetweenTarget = obsRay.transform.root.CompareTag(GameCore.LOCAL_PLAYER_TAG) == false;
         }
         else { ObstacleBetweenTarget = false; }
-
         if (wasTargetInSight != ObstacleBetweenTarget)
         {
             OnTargetLineOfSightChanged(wasTargetInSight, ObstacleBetweenTarget);
             wasTargetInSight = ObstacleBetweenTarget;
         }
     }
-
-    /// <summary>
     /// 让机器人在原地停留指定时间
-    /// </summary>
-    /// <param name="forTime"></param>
     public void HoldPosition(float forTime = 10)
     {
         SetState(AIBrainState.HoldingPosition);
         lastDestinationTime = Time.time + forTime;
     }
-
-    /// <summary>
     /// 敌人在范围外时，让机器人在地图上随机巡逻
-    /// </summary>
     /// <param name="precision">巡逻时靠近敌人区域的程度</param>
     void RandomPatrol(bool precision)
     {
         if (isDeath || !NetworkWrapper.IsMasterClient)
             return;
-
         float precisionArea = soldierSettings.farRange;
         if (precision)
         {
@@ -744,14 +682,12 @@ public class AIBotAgent : AIBotCore
             }
             ForceCoverFire = false;
         }
-
         SetLookAtState(AIGaze.Path);
         AIWeapon.IsFiring = false;
-
         if (!Agent.hasPath || (time - lastPathTime) > 5)
         {
             SetDebugState(27);
-            bool toAnCover = (Random.value <= behaviorSettings.randomCoverProbability);//probability of get a cover point as random destination
+            bool toAnCover = (Random.value <= behaviorSettings.randomCoverProbability);
             Vector3 randomDirection = TargetPosition + (Random.insideUnitSphere * precisionArea);
             if (toAnCover) { randomDirection = AICoverSpotManager.Instance.GetCoverOnRadius(m_Transform, 20).Position; }
             if (!HasATarget && isOneTeamMode)
@@ -778,19 +714,15 @@ public class AIBotAgent : AIBotCore
         }
         SetDestination(finalPosition, 1, true);
     }
-
     public void KillTheTarget()
     {
         if (!HasATarget) return;
-
         SetTarget(null);
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", AIRemoteCallKind.SyncTarget);
         data.Add("viewID", -1);
-
         photonView.RPC(RPC_NAME, RpcTarget.Others, data);
     }
-
     void CheckConfrontation()
     {
         if (AgentState != AIBrainState.Covering)
@@ -804,19 +736,15 @@ public class AIBotAgent : AIBotCore
             lookTime += delta;
             SetState(AIBrainState.Looking);
         }
-
         TriggerFire();
         SetCrouch(playerInFront && !ObstacleBetweenTarget);
     }
-
     private void LookAtControl()
     {
         if (!isMaster) return;
-
         if ((Time.frameCount % AIManager.Instance.updateBotsLookAtEach) == 0 || forceUpdateRotation)
         {
             // ... 现有代码 ...
-        
             // 改进高度处理
             if (CommonUtil.Distance(m_Transform.localPosition, LookAtPosition) <= 3)
             {
@@ -830,21 +758,16 @@ public class AIBotAgent : AIBotCore
                 LookAtPosition = lap;
                 LookAtDirection = LookAtPosition - m_Transform.localPosition;
             }
-
             localRotation = m_Transform.localEulerAngles;
             localRotation.y = Quaternion.LookRotation(LookAtDirection).eulerAngles.y;
             forceUpdateRotation = false;
         }
-
         m_Transform.localRotation = Quaternion.Slerp(m_Transform.localRotation, Quaternion.Euler(localRotation), delta * soldierSettings.rotationSmoothing);
     }
-
     void Follow()
     {
         if (AgentState == AIBrainState.Covering && Random.value > 0.5f) return;
-
         SetLookAtState(AIGaze.Target);
-
         SetCrouch(false);
         SetDestination(TargetPosition, 3);
         if (CachedTargetDistance <= 3)
@@ -876,40 +799,30 @@ public class AIBotAgent : AIBotCore
             TriggerFire();
         }
     }
-
     public void TriggerFire(AIBotAttackBase.FireReason reason = AIBotAttackBase.FireReason.Normal)
     {
         if (LookingAt == AIGaze.Path) SetLookAtState(AIGaze.Target);
-
         AIWeapon.Fire(reason);
     }
-
     private void DetermineSpeedBaseOnRange()
     {
         Speed = (Target != null && CachedTargetDistance > soldierSettings.mediumRange) ? soldierSettings.runSpeed : soldierSettings.walkSpeed;
     }
-
     public void SetState(AIBrainState newState)
     {
         if (newState == AgentState) return;
-
         OnAgentStateChanged(AgentState, newState);
         AgentState = newState;
     }
-
     public void SetTarget(Transform newTarget)
     {
         if (Target == newTarget) return;
-
         OnTargetChanged(Target, newTarget);
         Target = newTarget;
-
         if (!NetworkWrapper.IsMasterClient) return;
-
         //同步机器人目标
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", AIRemoteCallKind.SyncTarget);
-
         if (Target == null)
         {
             data.Add("viewID", -1);
@@ -925,11 +838,9 @@ public class AIBotAgent : AIBotCore
             }
             else
             {
-                Debug.Log("This Target " + Target.name + "no have photonview");
             }
         }
     }
-
     public void SetLookAtState(AIGaze newLookAt)
     {
         if (LookingAt == newLookAt) return;
@@ -937,15 +848,12 @@ public class AIBotAgent : AIBotCore
         {
             if (ObstacleBetweenTarget) return;
         }
-
         LookingAt = newLookAt;
         forceUpdateRotation = true;
     }
-
     public void SetDestination(Vector3 position, float stopedDistance, bool checkRate = false)
     {
         if (checkRate && (time - lastDestinationTime) < 2) return;
-
         // 添加高度检查
         if (IsPositionReachable(position))
         {
@@ -965,15 +873,11 @@ public class AIBotAgent : AIBotCore
             }
         }
     }
-    
-    /// <summary>
     /// 检查位置是否可达（考虑高度差）
-    /// </summary>
     public bool IsPositionReachable(Vector3 targetPosition)
     {
         // 计算高度差
         float heightDifference = Mathf.Abs(targetPosition.y - transform.position.y);
-    
         // 如果高度差在合理范围内，认为可达
         if (heightDifference <= 500f) // 使用您的最大高度差值
         {
@@ -988,20 +892,15 @@ public class AIBotAgent : AIBotCore
                 }
             }
         }
-    
         return false;
     }
-    
-    /// <summary>
     /// 寻找最近的可达位置
-    /// </summary>
     private Vector3 FindNearestReachablePosition(Vector3 targetPosition, float searchRadius = 10f)
     {
         for (int i = 0; i < 10; i++) // 尝试10次
         {
             Vector3 randomPoint = targetPosition + Random.insideUnitSphere * searchRadius;
             randomPoint.y = targetPosition.y; // 保持相同高度
-        
             NavMeshHit hit;
             if (NavMesh.SamplePosition(randomPoint, out hit, searchRadius, NavMesh.AllAreas))
             {
@@ -1013,7 +912,6 @@ public class AIBotAgent : AIBotCore
         }
         return Vector3.zero;
     }
-
     void SetCrouch(bool crouch)
     {
         if (IsCrouch == crouch || time - lastCrouchTime < 0.5f) return;
@@ -1022,7 +920,6 @@ public class AIBotAgent : AIBotCore
         {
             crouch = false;
         }
-
         Anim.SetBool(animationHash[0], crouch);
         Speed = crouch ? soldierSettings.crounchSpeed : soldierSettings.walkSpeed;
         if (IsCrouch != crouch)
@@ -1030,21 +927,16 @@ public class AIBotAgent : AIBotCore
             var data = CommonUtil.CreatePhotonHashTable();
             data.Add("type", AIRemoteCallKind.CrouchState);
             data.Add("state", crouch);
-
             photonView.RPC(RPC_NAME, RpcTarget.Others, data);
             IsCrouch = crouch;
         }
     }
-
-    /// <summary>
     /// 机器人有目标时调用
     /// 检查是否有更近的敌人，必要时切换目标
-    /// </summary>
     void CheckEnemysDistances()
     {
         if (!behaviorSettings.checkEnemysWhenHaveATarget || availableTargets.Count <= 0) return;
         if (time < nextEnemysCheck) return;
-
         CachedTargetDistance = CommonUtil.Distance(m_Transform.localPosition, TargetPosition);
         for (int i = 0; i < availableTargets.Count; i++)
         {
@@ -1052,7 +944,7 @@ public class AIBotAgent : AIBotCore
             if (availableTargets[i] == null || availableTargets[i] == Target || availableTargets[i].name.Contains("(die)")) continue;
             //计算与这个敌人的距离
             float otherDistance = CommonUtil.Distance(m_Transform.localPosition, availableTargets[i].position);
-            if (otherDistance > soldierSettings.limitRange) continue;//if this enemy is too far away...
+            if (otherDistance > soldierSettings.limitRange) continue;
             //判断是否比当前目标更近（至少近 5 米）
             if (otherDistance < CachedTargetDistance && (CachedTargetDistance - otherDistance) > 5)
             {
@@ -1069,15 +961,12 @@ public class AIBotAgent : AIBotCore
             }
         }
     }
-
     public override void UpdateTargetList()
     {
         if (Target != null) return;
-
         AIManager.Instance.GetTargetsFor(this, ref availableTargets);
         AimTarget.name = AIName;
     }
-
     public override void CheckTargets()
     {
         if (Target != null && Target.name.Contains("(die)"))
@@ -1085,23 +974,18 @@ public class AIBotAgent : AIBotCore
             SetTarget(null);
         }
     }
-
-    /// <summary>
     /// 强制重生被调用、而该机器人仍存活时调用
-    /// </summary>
     public override void Respawn()
     {
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", AIRemoteCallKind.Respawn);
         photonView.RPC(RPC_NAME, RpcTarget.All, data);
     }
-
     public void FootStep()
     {
         if (velocityMagnitud > 0.2f)
             footstep?.UpdateStep(Agent.speed);
     }
-
     [System.Serializable]
     public class NetworkMessagesCount
     {
@@ -1109,12 +993,10 @@ public class AIBotAgent : AIBotCore
         public int Count;
     }
     public List<NetworkMessagesCount> networkMessagesCounts = new List<NetworkMessagesCount>();
-
     [PunRPC]
     public void RPCShooterBot(NetHashTable data, PhotonMessageInfo info)
     {
         var callType = (AIRemoteCallKind)data["type"];
-
         var cid = networkMessagesCounts.FindIndex(x => x.CallType == callType);
         if(cid == -1)
         {
@@ -1128,7 +1010,6 @@ public class AIBotAgent : AIBotCore
         {
             networkMessagesCounts[cid].Count++;
         }
-
         switch (callType)
         {
             case AIRemoteCallKind.DestroyBot:
@@ -1145,10 +1026,7 @@ public class AIBotAgent : AIBotCore
                 break;
         }
     }
-
-    /// <summary>
     /// 不销毁机器人实例直接重生
-    /// </summary>
     private void DoAliveRespawn()
     {
         Agent.isStopped = false;
@@ -1164,10 +1042,7 @@ public class AIBotAgent : AIBotCore
             m_Transform.rotation = spawn.rotation;
         }      
     }
-
-    /// <summary>
     /// 机器人死亡时，由主客户端在所有客户端上调用
-    /// </summary>
     public void DestroyBot(NetHashTable data, PhotonMessageInfo info)
     {
         if (data.ContainsKey("instant"))
@@ -1175,21 +1050,18 @@ public class AIBotAgent : AIBotCore
             if (NetworkWrapper.IsMasterClient) NetworkWrapper.Destroy(gameObject);
             return;
         }
-
         Vector3 position = (Vector3)data["direction"];
         References.aiAnimation.Ragdolled(position, data.ContainsKey("explosion"));
-
         if ((NetworkWrapper.Time - info.SentServerTime) > GameConfig.Instance.respawnDelay + 1)
         {
-            Debug.LogWarning("The death call get with too much delay.");
+            Debug.LogWarning("死亡回调延迟过大。");
         }
         this.InvokeAfter(GameConfig.Instance.respawnDelay + 2, () =>
          {
              if (GetGameMode.GetGameModeInfo().spawnOnRoundBegin != GameModeSettings.OnRoundBegin.WaitUntilRoundFinish)
-                 Debug.LogWarning("For some reason this bot has not been destroyed yet.");
+                 Debug.LogWarning("该机器人未能正常销毁。");
          });
     }
-
     void SyncTargetAI(NetHashTable data)
     {
         var view = (int)data["viewID"];
@@ -1198,21 +1070,17 @@ public class AIBotAgent : AIBotCore
             SetTarget(null);
             return;
         }
-
         GameObject pr = FindPlayerRoot(view);
         if (pr == null)
         {
-            Debug.Log($"Couldn't find the network view: {view}");
             return;
         }
-
         Transform t = pr.transform;
         if (t != null)
         {
             SetTarget(t);
         }
     }
-
     void OnLocalSpawn()
     {
         if (!isOneTeamMode && GameCore.LocalPlayer.Team == AITeam)
@@ -1220,11 +1088,7 @@ public class AIBotAgent : AIBotCore
             References.namePlateDrawer.enabled = true;
         }
     }
-
-    /// <summary>
     /// 新玩家加入房间时
-    /// </summary>
-    /// <param name="newPlayer"></param>
     public void OnPhotonPlayerConnected(Player newPlayer)
     {
         if (NetworkWrapper.IsMasterClient && newPlayer.ActorNumber != NetworkWrapper.LocalPlayer.ActorNumber)
@@ -1233,7 +1097,6 @@ public class AIBotAgent : AIBotCore
             photonView.RPC("RpcSyncHealth", newPlayer, AIHealth.GetHealth());
         }
     }
-
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -1241,7 +1104,6 @@ public class AIBotAgent : AIBotCore
         GameEvents.onMatchStart += OnMatchStart;
         GameEvents.onMatchStateChanged += OnMatchStateChange;
     }
-
     protected override void OnDisable()
     {
         base.OnDisable();
@@ -1250,21 +1112,17 @@ public class AIBotAgent : AIBotCore
         GameEvents.onMatchStart -= OnMatchStart;
         GameEvents.onMatchStateChanged -= OnMatchStateChange;
     }
-
     void OnMatchStateChange(MatchState state)
     {
         if (state == MatchState.Waiting || state == MatchState.Starting) isGameStarted = false;
         else isGameStarted = MatchTimeManagerBase.Instance.TimeState == RoomTimeState.Started;      
     }
-
     void OnMatchStart()
     {
         isGameStarted = GameController.Instance.GameMatchState != MatchState.Waiting && MatchTimeManagerBase.Instance.TimeState == RoomTimeState.Started;
         UpdateTargetList();
     }
-
     public override void OnDeath() { CancelInvoke(); }
-
     private float Speed
     {
         get => Agent.speed;
@@ -1281,7 +1139,6 @@ public class AIBotAgent : AIBotCore
             }
         }
     }
-
     public override Vector3 TargetPosition
     {
         get
@@ -1299,7 +1156,6 @@ public class AIBotAgent : AIBotCore
             return Vector3.zero;
         }
     }
-
     private Vector3 GetPositionAround(Vector3 positionReference, float radius)
     {
         var v = Random.insideUnitSphere * radius;
@@ -1307,7 +1163,6 @@ public class AIBotAgent : AIBotCore
         v += positionReference;
         return v;
     }
-
     public Transform GetNearestPlayer()
     {
         if (availableTargets.Count > 0)
@@ -1328,32 +1183,26 @@ public class AIBotAgent : AIBotCore
         }
         else { return null; }
     }
-
     public Transform GetTargetOnRange()
     {
         Transform t = null;
         if (availableTargets.Count <= 0) return t;
-
         List<Transform> inRange = new List<Transform>();
         float distance;
         for (int i = 0; i < availableTargets.Count; i++)
         {
             t = availableTargets[i];
             if (t == null || t.name.Contains("(die)")) continue;
-
             distance = CommonUtil.Distance(m_Transform.localPosition, t.position);
             if (distance < soldierSettings.mediumRange)
             {
                 inRange.Add(t);
             }
         }
-
         if (inRange.Count > 0) t = inRange[Random.Range(0, inRange.Count)];
         else t = null;
-
         return t;
     }
-
     private GamePlayer m_GameActor;
     public GamePlayer BotGameActor
     {
@@ -1363,7 +1212,6 @@ public class AIBotAgent : AIBotCore
             return m_GameActor;
         }
     }
-
     bool isNewDebug = false;
     public void SetDebugState(int stateID, bool initial = false)
     {
@@ -1376,13 +1224,10 @@ public class AIBotAgent : AIBotCore
     }
     public bool Probability(float probability) { return Random.value <= probability; }
     public bool ForceFollowAtHalfHealth => AIHealth.GetHealth() < 50 && behaviorSettings.forceFollowAtHalfHealth;
-
     public float TargetDistance { get { return CommonUtil.Distance(m_Transform.position, TargetPosition); } }
     public bool HasATarget { get => Target != null; }
     private bool CanCover(float inTimePassed) { return ((time - CoverTime) >= inTimePassed); }
-
 #if UNITY_EDITOR
-
     private void OnDrawGizmos()
     {
         if (isDeath) return;
@@ -1391,7 +1236,6 @@ public class AIBotAgent : AIBotCore
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(Agent.destination, 0.3f);
             Gizmos.DrawLine(m_Transform.localPosition, Agent.destination);
-
             if (Agent.path != null && Agent.path.corners != null)
             {
                 Gizmos.color = Color.yellow;
@@ -1405,7 +1249,6 @@ public class AIBotAgent : AIBotCore
                     {
                         Gizmos.DrawSphere(Agent.path.corners[i], 0.2f);
                     }
-
                     Gizmos.DrawLine(Agent.path.corners[i - 1], Agent.path.corners[i]);
                 }
             }
@@ -1420,7 +1263,6 @@ public class AIBotAgent : AIBotCore
         Gizmos.DrawLine(m_Transform.localPosition, LookAtPosition);
         Gizmos.DrawWireCube(LookAtPosition, Vector3.one * 0.3f);
     }
-
     private void OnDrawGizmosSelected()
     {
         if (!DebugStates || soldierSettings == null) return;

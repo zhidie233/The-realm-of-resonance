@@ -66,18 +66,13 @@ public class RoomChat : RoomChatBase
             }
         }
     }
-
-    /// <summary>
     /// 接收服务器聊天事件发来的网络消息
-    /// </summary>
-    /// <param name="data"></param>
     void OnNetworkMessageReceived(ExitGames.Client.Photon.Hashtable data)
     {
         var messageTarget = (MessageTarget)data["target"];
         var sender = (Player)data["sender"];
         var message = (string)data["chat"];
-
-        if (messageTarget == MessageTarget.Team && sender.GetPlayerTeam() != NetworkWrapper.LocalPlayer.GetPlayerTeam())//check if team message and only team receive it
+        if (messageTarget == MessageTarget.Team && sender.GetPlayerTeam() != NetworkWrapper.LocalPlayer.GetPlayerTeam())
             return;
 
         string senderName = "anonymous";
@@ -103,11 +98,7 @@ public class RoomChat : RoomChatBase
         chatText.CrossFadeAlpha(1, 0.3f, true);
         Invoke(nameof(HideChat), 5);
     }
-
-    /// <summary>
     /// 通过网络向其他所有客户端发送文本消息
-    /// </summary>
-    /// <param name="txt"></param>
     public override void SetChat(string txt)
     {
         if (!NetworkWrapper.IsConnected || !CanUseTheChat)
@@ -121,11 +112,7 @@ public class RoomChat : RoomChatBase
 
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.ChatEvent, data);
     }
-
-    /// <summary>
     /// 仅在本地聊天窗口发布消息。
-    /// </summary>
-    /// <param name="newLine"></param>
     public override void SetChatLocally(string newLine)
     {
         this.messages.Add(newLine);

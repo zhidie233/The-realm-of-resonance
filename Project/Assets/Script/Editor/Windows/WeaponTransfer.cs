@@ -13,8 +13,7 @@ using UnityEditor.SceneManagement;
        private bool isDone = false;
        Texture[] stateIcons = new Texture[3];
        readonly string LAST_PATH = "last-path-ls";
-
-       [MenuItem("游戏设置/工具/导入武器")]
+       [MenuItem("项目工具/工具/导入武器")]
        static void OpenImport()
        {
            GetWindow<WeaponTransfer>("导入").PrepareToImport(null, null);
@@ -347,7 +346,6 @@ using UnityEditor.SceneManagement;
 
                string relativepath = "Assets" + subPath;
                relativepath += "/" + root.name + ".prefab";
-               Debug.Log(relativepath);
 #if UNITY_2018_3_OR_NEWER
                GameObject newPrefab = PrefabUtility.SaveAsPrefabAsset(root, relativepath);
 #else

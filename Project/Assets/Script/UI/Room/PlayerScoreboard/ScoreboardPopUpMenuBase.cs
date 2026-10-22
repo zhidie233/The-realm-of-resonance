@@ -29,11 +29,7 @@ public abstract class ScoreboardPopUpMenuBase : MonoBehaviour
     public abstract ScoreboardPopUpMenuBase SetTargetPlayer(Player player);
 
     public abstract ScoreboardPopUpMenuBase FilterMenuOptions(MenuFilter filter);
-
-    /// <summary>
     /// 
-    /// </summary>
-    /// <param name="buttonName"></param>
     /// <returns>按钮 id</returns>
     public abstract int AddButton(string buttonName, MenuFilter filter);
 }

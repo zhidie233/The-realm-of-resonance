@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,7 +11,6 @@ using UnityEngine;
 
        private void OnTransformParentChanged()
        {
-           Debug.Log("change");
        }
 
        public void Check()

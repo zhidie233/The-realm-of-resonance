@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 
@@ -42,14 +42,10 @@ public static class InputHandler
         InputType t = InputType.Keyboard;
         for(int  i = 0; i < names.Length; i++)
         {
-            Debug.Log("Joystick: " + names[i]);
         }
         return t;
     }
-
-    /// <summary>
     /// 用它代替 Input.GetAxis("Vertical");
-    /// </summary>
     public static float VerticalAxis
     {
         get
@@ -79,10 +75,7 @@ public static class InputHandler
             }
         }
     }
-
-    /// <summary>
     /// 手柄上的开始按钮
-    /// </summary>
     public static bool isStartPad
     {
         get
@@ -90,10 +83,7 @@ public static class InputHandler
             return Input.GetKeyDown("joystick button 7");
         }
     }
-
-    /// <summary>
     /// 用它代替 Input.GetAxis("Horizontal");
-    /// </summary>
     public static float HorizontalAxis
     {
         get

@@ -100,7 +100,7 @@ public class AIBotAttack : AIBotAttackBase
             return;
         }
         if (attackTime > Time.time) return;
-       
+
         if (Grenades > 0 && AI.TargetDistance >= MinumumDistanceForGranades && FollowingShoots > 5)
         {
             if ((Random.Range(0, 200) > 165))
@@ -217,7 +217,7 @@ public class AIBotAttack : AIBotAttackBase
         m_BulletData.WeaponName = "Grenade";
         m_BulletData.ActorViewID = photonView.ViewID;
         m_BulletData.GameActor = new GamePlayer(photonView, false, true);
-        bullet.GetComponent<ProjectileBase>().InitProjectile(m_BulletData);//ProjectileBody.cs
+        bullet.GetComponent<ProjectileBase>().InitProjectile(m_BulletData);
 
         if (!network)
         {
@@ -310,7 +310,6 @@ public class AIBotAttack : AIBotAttackBase
         float gSquared = Physics.gravity.sqrMagnitude;
         float b = speed * speed + Vector3.Dot(toTarget, Physics.gravity);
         float discriminant = b * b - gSquared * toTarget.sqrMagnitude;
-
         //检查以最大速度或更低速度能否命中目标。
         if (discriminant < 0)
         {
@@ -326,13 +325,11 @@ public class AIBotAttack : AIBotAttackBase
         }
 
         float discRoot = Mathf.Sqrt(discriminant);
-
         //给定最大速度时的最高射击角：
         float T_max = Mathf.Sqrt((b + discRoot) * 2f / gSquared);
 
         float T = 0;
         T = T_max;
-
         //把命中时间换算成发射速度：
         velocity = toTarget / T - Physics.gravity * T / 2f;
 
@@ -348,7 +345,6 @@ public class AIBotAttack : AIBotAttackBase
             yield return new WaitForSeconds(0.5f);
         }
     }
-
 
     public void OnPhotonPlayerConnected(Player newPlayer)
     {

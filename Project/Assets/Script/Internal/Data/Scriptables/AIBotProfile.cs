@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEngine;
-
-   [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "Game/AI/Soldier Settings")]
+   [CreateAssetMenu(fileName = "AI Soldier Settings", menuName = "项目/AI/Soldier Settings")]
    public class AIBotProfile : ScriptableObject
    {
        [Header("Speeds")]
@@ -15,7 +14,7 @@ using UnityEngine;
        public float mediumRange = 25.0f;
        public float farRange = 20f;
        public float limitRange = 50f;
-       
+
        [Header("Height Perception")]
        public float maxHeightDifference = 500.0f; // 最大可跨越高度差
        public float stepHeight = 0.5f; // 台阶高度

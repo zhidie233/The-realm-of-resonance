@@ -1,9 +1,6 @@
 #if UNITY_EDITOR
 using UnityEngine;
-
-   /// <summary>
    /// 绘制 SpawnLocation 的圆顶形出生区域。
-   /// </summary>
    public class DomeGizmo
    {
        const int ArcCount = 8;

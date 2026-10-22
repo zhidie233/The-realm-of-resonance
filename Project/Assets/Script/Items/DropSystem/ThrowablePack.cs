@@ -1,24 +1,19 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 public class ThrowablePack : MonoBehaviourBase
 {
     [Header("SETTINGS")]
     public int AmountOfPacks = 3;
-    /// <summary>
     /// 实例化预制体时强制应用
-    /// </summary>
     public float ForceImpulse = 500;
     [Range(1, 4)] public float CallDelay = 1.4f;
     public float dropInstanceDistance = 1f;
 
     [Header("REFERENCES")]
-    /// <summary>
     /// 用于实例化的预制体
-    /// </summary>
     public GameObject DropCallerPrefab;
     public AudioClip SpawnSound;
     public PlayerClass CurrentPlayerClass { get; set; } = PlayerClass.Vanguard;
-
 
     private int remainingPacks;
 
@@ -28,11 +23,9 @@ public class ThrowablePack : MonoBehaviourBase
         remainingPacks = AmountOfPacks;
     }
 
-
     public override void OnUpdate()
     {
         if (GameConfig.Instance.isChatOpen) return;
-       
 
         if (GameInput.ThrowPack())
         {
@@ -49,7 +42,6 @@ public class ThrowablePack : MonoBehaviourBase
         {
             id = 1;
         }
-
 
         ThrowCaller(id);
     }

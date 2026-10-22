@@ -1,8 +1,7 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
-[CreateAssetMenu(fileName = "Weapon Slot Guide", menuName = "Game/Weapon/SlotGuide")]
+[CreateAssetMenu(fileName = "Weapon Slot Guide", menuName = "项目/Weapon/SlotGuide")]
 public class WeaponSlotGuide : ScriptableObject
 {
     [Reorderable] public FirearmType[] primarySlots;

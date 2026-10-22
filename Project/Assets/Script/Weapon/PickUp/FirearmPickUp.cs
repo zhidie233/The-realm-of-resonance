@@ -1,10 +1,7 @@
 using System.Collections;
 using UnityEngine;
-
-/// <summary>
 /// 默认武器拾取脚本
 /// 继承 FirearmPickUpBase 即可用自己的脚本
-/// </summary>
 public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
 {
     #region Public members
@@ -21,7 +18,7 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
     private bool localInsideTrigger = false;
     private byte uniqueLocal = 0;
     #endregion
-    
+
     #region Unity Methods
     protected override void Awake()
     {
@@ -136,10 +133,7 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
             }
         }
     }
-
-    /// <summary>
     /// 拾取武器
-    /// </summary>
     public override void PickUp()
     {
         if (!GetGameMode.GetGameModeInfo().allowWeaponPickup) return;
@@ -154,19 +148,13 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
         PickUpUIBase.Instance?.Hide();
         onPickUp?.Invoke();
     }
-
-    /// <summary>
     /// 玩家看向武器时调用
-    /// </summary>
     public void OnRayDetectedByPlayer()
     {
         isFocus = true;
         PickUpUIBase.Instance?.OnOverWeapon(this);
     }
-
-    /// <summary>
     /// 玩家不再看向武器时调用
-    /// </summary>
     public void OnUnDetectedByPlayer()
     {
         isFocus = false;

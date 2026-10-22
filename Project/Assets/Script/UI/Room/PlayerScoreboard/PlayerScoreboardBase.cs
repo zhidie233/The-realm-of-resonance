@@ -5,9 +5,7 @@ using UnityEngine;
 
 public abstract class PlayerScoreboardBase : MonoBehaviourBase
 {
-    /// <summary>
     /// 不想显示记分板时，把此属性设为 false 即可
-    /// </summary>
     private bool blockScoreboards = false;
     public bool BlockScoreboards
     {

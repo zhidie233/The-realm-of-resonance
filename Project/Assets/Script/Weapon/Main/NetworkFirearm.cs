@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 public class NetworkFirearm : MonoBehaviour
@@ -61,7 +61,7 @@ public class NetworkFirearm : MonoBehaviour
 
             bulletRotation = Quaternion.LookRotation(hitPoint - bulletPosition);
             //子弹信息在 start 函数中设置
-            GameObject newBullet = ObjectRecyclerBase.Instance.Instantiate(LocalGun.BulletName, bulletPosition, bulletRotation); // create a bullet
+            GameObject newBullet = ObjectRecyclerBase.Instance.Instantiate(LocalGun.BulletName, bulletPosition, bulletRotation);
             // 把枪械信息写入数组传给子弹
             m_BulletData.Damage = 0;
             m_BulletData.ImpactForce = 0;
@@ -87,13 +87,12 @@ public class NetworkFirearm : MonoBehaviour
     }
 
     // 若是手雷
-    // <param name="s"></param>
     public void GrenadeFire(float s, Vector3 position, Quaternion rotation, Vector3 direction)
     {
         if (LocalGun != null)
         {
             //子弹信息在 start 函数中设置
-            GameObject newBullet = Instantiate(Bullet, position, rotation) as GameObject; // create a bullet
+            GameObject newBullet = Instantiate(Bullet, position, rotation) as GameObject;
             // 把枪械信息写入数组传给子弹
             ShotData bulletData = new ShotData();
             bulletData.SetInaccuracity(s, LocalGun.spreadMinMax.y);
@@ -106,8 +105,7 @@ public class NetworkFirearm : MonoBehaviour
             {
                 proRigid.AddForce(direction, ForceMode.Impulse);
             }
-
-            newBullet.GetComponent<ProjectileBase>().InitProjectile(bulletData); //ProjectileBody.cs
+            newBullet.GetComponent<ProjectileBase>().InitProjectile(bulletData);
             Source.clip = LocalGun.FireSound;
             Source.spread = Random.Range(1.0f, 1.5f);
             Source.Play();
@@ -129,7 +127,7 @@ public class NetworkFirearm : MonoBehaviour
     {
         if (Info.Type != FirearmType.Grenade)
         {
-            Debug.LogError("Gun type is not grenade, can't desactive it: " + Info.Type);
+            Debug.LogError("武器类型不是投掷物，无法禁用：" + Info.Type);
             return;
         }
         //隐藏网络枪/手雷时改用换成不可见材质的方式
@@ -174,7 +172,6 @@ public class NetworkFirearm : MonoBehaviour
     }
 
     // 返回上半身状态 ID，用于确定装备该武器时播放哪些上半身动画
-    // <returns></returns>
     public int GetUpperStateID()
     {
         if (!useCustomPlayerAnimations || customUpperAnimationID <= 20) return (int)Info.Type;
@@ -208,7 +205,7 @@ public class NetworkFirearm : MonoBehaviour
             }
             else
             {
-                Debug.LogError("This tpv weapon: " + gameObject.name + " has not been defined!");
+                Debug.LogError("第三人称武器 " + gameObject.name + " 尚未定义。");
                 return GameConfig.Instance.GetWeapon(0);
             }
         }

@@ -20,7 +20,6 @@ public class ExplosionDamage : ExplosionBase
     private RaycastHit hitInfo;
     private ShotData cachedData;
     private GamePlayer creator;
-
     // 不是远程受击
     void Start()
     {
@@ -40,7 +39,7 @@ public class ExplosionDamage : ExplosionBase
             }
             else
             {
-                Debug.LogWarning("Explosion has not been initialized.");
+                Debug.LogWarning("爆炸尚未初始化。");
                 return;
             }
         }
@@ -67,7 +66,6 @@ public class ExplosionDamage : ExplosionBase
     {
         explosionRadius = radius;
     }
-
     // 对敌人施加爆炸的冲击伤害
     private void DoDamage()
     {
@@ -77,7 +75,6 @@ public class ExplosionDamage : ExplosionBase
         DoPlayersDamage();
         DoCollisionDamage();
     }
-
     // 对真人玩家施加伤害。玩家的波及范围按距离计算而不检测碰撞体，实现更简单、性能更好。
     void DoPlayersDamage()
     {
@@ -89,7 +86,7 @@ public class ExplosionDamage : ExplosionBase
         {
             if (player == null)
             {
-                Debug.LogError("Player " + player.NickName + " not found in this room.");
+                Debug.LogError("房间中没有找到玩家 " + player.NickName + "。");
                 continue;
             }
 
@@ -111,7 +108,6 @@ public class ExplosionDamage : ExplosionBase
             odi.Cause = (!creator.isRealPlayer) ? DamageCause.Bot : DamageCause.Explosion;
             odi.GunID = cachedData.WeaponID;
             odi.Actor = NetworkWrapper.LocalPlayer;
-            
             // 检查团队关系并调整共鸣值
             if (!isOneTeamMode && player.GetPlayerTeam() == creator.Team)
             {
@@ -126,7 +122,7 @@ public class ExplosionDamage : ExplosionBase
             pdm?.DoDamage(odi);
         }
     }
-    
+
     void NotifyMasterClientResonanceChange(string resonanceKey, float damage)
     {
         if (ResonanceManager.Instance == null) return;
@@ -145,7 +141,6 @@ public class ExplosionDamage : ExplosionBase
                 resonanceKey, damage);
         }
     }
-
     // 对物体、物品、机器人等施加伤害，条件是碰撞体在爆炸半径内
     void DoCollisionDamage()
     {
@@ -186,13 +181,11 @@ public class ExplosionDamage : ExplosionBase
 
             if(damageData.GameActor == null)
             {
-                Debug.Log($"Explosion actor '{creator.ActorViewID}' was not found in the scene, maybe left the match?");
                 return;
             }
             damageable.ReceiveDamage(damageData);
         }
     }
-
     // 爆炸发生在本地且玩家被击中时，只发送震动
     void ApplyShake()
     {
@@ -201,7 +194,6 @@ public class ExplosionDamage : ExplosionBase
             GameEvents.DoPlayerCameraShake(shakerPresent, "shakerKey");
         }
     }
-
     // 根据玩家与爆炸点的距离计算产生的伤害
     private int CalculatePlayerDamage(Transform trans, Player p)
     {
@@ -225,22 +217,12 @@ public class ExplosionDamage : ExplosionBase
         float distance = CommonUtil.Distance(transform.position, trans.position);
         return Mathf.Clamp((int)(explosionDamage * ((explosionRadius - distance) / explosionRadius)), 0, (int)explosionDamage);
     }
-
     // 简单检查爆炸点与目标碰撞体之间是否有遮挡，若有则爆炸不应影响目标。
-    // <param name="target"></param>
-    // <param name="offset"></param>
-    // <returns></returns>
     private bool ExplosionCanHitTarget(Transform target, Vector3 offset, bool rootOnly = true)
     {
         return ExplosionCanHitTarget(target, offset, target.position, rootOnly);
     }
-
     // 简单检查爆炸点与目标碰撞体之间是否有遮挡，若有则爆炸不应影响目标。
-    // <param name="target"></param>
-    // <param name="offset"></param>
-    // <param name="targetPosition"></param>
-    // <param name="rootOnly"></param>
-    // <returns></returns>
     private bool ExplosionCanHitTarget(Transform target, Vector3 offset, Vector3 targetPosition, bool rootOnly = true)
     {
         bool result = false;
@@ -264,9 +246,7 @@ public class ExplosionDamage : ExplosionBase
         }
         return result;
     }
-
     // 获取爆炸范围内的玩家
-    // <returns></returns>
     private List<Player> GetPlayersInRange()
     {
         List<Player> list = new List<Player>();
@@ -330,9 +310,7 @@ public class ExplosionDamage : ExplosionBase
         }
         return list;
     }
-
     // 计算本地玩家是否在爆炸半径内
-    // <returns></returns>
     private bool isMyInRange()
     {
         GameObject p = GameController.Instance.LocalPlayer;

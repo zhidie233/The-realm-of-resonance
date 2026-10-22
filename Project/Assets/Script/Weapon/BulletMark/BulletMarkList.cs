@@ -1,17 +1,11 @@
 using System;
 using UnityEngine;
-
-   [CreateAssetMenu(fileName = "Bullet Decal List", menuName = "Game/Weapons/Decal/List")]
+   [CreateAssetMenu(fileName = "Bullet Decal List", menuName = "项目/Weapons/Decal/List")]
    public class BulletMarkList : ScriptableObject
    {
        public int genericSurfaceId = 0;
        public SurfaceMark[] surfaceDecals;
-
-       /// <summary>
        /// 从给定表面随机取一个材质
-       /// </summary>
-       /// <param name="surfaceTag"></param>
-       /// <returns></returns>
        public SurfaceMark GetDecalForSurface(string surfaceTag)
        {
            for (int i = 0; i < surfaceDecals.Length; i++)
@@ -23,12 +17,7 @@ using UnityEngine;
            }
            return surfaceDecals[genericSurfaceId];
        }
-
-       /// <summary>
        /// 从给定表面随机取一个材质
-       /// </summary>
-       /// <param name="surfaceTag"></param>
-       /// <returns></returns>
        public SurfaceMark GetDecalForTag(Transform trans)
        {
            for (int i = 0; i < surfaceDecals.Length; i++)

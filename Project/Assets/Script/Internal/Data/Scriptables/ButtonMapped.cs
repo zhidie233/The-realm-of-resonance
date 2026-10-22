@@ -1,8 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-   [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "Game/Input/Input Mapped")]
+   [Serializable, CreateAssetMenu(fileName = "Button Mapped", menuName = "项目/Input/Input Mapped")]
    public class ButtonMapped : ScriptableObject
    {
        public InputType inputType = InputType.Keyboard;

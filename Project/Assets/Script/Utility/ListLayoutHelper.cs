@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,10 +13,7 @@ using UnityEngine;
        private List<GameObject> poolList;
        public int Current { get; set; } = 0;
        public bool IsInitialize => poolList != null && poolList.Count > 0;
-
-       /// <summary>
        /// 按需初始化处理器
-       /// </summary>
        public void Initialize()
        {
            if (IsInitialize) return;
@@ -35,11 +32,7 @@ using UnityEngine;
 
            Prefab.SetActive(false);
        }
-
-       /// <summary>
        /// 从池中获取一个可用对象
-       /// </summary>
-       /// <returns></returns>
        public GameObject Instantiate()
        {
            GameObject go = null;
@@ -61,12 +54,7 @@ using UnityEngine;
            Current = (Current + 1) % PoolCount;
            return go;
        }
-
-       /// <summary>
        /// 获取池中下一个可用对象，并返回其上挂载的指定组件。
-       /// </summary>
-       /// <typeparam name="T"></typeparam>
-       /// <returns></returns>
        public T InstatiateAndGet<T>()
        {
            var go = Instantiate();

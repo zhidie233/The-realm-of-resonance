@@ -1,11 +1,8 @@
-﻿using System;
+using System;
 using System.Collections;
 using UnityEngine;
-
-/// <summary>
 /// 处理 FPWeapon 动画的 Game 默认脚本。
 /// 脚本继承 WeaponRigBase.cs 后可以用自己的脚本处理动画
-/// </summary>
 public class WeaponRigHandler : WeaponRigBase
 {
     #region Public members
@@ -122,7 +119,7 @@ public class WeaponRigHandler : WeaponRigBase
     public override void PlayReload(float reloadTime, int[] data, AnimationFlags flags, Action onFinish = null)
     {
         if (flags.IsEnumFlagPresent(AnimationFlags.SplitReload))
-            SplitReload(reloadTime, data[0]); // data[0] = number of bullets to add to the magazine.
+            SplitReload(reloadTime, data[0]);
         else
             Reload(reloadTime);
     }
@@ -189,10 +186,7 @@ public class WeaponRigHandler : WeaponRigBase
             }
         }
     }
-
-    /// <summary>
     /// 播放一次开火动画
-    /// </summary>
     public float Fire()
     {
         if (m_AnimationType == AnimationType.Animation)
@@ -231,10 +225,7 @@ public class WeaponRigHandler : WeaponRigBase
             return SoloFireClip.length / FireSpeed;
         }
     }
-
-    /// <summary>
     /// 播放刀的开火动画
-    /// </summary>
     public float KnifeFire(bool Quickfire)
     {
         if (m_AnimationType == AnimationType.Animation)
@@ -257,12 +248,7 @@ public class WeaponRigHandler : WeaponRigBase
             return SoloFireClip.length / FireSpeed;
         }
     }
-
-    /// <summary>
     /// 播放手雷的开火动画
-    /// </summary>
-    /// <param name="fastFire"></param>
-    /// <returns></returns>
     public float FireGrenade(bool fastFire)
     {
         if (fastFire)
@@ -293,11 +279,8 @@ public class WeaponRigHandler : WeaponRigBase
         yield return new WaitForSeconds(DrawWeapon());
         AimFire();
     }
-
-    /// <summary>
     /// 抛出手雷预制体（来自 FirearmController.cs）
     /// 应从动画事件中调用
-    /// </summary>
     public void ThrowProjectile()
     {
         StartCoroutine(ParentGun.ThrowGrenade(false, false));
@@ -336,10 +319,7 @@ public class WeaponRigHandler : WeaponRigBase
             return FireAimAnimation.length / FireSpeed;
         }
     }
-
-    /// <summary>
     /// 播放掏枪动画
-    /// </summary>
     public float DrawWeapon()
     {
         if (DrawName == null || !gameObject.activeInHierarchy)
@@ -362,10 +342,7 @@ public class WeaponRigHandler : WeaponRigBase
             return DrawName.length / DrawSpeed;
         }
     }
-
-    /// <summary>
     ///  播放收枪动画
-    /// </summary>
     public float HideWeapon()
     {
         if (m_AnimationType == AnimationType.Animation)
@@ -385,11 +362,7 @@ public class WeaponRigHandler : WeaponRigBase
         }
         return TakeOut == null ? 0 : TakeOut.length / HideSpeed;
     }
-
-    /// <summary>
     /// 处于换弹状态时由动画调用的事件
-    /// </summary>
-    /// <param name="ReloadTime"></param>
     public void Reload(float ReloadTime)
     {
         if (ReloadName == null)
@@ -408,10 +381,7 @@ public class WeaponRigHandler : WeaponRigBase
             animator.Play("Reload", 0, 0);
         }
     }
-
-    /// <summary>
     /// 开火时由动画调用的事件
-    /// </summary>
     public void FireAudio()
     {
         if (m_source != null && m_Fire != null)
@@ -491,11 +461,8 @@ public class WeaponRigHandler : WeaponRigBase
             }
         }
     }
-
-    /// <summary>
     /// 用来更好地配合
     /// 换弹音效与动画配合
-    /// </summary>
     public void ReloadSound(int index)
     {
         if (m_source == null)

@@ -7,7 +7,7 @@ public class ProjectileBody : ProjectileBase
     public ProjectileType m_Type = ProjectileType.Grenade;
     public ExplosionMethod explosionMethod = ExplosionMethod.Timer;
     public int TimeToExploit = 10;
-    public GameObject explosion;   // instanced explosion 
+    public GameObject explosion;
     public TrailRenderer trailRenderer;
     #endregion
 
@@ -18,8 +18,8 @@ public class ProjectileBody : ProjectileBase
     #endregion
 
     #region Private members
-    private float speed = 75.0f;              // bullet speed
-    private float impactForce;        // force applied to a rigid body object
+    private float speed = 75.0f;
+    private float impactForce;
     private float damage;
     private ShotData bulletData;
 

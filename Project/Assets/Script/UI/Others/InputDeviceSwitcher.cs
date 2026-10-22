@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
    public class InputDeviceSwitcher : MonoBehaviour
    {
@@ -20,7 +20,7 @@
            if (init) return;
 
            InputType currentType = InputBindings.Instance.mappedInstance.inputType;
-           int id = 0; // keyboard
+           int id = 0;
            if(currentType == InputType.Xbox || currentType == InputType.Playstation)
            {
                id = 1;

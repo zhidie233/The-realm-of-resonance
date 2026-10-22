@@ -10,29 +10,14 @@ public abstract class PlayerRagdollBase : MonoBehaviour
         public bool AutoDestroy;
         public Transform RightHandChild;
     }
-
-    /// <summary>
     /// 把远程玩家变成布娃娃
-    /// </summary>
     public abstract void Ragdolled(RagdollInfo info);
-
-    /// <summary>
     /// 把本地玩家变成布娃娃
-    /// </summary>
     public abstract void SetLocalRagdoll(RagdollInfo info);
-
-    /// <summary>
     /// 启用/停用布娃娃的所有碰撞体和刚体
-    /// </summary>
     public abstract void SetActiveRagdollPhysics(bool active);
-
-    /// <summary>
     /// 让该布娃娃碰撞体忽略或检测指定的碰撞体
-    /// </summary>
     public abstract void IgnoreColliders(Collider[] list, bool ignore);
-
-    /// <summary>
     /// 在这个函数里应让该玩家碰撞体忽略本地玩家的碰撞体。
-    /// </summary>
     public abstract void IgnorePlayerCollider();
 }

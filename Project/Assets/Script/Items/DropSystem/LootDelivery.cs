@@ -1,11 +1,8 @@
-﻿using System.Collections;
+using System.Collections;
 using UnityEngine;
-
-/// <summary>
 /// 此脚本处理游戏默认的空投/包裹投放
 /// 若要自定义投放方式，新建脚本并从 LootBase 继承
 /// 此脚本仅作参考。
-/// </summary>
 public class LootDelivery : LootBase
 {
     public Transform PackageHolder;
@@ -79,7 +76,7 @@ public class LootDelivery : LootBase
                 networkItem.OnLocalInstanced();
             }
         }
-        else { Debug.Log("No kit instance"); }
+        else {  }
         if (DropSound != null)
         {
             AudioSource.PlayClipAtPoint(DropSound, transform.position, 1);

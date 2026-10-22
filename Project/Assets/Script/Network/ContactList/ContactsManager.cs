@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
@@ -12,7 +12,7 @@ using TMPro;
        private bool firstBuild = false;
        private List<FriendInfo> contactList = new List<FriendInfo>();
        private Status m_status = Status.Idle;
-       
+
        public override int FriendsCount => contactList.Count;
 
        void Awake()
@@ -61,10 +61,7 @@ using TMPro;
                return;
            }
        }
-
-       /// <summary>
        /// 调用以更新好友列表
-       /// </summary>
        void UpdateList()
        {
            if (!NetworkWrapper.IsConnected || NetworkWrapper.InRoom)
@@ -98,7 +95,7 @@ using TMPro;
 
        public override void AddFriend(string friend)
        {
-           
+
            if (friendsNames.Contains(friend)) return;
            if (friendsNames.Count > GameConfig.Instance.contactLimit)
            {
@@ -119,14 +116,14 @@ using TMPro;
                FriendUI.ShowMessage("You can't add yourself.");
                return;
            }
-           
+
            friendsNames.Add(friend);
            PhotonNetwork.FindFriends(friendsNames.ToArray());
            FriendUI.UpdateContactList(true);
            SaveFriends();
            m_status = Status.Fetching;
        }
-       
+
        public override void RemoveFriend(string friend)
        {
            if (friendsNames.Contains(friend))
@@ -154,7 +151,7 @@ using TMPro;
                FriendUI.UpdateContactList(true);
                m_status = Status.Fetching;
            }
-           else { Debug.Log("This user doesn't exist"); }
+           else {  }
        }
 
        public override FriendInfo[] GetFriends()
@@ -181,7 +178,7 @@ using TMPro;
            {
                if (item.UserId == NetworkWrapper.NickName) return;
            }
-           
+
            bool build = (contactList.Count != this.contactList.Count);
            if (contactList.Count == 1)
            {
@@ -205,10 +202,7 @@ using TMPro;
            InvokeRepeating(nameof(UpdateList), 1, 1);
            FriendUI.SetActiveList(true);
        }
-
-       /// <summary>
        /// 每个玩家的自定义 key，可在同一设备上保存多份好友列表
-       /// </summary>
        private string SaveKey
        {
            get

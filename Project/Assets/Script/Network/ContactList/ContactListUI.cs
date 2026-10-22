@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using Photon.Pun;
@@ -61,11 +61,7 @@ using TMPro;
        {
            return isExpand;
        }
-
-       /// <summary>
        /// 好友面板里每个好友对应的 UI 实例
-       /// </summary>
-       /// <param name="friends"></param>
        public void InstanceContactList(string[] friends)
        {
            for (int i = 0; i < friends.Length; i++)
@@ -75,8 +71,6 @@ using TMPro;
                f.transform.SetParent(PanelList, false);
            }
        }
-
-       /// <summary>
        /// 每次好友列表更新时调用
        /// 更新好友列表期间 Photon 会临时把
        // isOnline 和 isInRoom 置为 false
@@ -85,7 +79,6 @@ using TMPro;
        // 因此把在线状态和房间先存进一个
        // 字典，等到真正收到更新时
        // 再记录更新后的值
-       /// </summary>
        public void OnUpdatedContactList()
        {
            if (!PhotonNetwork.IsConnected || PhotonNetwork.InRoom)
@@ -162,7 +155,7 @@ using TMPro;
                ConnectFriendsText.text = OnlineFriends.Count.ToString();
 
            }
-           else//Just update list
+           else
            {
                for (int i = 0; i < cacheFriendsInfo.Count; i++)
                {
@@ -179,7 +172,6 @@ using TMPro;
            }
            UpdateCount(friends);
        }
-
        void InstanceFriend(FriendInfo[] friends)
        {
            for (int i = 0; i < friends.Length; i++)
@@ -193,7 +185,6 @@ using TMPro;
                f.transform.SetParent(PanelList, false);
            }
        }
-
        void UpdateCount(FriendInfo[] friends)
        {
            OnlineCount = 0;
@@ -209,7 +200,6 @@ using TMPro;
                FriendsCountText.text = OnlineCount + "/" + friends.Length;
            }
        }
-
        void CleanCacheList()
        {
            if (cacheFriendsInfo.Count > 0)
@@ -218,30 +208,27 @@ using TMPro;
                {
                    Destroy(cacheFriendsInfo[i].gameObject);
                }
+
            }
            cacheFriendsInfo.Clear();
        }
-
        public void SetOnlineFirst(bool first)
        {
            onlineFirst = first;
            ArrowImage.sprite = (onlineFirst == true) ? UpArrowSprite : BottomArrowSprite;
            UpdateContactList(true);
        }
-
        public void ChangeOnlineFirst()
        {
            onlineFirst = !onlineFirst;
            ArrowImage.sprite = (onlineFirst == true) ? UpArrowSprite : BottomArrowSprite;
            UpdateContactList(true);
        }
-
        public void ToggleView()
        {
            isExpand = !isExpand;
            ExpandView(isExpand);
        }
-
        public void ExpandView(bool expand)
        {
            isExpand = expand;
@@ -259,7 +246,6 @@ using TMPro;
            }
            if (emptyRow != null) emptyRow.Expand(isExpand);
        }
-
        IEnumerator DoExpand()
        {
            float d = 0;
@@ -267,7 +253,6 @@ using TMPro;
            var width = isExpand ? expandWidth : minifiedWidth;
            var target = new Vector2(width, origin.y);
            float t = 0;
-
            while(d < 1)
            {
                d += Time.deltaTime / 0.3f;
@@ -276,7 +261,6 @@ using TMPro;
                yield return null;
            }
        }
-
        public override void ShowMessage(string log)
        {
            CancelInvoke(nameof(HideLog));
@@ -287,7 +271,6 @@ using TMPro;
            }
            Invoke(nameof(HideLog), 3);
        }
-
        void HideLog()
        {
            if (LogText != null)
@@ -295,12 +278,10 @@ using TMPro;
                LogText.CrossFadeAlpha(0, 1, true);
            }
        }
-
        public override void SetActiveList(bool active)
        {
            Panel.SetActive(active);
        }
-
        public override bool IsPlayerListed(string fname)
        {
            for (int i = 0; i < cacheFriendsInfo.Count; i++)
@@ -311,6 +292,5 @@ using TMPro;
                }
            }
            return false;
-
        }
    }

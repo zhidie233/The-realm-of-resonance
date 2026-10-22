@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -48,7 +48,6 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
 
     public void OnConnectedToMaster()
     {
-        Debug.Log("Offline Connected to Master");
         Hashtable roomOption = new Hashtable();
         roomOption[NetworkKeys.TimeRoomKey] = MatchTime;
         roomOption[NetworkKeys.GameModeKey] = gameMode.ToString();
@@ -72,7 +71,6 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
             EmptyRoomTtl = 0,
         }, null);
     }
-
 
     public void OnConnected()
     {

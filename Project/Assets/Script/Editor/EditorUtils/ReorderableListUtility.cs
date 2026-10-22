@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
@@ -181,25 +181,16 @@ using System.Collections;
        }
 
        #region Simple string path based extensions
-       /// <summary>
        /// 返回 SerializedProperty 的父级路径
-       /// </summary>
-       /// <param name="prop"></param>
-       /// <returns></returns>
        public static string ParentPath(this SerializedProperty prop)
        {
            int lastDot = prop.propertyPath.LastIndexOf('.');
-           if (lastDot == -1) // No parent property
+           if (lastDot == -1)
                return "";
 
            return prop.propertyPath.Substring(0, lastDot);
        }
-
-       /// <summary>
        /// 以另一个 SerializedProperty 的形式返回 SerializedProperty 的父级
-       /// </summary>
-       /// <param name="prop"></param>
-       /// <returns></returns>
        public static SerializedProperty GetParentProp(this SerializedProperty prop)
        {
            string parentPath = prop.ParentPath();
@@ -207,16 +198,9 @@ using System.Collections;
        }
        #endregion
 
-
        #region Reflection based extensions
        // 获取 SerializedProperty 所属实例的思路参考自 Unity 社区旧帖
-
-       /// <summary>
        /// 用反射获取 SerializedProperty 的实际数据实例
-       /// </summary>
-       /// <typeparam name="T"></typeparam>
-       /// <param name="prop"></param>
-       /// <returns></returns>
        public static object GetValue<T>(this SerializedProperty prop)
        {
            var path = prop.propertyPath.Replace(".Array.data[", "[");
@@ -257,13 +241,7 @@ using System.Collections;
                return null;
            return field.FieldType;
        }
-
-       /// <summary>
        /// 用反射获取 SerializedProperty 父级的实际数据实例
-       /// </summary>
-       /// <typeparam name="T"></typeparam>
-       /// <param name="prop"></param>
-       /// <returns></returns>
        public static T GetParent<T>(this SerializedProperty prop)
        {
            var path = prop.propertyPath.Replace(".Array.data[", "[");
@@ -311,13 +289,7 @@ using System.Collections;
                enm.MoveNext();
            return enm.Current;
        }
-
-       /// <summary>
        /// 用反射检查 SerializedProperty 是否带有给定特性
-       /// </summary>
-       /// <typeparam name="T"></typeparam>
-       /// <param name="prop"></param>
-       /// <returns></returns>
        public static bool HasAttribute<T>(this SerializedProperty prop)
        {
            object[] attributes = GetAttributes<T>(prop);
@@ -327,13 +299,7 @@ using System.Collections;
            }
            return false;
        }
-
-       /// <summary>
        /// 用反射获取 SerializedProperty 的特性
-       /// </summary>
-       /// <typeparam name="T"></typeparam>
-       /// <param name="prop"></param>
-       /// <returns></returns>
        public static object[] GetAttributes<T>(this SerializedProperty prop)
        {
            object obj = GetParent<object>(prop);

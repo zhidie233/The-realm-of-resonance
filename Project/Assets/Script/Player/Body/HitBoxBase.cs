@@ -1,15 +1,11 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 public abstract class HitBoxBase : MonoBehaviour, IGameDamageable
 {
     public HitBoxInfo hitBoxInfo;
     public HitBoxManager hitBoxManager;
-
-    /// <summary>
     /// 用它在本地接收伤害并同步给其他客户端
-    /// </summary>
-    /// <param name="damageData"></param>
     public abstract void ReceiveDamage(DamageInfo damageData);
 }
 

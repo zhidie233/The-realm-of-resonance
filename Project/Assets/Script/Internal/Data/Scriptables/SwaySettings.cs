@@ -1,6 +1,5 @@
-﻿using UnityEngine;
-
-[CreateAssetMenu(fileName = "Weapon Bob Settings", menuName = "Game/Weapons/Bob/Settings")]
+using UnityEngine;
+[CreateAssetMenu(fileName = "Weapon Bob Settings", menuName = "项目/Weapons/Bob/Settings")]
 public class SwaySettings : ScriptableObject
 {
     [Header("Walk")]

@@ -1,10 +1,7 @@
-﻿using UnityEngine;
-
-/// <summary>
+using UnityEngine;
 /// 游戏默认的 IK 实现
 /// 想用自己的 IK 控制系统，只需新建一个脚本
 /// 并继承 PlayerIKBase.cs
-/// </summary>
 [ExecuteInEditMode]
 public class PlayerIK : PlayerIKBase
 {
@@ -78,14 +75,11 @@ public class PlayerIK : PlayerIKBase
             LeftFeed = animator.GetBoneTransform(HumanBodyBones.LeftFoot);
             RightFeed = animator.GetBoneTransform(HumanBodyBones.RightFoot);
         }
-        
+
         editor_previewMode = 0;
         editor_weight = 0;
     }
-
-    /// <summary>
     /// 动画更新后由 Animator 调用
-    /// </summary>
     void OnAnimatorIK(int layer)
     {
         if (HeadLookTarget == null || animator == null)
@@ -96,10 +90,7 @@ public class PlayerIK : PlayerIKBase
         if (layer == 0) BottomBody();
         else if (layer == 1) UpperBody();
     }
-
-    /// <summary>
     /// 控制腿部 IK
-    /// </summary>
     void BottomBody()
     {
         animator.SetLookAtWeight(Weight, Body, Head, Eyes, Clamp);
@@ -118,10 +109,7 @@ public class PlayerIK : PlayerIKBase
             animator.SetIKRotationWeight(AvatarIKGoal.RightFoot, 0);
         }
     }
-
-    /// <summary>
     /// 控制手臂和头部 IK 骨骼
-    /// </summary>
     void UpperBody()
     {
         //如果已有其他脚本处理手臂 IK
@@ -138,10 +126,7 @@ public class PlayerIK : PlayerIKBase
             ResetWeightIK();
         }
     }
-
-    /// <summary>
     /// 控制左右手臂
-    /// </summary>
     void ArmsIK()
     {
         //仅在玩家瞄准或开火时控制手臂
@@ -179,10 +164,7 @@ public class PlayerIK : PlayerIKBase
         animator.SetIKPositionWeight(AvatarIKGoal.LeftHand, leftArmIkWight);
         animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, leftArmIkWight);
     }
-
-    /// <summary>
     /// 检测地面并用 IK 放置脚部
-    /// </summary>
     void LegsIK()
     {
         Vector3 leftPosition = LeftFeed.position;
@@ -271,10 +253,7 @@ public class PlayerIK : PlayerIKBase
             }
         }
     }
-
-    /// <summary>
     /// 玩家是否处于需要用 IK 控制手臂的状态
-    /// </summary>
     private bool inPointMode
     {
         get
@@ -295,7 +274,7 @@ public class PlayerIK : PlayerIKBase
                     return PlayerSync.CurrenGun.LeftHandPosition;
                 }
             }
-            else//called from an editor script to simulate IK in editor
+            else
             {
                 if (PlayerSync != null && playerReferences.playerAnimations != null && playerReferences.EditorSelectedGun)
                 {

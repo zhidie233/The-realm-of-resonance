@@ -1,4 +1,4 @@
-﻿using UnityEngine;
+using UnityEngine;
 
    public class BulletMarkManager : BulletMarkManagerBase
    {
@@ -15,10 +15,7 @@
        {
            Init();
        }
-
-       /// <summary>
        /// 在射线检测命中点生成弹痕
-       /// </summary>
        public override void InstanceDecal(RaycastHit raycastHit)
        {
            if (raycastHit.transform == null || !showDecals) return;
@@ -51,10 +48,7 @@
            currentPool = (currentPool + 1) % maxDecalInstances;
            return decalPool[currentPool];
        }
-
-       /// <summary>
        /// 初始化弹痕池列表
-       /// </summary>
        private void Init()
        {
            if (decalPool != null) return;
