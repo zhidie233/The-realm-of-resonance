@@ -40,7 +40,7 @@ public class AIBotAgent : AIBotCore
     private Animator Anim;
     private Vector3 finalPosition;
     private float lastPathTime = 0;
-    private AICoverSpot CoverPoint = null;
+    private AICoverSpot CurrentCover = null;
     private bool ForceCoverFire = false;
     private float CoverTime = 0;
     private Vector3 LastHitDirection;
@@ -370,7 +370,7 @@ public class AIBotAgent : AIBotCore
         }
         if (Agent.pathStatus == NavMeshPathStatus.PathComplete)
         {
-            if (CoverPoint != null && CoverPoint.Crouch) { SetCrouch(true); }
+            if (CurrentCover != null && CurrentCover.Crouch) { SetCrouch(true); }
         }
     }
     private bool Cover(bool overridePoint, AICoverZone coverArea = AICoverZone.ToPoint)
@@ -378,7 +378,7 @@ public class AIBotAgent : AIBotCore
         // 添加空检查
         if (AICoverSpotManager.Instance == null)
         {
-            Debug.LogError("AICoverPointManager实例为空！");
+            Debug.LogError("AICoverSpotManager实例为空！");
             return false;
         }
         //目标太远就没必要躲掩体
@@ -403,12 +403,12 @@ public class AIBotAgent : AIBotCore
                 if (coverArea == AICoverZone.ToRandomPoint)
                 {
                     //找另一个随机掩体点
-                    CoverPoint = AICoverSpotManager.Instance.GetCoverOnRadius(t, 30);
+                    CurrentCover = AICoverSpotManager.Instance.GetCoverOnRadius(t, 30);
                 }
                 else
                 {
                     //获取最近的掩体点
-                    CoverPoint = AICoverSpotManager.Instance.GetCloseCover(t, CoverPoint);
+                    CurrentCover = AICoverSpotManager.Instance.GetCloseCover(t, CurrentCover);
                 }
             }
             SetDebugState(13);
@@ -417,13 +417,13 @@ public class AIBotAgent : AIBotCore
         {
             SetDebugState(14);
             //找一个附近的掩体点
-            CoverPoint = AICoverSpotManager.Instance.GetCloseCover(t);
+            CurrentCover = AICoverSpotManager.Instance.GetCloseCover(t);
         }
-        if (CoverPoint != null && (time - CoverTime) > behaviorSettings.coverColdDown)
+        if (CurrentCover != null && (time - CoverTime) > behaviorSettings.coverColdDown)
         {
             SetDebugState(15);
             Speed = playerInFront ? soldierSettings.walkSpeed : soldierSettings.runSpeed;
-            SetDestination(CoverPoint.transform.position, 0.1f);
+            SetDestination(CurrentCover.transform.position, 0.1f);
             SetState(AIBrainState.Covering);
             CoverTime = time;
             TriggerFire(behaviorSettings.agentBehave == AIBrainAction.Agressive ? AIBotAttackBase.FireReason.Normal : AIBotAttackBase.FireReason.OnMove);
@@ -445,10 +445,10 @@ public class AIBotAgent : AIBotCore
             {
                 SetDebugState(17);
                 //强制获取一个掩体点
-                CoverPoint = AICoverSpotManager.Instance.GetCloseCoverForced(m_Transform);
-                if (CoverPoint != null)
+                CurrentCover = AICoverSpotManager.Instance.GetCloseCoverForced(m_Transform);
+                if (CurrentCover != null)
                 {
-                    SetDestination(CoverPoint.transform.position, 0.1f);
+                    SetDestination(CurrentCover.transform.position, 0.1f);
                     Speed = Probability(0.5f) ? soldierSettings.walkSpeed : soldierSettings.runSpeed;
                 }
             }
@@ -461,7 +461,7 @@ public class AIBotAgent : AIBotCore
         // 添加前置检查
         if (AICoverSpotManager.Instance == null)
         {
-            Debug.LogError("AICoverPointManager不可用，无法寻找掩护");
+            Debug.LogError("AICoverSpotManager不可用，无法寻找掩护");
             SetLookAtState(AIGaze.Target);
             return;
         }

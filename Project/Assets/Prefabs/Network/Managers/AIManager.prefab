@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 4182093878290060}
   - component: {fileID: 114415916861819318}
   m_Layer: 0
-  m_Name: CoverPoint
+  m_Name: CoverSpot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -148,7 +148,7 @@ GameObject:
   - component: {fileID: 9148047512920743838}
   - component: {fileID: 2156048093144851082}
   m_Layer: 0
-  m_Name: CoverPoint (1)
+  m_Name: CoverSpot (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
