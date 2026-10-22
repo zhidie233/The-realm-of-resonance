@@ -2,12 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
-using UnityEngine.Serialization;
 using Photon.Pun;
 
 public class ExplosionDamage : ExplosionBase
 {
-    [FormerlySerializedAs("m_Type")]
     public ExplosionType explosionType = ExplosionType.Normal;
     [GameToggle] public bool CheckRootsOnly = false;
     public float explosionDamage = 50f;
@@ -106,7 +104,7 @@ public class ExplosionDamage : ExplosionBase
             odi.From = creator.Name;
             odi.isHeadShot = false;
             odi.Cause = (!creator.isRealPlayer) ? DamageCause.Bot : DamageCause.Explosion;
-            odi.GunID = cachedData.WeaponID;
+            odi.WeaponID = cachedData.WeaponID;
             odi.Actor = NetworkWrapper.LocalPlayer;
             // 检查团队关系并调整共鸣值
             if (!isOneTeamMode && player.GetPlayerTeam() == creator.Team)
@@ -174,7 +172,7 @@ public class ExplosionDamage : ExplosionBase
                 Direction = transform.position,
                 GameActor = creator,
                 ActorViewID = creator.ActorViewID,
-                GunID = cachedData.WeaponID,
+                WeaponID = cachedData.WeaponID,
                 From = creator.Name,
             };
             damageData.Cause = (!creator.isRealPlayer) ? DamageCause.Bot : DamageCause.Explosion;

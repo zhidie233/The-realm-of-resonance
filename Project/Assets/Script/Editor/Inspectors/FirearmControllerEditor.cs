@@ -263,13 +263,13 @@ public class FirearmControllerEditor : Editor
         GUILayout.EndHorizontal();
 
         EditorGUILayout.Space();
-        script.GunID = EditorGUILayout.Popup("枪械 ID ", script.GunID, GameData.WeaponStringList());
-        if (oldID != script.GunID)
+        script.WeaponID = EditorGUILayout.Popup("武器 ID ", script.WeaponID, GameData.WeaponStringList());
+        if (oldID != script.WeaponID)
         {
             script.Info = null;
-            oldID = script.GunID;
+            oldID = script.WeaponID;
         }
-        script.Info.Type = GameConfig.Instance.GetWeapon(script.GunID).Type;
+        script.Info.Type = GameConfig.Instance.GetWeapon(script.WeaponID).Type;
         FirearmType t = script.Info.Type;
         if (t == FirearmType.Machinegun || t == FirearmType.Pistol || t == FirearmType.Burst)
         {

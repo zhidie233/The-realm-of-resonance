@@ -6,7 +6,7 @@
        public string Killed;
        public string Message;
        public bool HeadShot;
-       public int GunID;
+       public int WeaponID;
        public Team KillerTeam;
        public Color KillerColor;
        public Color KilledColor;

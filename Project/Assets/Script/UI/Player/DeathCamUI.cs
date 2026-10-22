@@ -24,7 +24,7 @@ public class DeathCamUI :  DeathCamUIBase
         }
         
         content.SetActive(true);
-        FirearmData info = GameConfig.Instance.GetWeapon(kcinfo.GunID);
+        FirearmData info = GameConfig.Instance.GetWeapon(kcinfo.WeaponID);
         GunImage.sprite = info.WeaponIcon;
         GunNameText.text = info.Name.ToUpper();
         killer = killer.Replace("(die)", "");

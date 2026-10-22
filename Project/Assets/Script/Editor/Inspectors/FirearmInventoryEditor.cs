@@ -165,7 +165,7 @@ public class FirearmInventoryEditor : Editor
                 pcl.Primary = old.Primary;
                 pcl.Secondary = old.Primary;
                 pcl.Perks = old.Perks;
-                pcl.Letal = old.Letal;
+                pcl.Lethal = old.Lethal;
                 EditorUtility.SetDirty(target);
                 EditorUtility.SetDirty(pcl);
             }

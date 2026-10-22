@@ -161,7 +161,7 @@ public class AIBotAttack : AIBotAttackBase
         m_BulletData.Damage = Weapon.Info.Damage;
         m_BulletData.isNetwork = remote;
         m_BulletData.Position = transform.position;
-        m_BulletData.WeaponID = Weapon.GunID;
+        m_BulletData.WeaponID = Weapon.WeaponID;
         if (AI.behaviorSettings.weaponAccuracy == AIBotWeaponSpread.Pro)
         {
             m_BulletData.SetInaccuracity(2, 3);

@@ -38,7 +38,7 @@ public static class GameEvents
     public delegate void PickUpWeapon(FirearmPickUpData e);
     public static PickUpWeapon onPickUpGun;
     /// 本地玩家切换武器时触发
-    public delegate void EventChangeWeapon(int GunID);
+    public delegate void EventChangeWeapon(int WeaponID);
     public static EventChangeWeapon onChangeWeapon;
 
     public struct PlayerChangeData
@@ -73,7 +73,7 @@ public static class GameEvents
     public static void DispatchPlayerClassChange(PlayerClass newClass) => onPlayerClassChanged?.Invoke();
     /// 本地玩家使用武器开火时调用
     public static Action<int> onLocalPlayerFire;
-    public static void DispatchLocalPlayerFire(int gunID) => onLocalPlayerFire?.Invoke(gunID);
+    public static void DispatchLocalPlayerFire(int weaponID) => onLocalPlayerFire?.Invoke(weaponID);
     /// 本地玩家命中敌人时调用。
     public static Action<GameHitData> onLocalPlayerHitEnemy;
     public static void DispatchLocalPlayerHitEnemy(GameHitData hitData) => onLocalPlayerHitEnemy?.Invoke(hitData);
@@ -103,13 +103,13 @@ public static class GameEvents
     public static Action onRoomPropertiesReset;
     public static void DispatchRoomPropertiesReset() => onRoomPropertiesReset?.Invoke();
     /// 本地玩家切换武器时调用
-    public static void ChangeWeaponEvent(int GunID) => onChangeWeapon?.Invoke(GunID);
+    public static void ChangeWeaponEvent(int WeaponID) => onChangeWeapon?.Invoke(WeaponID);
     /// 拾取医疗包时触发
     public static void DispatchPickUpHealth(int health) => onPickUpHealth?.Invoke(health);
     /// 呼叫新补给时触发
     public static void DispatchDropEvent(Vector3 t_position, int type) => onAirSupply?.Invoke(t_position, type);
     /// 拾取弹药时触发
-    public static bool OnAmmo(int bullets, int projectiles, int gunID) => onAmmoPickUp(bullets, projectiles, gunID);
+    public static bool OnAmmo(int bullets, int projectiles, int weaponID) => onAmmoPickUp(bullets, projectiles, weaponID);
     /// 击杀新玩家时调用
     public static void DispatchLocalKillEvent(KillRecord killInfo) => onLocalKill?.Invoke(killInfo);
     /// 房间完成一回合时调用

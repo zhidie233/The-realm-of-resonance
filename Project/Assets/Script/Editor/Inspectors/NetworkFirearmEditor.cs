@@ -42,7 +42,7 @@ public class NetworkFirearmEditor : Editor
         EditorGUI.BeginChangeCheck();
         if (script.LocalGun != null)
         {
-            script.gameObject.name = GameConfig.Instance.GetWeapon(script.LocalGun.GunID).Name;
+            script.gameObject.name = GameConfig.Instance.GetWeapon(script.LocalGun.WeaponID).Name;
         }
 
         EditorGUILayout.BeginVertical("box");

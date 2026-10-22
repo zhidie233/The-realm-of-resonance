@@ -44,7 +44,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", 1);
         data.Add("name", prefix);
-        data.Add("gunID", throwData.GunID);
+        data.Add("gunID", throwData.WeaponID);
         data.Add("info", i);
         data.Add("destroy", throwData.AutoDestroy);
         data.Add("origin", throwData.Origin);
@@ -92,7 +92,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", 0);
         data.Add("name", pickUpData.Identifier);
-        data.Add("gunID", pickUpData.GunID);
+        data.Add("gunID", pickUpData.WeaponID);
         data.Add("bullets", pickUpData.Ammunition.Bullets);
         data.Add("clips", pickUpData.Ammunition.Clips);
         data.Add("actorID", NetworkWrapper.LocalPlayer.ActorNumber);

@@ -28,7 +28,7 @@ public class ShotData
     // 子弹下坠量
     public float DropFactor;
 
-    // 发射这颗子弹的武器 GunID
+    // 发射这颗子弹的武器 WeaponID
     public int WeaponID;
 
     // 这颗子弹是否由远程玩家创建？
@@ -49,7 +49,7 @@ public class ShotData
         GameActor = data.GameActor;
         Damage = data.Damage;
         ActorViewID = data.ActorViewID;
-        WeaponID = data.GunID;
+        WeaponID = data.WeaponID;
         Position = data.Direction;
     }
 

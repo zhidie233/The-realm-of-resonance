@@ -16,11 +16,11 @@ public class PrefabPatch : MonoBehaviour
         if (team == Team.Team2)
         {
             player = Team2Player.gameObject;
-            if (player == null) player = GameConfig.Instance.Player2.gameObject;
+            if (player == null) player = GameConfig.Instance.Team2PlayerPrefab.gameObject;
         }
         else
         {
-            if (player == null) player = GameConfig.Instance.Player1.gameObject;
+            if (player == null) player = GameConfig.Instance.Team1PlayerPrefab.gameObject;
         }
 
         return player;

@@ -34,16 +34,10 @@ public static class NetworkKeys
     public const byte WaitingStartGame = 104;
     public const byte ChatEvent = 105;
     public const byte KillFeedEvent = 106;
-    public const byte BreachEvent = 107;
-    public const byte DMBombEvent = 108;
-    public const byte StreakCallEvent = 109;
-    public const byte BattleRoyalEvent = 110;
     public const byte NetworkItemInstance = 111;
     public const byte NetworkItemChange = 112;
     public const byte WeaponPickUpEvent = 113;
     public const byte VoteEvent = 114;
-    public const byte WipeoutGameMode = 115;
-    public const byte KillConfirmedGameMode = 116;
     public const byte CaptureOfFlagMode = 117;
     public const byte DropManager = 118;
     public const byte DoorSystem = 119;

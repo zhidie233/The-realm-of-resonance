@@ -49,9 +49,9 @@ using TMPro;
            {
                WeaponText.gameObject.SetActive(false);
                Sprite icon = null;
-               if (info.GunID >= 0)
+               if (info.WeaponID >= 0)
                {
-                   icon = GameConfig.Instance.GetWeapon(info.GunID).WeaponIcon;
+                   icon = GameConfig.Instance.GetWeapon(info.WeaponID).WeaponIcon;
                }
                else
                {
@@ -60,7 +60,7 @@ using TMPro;
 
                    if (icon == null)
                    {
-                       int normalizedID = Mathf.Abs(info.GunID + 1);
+                       int normalizedID = Mathf.Abs(info.WeaponID + 1);
                        if (normalizedID <= KillReportEntry.Instance.customIcons.Count - 1)
                        {
                            icon = KillReportEntry.Instance.customIcons[normalizedID].Icon;

@@ -593,7 +593,7 @@ public class FirearmController : FirearmBase
                     damageData.GameActor = GameController.Instance.LocalActor;
                     damageData.Cause = DamageCause.Player;
                     damageData.Direction = transform.position;
-                    damageData.GunID = GunID;
+                    damageData.WeaponID = WeaponID;
                     damageData.ActorViewID = GameController.LocalPlayerViewID;
                     damageData.From = LocalPlayer.NickName;
                     bp?.ReceiveDamage(damageData);
@@ -610,7 +610,7 @@ public class FirearmController : FirearmBase
                             Direction = _transform.position,
                             GameActor = GameController.Instance.LocalActor,
                             ActorViewID = GameController.LocalPlayerViewID,
-                            GunID = GunID,
+                            WeaponID = WeaponID,
                             From = LocalPlayer.NickName,
                         };
                         damageData.Cause = DamageCause.Player;
@@ -627,7 +627,7 @@ public class FirearmController : FirearmBase
             OnFireCommons();
             ReticleBase.Instance.OnFire();
             isFiring = false;
-            GameEvents.DispatchLocalPlayerFire(GunID);
+            GameEvents.DispatchLocalPlayerFire(WeaponID);
         }
         return time;
     }
@@ -803,7 +803,7 @@ public class FirearmController : FirearmBase
         instancedBullet.GetComponent<ProjectileBase>().InitProjectile(BulletSettings);
         ReticleBase.Instance.OnFire();
         PlayerNetwork.ReplicateFire(OriginalWeaponType, instanceData.ProjectedHitPoint, BulletSettings.Inaccuracity);
-        GameEvents.DispatchLocalPlayerFire(GunID);
+        GameEvents.DispatchLocalPlayerFire(WeaponID);
         if ((bulletsLeft == 0))
         {
             Reload();
@@ -822,7 +822,7 @@ public class FirearmController : FirearmBase
         }
         newNoobTube.GetComponent<ProjectileBase>().InitProjectile(BulletSettings);
         grenadeFired = false;
-        GameEvents.DispatchLocalPlayerFire(GunID);
+        GameEvents.DispatchLocalPlayerFire(WeaponID);
     }
     public void OnFireCommons()
     {
@@ -922,7 +922,7 @@ public class FirearmController : FirearmBase
         BulletSettings.Speed = BulletSpeed;
         BulletSettings.WeaponName = Info.Name;
         BulletSettings.Position = PlayerReferences.transform.localPosition;
-        BulletSettings.WeaponID = GunID;
+        BulletSettings.WeaponID = WeaponID;
         BulletSettings.isNetwork = false;
         BulletSettings.DropFactor = bulletDropFactor;
         BulletSettings.Range = Range;
@@ -1233,13 +1233,13 @@ public class FirearmController : FirearmBase
     }
     // 回合结束时不能开火
     void OnRoundEnd() => _enable = false;
-    public bool OnPickUpAmmo(int bullets, int projectiles, int gunID)
+    public bool OnPickUpAmmo(int bullets, int projectiles, int weaponID)
     {
         //若这不是全局弹药，而是某把武器专用
-        if (gunID != -1)
+        if (weaponID != -1)
         {
             //而且这又不是对应的那把武器
-            if (gunID != GunID) return false;
+            if (weaponID != WeaponID) return false;
         }
         if (WeaponType == FirearmType.Knife) return false;
         if (AmmoType == AmmunitionType.Clips)

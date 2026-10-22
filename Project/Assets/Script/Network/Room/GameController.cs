@@ -128,10 +128,10 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         Vector3 pos;
         Quaternion rot;
         SpawnPointManager.Instance.GetPlayerSpawnPosition(playerTeam, out pos, out rot);
-        GameObject playerPrefab = GameConfig.Instance.Player1.gameObject;
+        GameObject playerPrefab = GameConfig.Instance.Team1PlayerPrefab.gameObject;
         if (OverridePlayerPrefab == null)
         {
-            if (playerTeam == Team.Team2) playerPrefab = GameConfig.Instance.Player2.gameObject;
+            if (playerTeam == Team.Team2) playerPrefab = GameConfig.Instance.Team2PlayerPrefab.gameObject;
 
         }
         else

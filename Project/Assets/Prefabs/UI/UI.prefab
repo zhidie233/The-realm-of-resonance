@@ -20954,7 +20954,7 @@ GameObject:
   - component: {fileID: 1618263569112397525}
   - component: {fileID: 1618549604057368351}
   m_Layer: 5
-  m_Name: HeatShot
+  m_Name: Headshot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

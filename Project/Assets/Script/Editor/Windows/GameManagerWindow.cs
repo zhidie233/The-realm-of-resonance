@@ -304,10 +304,10 @@ public class GameManagerWindow : EditorWindow
     void DrawEquipmentBody()
     {
         GUILayout.Space(10);
-        var player = GameConfig.Instance.Player1.PlayerReferences;
+        var player = GameConfig.Instance.Team1PlayerPrefab.PlayerReferences;
         DrawPlayerPreset(player, ref currentSlot);
         GUILayout.Space(15);
-        player = GameConfig.Instance.Player2.PlayerReferences;
+        player = GameConfig.Instance.Team2PlayerPrefab.PlayerReferences;
         DrawPlayerPreset(player, ref currentSlot2);
         GUILayout.Space(10);
         var latpc = currentPlayerClass;
@@ -503,7 +503,7 @@ public class GameManagerWindow : EditorWindow
 
     public bool isOneTeamMode(GameMode mode)
     {
-        if (mode == GameMode.RoyaleMatch || mode == GameMode.RaceMatch || mode == GameMode.FreeMatch)
+        if (mode == GameMode.FreeMatch)
             return true;
 
         return false;
@@ -589,8 +589,8 @@ public class GameManagerWindow : EditorWindow
         gun = preset.GetPerksGunInfo();
         DrawSlot(gun, "PERK", preset, 2);
         GUILayout.Space(10);
-        gun = preset.GetLetalGunInfo();
-        DrawSlot(gun, "LETAL", preset, 3);
+        gun = preset.GetLethalGunInfo();
+        DrawSlot(gun, "LETHAL", preset, 3);
         GUILayout.Space(10);
     }
 
@@ -641,7 +641,7 @@ public class GameManagerWindow : EditorWindow
                 if (selectedSlot == 0) selectedPreset.Primary = i;
                 else if (selectedSlot == 1) selectedPreset.Secondary = i;
                 else if (selectedSlot == 2) selectedPreset.Perks = i;
-                else if (selectedSlot == 3) selectedPreset.Letal = i;
+                else if (selectedSlot == 3) selectedPreset.Lethal = i;
 
                 EditorUtility.SetDirty(selectedPreset);
                 AssetDatabase.SaveAssets();
@@ -655,7 +655,7 @@ public class GameManagerWindow : EditorWindow
         GUILayout.EndScrollView();
     }
 
-    void WeaponCard(FirearmData gun, int gunId)
+    void WeaponCard(FirearmData gun, int weaponId)
     {
         Rect rect = EditorGUILayout.BeginVertical(styles["borders"], GUILayout.Width(370), GUILayout.Height(90));
         {
@@ -700,7 +700,7 @@ public class GameManagerWindow : EditorWindow
         editR.height = 14;
         if (GUI.Button(editR, "编辑"))
         {
-            editWeaponId = gunId;
+            editWeaponId = weaponId;
             editGunInfo = gun;
         }
     }

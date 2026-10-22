@@ -11795,7 +11795,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5084abc0e8925f43985bf808463102f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 0
+  WeaponID: 0
   Bullets: 30
   bulletsPerShot: 1
   maxFollowingShots: 5
@@ -18056,7 +18056,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5084abc0e8925f43985bf808463102f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 1
+  WeaponID: 1
   Bullets: 22
   bulletsPerShot: 1
   maxFollowingShots: 3
@@ -19416,7 +19416,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceModifier: 1
   hideDistance: 25
-  StylePresent: {fileID: 11400000, guid: 4e66094cf37ab2f4598081cf5d135a86, type: 2}
+  StylePreset: {fileID: 11400000, guid: 4e66094cf37ab2f4598081cf5d135a86, type: 2}
   positionReference: {fileID: 4658809452883866}
 --- !u!114 &7839100337265426435
 MonoBehaviour:
@@ -19691,7 +19691,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b5084abc0e8925f43985bf808463102f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 2
+  WeaponID: 2
   Bullets: 5
   bulletsPerShot: 4
   maxFollowingShots: 1

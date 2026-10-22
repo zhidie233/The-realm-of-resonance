@@ -3,7 +3,7 @@
    public class AIBotWeaponHandler : MonoBehaviour
    {
        [Header("Info")]
-       [FirearmID] public int GunID;
+       [FirearmID] public int WeaponID;
        [Range(1, 60)] public int Bullets = 30;
        [Range(1, 6)] public int bulletsPerShot = 1;
        public int maxFollowingShots = 5;
@@ -26,7 +26,7 @@
            {
                if (m_info == null)
                {
-                   m_info = GameConfig.Instance.GetWeapon(GunID); ;
+                   m_info = GameConfig.Instance.GetWeapon(WeaponID); ;
                }
                return m_info;
            }

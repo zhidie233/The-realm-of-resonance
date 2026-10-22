@@ -20,7 +20,7 @@ public class KillNoticeUI : MonoBehaviour
         }
         else
         {
-            NameText.text = GameTexts.HeatShotBonus;
+            NameText.text = GameTexts.HeadshotBonus;
             ValueText.text = GameConfig.Instance.matchScore.HeadshotExtraReward.ToString();
         }
         Alpha = GetComponent<CanvasGroup>();

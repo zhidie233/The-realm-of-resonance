@@ -82,6 +82,6 @@ public class LauncherFirearm : CustomFirearmBase
         netData.Add("rotation", rotation);
 
         FPWeapon.PlayerNetwork.SyncCustomProjectile(netData);
-        GameEvents.DispatchLocalPlayerFire(FPWeapon.GunID);
+        GameEvents.DispatchLocalPlayerFire(FPWeapon.WeaponID);
     }
 }

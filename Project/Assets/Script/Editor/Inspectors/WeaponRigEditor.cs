@@ -21,7 +21,7 @@ public class WeaponRigEditor : Editor
     {
         script = (WeaponRigHandler)target;
         Gun = script.transform.parent.GetComponent<FirearmController>();
-        gType = GameConfig.Instance.GetWeapon(Gun.GunID).Type;
+        gType = GameConfig.Instance.GetWeapon(Gun.WeaponID).Type;
         if (script.m_AnimationType == WeaponRigHandler.AnimationType.Animator)
         {
             _animator = script.GetComponent<Animator>();

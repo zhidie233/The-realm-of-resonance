@@ -1,10 +1,8 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 /// 出生点基类
 /// 你的自定义出生点脚本可从此类继承。
 public abstract class SpawnPointBase : MonoBehaviour
 {
-    [FormerlySerializedAs("m_Team")]
     public Team team = Team.All;
 
     public static implicit operator Transform(SpawnPointBase d) => d.transform;

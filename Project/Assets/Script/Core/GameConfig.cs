@@ -5,7 +5,6 @@ using UnityEngine;
 using System.Linq;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
-using UnityEngine.Serialization;
 
 public class GameConfig : ScriptableObject
 {
@@ -68,7 +67,7 @@ public class GameConfig : ScriptableObject
     public int endMatchDelay = 10;
     public float idleKickTime = 60;
     public int teamSwitchLimit = 3;
-    public int selfKillLimit = 3;
+    public int suicideLimit = 3;
     public string MainMenuScene = "MainMenu";
     public string OnDisconnectScene = "MainMenu";
     public Color focusColor = Color.green;
@@ -82,7 +81,7 @@ public class GameConfig : ScriptableObject
     public List<FirearmData> WeaponTable = new List<FirearmData>();
     [Header("默认画质")]
     [ScriptableDrawer, SerializeField] private RuntimeSettingsProfile defaultSettings;
-    [Header("可用模式"), Reorderable, FormerlySerializedAs("AllGameModes")]
+    [Header("可用模式"), Reorderable]
     public List<GameModeSettings> gameModeTable = new List<GameModeSettings>();
     [Header("阵营")]
     public string Team1Name = "Team1";
@@ -91,8 +90,8 @@ public class GameConfig : ScriptableObject
     public string Team2Name = "Team2";
     public Color Team2Color = Color.green;
     [Header("玩家预制体")]
-    public PlayerNetworkHandler Player1;
-    public PlayerNetworkHandler Player2;
+    public PlayerNetworkHandler Team1PlayerPrefab;
+    public PlayerNetworkHandler Team2PlayerPrefab;
     [Header("机器人预制体")]
     public AIBotCore BotTeam1;
     public AIBotCore BotTeam2;

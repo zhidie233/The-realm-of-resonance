@@ -19766,7 +19766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 3
+  WeaponID: 3
   customWeapon: {fileID: 0}
   CrossHairScale: 15
   bulletInstanceMethod: 0
@@ -20782,7 +20782,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 1
+  WeaponID: 1
   customWeapon: {fileID: 0}
   CrossHairScale: 6
   bulletInstanceMethod: 0
@@ -20902,7 +20902,7 @@ GameObject:
   - component: {fileID: 4479059652040193935}
   m_Layer: 0
   m_Name: WeaponsManager
-  m_TagString: WeaponManager
+  m_TagString: PlayerWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36677,7 +36677,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 4
+  WeaponID: 4
   customWeapon: {fileID: 0}
   CrossHairScale: 20
   bulletInstanceMethod: 0
@@ -47618,7 +47618,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 0
+  WeaponID: 0
   customWeapon: {fileID: 0}
   CrossHairScale: 10
   bulletInstanceMethod: 0
@@ -68834,7 +68834,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 5
+  WeaponID: 5
   customWeapon: {fileID: 0}
   CrossHairScale: 5
   bulletInstanceMethod: 0
@@ -95356,7 +95356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 6
+  WeaponID: 6
   customWeapon: {fileID: 0}
   CrossHairScale: 15
   bulletInstanceMethod: 0
@@ -134032,7 +134032,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   distanceModifier: 0.2
   hideDistance: 25
-  StylePresent: {fileID: 11400000, guid: 4e66094cf37ab2f4598081cf5d135a86, type: 2}
+  StylePreset: {fileID: 11400000, guid: 4e66094cf37ab2f4598081cf5d135a86, type: 2}
   positionReference: {fileID: 4102520725796924108}
 --- !u!114 &5409649720615495890
 MonoBehaviour:
@@ -146006,7 +146006,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 7
+  WeaponID: 7
   customWeapon: {fileID: 6240814256202410831}
   CrossHairScale: 25
   bulletInstanceMethod: 1
@@ -224144,7 +224144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c071d91f7520e546897a6105fff4772, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 2
+  WeaponID: 2
   customWeapon: {fileID: 0}
   CrossHairScale: 25
   bulletInstanceMethod: 0

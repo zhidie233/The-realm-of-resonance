@@ -4,7 +4,7 @@ public abstract class FirearmPickUpManagerBase : NetworkHelper
 {
     public struct ThrowData
     {
-        public int GunID;
+        public int WeaponID;
         public Vector3 Origin;
         public Vector3 Direction;
         public int[] Data;
@@ -14,7 +14,7 @@ public abstract class FirearmPickUpManagerBase : NetworkHelper
     public struct PickUpData
     {
         public string Identifier;
-        public int GunID;
+        public int WeaponID;
         public FirearmPickUpBase.AmmoInformation Ammunition;
     }
 

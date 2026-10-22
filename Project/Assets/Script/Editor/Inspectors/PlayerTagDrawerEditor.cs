@@ -26,14 +26,14 @@ public class PlayerTagDrawerEditor : Editor
         }
 
         EditorGUILayout.BeginVertical("box");
-        GUI.enabled = script.StylePresent != null;
+        GUI.enabled = script.StylePreset != null;
         if (GUILayout.Button("编辑外观"))
         {
             editPresent = !editPresent;
         }
         if (editPresent)
         {
-            var e = Editor.CreateEditor(script.StylePresent);
+            var e = Editor.CreateEditor(script.StylePreset);
             if (e != null)
             {
                 using (new EditorGUILayout.VerticalScope("box"))
@@ -43,7 +43,7 @@ public class PlayerTagDrawerEditor : Editor
             }
         }
         string isOn = isSimulating ? "ON" : "OFF";
-        GUI.enabled = !Application.isPlaying && script.StylePresent != null;
+        GUI.enabled = !Application.isPlaying && script.StylePreset != null;
         if (GUILayout.Button($"Simulate [{isOn}]"))
         {
             isSimulating = !isSimulating;
@@ -67,7 +67,7 @@ public class PlayerTagDrawerEditor : Editor
     private void OnSceneGUI()
     {
         if (!isSimulating) return;
-        if (script.StylePresent == null) return;
+        if (script.StylePreset == null) return;
         if (script == null) { script = (PlayerTagDrawer)target; }
         if (script.positionReference == null || SceneView.lastActiveSceneView == null) return;
 
@@ -85,22 +85,22 @@ public class PlayerTagDrawerEditor : Editor
             int vertical = GameConfig.Instance.allyHealthBars ? 15 : 10;
             if (distance < script.hideDistance)
             {
-                GUI.Label(new Rect(vector.x - 5, (Screen.height - vector.y) - vertical, 10, 11), simulatedName, script.StylePresent.style);
+                GUI.Label(new Rect(vector.x - 5, (Screen.height - vector.y) - vertical, 10, 11), simulatedName, script.StylePreset.style);
                 if (GameConfig.Instance.allyHealthBars)
                 {
                     float mh = 100;
                     float h = simulatedHealth;
-                    GUI.color = script.StylePresent.HealthBackColor;
-                    GUI.DrawTexture(new Rect(vector.x - (mh / 2), (Screen.height - vector.y), mh, script.StylePresent.HealthBarThickness), script.StylePresent.HealthBarTexture);
-                    GUI.color = script.StylePresent.HealthBarColor;
-                    GUI.DrawTexture(new Rect(vector.x - (mh / 2), (Screen.height - vector.y), h, script.StylePresent.HealthBarThickness), script.StylePresent.HealthBarTexture);
+                    GUI.color = script.StylePreset.HealthBackColor;
+                    GUI.DrawTexture(new Rect(vector.x - (mh / 2), (Screen.height - vector.y), mh, script.StylePreset.HealthBarThickness), script.StylePreset.HealthBarTexture);
+                    GUI.color = script.StylePreset.HealthBarColor;
+                    GUI.DrawTexture(new Rect(vector.x - (mh / 2), (Screen.height - vector.y), h, script.StylePreset.HealthBarThickness), script.StylePreset.HealthBarTexture);
                     GUI.color = Color.white;
                 }
             }
             else
             {
-                float iconsSize = script.StylePresent.IndicatorIconSize;
-                GUI.DrawTexture(new Rect(vector.x - (iconsSize / 2), (Screen.height - vector.y) - (iconsSize / 2), iconsSize, iconsSize), script.StylePresent.IndicatorIcon);
+                float iconsSize = script.StylePreset.IndicatorIconSize;
+                GUI.DrawTexture(new Rect(vector.x - (iconsSize / 2), (Screen.height - vector.y) - (iconsSize / 2), iconsSize, iconsSize), script.StylePreset.IndicatorIcon);
             }
         }
         Handles.EndGUI();

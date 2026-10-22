@@ -15,9 +15,9 @@ using System.Collections;
        {
            if (!m_other.isLocalPlayerCollider()) return;
 
-           int gunID = isGlobal ? -1 : ForGun;
+           int weaponID = isGlobal ? -1 : ForGun;
 
-           if (GameEvents.OnAmmo(Bullets, Projectiles, gunID))
+           if (GameEvents.OnAmmo(Bullets, Projectiles, weaponID))
            {
                if (PickSound) AudioSource.PlayClipAtPoint(PickSound, transform.position, 1.0f);
                //此弹药是否在一定时间后重新出现？

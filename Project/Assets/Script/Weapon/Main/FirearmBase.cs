@@ -19,14 +19,14 @@ public abstract class FirearmBase : MonoBehaviourBase
         {
             if (m_gunInfo == null)
             {
-                m_gunInfo = GameConfig.Instance.GetWeapon(GunID);
+                m_gunInfo = GameConfig.Instance.GetWeapon(WeaponID);
             }
             return m_gunInfo;
         }
         set => m_gunInfo = value;
     }
     /// 武器索引
-    public int GunID;
+    public int WeaponID;
 
     protected int _bulletLeft;
     /// 当前武器弹匣内剩余弹药

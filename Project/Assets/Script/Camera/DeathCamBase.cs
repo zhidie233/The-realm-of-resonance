@@ -21,7 +21,7 @@ public abstract class DeathCamBase : MonoBehaviourBase
     {
         public Transform Target;
         public string TargetName;
-        public int GunID;
+        public int WeaponID;
         public Transform FallbackTarget;
         public Player RealPlayer;
     }

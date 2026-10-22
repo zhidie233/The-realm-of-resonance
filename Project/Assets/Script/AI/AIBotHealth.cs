@@ -26,12 +26,12 @@ public class AIBotHealth : PlayerHealthManagerBase
 
     public override void DoDamage(DamageInfo damageData)
     {
-        string weaponName = GameConfig.Instance.GetWeapon(damageData.GunID).Name;
+        string weaponName = GameConfig.Instance.GetWeapon(damageData.WeaponID).Name;
         //如果不是被列表中的武器击杀
-        if (damageData.GunID < 0)
+        if (damageData.WeaponID < 0)
         {
             //尝试找到自定义武器名
-            var iconData = KillReportEntry.Instance.GetCustomIconByIndex(Mathf.Abs(damageData.GunID + 1));
+            var iconData = KillReportEntry.Instance.GetCustomIconByIndex(Mathf.Abs(damageData.WeaponID + 1));
             if (iconData != null)
             {
                 weaponName = $"cmd:{iconData.Name}";
@@ -146,11 +146,11 @@ public class AIBotHealth : PlayerHealthManagerBase
         {
             Team team = NetworkWrapper.LocalPlayer.GetPlayerTeam();
             //发送击杀提示消息
-            int gunID = GameConfig.Instance.GetWeaponID(weaponName);
-            if (weaponName.Contains("cmd:") || gunID == -1)
+            int weaponID = GameConfig.Instance.GetWeaponID(weaponName);
+            if (weaponName.Contains("cmd:") || weaponID == -1)
             {
                 weaponName = weaponName.Replace("cmd:", "");
-                gunID = -(KillReportEntry.Instance.GetCustomIconIndex(weaponName) + 1);
+                weaponID = -(KillReportEntry.Instance.GetCustomIconIndex(weaponName) + 1);
             }
 
             var feed = new KillReportEntry.FeedData()
@@ -159,7 +159,7 @@ public class AIBotHealth : PlayerHealthManagerBase
                 RightText = m_AIShooter.AIName,
                 Team = team
             };
-            feed.AddData("gunid", gunID);
+            feed.AddData("gunid", weaponID);
             feed.AddData("headshot", ishead);
 
             KillReportEntry.Instance.SendKillMessageEvent(feed);
@@ -230,14 +230,14 @@ public class AIBotHealth : PlayerHealthManagerBase
                     AIManager.Instance.SetBotKill(killer);
                 }
                 //发送击杀提示消息
-                int gunID = GameConfig.Instance.GetWeaponID(weaponName);
+                int weaponID = GameConfig.Instance.GetWeaponID(weaponName);
                 var feed = new KillReportEntry.FeedData()
                 {
                     LeftText = killer,
                     RightText = m_AIShooter.AIName,
                     Team = bot.AITeam
                 };
-                feed.AddData("gunid", gunID);
+                feed.AddData("gunid", weaponID);
                 feed.AddData("headshot", ishead);
                 KillReportEntry.Instance.SendKillMessageEvent(feed);
                 if (bot != null)

@@ -88,7 +88,7 @@ public class KillReportManager : KillReportEntry
         KillReport kf = new KillReport();
         kf.Killer = (string)data["killer"];
         kf.Killed = (string)data["killed"];
-        kf.GunID = (int)data["gunid"];
+        kf.WeaponID = (int)data["gunid"];
         kf.HeadShot = (bool)data["headshot"];
         kf.KillerTeam = (Team)data["team"];
         kf.messageType = KillReportMessageType.WeaponKillEvent;

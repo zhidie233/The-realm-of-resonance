@@ -186,7 +186,7 @@ public class NetworkFirearm : MonoBehaviour
             {
                 if (LocalGun != null)
                 {
-                    WeaponID = LocalGun.GunID;
+                    WeaponID = LocalGun.WeaponID;
                 }
             }
             return WeaponID;

@@ -1,5 +1,4 @@
 using System;
-using UnityEngine.Serialization;
 
 public abstract class FirearmPickUpBase : MonoBehaviourBase
 {
@@ -24,9 +23,8 @@ public abstract class FirearmPickUpBase : MonoBehaviourBase
         }
     }
     /// 武器标识
-    [FirearmID] public int GunID = 0;
+    [FirearmID] public int WeaponID = 0;
     /// 这把掉落武器的弹药数据
-    [FormerlySerializedAs("Info")] 
     public AmmoInformation Ammunition;
     /// 这把武器将被自动销毁
     /// 是否在特定时间后？
@@ -38,7 +36,7 @@ public abstract class FirearmPickUpBase : MonoBehaviourBase
         {
             if (_gunInfo == null)
             {
-                _gunInfo = GameConfig.Instance.GetWeapon(GunID);
+                _gunInfo = GameConfig.Instance.GetWeapon(WeaponID);
             }
             return _gunInfo;
         }

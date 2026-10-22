@@ -19,8 +19,8 @@ public class DamageInfo
     // 该伤害是否来自爆头？
     public bool isHeadShot { get; set; } = false;
 
-    // 造成此伤害的武器 GunID；若伤害并非来自武器可忽略。
-    public int GunID { get; set; } = 0;
+    // 造成此伤害的武器 WeaponID；若伤害并非来自武器可忽略。
+    public int WeaponID { get; set; } = 0;
 
     // 此伤害所属的网络玩家
     public Player Actor { get; set; }
@@ -36,7 +36,7 @@ public class DamageInfo
     {
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("d", Damage);
-        data.Add("gi", GunID);
+        data.Add("gi", WeaponID);
         data.Add("vi", ActorViewID);
         data.Add("c", Cause);
         data.Add("f", From);
@@ -49,7 +49,7 @@ public class DamageInfo
     public DamageInfo(ExitGames.Client.Photon.Hashtable data)
     {
         Damage = (int)data["d"];
-        GunID = (int)data["gi"];
+        WeaponID = (int)data["gi"];
         ActorViewID = (int)data["vi"];
         Cause = (DamageCause)data["c"];
         From = (string)data["f"];

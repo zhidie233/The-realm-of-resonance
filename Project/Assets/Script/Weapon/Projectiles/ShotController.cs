@@ -414,7 +414,7 @@ public class ShotController : ProjectileBase
             Direction = bulletData.Position,
             GameActor = bulletData.GameActor,
             ActorViewID = bulletData.ActorViewID,
-            GunID = bulletData.WeaponID,
+            WeaponID = bulletData.WeaponID,
         };
         if (data.GameActor != null) { data.From = data.GameActor.Name; }
         return data;

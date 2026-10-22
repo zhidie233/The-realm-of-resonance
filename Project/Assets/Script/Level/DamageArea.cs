@@ -28,7 +28,7 @@ public class DamageArea : MonoBehaviour
                         int gi = GameConfig.Instance.GetWeaponID("Molotov");
                         if (gi > 0)
                         {
-                            cacheInformation.GunID = gi;
+                            cacheInformation.WeaponID = gi;
                         }
 
                         pdm.DoRepeatHitDamage(new PlayerHealthManagerBase.RepeatHitDamage()
@@ -71,7 +71,7 @@ public class DamageArea : MonoBehaviour
                         int gi = GameConfig.Instance.GetWeaponID("Molotov");
                         if (gi > 0)
                         {
-                            cacheInformation.GunID = gi;
+                            cacheInformation.WeaponID = gi;
                         }
                         ash.DoRepeatHitDamage(new PlayerHealthManagerBase.RepeatHitDamage()
                         {

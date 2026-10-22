@@ -37,7 +37,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     private CharacterController m_CharacterController;
     private bool isDead = false;
     private string lastDamageGiverActor;
-    private int KillReward, ScorePerHeatShot;
+    private int KillReward, ScorePerHeadshot;
     private PlayerNetworkHandler PlayerSync;
     private float TimeToRegenerate = 4;
     private FirearmInventory GunManager;
@@ -145,7 +145,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             return;
         }
 
-        photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, e.Damage, e.From, e.Cause, e.Direction, e.isHeadShot, e.GunID, NetworkWrapper.LocalPlayer);
+        photonView.RPC(nameof(SyncDamage), RpcTarget.AllBuffered, e.Damage, e.From, e.Cause, e.Direction, e.isHeadShot, e.WeaponID, NetworkWrapper.LocalPlayer);
     }
     /// 玩家受到坠落冲击伤害时调用
     public override void DoFallDamage(int damage)
@@ -158,7 +158,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
     /// 该玩家受到伤害时会在所有客户端调用此函数
     [PunRPC]
-    void SyncDamage(int damage, string killer, DamageCause cause, Vector3 hitDirection, bool isHeatShot, int weaponID, Player m_sender)
+    void SyncDamage(int damage, string killer, DamageCause cause, Vector3 hitDirection, bool isHeadshot, int weaponID, Player m_sender)
     {
         if (isDead || isProtectionEnable)
             return;
@@ -232,18 +232,18 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                 GameEvents.DispatchPlayerLocalDeathEvent();
             }
 
-            Die(lastDamageGiverActor, isHeatShot, cause, weaponID, hitDirection, m_sender);
+            Die(lastDamageGiverActor, isHeadshot, cause, weaponID, hitDirection, m_sender);
         }
     }
     /// 该玩家在对局中死亡时调用
     /// 此函数判断死因并更新所需统计
-	void Die(string killer, bool isHeadshot, DamageCause cause, int gunID, Vector3 hitPos, Player sender)
+	void Die(string killer, bool isHeadshot, DamageCause cause, int weaponID, Vector3 hitPos, Player sender)
     {
         isDead = true;
         transform.parent = null;
         m_CharacterController.enabled = false;
         GameController.Instance.GetGamePlayer(gameObject.name).isAlive = false;
-        FirearmData gunInfo = GameConfig.Instance.GetWeapon(gunID);
+        FirearmData gunInfo = GameConfig.Instance.GetWeapon(weaponID);
         bool isExplosion = gunInfo.Type == FirearmType.Grenade || gunInfo.Type == FirearmType.Launcher;
         playerReferences.onDie?.Invoke();
 
@@ -285,7 +285,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             //如果杀死该玩家的是本地玩家
             if (lastDamageGiverActor == LocalName)
             {
-                AddKill(isHeadshot, weapon, gunID);
+                AddKill(isHeadshot, weapon, weaponID);
             }
             if (GameConfig.Instance.deathIconsEnabled && !isOneTeamMode)
             {
@@ -322,7 +322,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             {
                 RealPlayer = sender,
                 TargetName = killer,
-                GunID = gunID,
+                WeaponID = weaponID,
                 Target = transform,
                 FallbackTarget = playerReferences.playerRagdoll.transform
             }).SetActive(true);
@@ -349,7 +349,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     RightText = gameObject.name,
                     Team = NetworkWrapper.LocalPlayer.GetPlayerTeam()
                 };
-                feed.AddData("gunid", gunID);
+                feed.AddData("gunid", weaponID);
                 feed.AddData("headshot", isHeadshot);
                 KillReportEntry.Instance.SendKillMessageEvent(feed);
                 //这种情况下由本地玩家而不是主客户端更新机器人统计。
@@ -359,7 +359,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         }
     }
     /// 获得新击杀时同步并给玩家加分
-    public void AddKill(bool isHeadshot, string m_weapon, int gunID)
+    public void AddKill(bool isHeadshot, string m_weapon, int weaponID)
     {
         //发送击杀提示消息
         var feed = new KillReportEntry.FeedData()
@@ -368,7 +368,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             RightText = gameObject.name,
             Team = NetworkWrapper.LocalPlayer.GetPlayerTeam()
         };
-        feed.AddData("gunid", gunID);
+        feed.AddData("gunid", weaponID);
         feed.AddData("headshot", isHeadshot);
         KillReportEntry.Instance.SendKillMessageEvent(feed);
         //新增一次击杀并更新玩家信息

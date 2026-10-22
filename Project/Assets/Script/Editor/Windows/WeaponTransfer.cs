@@ -204,7 +204,7 @@ using UnityEditor.SceneManagement;
            FPWeapon = fpweapon;
            Player = player;
            if (FPWeapon == null || Player == null) return;
-           NetworkGun = Player.NetworkGuns.Find(x => x.LocalGun.GunID == FPWeapon.GunID);
+           NetworkGun = Player.NetworkGuns.Find(x => x.LocalGun.WeaponID == FPWeapon.WeaponID);
            isExport = true;
 
            minSize = new Vector2(200, 150);
@@ -249,13 +249,13 @@ using UnityEditor.SceneManagement;
                if (!GameConfig.Instance.WeaponTable.Exists(x => x.Name == we.WeaponInfo.Name))
                {
                    GameConfig.Instance.WeaponTable.Add(we.WeaponInfo);
-                   we.FPWeapon.GunID = GameConfig.Instance.WeaponTable.Count - 1;
+                   we.FPWeapon.WeaponID = GameConfig.Instance.WeaponTable.Count - 1;
                    EditorUtility.SetDirty(GameConfig.Instance);
                    results[0] = 1;
                }
                else
                {
-                   we.FPWeapon.GunID = GameConfig.Instance.WeaponTable.FindIndex(x => x.Name == we.WeaponInfo.Name);
+                   we.FPWeapon.WeaponID = GameConfig.Instance.WeaponTable.FindIndex(x => x.Name == we.WeaponInfo.Name);
                    EditorUtility.SetDirty(GameConfig.Instance);
                    results[0] = 2;
                }
@@ -310,7 +310,7 @@ using UnityEditor.SceneManagement;
        {
            if (FPWeapon == null || Player == null) return;
 
-           FirearmData info = GameConfig.Instance.GetWeapon(FPWeapon.GunID);
+           FirearmData info = GameConfig.Instance.GetWeapon(FPWeapon.WeaponID);
            GameObject root = new GameObject(info.Name + " [Export]");
            root.transform.SetAsLastSibling();
            WeaponArchive export = root.AddComponent<WeaponArchive>();

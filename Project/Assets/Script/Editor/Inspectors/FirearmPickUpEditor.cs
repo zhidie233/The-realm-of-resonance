@@ -12,7 +12,7 @@ public class FirearmPickUpEditor : Editor
     private void OnEnable()
     {
         script = (FirearmPickUp)target;
-        info = GameConfig.Instance.GetWeapon(script.GunID);
+        info = GameConfig.Instance.GetWeapon(script.WeaponID);
         if (script.m_DetectMode == FirearmPickUp.DetectMode.Trigger)
         {
             if (script.gameObject.layer != LayerMask.NameToLayer("Ignore Raycast"))
@@ -45,7 +45,7 @@ public class FirearmPickUpEditor : Editor
         EditorGUILayout.BeginVertical("box");
         EditorGUILayout.BeginVertical("box");
         if (!serializedObject.isEditingMultipleObjects)
-            script.GunID = EditorGUILayout.Popup("Gun ID ", script.GunID, GameConfig.Instance.WeaponStringList(), EditorStyles.toolbarDropDown);
+            script.WeaponID = EditorGUILayout.Popup("Weapon ID ", script.WeaponID, GameConfig.Instance.WeaponStringList(), EditorStyles.toolbarDropDown);
         if (info != null && info.WeaponIcon != null)
         {
             GUILayout.Space(5);
@@ -116,7 +116,7 @@ public class FirearmPickUpEditor : Editor
         {
             serializedObject.ApplyModifiedProperties();
             EditorUtility.SetDirty(target);
-            info = GameConfig.Instance.GetWeapon(script.GunID);
+            info = GameConfig.Instance.GetWeapon(script.WeaponID);
         }
     }
 }

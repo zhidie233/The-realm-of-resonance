@@ -1,22 +1,17 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 [RequireComponent(typeof(CharacterController))]
 public class FirstPersonController : FirstPersonControllerBase
 {
     [Header("设置")]
     public float WalkSpeed = 4.5f;
-    [FormerlySerializedAs("m_CrouchSpeed")]
     public float runSpeed = 8;
     public float stealthSpeed = 1;
-    [FormerlySerializedAs("m_CrouchSpeed")]
     public float crouchSpeed = 2;
     public float slideSpeed = 10;
-    [FormerlySerializedAs("m_ClimbSpeed")]
     public float climbSpeed = 1f;
-    [FormerlySerializedAs("m_JumpSpeed")]
     public float jumpSpeed;
     public float acceleration = 9;
     public float slopeFriction = 3f;
@@ -52,9 +47,7 @@ public class FirstPersonController : FirstPersonControllerBase
     public float dropControlSpeed = 25;
     public Vector2 dropTiltSpeedRange = new Vector2(20, 60);
     [Header("鼠标视角")] 
-    [FormerlySerializedAs("m_MouseLook")]
     public MouseLook mouseLook;
-    [FormerlySerializedAs("HeatRoot")]
     public Transform headRoot;
     public Transform CameraRoot;
     [Header("头部摇晃")]

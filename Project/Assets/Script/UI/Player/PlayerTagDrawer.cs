@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 /// 默认游戏名称牌（头顶名称）脚本
 /// 若想改用其他方案，例如用 UGUI 代替 OnGUI
 /// 新建自定义脚本并继承 PlayerTagBase.cs
@@ -11,8 +10,7 @@ public class PlayerTagDrawer : PlayerTagBase
     public float hideDistance = 25;
 
     [Header("References")]
-    public NameplateStyle StylePresent;
-    [FormerlySerializedAs("m_Target")]
+    public NameplateStyle StylePreset;
     public Transform positionReference;
     #endregion
 
@@ -69,7 +67,7 @@ public class PlayerTagDrawer : PlayerTagBase
     {
         if (BlockDraw || GameController.Instance.CameraRendered == null || isFinish || PauseMenuBase.IsMenuOpen)
             return;
-        if (StylePresent == null) return;
+        if (StylePreset == null) return;
 
         screenPoint = GameController.Instance.CameraRendered.WorldToScreenPoint(positionReference.position);
         if (screenPoint.z > 0)
@@ -81,20 +79,20 @@ public class PlayerTagDrawer : PlayerTagBase
                 float distanceDifference = Mathf.Clamp(distance - 0.1f, 1, 12);
                 screenPoint.y += distanceDifference * distanceModifier;              
 
-                GUI.Label(new Rect(screenPoint.x - 5, (screenHeight - screenPoint.y) - vertical, 10, 11), PlayerName, StylePresent.style);
+                GUI.Label(new Rect(screenPoint.x - 5, (screenHeight - screenPoint.y) - vertical, 10, 11), PlayerName, StylePreset.style);
                 if (ShowHealthBar)
                 {
-                    GUI.color = StylePresent.HealthBackColor;
-                    GUI.DrawTexture(new Rect(screenPoint.x - (50), (screenHeight - screenPoint.y), 100, StylePresent.HealthBarThickness), StylePresent.HealthBarTexture);
-                    GUI.color = StylePresent.HealthBarColor;
-                    GUI.DrawTexture(new Rect(screenPoint.x - (50), (screenHeight - screenPoint.y), healthManager.GetHealth(), StylePresent.HealthBarThickness), StylePresent.HealthBarTexture);
+                    GUI.color = StylePreset.HealthBackColor;
+                    GUI.DrawTexture(new Rect(screenPoint.x - (50), (screenHeight - screenPoint.y), 100, StylePreset.HealthBarThickness), StylePreset.HealthBarTexture);
+                    GUI.color = StylePreset.HealthBarColor;
+                    GUI.DrawTexture(new Rect(screenPoint.x - (50), (screenHeight - screenPoint.y), healthManager.GetHealth(), StylePreset.HealthBarThickness), StylePreset.HealthBarTexture);
                     GUI.color = Color.white;
                 }
             }
             else
             {
-                float iconSize = StylePresent.IndicatorIconSize;
-                GUI.DrawTexture(new Rect(screenPoint.x - (iconSize * 0.5f), (screenHeight - screenPoint.y) - (iconSize * 0.5f), iconSize, iconSize), StylePresent.IndicatorIcon);
+                float iconSize = StylePreset.IndicatorIconSize;
+                GUI.DrawTexture(new Rect(screenPoint.x - (iconSize * 0.5f), (screenHeight - screenPoint.y) - (iconSize * 0.5f), iconSize, iconSize), StylePreset.IndicatorIcon);
             }
         }
     }

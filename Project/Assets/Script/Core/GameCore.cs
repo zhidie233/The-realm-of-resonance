@@ -59,7 +59,7 @@ public static class GameCore
             if(increaseWarnings)
             GameController.SuicideCount++;
             //如果玩家消极送死或滥杀自己，就踢出房间
-            if (GameController.SuicideCount > GameConfig.Instance.selfKillLimit)
+            if (GameController.SuicideCount > GameConfig.Instance.suicideLimit)
             {              
                 IsAlive = false;
                 CommonUtil.LockCursor(false);

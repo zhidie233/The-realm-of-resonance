@@ -141,7 +141,7 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
         FirearmPickUpManagerBase.Instance?.SendPickUp(new FirearmPickUpManagerBase.PickUpData()
         {
             Identifier = gameObject.name,
-            GunID = GunID,
+            WeaponID = WeaponID,
             Ammunition = Ammunition
         });
 

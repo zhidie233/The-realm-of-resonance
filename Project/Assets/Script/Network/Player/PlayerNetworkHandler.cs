@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using Photon.Pun;
 using Photon.Realtime;
-using UnityEngine.Serialization;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using System.Linq;
 
@@ -14,7 +13,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     // 本地玩家第一人称状态
     public PlayerFPState FPState = PlayerFPState.Idle;
     // 玩家注视的目标
-    [FormerlySerializedAs("HeatTarget")]
     public Transform HeadTarget;
     // 平滑插值量
     public float SmoothingDelay = 8f;
@@ -205,7 +203,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
             currentGun = NetworkGuns[i];
             if (currentGun == null) continue;
 
-            int currentID = (local) ? PlayerReferences.gunManager.GetCurrentWeapon().GunID : networkGunID;
+            int currentID = (local) ? PlayerReferences.gunManager.GetCurrentWeapon().WeaponID : networkGunID;
             if (currentGun.GetWeaponID == currentID)
             {
                 currentGun.gameObject.SetActive(true);

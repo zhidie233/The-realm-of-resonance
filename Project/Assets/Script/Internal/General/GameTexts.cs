@@ -4,12 +4,6 @@
     public static string TeamMatch = "团队竞赛";
     public static string FreeMatch = "自由混战";
     public static string CaptureMatch = "夺旗模式";
-    public static string BombSiteRescue = "搜索与摧毁";
-    public static string PointMatch = "占领据点";
-    public static string RaceMatch = "枪械竞速";
-    public static string LastStand = "最后一人";
-    public static string WipeoutMode = "歼灭模式";
-    public static string TallyMode = "确认击杀";
 
     public static string PickUpMedicalKit = "拾取医疗包";
     public static string PickUpAmmoKit = "拾取弹药";
@@ -33,10 +27,8 @@
     public static string CommittedSuicide = "已自我了断";
     public static string DeathByFall = "坠落身亡";
     public static string KilledEnemy = "击杀敌人";
-    public static string HeatShotBonus = "爆头奖励";
+    public static string HeadshotBonus = "爆头奖励";
     public static string JoinIn = "加入 ";
-    public static string GRPlayerWinning = "领先玩家:\n<size=10><color=black>{0} | {1}/{2}</color></size>";
-    public static string NoLimit = "无限制";
     public static string Spectating = "观战中";
     public static string KillingInAction = "行动中阵亡";
     public static string KillZoneMessage = "请在 <color=red><size=25>{0}</size>秒</color>内返回战场";
@@ -68,7 +60,6 @@
 
     public static string CaptureTheFlag = "已夺取旗帜";
     public static string ObtainedFlag = "已获得 {0} 旗帜";
-    public static string CoverPointTime = "占领倒计时: <b>{0}</b>";
 
     public static string FireTypeAuto = "全自动";
     public static string FireTypeSemi = "半自动";

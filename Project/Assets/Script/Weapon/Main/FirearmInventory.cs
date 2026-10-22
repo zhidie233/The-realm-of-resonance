@@ -56,7 +56,7 @@ public class FirearmInventory : MonoBehaviourBase
         TakeWeapon(firstWeapon);
 
         if (firstWeapon != null)
-            GameEvents.ChangeWeaponEvent(firstWeapon.GunID);
+            GameEvents.ChangeWeaponEvent(firstWeapon.WeaponID);
 
         if (GameController.Instance.GameMatchState == MatchState.Waiting && !GameController.Instance.FirstSpawnDone)
         {
@@ -93,7 +93,7 @@ public class FirearmInventory : MonoBehaviourBase
         // 分配玩家职业的配装武器
         AddWeaponToSlot(0, GetGunOnListById(pcl.Primary), true);
         AddWeaponToSlot(1, GetGunOnListById(pcl.Secondary), true);
-        AddWeaponToSlot(2, GetGunOnListById(pcl.Letal), true);
+        AddWeaponToSlot(2, GetGunOnListById(pcl.Lethal), true);
         AddWeaponToSlot(3, GetGunOnListById(pcl.Perks), true);
         // 想加更多武器可以在这里加
 
@@ -241,7 +241,7 @@ public class FirearmInventory : MonoBehaviourBase
         CurrentGun = PlayerEquip[currentWeaponIndex];
         CanSwich = true;
         isFastFire = false;
-        GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].GunID);
+        GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].WeaponID);
     }
 
     void TakeWeapon(FirearmController gun, bool forced = false)
@@ -308,7 +308,7 @@ public class FirearmInventory : MonoBehaviourBase
         PlayerEquip[currentWeaponIndex].gameObject.SetActive(false);
         AllGuns[WeaponTableIndex].gameObject.SetActive(true);
         PlayerEquip[currentWeaponIndex] = AllGuns[WeaponTableIndex];
-        GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].GunID);
+        GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].WeaponID);
     }
     // 把当前已装备武器换成指定武器槽中的那把
     // 武器在 <see cref="PlayerEquip"/> 列表中的索引
@@ -356,7 +356,7 @@ public class FirearmInventory : MonoBehaviourBase
             }
         }
         TakeWeapon(PlayerEquip[newID], true);
-        GameEvents.ChangeWeaponEvent(PlayerEquip[newID].GunID);
+        GameEvents.ChangeWeaponEvent(PlayerEquip[newID].WeaponID);
     }
     // 本地玩家在地图上拾取武器时调用
     public void PickUpGun(FirearmPickUpData e)
@@ -367,14 +367,14 @@ public class FirearmInventory : MonoBehaviourBase
             return;
         }
         //在该玩家预制体的第一人称武器列表中查找拾取的武器
-        FirearmController pickedLocalGun = AllGuns.Find(x => x.GunID == e.ID);
+        FirearmController pickedLocalGun = AllGuns.Find(x => x.WeaponID == e.ID);
         if (pickedLocalGun == null)
         {
             Debug.LogWarning($"武器 {e.ID} 未集成到当前玩家预制体。");
             return;
         }
         //若尚未装备
-        if (!PlayerEquip.Exists(x => x != null && x.GunID == e.ID))
+        if (!PlayerEquip.Exists(x => x != null && x.WeaponID == e.ID))
         {
             FirearmData gunInfo = GameConfig.Instance.GetWeapon(e.ID);
             //先确认配装里没有空槽位
@@ -399,7 +399,7 @@ public class FirearmInventory : MonoBehaviourBase
             //走到这里说明没有空槽位，只能替换当前武器
             //先检查拾取的武器能否替换当前槽位的武器。
             bool isEmpty = PlayerEquip[currentWeaponIndex] == null;
-            int actualID = isEmpty ? -1 : PlayerEquip[currentWeaponIndex].GunID;
+            int actualID = isEmpty ? -1 : PlayerEquip[currentWeaponIndex].WeaponID;
             //获取要被替换的武器所需的数据
             int[] info = new int[2];
             int clips = isEmpty ? 3 : (int)PlayerEquip[currentWeaponIndex].RemainingClips;
@@ -428,7 +428,7 @@ public class FirearmInventory : MonoBehaviourBase
                         {
                             FirearmPickUpManagerBase.Instance.ThrowGun(new FirearmPickUpManagerBase.ThrowData()
                             {
-                                GunID = oldGun.GunID,
+                                WeaponID = oldGun.WeaponID,
                                 Origin = GetThrowPosition(),
                                 Direction = GetThrowDirection(),
                                 Data = info,
@@ -449,7 +449,7 @@ public class FirearmInventory : MonoBehaviourBase
             // 只当作弹药拾取
             foreach (FirearmController g in PlayerEquip)
             {
-                if (g != null && g.GunID == e.ID)
+                if (g != null && g.WeaponID == e.ID)
                 {
                     g.OnPickUpAmmo(e.Bullets * e.Clips, 1, e.ID);
                     break;
@@ -486,14 +486,14 @@ public class FirearmInventory : MonoBehaviourBase
         {
             FirearmPickUpManagerBase.Instance.ThrowGun(new FirearmPickUpManagerBase.ThrowData()
             {
-                GunID = currentGun.GunID,
+                WeaponID = currentGun.WeaponID,
                 Origin = GetThrowPosition(),
                 Direction = GetThrowDirection(),
                 Data = info,
                 AutoDestroy = false
             });
         }
-        GameEvents.ChangeWeaponEvent(nextGun.GunID);
+        GameEvents.ChangeWeaponEvent(nextGun.WeaponID);
         UIReferences.Instance.PlayerUI.WeaponStatsUI.SetActive(true);
         CanSwich = true;
     }
@@ -502,7 +502,7 @@ public class FirearmInventory : MonoBehaviourBase
     {
         if (PlayerEquip[currentWeaponIndex] == null)
             return;
-        int actualID = PlayerEquip[currentWeaponIndex].GunID;
+        int actualID = PlayerEquip[currentWeaponIndex].WeaponID;
         int[] info = new int[2];
         int clips = (GameConfig.Instance.AmmoType == AmmunitionType.Bullets) ?
             (int)PlayerEquip[currentWeaponIndex].RemainingClips / PlayerEquip[currentWeaponIndex].bulletsPerClip : (int)PlayerEquip[currentWeaponIndex].RemainingClips;
@@ -510,7 +510,7 @@ public class FirearmInventory : MonoBehaviourBase
         info[1] = PlayerEquip[currentWeaponIndex].bulletsLeft;
         FirearmPickUpManagerBase.Instance.ThrowGun(new FirearmPickUpManagerBase.ThrowData()
         {
-            GunID = actualID,
+            WeaponID = actualID,
             Origin = throwPosition,
             Direction = transform.forward,
             Data = info,
@@ -520,9 +520,9 @@ public class FirearmInventory : MonoBehaviourBase
     public FirearmController GetGunOnListById(int id)
     {
         FirearmController gun = null;
-        if (AllGuns.Exists(x => x != null && x.GunID == id))
+        if (AllGuns.Exists(x => x != null && x.WeaponID == id))
         {
-            gun = AllGuns.Find(x => x.GunID == id);
+            gun = AllGuns.Find(x => x.WeaponID == id);
         }
         else
         {
@@ -621,13 +621,13 @@ public class FirearmInventory : MonoBehaviourBase
             return CurrentGun;
         }
     }
-    // 当前已装备武器的 GunID，-1 表示玩家还没有装备武器
+    // 当前已装备武器的 WeaponID，-1 表示玩家还没有装备武器
     public int GetCurrentGunID
     {
         get
         {
             if (GetCurrentWeapon() == null) { return -1; }
-            return GetCurrentWeapon().GunID;
+            return GetCurrentWeapon().WeaponID;
         }
     }
     void OnMatchStart() { isGameStarted = true; }

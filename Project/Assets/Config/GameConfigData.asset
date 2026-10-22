@@ -70,7 +70,7 @@ MonoBehaviour:
   endMatchDelay: 5
   idleKickTime: 60
   teamSwitchLimit: 3
-  selfKillLimit: 3
+  suicideLimit: 3
   MainMenuScene: MainMenu
   OnDisconnectScene: MainMenu
   focusColor: {r: 0.44827604, g: 0, b: 1, a: 1}
@@ -269,102 +269,12 @@ MonoBehaviour:
     maxPlayers: 06000000020000000400000008000000
     GoalValueOptions: 05000000070000000b00000003000000
     roundTimes: 8403000058020000b00400002c010000
-  - ModeName: Wipeout
-    gameMode: 7
-    isEnabled: 0
-    botsEnabled: 1
-    AutoAssignTeams: 1
-    HideRoomAfterStart: 1
-    MinPlayersToStart: 2
-    spawnOnRoundBegin: 1
-    onDeath: 1
-    RoundFormat: 3
-    GoalName: Rounds
-    allowWeaponPickup: 1
-    maxPlayers: 06000000020000000400000008000000
-    GoalValueOptions: 05000000070000000b00000003000000
-    roundTimes: 8403000058020000b00400002c010000
-  - ModeName: Zone Capture
-    gameMode: 4
-    isEnabled: 0
-    botsEnabled: 0
-    AutoAssignTeams: 1
-    HideRoomAfterStart: 0
-    MinPlayersToStart: 2
-    spawnOnRoundBegin: 0
-    onDeath: 0
-    RoundFormat: 0
-    GoalName: Tickets
-    allowWeaponPickup: 1
-    maxPlayers: 06000000020000000400000008000000
-    GoalValueOptions: f4010000e8030000dc050000d0070000
-    roundTimes: 8403000058020000b00400002c010000
-  - ModeName: Order Race
-    gameMode: 5
-    isEnabled: 0
-    botsEnabled: 0
-    AutoAssignTeams: 0
-    HideRoomAfterStart: 0
-    MinPlayersToStart: 1
-    spawnOnRoundBegin: 0
-    onDeath: 0
-    RoundFormat: 0
-    GoalName: First Player
-    allowWeaponPickup: 0
-    maxPlayers: 06000000020000000400000008000000
-    GoalValueOptions: 
-    roundTimes: 8403000058020000b00400002c010000
-  - ModeName: Breach
-    gameMode: 8
-    isEnabled: 0
-    botsEnabled: 0
-    AutoAssignTeams: 1
-    HideRoomAfterStart: 1
-    MinPlayersToStart: 2
-    spawnOnRoundBegin: 1
-    onDeath: 1
-    RoundFormat: 1
-    GoalName: Rounds
-    allowWeaponPickup: 1
-    maxPlayers: 06000000020000000400000008000000
-    GoalValueOptions: 0500000007000000030000000d000000
-    roundTimes: 7800000058020000b00400002c010000
-  - ModeName: Last Stand
-    gameMode: 6
-    isEnabled: 0
-    botsEnabled: 0
-    AutoAssignTeams: 1
-    HideRoomAfterStart: 1
-    MinPlayersToStart: 16
-    spawnOnRoundBegin: 1
-    onDeath: 1
-    RoundFormat: 2
-    GoalName: Alives
-    allowWeaponPickup: 1
-    maxPlayers: 06000000020000000400000008000000
-    GoalValueOptions: 
-    roundTimes: 8403000058020000b00400002c010000
-  - ModeName: Tally
-    gameMode: 9
-    isEnabled: 0
-    botsEnabled: 1
-    AutoAssignTeams: 1
-    HideRoomAfterStart: 0
-    MinPlayersToStart: 1
-    spawnOnRoundBegin: 0
-    onDeath: 0
-    RoundFormat: 0
-    GoalName: Kills
-    allowWeaponPickup: 1
-    maxPlayers: 06000000020000000400000008000000
-    GoalValueOptions: 1e0000003200000064000000c8000000
-    roundTimes: 8403000058020000b00400002c010000
   Team1Name: "\u7B51\u6CE2\u8005\u200B\u5267\u56E2"
   Team1Color: {r: 0.03529412, g: 0.5176471, b: 0.8901961, a: 1}
   Team2Name: "\u6D8C\u6D6A\u4EBA\u5267\u56E2"
   Team2Color: {r: 0.92156863, g: 0.3019608, b: 0.29411766, a: 1}
-  Player1: {fileID: 7135504912842644769, guid: 77c0e08bd92715b4a9732ce61b4f1bbd, type: 3}
-  Player2: {fileID: 6787355089765057219, guid: cb9f7f11e9dd4224d88acd2b4a38250b, type: 3}
+  Team1PlayerPrefab: {fileID: 7135504912842644769, guid: 77c0e08bd92715b4a9732ce61b4f1bbd, type: 3}
+  Team2PlayerPrefab: {fileID: 6787355089765057219, guid: cb9f7f11e9dd4224d88acd2b4a38250b, type: 3}
   BotTeam1: {fileID: 575238182293687342, guid: 4baf4208a7e82d147b76a6300faee306, type: 3}
   BotTeam2: {fileID: 7711766675355324538, guid: ca5c4aab36c1d4249b34f41cf243290f, type: 3}
   BotTeam3: {fileID: 5091329565238615710, guid: ff3b42bcc9e71f644ab6bf81713108e9, type: 3}
