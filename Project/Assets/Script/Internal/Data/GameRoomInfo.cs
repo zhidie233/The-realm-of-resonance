@@ -15,7 +15,6 @@ public struct GameRoomInfo
     public int maxPing { get; set; }
     public Room room { get; set; }
     public int maxPlayers { get; set; }
-    public bool friendlyFire { get; set; }
     public bool withBots { get; set; }
     public bool autoAssignTeams { get; set; }
     public RoundStyle roundStyle { get; set; }
@@ -35,7 +34,6 @@ public struct GameRoomInfo
         goal = (int)room.CustomProperties[NetworkKeys.RoomGoal];
         maxPing = (int)room.CustomProperties[NetworkKeys.MaxPing];
         maxPlayers = room.MaxPlayers;
-        friendlyFire = (bool)room.CustomProperties[NetworkKeys.RoomFriendlyFire];
         withBots = (bool)room.CustomProperties[NetworkKeys.WithBotsKey];
         autoAssignTeams = (bool)room.CustomProperties[NetworkKeys.TeamSelectionKey];
         roundStyle = (RoundStyle)room.CustomProperties[NetworkKeys.RoomRoundKey];

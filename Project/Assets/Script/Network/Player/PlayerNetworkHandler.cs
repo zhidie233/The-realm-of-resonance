@@ -178,7 +178,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     // 该远程玩家是队友时每帧调用
     void OnTeammatePlayer()
     {
-        playerHealthManager.DamageEnabled = RoomSettings.Instance.CurrentRoomInfo.friendlyFire;
+        playerHealthManager.DamageEnabled = true;
         DrawName.SetActive(true);
         characterController.enabled = false;
 

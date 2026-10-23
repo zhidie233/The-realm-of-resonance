@@ -13,7 +13,6 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
     [GameToggle] public bool forceOffline = false;
     [GameToggle] public bool withBots = false;
     [GameToggle] public bool autoAssignTeams = true;
-    [GameToggle] public bool friendlyFire = false;
     [Range(1, 64)] public int maxPlayers = 1;
     public int MatchTime = 9989;
     public int gameModeGoal = 100;
@@ -56,7 +55,6 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
         roomOption[NetworkKeys.TeamSelectionKey] = autoAssignTeams;
         roomOption[NetworkKeys.CustomSceneName] = GameConfig.Instance.SceneTable[0].ShowName;
         roomOption[NetworkKeys.RoomGoal] = gameModeGoal;
-        roomOption[NetworkKeys.RoomFriendlyFire] = friendlyFire;
         roomOption[NetworkKeys.MaxPing] = 1000;
         roomOption[NetworkKeys.RoomPassword] = "";
         roomOption[NetworkKeys.WithBotsKey] = withBots;

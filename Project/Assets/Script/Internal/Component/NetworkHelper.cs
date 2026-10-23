@@ -9,15 +9,6 @@ public class NetworkHelper : MonoBehaviourPun {
     private List<Player> PlayerList = new List<Player>();
     private bool GameModeDownloaded = false;
 
-    public string myTeam
-    {
-        get
-        {
-            string t = (string)NetworkWrapper.LocalPlayer.CustomProperties[NetworkKeys.TeamKey];
-            return t;
-        }
-    }
-
     public bool isRoomReady
     {
         get { return (NetworkWrapper.IsConnected && NetworkWrapper.InRoom); }

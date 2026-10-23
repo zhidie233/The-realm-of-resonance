@@ -318,7 +318,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         roomInfo.autoAssignTeams = gameMode.AutoAssignTeams;
         roomInfo.mapName = mapInfo.ShowName;
         roomInfo.goal = gameMode.GetGoalValue(randomGoal);
-        roomInfo.friendlyFire = true;
         roomInfo.maxPing = MaxPing[CurrentMaxPing];
         roomInfo.password = string.Empty;
         roomInfo.withBots = gameMode.botsEnabled;
@@ -346,7 +345,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         roomOption[NetworkKeys.TeamSelectionKey] = roomInfo.autoAssignTeams;
         roomOption[NetworkKeys.CustomSceneName] = roomInfo.mapName;
         roomOption[NetworkKeys.RoomGoal] = roomInfo.goal;
-        roomOption[NetworkKeys.RoomFriendlyFire] = roomInfo.friendlyFire;
         roomOption[NetworkKeys.MaxPing] = roomInfo.maxPing;
         roomOption[NetworkKeys.RoomPassword] = roomInfo.password;
         roomOption[NetworkKeys.WithBotsKey] = roomInfo.withBots;

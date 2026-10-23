@@ -210,16 +210,8 @@ public class ShotController : ProjectileBase
                 }
                 else if (playerRefs.playerSettings.PlayerTeam == bulletData.GameActor.Team)
                 {
-                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
-                    {
-                        Disable();
-                        return;
-                    }
-                    else
-                    {
-                        // 攻击友军，降低共鸣值
-                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
-                    }
+                    // 攻击友军，降低共鸣值
+                    ResonanceManager.RequestChange("Teammate", damageData.Damage);
                 }
                 else
                 {
@@ -233,16 +225,8 @@ public class ShotController : ProjectileBase
             {
                 if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                 {
-                    if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
-                    {
-                        Disable();
-                        return;
-                    }
-                    else
-                    {
-                        // 攻击友军，降低共鸣值
-                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
-                    }
+                    // 攻击友军，降低共鸣值
+                    ResonanceManager.RequestChange("Teammate", damageData.Damage);
                 }
                 else
                 {
@@ -296,16 +280,8 @@ public class ShotController : ProjectileBase
                     }
                     else if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                     {
-                        if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
-                        {
-                            Disable();
-                            return;
-                        }
-                        else
-                        {
-                            // 攻击友军，降低共鸣值
-                            ResonanceManager.RequestChange("Teammate", damageData.Damage);
-                        }
+                        // 攻击友军，降低共鸣值
+                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
                     }
                     else
                     {
@@ -337,16 +313,8 @@ public class ShotController : ProjectileBase
             }
             else if (pdm.playerSettings.PlayerTeam == bulletData.GameActor.Team)
             {
-                if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire)
-                {
-                    Disable();
-                    return;
-                }
-                else
-                {
-                    // 攻击友军，降低共鸣值
-                    ResonanceManager.RequestChange("Teammate", info.Damage);
-                }
+                // 攻击友军，降低共鸣值
+                ResonanceManager.RequestChange("Teammate", info.Damage);
             }
             else
             {

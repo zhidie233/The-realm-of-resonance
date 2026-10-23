@@ -12,7 +12,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     public SingleSettingsBinding GameModeSelector;
     public SingleSettingsBinding MaxPingSelector;
     public SingleSettingsBinding BotsActiveSelector;
-    public SingleSettingsBinding FriendlyFireSelector;
     public SingleSettingsBinding PerRoundSelector;
     public SingleSettingsBinding TeamSelectionSelector;
     public TMP_InputField roomInputField;
@@ -100,7 +99,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     public string RoomName => roomInputField.text;
     public string RoomPassword => roomPasswordInputField.text;
     public bool IsPrivate => !string.IsNullOrEmpty(roomPasswordInputField.text);
-    public bool FriendlyFire => FriendlyFireSelector.CurrentSelectionAsBool();
     public bool BotsActive => BotsActiveSelector.CurrentSelectionAsBool();
     public bool AutoAssignTeams => TeamSelectionSelector.CurrentSelectionAsBool();
     public RoundStyle GamePerRound => PerRoundSelector.CurrentSelectionAsBool() == true ? RoundStyle.Rounds : RoundStyle.OneMacht;

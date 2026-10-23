@@ -20,7 +20,6 @@ public class ReadyRoomUI : ReadyRoomUIBase
     public TextMeshProUGUI TimeText;
     public TextMeshProUGUI GoalText;
     public TextMeshProUGUI BotsText;
-    public TextMeshProUGUI FriendlyFireText;
     public TextMeshProUGUI PlayerCountText;
     public Image MapPreview;
     public List<RectTransform> PlayerListHeaders = new List<RectTransform>();
@@ -122,7 +121,6 @@ public class ReadyRoomUI : ReadyRoomUIBase
         int t = (int)room.CustomProperties[NetworkKeys.TimeRoomKey];
         TimeText.text = (t / 60).ToString().ToUpper() + ":00";
         BotsText.text = string.Format("BOTS: {0}", (bool)room.CustomProperties[NetworkKeys.WithBotsKey] ? "ON" : "OFF");
-        FriendlyFireText.text = string.Format("友方伤害: {0}", (bool)room.CustomProperties[NetworkKeys.RoomFriendlyFire] ? "ON" : "OFF");       
         UpdatePlayerCount();
         readyButtons[0].gameObject.SetActive(NetworkWrapper.IsMasterClient);
         readyButtons[1].gameObject.SetActive(!NetworkWrapper.IsMasterClient);

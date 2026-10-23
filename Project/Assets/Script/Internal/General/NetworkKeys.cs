@@ -10,7 +10,6 @@ public static class NetworkKeys
     public const string RoomRoundKey = "rr.round";
     public const string RoomGoal = "rr.goal";
     public const string TeamSelectionKey = "rr.teamSelection";
-    public const string RoomFriendlyFire = "rr.friendlyFire";
     public const string Team1Score = "rr.team1Score";
     public const string Team2Score = "rr.team2Score";
     public const string MaxPing = "rr.maxPing";

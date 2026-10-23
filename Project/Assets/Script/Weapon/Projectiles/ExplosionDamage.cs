@@ -176,22 +176,9 @@ public class ExplosionDamage : ExplosionBase
     // 根据玩家与爆炸点的距离计算产生的伤害
     private int CalculatePlayerDamage(Transform trans, Player p)
     {
-        if (p != null)
+        if (p != null && !isOneTeamMode && p == NetworkWrapper.LocalPlayer && !GameConfig.Instance.selfExplosionDamage)
         {
-            if (!isOneTeamMode)
-            {
-                if (GameConfig.Instance.selfExplosionDamage && p == NetworkWrapper.LocalPlayer)
-                {
-
-                }
-                else
-                {
-                    if ((string)p.CustomProperties[NetworkKeys.TeamKey] == myTeam)
-                    {
-                        return 0;
-                    }
-                }
-            }
+            return 0;
         }
         float distance = CommonUtil.Distance(transform.position, trans.position);
         return Mathf.Clamp((int)(explosionDamage * ((explosionRadius - distance) / explosionRadius)), 0, (int)explosionDamage);
@@ -236,54 +223,18 @@ public class ExplosionDamage : ExplosionBase
                 return null;
 
             float distance = CommonUtil.Distance(transform.position, player.transform.position);
-            if (!isOneTeamMode)
+            if (p != NetworkWrapper.LocalPlayer)
             {
-                if (!creator.isRealPlayer)
+                if (distance <= explosionRadius)
                 {
-                    if (p.GetPlayerTeam() != creator.Team && (distance <= explosionRadius))
-                    {
-                        list.Add(p);
-                    }
-                }
-                else
-                {
-                    if (p != NetworkWrapper.LocalPlayer)
-                    {
-                        if (p.GetPlayerTeam() != NetworkWrapper.LocalPlayer.GetPlayerTeam() && (distance <= explosionRadius))
-                        {
-                            list.Add(p);
-                        }
-                    }
-                    else
-                    {
-                        if (GameConfig.Instance.selfExplosionDamage)
-                        {
-                            if (distance <= explosionRadius)
-                            {
-                                list.Add(p);
-                            }
-                        }
-                    }
+                    list.Add(p);
                 }
             }
             else
             {
-                if (p != NetworkWrapper.LocalPlayer)
+                if (GameConfig.Instance.selfExplosionDamage && distance <= explosionRadius)
                 {
-                    if (distance <= explosionRadius)
-                    {
-                        list.Add(p);
-                    }
-                }
-                else
-                {
-                    if (GameConfig.Instance.selfExplosionDamage)
-                    {
-                        if (distance <= explosionRadius)
-                        {
-                            list.Add(p);
-                        }
-                    }
+                    list.Add(p);
                 }
             }
         }

@@ -128,15 +128,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// 调用它对玩家造成一次新伤害
     public void GetDamage(DamageInfo e)
     {
-        bool canDamage = true;
-        if (!DamageEnabled)
-        {
-            //修复：机器人无法伤害主客户端的队友。
-            if (e.GameActor != null && (e.GameActor.Team != thisPlayerTeam || RoomSettings.Instance.CurrentRoomInfo.friendlyFire)) { canDamage = true; }
-            else canDamage = false;
-        }
-
-        if (!canDamage || isProtectionEnable || GameController.Instance.GameMatchState == MatchState.Waiting)
+        if (isProtectionEnable || GameController.Instance.GameMatchState == MatchState.Waiting)
         {
             if (!isMine)
             {

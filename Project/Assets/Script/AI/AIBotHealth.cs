@@ -38,22 +38,17 @@ public class AIBotHealth : PlayerHealthManagerBase
             }
         }
 
-        DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.GameActor.isRealPlayer, damageData.GameActor.Team, damageData.isHeadShot);
+        DoDamage(damageData.Damage, weaponName, damageData.Direction, damageData.ActorViewID, !damageData.GameActor.isRealPlayer, damageData.isHeadShot);
     }
 
     public override void DoFallDamage(int damage)
     {
     }
 
-    public void DoDamage(int damage, string weaponName, Vector3 direction, int viewID, bool fromBot, Team team, bool ishead)
+    public void DoDamage(int damage, string weaponName, Vector3 direction, int viewID, bool fromBot, bool ishead)
     {
         if (m_AIShooter.isDeath)
             return;
-
-        if (!isOneTeamMode)
-        {
-            if (!RoomSettings.Instance.CurrentRoomInfo.friendlyFire && team == m_AIShooter.AITeam) return;
-        }
 
         photonView.RPC(nameof(RpcDoDamage), RpcTarget.All, damage, weaponName, direction, viewID, fromBot, ishead);
     }
@@ -304,7 +299,7 @@ public class AIBotHealth : PlayerHealthManagerBase
             damageinfo.Cause = DamageCause.Map;
         }
         damageinfo.Damage = repeatHitDamage.Damage;
-        DoDamage(damageinfo.Damage, "[Burn]", damageinfo.Direction, GameController.LocalPlayerViewID, false, NetworkWrapper.LocalPlayer.GetPlayerTeam(), false);
+        DoDamage(damageinfo.Damage, "[Burn]", damageinfo.Direction, GameController.LocalPlayerViewID, false, false);
     }
     public override void CancelRepeatHit()
     {

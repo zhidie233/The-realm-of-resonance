@@ -20,7 +20,6 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
         room.gameMode = mode.gameMode;
         room.time = TimeLimit;
         room.password = Password;
-        room.friendlyFire = FriendlyFire;
         room.autoAssignTeams = AutoAssignTeams;
         room.withBots = BotsActive;
         room.roundStyle = PerRoundGame;
@@ -78,7 +77,6 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
     public int TimeLimit => GameModeInfo.roundTimes[LobbyRoomCreatorUI.Instance.TimeLimit];
     public GameModeSettings GameModeInfo => LobbyRoomCreatorUI.Instance.CurrentGameMode;
     public bool IsPrivate => LobbyRoomCreatorUI.Instance.IsPrivate;
-    public bool FriendlyFire => LobbyRoomCreatorUI.Instance.FriendlyFire;
     public bool BotsActive => GameModeInfo.botsEnabled ? LobbyRoomCreatorUI.Instance.BotsActive : false;
     public bool AutoAssignTeams => GameModeInfo.AutoAssignTeams ? true :  LobbyRoomCreatorUI.Instance.AutoAssignTeams;
     public RoundStyle PerRoundGame => GameModeInfo.HasForcedRoundMode() ? GameModeInfo.GetAllowedRoundMode() : LobbyRoomCreatorUI.Instance.GamePerRound;
