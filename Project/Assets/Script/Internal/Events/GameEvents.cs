@@ -28,6 +28,8 @@ public static class GameEvents
     public static void DispatchRemotePlayerDeath(GamePlayer player) => onRemotePlayerDeath?.Invoke(player);
     /// 本地玩家出生时触发
     public static Action onLocalPlayerSpawn;
+    /// 共振值发生变化时触发
+    public static Action<float> onResonanceChanged;
 
     public delegate void LocalPlayerShakeEvent(ShakePreset present, string key, float influence = 1);
     public static LocalPlayerShakeEvent onLocalPlayerShake;
@@ -105,6 +107,8 @@ public static class GameEvents
     public static void DispatchPickUpHealth(int health) => onPickUpHealth?.Invoke(health);
     /// 呼叫新补给时触发
     public static void DispatchDropEvent(Vector3 t_position, int type) => onAirSupply?.Invoke(t_position, type);
+    /// 通知所有监听者共振值已更新
+    public static void DispatchResonanceChanged(float value) => onResonanceChanged?.Invoke(value);
     /// 拾取弹药时触发
     public static bool OnAmmo(int bullets, int projectiles, int weaponID) => onAmmoPickUp(bullets, projectiles, weaponID);
     /// 击杀新玩家时调用

@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 
 public class MeteoriteFacility : ResonanceFacility
 {
-    [Header("陨石配置")]
-    public MeteoriteConfig meteoriteConfig;
+    private MeteoriteConfig config => GameConfig.Instance.meteoriteConfig;
     private BoxCollider dropArea;
     private bool isOnCooldown = false;
     private float lastTriggerTime = 0f;
@@ -15,7 +14,8 @@ public class MeteoriteFacility : ResonanceFacility
 
     private void Start()
     {
-        dropArea=GameObject.FindGameObjectWithTag("DropArea").GetComponent<BoxCollider>();
+        GameObject dropAreaObject = GameObject.FindGameObjectWithTag("DropArea");
+        if (dropAreaObject != null) dropArea = dropAreaObject.GetComponent<BoxCollider>();
     }
 
     public override void ReceiveDamage(DamageInfo damageData)
@@ -23,10 +23,10 @@ public class MeteoriteFacility : ResonanceFacility
         if (isOnCooldown) return;
         
         // 检查触发概率
-        if (Random.Range(0f, 1f) > meteoriteConfig.triggerProbability) return;
+        if (Random.Range(0f, 1f) > config.triggerProbability) return;
         
         // 只有MasterClient处理陨石生成逻辑
-        if (!PhotonNetwork.IsMasterClient) return;
+        if (!NetworkWrapper.IsMasterClient) return;
         
         TriggerMeteorite(damageData);
     }
@@ -68,20 +68,20 @@ public class MeteoriteFacility : ResonanceFacility
     private IEnumerator SpawnMeteorite(GamePlayer shooter, GamePlayer target, int shooterViewID)
     {
         // 显示射击者标记
-        if (shooter.isRealPlayer && shooter.Name == PhotonNetwork.NickName)
+        if (shooter.isRealPlayer && shooter.Name == NetworkWrapper.NickName)
         {
             ShowShooterMarker(shooter);
         }
         
         // 等待倒计时
-        yield return new WaitForSeconds(meteoriteConfig.meteoriteCountdown);
+        yield return new WaitForSeconds(config.meteoriteCountdown);
         
         if (target == null || target.Actor == null) yield break;
         
         // 计算伤害（基于共鸣值）
         float resonance = ResonanceManager.Instance.GetCurrentResonance();
-        float damageMultiplier = meteoriteConfig.damageCurve.Evaluate(resonance);
-        int finalDamage = Mathf.RoundToInt(meteoriteConfig.baseDamage * damageMultiplier);
+        float damageMultiplier = config.damageCurve.Evaluate(resonance);
+        int finalDamage = Mathf.RoundToInt(config.baseDamage * damageMultiplier);
         
         // 在目标位置上方生成陨石
         Vector3 spawnPosition = GetRandomPositionInDropArea();
@@ -91,7 +91,7 @@ public class MeteoriteFacility : ResonanceFacility
     private void SpawnMeteoriteProjectile(Vector3 spawnPos, Vector3 targetPos, int damage, int shooterViewID, GamePlayer shooter)
     {
         // 使用现有的榴弹发射器逻辑，但修改为陨石行为
-        GameObject meteorite = Instantiate(meteoriteConfig.meteoritePrefab, spawnPos, Quaternion.identity);
+        GameObject meteorite = Instantiate(config.meteoritePrefab, spawnPos, Quaternion.identity);
         var projectile = meteorite.GetComponent<MeteoriteProjectile>();
         // 创建子弹数据
         ShotData bulletData = new ShotData
@@ -99,7 +99,7 @@ public class MeteoriteFacility : ResonanceFacility
             Damage = damage,
             GameActor = shooter,
             ActorViewID = shooterViewID,
-            Speed = meteoriteConfig.meteoriteFallSpeed,
+            Speed = config.meteoriteFallSpeed,
             Position = spawnPos,
             isNetwork = false
         };
@@ -114,13 +114,13 @@ public class MeteoriteFacility : ResonanceFacility
     
     private void ShowShooterMarker(GamePlayer shooter)
     {
-        if (meteoriteConfig.arrowMarkerPrefab == null) return;
+        if (config.arrowMarkerPrefab == null) return;
         
-        GameObject marker = Instantiate(meteoriteConfig.arrowMarkerPrefab);
+        GameObject marker = Instantiate(config.arrowMarkerPrefab);
         MeteoriteShooterMarker markerScript = marker.GetComponent<MeteoriteShooterMarker>();
         if (markerScript != null)
         {
-            markerScript.Initialize(shooter, meteoriteConfig.markerDisplayTime);
+            markerScript.Initialize(shooter, config.markerDisplayTime);
         }
     }
     

@@ -243,7 +243,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   resonanceKey: Meteorite
-  meteoriteConfig: {fileID: 11400000, guid: b08820c1490408d45b387a90c01d9db1, type: 2}
 --- !u!114 &1389919315816435018
 MonoBehaviour:
   m_ObjectHideFlags: 0

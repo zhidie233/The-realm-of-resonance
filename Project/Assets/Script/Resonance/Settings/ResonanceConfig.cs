@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ResonanceConfig", menuName = "Resonance/Settings/ResonanceConfig")]
+[CreateAssetMenu(fileName = "ResonanceConfig", menuName = "项目/共振/ResonanceConfig")]
 public class ResonanceConfig : ScriptableObject
 {
     [System.Serializable]

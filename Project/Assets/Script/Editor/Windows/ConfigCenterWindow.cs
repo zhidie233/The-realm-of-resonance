@@ -18,6 +18,7 @@ public class ConfigCenterWindow : EditorWindow
     {
     new ManagerPanel(){Name = "游戏数据", BodyFuncName = nameof(DrawGameDataSettings)},
     new ManagerPanel(){Name = "输入管理器", BodyFuncName = nameof(DrawInputManager)},
+    new ManagerPanel(){Name = "共振参数", BodyFuncName = nameof(DrawResonanceSettings)},
     };
     private WindowType currentWindow = WindowType.Home;
     private string currentPanelType = "";
@@ -719,6 +720,26 @@ public class ConfigCenterWindow : EditorWindow
             DrawTitleText($"映射 {InputHandler.InputData.DefaultMapped.name}");
             DrawEditorOf(InputHandler.InputData.DefaultMapped);
         }
+    }
+
+    void DrawResonanceSettings()
+    {
+        DrawTitleText("共振参数");
+
+        var config = GameConfig.Instance;
+        if (config == null) return;
+
+        DrawEditorOf(config.resonanceConfig);
+        GUILayout.Space(10);
+        DrawEditorOf(config.gravityConfig);
+        GUILayout.Space(10);
+        DrawEditorOf(config.groundFireConfig);
+        GUILayout.Space(10);
+        DrawEditorOf(config.meteoriteConfig);
+        GUILayout.Space(10);
+        DrawEditorOf(config.robotConfig);
+        GUILayout.Space(10);
+        DrawEditorOf(config.supplyConfig);
     }
     #endregion
 

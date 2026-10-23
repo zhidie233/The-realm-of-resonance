@@ -215,9 +215,9 @@ MonoBehaviour:
     maxPlayers: 06000000020000000400000008000000
     GoalValueOptions: 05000000070000000b00000003000000
     roundTimes: 8403000058020000b00400002c010000
-  Team1Name: "\u7B51\u6CE2\u8005\u200B\u5267\u56E2"
+  Team1Name: "\u84DD\u961F"
   Team1Color: {r: 0.03529412, g: 0.5176471, b: 0.8901961, a: 1}
-  Team2Name: "\u6D8C\u6D6A\u4EBA\u5267\u56E2"
+  Team2Name: "\u7EA2\u961F"
   Team2Color: {r: 0.92156863, g: 0.3019608, b: 0.29411766, a: 1}
   Team1PlayerPrefab: {fileID: 7135504912842644769, guid: 77c0e08bd92715b4a9732ce61b4f1bbd, type: 3}
   Team2PlayerPrefab: {fileID: 6787355089765057219, guid: cb9f7f11e9dd4224d88acd2b4a38250b, type: 3}
@@ -227,6 +227,13 @@ MonoBehaviour:
   mouseLookSettings: {fileID: 11400000, guid: 68ddc6624e6fafd41b8349be7933fcc9, type: 2}
   weaponSlotGuide: {fileID: 11400000, guid: 08554bfc9f078a24088357ad2e7b0050, type: 2}
   tagsAndLayersSettings: {fileID: 11400000, guid: a4bcf2e6bc508bb4b914bd8659a80b09, type: 2}
+  resonanceEnabled: 1
+  resonanceConfig: {fileID: 11400000, guid: e323ad59069fd384794ac769020c8c0c, type: 2}
+  gravityConfig: {fileID: 11400000, guid: b78439da22b87f349a9a277adc8d76ca, type: 2}
+  groundFireConfig: {fileID: 11400000, guid: 6817feaeaf9d89d469af2fa8f2494fb5, type: 2}
+  meteoriteConfig: {fileID: 11400000, guid: b08820c1490408d45b387a90c01d9db1, type: 2}
+  robotConfig: {fileID: 11400000, guid: 4a592d5ecbecc5d47884e07eb4400558, type: 2}
+  supplyConfig: {fileID: 11400000, guid: f2fd13b5a00e4a444af72bc4dddb1b87, type: 2}
   sceneLoader: {fileID: 11400000, guid: 29378ef374afdda4997808cca6533c28, type: 2}
   GameTeam:
   - UserName: FairyOnTheTree

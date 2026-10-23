@@ -1,81 +1,67 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using Photon.Pun;
 
 public class SupplyManager : EnvironmentEffectManager
 {
-    public SupplyConfig config;
-    private GameObject[] supplyPackages;
-    
-    [Header("掉落区域设置")]
+    [Header("掉落区域")]
     private BoxCollider dropArea;
-    
+
     private int lastTriggeredMultiple = -1;
-    private int lastIndex=0;
-    
+    private int lastIndex = 0;
+
     protected override void Start()
     {
         base.Start();
+        if (!enabled) return;
+
         GameObject dropAreaObject = GameObject.FindGameObjectWithTag("DropArea");
         if (dropAreaObject == null || dropAreaObject.GetComponent<BoxCollider>() == null)
         {
-            Debug.LogWarning("[SupplyManager] 场景中不存在 DropArea 标签物体，道具掉落效果已禁用。");
             enabled = false;
             return;
         }
+
         dropArea = dropAreaObject.GetComponent<BoxCollider>();
-        supplyPackages=Resources.LoadAll<GameObject>("SupplyPackages");
-        // 初始化上次触发倍数
-        lastTriggeredMultiple = Mathf.FloorToInt(currentResonance / config.supplyInterval);
+        lastTriggeredMultiple = Mathf.FloorToInt(currentResonance / GameConfig.Instance.supplyConfig.supplyInterval);
     }
-    
+
     public override void UpdateEffect()
     {
-        // 检查共鸣值是否为100的倍数且大于0
-        int currentMultiple = Mathf.FloorToInt(currentResonance / config.supplyInterval);
-        
-        if (currentMultiple > 0 && currentMultiple > lastTriggeredMultiple)
-        {
-            lastTriggeredMultiple = currentMultiple;
-            DropItem();
-        }
+        if (!NetworkWrapper.IsMasterClient) return;
+
+        int currentMultiple = Mathf.FloorToInt(currentResonance / GameConfig.Instance.supplyConfig.supplyInterval);
+
+        if (currentMultiple <= 0 || currentMultiple <= lastTriggeredMultiple) return;
+
+        lastTriggeredMultiple = currentMultiple;
+        DropItem();
     }
-    
+
     private void DropItem()
     {
-        if (!PhotonNetwork.IsMasterClient) return;
-        if (supplyPackages == null || supplyPackages.Length == 0) return;
         if (dropArea == null) return;
-        
-        // 在掉落区域内随机生成位置
-        Vector3 randomPosition = GetRandomPositionInDropArea();
-        
-        // 随机选择道具
-        int index=lastIndex++;
-        GameObject selectedPrefab = supplyPackages[index];
-        if (index >= supplyPackages.Length-1)
+
+        int[] packIDs = GameConfig.Instance.supplyConfig.supplyPackIDs;
+        if (packIDs == null || packIDs.Length == 0) return;
+
+        GameEvents.DispatchDropEvent(GetRandomPositionInDropArea(), packIDs[lastIndex]);
+
+        lastIndex++;
+        if (lastIndex >= packIDs.Length)
             lastIndex = 0;
-        
-        // 网络同步生成道具
-        PhotonNetwork.Instantiate("SupplyPackages/"+selectedPrefab.name, randomPosition, Quaternion.identity);
-        
     }
-    
+
     private Vector3 GetRandomPositionInDropArea()
     {
         if (dropArea == null) return Vector3.zero;
-        
-        // 计算掉落区域内的随机位置
+
         Vector3 localRandomPos = new Vector3(
             Random.Range(-dropArea.size.x * 0.5f, dropArea.size.x * 0.5f),
             Random.Range(-dropArea.size.y * 0.5f, dropArea.size.y * 0.5f),
             Random.Range(-dropArea.size.z * 0.5f, dropArea.size.z * 0.5f)
         );
-        
-        // 转换为世界坐标
+
         Vector3 worldPos = dropArea.transform.TransformPoint(localRandomPos);
-        Vector3 offset=new Vector3(0, 1f, 0);
-        return worldPos-offset;
+        Vector3 offset = new Vector3(0, 1f, 0);
+        return worldPos - offset;
     }
 }

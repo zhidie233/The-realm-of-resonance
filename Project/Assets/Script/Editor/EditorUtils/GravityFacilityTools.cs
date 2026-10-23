@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public static class GravityFacilityTools
 {
-    [MenuItem("Tools/GravityFacility/Reset All to Start Position")]
+    [MenuItem("项目工具/共振/重置全部到初始位置")]
     public static void ResetAllToStartPosition()
     {
         // 获取所有GravityFacility组件（包括子物体）
@@ -24,7 +24,7 @@ public static class GravityFacilityTools
             EditorUtility.SetDirty(facility);
         }
     }
-    [MenuItem("Tools/GravityFacility/Reset All to Final Position")]
+    [MenuItem("项目工具/共振/重置全部到最终位置")]
     public static void ResetAllToFinalPosition()
     {
         // 获取所有GravityFacility组件（包括子物体）
@@ -44,7 +44,7 @@ public static class GravityFacilityTools
             EditorUtility.SetDirty(facility);
         }
     }
-    [MenuItem("Tools/GravityFacility/Select All GravityFacility Objects")]
+    [MenuItem("项目工具/共振/选中全部重力设施")]
     public static void SelectAllGravityFacilityObjects()
     {
         List<GameObject> selectedObjects = new List<GameObject>();
@@ -63,7 +63,7 @@ public static class GravityFacilityTools
         }
     }
     // 新增功能：将所有GravityFacility对象的当前位置设置为初始位置
-    [MenuItem("Tools/GravityFacility/Set Current as Start Position for All")]
+    [MenuItem("项目工具/共振/将当前设为全部初始位置")]
     public static void SetCurrentAsStartPositionForAll()
     {
         GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);
@@ -83,7 +83,7 @@ public static class GravityFacilityTools
         }
     }
     // 新增功能：将所有GravityFacility对象的当前位置设置为最终位置
-    [MenuItem("Tools/GravityFacility/Set Current as Final Position for All")]
+    [MenuItem("项目工具/共振/将当前设为全部最终位置")]
     public static void SetCurrentAsFinalPositionForAll()
     {
         GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);

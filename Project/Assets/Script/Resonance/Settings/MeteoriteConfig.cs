@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "Meteorite", menuName = "Resonance/Meteorite")]
+[CreateAssetMenu(fileName = "Meteorite", menuName = "项目/共振/Meteorite")]
 public class MeteoriteConfig : ScriptableObject
 {
     [Header("触发概率")]

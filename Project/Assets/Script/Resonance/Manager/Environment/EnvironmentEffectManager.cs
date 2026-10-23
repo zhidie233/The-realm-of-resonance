@@ -1,11 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class EnvironmentEffectManager : MonoBehaviour
 {
     protected float currentResonance;
-    
+
     protected virtual void Start()
     {
         if (ResonanceManager.Instance == null)
@@ -15,22 +13,21 @@ public abstract class EnvironmentEffectManager : MonoBehaviour
             return;
         }
 
-        ResonanceManager.Instance.OnResonanceChanged += OnResonanceChanged;
+        GameEvents.onResonanceChanged += OnResonanceChanged;
         currentResonance = ResonanceManager.Instance.GetCurrentResonance();
         UpdateEffect();
     }
-    
+
     protected virtual void OnDestroy()
     {
-        if (ResonanceManager.Instance != null)
-            ResonanceManager.Instance.OnResonanceChanged -= OnResonanceChanged;
+        GameEvents.onResonanceChanged -= OnResonanceChanged;
     }
-    
-    protected void OnResonanceChanged(float newResonance)
+
+    void OnResonanceChanged(float newResonance)
     {
         currentResonance = newResonance;
         UpdateEffect();
     }
-    
+
     public abstract void UpdateEffect();
 }

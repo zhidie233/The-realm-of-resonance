@@ -17,6 +17,7 @@ public static class NetworkKeys
     public const string RoomPassword = "rr.password";
     public const string WithBotsKey = "rr.withBots";
     public const string TimeState = "rr.timeState";
+    public const string ResonanceValueKey = "rr.resonance";
     // 房间内玩家属性键
     public const string TeamKey = "rr.team";
     public const string KillsKey = "rr.kills";

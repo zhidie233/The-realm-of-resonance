@@ -175,18 +175,11 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         LocalActor.ActorView = LocalPlayer.GetComponent<PhotonView>();
         LocalActor.Team = team;
         LocalActor.AimPosition = LocalPlayer.GetComponent<PlayerConfig>().AimPositionReference.transform;
-        RegisterFirstPersonController();
         if (!Joined)
         {
         }
         GameEvents.DispatchPlayerLocalSpawnEvent();
         return true;
-    }
-    public void RegisterFirstPersonController()
-    {
-        GravityManager gravityManager = GetComponentInChildren<GravityManager>();
-        gravityManager.SetBlFirstPersonController(LocalPlayer.GetComponent<FirstPersonController>());
-        gravityManager.UpdateEffect();
     }
     // 检查是否还有待处理的出生过滤器
     // 返回: True if a filter exist, false if not filters availables

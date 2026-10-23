@@ -10,22 +10,21 @@ public class ResonanceUI : MonoBehaviour
     {
         if (ResonanceManager.Instance == null)
         {
-            Debug.LogWarning("[ResonanceUI] 场景中不存在 ResonanceManager，共鸣 UI 已禁用。");
+            Debug.LogWarning("[ResonanceUI] 场景中不存在 ResonanceManager，共振 UI 已禁用。");
             enabled = false;
             return;
         }
 
-        ResonanceManager.Instance.OnResonanceChanged += OnResonanceChanged;
-        currentResonance = ResonanceManager.Instance.GetCurrentResonance();
+        GameEvents.onResonanceChanged += OnResonanceChanged;
+        OnResonanceChanged(ResonanceManager.Instance.GetCurrentResonance());
     }
-    
-    protected virtual void OnDestroy()
+
+    void OnDestroy()
     {
-        if (ResonanceManager.Instance != null)
-            ResonanceManager.Instance.OnResonanceChanged -= OnResonanceChanged;
+        GameEvents.onResonanceChanged -= OnResonanceChanged;
     }
-    
-    protected virtual void OnResonanceChanged(float newResonance)
+
+    void OnResonanceChanged(float newResonance)
     {
         currentResonance = newResonance;
         UpdateCurrentResonanceValue();

@@ -98,6 +98,15 @@ public class GameConfig : ScriptableObject
 
     [ScriptableDrawer, SerializeField] private TagsAndLayersSettings tagsAndLayersSettings;
 
+    [Header("共振")]
+    [GameToggle] public bool resonanceEnabled = true;
+    [ScriptableDrawer] public ResonanceConfig resonanceConfig;
+    [ScriptableDrawer] public GravityConfig gravityConfig;
+    [ScriptableDrawer] public GroundFireConfig groundFireConfig;
+    [ScriptableDrawer] public MeteoriteConfig meteoriteConfig;
+    [ScriptableDrawer] public RobotConfig robotConfig;
+    [ScriptableDrawer] public SupplyConfig supplyConfig;
+
     public SceneLoaderBase sceneLoader;
     [Header("后台账号")]
     public List<GameTeamInfo> GameTeam = new List<GameTeamInfo>();

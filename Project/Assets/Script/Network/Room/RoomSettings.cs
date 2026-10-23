@@ -42,6 +42,7 @@ public class RoomSettings : MonoBehaviourBase
         {
             table.Add(NetworkKeys.Team1Score, 0);
             table.Add(NetworkKeys.Team2Score, 0);
+            table.Add(NetworkKeys.ResonanceValueKey, 0f);
             NetworkWrapper.CurrentRoom.SetCustomProperties(table);
         }
         table.Clear();

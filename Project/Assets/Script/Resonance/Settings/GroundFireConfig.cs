@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "GroundFireConfig", menuName = "Resonance/Settings/GroundFireConfig")]
+[CreateAssetMenu(fileName = "GroundFireConfig", menuName = "项目/共振/GroundFireConfig")]
 public class GroundFireConfig : ScriptableObject
 {
     [Header("激活阈值")]

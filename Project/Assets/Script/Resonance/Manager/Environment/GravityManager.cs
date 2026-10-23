@@ -1,96 +1,76 @@
-using System.Collections;
 using System.Collections.Generic;
-using Photon.Pun;
 using UnityEngine;
 
 public class GravityManager : EnvironmentEffectManager
 {
-    [Header("配置")]
-    public GravityConfig config;
     private AnimationCurve positionCurve = AnimationCurve.Linear(0, 0, 1, 1);
-    
-    // 受响应的物体
-    private FirstPersonController _blFirstPersonControllers;
+
+    private FirstPersonController _localPlayerController;
     private List<GravityFacility> _gravityFacilities = new List<GravityFacility>();
-    
+
     protected override void Start()
     {
         base.Start();
-        
-        // 查找所有GravityFacility物体
+        if (!enabled) return;
+
         FindAllGravityFacilities();
-        
-        // 初始更新
+        BindLocalPlayer();
         UpdateEffect();
+
+        GameEvents.onLocalPlayerSpawn += OnLocalPlayerSpawn;
+    }
+
+    protected override void OnDestroy()
+    {
+        base.OnDestroy();
+        GameEvents.onLocalPlayerSpawn -= OnLocalPlayerSpawn;
+    }
+
+    void OnLocalPlayerSpawn()
+    {
+        BindLocalPlayer();
+        UpdateEffect();
+    }
+
+    void BindLocalPlayer()
+    {
+        if (GameController.Instance == null || GameController.Instance.LocalPlayer == null) return;
+
+        _localPlayerController = GameController.Instance.LocalPlayer.GetComponent<FirstPersonController>();
     }
 
     private void FindAllGravityFacilities()
     {
         _gravityFacilities.Clear();
-        
+
         GameObject[] facilityObjects = GameObject.FindGameObjectsWithTag("GravityFacility");
         foreach (GameObject obj in facilityObjects)
         {
             GravityFacility facility = obj.GetComponent<GravityFacility>();
             if (facility != null)
-            {
                 _gravityFacilities.Add(facility);
-                
-                // 确保物体有PhotonView组件
-                PhotonView photonView = obj.GetComponent<PhotonView>();
-                if (photonView == null)
-                {
-                    photonView = obj.AddComponent<PhotonView>();
-                    photonView.Synchronization = ViewSynchronization.UnreliableOnChange;
-                    photonView.ObservedComponents = new List<Component> { facility };
-                }
-            }
         }
-    }
-
-    public void SetBlFirstPersonController(FirstPersonController controller)
-    {
-        this._blFirstPersonControllers = controller;
     }
 
     public override void UpdateEffect()
     {
-        // 更新弹跳力（本地玩家）
-        if (_blFirstPersonControllers != null)
+        if (_localPlayerController != null)
         {
-            float gravityMultiplier = config.jumpForce.Evaluate(currentResonance);
-            _blFirstPersonControllers.jumpSpeed = gravityMultiplier;
+            float gravityMultiplier = GameConfig.Instance.gravityConfig.jumpForce.Evaluate(currentResonance);
+            _localPlayerController.jumpSpeed = gravityMultiplier;
         }
-        
-        // 更新所有GravityFacility物体的位置
+
         UpdateFacilityTransform();
     }
 
     private void UpdateFacilityTransform()
     {
-        float maxResonance = config.GetMaxResonanceValue();
-        
+        float maxResonance = GameConfig.Instance.gravityConfig.GetMaxResonanceValue();
+
         foreach (GravityFacility facility in _gravityFacilities)
         {
             if (facility != null)
-            {
                 facility.UpdateTransformBasedOnResonance(currentResonance, maxResonance, positionCurve);
-            }
         }
-    }
-    
-    // 动态添加GravityFacility（如果需要）
-    public void RegisterGravityFacility(GravityFacility facility)
-    {
-        if (!_gravityFacilities.Contains(facility))
-        {
-            _gravityFacilities.Add(facility);
-        }
-    }
-    
-    // 动态移除GravityFacility
-    public void UnregisterGravityFacility(GravityFacility facility)
-    {
-        _gravityFacilities.Remove(facility);
     }
 }

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: SupplyConfig
   m_EditorClassIdentifier: 
   supplyInterval: 200
+  supplyPackIDs: 0000000001000000

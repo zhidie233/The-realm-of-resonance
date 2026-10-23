@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "GravityConfig", menuName = "Resonance/Settings/GravityConfig")]
+[CreateAssetMenu(fileName = "GravityConfig", menuName = "项目/共振/GravityConfig")]
 public class GravityConfig : ScriptableObject
 {
     [Header("重力变化配置")] 
