@@ -66,6 +66,8 @@ MonoBehaviour:
   - RPC_SetTarget
   - RPC_SyncCooldown
   - RPC_UpdatePosition
+  - RPC_RequestChange
+  - RPC_RequestMeteorite
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0
