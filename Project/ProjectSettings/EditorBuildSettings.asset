@@ -9,9 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/MainMenu.unity
     guid: fcfe9637e4043474a98d431ae71e26c2
   - enabled: 1
-    path: Assets/Scenes/Drylands.unity
-    guid: 7b433244bb0354246a7c6a8c682e5441
-  - enabled: 1
     path: Assets/Scenes/Test.unity
     guid: eeed25649b364e846bb0732e6adcfe27
   - enabled: 1
