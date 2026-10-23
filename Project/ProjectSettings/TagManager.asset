@@ -6,7 +6,7 @@ TagManager:
   tags:
   - BodyPart
   - Projectile
-  - WeaponManager
+  - PlayerWeapon
   - Enemy
   - GameManager
   - ItemManager

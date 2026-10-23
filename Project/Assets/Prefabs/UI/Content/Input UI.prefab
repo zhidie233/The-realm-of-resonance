@@ -84,7 +84,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3965424644538037999}
   - component: {fileID: 1027459545022063878}
-  - component: {fileID: 2554411672404647581}
   - component: {fileID: 1028381285833067303}
   m_Layer: 0
   m_Name: Title
@@ -120,28 +119,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1028381285833067302}
   m_CullTransparentMesh: 0
---- !u!114 &2554411672404647581
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1028381285833067302}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ba051f74444648459f78bbbc1ed3036, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  StringID: devinsour
-  StringIDs: []
-  ExtraString: 
-  m_UIType: 0
-  StringCase: 1
-  Plural: 0
-  Extra: 0
-  FormatedText: 0
-  ManuallyAssignId: 0
-  _arrayID: 153
 --- !u!114 &1028381285833067303
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -667,7 +667,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2113fc9d0b1b1704c839c0a19a424069, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GunID: 4
+  WeaponID: 4
   Ammunition:
     Bullets: 5
     Clips: 3

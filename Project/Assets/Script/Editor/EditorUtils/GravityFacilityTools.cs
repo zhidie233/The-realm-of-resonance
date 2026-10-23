@@ -1,0 +1,105 @@
+using UnityEditor;
+using UnityEngine;
+using System.Collections.Generic;
+
+public static class GravityFacilityTools
+{
+    [MenuItem("项目工具/共振/重置全部到初始位置")]
+    public static void ResetAllToStartPosition()
+    {
+        // 获取所有GravityFacility组件（包括子物体）
+        GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);
+
+        if (facilities.Length == 0)
+        {
+            Debug.LogWarning("场景中没有 GravityFacility 组件。");
+            return;
+        }
+        // 记录撤销操作
+        Undo.RecordObjects(facilities, "Reset All GravityFacility to Start Position");
+
+        foreach (GravityFacility facility in facilities)
+        {
+            facility.MoveToStartTransform();
+            EditorUtility.SetDirty(facility);
+        }
+    }
+    [MenuItem("项目工具/共振/重置全部到最终位置")]
+    public static void ResetAllToFinalPosition()
+    {
+        // 获取所有GravityFacility组件（包括子物体）
+        GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);
+
+        if (facilities.Length == 0)
+        {
+            Debug.LogWarning("场景中没有 GravityFacility 组件。");
+            return;
+        }
+        // 记录撤销操作
+        Undo.RecordObjects(facilities, "Reset All GravityFacility to Final Position");
+
+        foreach (GravityFacility facility in facilities)
+        {
+            facility.MoveToFinalTransform();
+            EditorUtility.SetDirty(facility);
+        }
+    }
+    [MenuItem("项目工具/共振/选中全部重力设施")]
+    public static void SelectAllGravityFacilityObjects()
+    {
+        List<GameObject> selectedObjects = new List<GameObject>();
+        GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);
+        foreach (GravityFacility facility in facilities)
+        {
+            selectedObjects.Add(facility.gameObject);
+        }
+        if (selectedObjects.Count > 0)
+        {
+            Selection.objects = selectedObjects.ToArray();
+        }
+        else
+        {
+            Debug.LogWarning("没有可选择的 GravityFacility 对象。");
+        }
+    }
+    // 新增功能：将所有GravityFacility对象的当前位置设置为初始位置
+    [MenuItem("项目工具/共振/将当前设为全部初始位置")]
+    public static void SetCurrentAsStartPositionForAll()
+    {
+        GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);
+        if (facilities.Length == 0)
+        {
+            Debug.LogWarning("场景中没有 GravityFacility 组件。");
+            return;
+        }
+        // 记录撤销操作
+        Undo.RecordObjects(facilities, "Set Current as Start Position for All GravityFacility");
+        foreach (GravityFacility facility in facilities)
+        {
+            // 将当前位置和旋转设置为初始位置和旋转
+            facility.StartLimitPosition = facility.transform.position;
+            facility.StartLimitRotation = facility.transform.rotation;
+            EditorUtility.SetDirty(facility);
+        }
+    }
+    // 新增功能：将所有GravityFacility对象的当前位置设置为最终位置
+    [MenuItem("项目工具/共振/将当前设为全部最终位置")]
+    public static void SetCurrentAsFinalPositionForAll()
+    {
+        GravityFacility[] facilities = Object.FindObjectsOfType<GravityFacility>(true);
+        if (facilities.Length == 0)
+        {
+            Debug.LogWarning("场景中没有 GravityFacility 组件。");
+            return;
+        }
+        // 记录撤销操作
+        Undo.RecordObjects(facilities, "Set Current as Final Position for All GravityFacility");
+        foreach (GravityFacility facility in facilities)
+        {
+            // 将当前位置和旋转设置为最终位置和旋转
+            facility.FinalLimitPosition = facility.transform.position;
+            facility.FinalLimitRotation = facility.transform.rotation;
+            EditorUtility.SetDirty(facility);
+        }
+    }
+}

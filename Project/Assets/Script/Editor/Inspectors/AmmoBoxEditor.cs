@@ -1,0 +1,51 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+using UnityEditor;
+
+   [CustomEditor(typeof(AmmoBox))]
+   public class AmmoBoxEditor : Editor
+   {
+       AmmoBox script;
+
+       private void OnEnable()
+       {
+           script = (AmmoBox)target;
+       }
+
+       public override void OnInspectorGUI()
+       {
+           EditorGUI.BeginChangeCheck();
+
+           EditorGUILayout.BeginVertical("box");
+           {
+               GUILayout.Space(4);
+               script.itemAuthority = (NetworkedItem.ItemAuthority)EditorGUILayout.EnumPopup("物品权限", script.itemAuthority, EditorStyles.toolbarPopup);
+               GUILayout.Space(4);
+               Rect r = GUILayoutUtility.GetRect(Screen.width - 100, EditorGUIUtility.singleLineHeight);
+               script.isSceneItem = ResonanceRealmEditorStyles.FeatureToogle(r, script.isSceneItem, "是否为场景物品");
+               GUILayout.Space(10);
+               r = GUILayoutUtility.GetRect(Screen.width - 100, EditorGUIUtility.singleLineHeight);
+               script.isGlobal = ResonanceRealmEditorStyles.FeatureToogle(r, script.isGlobal, "是否为全局弹药");
+               GUILayout.Space(2);
+               r = GUILayoutUtility.GetRect(Screen.width - 100, EditorGUIUtility.singleLineHeight);
+               script.autoRespawn = ResonanceRealmEditorStyles.FeatureToogle(r, script.autoRespawn, "自动重生");
+               GUILayout.Space(2);
+               if (!script.isGlobal)
+               {
+                   script.ForGun = EditorGUILayout.Popup("适用枪械", script.ForGun, GameConfig.Instance.WeaponStringList(), EditorStyles.toolbarPopup);
+                   GUILayout.Space(2);
+               }
+               script.Bullets = EditorGUILayout.IntField("子弹数", script.Bullets);
+               script.Projectiles = EditorGUILayout.IntField("投射物数", script.Projectiles);
+
+               script.PickSound = EditorGUILayout.ObjectField("拾取音效", script.PickSound, typeof(AudioClip), false) as AudioClip;
+           }
+           EditorGUILayout.EndVertical();
+           if (EditorGUI.EndChangeCheck())
+           {
+               script.EditorValidateName();
+               serializedObject.ApplyModifiedProperties();
+               EditorUtility.SetDirty(target);
+           }
+       }
+   }

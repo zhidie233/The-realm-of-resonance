@@ -246,7 +246,7 @@ MonoBehaviour:
   gameMode: 0
   forceOffline: 1
   withBots: 1
-  autoTeamSelection: 1
+  autoAssignTeams: 1
   friendlyFire: 1
   maxPlayers: 1
   MatchTime: 3800
@@ -265,7 +265,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 150f352bf41271042b0dfa941d563e77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resonanceConfig: {fileID: 11400000, guid: e323ad59069fd384794ac769020c8c0c, type: 2}
   currentResonance: 0
 --- !u!82 &8200000
 AudioSource:
@@ -747,7 +746,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7c3e4dbdef72db34eaa42a43f169d793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 6817feaeaf9d89d469af2fa8f2494fb5, type: 2}
 --- !u!114 &1621177315665584110
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -760,7 +758,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b2cb8b3148154449a419ef876464459, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: b78439da22b87f349a9a277adc8d76ca, type: 2}
 --- !u!114 &1966536996182800246
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -773,7 +770,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10b3ab1744603304fb1938aef3208f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: f2fd13b5a00e4a444af72bc4dddb1b87, type: 2}
 --- !u!114 &2910324251204366626
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -786,7 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52f201de25465df4a9000cd13ece5390, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  config: {fileID: 11400000, guid: 4a592d5ecbecc5d47884e07eb4400558, type: 2}
 --- !u!1 &6344847394186703632
 GameObject:
   m_ObjectHideFlags: 0

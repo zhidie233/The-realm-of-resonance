@@ -1,0 +1,14 @@
+using UnityEngine;
+/// 名称牌绘制器的基类
+/// 自定义脚本继承此类，自行处理游戏中玩家名称的绘制。
+public abstract class PlayerTagBase : MonoBehaviourBase
+{
+
+    public static bool BlockDraw = false;
+
+    public string PlayerName { get; set; }
+    /// 设置要绘制的名称
+    public abstract void SetName(string playerName);
+
+    public abstract void SetActive(bool active);
+}

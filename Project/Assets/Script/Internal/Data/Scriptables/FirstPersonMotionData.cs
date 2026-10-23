@@ -1,0 +1,55 @@
+using UnityEngine;
+using System;
+   [CreateAssetMenu(fileName = "CameraMotionData", menuName = "项目/Camera/MotionData")]
+   public class FirstPersonMotionData : ScriptableObject
+   {
+       public string Name = "Motion Name";
+       [Header("Head Rotation")]
+       public MotionCurves HeadAnimation;
+
+       [Header("Arms Rotation")]
+       public MotionCurves ArmsAnimation;
+
+       [Range(0.1f, 10)] public float Duration = 2;
+
+       public void ApplyFrame(float time, Vector3 headVector, Vector3 armsVector)
+       {
+           HeadAnimation.ApplyFrame(headVector, time);
+           ArmsAnimation.ApplyFrame(armsVector, time);
+       }
+
+       [Serializable]
+       public class MotionCurves
+       {
+           public AnimationCurve X = AnimationCurve.EaseInOut(0, 0, 1, 0);
+           public AnimationCurve Y = AnimationCurve.EaseInOut(0, 0, 1, 0);
+           public AnimationCurve Z = AnimationCurve.EaseInOut(0, 0, 1, 0);
+
+           public Vector3 Vector(float time = 0) => new Vector3(X.Evaluate(time), Y.Evaluate(time), Z.Evaluate(time));
+           /// 获取动画曲线的最终旋转
+           public Vector3 FinalVector()
+           {
+               return new Vector3(X.Evaluate(1), Y.Evaluate(1), Z.Evaluate(1));
+           }
+
+           public void ApplyFrame(Vector3 vector, float time)
+           {
+               SetKey(X, time, vector.x);
+               SetKey(Y, time, vector.y);
+               SetKey(Z, time, vector.z);
+           }
+
+           private void SetKey(AnimationCurve curve, float time, float value)
+           {
+               for (int i = curve.keys.Length - 1; i >= 0; i--)
+               {
+                   if (curve.keys[i].time == time)
+                   {
+                       curve.keys[i].value = value;
+                       return;
+                   }
+               }
+               curve.AddKey(time, value);
+           }
+       }
+   }
