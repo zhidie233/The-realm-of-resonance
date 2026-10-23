@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEditor.IMGUI.Controls;
 using UnityEngine;
 
-public class GameManagerWindow : EditorWindow
+public class ConfigCenterWindow : EditorWindow
 {
     #region Parameters
     public static Color primaryColor = new Color(0.098f, 0.098f, 0.098f, 1.00f);
@@ -894,16 +894,16 @@ public class GameManagerWindow : EditorWindow
     [MenuItem("项目工具/配置中心")]
     static void Open()
     {
-        GetWindow<GameManagerWindow>("配置中心");
+        GetWindow<ConfigCenterWindow>("配置中心");
     }
 
     void FetchCustomTabs()
     {
-        var classes = TypeCache.GetTypesWithAttribute<GameManagerTab>();
+        var classes = TypeCache.GetTypesWithAttribute<ConfigCenterTab>();
         foreach (var classInfo in classes)
         {
             // 获取特性信息
-            var attr = classInfo.GetCustomAttribute<GameManagerTab>();
+            var attr = classInfo.GetCustomAttribute<ConfigCenterTab>();
 
             var panel = managerPanels.Find(x => x.Name == attr.name);
             if (panel != null)
@@ -914,8 +914,8 @@ public class GameManagerWindow : EditorWindow
                 }
                 else continue;
             }
-            // 从 classInfo 转换出 GameManagerTabData 类型
-            var tab = (GameManagerTabData)Activator.CreateInstance(classInfo);
+            // 从 classInfo 转换出 ConfigCenterTabData 类型
+            var tab = (ConfigCenterTabData)Activator.CreateInstance(classInfo);
             var data = tab.GetData();
 
             if (panel == null)
@@ -945,7 +945,7 @@ public class GameManagerWindow : EditorWindow
         internal MethodInfo bodyFunc;
         internal bool isExternalDrawer = false;
 
-        public void DrawBody(Type type, GameManagerWindow target)
+        public void DrawBody(Type type, ConfigCenterWindow target)
         {
             if (string.IsNullOrEmpty(BodyFuncName) && bodyFunc == null) { return; }
 
@@ -979,7 +979,7 @@ public class GameManagerWindow : EditorWindow
     #endregion
 }
 
-public abstract class GameManagerTabData
+public abstract class ConfigCenterTabData
 {
     public struct Data
     {
@@ -997,11 +997,11 @@ public abstract class GameManagerTabData
 }
 
 [AttributeUsage(AttributeTargets.Class)]
-public class GameManagerTab : Attribute
+public class ConfigCenterTab : Attribute
 {
     public string name;
 
-    public GameManagerTab(string name)
+    public ConfigCenterTab(string name)
     {
         this.name = name;
     }

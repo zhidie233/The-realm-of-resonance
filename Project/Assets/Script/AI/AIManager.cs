@@ -23,7 +23,7 @@ public class AIManager : NetworkHelper
     public delegate void StatEvent(GameBotProperties stat);
     public static StatEvent OnBotStatUpdate;
 
-    private GameController GameManager;
+    private GameController MatchController;
     private List<PlayersSlots> Team1PlayersSlots = new List<PlayersSlots>();
     private List<PlayersSlots> Team2PlayersSlots = new List<PlayersSlots>();
     private List<string> BotsNames = new List<string>();
@@ -36,7 +36,7 @@ public class AIManager : NetworkHelper
 
     private void Awake()
     {
-        GameManager = GameController.Instance;
+        MatchController = GameController.Instance;
         BotsNames.AddRange(GameTexts.RandomNames);
         NetworkCallbacks.PlayerPropertiesUpdate += OnPhotonPlayerPropertiesChanged;
         NetworkCallbacks.PlayerEnteredRoom += OnPlayerEnter;
