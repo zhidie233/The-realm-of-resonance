@@ -51,4 +51,9 @@ public class PostProcessEffects : MonoBehaviour
         }
     }
 #endif
+
+    private void Start()
+    {
+        DynamicGI.UpdateEnvironment();
+    }
 }
