@@ -16,14 +16,8 @@ public class FirearmData
     [Range(0, 1000)] public int Range;
     [Range(0.01f, 5)] public int Accuracy;
     [Range(0, 4)] public float Weight;
-    public GameItemAccessRules AccessRules;
 
     [Header("References")]
     public FirearmPickUpBase WorldPrefab;
     [SpritePreview(30, true)] public Sprite WeaponIcon;
-    /// 此武器是否显示在游戏菜单中（配装、解锁等）
-    public bool CanShowWeapon()
-    {
-        return Active && AccessRules.UnlockMethod != GameItemAccessRules.AccessRulesMethod.Hidden;
-    }
 }

@@ -281,10 +281,6 @@ public class LobbyUI : MonoBehaviour
         MatchLobby.Instance.LoadLocalLevel(level);
     }
 
-    public void ShowBuyCoins()
-    {
-    }
-
     public void Quit()
     {
         confirmationWindow.AskConfirmation(GameTexts.QuitGameConfirmation, () =>

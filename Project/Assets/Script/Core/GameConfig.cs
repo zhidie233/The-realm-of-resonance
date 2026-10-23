@@ -50,11 +50,6 @@ public class GameConfig : ScriptableObject
     public BotKillPolicy botKillCredit = BotKillPolicy.SameAsRealPlayers;
     [Header("奖励")]
     public ScoreScale matchScore;
-    public WalletEntry wallet;
-#if UNITY_2020_2_OR_NEWER
-    [NonReorderable]
-#endif
-    [ScriptableDrawer] public List<GameCoin> gameCoins;
     [Header("参数")]
     public string buildVersion = "1.0.0";
     public string visitorNameFormat = "Guest {0}";
@@ -342,27 +337,6 @@ public class GameConfig : ScriptableObject
         {
             if (PerMinuteScore <= 0) return 0;
             return time * PerMinuteScore;
-        }
-    }
-    [Serializable]
-    public class WalletEntry
-    {
-        [ItemCoinID] public int XPCoin;
-        [Tooltip("多少分数或经验折算一枚金币")]
-        public int CoinScoreValue = 1000;
-        public int InitialCoins
-        {
-            get
-            {
-                var coin = GameCore.Coins.GetCoinData(XPCoin);
-                return coin == null ? 0 : coin.InitialCoins;
-            }
-        }
-        public void AddCoins(int newCoins, string endPoint = "") => GameCore.Coins.GetCoinData(XPCoin)?.Add(newCoins, endPoint);
-        public int GetCoinsPerScore(int score)
-        {
-            if (score <= 0 || score < CoinScoreValue || CoinScoreValue <= 0) return 0;
-            return score / CoinScoreValue;
         }
     }
     [Serializable]

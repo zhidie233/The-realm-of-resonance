@@ -94,9 +94,6 @@ public static class GameEvents
     /// 本地玩家受到敌人或其他来源伤害时调用。
     public static Action<int> onlocalPlayerReceiveDamage;
     public static void DispatchLocalPlayerReceiveDamage(int damage) => onlocalPlayerReceiveDamage?.Invoke(damage);
-    /// 某个硬币的数值每次变化时调用。
-    public static Action<GameCoin> onCoinUpdate;
-    public static void DispatchCoinUpdate(GameCoin updatedCoin) => onCoinUpdate?.Invoke(updatedCoin);
     /// 房间属性重置时调用
     /// 在游戏或新回合开始时。
     /// 可用它重置任意自定义属性。

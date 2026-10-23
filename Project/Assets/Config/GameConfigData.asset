@@ -53,12 +53,6 @@ MonoBehaviour:
     HeadshotExtraReward: 25
     WinMatchReward: 1000
     PerMinuteScore: 3
-  wallet:
-    XPCoin: 0
-    CoinScoreValue: 100
-  gameCoins:
-  - {fileID: 11400000, guid: a8e2d139cede6ec4dbb43712a6f9a86f, type: 2}
-  - {fileID: 11400000, guid: 6249e2dd81be65b448a55259fd1d2bea, type: 2}
   buildVersion: 1.0.0
   visitorNameFormat: Guest {0}
   botTagFormat: BOT {0}
@@ -95,12 +89,6 @@ MonoBehaviour:
     Range: 700
     Accuracy: 1
     Weight: 2
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114276421530720698, guid: 24d483153274cb044b6356f4faf914ee, type: 3}
     WeaponIcon: {fileID: 21300000, guid: 59c560ab0d189a94ebc9a73b29d258fc, type: 3}
   - Name: Pistol
@@ -112,12 +100,6 @@ MonoBehaviour:
     Range: 300
     Accuracy: 3
     Weight: 1.95
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114377898252377658, guid: 9b70bddae83a2624c8b2647cc2bb2bde, type: 3}
     WeaponIcon: {fileID: 21300000, guid: 67817f6c38715a64a8074a1940d6b966, type: 3}
   - Name: Shotgun
@@ -129,12 +111,6 @@ MonoBehaviour:
     Range: 100
     Accuracy: 1
     Weight: 2.2
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114903181447801438, guid: 0148ce739c367f5499c6a9e5dea9d23a, type: 3}
     WeaponIcon: {fileID: 21300000, guid: f46bf914a29644c46a4d817ec77246cb, type: 3}
   - Name: Grenade
@@ -146,12 +122,6 @@ MonoBehaviour:
     Range: 125
     Accuracy: 1
     Weight: 1.7
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114503052674967646, guid: c9fa96b788fed1e49b45acc2aedb0823, type: 3}
     WeaponIcon: {fileID: 21300000, guid: 5888e24ba146f2141b5c01400fd2c24c, type: 3}
   - Name: Sniper
@@ -163,12 +133,6 @@ MonoBehaviour:
     Range: 700
     Accuracy: 5
     Weight: 2.2
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114458066640939220, guid: b5e79ed4cf51fa84a9ced1a35c59c9b9, type: 3}
     WeaponIcon: {fileID: 21300000, guid: 8fc34eb714f6fa64f928bbad3049b5d8, type: 3}
   - Name: Knife
@@ -180,12 +144,6 @@ MonoBehaviour:
     Range: 2
     Accuracy: 1
     Weight: 1.6
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114908929425986968, guid: ccd5832d51ac4b044946fef0edec51ce, type: 3}
     WeaponIcon: {fileID: 21300000, guid: 38349530c3a41fd4a8ecc2df82a57e3a, type: 3}
   - Name: Molotov
@@ -197,12 +155,6 @@ MonoBehaviour:
     Range: 300
     Accuracy: 2
     Weight: 0
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 114685265083659480, guid: d537af36ed22be84faa601876ab96857, type: 3}
     WeaponIcon: {fileID: 21300000, guid: 2fd72e2aa4d7cc14f993fa22e6f2ff19, type: 3}
   - Name: Grenade Launcher
@@ -214,12 +166,6 @@ MonoBehaviour:
     Range: 100
     Accuracy: 1
     Weight: 2.5
-    AccessRules:
-      UnlockMethod: 0
-      ItemType: 0
-      Price: 0
-      UnlockAtLevel: 0
-      BlockedCoins: 
     WorldPrefab: {fileID: 9043734865955749252, guid: e5267eb24b2bb3e44b7e5b2b4961a28c, type: 3}
     WeaponIcon: {fileID: 21300000, guid: f22b479294de3414e987ba1cb0e2e81f, type: 3}
   defaultSettings: {fileID: 11400000, guid: 5fadfa78dabe7f6429f21e8ed3cc747b, type: 2}

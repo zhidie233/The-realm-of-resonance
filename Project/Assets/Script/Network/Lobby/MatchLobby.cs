@@ -190,7 +190,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         }
         else
         {
-            GameEvents.DispatchCoinUpdate(null);
             GoToMainMenu();
         }
     }
@@ -627,7 +626,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             // 该账号没有打开的会话
             connectionState = LobbyConnectionState.Authenticating;
             NetworkWrapper.NickName = CachePlayerName;
-            GameEvents.DispatchCoinUpdate(null);
             Disconect();
         }
     }

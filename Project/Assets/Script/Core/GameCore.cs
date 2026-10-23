@@ -113,24 +113,6 @@ public static class GameCore
         /// 向同一房间内的所有其他客户端发送类 RPC 调用（无需 PhotonView）。
         public static void SendNetworkCall(byte code, Hashtable data) => NetworkWrapper.Instance.SendDataOverNetwork(code, data);
     }
-    /// 游戏金币的静态函数
-    public static class Coins
-    {
-        /// 按 ID 获取 GameData 中列出的金币。
-        public static GameCoin GetCoinData(int coinID)
-        {
-            if (coinID >= GameConfig.Instance.gameCoins.Count) return null;
-
-            return GameConfig.Instance.gameCoins[coinID];
-        }
-        /// 按金币数据获取它的索引/ID
-        public static int GetIndexOfCoin(GameCoin coin)
-        {
-            return GetAllCoins().FindIndex(x => x.CoinName == coin.CoinName);
-        }
-
-        public static List<GameCoin> GetAllCoins() => GameConfig.Instance.gameCoins;
-    }
 
     public static class Utility
     {

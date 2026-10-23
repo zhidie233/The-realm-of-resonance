@@ -15,7 +15,6 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
     [SerializeField] private TextMeshProUGUI WinScoreText = null;
     [SerializeField] private TextMeshProUGUI HeadshotsText = null;
     [SerializeField] private TextMeshProUGUI TotalScoreText = null;
-    [SerializeField] private TextMeshProUGUI CoinsText = null;
     [SerializeField] private GameObject Content = null;
 
     void OnEnable()
@@ -49,11 +48,6 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
         PlayerNameText.text = NetworkWrapper.NickName;
         int tscore = score + winScore + scorePerTime;
 
-        int coins = 0;
-        if (tscore > 0 && GameConfig.Instance.wallet.CoinScoreValue > 0 && tscore > GameConfig.Instance.wallet.CoinScoreValue)
-        {
-            coins = tscore / GameConfig.Instance.wallet.CoinScoreValue;
-        }
         KillsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Kills.ToUpper(), kills);
         DeathsText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Deaths.ToUpper(), deaths);
         ScoreText.text = string.Format("{0}: <b>{1}</b>", GameTexts.Score.ToUpper(), score - hsscore);
@@ -62,12 +56,7 @@ public class GameFinishHandler : NetworkHelper, IGameResumeScreen
         TimePlayedText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.TimePlayed.ToUpper(), StringHelpers.GetTimeFormat((float)timePlayed / 60, timePlayed), scorePerTime);
         HeadshotsText.text = string.Format("{0} <b>{1}</b> +{2}", GameTexts.HeadShot.ToUpper(), GameController.Instance.Headshots, hsscore);
         TotalScoreText.text = string.Format("{0}\n<size=9>{1}</size>", tscore, GameTexts.TotalScore.ToUpper());
-        CoinsText.text = string.Format("+{0}\n<size=9>COINS</size>", coins);
 
-        if (coins > 0)
-        {
-            GameConfig.Instance.wallet.AddCoins(coins, NetworkWrapper.NickName);
-        }
         int oldsavedScore = PlayerPrefs.GetInt(NetworkKeys.GetUniqueKeyForPlayer("score", LocalName), 0);
         oldsavedScore += tscore;
         PlayerPrefs.SetInt(NetworkKeys.GetUniqueKeyForPlayer("score", LocalName), oldsavedScore);

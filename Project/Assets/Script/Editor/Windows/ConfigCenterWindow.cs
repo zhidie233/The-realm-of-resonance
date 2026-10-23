@@ -272,11 +272,6 @@ public class ConfigCenterWindow : EditorWindow
         w.Weight = EditorGUILayout.FloatField("重量", w.Weight);
 
         GUILayout.Space(18);
-        DrawTitleText("AccessRules");
-
-        EditorGUILayout.PropertyField(serializedObject.FindProperty("editGunInfo").FindPropertyRelative("AccessRules"), true);
-
-        GUILayout.Space(18);
         DrawTitleText("Others");
         w.WorldPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.WorldPrefab, typeof(FirearmPickUpBase), false) as FirearmPickUpBase;
 
@@ -684,7 +679,6 @@ public class ConfigCenterWindow : EditorWindow
                 gun.ReloadTime = EditorGUILayout.Slider("RELOAD", gun.ReloadTime, 0.5f, 10);
                 gun.Range = EditorGUILayout.IntSlider("RANGE", gun.Range, 1, 700);
                 gun.Weight = EditorGUILayout.Slider("WEIGHT", gun.Weight, 0, 4);
-                gun.AccessRules.Price = EditorGUILayout.IntField("价格", gun.AccessRules.Price);
                 GUILayout.Space(5);
             }
             EditorGUILayout.EndVertical();
