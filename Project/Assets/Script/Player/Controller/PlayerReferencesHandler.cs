@@ -46,15 +46,6 @@ public class PlayerRig : PlayerReferencesCommon
         set => _botAimTarget = value;
     }
     
-    [PunRPC]
-    void RPC_RequestResonanceChange(string resonanceKey, float damage)
-    {
-        if (ResonanceManager.Instance == null) return;
-
-        // 只有MasterClient会执行这个方法
-        ResonanceManager.Instance.ChangeResonance(resonanceKey, damage);
-    }
-
     private Transform _transform;
     public Transform Transform
     {

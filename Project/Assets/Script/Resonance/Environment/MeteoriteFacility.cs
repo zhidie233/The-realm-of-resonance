@@ -9,7 +9,6 @@ public class MeteoriteFacility : ResonanceFacility
     private MeteoriteConfig config => GameConfig.Instance.meteoriteConfig;
     private BoxCollider dropArea;
     private bool isOnCooldown = false;
-    private float lastTriggerTime = 0f;
     private const float COOLDOWN_TIME = 1f;
 
     private void Start()
@@ -20,38 +19,55 @@ public class MeteoriteFacility : ResonanceFacility
 
     public override void ReceiveDamage(DamageInfo damageData)
     {
+        if (damageData == null || damageData.GameActor == null) return;
+
+        // 陨石的目标选择与冷却只由房主判定，其他端把请求转给房主
+        if (NetworkWrapper.IsMasterClient)
+        {
+            TryTriggerMeteorite(damageData.GameActor, damageData.ActorViewID);
+            return;
+        }
+
+        PhotonView view = GetComponent<PhotonView>();
+        if (view == null || !NetworkWrapper.InRoom) return;
+        view.RPC(nameof(RPC_RequestMeteorite), RpcTarget.MasterClient,
+            damageData.GameActor.Name, damageData.ActorViewID);
+    }
+
+    [PunRPC]
+    private void RPC_RequestMeteorite(string shooterName, int shooterViewID)
+    {
+        GamePlayer shooter = GameController.Instance.GetGamePlayer(shooterName);
+        if (shooter == null) return;
+
+        TryTriggerMeteorite(shooter, shooterViewID);
+    }
+
+    private void TryTriggerMeteorite(GamePlayer shooter, int shooterViewID)
+    {
         if (isOnCooldown) return;
-        
+
         // 检查触发概率
         if (Random.Range(0f, 1f) > config.triggerProbability) return;
-        
-        // 只有MasterClient处理陨石生成逻辑
-        if (!NetworkWrapper.IsMasterClient) return;
-        
-        TriggerMeteorite(damageData);
-    }
-    
-    private void TriggerMeteorite(DamageInfo damageData)
-    {
+
         // 获取敌方队伍
-        Team enemyTeam = GetEnemyTeam(damageData.GameActor.Team);
+        Team enemyTeam = GetEnemyTeam(shooter.Team);
         if (enemyTeam == Team.None) return;
-        
+
         // 随机选择一个敌方目标
         GamePlayer target = GetRandomEnemyPlayer(enemyTeam);
         if (target == null) return;
-        
+
         // 开始冷却
         isOnCooldown = true;
-        lastTriggerTime = Time.time;
         StartCoroutine(CooldownRoutine());
-        
+
         // 通知所有客户端生成陨石
         PhotonView photonView = GetComponent<PhotonView>();
-        photonView.RPC("RPC_TriggerMeteorite", RpcTarget.All, 
-            damageData.GameActor.Name, 
+        photonView.RPC(nameof(RPC_TriggerMeteorite), RpcTarget.All,
+            shooter.Name,
             target.Name,
-            damageData.ActorViewID);
+            shooterViewID);
     }
     
     [PunRPC]
@@ -101,15 +117,14 @@ public class MeteoriteFacility : ResonanceFacility
             ActorViewID = shooterViewID,
             Speed = config.meteoriteFallSpeed,
             Position = spawnPos,
-            isNetwork = false
+            // 伤害与共鸣只由房主结算，其余客户端只做表现
+            isNetwork = !NetworkWrapper.IsMasterClient
         };
-        
+
+        // 先朝向目标再初始化，避免初速度沿预制体默认朝向
+        meteorite.transform.forward = (targetPos - spawnPos).normalized;
         projectile.InitProjectile(bulletData);
         projectile.SetTarget(targetPos);
-        
-        // 设置陨石朝向目标
-        Vector3 direction = (targetPos - spawnPos).normalized;
-        meteorite.transform.forward = direction;
     }
     
     private void ShowShooterMarker(GamePlayer shooter)
@@ -156,14 +171,5 @@ public class MeteoriteFacility : ResonanceFacility
         Vector3 worldPos = dropArea.transform.TransformPoint(localRandomPos);
         Vector3 offset=new Vector3(0, 10f, 0);
         return worldPos-offset;
-    }
-    
-    private void Update()
-    {
-        // 备用冷却检查
-        if (isOnCooldown && Time.time - lastTriggerTime >= COOLDOWN_TIME)
-        {
-            isOnCooldown = false;
-        }
     }
 }

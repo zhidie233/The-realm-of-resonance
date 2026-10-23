@@ -2,7 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
-using Photon.Pun;
 
 public class ExplosionDamage : ExplosionBase
 {
@@ -110,35 +109,17 @@ public class ExplosionDamage : ExplosionBase
             if (!isOneTeamMode && player.GetPlayerTeam() == creator.Team)
             {
                 // 爆炸伤害友军，降低共鸣值
-                NotifyMasterClientResonanceChange("Teammate", odi.Damage);
+                ResonanceManager.RequestChange("Teammate", odi.Damage);
             }
             else
             {
                 // 爆炸伤害敌人，升高共鸣值
-                NotifyMasterClientResonanceChange("Enemy", odi.Damage);
+                ResonanceManager.RequestChange("Enemy", odi.Damage);
             }
             pdm?.DoDamage(odi);
         }
     }
 
-    void NotifyMasterClientResonanceChange(string resonanceKey, float damage)
-    {
-        if (ResonanceManager.Instance == null) return;
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 如果自己就是房主，直接修改
-            ResonanceManager.Instance.ChangeResonance(resonanceKey, damage);
-        }
-        else
-        {
-            // 如果不是房主，通过RPC通知房主
-            // 需要获取一个PhotonView来发送RPC
-            PhotonView shooterPhotonView = creator.m_actorView; // 获取发射者的PhotonView
-            shooterPhotonView.RPC("RPC_RequestResonanceChange", RpcTarget.MasterClient, 
-                resonanceKey, damage);
-        }
-    }
     // 对物体、物品、机器人等施加伤害，条件是碰撞体在爆炸半径内
     void DoCollisionDamage()
     {

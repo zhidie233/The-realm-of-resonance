@@ -9,7 +9,7 @@ public class LauncherProjectile : ProjectileBase
     public float ExplosionRadius { get; set; } = 10;
 
     private bool detecting = true;
-    ShotData bulletData;
+    protected ShotData bulletData;
     private Rigidbody _rigidbody;
     private float instanceTime = 0;
 
@@ -57,7 +57,14 @@ public class LauncherProjectile : ProjectileBase
             }
         }
 
-        GameObject e = Instantiate(explosionPrefab, collision.contacts[0].point, Quaternion.identity) as GameObject;
+        Explode(collision.contactCount > 0 ? collision.contacts[0].point : transform.position);
+    }
+
+    protected void Explode(Vector3 position)
+    {
+        if (!detecting) return;
+
+        GameObject e = Instantiate(explosionPrefab, position, Quaternion.identity) as GameObject;
         var blast = e.GetComponent<ExplosionBase>();
         if (blast != null)
         {

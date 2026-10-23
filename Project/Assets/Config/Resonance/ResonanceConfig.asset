@@ -17,9 +17,9 @@ MonoBehaviour:
     magnification: -1
   - key: Enemy
     magnification: 1
-  - key: A
+  - key: Amplifier
     magnification: 2
-  - key: B
+  - key: Suppressor
     magnification: -2
   - key: Meteorite
     magnification: 0

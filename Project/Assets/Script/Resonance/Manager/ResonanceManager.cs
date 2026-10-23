@@ -1,4 +1,5 @@
 using ExitGames.Client.Photon;
+using Photon.Pun;
 using UnityEngine;
 
 public class ResonanceManager : MonoBehaviourBase
@@ -7,6 +8,8 @@ public class ResonanceManager : MonoBehaviourBase
 
     [Header("当前共鸣值")]
     [SerializeField] private float currentResonance = 0f;
+
+    private PhotonView _photonView;
 
     protected override void Awake()
     {
@@ -17,6 +20,7 @@ public class ResonanceManager : MonoBehaviourBase
             return;
         }
         Instance = this;
+        _photonView = GetComponent<PhotonView>();
     }
 
     protected override void OnEnable()
@@ -53,6 +57,31 @@ public class ResonanceManager : MonoBehaviourBase
         NetworkWrapper.CurrentRoom.SetCustomProperties(properties);
 
         GameEvents.DispatchResonanceChanged(currentResonance);
+    }
+
+    /// 任意端请求修改共鸣值：房主直接结算，其余端转交房主
+    public static void RequestChange(string changeKey, float damage)
+    {
+        if (Instance == null) return;
+        Instance.SendChangeRequest(changeKey, damage);
+    }
+
+    void SendChangeRequest(string changeKey, float damage)
+    {
+        if (NetworkWrapper.IsMasterClient)
+        {
+            ChangeResonance(changeKey, damage);
+            return;
+        }
+
+        if (_photonView == null || !NetworkWrapper.InRoom) return;
+        _photonView.RPC(nameof(RPC_RequestChange), RpcTarget.MasterClient, changeKey, damage);
+    }
+
+    [PunRPC]
+    void RPC_RequestChange(string changeKey, float damage)
+    {
+        ChangeResonance(changeKey, damage);
     }
 
     void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)

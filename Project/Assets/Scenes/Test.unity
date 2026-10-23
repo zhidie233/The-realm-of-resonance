@@ -30284,7 +30284,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3738048620485336899, guid: b737f0cb1fd60364ba81d1e6149cd26f, type: 3}
       propertyPath: m_Name
-      value: A
+      value: ResonanceAmplifier
       objectReference: {fileID: 0}
     - target: {fileID: 7352022367494188531, guid: b737f0cb1fd60364ba81d1e6149cd26f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -37747,7 +37747,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 749295459146568038, guid: ade36a11ee1bbd044a3c4b90aa0517dd, type: 3}
       propertyPath: m_Name
-      value: B
+      value: ResonanceSuppressor
       objectReference: {fileID: 0}
     - target: {fileID: 3599808310783269317, guid: ade36a11ee1bbd044a3c4b90aa0517dd, type: 3}
       propertyPath: m_LocalPosition.x

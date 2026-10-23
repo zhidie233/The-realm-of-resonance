@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class GravityManager : EnvironmentEffectManager
 {
-    private AnimationCurve positionCurve = AnimationCurve.Linear(0, 0, 1, 1);
-
     private FirstPersonController _localPlayerController;
     private List<GravityFacility> _gravityFacilities = new List<GravityFacility>();
 
@@ -42,14 +40,7 @@ public class GravityManager : EnvironmentEffectManager
     private void FindAllGravityFacilities()
     {
         _gravityFacilities.Clear();
-
-        GameObject[] facilityObjects = GameObject.FindGameObjectsWithTag("GravityFacility");
-        foreach (GameObject obj in facilityObjects)
-        {
-            GravityFacility facility = obj.GetComponent<GravityFacility>();
-            if (facility != null)
-                _gravityFacilities.Add(facility);
-        }
+        _gravityFacilities.AddRange(Object.FindObjectsOfType<GravityFacility>(true));
     }
 
     public override void UpdateEffect()
@@ -70,7 +61,7 @@ public class GravityManager : EnvironmentEffectManager
         foreach (GravityFacility facility in _gravityFacilities)
         {
             if (facility != null)
-                facility.UpdateTransformBasedOnResonance(currentResonance, maxResonance, positionCurve);
+                facility.UpdateTransformBasedOnResonance(currentResonance, maxResonance);
         }
     }
 }

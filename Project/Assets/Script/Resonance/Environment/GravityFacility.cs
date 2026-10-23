@@ -7,12 +7,10 @@ public class GravityFacility : MonoBehaviour
     public Quaternion StartLimitRotation = Quaternion.identity;
     public Quaternion FinalLimitRotation = Quaternion.identity;
 
-    public void UpdateTransformBasedOnResonance(float resonanceValue, float maxResonance, AnimationCurve curve)
+    public void UpdateTransformBasedOnResonance(float resonanceValue, float maxResonance)
     {
         // 将共振值映射到0-1的范围
         float t = Mathf.Clamp01(resonanceValue / maxResonance);
-        // 应用曲线控制
-        t = curve.Evaluate(t);
         // 计算新位置和旋转
         Vector3 newPosition = Vector3.Lerp(StartLimitPosition, FinalLimitPosition, t);
         Quaternion newRotation = Quaternion.Lerp(StartLimitRotation, FinalLimitRotation, t);

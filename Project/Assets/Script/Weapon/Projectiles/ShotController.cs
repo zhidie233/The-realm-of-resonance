@@ -1,4 +1,3 @@
-using Photon.Pun;
 using UnityEngine;
 
 // Game 默认的子弹处理脚本。想用自己的子弹脚本，就继承 ProjectileBase 类，实现要覆盖的函数，再挂到子弹预制体上。使用自定义子弹预制体请查看 Bullet 文档。可以参考本脚本了解如何对玩家和机器人施加伤害。
@@ -167,6 +166,7 @@ public class ShotController : ProjectileBase
                 break;
             case "Facility":
                 //攻击设施
+                SpawnImpactEffect("decal", hit);
                 SendFacilityDamage(hit);
                 break;
             case "Wood":
@@ -206,7 +206,7 @@ public class ShotController : ProjectileBase
                 if (isOneTeamMode)
                 {
                     // 自由混战：所有玩家互为敌人，命中即提升共鸣值
-                    NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
+                    ResonanceManager.RequestChange("Enemy", damageData.Damage);
                 }
                 else if (playerRefs.playerSettings.PlayerTeam == bulletData.GameActor.Team)
                 {
@@ -218,13 +218,13 @@ public class ShotController : ProjectileBase
                     else
                     {
                         // 攻击友军，降低共鸣值
-                        NotifyMasterClientResonanceChange("Teammate", damageData.Damage);
+                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
                     }
                 }
                 else
                 {
                     // 攻击敌人，升高共鸣值
-                    NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
+                    ResonanceManager.RequestChange("Enemy", damageData.Damage);
                 }
             }
             //不是真人
@@ -241,13 +241,13 @@ public class ShotController : ProjectileBase
                     else
                     {
                         // 攻击友军，降低共鸣值
-                        ResonanceManager.Instance.ChangeResonance("Teammate", damageData.Damage);
+                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
                     }
                 }
                 else
                 {
                     // 攻击敌人，升高共鸣值
-                    ResonanceManager.Instance.ChangeResonance("Enemy", damageData.Damage);
+                    ResonanceManager.RequestChange("Enemy", damageData.Damage);
                 }
             }
             //检查子弹来自机器人还是真人玩家。
@@ -292,7 +292,7 @@ public class ShotController : ProjectileBase
                     if (isOneTeamMode)
                     {
                         // 自由混战：所有人机均为敌人，命中即提升共鸣值
-                        NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
+                        ResonanceManager.RequestChange("Enemy", damageData.Damage);
                     }
                     else if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
                     {
@@ -304,13 +304,13 @@ public class ShotController : ProjectileBase
                         else
                         {
                             // 攻击友军，降低共鸣值
-                            NotifyMasterClientResonanceChange("Teammate", damageData.Damage);
+                            ResonanceManager.RequestChange("Teammate", damageData.Damage);
                         }
                     }
                     else
                     {
                         // 攻击敌人，升高共鸣值
-                        NotifyMasterClientResonanceChange("Enemy", damageData.Damage);
+                        ResonanceManager.RequestChange("Enemy", damageData.Damage);
                     }
                 }
                 damageable.ReceiveDamage(damageData);
@@ -333,7 +333,7 @@ public class ShotController : ProjectileBase
             if (isOneTeamMode)
             {
                 // 自由混战：所有玩家互为敌人，被击中即提升共鸣值
-                NotifyMasterClientResonanceChange("Enemy", info.Damage);
+                ResonanceManager.RequestChange("Enemy", info.Damage);
             }
             else if (pdm.playerSettings.PlayerTeam == bulletData.GameActor.Team)
             {
@@ -345,13 +345,13 @@ public class ShotController : ProjectileBase
                 else
                 {
                     // 攻击友军，降低共鸣值
-                    NotifyMasterClientResonanceChange("Teammate", info.Damage);
+                    ResonanceManager.RequestChange("Teammate", info.Damage);
                 }
             }
             else
             {
                 // 攻击敌人，升高共鸣值
-                NotifyMasterClientResonanceChange("Enemy", info.Damage);
+                ResonanceManager.RequestChange("Enemy", info.Damage);
             }
             info.Actor = null;
             info.Cause = DamageCause.Bot;
@@ -368,35 +368,14 @@ public class ShotController : ProjectileBase
         {
             //回调在 HitBox.cs 中
             var damageData = BuildBaseDamageData();
-            NotifyMasterClientResonanceChange(facility.resonanceKey, damageData.Damage);
+            if (facility != null)
+                ResonanceManager.RequestChange(facility.resonanceKey, damageData.Damage);
             damageable.ReceiveDamage(damageData);
-        }
-    }
-    void NotifyMasterClientResonanceChange(string resonanceKey, float damage)
-    {
-        if (ResonanceManager.Instance == null) return;
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 如果自己就是房主，直接修改
-            ResonanceManager.Instance.ChangeResonance(resonanceKey, damage);
-        }
-        else
-        {
-            // 如果不是房主，通过RPC通知房主
-            // 需要获取一个PhotonView来发送RPC
-            PhotonView shooterPhotonView = bulletData.GameActor.m_actorView; // 获取发射者的PhotonView
-            shooterPhotonView.RPC("RPC_RequestResonanceChange", RpcTarget.MasterClient, 
-                resonanceKey, damage);
         }
     }
     void InstanceHitParticle(string poolPrefab, RaycastHit hit, bool overrideDamageable = false)
     {
-        // 生成粒子
-        GameObject go = ObjectRecyclerBase.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-        // 生成弹痕
-        BulletMarkManagerBase.InstantiateDecal(hit);
-        if (go != null)
-            go.transform.parent = hit.transform;
+        SpawnImpactEffect(poolPrefab, hit);
         if (checkDamageables || overrideDamageable)
         {
             var damageable = hit.transform.GetComponent<IGameDamageable>();
@@ -405,6 +384,14 @@ public class ShotController : ProjectileBase
             damageData.Cause = DamageCause.Player;
             damageable.ReceiveDamage(damageData);
         }
+    }
+    // 只生成粒子与弹痕，不结算伤害
+    void SpawnImpactEffect(string poolPrefab, RaycastHit hit)
+    {
+        GameObject go = ObjectRecyclerBase.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+        BulletMarkManagerBase.InstantiateDecal(hit);
+        if (go != null)
+            go.transform.parent = hit.transform;
     }
     DamageInfo BuildBaseDamageData()
     {

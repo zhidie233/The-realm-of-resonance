@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 1261336224871796618}
   - component: {fileID: 6408002964248909925}
   m_Layer: 0
-  m_Name: B
+  m_Name: ResonanceSuppressor
   m_TagString: Facility
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -119,7 +119,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 344ab2871cf75b442803cc38f0150666, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  resonanceKey: B
+  resonanceKey: Suppressor
 --- !u!1 &6479126922112646586
 GameObject:
   m_ObjectHideFlags: 0
