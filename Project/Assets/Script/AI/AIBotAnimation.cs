@@ -2,9 +2,28 @@
 using UnityEngine;
 
 [ExecuteInEditMode]
-public class AIBotAnimation : AIBotAnimationBase
+public class AIBotAnimation : MonoBehaviourBase
 {
-    #region Public members
+    private Animator _animator;
+    public Animator m_Animator
+    {
+        get
+        {
+            if (_animator == null)
+            {
+                _animator = GetComponent<Animator>();
+            }
+            return _animator;
+        }
+    }
+
+    public virtual Transform GetHumanBone(HumanBodyBones bodyBone)
+    {
+        if (m_Animator == null) return null;
+
+        return m_Animator.GetBoneTransform(bodyBone);
+    }
+
     [Header("Head Look")]
     [SerializeField, Range(0, 1)] private float Weight = 0.8f;
     [SerializeField, Range(0, 1)] private float Body = 0.9f;
@@ -12,9 +31,7 @@ public class AIBotAnimation : AIBotAnimationBase
 
     [Header("Ragdoll")]
     public List<Rigidbody> mRigidBody = new List<Rigidbody>(); 
-    #endregion
 
-    #region Private members
     private Animator m_animator;
     private Vector3 localVelocity;
     private float vertical;
@@ -30,7 +47,6 @@ public class AIBotAnimation : AIBotAnimationBase
     private float timeSinceLastMove = 0;
     private Vector3 fixedLookAtPosition = Vector3.zero;
     private Transform headBone;
-    #endregion
 
     protected override void Awake()
     {
@@ -38,7 +54,7 @@ public class AIBotAnimation : AIBotAnimationBase
         references = CachedTransform.root.GetComponent<AIBotReferences>();
         m_animator = GetComponent<Animator>();
         headBone = m_animator.GetBoneTransform(HumanBodyBones.Head);
-        SetKinecmatic();
+        SetKinematic();
         if (animatorHashes == null)
         {
             FetchHashes();
@@ -119,7 +135,7 @@ public class AIBotAnimation : AIBotAnimationBase
         }
     }
 
-    public void SetKinecmatic()
+    public void SetKinematic()
     {
         for(int i = 0; i< mRigidBody.Count; i++)
         {
@@ -129,7 +145,8 @@ public class AIBotAnimation : AIBotAnimationBase
         }
     }
 
-    public override void Ragdolled(Vector3 from, bool isExplosion = false)
+    /// 让机器人变成布娃娃
+    public void Ragdolled(Vector3 from, bool isExplosion = false)
     {
         m_animator.enabled = false;
 
@@ -149,7 +166,8 @@ public class AIBotAnimation : AIBotAnimationBase
         }
     }
 
-    public override void OnGetHit()
+    /// 处理机器人受伤
+    public void OnGetHit()
     {
         int r = Random.Range(0, 2);
         string hit = (r == 1) ? "Right Hit" : "Left Hit";
@@ -159,7 +177,7 @@ public class AIBotAnimation : AIBotAnimationBase
 #if UNITY_EDITOR
     [ContextMenu("Get RigidBodys")]
 #endif
-    public void GetRigidBodys()
+    public void GetRigidbodies()
     {
         Rigidbody[] R = this.transform.GetComponentsInChildren<Rigidbody>();
 

@@ -1,7 +1,47 @@
 ﻿using UnityEngine;
+using System;
 
-public class ObserverMode : ObserverModeBase
+public class ObserverMode : MonoBehaviourBase
 {
+    [Serializable]
+    public enum LeaveSpectatorModeAction
+    {
+        AllowSelectTeam,
+        ReturnToLobby,
+    }
+    /// 观战模式是否处于激活状态？
+    public virtual bool isActive 
+    { 
+        get; 
+        set; 
+    } = false;
+    /// 本地玩家是否以观战者身份进入了当前对局？
+    private static bool s_enterAsSpectator = false;
+    public static bool EnterAsSpectator
+    {
+        get => s_enterAsSpectator;
+        set => s_enterAsSpectator = value;
+    }
+    /// 玩家能否在进入观战模式后选择队伍？
+    public virtual bool CanSelectTeam()
+    {
+        if (!isActive) return true;
+        return GameConfig.Instance.onLeaveSpectatorMode == LeaveSpectatorModeAction.AllowSelectTeam;
+    }
+
+    private static ObserverMode _instance;
+    public static ObserverMode Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<ObserverMode>();
+            }
+            return _instance;
+        }
+    }
+
     [GameToggle] public bool leaveSpectatorWithEscape = false;
     [SerializeField] private GameObject content = null;
 
@@ -20,17 +60,17 @@ public class ObserverMode : ObserverModeBase
         }
     }
 
-    public override void SetActiveSpectatorMode(bool active)
+    public void SetActiveSpectatorMode(bool active)
     {
         
         CommonUtil.LockCursor(active);
         if (active)
         {
             SetActiveUI(true);
-            LobbyCameraBase.Instance.SetCameraMode(LobbyCameraBase.CameraMode.Spectator);
-            LobbyCameraBase.Instance.SetActive(active);
+            LobbyCamera.Instance.SetCameraMode(LobbyCamera.CameraMode.Spectator);
+            LobbyCamera.Instance.SetActive(active);
             UIReferences.Instance.ShowMenu(false);
-            PauseMenuBase.Instance.CloseMenu();
+            PauseMenu.Instance.CloseMenu();
             UIReferences.Instance.SetActiveChangeTeamButton(false);
         }
         else
@@ -47,14 +87,14 @@ public class ObserverMode : ObserverModeBase
             }
 
             UIReferences.Instance.SetActiveChangeTeamButton(true);
-            LobbyCameraBase.Instance.ResetCamera();
+            LobbyCamera.Instance.ResetCamera();
 
             if (!GameController.Joined)
             {
                 UIReferences.Instance.ShowMenu(true);
                 UIReferences.Instance.SetUpJoinButtons(true);
             }
-            PauseMenuBase.Instance.OpenMenu();
+            PauseMenu.Instance.OpenMenu();
         }
         isActive = active;
     }
@@ -74,5 +114,5 @@ public class ObserverMode : ObserverModeBase
         }
     }
 
-    public override void SetActiveUI(bool active) => content.SetActive(active);
+    public void SetActiveUI(bool active) => content.SetActive(active);
 }

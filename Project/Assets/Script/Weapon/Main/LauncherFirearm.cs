@@ -1,24 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class LauncherFirearm : CustomFirearmBase
+public class LauncherFirearm : MonoBehaviour
 {
-    public float explosionRadious = 10;
+    public float explosionRadius = 10;
     private FirearmController FPWeapon;
     private NetworkFirearm TPWeapon;
 
-    public override void Initialitate(FirearmController gun)
+    /// 启动时该武器在玩家配装中，由 FPWeapon 调用
+    public void Initialize(FirearmController gun)
     {
         FPWeapon = gun;
     }
 
-    public override void OnFire()
+    /// 按住开火按钮时调用
+    public void OnFire()
     {
       
     }
 
-    public override void OnFireDown()
+    /// 点击一次开火按钮时调用
+    public void OnFireDown()
     {
         if (!FPWeapon.FireRatePassed) return;
 
@@ -26,7 +27,9 @@ public class LauncherFirearm : CustomFirearmBase
         Shoot();
     }
 
-    public override void TPFire(NetworkFirearm networkGun, ExitGames.Client.Photon.Hashtable data)
+    /// 需要生成投掷物时由 TPWeapon（网络枪）调用
+    /// 在这里实现自定义开火逻辑
+    public void TPFire(NetworkFirearm networkGun, ExitGames.Client.Photon.Hashtable data)
     {
         TPWeapon = networkGun;
         if(FPWeapon == null) { FPWeapon = TPWeapon.LocalGun; }
@@ -36,7 +39,7 @@ public class LauncherFirearm : CustomFirearmBase
 
         if (FPWeapon.bulletInstanceMethod == FirearmController.ShotInstanceMethod.Pooled)
         {
-            projectile = ObjectRecyclerBase.Instance.Instantiate(FPWeapon.BulletName, instancePosition, instanceRotation);
+            projectile = ObjectRecycler.Instance.Instantiate(FPWeapon.BulletName, instancePosition, instanceRotation);
         }
         else
         {
@@ -58,7 +61,7 @@ public class LauncherFirearm : CustomFirearmBase
         Quaternion rotation = FPWeapon.PlayerCamera.transform.rotation;
         if (FPWeapon.bulletInstanceMethod == FirearmController.ShotInstanceMethod.Pooled)
         {
-            projectile = ObjectRecyclerBase.Instance.Instantiate(FPWeapon.BulletName, position, rotation);
+            projectile = ObjectRecycler.Instance.Instantiate(FPWeapon.BulletName, position, rotation);
         }
         else
         {
@@ -67,10 +70,10 @@ public class LauncherFirearm : CustomFirearmBase
 
         var glp = projectile.GetComponent<ProjectileBase>();
         FPWeapon.BuildBulletData();
-        FPWeapon.BulletSettings.ImpactForce = explosionRadious;
+        FPWeapon.BulletSettings.ImpactForce = explosionRadius;
         glp.InitProjectile(FPWeapon.BulletSettings);
         FPWeapon.PlayFireAudio();
-        FPWeapon.WeaponAnimation?.PlayFire(WeaponRigBase.AnimationFlags.Aiming);
+        FPWeapon.WeaponAnimation?.PlayFire(WeaponRigHandler.AnimationFlags.Aiming);
         if (FPWeapon.muzzleFlash != null) { FPWeapon.muzzleFlash.Play(); }
         FPWeapon.bulletsLeft--;
         FPWeapon.Kick();

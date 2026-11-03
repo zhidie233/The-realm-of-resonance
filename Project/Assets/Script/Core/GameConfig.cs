@@ -8,7 +8,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 
 public class GameConfig : ScriptableObject
 {
-    #region Public members
     [Header("游戏规则")]
     [GameToggle] public bool directConnectMode = false;
     [GameToggle] public bool guardDuplicateSessions = true;
@@ -42,9 +41,9 @@ public class GameConfig : ScriptableObject
     public KillReportWeaponShowMode deathFeedWeaponDisplay = KillReportWeaponShowMode.WeaponIcon;
     public LobbyAccess lobbyAccess = LobbyAccess.ReadyRoom;
     public DeathCam.DeathCamType deathReplayMode = DeathCam.DeathCamType.WatchBody;
-    public KillNotifier.KillNotice personalKillFeedDisplay = KillNotifier.KillNotice.Queqe;
+    public KillNotifier.KillNotice personalKillFeedDisplay = KillNotifier.KillNotice.Queue;
     public FirearmInventory.SwapOnPickup swapOnPickupMode = FirearmInventory.SwapOnPickup.OnlyOnEmptySlots;
-    public ObserverModeBase.LeaveSpectatorModeAction onLeaveSpectatorMode = ObserverModeBase.LeaveSpectatorModeAction.AllowSelectTeam;
+    public ObserverMode.LeaveSpectatorModeAction onLeaveSpectatorMode = ObserverMode.LeaveSpectatorModeAction.AllowSelectTeam;
     /// 决定机器人击杀如何计入真人玩家战绩
     /// 用于避免玩家靠刷机器人击杀来提升个人战绩。
     public BotKillPolicy botKillCredit = BotKillPolicy.SameAsRealPlayers;
@@ -70,9 +69,7 @@ public class GameConfig : ScriptableObject
     [Reorderable]
     public List<MapInfo> SceneTable = new List<MapInfo>();
     [Header("武器列表")]
-#if UNITY_2020_2_OR_NEWER
     [NonReorderable]
-#endif
     public List<FirearmData> WeaponTable = new List<FirearmData>();
     [Header("默认画质")]
     [ScriptableDrawer, SerializeField] private RuntimeSettingsProfile defaultSettings;
@@ -107,12 +104,10 @@ public class GameConfig : ScriptableObject
     [ScriptableDrawer] public RobotConfig robotConfig;
     [ScriptableDrawer] public SupplyConfig supplyConfig;
 
-    public SceneLoaderBase sceneLoader;
+    public SimpleSceneLoader sceneLoader;
     [Header("后台账号")]
     public List<GameTeamInfo> GameTeam = new List<GameTeamInfo>();
-    #endregion
 
-    #region Private Members
     public GameTeamInfo CurrentTeamUser { get; set; } = null;
     [HideInInspector] public bool isChatOpen = false;
     [HideInInspector] public string appKey = string.Empty;
@@ -128,7 +123,6 @@ public class GameConfig : ScriptableObject
 #if UNITY_EDITOR
     private const string EditorAssetPath = "Assets/Config/GameConfigData.asset";
 #endif
-    #endregion
     [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
     private static void OnRuntimeInit()
     {
@@ -174,7 +168,6 @@ public class GameConfig : ScriptableObject
         }
         m_instance = null;
     }
-    #region Getters
     /// 按 ID 获取武器信息
     /// <param name="ID">武器 ID，即 GameData 中该武器信息的 indexOf</param>
     public FirearmData GetWeapon(int ID)
@@ -289,7 +282,6 @@ public class GameConfig : ScriptableObject
             return m_instance;
         }
     }
-    #endregion
     /// 异步从 Addressables 加载全局配置资产
     public static IEnumerator AsyncLoadData()
     {
@@ -333,7 +325,6 @@ public class GameConfig : ScriptableObject
         }
     }
 #endif
-    #region Local Classes
     [Serializable]
     public class ScoreScale
     {
@@ -361,5 +352,4 @@ public class GameConfig : ScriptableObject
             Moderator = 1,
         }
     }
-    #endregion
 }

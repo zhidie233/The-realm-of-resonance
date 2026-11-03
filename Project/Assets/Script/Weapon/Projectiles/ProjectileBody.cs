@@ -1,29 +1,21 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class ProjectileBody : ProjectileBase
 {
-    #region Public members
     public ProjectileType m_Type = ProjectileType.Grenade;
     public ExplosionMethod explosionMethod = ExplosionMethod.Timer;
     public int TimeToExploit = 10;
     public GameObject explosion;
     public TrailRenderer trailRenderer;
-    #endregion
 
-    #region Public properties
     public int ID { get; set; }
     public string mName { get; set; }
     public bool isNetwork { get; set; } = false;
-    #endregion
 
-    #region Private members
     private float speed = 75.0f;
     private float impactForce;
     private float damage;
     private ShotData bulletData;
-
-    #endregion
 
     public override void InitProjectile(ShotData data)
     {
@@ -71,7 +63,7 @@ public class ProjectileBody : ProjectileBase
                 GameObject e = Instantiate(explosion, contact.point, rotation) as GameObject;
                 if (m_Type == ProjectileType.Grenade)
                 {
-                    var blast = e.GetComponent<ExplosionBase>();
+                    var blast = e.GetComponent<ExplosionDamage>();
                     if (blast != null)
                     {
                         blast.InitExplosion(bulletData, bulletData.GameActor);
@@ -100,7 +92,7 @@ public class ProjectileBody : ProjectileBase
             GameObject e = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
             if (m_Type == ProjectileType.Grenade)
             {
-                var blast = e.GetComponent<ExplosionBase>();
+                var blast = e.GetComponent<ExplosionDamage>();
                 if (blast != null)
                 {
                     var actor = bulletData.GameActor;

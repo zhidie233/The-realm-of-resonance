@@ -7,8 +7,18 @@ using UnityEngine;
 /// 
 /// 实例化网络物品只有一个要求：
 /// 1. 物品预制体必须列在 'Network Items Prefabs' 列表中
-public class PickupSpawner : ItemRespawnerBase
+public class PickupSpawner : MonoBehaviourBase
 {
+    private static PickupSpawner _instance;
+    public static PickupSpawner Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<PickupSpawner>(); }
+            return _instance;
+        }
+    }
+
     [Header("Network Prefabs")]
     public List<NetworkedItem> networkItemsPrefabs = new List<NetworkedItem>();
 
@@ -58,7 +68,9 @@ public class PickupSpawner : ItemRespawnerBase
         PoolItem(prefabName, prefab);
     }
 
-    public override void PoolItem(string itemName, NetworkedItem item)
+    /// 将给定物品加入网络物品池
+    /// <param name="itemName">池列表名称</param>
+    public void PoolItem(string itemName, NetworkedItem item)
     {
         if (networkItemsPool.ContainsKey(itemName)) return;
         networkItemsPool.Add(itemName, item);
@@ -106,7 +118,7 @@ public class PickupSpawner : ItemRespawnerBase
         }
     }
     /// 将物品加入等待列表，在指定时间后重生
-    public override void RespawnAfter(NetworkedItem item, float respawnAfter = 0)
+    public void RespawnAfter(NetworkedItem item, float respawnAfter = 0)
     {
         respawnItems.Add(new RespawnItems()
         {

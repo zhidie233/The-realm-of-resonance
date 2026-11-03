@@ -1,10 +1,16 @@
 using System.Collections;
 using UnityEngine;
 /// 此脚本处理游戏默认的空投/包裹投放
-/// 若要自定义投放方式，新建脚本并从 LootBase 继承
-/// 此脚本仅作参考。
-public class LootDelivery : LootBase
+public class LootDelivery : MonoBehaviour
 {
+    public struct LootData
+    {
+        public int PackID;
+        public Vector3 DropPosition;
+        public float DeliveryDuration;
+        public GameObject DropPrefab;
+    }
+
     public Transform PackageHolder;
     public Transform CircleTransform;
     public GameObject DeliveryEffect;
@@ -14,13 +20,14 @@ public class LootDelivery : LootBase
     public AudioClip DropSound;
 
     private float DeliveryTime = 4;
-    private GameObject InstacePrefab;
+    private GameObject InstancePrefab;
     private LineRenderer lineRender;
 
-    public override void Dispatch(LootData dropData)
+    /// 处理空投/包裹实例化的函数
+    public void Dispatch(LootData dropData)
     {
         DeliveryTime = dropData.DeliveryDuration;
-        InstacePrefab = dropData.DropPrefab;
+        InstancePrefab = dropData.DropPrefab;
         lineRender = GetComponent<LineRenderer>();
 
         //设置所有物体的初始位置
@@ -68,9 +75,9 @@ public class LootDelivery : LootBase
 
         //实例化包裹
         if (DeliveryEffect != null) { Instantiate(DeliveryEffect, transform.position, Quaternion.identity); }
-        if (InstacePrefab != null)
+        if (InstancePrefab != null)
         {
-            var drop = Instantiate(InstacePrefab, transform.position, Quaternion.identity) as GameObject;
+            var drop = Instantiate(InstancePrefab, transform.position, Quaternion.identity) as GameObject;
             if (drop.TryGetComponent(out NetworkedItem networkItem))
             {
                 networkItem.OnLocalInstanced();

@@ -29,7 +29,7 @@ public class LootDispatcher : MonoBehaviour
     {
         GameObject newInstance = Instantiate(DropDeliveryPrefab, transform.position, Quaternion.identity) as GameObject;
 
-        newInstance.GetComponent<LootBase>().Dispatch(new LootBase.LootData()
+        newInstance.GetComponent<LootDelivery>().Dispatch(new LootDelivery.LootData()
         {
             DropPrefab = AvailablePacks[(int)data["pack"]].Prefab,
             DropPosition = (Vector3)data["pos"],

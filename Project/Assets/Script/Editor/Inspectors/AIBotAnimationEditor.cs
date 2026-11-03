@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 
 [CustomEditor(typeof(AIBotAnimation))]
@@ -21,7 +20,7 @@ public class AIBotAnimationEditor : Editor
         GUILayout.Space(10);
         if(GUILayout.Button("刷新刚体列表"))
         {
-            script.GetRigidBodys();
+            script.GetRigidbodies();
         }
         if (GUILayout.Button("运行动画器"))
         {

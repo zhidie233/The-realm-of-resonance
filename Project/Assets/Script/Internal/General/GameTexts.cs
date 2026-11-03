@@ -33,7 +33,7 @@
     public static string KillingInAction = "行动中阵亡";
     public static string KillZoneMessage = "请在 <color=red><size=25>{0}</size>秒</color>内返回战场";
 
-    public static string ServerMesagge = "[服务器]";
+    public static string ServerMessage = "[服务器]";
     public static string OpenChatStart = "[服务器]: 按 'T' 或 'Y' 键打开聊天框";
     public static string NoOneWonName = "无人";
     public static string AFKWarning = "您正处于挂机状态，将在 {0} 后被踢出";
@@ -65,7 +65,7 @@
     public static string FireTypeSemi = "半自动";
     public static string FireTypeSingle = "单发";
 
-    public static string[] AntiStropicOptions = new string[] { "禁用", "启用", "强制启用" };
+    public static string[] AnisotropicOptions = new string[] { "禁用", "启用", "强制启用" };
 
     public static string RoomsCreated = "<b>已创建房间:</b> {0}";
     public static string PlayersOnline = "<b>在线玩家:</b> {0}";

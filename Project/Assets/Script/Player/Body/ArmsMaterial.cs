@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Arms Material", menuName = "项目/Player/Arm Material")]
 public class ArmsMaterial : ScriptableObject

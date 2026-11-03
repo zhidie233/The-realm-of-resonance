@@ -69,7 +69,7 @@ public static class GameEvents
     public static Action<string> onBotDeath;
     public static void EventBotDeath(string botName) => onBotDeath?.Invoke(botName);
     /// 所有机器人信息获取完成后调用一次
-    public static Action onBotsInitializated;
+    public static Action onBotsInitialized;
     /// 本地玩家更改职业/配装时调用
     public static Action onPlayerClassChanged;
     public static void DispatchPlayerClassChange(PlayerClass newClass) => onPlayerClassChanged?.Invoke();

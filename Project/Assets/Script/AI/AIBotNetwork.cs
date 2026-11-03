@@ -96,7 +96,7 @@ public sealed class AIBotNetwork : MonoBehaviourBase, IPunObservable
         else
         {
             Velocity = Agent.velocity;
-            if (MatchTimeManagerBase.Instance.IsTimeUp())
+            if (MatchTimeManager.Instance.IsTimeUp())
             {
                 if(Agent.enabled) Agent.isStopped = true;
                 return;

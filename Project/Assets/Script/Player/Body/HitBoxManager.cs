@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 #if UNITY_EDITOR
@@ -7,11 +6,11 @@ using UnityEditor;
 
 public class HitBoxManager : MonoBehaviour
 {
-    public List<HitBoxBase> hitBoxes = new List<HitBoxBase>();
+    public List<HitBox> hitBoxes = new List<HitBox>();
     public bool managerPerSegments = true;
     public PlayerHealthManagerBase healthManager;
     /// 判定盒被击中时调用
-    public void OnHit(DamageInfo damageData, HitBoxBase hitbox)
+    public void OnHit(DamageInfo damageData, HitBox hitbox)
     {
         if(healthManager != null)
         healthManager.DoDamage(damageData);
@@ -55,7 +54,7 @@ public class HitBoxManager : MonoBehaviour
         box.collider = col;
         if (bone == HumanBodyBones.Head) { box.DamageMultiplier = 5; }
 
-        var bp = col.GetComponent<HitBoxBase>();
+        var bp = col.GetComponent<HitBox>();
         if (bp == null) { bp = col.gameObject.AddComponent<HitBox>(); }
 
         bp.hitBoxManager = this;
@@ -97,14 +96,14 @@ public class BodyHitBoxManagerEditor: Editor
             EditorGUILayout.HelpBox("No Health Manager has been assigned, therefore none damage will be applied from the hitboxes", MessageType.Warning);
         }
         var rect = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.toolbarButton);
-        script.managerPerSegments = ResonanceRealmEditorStyles.FeatureToogle(rect, script.managerPerSegments, "Multiplier value per segment?");
+        script.managerPerSegments = ResonanceRealmEditorStyles.FeatureToggle(rect, script.managerPerSegments, "Multiplier value per segment?");
         DrawBodyMultiplier();
         DrawHitBoxesList();
 
         if (GUILayout.Button("Refresh Hitboxes"))
         {
             script.hitBoxes.Clear();
-            var all = script.transform.GetComponentsInChildren<HitBoxBase>(false);
+            var all = script.transform.GetComponentsInChildren<HitBox>(false);
             for (int i = 0; i < all.Length; i++)
             {
                 var b = all[i];
@@ -157,7 +156,7 @@ public class BodyHitBoxManagerEditor: Editor
                 GUILayout.Label(hbi.collider == null ? "" : hbi.collider.name);
                 if (!sp.isExpanded) hbi.Bone = (HumanBodyBones)EditorGUILayout.EnumPopup(hbi.Bone, GUILayout.Width(110));
                 GUILayout.Space(10);
-                EditorGUILayout.ObjectField(box, typeof(HitBoxBase), true, GUILayout.Width(120));
+                EditorGUILayout.ObjectField(box, typeof(HitBox), true, GUILayout.Width(120));
                 GUILayout.Space(10);
             }
             EditorGUILayout.EndHorizontal();

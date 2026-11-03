@@ -7,5 +7,4 @@
     Self = 5,
     Map = 6,
     Fire = 7,
-    Vehicle = 8,
 }

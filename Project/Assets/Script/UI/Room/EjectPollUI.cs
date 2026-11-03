@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using Photon.Realtime;
 using TMPro;
@@ -23,12 +22,12 @@ public class EjectPollUI : MonoBehaviour
 
     private void OnEnable()
     {
-        ScoreboardPopUpMenuBase.onScoreboardMenuAction += OnScoreboardPopupAction;
+        ScoreboardPopUpMenu.onScoreboardMenuAction += OnScoreboardPopupAction;
     }
 
     private void OnDisable()
     {
-        ScoreboardPopUpMenuBase.onScoreboardMenuAction -= OnScoreboardPopupAction;
+        ScoreboardPopUpMenu.onScoreboardMenuAction -= OnScoreboardPopupAction;
     }
 
 
@@ -40,7 +39,7 @@ public class EjectPollUI : MonoBehaviour
         }
     }
 
-    public void OpenVotatation(Player again, Player By)
+    public void OpenVotation(Player again, Player By)
     {
         CancelInvoke("Hide");
         CacheTargetName = again.NickName;
@@ -89,7 +88,7 @@ public class EjectPollUI : MonoBehaviour
 
     public void RequestVote()
     {
-        KickManager.RequestKick(ScoreboardPopUpMenuBase.TargetPlayer);
+        KickManager.RequestKick(ScoreboardPopUpMenu.TargetPlayer);
     }
 
     void Hide()

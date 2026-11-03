@@ -33,7 +33,7 @@ public class GameToggleAttributeDrawer : PropertyDrawer
         float lw = EditorGUIUtility.labelWidth;
         EditorGUIUtility.labelWidth += script.ExtraWidth;
         position.x += 15 * EditorGUI.indentLevel;
-        property.boolValue = ResonanceRealmEditorStyles.FeatureToogle(position, property.boolValue, t);
+        property.boolValue = ResonanceRealmEditorStyles.FeatureToggle(position, property.boolValue, t);
         EditorGUIUtility.labelWidth = lw;
     }
 }

@@ -65,7 +65,7 @@ public class LauncherProjectile : ProjectileBase
         if (!detecting) return;
 
         GameObject e = Instantiate(explosionPrefab, position, Quaternion.identity) as GameObject;
-        var blast = e.GetComponent<ExplosionBase>();
+        var blast = e.GetComponent<ExplosionDamage>();
         if (blast != null)
         {
             bulletData.Position = transform.position;

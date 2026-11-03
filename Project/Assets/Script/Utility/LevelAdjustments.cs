@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LevelAdjustments : MonoBehaviour
 {
@@ -20,6 +18,6 @@ public class LevelAdjustments : MonoBehaviour
     {
         var p = GameCore.LocalPlayerReferences;
 
-        if (infinityAmmo) p.gunManager.SetInfinityAmmoToAllEquippeds(true);
+        if (infinityAmmo) p.gunManager.SetInfinityAmmoToAllEquipped(true);
     }
 }

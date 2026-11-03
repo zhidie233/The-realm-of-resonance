@@ -57492,7 +57492,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd5ef3c024dfda242b1701bbc371fa0d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  messageBufferLenght: 7
+  messageBufferLength: 7
   chatUIRoot: {fileID: 8328468959602034450}
   chatInputField: {fileID: 175685998910737976}
   chatText: {fileID: 176026810205065750}

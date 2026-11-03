@@ -4,14 +4,20 @@ using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 
-public class AIBotAttack : AIBotAttackBase
+public class AIBotAttack : NetworkHelper
 {
-    #region Public members
+    public enum FireReason
+    {
+        Normal,
+        OnMove,
+        Forced,
+    }
+
     [Header("Settings")]
     [GameToggle] public bool ForceFireWhenTargetClose = true;
     [Range(0, 5)] public int Grenades = 3;
     [SerializeField, Range(10, 100)] private float GrenadeSpeed = 50;
-    [Range(10, 100)] public float MinumumDistanceForGranades = 20;
+    [Range(10, 100)] public float MinimumDistanceForGrenades = 20;
 
     [Header("Weapons")]
     public List<AIBotWeaponHandler> aiWeapons = new List<AIBotWeaponHandler>();
@@ -20,15 +26,13 @@ public class AIBotAttack : AIBotAttackBase
     [SerializeField] private GameObject Grenade = null;
     [SerializeField] private Transform GrenadeFirePoint = null;
     [SerializeField] private AudioSource FireSource = null; 
-    #endregion
 
-    public override bool IsFiring 
+    public bool IsFiring 
     { 
         get; 
         set; 
     }
 
-    #region Private members
     private int bullets;
     private bool canFire = true;
     private float attackTime;
@@ -40,7 +44,6 @@ public class AIBotAttack : AIBotAttackBase
     private int WeaponID = -1;
     private ShotData m_BulletData = new ShotData();
     private AIBotAgent AI;
-    #endregion
 
     private void Awake()
     {
@@ -81,7 +84,7 @@ public class AIBotAttack : AIBotAttackBase
         Destroy(gameObject);
     }
 
-    public override void Fire(FireReason fireReason = FireReason.Normal)
+    public void Fire(FireReason fireReason = FireReason.Normal)
     {
         if (!canFire || AI.ObstacleBetweenTarget)
             return;
@@ -101,7 +104,7 @@ public class AIBotAttack : AIBotAttackBase
         }
         if (attackTime > Time.time) return;
 
-        if (Grenades > 0 && AI.TargetDistance >= MinumumDistanceForGranades && FollowingShoots > 5)
+        if (Grenades > 0 && AI.TargetDistance >= MinimumDistanceForGrenades && FollowingShoots > 5)
         {
             if ((Random.Range(0, 200) > 165))
             {
@@ -155,7 +158,7 @@ public class AIBotAttack : AIBotAttackBase
     {
         if (Weapon == null) return;
 
-        bullet = ObjectRecyclerBase.Instance.Instantiate(Weapon.BulletName, origin, transform.root.rotation);
+        bullet = ObjectRecycler.Instance.Instantiate(Weapon.BulletName, origin, transform.root.rotation);
         bullet.transform.LookAt(direction);
         //构建子弹数据
         m_BulletData.Damage = Weapon.Info.Damage;
@@ -164,15 +167,15 @@ public class AIBotAttack : AIBotAttackBase
         m_BulletData.WeaponID = Weapon.WeaponID;
         if (AI.behaviorSettings.weaponAccuracy == AIBotWeaponSpread.Pro)
         {
-            m_BulletData.SetInaccuracity(2, 3);
+            m_BulletData.SetInaccuracy(2, 3);
         }
         else if (AI.behaviorSettings.weaponAccuracy == AIBotWeaponSpread.Casual)
         {
-            m_BulletData.SetInaccuracity(3, 6);
+            m_BulletData.SetInaccuracy(3, 6);
         }
         else
         {
-            m_BulletData.SetInaccuracity(5, 10);
+            m_BulletData.SetInaccuracy(5, 10);
         }
         m_BulletData.Speed = 300;
         m_BulletData.Range = Weapon.Info.Range;
@@ -193,7 +196,7 @@ public class AIBotAttack : AIBotAttackBase
         if (Weapon.MuzzleFlash != null) { Weapon.MuzzleFlash.Play(); }
     }
 
-    public override void OnDeath()
+    public void OnDeath()
     {
         StopAllCoroutines();
 
@@ -211,7 +214,7 @@ public class AIBotAttack : AIBotAttackBase
         m_BulletData.isNetwork = network;
         m_BulletData.Position = transform.position;
         m_BulletData.WeaponID = 3;
-        m_BulletData.SetInaccuracity(2, 3);
+        m_BulletData.SetInaccuracy(2, 3);
         m_BulletData.Speed = GrenadeSpeed;
         m_BulletData.Range = 5;
         m_BulletData.WeaponName = "Grenade";
@@ -359,7 +362,7 @@ public class AIBotAttack : AIBotAttackBase
         return Weapon.maxFollowingShots;
     }
 
-    public override Vector3 GetFirePosition()
+    public Vector3 GetFirePosition()
     {
         return FirePoint.position;
     }

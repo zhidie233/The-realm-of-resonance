@@ -30,7 +30,7 @@ public class LobbyMenu : MonoBehaviourBase
     /// 游戏当前是否显示暂停菜单？
     public bool isPaused
     {
-        get => PauseMenuBase.IsMenuOpen;
+        get => PauseMenu.IsMenuOpen;
     }
     /// 游戏是否正在退出？
     public bool isApplicationQuitting
@@ -78,11 +78,11 @@ public class LobbyMenu : MonoBehaviourBase
     public override void OnUpdate()
     {
         isCursorLocked = CommonUtil.GetCursorState;
-        PauseControll();
+        PauseControl();
         ScoreboardInput();
     }
     /// 检测打开/隐藏暂停菜单的输入
-    void PauseControll()
+    void PauseControl()
     {
         // 按下左 Alt + 鼠标左键时强制锁定光标
         if (Input.GetKey(KeyCode.LeftAlt))
@@ -111,22 +111,22 @@ public class LobbyMenu : MonoBehaviourBase
         paused = !paused;
         UIReferences.Instance.ShowMenu(paused);
         CommonUtil.LockCursor(!paused);
-        ReticleBase.Instance?.Show(!paused);
+        ReticlePainter.Instance?.Show(!paused);
         GameEvents.DispatchGamePauseEvent(paused);
     }
 
     void ScoreboardInput()
     {
-        if (GameController.Instance.GameFinish || PauseMenuBase.IsMenuOpen) return;
+        if (GameController.Instance.GameFinish || PauseMenu.IsMenuOpen) return;
 
         if (GameInput.Scoreboard())
         {
-            PauseMenuBase.Instance.SetActiveLayouts(PauseMenuBase.LayoutPart.Body);
-            PauseMenuBase.Instance.OpenWindow("scoreboard");
+            PauseMenu.Instance.SetActiveLayouts(PauseMenu.LayoutPart.Body);
+            PauseMenu.Instance.OpenWindow("scoreboard");
         }
         else if (GameInput.Scoreboard(GameInputType.Up))
         {
-            PauseMenuBase.Instance.CloseWindow("scoreboard");
+            PauseMenu.Instance.CloseWindow("scoreboard");
         }
     }
     /// 玩家将被自动分配到队伍时触发
@@ -183,9 +183,9 @@ public class LobbyMenu : MonoBehaviourBase
     /// 服务器收到离开房间请求时调用。
     public void OnLeftRoom()
     {
-        LobbyCameraBase.Instance?.SetActive(true);
+        LobbyCamera.Instance?.SetActive(true);
         NetworkWrapper.IsMessageQueueRunning = false;
-        MatchTimeManagerBase.Instance.enabled = false;
+        MatchTimeManager.Instance.enabled = false;
         if (UIReferences.Instance != null)
             StartCoroutine(UIReferences.Instance.FinalFade(true));
     }

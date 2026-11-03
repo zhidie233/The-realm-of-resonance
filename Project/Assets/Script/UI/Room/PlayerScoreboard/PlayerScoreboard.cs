@@ -4,32 +4,53 @@ using Photon.Realtime;
 using System.Linq;
 using TMPro;
 
-public class PlayerScoreboard : PlayerScoreboardBase
+public class PlayerScoreboard : MonoBehaviourBase
 {
-    #region Public members
+    /// 不想显示记分板时，把此属性设为 false 即可
+    private bool blockScoreboards = false;
+    public bool BlockScoreboards
+    {
+        get { return blockScoreboards; }
+        set
+        {
+            if (value == true)
+            {
+                SetActive(false);
+            }
+            blockScoreboards = value;
+        }
+    }
+
+    private static PlayerScoreboard _instance;
+    public static PlayerScoreboard Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<PlayerScoreboard>(); }
+            if (_instance == null) { _instance = UIReferences.Instance.playerScoreboards; }
+            return _instance;
+        }
+    }
+
     [Header("Settings")]
     [GameToggle] public bool updateOnEnable = true;
     [GameToggle] public bool autoUpdate = true;
 
     [Header("References")]
-    public PlayerScoreboardTableBase[] TwoTeamScoreboards;
-    public PlayerScoreboardTableBase OneTeamScoreboard;
-    public ScoreboardPopUpMenuBase popUpMenu;
+    public PlayerScoreboardTable[] TwoTeamScoreboards;
+    public PlayerScoreboardTable OneTeamScoreboard;
+    public ScoreboardPopUpMenu popUpMenu;
     public GameObject playerscoreboardUIBinding;
     public TextMeshProUGUI SpectatorsCountText;
-    #endregion
 
-    #region Private members
-    Dictionary<int, PlayerScoreboardUIBase> cachedUIBindings = new Dictionary<int, PlayerScoreboardUIBase>();
-    Dictionary<GameBotProperties, PlayerScoreboardUIBase> cachedBotsUIBindings = new Dictionary<GameBotProperties, PlayerScoreboardUIBase>();
+    Dictionary<int, PlayerScoreboardUI> cachedUIBindings = new Dictionary<int, PlayerScoreboardUI>();
+    Dictionary<GameBotProperties, PlayerScoreboardUI> cachedBotsUIBindings = new Dictionary<GameBotProperties, PlayerScoreboardUI>();
     bool botsScoreInstance = false;
-    private List<PlayerScoreboardUIBase> cachePlayerScoreboardSorted = new List<PlayerScoreboardUIBase>();
-    private List<PlayerScoreboardUIBase> cachePlayerScoreboardSorted2 = new List<PlayerScoreboardUIBase>();
-    #endregion
+    private List<PlayerScoreboardUI> cachePlayerScoreboardSorted = new List<PlayerScoreboardUI>();
+    private List<PlayerScoreboardUI> cachePlayerScoreboardSorted2 = new List<PlayerScoreboardUI>();
 
     public bool isShowingTables { get; set; } = false;
 
-    #region Unity Methods
     protected override void Awake()
     {
         base.Awake();
@@ -57,7 +78,6 @@ public class PlayerScoreboard : PlayerScoreboardBase
         base.OnDestroy();
         NetworkCallbacks.PlayerLeftRoom -= OnPlayerLeftRoom;
     }
-    #endregion
 
     public void UpdateTables()
     {
@@ -77,7 +97,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
                 }
                 else
                 {
-                    PlayerScoreboardUIBase script = null;
+                    PlayerScoreboardUI script = null;
                     if (!isOneTeamMode)
                     {
                         if (p.GetPlayerTeam() == Team.Team1)
@@ -131,7 +151,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
 
     void InstanceBotUIBinding(GameBotProperties info)
     {
-        PlayerScoreboardUIBase script = null;
+        PlayerScoreboardUI script = null;
         if (!isOneTeamMode)
         {
             if (info.Team == Team.Team1)
@@ -146,9 +166,9 @@ public class PlayerScoreboard : PlayerScoreboardBase
         cachedBotsUIBindings.Add(info, script);
     }
     /// 强制刷新记分板信息
-    public override void ForceUpdateAll()
+    public void ForceUpdateAll()
     {
-        List<PlayerScoreboardUIBase> ailist = cachedBotsUIBindings.Values.ToList();
+        List<PlayerScoreboardUI> ailist = cachedBotsUIBindings.Values.ToList();
         foreach (var item in ailist)
         {
             item?.Refresh();
@@ -175,7 +195,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         {
             cachePlayerScoreboardSorted.Clear();
             cachePlayerScoreboardSorted2.Clear();
-            List<PlayerScoreboardUIBase> all = new List<PlayerScoreboardUIBase>();
+            List<PlayerScoreboardUI> all = new List<PlayerScoreboardUI>();
             all.AddRange(cachedUIBindings.Values.ToArray());
             all.AddRange(cachedBotsUIBindings.Values.ToArray());
 
@@ -205,7 +225,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
     }
 
-    public override void SetActiveByTeamMode(bool enableJoinButtons = false)
+    public void SetActiveByTeamMode(bool enableJoinButtons = false)
     {
         if (BlockScoreboards) return;
 
@@ -217,7 +237,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         ForceUpdateAll();
     }
 
-    public override void SetActive(bool active, bool enableJoinButtons = false)
+    public void SetActive(bool active, bool enableJoinButtons = false)
     {
         if (BlockScoreboards) return;
 
@@ -229,25 +249,25 @@ public class PlayerScoreboard : PlayerScoreboardBase
         if (active) { ForceUpdateAll(); }
     }
 
-    public override void SetActiveByGameState(bool active)
+    public void SetActiveByGameState(bool active)
     {
         SetActive(active, (!GameController.Instance.FirstSpawnDone && GameController.Joined));
     }
 
-    public override void ResetJoinButtons()
+    public void ResetJoinButtons()
     {
         OneTeamScoreboard?.ResetJoinButton();
         foreach (var table in TwoTeamScoreboards) { table?.ResetJoinButton(); }
     }
 
-    public override void SetActiveJoinButtons(bool active)
+    public void SetActiveJoinButtons(bool active)
     {
         bool tm = isOneTeamMode;
         OneTeamScoreboard?.SetActiveJoinButton(active && tm);
         foreach (var table in TwoTeamScoreboards) { table?.SetActiveJoinButton(active && !tm); }
     }
 
-    public override void OnPlayerClicked(Player player)
+    public void OnPlayerClicked(Player player)
     {
         if (popUpMenu != null)
         {
@@ -255,7 +275,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
             popUpMenu
                 .SetTargetPlayer(player)
                 .SetActive(true)
-               .FilterMenuOptions(new ScoreboardPopUpMenuBase.MenuFilter()
+               .FilterMenuOptions(new ScoreboardPopUpMenu.MenuFilter()
                 {
                     IsLocalPlayer = localPlayer,
                     IsBot = player == null,
@@ -263,7 +283,7 @@ public class PlayerScoreboard : PlayerScoreboardBase
         }
     }
 
-    public override bool RemoveUIBinding(PlayerScoreboardUIBase uiBinding)
+    public bool RemoveUIBinding(PlayerScoreboardUI uiBinding)
     {
         if (uiBinding.isBotBinding)
         {

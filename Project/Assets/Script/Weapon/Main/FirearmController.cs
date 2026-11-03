@@ -2,9 +2,58 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FirearmController : FirearmBase
+public class FirearmController : MonoBehaviourBase
 {
-    public CustomFirearmBase customWeapon;
+    public enum FireType
+    {
+        Undefined,
+        Auto,
+        Single,
+        Semi,
+    }
+
+    private FirearmData m_gunInfo = null;
+    /// 武器信息
+    public FirearmData Info
+    {
+        get
+        {
+            if (m_gunInfo == null)
+            {
+                m_gunInfo = GameConfig.Instance.GetWeapon(WeaponID);
+            }
+            return m_gunInfo;
+        }
+        set => m_gunInfo = value;
+    }
+    /// 武器索引
+    public int WeaponID;
+
+    protected int _bulletLeft;
+    /// 当前武器弹匣内剩余弹药
+    public int bulletsLeft
+    {
+        get => _bulletLeft;
+        set
+        {
+            _bulletLeft = value;
+            GameEvents.DispatchLocalPlayerAmmoUpdate(_bulletLeft);
+        }
+    }
+    /// 玩家当前是否正在瞄准？
+    public bool isAiming
+    {
+        get;
+        set;
+    }
+    /// 玩家当前是否正在用这把武器开火
+    public bool isFiring
+    {
+        get;
+        set;
+    }
+
+    public LauncherFirearm customWeapon;
     public float CrossHairScale = 8;
     public ShotInstanceMethod bulletInstanceMethod = ShotInstanceMethod.Pooled;
     public string BulletName = "bullet";
@@ -12,7 +61,7 @@ public class FirearmController : FirearmBase
     public GameObject grenade = null;
     public ParticleSystem muzzleFlash = null;
     public Transform muzzlePoint = null;
-    public WeaponEffectsBase weaponFX = null;
+    public WeaponEffects weaponFX = null;
     public ParticleSystem shell = null;
     public GameObject impactEffect = null;
     public Vector3 AimPosition;
@@ -212,9 +261,9 @@ public class FirearmController : FirearmBase
 
         defaultSpreadRange = spreadMinMax;
         AmmoType = GameConfig.Instance.AmmoType;
-        ReticleBase.Instance.Block = false;
+        ReticlePainter.Instance.Block = false;
         Setup();
-        customWeapon?.Initialitate(this);
+        customWeapon?.Initialize(this);
         isInitialized = true;
     }
 
@@ -239,8 +288,8 @@ public class FirearmController : FirearmBase
         }
         GameEvents.onAmmoPickUp += this.OnPickUpAmmo;
         GameEvents.onRoundEnd += this.OnRoundEnd;
-        ReticleBase.Instance.SetupCrosshairForWeapon(this);
-        HeldWeaponUIBase.Instance.SetFireType(GetFireType());
+        ReticlePainter.Instance.SetupCrosshairForWeapon(this);
+        HeldWeaponUI.Instance.SetFireType(GetFireType());
         playerSettings?.DoSpawnWeaponRenderEffect(weaponRenders);
         OnAmmoLauncher.ForEach(x => { x?.SetActive(true); });
     }
@@ -364,7 +413,7 @@ public class FirearmController : FirearmBase
         }
         if (LobbyMenu.Instance.isCursorLocked)
         {
-            ReticleBase.Instance.OnAim(isAiming);
+            ReticlePainter.Instance.OnAim(isAiming);
         }
         if (GameInput.Reload() && CanReload)
         {
@@ -419,7 +468,7 @@ public class FirearmController : FirearmBase
                     else if (CanSemi) WeaponType = FirearmType.Burst;
                     break;
             }
-            HeldWeaponUIBase.Instance.SetFireType(GetFireType());
+            HeldWeaponUI.Instance.SetFireType(GetFireType());
             gunManager.PlaySound(0);
         }
     }
@@ -533,7 +582,7 @@ public class FirearmController : FirearmBase
         nextFireTime = time + (Info.FireRate * 0.1f);
         FireOneShot();
         //播放开火动画
-        if (isAiming) WeaponAnimation?.PlayFire(WeaponRigBase.AnimationFlags.Aiming);
+        if (isAiming) WeaponAnimation?.PlayFire(WeaponRigHandler.AnimationFlags.Aiming);
         else WeaponAnimation?.PlayFire();
         OnFireCommons();
         PlayFX();
@@ -597,7 +646,7 @@ public class FirearmController : FirearmBase
                     damageData.ActorViewID = GameController.LocalPlayerViewID;
                     damageData.From = LocalPlayer.NickName;
                     bp?.ReceiveDamage(damageData);
-                    ObjectRecyclerBase.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+                    ObjectRecycler.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
                 }
                 else
                 {
@@ -620,12 +669,12 @@ public class FirearmController : FirearmBase
             }
             if (WeaponAnimation != null)
             {
-                if (quickFire) time = WeaponAnimation.PlayFire(WeaponRigBase.AnimationFlags.QuickFire);
+                if (quickFire) time = WeaponAnimation.PlayFire(WeaponRigHandler.AnimationFlags.QuickFire);
                 else time = WeaponAnimation.PlayFire();
             }
             PlayerNetwork.ReplicateFire(FirearmType.Knife, Vector3.zero, Vector3.zero);
             OnFireCommons();
-            ReticleBase.Instance.OnFire();
+            ReticlePainter.Instance.OnFire();
             isFiring = false;
             GameEvents.DispatchLocalPlayerFire(WeaponID);
         }
@@ -651,7 +700,7 @@ public class FirearmController : FirearmBase
                 OnFireCommons();
                 PlayFX();
                 //播放开火动画
-                if (isAiming) WeaponAnimation?.PlayFire(WeaponRigBase.AnimationFlags.Aiming);
+                if (isAiming) WeaponAnimation?.PlayFire(WeaponRigHandler.AnimationFlags.Aiming);
                 else WeaponAnimation?.PlayFire();
                 yield return new WaitForSeconds(Info.FireRate);
                 if (bulletsLeft <= 0) { break; }
@@ -709,7 +758,7 @@ public class FirearmController : FirearmBase
         if (ThrowByAnimation)
         {
             nextFireTime = Time.time + Info.FireRate;
-            if (fastFire) WeaponAnimation?.PlayFire(WeaponRigBase.AnimationFlags.QuickFire);
+            if (fastFire) WeaponAnimation?.PlayFire(WeaponRigHandler.AnimationFlags.QuickFire);
             else WeaponAnimation?.PlayFire();
         }
         else { StartCoroutine(ThrowGrenade(fastFire)); }
@@ -724,9 +773,9 @@ public class FirearmController : FirearmBase
         if (useDelay)
         {
             nextFireTime = Time.time + Info.FireRate;
-            if (fastFire) t = WeaponAnimation.PlayFire(WeaponRigBase.AnimationFlags.QuickFire);
+            if (fastFire) t = WeaponAnimation.PlayFire(WeaponRigHandler.AnimationFlags.QuickFire);
             else t = WeaponAnimation.PlayFire();
-            float d = (fastFire) ? DelayFire + WeaponAnimation.GetAnimationDuration(WeaponRigBase.WeaponRigType.TakeIn) : DelayFire;
+            float d = (fastFire) ? DelayFire + WeaponAnimation.GetAnimationDuration(WeaponRigHandler.WeaponRigType.TakeIn) : DelayFire;
             yield return new WaitForSeconds(d);
         }
         Vector3 direction = PlayerCamera.transform.forward * throwForce + _transform.parent.up * upwardForce;
@@ -767,8 +816,8 @@ public class FirearmController : FirearmBase
     }
     public IEnumerator FastGrenadeFire(System.Action callBack)
     {
-        float tt = WeaponAnimation.GetAnimationDuration(WeaponRigBase.WeaponRigType.AimFire)
-            + WeaponAnimation.GetAnimationDuration(WeaponRigBase.WeaponRigType.TakeIn);
+        float tt = WeaponAnimation.GetAnimationDuration(WeaponRigHandler.WeaponRigType.AimFire)
+            + WeaponAnimation.GetAnimationDuration(WeaponRigHandler.WeaponRigType.TakeIn);
         GrenadeFire(true);
         yield return new WaitForSeconds(tt);
         if (_remainingClips > 0)
@@ -799,10 +848,10 @@ public class FirearmController : FirearmBase
         BuildBulletData();
         var instanceData = GetBulletPosition();
         //子弹信息在 start 函数中设置
-        instancedBullet = ObjectRecyclerBase.Instance.Instantiate(BulletName, instanceData.Position, instanceData.Rotation);
+        instancedBullet = ObjectRecycler.Instance.Instantiate(BulletName, instanceData.Position, instanceData.Rotation);
         instancedBullet.GetComponent<ProjectileBase>().InitProjectile(BulletSettings);
-        ReticleBase.Instance.OnFire();
-        PlayerNetwork.ReplicateFire(OriginalWeaponType, instanceData.ProjectedHitPoint, BulletSettings.Inaccuracity);
+        ReticlePainter.Instance.OnFire();
+        PlayerNetwork.ReplicateFire(OriginalWeaponType, instanceData.ProjectedHitPoint, BulletSettings.Inaccuracy);
         GameEvents.DispatchLocalPlayerFire(WeaponID);
         if ((bulletsLeft == 0))
         {
@@ -855,7 +904,7 @@ public class FirearmController : FirearmBase
         bulletInstanceData.ProjectedHitPoint = cp + (PlayerCamera.transform.forward * 100);
         // 若玩家相机与武器开火点之间存在碰撞体
         // 说明开火点穿进了碰撞体
-        if (Physics.Linecast(cp, mp, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers))
+        if (Physics.Linecast(cp, mp, GameConfig.TagsAndLayerSettings.LocalPlayerHittableLayers))
         {
             // 因为不能从开火点射击（子弹会穿过碰撞体）
             // 子弹改从玩家相机中心生成
@@ -871,7 +920,7 @@ public class FirearmController : FirearmBase
         // 此时玩家可能并没有瞄准该碰撞体，但子弹会打到它而不是玩家瞄准的位置
         // 为此做如下处理：
         // 检测开火点与玩家瞄准方向（长 5 米）之间的碰撞体
-        if (Physics.Raycast(bulletInstanceData.Position, PlayerCamera.transform.forward, out hit, 5, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers, QueryTriggerInteraction.Ignore))
+        if (Physics.Raycast(bulletInstanceData.Position, PlayerCamera.transform.forward, out hit, 5, GameConfig.TagsAndLayerSettings.LocalPlayerHittableLayers, QueryTriggerInteraction.Ignore))
         {
             // 若确实有碰撞体挡住轨迹
             // 就从相机生成子弹，让它绕过障碍并打中目标位置。
@@ -886,7 +935,7 @@ public class FirearmController : FirearmBase
                 {
                     // 这样瞄准时弹道更真实，但近处目标会有轻微偏差
                     bulletInstanceData.Rotation = Quaternion.LookRotation(bulletInstanceData.ProjectedHitPoint - mp);
-                    if (Physics.Raycast(cp, PlayerCamera.transform.forward, out hit, 500, GameConfig.TagsAndLayerSettings.LocalPlayerHitableLayers, QueryTriggerInteraction.Ignore))
+                    if (Physics.Raycast(cp, PlayerCamera.transform.forward, out hit, 500, GameConfig.TagsAndLayerSettings.LocalPlayerHittableLayers, QueryTriggerInteraction.Ignore))
                     {
                         bulletInstanceData.ProjectedHitPoint = hit.point;
                         bulletInstanceData.Rotation = Quaternion.LookRotation(bulletInstanceData.ProjectedHitPoint - mp);
@@ -913,11 +962,11 @@ public class FirearmController : FirearmBase
         BulletSettings.ImpactForce = impactForce;
         if (WeaponType == FirearmType.Sniper && !isAiming)
         {
-            BulletSettings.SetInaccuracity(spread * 3, spreadMinMax.y * 3);
+            BulletSettings.SetInaccuracy(spread * 3, spreadMinMax.y * 3);
         }
         else
         {
-            BulletSettings.SetInaccuracity(spread, spreadMinMax.y);
+            BulletSettings.SetInaccuracy(spread, spreadMinMax.y);
         }
         BulletSettings.Speed = BulletSpeed;
         BulletSettings.WeaponName = Info.Name;
@@ -965,7 +1014,7 @@ public class FirearmController : FirearmBase
         }
     }
     // 开火时把后坐力反馈给鼠标视角
-    public void Kick() => PlayerReferences.recoil.SetRecoil(new KickbackBase.KickbackData() { Amount = WeaponRecoil, Speed = RecoilSpeed });
+    public void Kick() => PlayerReferences.recoil.SetRecoil(new KickbackHandler.KickbackData() { Amount = WeaponRecoil, Speed = RecoilSpeed });
     void Shake()
     {
         float influence = isAiming ? 0.5f : 1;
@@ -1012,7 +1061,7 @@ public class FirearmController : FirearmBase
                 {
                     int t_repeat = BulletsPerMagazine - bulletsLeft;
                     int add = (_remainingClips >= t_repeat) ? t_repeat : (int)_remainingClips;
-                    WeaponAnimation?.PlayReload(ReloadTime, new int[1] { add }, WeaponRigBase.AnimationFlags.SplitReload);
+                    WeaponAnimation?.PlayReload(ReloadTime, new int[1] { add }, WeaponRigHandler.AnimationFlags.SplitReload);
                     // 这种换弹方式由多段动画组成，换弹时间
                     // 由动画决定，最后一段动画播完后换弹才结束。
                     yield break;
@@ -1065,7 +1114,7 @@ public class FirearmController : FirearmBase
         UpdateUI();
     }
     // 把该武器设为无限弹药
-    public void SetInifinityAmmo(bool infinity)
+    public void SetInfinityAmmo(bool infinity)
     {
         HaveInfinityAmmo = infinity;
         bulletsLeft = BulletsPerMagazine;
@@ -1297,17 +1346,17 @@ public class FirearmController : FirearmBase
             int missingBullets = BulletsPerMagazine - bulletsLeft;
             int add = (_remainingClips >= missingBullets) ? missingBullets : (int)_remainingClips;
             float[] bullets = { add };
-            return WeaponAnimation.GetAnimationDuration(WeaponRigBase.WeaponRigType.Reload, bullets);
+            return WeaponAnimation.GetAnimationDuration(WeaponRigHandler.WeaponRigType.Reload, bullets);
         }
         return ReloadTime;
     }
     void CancelFiring() { isFiring = false; }
-    void CancelReloading() { WeaponAnimation?.CancelAnimation(WeaponRigBase.WeaponRigType.Reload); }
+    void CancelReloading() { WeaponAnimation?.CancelAnimation(WeaponRigHandler.WeaponRigType.Reload); }
     public void ResetDefaultMuzzlePoint() { if (defaultMuzzlePoint != null) muzzlePoint = defaultMuzzlePoint; }
-    public void UpdateUI() => HeldWeaponUIBase.Instance?.SetAmmoOf(this);
+    public void UpdateUI() => HeldWeaponUI.Instance?.SetAmmoOf(this);
     public void SetDefaultWeaponCameraFOV(float fov) => WeaponCamera.fieldOfView = fov;
     public Vector3 GetDefaultPosition() => DefaultPos;
-    public override FireType GetFireType()
+    public FireType GetFireType()
     {
         switch (WeaponType)
         {
@@ -1399,7 +1448,7 @@ public class FirearmController : FirearmBase
     }
     public bool CanBeTaken() { if (canBeTakenWhenIsEmpty) return true; else return (bulletsLeft > 0 || _remainingClips > 0); }
     public bool IsOutOfAmmo() => bulletsLeft <= 0 && _remainingClips <= 0;
-    public FirstPersonControllerBase controller => PlayerReferences.firstPersonController;
+    public FirstPersonController controller => PlayerReferences.firstPersonController;
     public PlayerNetworkHandler PlayerNetwork => PlayerReferences.playerNetwork;
     private FirearmInventory gunManager => PlayerReferences.gunManager;
     private PlayerRig _playerReferences;
@@ -1411,12 +1460,12 @@ public class FirearmController : FirearmBase
             return _playerReferences;
         }
     }
-    private WeaponRigBase _anim;
-    public WeaponRigBase WeaponAnimation
+    private WeaponRigHandler _anim;
+    public WeaponRigHandler WeaponAnimation
     {
         get
         {
-            if (_anim == null) { _anim = GetComponentInChildren<WeaponRigBase>(); }
+            if (_anim == null) { _anim = GetComponentInChildren<WeaponRigHandler>(); }
             return _anim;
         }
     }

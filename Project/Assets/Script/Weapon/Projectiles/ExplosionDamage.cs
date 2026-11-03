@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Photon.Realtime;
 
-public class ExplosionDamage : ExplosionBase
+public class ExplosionDamage : NetworkHelper
 {
     public ExplosionType explosionType = ExplosionType.Normal;
     [GameToggle] public bool CheckRootsOnly = false;
@@ -50,7 +50,7 @@ public class ExplosionDamage : ExplosionBase
         StartCoroutine(Init());
     }
 
-    public override void InitExplosion(ShotData bulletData, GamePlayer fromPlayer)
+    public void InitExplosion(ShotData bulletData, GamePlayer fromPlayer)
     {
         cachedData = bulletData;
         creator = fromPlayer;
@@ -59,7 +59,7 @@ public class ExplosionDamage : ExplosionBase
         SetupAudio();
     }
 
-    public override void SetRadius(float radius)
+    public void SetRadius(float radius)
     {
         explosionRadius = radius;
     }
@@ -124,7 +124,7 @@ public class ExplosionDamage : ExplosionBase
     void DoCollisionDamage()
     {
         Collider[] colls = Physics.OverlapSphere(transform.position, explosionRadius, detectLayers, QueryTriggerInteraction.Ignore);
-        List<string> Hited = new List<string>();
+        List<string> Hit = new List<string>();
 
         foreach (Collider c in colls)
         {
@@ -136,10 +136,10 @@ public class ExplosionDamage : ExplosionBase
 
             if (c.CompareTag(GameCore.HITBOX_TAG) || c.CompareTag(GameCore.AI_TAG))
             {
-                if (Hited.Contains(c.transform.root.name)) continue;
+                if (Hit.Contains(c.transform.root.name)) continue;
                 if (!ExplosionCanHitTarget(c.transform.root, new Vector3(0, 0.6f, 0)) && !ExplosionCanHitTarget(c.transform.root, new Vector3(0, 0.15f, 0))) continue;
 
-                Hited.Add(c.transform.root.name);
+                Hit.Add(c.transform.root.name);
             }
             else
             {

@@ -78,8 +78,8 @@ public class NetworkStatistics : NetworkHelper, IConnectionCallbacks, ILobbyCall
         {
             PingImage.color = Color.red;
         }
-        float percet = ping * 100 / 500;
-        PingImage.fillAmount = 1 - (percet * 0.01f);
+        float percent = ping * 100 / 500;
+        PingImage.fillAmount = 1 - (percent * 0.01f);
         PingText.text = ping.ToString();
     }
 

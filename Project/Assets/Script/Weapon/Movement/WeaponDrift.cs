@@ -1,13 +1,12 @@
 using UnityEngine;
 using System.Collections;
 
-public class WeaponDrift : WeaponDriftBase
+public class WeaponDrift : MonoBehaviourBase
 {
-    #region Public members
     private float maxAmount = 0.05F;
     [Header("Movements")]
     [Range(0.2f, 5)] public float delayAmplitude = 2;
-    [Range(0.01f, 0.5f)] public float pushAmplutide = 0.2f;
+    [Range(0.01f, 0.5f)] public float pushAmplitude = 0.2f;
     [Range(1, 7)] public float sideAngleAmplitude = 4;
     public float Smoothness = 3.0F;
     public float aimMultiplier = 0.05f;
@@ -21,9 +20,7 @@ public class WeaponDrift : WeaponDriftBase
     public AnimationCurve downCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
 
     public float Amount { get; set; }
-    #endregion
 
-    #region Private members
     private Vector3 defaultPosition;
     private Quaternion defaultRotation;
     private Quaternion delayRotation;
@@ -34,7 +31,6 @@ public class WeaponDrift : WeaponDriftBase
     private float deltaTime;
     private bool isAiming = false;
     private float amplitudeMultiplier = 1;
-    #endregion
 
     protected override void Awake()
     {
@@ -59,7 +55,7 @@ public class WeaponDrift : WeaponDriftBase
     {
         factorX = (-GameInput.MouseX * deltaTime * Amount) * amplitudeMultiplier;
         factorY = (-GameInput.MouseY * deltaTime * Amount) * amplitudeMultiplier;
-        factorZ = (-GameInput.Vertical * (isAiming ? pushAmplutide * 0.1f : pushAmplutide)) * amplitudeMultiplier;
+        factorZ = (-GameInput.Vertical * (isAiming ? pushAmplitude * 0.1f : pushAmplitude)) * amplitudeMultiplier;
         factorX = Mathf.Clamp(factorX, -maxAmount, maxAmount);
         factorY = Mathf.Clamp(factorY, -maxAmount, maxAmount);
         targetVector.Set(defaultPosition.x + factorX, defaultPosition.y + factorY, defaultPosition.z + factorZ);
@@ -116,12 +112,12 @@ public class WeaponDrift : WeaponDriftBase
         }
     }
 
-    public override void SetMotionMultiplier(float multiplier)
+    public void SetMotionMultiplier(float multiplier)
     {
         amplitudeMultiplier = multiplier;
     }
 
-    public override void UseAimSettings()
+    public void UseAimSettings()
     {
         amplitudeMultiplier = aimMultiplier;
     }
@@ -131,7 +127,7 @@ public class WeaponDrift : WeaponDriftBase
         float mul = Mathf.Clamp01(amount / 3.3f);
         float side = SliderAmount * mul;
         Quaternion m_default = m_Transform.localRotation;
-        Quaternion m_finaly = m_Transform.localRotation * Quaternion.Euler(new Vector3(DownAmount * mul, Random.Range(-side, side), m_default.z));
+        Quaternion m_final = m_Transform.localRotation * Quaternion.Euler(new Vector3(DownAmount * mul, Random.Range(-side, side), m_default.z));
         float t_rate = 1.0f / m_time;
         float t_time = 0.0f;
         float t;
@@ -140,12 +136,13 @@ public class WeaponDrift : WeaponDriftBase
         {
             t = downCurve.Evaluate(t_time);
             t_time += Time.deltaTime * t_rate;
-            m_Transform.localRotation = Quaternion.Slerp(m_default, m_finaly, t);
+            m_Transform.localRotation = Quaternion.Slerp(m_default, m_final, t);
             yield return t_rate;
         }
     }
 
-    public override void ResetSettings()
+    /// 把所有设置重置为初始值
+    public void ResetSettings()
     {
         Amount = delayAmplitude;
         amplitudeMultiplier = 1;

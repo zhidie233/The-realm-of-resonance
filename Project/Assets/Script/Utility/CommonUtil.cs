@@ -24,7 +24,7 @@ public static class CommonUtil
     public static int GetSortPlayerByKills(GamePlayer player1, GamePlayer player2)
     {
         if (player1 != null && player2 != null)
-            return (int)player2.GetPlayerPropertie(NetworkKeys.KillsKey) - (int)player1.GetPlayerPropertie(NetworkKeys.KillsKey);
+            return (int)player2.GetPlayerProperty(NetworkKeys.KillsKey) - (int)player1.GetPlayerProperty(NetworkKeys.KillsKey);
         else return 0;
     }
     /// Unity 5 中锁定光标用的辅助方法
@@ -77,21 +77,21 @@ public static class CommonUtil
         }
     }
 
-    public static void PlayClipAtPoint(AudioClip clip, Vector3 position, float volume, AudioSource sourc)
+    public static void PlayClipAtPoint(AudioClip clip, Vector3 position, float volume, AudioSource sourceSettings)
     {
         GameObject obj2 = new GameObject("One shot audio")
         {
             transform = { position = position }
         };
         AudioSource source = (AudioSource)obj2.AddComponent(typeof(AudioSource));
-        if (sourc != null)
+        if (sourceSettings != null)
         {
-            source.minDistance = sourc.minDistance;
-            source.maxDistance = sourc.maxDistance;
-            source.panStereo = sourc.panStereo;
-            source.spatialBlend = sourc.spatialBlend;
-            source.rolloffMode = sourc.rolloffMode;
-            source.priority = sourc.priority;
+            source.minDistance = sourceSettings.minDistance;
+            source.maxDistance = sourceSettings.maxDistance;
+            source.panStereo = sourceSettings.panStereo;
+            source.spatialBlend = sourceSettings.spatialBlend;
+            source.rolloffMode = sourceSettings.rolloffMode;
+            source.priority = sourceSettings.priority;
         }
         source.clip = clip;
         source.volume = volume;
@@ -216,7 +216,7 @@ public static class CommonUtil
     {
         if (go == null) return;
 
-        var all = go.transform.GetComponents<BulletMarkBase>();
+        var all = go.transform.GetComponents<BulletMark>();
         for (int i = 0; i < all.Length; i++)
         {
             all[i].BackToOrigin();
@@ -225,11 +225,7 @@ public static class CommonUtil
 
     public static bool IsNetworkError(UnityWebRequest w)
     {
-#if UNITY_2020_1_OR_NEWER
         return w.result != UnityWebRequest.Result.Success && w.result != UnityWebRequest.Result.InProgress;
-#else
-        return w.isNetworkError || w.isHttpError;
-#endif
     }
     /// 动画器是否正在播放或处于过渡中
     public static bool IsPlaying(this Animator animator)

@@ -51,7 +51,7 @@ public class ThrowablePack : MonoBehaviourBase
         remainingPacks--;
         Vector3 point = (transform.position + (PlayerReferences.PlayerCameraTransform.forward * dropInstanceDistance)) + transform.up;
         GameObject kit = Instantiate(DropCallerPrefab, point, Quaternion.identity) as GameObject;
-        kit.GetComponent<LootCasterBase>().SetUp(new LootCasterBase.LootData()
+        kit.GetComponent<LootCaster>().SetUp(new LootCaster.LootData()
         {
             PackID = id,
             Delay = CallDelay

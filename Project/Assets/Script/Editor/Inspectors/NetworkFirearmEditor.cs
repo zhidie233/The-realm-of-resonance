@@ -65,7 +65,7 @@ public class NetworkFirearmEditor : Editor
                 }
                 if (script.LocalGun.Info.Type == FirearmType.Grenade)
                 {
-                    script.DesactiveOnOffAmmo = EditorGUILayout.ObjectField("无弹药时禁用", script.DesactiveOnOffAmmo, typeof(GameObject), allowSceneObjects) as GameObject;
+                    script.DeactivateOnOffAmmo = EditorGUILayout.ObjectField("无弹药时禁用", script.DeactivateOnOffAmmo, typeof(GameObject), allowSceneObjects) as GameObject;
                 }
                 EditorGUILayout.EndVertical();
             }
@@ -179,14 +179,14 @@ public class NetworkFirearmEditor : Editor
         Animator anim = pa.playerAnimations.Animator;
         pa.EditorSelectedGun = script;
 
-        var pis = pa.playerAnimations.GetComponentsInChildren<PlayerIKBase>(true);
+        var pis = pa.playerAnimations.GetComponentsInChildren<PlayerIK>(true);
         if(pis == null || pis.Length == 0)
         {
             Debug.LogWarning("在玩家预制体中未找到玩家 IK 脚本！");
             return;
         }
 
-        PlayerIKBase hm = pis[0];
+        PlayerIK hm = pis[0];
         if(pis.Length > 1)
         {
             for (int i = 0; i < pis.Length; i++)

@@ -8,13 +8,11 @@ public class AIBotHealth : PlayerHealthManagerBase
 
     [Range(10, 500)] public int Health = 100;
 
-    #region Private members
     private AIBotCore m_AIShooter;
     private int LastActorEnemy = -1;
     private RepeatHitDamage repeatHitDamage;
     private AIBotReferences references;
     private AIBotCore shooterAgent;
-    #endregion
 
     protected override void Awake()
     {
@@ -73,7 +71,7 @@ public class AIBotHealth : PlayerHealthManagerBase
         }
         if (viewID == GameController.LocalPlayerViewID)
         {
-            ReticleBase.Instance.OnHit();
+            ReticlePainter.Instance.OnHit();
             AudioManager.Instance.PlayClip("body-hit");
             GameEvents.DispatchLocalPlayerHitEnemy(new GameHitData()
             {
@@ -129,7 +127,7 @@ public class AIBotHealth : PlayerHealthManagerBase
         references.onDie?.Invoke();
 
         if (NetworkWrapper.IsMasterClient && references.Agent.enabled) references.Agent.isStopped = true;
-        GetComponent<PlayerTagBase>().SetActive(false);
+        GetComponent<PlayerTagDrawer>().SetActive(false);
         //更新 GamePlayer 数据
         GamePlayer player = GameController.Instance.GetGamePlayer(m_AIShooter.AIName);
         if (player != null)
@@ -248,7 +246,7 @@ public class AIBotHealth : PlayerHealthManagerBase
         {
             if (m_AIShooter.AITeam == NetworkWrapper.LocalPlayer.GetPlayerTeam())
             {
-                GameObject di = ObjectRecyclerBase.Instance.Instantiate("deathicon", transform.position, transform.rotation);
+                GameObject di = ObjectRecycler.Instance.Instantiate("deathicon", transform.position, transform.rotation);
             }
         }
         var mplayer = new GamePlayer(photonView, false, false);

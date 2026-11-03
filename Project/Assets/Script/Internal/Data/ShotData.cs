@@ -17,7 +17,7 @@ public class ShotData
     public float ImpactForce;
 
     // 作用于投射方向的子弹散布
-    public Vector3 Inaccuracity = Vector3.zero;
+    public Vector3 Inaccuracy = Vector3.zero;
 
     // 子弹速度
     public float Speed;
@@ -54,9 +54,9 @@ public class ShotData
     }
 
     // 计算并设置弹道散布向量
-    public ShotData SetInaccuracity(float spreadBase, float maxSpread)
+    public ShotData SetInaccuracy(float spreadBase, float maxSpread)
     {
-        Inaccuracity = new Vector3(Random.Range(-maxSpread, maxSpread) * spreadBase, Random.Range(-maxSpread, maxSpread) * spreadBase, 1);
+        Inaccuracy = new Vector3(Random.Range(-maxSpread, maxSpread) * spreadBase, Random.Range(-maxSpread, maxSpread) * spreadBase, 1);
         return this;
     }
 

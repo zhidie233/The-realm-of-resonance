@@ -2,20 +2,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class ViewRay : ViewRayBase
+public class ViewRay : MonoBehaviourBase
 {
-    #region Public members
+    public struct DetectableInfo
+    {
+        public string Name;
+        public byte ID;
+        public Action<bool> Callback;
+    }
+
+    public float ExtraRayDistance { get; set; } = 0;
+
     public int CheckFrameRate = 5;
     public CastMethod castMethod = CastMethod.Box;
     [Range(0.1f, 10)] public float DistanceCheck = 2;
     public LayerMask DetectLayers;
-    public Vector3 boxDimesion = new Vector3(0.15f, 0.15f, 0.1f);
-    #endregion
-
-    #region Public properties
+    public Vector3 boxDimension = new Vector3(0.15f, 0.15f, 0.1f);
 
     private bool isChecking = false;
-    public override bool IsCurrentlyDetecting
+    /// 相机当前是否在检测碰撞体？
+    public bool IsCurrentlyDetecting
     { 
         get => isChecking;
         set
@@ -27,17 +33,14 @@ public class ViewRay : ViewRayBase
             }
         } 
     }
-    #endregion
 
-    #region Private members
     private int currentFrame = 0;
     private RaycastHit RayHit;
     private IRayDetectable m_currentDetectedItem = null;
-    private List<byte> activers = new List<byte>();
+    private List<byte> activators = new List<byte>();
     private Dictionary<string, Action<bool>> triggers = new Dictionary<string, Action<bool>>();
-    bool hasDectected = false;
+    bool hasDetected = false;
     private byte increaseCounter = 0;
-    #endregion
 
     public override void OnUpdate()
     {
@@ -55,7 +58,7 @@ public class ViewRay : ViewRayBase
         bool detected = false;
         if (castMethod == CastMethod.Box || castMethod == CastMethod.Both)
         {
-            detected = Physics.BoxCast(CachedTransform.position, boxDimesion, CachedTransform.forward,
+            detected = Physics.BoxCast(CachedTransform.position, boxDimension, CachedTransform.forward,
                 out RayHit, CachedTransform.rotation, RayDistance, DetectLayers, QueryTriggerInteraction.Ignore);
         }
         if((castMethod == CastMethod.Ray || castMethod == CastMethod.Both) && !detected)
@@ -66,7 +69,7 @@ public class ViewRay : ViewRayBase
 
         if (detected)
         {
-            hasDectected = true;
+            hasDetected = true;
             OnHit();
             //逐个检查注册的触发器
             if (triggers.Count > 0)
@@ -85,14 +88,14 @@ public class ViewRay : ViewRayBase
         {
             //如果玩家之前聚焦着某个物体，现在不再聚焦
             UnDetectCurrentItem();
-            if (triggers.Count > 0 && hasDectected)
+            if (triggers.Count > 0 && hasDetected)
             {
                 foreach (var item in triggers.Values)
                 {
                     item.Invoke(false);
                 }
             }
-            hasDectected = false;
+            hasDetected = false;
         }
     }
     /// 玩家相机射线击中地图上的物体时
@@ -123,42 +126,42 @@ public class ViewRay : ViewRayBase
     }
     /// 想检测物体是否出现在本地玩家视野前方时
     /// 在这个函数里注册一个回调
-    public override byte AddTrigger(DetecableInfo info)
+    public byte AddTrigger(DetectableInfo info)
     {
         if (triggers.ContainsKey(info.Name)) { return 0; }
         triggers.Add(info.Name, info.Callback);
-        return SetActiver(true, info.ID);
+        return SetActivator(true, info.ID);
     }
     /// 不再需要检测时记得移除触发器。
-    public override void RemoveTrigger(DetecableInfo info)
+    public void RemoveTrigger(DetectableInfo info)
     {
         if (!triggers.ContainsKey(info.Name)) return;
         triggers.Remove(info.Name);
-        SetActiver(false, info.ID);
+        SetActivator(false, info.ID);
     }
-    public override byte SetActiver(bool add, byte id)
+    public byte SetActivator(bool add, byte id)
     {
         if (add)
         {
-            if (!activers.Contains(id))
+            if (!activators.Contains(id))
             {
-                activers.Add(id);
+                activators.Add(id);
             }
             else
             {
                 increaseCounter++;
                 id = increaseCounter;
-                activers.Add(id);
+                activators.Add(id);
             }
             IsCurrentlyDetecting = true;
         }
         else
         {
-            if (activers.Contains(id))
+            if (activators.Contains(id))
             {
-                activers.Remove(id);
+                activators.Remove(id);
             }
-            if (activers.Count <= 0)
+            if (activators.Count <= 0)
             {
                 IsCurrentlyDetecting = false;
             }

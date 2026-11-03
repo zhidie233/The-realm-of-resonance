@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,15 +7,15 @@ public class SpawnPointManager : MonoBehaviour
     [GameToggle] public bool drawSpawnPoints = true;
 
     [Header("References")]
-    public DeathCamBase killCameraInstance;
+    public DeathCam killCameraInstance;
 #if UNITY_EDITOR
     public Mesh SpawnPointPlayerGizmo;
 #endif
 
-    private List<SpawnPointBase> spawnPoints = new List<SpawnPointBase>();
+    private List<SpawnLocation> spawnPoints = new List<SpawnLocation>();
     private int currentSpawnpoint = -1;
 
-    public static void AddSpawnPoint(SpawnPointBase point)
+    public static void AddSpawnPoint(SpawnLocation point)
     {
         if (Instance == null) return;
 
@@ -38,13 +37,13 @@ public class SpawnPointManager : MonoBehaviour
         point.GetSpawnPosition(out position, out rotation);
     }
     /// 按默认选择模式从所有已注册出生点中获取一个出生点。
-    public SpawnPointBase GetSpawnPointForTeam(Team team) => GetSpawnPointForTeam(team, spawnMode);
+    public SpawnLocation GetSpawnPointForTeam(Team team) => GetSpawnPointForTeam(team, spawnMode);
     /// 按指定选择模式从所有已注册出生点中获取一个出生点。
-    public SpawnPointBase GetSpawnPointForTeam(Team team, SpawnMode m_spawnMode)
+    public SpawnLocation GetSpawnPointForTeam(Team team, SpawnMode m_spawnMode)
     {
         if(spawnPoints.Count <= 0)
         {
-            var all = FindObjectsOfType<SpawnPointBase>();
+            var all = FindObjectsOfType<SpawnLocation>();
             if (all.Length > 0)
             {
                 for (int i = 0; i < all.Length; i++)
@@ -69,7 +68,7 @@ public class SpawnPointManager : MonoBehaviour
         }
     }
 
-    public SpawnPointBase GetRandomSpawnPoint(Team team)
+    public SpawnLocation GetRandomSpawnPoint(Team team)
     {
         var teamPoints = GetListOfPointsForTeam(team);
         if(teamPoints.Count <= 0) return null;
@@ -77,7 +76,7 @@ public class SpawnPointManager : MonoBehaviour
         return teamPoints[Random.Range(0, teamPoints.Count)];
     }
 
-    public SpawnPointBase GetSequentialSpawnPoint(Team team)
+    public SpawnLocation GetSequentialSpawnPoint(Team team)
     {
         var teamPoints = GetListOfPointsForTeam(team);
         if (teamPoints.Count <= 0) return null;
@@ -86,7 +85,7 @@ public class SpawnPointManager : MonoBehaviour
         return teamPoints[currentSpawnpoint];
     }
     /// 获取指定队伍可用的所有出生点列表
-    public List<SpawnPointBase> GetListOfPointsForTeam(Team team)
+    public List<SpawnLocation> GetListOfPointsForTeam(Team team)
     {
         if (team == Team.None) team = Team.All;
 
@@ -99,7 +98,7 @@ public class SpawnPointManager : MonoBehaviour
         return teamPoints;
     }
 
-    public SpawnPointBase GetSingleRandom() => spawnPoints[Random.Range(0, spawnPoints.Count)];
+    public SpawnLocation GetSingleRandom() => spawnPoints[Random.Range(0, spawnPoints.Count)];
 
     [System.Serializable]
     public enum SpawnMode

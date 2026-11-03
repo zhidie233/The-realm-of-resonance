@@ -16,7 +16,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
     public IGameResumeScreen ResumeScreen { get; set; }
 
     [Header("References")]
-    public PlayerScoreboardBase playerScoreboards;
+    public PlayerScoreboard playerScoreboards;
     [SerializeField] private GameObject SuicideButton = null;
     [SerializeField] private GameObject AutoTeamUI = null;
     [SerializeField] private GameObject SpectatorButton = null;
@@ -99,7 +99,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
     {
         if (!RoomSettings.Instance.CurrentRoomInfo.autoAssignTeams)
         {
-            PauseMenuBase.Instance.OpenMenu();
+            PauseMenu.Instance.OpenMenu();
         }
 
         playerScoreboards.gameObject.SetActive(true);
@@ -128,11 +128,11 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
 
     public void ShowMenu(bool active)
     {
-        if (active) PauseMenuBase.Instance.OpenMenu();
-        else PauseMenuBase.Instance.CloseMenu();
+        if (active) PauseMenu.Instance.OpenMenu();
+        else PauseMenu.Instance.CloseMenu();
 
         SetActiveChangeTeamButton(GameConfig.Instance.allowTeamSwitch && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.teamSwitchLimit 
-            && !RoomSettings.Instance.AutoAssignTeams && MatchTimeManagerBase.HaveTimeStarted() && ObserverModeBase.Instance.CanSelectTeam());
+            && !RoomSettings.Instance.AutoAssignTeams && MatchTimeManager.HaveTimeStarted() && ObserverMode.Instance.CanSelectTeam());
 
         SuicideButton.SetActive(RoomSettings.Instance.canSuicide && GameController.Instance.IsLocalPlaying);
 
@@ -156,7 +156,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
 
         CommonUtil.LockCursor(true);
         ShowMenu(false);
-        ReticleBase.Instance.Show(true);
+        ReticlePainter.Instance.Show(true);
         GameEvents.DispatchGamePauseEvent(false);
     }
 
@@ -176,8 +176,8 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         AutoTeamUI.SetActive(v);
         if (!v)
         {
-            PauseMenuBase.Instance.CloseMenu();
-            ObserverModeBase.Instance.SetActiveUI(false);
+            PauseMenu.Instance.CloseMenu();
+            ObserverMode.Instance.SetActiveUI(false);
             SpectatorButton.SetActive(false);
             inTeam = true;
         }
@@ -216,14 +216,14 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
     public void JoinTeam(int id)
     {
         LobbyMenu.Instance.JoinTeam(id);
-        PauseMenuBase.Instance.CloseMenu();
+        PauseMenu.Instance.CloseMenu();
         inTeam = true;
         AutoTeamUI.SetActive(false);
-        ObserverModeBase.Instance.SetActiveUI(false);
+        ObserverMode.Instance.SetActiveUI(false);
         SpectatorButton.SetActive(false);
 
         if (GameController.Joined) { ChangeTeamTimes++; }
-        if (GameConfig.Instance.allowTeamSwitch && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.teamSwitchLimit && MatchTimeManagerBase.HaveTimeStarted())
+        if (GameConfig.Instance.allowTeamSwitch && !isOneTeamMode && ChangeTeamTimes <= GameConfig.Instance.teamSwitchLimit && MatchTimeManager.HaveTimeStarted())
         {
             SetActiveChangeTeamButton(true);
         }
@@ -270,7 +270,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
 
     public void ResetRound()
     {
-        RoundFinishScreenBase.Instance?.Hide();
+        RoundFinishScreen.Instance?.Hide();
         inTeam = false;
         blackScreen.FadeOut(1);
         SetUpUI();
@@ -317,7 +317,6 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
         return !inTeam && (!RoomSettings.Instance.AutoAssignTeams || !GameCore.GameData.UsingReadyRoom());
     }
 
-    #region Photon Callbacks
     public void OnLeftRoom()
     {
         ShowMenu(false);
@@ -342,9 +341,7 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
     public void OnRoomPropertiesUpdate(ExitGames.Client.Photon.Hashtable propertiesThatChanged)
     {
     } 
-    #endregion
 
-    #region Getters
     private static UIReferences _instance;
     public static UIReferences Instance
     {
@@ -364,5 +361,4 @@ public class UIReferences : NetworkHelper, IInRoomCallbacks
             return _PlayerBank;
         }
     }
-    #endregion
 }

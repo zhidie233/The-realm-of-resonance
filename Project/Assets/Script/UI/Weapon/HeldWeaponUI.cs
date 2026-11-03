@@ -1,14 +1,26 @@
 using TMPro;
 using UnityEngine;
 
-public class HeldWeaponUI : HeldWeaponUIBase
+public class HeldWeaponUI : MonoBehaviour
 {
+    private static HeldWeaponUI _instance;
+    public static HeldWeaponUI Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<HeldWeaponUI>(); }
+            if (_instance == null) { _instance = UIReferences.Instance.GetComponentInChildren<HeldWeaponUI>(true); }
+            return _instance;
+        }
+    }
+
     [SerializeField] private TextMeshProUGUI AmmoText;
     [SerializeField] private TextMeshProUGUI ClipText;
     [SerializeField] private TextMeshProUGUI FireTypeText;
     public Gradient AmmoTextColorGradient;
 
-    public override void SetAmmoOf(FirearmController gun)
+    /// 更新本地玩家界面中的弹药信息
+    public void SetAmmoOf(FirearmController gun)
     {
         int bullets = gun.bulletsLeft;
         int clips = gun.RemainingClips;
@@ -34,16 +46,17 @@ public class HeldWeaponUI : HeldWeaponUIBase
         }
     }
 
-    public override void SetFireType(FirearmBase.FireType fireType)
+    /// 更新本地玩家界面中的开火模式文本。
+    public void SetFireType(FirearmController.FireType fireType)
     {
         if (FireTypeText == null) return;
 
         string fireName = "--";
         switch (fireType)
         {
-            case FirearmBase.FireType.Auto:   fireName = GameTexts.FireTypeAuto;   break;
-            case FirearmBase.FireType.Semi:   fireName = GameTexts.FireTypeSemi;   break;
-            case FirearmBase.FireType.Single: fireName = GameTexts.FireTypeSingle; break;
+            case FirearmController.FireType.Auto:   fireName = GameTexts.FireTypeAuto;   break;
+            case FirearmController.FireType.Semi:   fireName = GameTexts.FireTypeSemi;   break;
+            case FirearmController.FireType.Single: fireName = GameTexts.FireTypeSingle; break;
         }
         FireTypeText.text = fireName;
     }

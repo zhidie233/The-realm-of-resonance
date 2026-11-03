@@ -54,7 +54,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
 
         PhotonNetwork.IsMessageQueueRunning = true;
         CommonUtil.BlockCursorForUser = false;
-        PlayerTagBase.BlockDraw = false;
+        PlayerTagDrawer.BlockDraw = false;
         Joined = false;
         SuicideCount = 0;
         StartPlayTime = Time.time;
@@ -62,7 +62,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         LocalActor.isRealPlayer = true;
         LocalActor.Name = PhotonNetwork.NickName;
 
-        ReticleBase.Instance.Show(false);
+        ReticlePainter.Instance.Show(false);
         if (GameCore.GameData.UsingReadyRoom() && NetworkWrapper.LocalPlayer.GetPlayerTeam() != Team.None)
         {
             Invoke(nameof(SpawnPlayerWithCurrentTeam), 2);
@@ -108,7 +108,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         //如果游戏已结束
         if (GameFinish)
         {
-            LobbyCameraBase.Instance?.SetActive(false);
+            LobbyCamera.Instance?.SetActive(false);
             return false;
         }
         //把玩家队伍写入玩家属性
@@ -227,7 +227,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
             float fadeDuration = Mathf.Min(0.4f, respawnTime / 3);
             float wait = Mathf.Max(0.5f, (respawnTime - fadeDuration) - 0.5f);
             yield return new WaitForSeconds(wait);
-            PlayerTagBase.BlockDraw = true;
+            PlayerTagDrawer.BlockDraw = true;
             if (!GameFinish && doFadeIn)
             {
                 UIReferences.Instance.blackScreen.FadeIn(fadeDuration);
@@ -235,10 +235,10 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
             yield return new WaitForSeconds(fadeDuration);
             if (SpawnPlayer(NetworkWrapper.LocalPlayer.GetPlayerTeam()))
             {
-                DeathCamBase.Instance.SetActive(false);
+                DeathCam.Instance.SetActive(false);
             }
             UIReferences.Instance.blackScreen.FadeOut(fadeDuration);
-            PlayerTagBase.BlockDraw = false;
+            PlayerTagDrawer.BlockDraw = false;
         }
     }
     // 每个玩家出生后调用
@@ -248,7 +248,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         Instance.AfterSpawnSetup(skipFade);
         if (!Instance.FirstSpawnDone && MatchInformationDisplay.Instance != null) { MatchInformationDisplay.Instance.DisplayInfo(); }
         Instance.FirstSpawnDone = true;
-        ReticleBase.Instance.Show(true);
+        ReticlePainter.Instance.Show(true);
     }
     // 如果玩家已存在就销毁
     public void DestroyPlayer(bool ActiveCamera)
@@ -257,7 +257,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         {
             PhotonNetwork.Destroy(LocalPlayer);
         }
-        LobbyCameraBase.Instance?.SetActive(ActiveCamera);
+        LobbyCamera.Instance?.SetActive(ActiveCamera);
     }
     // 房间回合时间结束时调用
     public void OnGameTimeFinish(bool gameOver)
@@ -275,7 +275,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
     // 本机玩家出生后调用
     public void AfterSpawnSetup(bool skipFade = false)
     {
-        LobbyCameraBase.Instance?.SetActive(false);
+        LobbyCamera.Instance?.SetActive(false);
         if (!skipFade) StartCoroutine(UIReferences.Instance.FinalFade(false, false, 0));
         CommonUtil.LockCursor(true);
         if (!Joined) { StartPlayTime = Time.time; }
@@ -515,7 +515,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
         GameMatchState = state;
         if (!NetworkWrapper.IsMasterClient)
         {
-            MatchTimeManagerBase.Instance.Init();
+            MatchTimeManager.Instance.Init();
         }
     }
     public void SetGameState(MatchState state)
@@ -551,7 +551,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
     void CheckPlayersInMatch()
     {
         //如果仍在等待
-        if (!MatchTimeManagerBase.Instance.IsInitialized && GameMatchState == MatchState.Waiting)
+        if (!MatchTimeManager.Instance.IsInitialized && GameMatchState == MatchState.Waiting)
         {
             bool ready = false;
             if (isOneTeamMode)
@@ -591,10 +591,10 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
                 //主客户端调用开始比赛
                 if (NetworkWrapper.IsMasterClient)
                 {
-                    MatchTimeManagerBase.Instance.InitAfterWaiting();
+                    MatchTimeManager.Instance.InitAfterWaiting();
                 }
                 SetGameState(MatchState.Starting);
-                MatchTimeManagerBase.Instance.SetTimeState(RoomTimeState.Started, true);
+                MatchTimeManager.Instance.SetTimeState(RoomTimeState.Started, true);
                 onAllPlayersRequiredIn?.Invoke();
                 UIReferences.Instance.SetReadyPlayersText("", false);
             }
@@ -663,7 +663,7 @@ public class GameController : NetworkHelper, IInRoomCallbacks, IConnectionCallba
     }
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-        RoomChatBase.Instance?.SetChatLocally($"We have a new MasterClient: {newMasterClient.NickName}");
+        RoomChat.Instance?.SetChatLocally($"We have a new MasterClient: {newMasterClient.NickName}");
     }
     public void OnConnected()
     {

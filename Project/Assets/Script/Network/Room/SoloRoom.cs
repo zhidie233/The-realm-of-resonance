@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
@@ -16,7 +15,7 @@ public class SoloRoom : MonoBehaviour, IConnectionCallbacks
     [Range(1, 64)] public int maxPlayers = 1;
     public int MatchTime = 9989;
     public int gameModeGoal = 100;
-    public RoundStyle roundStyle = RoundStyle.OneMacht;
+    public RoundStyle roundStyle = RoundStyle.OneMatch;
     [Header("References")]
     public GameObject PhotonObject;
 

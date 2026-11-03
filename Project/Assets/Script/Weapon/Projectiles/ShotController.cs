@@ -40,7 +40,7 @@ public class ShotController : ProjectileBase
         ActorViewID = data.ActorViewID;
 
         // 子弹飞行方向，按武器精度加入散布
-        direction = _transform.TransformDirection(data.Inaccuracity);
+        direction = _transform.TransformDirection(data.Inaccuracy);
         bulletRange = data.Range;
         newPos = _transform.position;
         oldPos = newPos;
@@ -247,7 +247,7 @@ public class ShotController : ProjectileBase
         }
         if (GameConfig.Instance.showGore)
         {
-            GameObject go = ObjectRecyclerBase.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+            GameObject go = ObjectRecycler.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
             go.transform.parent = hit.transform;
         }
         Disable();
@@ -292,7 +292,7 @@ public class ShotController : ProjectileBase
                 damageable.ReceiveDamage(damageData);
             }
         }
-        GameObject go = ObjectRecyclerBase.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
+        GameObject go = ObjectRecycler.Instance.Instantiate("blood", hit.point, Quaternion.FromToRotation(Vector3.up, hit.normal));
         go.transform.parent = hit.transform;
         Disable();
     }
@@ -356,8 +356,8 @@ public class ShotController : ProjectileBase
     // 只生成粒子与弹痕，不结算伤害
     void SpawnImpactEffect(string poolPrefab, RaycastHit hit)
     {
-        GameObject go = ObjectRecyclerBase.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
-        BulletMarkManagerBase.InstantiateDecal(hit);
+        GameObject go = ObjectRecycler.Instance.Instantiate(poolPrefab, hit.point, Quaternion.LookRotation(hit.normal));
+        BulletMarkManager.InstantiateDecal(hit);
         if (go != null)
             go.transform.parent = hit.transform;
     }

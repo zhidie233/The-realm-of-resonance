@@ -1,6 +1,5 @@
 using System;
 using Photon.Realtime;
-using UnityEngine;
 /// 用于便捷获取所有房间属性
 /// 用法：RoomProperties props = PhotonNetwork.CurrentRoom.GetRoomInfo();
 public struct GameRoomInfo 

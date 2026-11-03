@@ -866,7 +866,7 @@ MonoBehaviour:
   - Name: afk kick
     Window: {fileID: 1721786297380446}
   FadeAlpha: {fileID: 1284362842983278242}
-  PhotonStaticticsUI: {fileID: 2173400710603471362}
+  PhotonStatisticsUI: {fileID: 2173400710603471362}
   PhotonGamePrefab: {fileID: 1418751099695426, guid: fc07700dd01b49b4cacfdd7c54536bd4, type: 3}
   EnterPasswordUI: {fileID: 1415042975076616}
   SeekingMatchUI: {fileID: 1456770161257792}
@@ -5436,7 +5436,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 114400201396920996}
         m_TargetAssemblyTypeName: 
-        m_MethodName: OnEnterPassworld
+        m_MethodName: OnEnterPassword
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 7577663524503261379}

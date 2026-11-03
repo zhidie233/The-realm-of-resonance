@@ -4,295 +4,312 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-   public class ContactsManager : ContactListBase, IMatchmakingCallbacks, IConnectionCallbacks, ILobbyCallbacks
-   {
-       private List<string> friendsNames = new List<string>();
-       private ContactListUIBase FriendUI;
-       private char splitChar = '/';
-       private bool firstBuild = false;
-       private List<FriendInfo> contactList = new List<FriendInfo>();
-       private Status m_status = Status.Idle;
+public class ContactsManager : NetworkHelper, IMatchmakingCallbacks, IConnectionCallbacks, ILobbyCallbacks
+{
+    public enum Status
+    {
+        Idle,
+        Fetching
+    }
 
-       public override int FriendsCount => contactList.Count;
+    private static ContactsManager _instance;
+    public static ContactsManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<ContactsManager>();
+            }
+            return _instance;
+        }
+    }
 
-       void Awake()
-       {
-           FriendUI = LobbyUI.Instance.FriendUI;
-           PhotonNetwork.AddCallbackTarget(this);
-           if (NetworkWrapper.IsConnected && !string.IsNullOrEmpty(NetworkWrapper.NickName))
-           {
-               GetFriendsStore();
-               InvokeRepeating(nameof(UpdateList), 1, 1);
-           }
-       }
+    private List<string> friendsNames = new List<string>();
+    private ContactListUI FriendUI;
+    private char splitChar = '/';
+    private bool firstBuild = false;
+    private List<FriendInfo> contactList = new List<FriendInfo>();
+    private Status m_status = Status.Idle;
 
-       void OnDisable()
-       {
-           PhotonNetwork.RemoveCallbackTarget(this);
-       }
+    public int FriendsCount => contactList.Count;
 
-       public override Status GetStatus()
-       {
-           return m_status;
-       }
+    void Awake()
+    {
+        FriendUI = LobbyUI.Instance.FriendUI;
+        PhotonNetwork.AddCallbackTarget(this);
+        if (NetworkWrapper.IsConnected && !string.IsNullOrEmpty(NetworkWrapper.NickName))
+        {
+            GetFriendsStore();
+            InvokeRepeating(nameof(UpdateList), 1, 1);
+        }
+    }
 
-       void GetFriendsStore()
-       {
-           if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InLobby)
-               return;
+    void OnDisable()
+    {
+        PhotonNetwork.RemoveCallbackTarget(this);
+    }
 
-           friendsNames.Clear();
-           //获取已保存的所有好友
-           string cacheFriend = PlayerPrefs.GetString(SaveKey, "Null");
-           if (!string.IsNullOrEmpty(cacheFriend))
-           {
-               string[] splitFriends = cacheFriend.Split(splitChar);
-               friendsNames.AddRange(splitFriends);
-           }
-           //在 Photon 列表中查找所有好友名字
-           if (friendsNames.Count > 0)
-           {
-               PhotonNetwork.FindFriends(friendsNames.ToArray());
-               //更新列表 UI
-               FriendUI.UpdateContactList(true);
-           }
-           else
-           {
-               return;
-           }
-       }
-       /// 调用以更新好友列表
-       void UpdateList()
-       {
-           if (!NetworkWrapper.IsConnected || NetworkWrapper.InRoom)
-               return;
+    public Status GetStatus()
+    {
+        return m_status;
+    }
 
-           if (friendsNames.Count > 0)
-           {
-               if (friendsNames.Count > 1 && friendsNames.Contains("Null"))
-               {
-                   friendsNames.Remove("Null");
-                   friendsNames.Remove("Null");
-                   SaveFriends();
-               }
-               if (PhotonNetwork.IsConnectedAndReady && friendsNames.Count > 0)
-               {
-                   PhotonNetwork.FindFriends(friendsNames.ToArray());
-               }
-           }
-       }
+    void GetFriendsStore()
+    {
+        if (!PhotonNetwork.IsConnectedAndReady || !PhotonNetwork.InLobby)
+            return;
 
-       public void SaveFriends()
-       {
-           string allfriends = string.Join(splitChar.ToString(), friendsNames.ToArray());
-           PlayerPrefs.SetString(SaveKey, allfriends);
-       }
+        friendsNames.Clear();
+        //获取已保存的所有好友
+        string cacheFriend = PlayerPrefs.GetString(SaveKey, "Null");
+        if (!string.IsNullOrEmpty(cacheFriend))
+        {
+            string[] splitFriends = cacheFriend.Split(splitChar);
+            friendsNames.AddRange(splitFriends);
+        }
+        //在 Photon 列表中查找所有好友名字
+        if (friendsNames.Count > 0)
+        {
+            PhotonNetwork.FindFriends(friendsNames.ToArray());
+            //更新列表 UI
+            FriendUI.UpdateContactList(true);
+        }
+        else
+        {
+            return;
+        }
+    }
+    /// 调用以更新好友列表
+    void UpdateList()
+    {
+        if (!NetworkWrapper.IsConnected || NetworkWrapper.InRoom)
+            return;
 
-       public override void AddFriend(TMP_InputField field)
-       {
-           AddFriend(field.text);
-       }
+        if (friendsNames.Count > 0)
+        {
+            if (friendsNames.Count > 1 && friendsNames.Contains("Null"))
+            {
+                friendsNames.Remove("Null");
+                friendsNames.Remove("Null");
+                SaveFriends();
+            }
+            if (PhotonNetwork.IsConnectedAndReady && friendsNames.Count > 0)
+            {
+                PhotonNetwork.FindFriends(friendsNames.ToArray());
+            }
+        }
+    }
 
-       public override void AddFriend(string friend)
-       {
+    public void SaveFriends()
+    {
+        string allfriends = string.Join(splitChar.ToString(), friendsNames.ToArray());
+        PlayerPrefs.SetString(SaveKey, allfriends);
+    }
 
-           if (friendsNames.Contains(friend)) return;
-           if (friendsNames.Count > GameConfig.Instance.contactLimit)
-           {
-               FriendUI.ShowMessage("Max friends reached!");
-               return;
-           }
-           string t = friend;
-           if (string.IsNullOrEmpty(t))
-               return;
+    public void AddFriend(TMP_InputField field)
+    {
+        AddFriend(field.text);
+    }
 
-           if (FriendUI != null && FriendUI.IsPlayerListed(t))
-           {
-               FriendUI.ShowMessage("Already has added this friend.");
-               return;
-           }
-           if (t == NetworkWrapper.NickName)
-           {
-               FriendUI.ShowMessage("You can't add yourself.");
-               return;
-           }
+    public void AddFriend(string friend)
+    {
 
-           friendsNames.Add(friend);
-           PhotonNetwork.FindFriends(friendsNames.ToArray());
-           FriendUI.UpdateContactList(true);
-           SaveFriends();
-           m_status = Status.Fetching;
-       }
+        if (friendsNames.Contains(friend)) return;
+        if (friendsNames.Count > GameConfig.Instance.contactLimit)
+        {
+            FriendUI.ShowMessage("Max friends reached!");
+            return;
+        }
+        string t = friend;
+        if (string.IsNullOrEmpty(t))
+            return;
 
-       public override void RemoveFriend(string friend)
-       {
-           if (friendsNames.Contains(friend))
-           {
-               friendsNames.Remove(friend);
-               SaveFriends();
-               if (friendsNames.Count > 0)
-               {
-                   if (friendsNames.Count > 1 && friendsNames.Contains("Null"))
-                   {
-                       friendsNames.Remove("Null");
-                       friendsNames.Remove("Null");
-                       SaveFriends();
-                   }
-                   if (friendsNames.Count > 0)
-                       PhotonNetwork.FindFriends(friendsNames.ToArray());
-               }
-               else
-               {
-                   AddFriend("Null");
-                   if (friendsNames.Count > 0)
-                       PhotonNetwork.FindFriends(friendsNames.ToArray());
-               }
+        if (FriendUI != null && FriendUI.IsPlayerListed(t))
+        {
+            FriendUI.ShowMessage("Already has added this friend.");
+            return;
+        }
+        if (t == NetworkWrapper.NickName)
+        {
+            FriendUI.ShowMessage("You can't add yourself.");
+            return;
+        }
 
-               FriendUI.UpdateContactList(true);
-               m_status = Status.Fetching;
-           }
-           else {  }
-       }
+        friendsNames.Add(friend);
+        PhotonNetwork.FindFriends(friendsNames.ToArray());
+        FriendUI.UpdateContactList(true);
+        SaveFriends();
+        m_status = Status.Fetching;
+    }
 
-       public override FriendInfo[] GetFriends()
-       {
-           return contactList.ToArray();
-       }
+    public void RemoveFriend(string friend)
+    {
+        if (friendsNames.Contains(friend))
+        {
+            friendsNames.Remove(friend);
+            SaveFriends();
+            if (friendsNames.Count > 0)
+            {
+                if (friendsNames.Count > 1 && friendsNames.Contains("Null"))
+                {
+                    friendsNames.Remove("Null");
+                    friendsNames.Remove("Null");
+                    SaveFriends();
+                }
+                if (friendsNames.Count > 0)
+                    PhotonNetwork.FindFriends(friendsNames.ToArray());
+            }
+            else
+            {
+                AddFriend("Null");
+                if (friendsNames.Count > 0)
+                    PhotonNetwork.FindFriends(friendsNames.ToArray());
+            }
 
-       public override bool IsPlayerFriend(string playerNick)
-       {
-           return friendsNames.Contains(playerNick);
-       }
+            FriendUI.UpdateContactList(true);
+            m_status = Status.Fetching;
+        }
+        else {  }
+    }
 
-       public override bool CanAddMoreFriends()
-       {
-           return friendsNames.Count < GameConfig.Instance.contactLimit;
-       }
+    public FriendInfo[] GetFriends()
+    {
+        return contactList.ToArray();
+    }
 
-       public void OnFriendListUpdate(List<FriendInfo> contactList)
-       {
-           if (string.IsNullOrEmpty(NetworkWrapper.NickName)) return;
+    public bool IsPlayerFriend(string playerNick)
+    {
+        return friendsNames.Contains(playerNick);
+    }
 
-           // 修复第一个添加的好友现在才出现在列表里的问题
-           foreach (var item in contactList)
-           {
-               if (item.UserId == NetworkWrapper.NickName) return;
-           }
+    public bool CanAddMoreFriends()
+    {
+        return friendsNames.Count < GameConfig.Instance.contactLimit;
+    }
 
-           bool build = (contactList.Count != this.contactList.Count);
-           if (contactList.Count == 1)
-           {
-               if (contactList[0].UserId != "Null")
-               {
-                   if (!firstBuild) { build = true; firstBuild = true; }
-               }
-               else firstBuild = false;
+    public void OnFriendListUpdate(List<FriendInfo> contactList)
+    {
+        if (string.IsNullOrEmpty(NetworkWrapper.NickName)) return;
 
-           }
-           else firstBuild = false;
+        // 修复第一个添加的好友现在才出现在列表里的问题
+        foreach (var item in contactList)
+        {
+            if (item.UserId == NetworkWrapper.NickName) return;
+        }
 
-           this.contactList = contactList;
-           FriendUI.UpdateContactList(build);
-       }
+        bool build = (contactList.Count != this.contactList.Count);
+        if (contactList.Count == 1)
+        {
+            if (contactList[0].UserId != "Null")
+            {
+                if (!firstBuild) { build = true; firstBuild = true; }
+            }
+            else firstBuild = false;
 
-       public void StartFriendsUpdate()
-       {
-           GetFriendsStore();
-           CancelInvoke();
-           InvokeRepeating(nameof(UpdateList), 1, 1);
-           FriendUI.SetActiveList(true);
-       }
-       /// 每个玩家的自定义 key，可在同一设备上保存多份好友列表
-       private string SaveKey
-       {
-           get
-           {
-               return NetworkKeys.GetUniqueKeyForPlayer("resonancerealm.friends", NetworkWrapper.NickName);
-           }
-       }
+        }
+        else firstBuild = false;
 
-#region Photon Callbacks
-       public void OnCreatedRoom()
-       {
+        this.contactList = contactList;
+        FriendUI.UpdateContactList(build);
+    }
 
-       }
+    public void StartFriendsUpdate()
+    {
+        GetFriendsStore();
+        CancelInvoke();
+        InvokeRepeating(nameof(UpdateList), 1, 1);
+        FriendUI.SetActiveList(true);
+    }
+    /// 每个玩家的自定义 key，可在同一设备上保存多份好友列表
+    private string SaveKey
+    {
+        get
+        {
+            return NetworkKeys.GetUniqueKeyForPlayer("resonancerealm.friends", NetworkWrapper.NickName);
+        }
+    }
 
-       public void OnCreateRoomFailed(short returnCode, string message)
-       {
+    public void OnCreatedRoom()
+    {
 
-       }
+    }
 
-       public void OnJoinRoomFailed(short returnCode, string message)
-       {
+    public void OnCreateRoomFailed(short returnCode, string message)
+    {
 
-       }
+    }
 
-       public void OnJoinRandomFailed(short returnCode, string message)
-       {
+    public void OnJoinRoomFailed(short returnCode, string message)
+    {
 
-       }
+    }
 
-       public void OnLeftRoom()
-       {
+    public void OnJoinRandomFailed(short returnCode, string message)
+    {
 
-       }
+    }
 
-       public void OnJoinedRoom()
-       {
-           CancelInvoke(nameof(UpdateList));
-       }
+    public void OnLeftRoom()
+    {
 
-       public void OnConnected()
-       {
+    }
 
-       }
+    public void OnJoinedRoom()
+    {
+        CancelInvoke(nameof(UpdateList));
+    }
 
-       public void OnConnectedToMaster()
-       {
+    public void OnConnected()
+    {
 
-       }
+    }
 
-       public void OnJoinedLobby()
-       {
-           if (!string.IsNullOrEmpty(NetworkWrapper.NickName))
-           {
-               StartFriendsUpdate();
-           }
-       }
+    public void OnConnectedToMaster()
+    {
 
-       public void OnDisconnected(DisconnectCause cause)
-       {
-           CancelInvoke(nameof(UpdateList));
-       }
+    }
 
-       public void OnRegionListReceived(RegionHandler regionHandler)
-       {
+    public void OnJoinedLobby()
+    {
+        if (!string.IsNullOrEmpty(NetworkWrapper.NickName))
+        {
+            StartFriendsUpdate();
+        }
+    }
 
-       }
+    public void OnDisconnected(DisconnectCause cause)
+    {
+        CancelInvoke(nameof(UpdateList));
+    }
 
-       public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
-       {
+    public void OnRegionListReceived(RegionHandler regionHandler)
+    {
 
-       }
+    }
 
-       public void OnCustomAuthenticationFailed(string debugMessage)
-       {
+    public void OnCustomAuthenticationResponse(Dictionary<string, object> data)
+    {
 
-       }
+    }
 
-       public void OnLeftLobby()
-       {
-           CancelInvoke(nameof(UpdateList));
-       }
+    public void OnCustomAuthenticationFailed(string debugMessage)
+    {
 
-       public void OnRoomListUpdate(List<RoomInfo> roomList)
-       {
+    }
 
-       }
+    public void OnLeftLobby()
+    {
+        CancelInvoke(nameof(UpdateList));
+    }
 
-       public void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
-       {
+    public void OnRoomListUpdate(List<RoomInfo> roomList)
+    {
 
-       }
-#endregion
-   }
+    }
+
+    public void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
+    {
+
+    }
+}

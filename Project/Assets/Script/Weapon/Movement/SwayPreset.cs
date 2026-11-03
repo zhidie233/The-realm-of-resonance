@@ -4,7 +4,6 @@ using UnityEngine;
 public class SwayPreset : MonoBehaviourBase
 {
 
-    #region Public members
     [Header("Weapon On Run Position")]
     [Tooltip("武器常规位置与奔跑位置")]
     public Vector3 moveTo;
@@ -23,18 +22,15 @@ public class SwayPreset : MonoBehaviourBase
     public float rotationSpeedMultiplier = 1;
     public AnimationCurve accelerationCurve = AnimationCurve.EaseInOut(0, 0, 1, 1);
     [HideInInspector] public float _previewWeight = 0;
-    #endregion
 
-    #region Private members
     private float vel;
     private Quaternion DefaultRot;
     private Quaternion sprintRot, sprintReloadRot;
     private Vector3 DefaultPos;
     private FirearmController Gun;
-    private FirstPersonControllerBase controller;
+    private FirstPersonController controller;
     private float acceleration = 1;
     private bool defaultState = true;
-    #endregion
 
     protected override void Awake()
     {

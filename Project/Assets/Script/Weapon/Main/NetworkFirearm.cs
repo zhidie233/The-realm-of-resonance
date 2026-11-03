@@ -1,6 +1,5 @@
 using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
 public class NetworkFirearm : MonoBehaviour
 {
     [Header("设置")]
@@ -12,7 +11,7 @@ public class NetworkFirearm : MonoBehaviour
     [Header("引用")]
     public GameObject Bullet;
     public ParticleSystem MuzzleFlash;
-    public GameObject DesactiveOnOffAmmo;
+    public GameObject DeactivateOnOffAmmo;
     public Transform LeftHandPosition;
 
     // 启用时自动设置这把武器
@@ -41,11 +40,11 @@ public class NetworkFirearm : MonoBehaviour
     public void SetUpType()
     {
         PlayerSync?.SetNetworkWeapon(Info.Type, this);
-        LocalGun?.customWeapon?.Initialitate(LocalGun);
+        LocalGun?.customWeapon?.Initialize(LocalGun);
     }
 
     // 网络玩家中的开火同步
-    public void Fire(Vector3 hitPoint, Vector3 inacuracity)
+    public void Fire(Vector3 hitPoint, Vector3 inaccuracy)
     {
         if (LocalGun != null)
         {
@@ -61,12 +60,12 @@ public class NetworkFirearm : MonoBehaviour
 
             bulletRotation = Quaternion.LookRotation(hitPoint - bulletPosition);
             //子弹信息在 start 函数中设置
-            GameObject newBullet = ObjectRecyclerBase.Instance.Instantiate(LocalGun.BulletName, bulletPosition, bulletRotation);
+            GameObject newBullet = ObjectRecycler.Instance.Instantiate(LocalGun.BulletName, bulletPosition, bulletRotation);
             // 把枪械信息写入数组传给子弹
             m_BulletData.Damage = 0;
             m_BulletData.ImpactForce = 0;
             m_BulletData.Speed = LocalGun.bulletSpeed;
-            m_BulletData.Inaccuracity = inacuracity;
+            m_BulletData.Inaccuracy = inaccuracy;
             m_BulletData.DropFactor = LocalGun.bulletDropFactor;
             m_BulletData.Position = Root.position;
             m_BulletData.isNetwork = true;
@@ -95,7 +94,7 @@ public class NetworkFirearm : MonoBehaviour
             GameObject newBullet = Instantiate(Bullet, position, rotation) as GameObject;
             // 把枪械信息写入数组传给子弹
             ShotData bulletData = new ShotData();
-            bulletData.SetInaccuracity(s, LocalGun.spreadMinMax.y);
+            bulletData.SetInaccuracy(s, LocalGun.spreadMinMax.y);
             bulletData.Speed = LocalGun.bulletSpeed;
             bulletData.Position = Root.position;
             bulletData.isNetwork = true;
@@ -123,7 +122,7 @@ public class NetworkFirearm : MonoBehaviour
         }
     }
 
-    public void DesactiveGrenade(bool active, Material mat)
+    public void DeactivateGrenade(bool active, Material mat)
     {
         if (Info.Type != FirearmType.Grenade)
         {
@@ -132,9 +131,9 @@ public class NetworkFirearm : MonoBehaviour
         }
         //隐藏网络枪/手雷时改用换成不可见材质的方式
         //因为直接禁用渲染器会破坏玩家动画。
-        if (DesactiveOnOffAmmo != null)
+        if (DeactivateOnOffAmmo != null)
         {
-            DesactiveOnOffAmmo.SetActive(active);
+            DeactivateOnOffAmmo.SetActive(active);
         }
     }
 

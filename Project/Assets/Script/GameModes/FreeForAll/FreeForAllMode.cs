@@ -52,9 +52,9 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         }
         FreeForAllUI.Instance.SetScores(player);
         //检查最佳玩家是否达到最大击杀数
-        if((int)player.GetPlayerPropertie(NetworkKeys.KillsKey) >= RoomSettings.Instance.GameGoal && !NetworkWrapper.OfflineMode)
+        if((int)player.GetPlayerProperty(NetworkKeys.KillsKey) >= RoomSettings.Instance.GameGoal && !NetworkWrapper.OfflineMode)
         {
-            MatchTimeManagerBase.Instance.FinishRound();
+            MatchTimeManager.Instance.FinishRound();
             return;
         }
         //检查机器人是否还没达到最大击杀数
@@ -62,7 +62,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         {
             if (AIManager.Instance.GetBotWithMoreKills().Kills >= RoomSettings.Instance.GameGoal)
             {
-                MatchTimeManagerBase.Instance.FinishRound();
+                MatchTimeManager.Instance.FinishRound();
             }
         }
     }
@@ -79,7 +79,6 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
         }
     }
 
-    #region Interface
     public bool isLocalPlayerWinner
     {
         get
@@ -112,7 +111,7 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
 
     public void OnFinishTime(bool gameOver)
     {
-        RoundFinishScreenBase.Instance?.Show(GetBestPlayer().Name);
+        RoundFinishScreen.Instance?.Show(GetBestPlayer().Name);
     }
 
     public void OnLocalPlayerDeath()
@@ -144,5 +143,4 @@ public class FreeForAllMode : MonoBehaviour, IGameMode
     {
 
     } 
-    #endregion
 }

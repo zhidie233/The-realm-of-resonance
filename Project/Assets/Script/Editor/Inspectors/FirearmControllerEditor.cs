@@ -62,7 +62,7 @@ public class FirearmControllerEditor : Editor
             DrawSeparator("References");
             EditorGUILayout.BeginVertical("box");
             script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffectsBase), true) as WeaponEffectsBase;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffects), true) as WeaponEffects;
             if (script.weaponFX == null)
             {
                 script.muzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as UnityEngine.ParticleSystem;
@@ -95,7 +95,7 @@ public class FirearmControllerEditor : Editor
             DrawAimSettings();
             DrawSeparator("References");
             script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffectsBase), true) as WeaponEffectsBase;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffects), true) as WeaponEffects;
             if (script.weaponFX == null)
             {
                 script.muzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
@@ -124,7 +124,7 @@ public class FirearmControllerEditor : Editor
             DrawAimSettings();
             DrawSeparator("References");
             script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffectsBase), true) as WeaponEffectsBase;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffects), true) as WeaponEffects;
             if (script.weaponFX == null)
             {
                 script.muzzleFlash = EditorGUILayout.ObjectField("枪口火焰", script.muzzleFlash, typeof(ParticleSystem), allowSceneObjects) as ParticleSystem;
@@ -180,7 +180,7 @@ public class FirearmControllerEditor : Editor
             EditorGUILayout.Space();
             DrawBullet();
             script.muzzlePoint = EditorGUILayout.ObjectField("开火点", script.muzzlePoint, typeof(UnityEngine.Transform), allowSceneObjects) as UnityEngine.Transform;
-            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffectsBase), true) as WeaponEffectsBase;
+            script.weaponFX = EditorGUILayout.ObjectField("武器特效", script.weaponFX, typeof(WeaponEffects), true) as WeaponEffects;
             if (script.weaponFX == null)
             {
                 script.muzzleFlash = EditorGUILayout.ObjectField("开火特效", script.muzzleFlash, typeof(ParticleSystem), true) as ParticleSystem;
@@ -337,7 +337,7 @@ public class FirearmControllerEditor : Editor
     void DrawWeaponBinding()
     {
         GUILayout.BeginVertical("box");
-        script.customWeapon = EditorGUILayout.ObjectField("自定义武器逻辑", script.customWeapon, typeof(CustomFirearmBase), true) as CustomFirearmBase;
+        script.customWeapon = EditorGUILayout.ObjectField("自定义武器逻辑", script.customWeapon, typeof(LauncherFirearm), true) as LauncherFirearm;
         GUILayout.EndVertical();
     }
 

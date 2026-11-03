@@ -9,7 +9,7 @@ public class KillNotifier : MonoBehaviour
     public GameObject notificationTemplate;
     public KillNoticeUI staticNotification;
 
-    private List<KillRecord> localKillsQueque = new List<KillRecord>();
+    private List<KillRecord> localKillsQueue = new List<KillRecord>();
 
     private void Start()
     {
@@ -31,7 +31,7 @@ public class KillNotifier : MonoBehaviour
     void OnLocalKill(KillRecord info)
     {
         if (GameConfig.Instance.personalKillFeedDisplay == KillNotice.List) InstanceSingleNotification(info);
-        else if (GameConfig.Instance.personalKillFeedDisplay == KillNotice.Queqe) ShowNotification(info);
+        else if (GameConfig.Instance.personalKillFeedDisplay == KillNotice.Queue) ShowNotification(info);
     }
 
     void OnLocalNotification(GameLocalNotification notification)
@@ -51,19 +51,19 @@ public class KillNotifier : MonoBehaviour
 
     void ShowNotification(KillRecord info)
     {
-        if (localKillsQueque.Count <= 0)
+        if (localKillsQueue.Count <= 0)
         {
             staticNotification.InitIndividual(info);
         }
-        localKillsQueque.Add(info);
+        localKillsQueue.Add(info);
     }
 
     public void LocalDisplayDone()
     {
-        localKillsQueque.RemoveAt(0);
-        if (localKillsQueque.Count > 0)
+        localKillsQueue.RemoveAt(0);
+        if (localKillsQueue.Count > 0)
         {
-            staticNotification.InitIndividual(localKillsQueque[0]);
+            staticNotification.InitIndividual(localKillsQueue[0]);
         }
     }
 
@@ -80,7 +80,7 @@ public class KillNotifier : MonoBehaviour
     [System.Serializable]
     public enum KillNotice
     {
-        Queqe,
+        Queue,
         List,
         Custom,
     }

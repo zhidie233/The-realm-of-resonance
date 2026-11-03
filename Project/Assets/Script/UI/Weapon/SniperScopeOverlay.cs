@@ -2,9 +2,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class SniperScopeOverlay : SniperScopeOverlayBase
+public class SniperScopeOverlay : MonoBehaviourBase
 {
-    #region Public members
+    [SerializeField]
+    private Sprite scopeTexture;
+    public Sprite ScopeTexture
+    {
+        get => scopeTexture;
+        set => scopeTexture = value;
+    }
+
     [Range(0.02f, 0.5f)] public float transitionDuration = 0.2f;
     [Range(0, 0.5f)] public float fadeInDelay = 0.2f;
     public float breathingAmplitude = 0.14f;
@@ -13,9 +20,7 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
     [Space]
     [Tooltip("开镜时禁用的对象，通常是武器和手臂模型")]
     public List<GameObject> OnScopeDisable = new List<GameObject>();
-    #endregion
 
-    #region Private members
     private FirearmController m_gun;
     private Vector3 m_point = Vector3.zero;
     private float m_dist = 0.0f;
@@ -23,7 +28,6 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
     private bool returnedAim = true;
     private bool aiming = false;
     RaycastHit m_ray;
-    #endregion
 
     protected override void Awake()
     {
@@ -34,14 +38,14 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
     protected override void OnEnable()
     {
         base.OnEnable();
-        ScopeOverlayBase.Instance.SetupWeapon(this);
+        ScopeOverlay.Instance.SetupWeapon(this);
         aiming = false;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (ScopeOverlayBase.Instance != null) ScopeOverlayBase.Instance.SetActive(false);
+        if (ScopeOverlay.Instance != null) ScopeOverlay.Instance.SetActive(false);
         aiming = false;
     }
 
@@ -57,7 +61,7 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
             if (!aiming)
             {
                 returnedAim = false;
-                ScopeOverlayBase.Instance?.Crossfade(true, transitionDuration, fadeInDelay, null, () =>
+                ScopeOverlay.Instance?.Crossfade(true, transitionDuration, fadeInDelay, null, () =>
                   {
                       foreach (GameObject go in OnScopeDisable)
                       {
@@ -81,7 +85,7 @@ public class SniperScopeOverlay : SniperScopeOverlayBase
             {
                 float inverse = MathHelpers.InverseLerp(m_gun.GetDefaultPosition(), m_gun.AimPosition, m_gun.transform.localPosition);
                 bool wasFullAiming = inverse >= 0.78f;
-                ScopeOverlayBase.Instance?.Crossfade(false, transitionDuration, 0, () =>
+                ScopeOverlay.Instance?.Crossfade(false, transitionDuration, 0, () =>
                    {
                        if (!returnedAim && m_gun.Info != null)
                        {

@@ -4,7 +4,7 @@ using Photon.Realtime;
 using Photon.Pun;
 using TMPro;
 
-public class ReadyPlayerUI : ReadyPlayerUIBase
+public class ReadyPlayerUI : MonoBehaviour
 {
 
     public TextMeshProUGUI NameText;
@@ -15,12 +15,12 @@ public class ReadyPlayerUI : ReadyPlayerUIBase
     public GameObject MasterClientUI;
     private Player ThisPlayer;
 
-    public override Player GetPlayer()
+    public Player GetPlayer()
     {
         return ThisPlayer;
     }
 
-    public override void SetInfo(Player player)
+    public void SetInfo(Player player)
     {
         ThisPlayer = player;
         NameText.text = string.Format(player.NickNameAndRole());
@@ -36,9 +36,9 @@ public class ReadyPlayerUI : ReadyPlayerUIBase
         LevelImg.gameObject.SetActive(false);
     }
 
-    public override void UpdateState()
+    public void UpdateState()
     {
-        ReadyUI.SetActive(ReadyRoomBase.Instance.IsPlayerReady(ThisPlayer));
+        ReadyUI.SetActive(ReadyRoomHandler.Instance.IsPlayerReady(ThisPlayer));
     }
 
     public void KickThis()

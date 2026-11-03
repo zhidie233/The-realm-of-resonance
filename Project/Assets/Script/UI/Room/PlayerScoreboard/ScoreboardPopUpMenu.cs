@@ -3,9 +3,29 @@ using Photon.Realtime;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
+public class ScoreboardPopUpMenu : MonoBehaviour
 {
+    public struct MenuFilter
+    {
+        public bool IsLocalPlayer;
+        public bool IsBot;
+    }
+
+    [Serializable]
+    public class MenuOptions
+    {
+        public string Title;
+        public bool AllowedForLocal = false;
+        public bool AllowedForBots = false;
+
+        [HideInInspector] public Button OptionButton;
+    }
+
+    public static Action<int> onScoreboardMenuAction;
+    public static Player TargetPlayer;
+
     public List<MenuOptions> options;
     public ListLayoutHelper listHandler;
     [SerializeField] private GameObject content = null;
@@ -16,20 +36,20 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
         ((RectTransform)transform).position = Input.mousePosition;
     }
 
-    public override ScoreboardPopUpMenuBase SetActive(bool active)
+    public ScoreboardPopUpMenu SetActive(bool active)
     {
         PrepareMenu();
         content.SetActive(active);
         return this;
     }
 
-    public override ScoreboardPopUpMenuBase SetTargetPlayer(Player player)
+    public ScoreboardPopUpMenu SetTargetPlayer(Player player)
     {
         TargetPlayer = player;
         return this;
     }
 
-    public override ScoreboardPopUpMenuBase FilterMenuOptions(MenuFilter filter)
+    public ScoreboardPopUpMenu FilterMenuOptions(MenuFilter filter)
     {
         foreach (var item in options)
         {
@@ -63,7 +83,7 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
         listHandler.Prefab.SetActive(false);
         for (int i = 0; i < options.Count; i++)
         {
-            var btn = listHandler.InstatiateAndGet<Button>();
+            var btn = listHandler.InstantiateAndGet<Button>();
             var text = btn.GetComponentInChildren<TextMeshProUGUI>();
             if(text != null)
             {
@@ -75,14 +95,16 @@ public class ScoreboardPopUpMenu : ScoreboardPopUpMenuBase
         }
     }
 
-    public override int AddButton(string buttonName, MenuFilter filter)
+    ///
+    /// <returns>按钮 id</returns>
+    public int AddButton(string buttonName, MenuFilter filter)
     {
         if (!listHandler.IsInitialize)
         {
             PrepareMenu();
         }
 
-        var btn = listHandler.InstatiateAndGet<Button>();
+        var btn = listHandler.InstantiateAndGet<Button>();
         var text = btn.GetComponentInChildren<TextMeshProUGUI>();
         if (text != null)
         {

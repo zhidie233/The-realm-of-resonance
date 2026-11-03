@@ -5,8 +5,21 @@ using Photon.Pun;
 using Photon.Realtime;
 using TMPro;
 
-public class ReadyRoomUI : ReadyRoomUIBase
+public class ReadyRoomUI : NetworkHelper
 {
+    private static ReadyRoomUI _instance;
+    public static ReadyRoomUI Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<ReadyRoomUI>();
+            }
+            return _instance;
+        }
+    }
+
     [Header("References")]
     public GameObject Content;
     public GameObject ReadyPlayerPrefab;
@@ -25,19 +38,20 @@ public class ReadyRoomUI : ReadyRoomUIBase
     public List<RectTransform> PlayerListHeaders = new List<RectTransform>();
     public Button[] readyButtons;
 
-    private List<ReadyPlayerUIBase> playerListCache = new List<ReadyPlayerUIBase>();
+    private List<ReadyPlayerUI> playerListCache = new List<ReadyPlayerUI>();
 
     private void OnEnable()
     {
         Content.SetActive(false);
     }
 
-    public override void ShowLoadingScreen(bool show)
+    public void ShowLoadingScreen(bool show)
     {
         LoadingMapUI.SetActive(show);
     }
 
-    public override void SetActive(bool active)
+    /// 显示等待房间菜单
+    public void SetActive(bool active)
     {
         if (active)
         {
@@ -54,7 +68,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
         }
     }
 
-    public override void InstancePlayerList()
+    public void InstancePlayerList()
     {
         playerListCache.ForEach(x => { if (x != null) { Destroy(x.gameObject); } });
         playerListCache.Clear();
@@ -102,13 +116,13 @@ public class ReadyRoomUI : ReadyRoomUIBase
     public void SetPlayerToList(Player player)
     {
         GameObject g = Instantiate(ReadyPlayerPrefab) as GameObject;
-        var wp = g.GetComponent<ReadyPlayerUIBase>();
+        var wp = g.GetComponent<ReadyPlayerUI>();
         wp.SetInfo(player);
         g.transform.SetParent(PlayerListPanel, false);
         playerListCache.Add(wp);
     }
    
-    public override void UpdateRoomInfoUI()
+    public void UpdateRoomInfoUI()
     {
         GameMode mode = GetGameModeUpdated;
         Room room = PhotonNetwork.CurrentRoom;
@@ -124,7 +138,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
         UpdatePlayerCount();
         readyButtons[0].gameObject.SetActive(NetworkWrapper.IsMasterClient);
         readyButtons[1].gameObject.SetActive(!NetworkWrapper.IsMasterClient);
-        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomBase.Instance.IsLocalReady() ? "取消".ToUpper() : "准备".ToUpper();
+        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomHandler.Instance.IsLocalReady() ? "取消".ToUpper() : "准备".ToUpper();
 
         string goal = room.CustomProperties[NetworkKeys.RoomGoal].ToString();
         if (goal == "0" || string.IsNullOrEmpty(goal))
@@ -138,7 +152,7 @@ public class ReadyRoomUI : ReadyRoomUIBase
     }
 
 
-    public override void UpdatePlayerCount()
+    public void UpdatePlayerCount()
     {
         int required = GetGameModeUpdated.GetGameModeInfo().MinPlayersToStart;
         if(required > 1)
@@ -162,28 +176,28 @@ public class ReadyRoomUI : ReadyRoomUIBase
         }
     }
 
-    public override void UpdateAllPlayersStates()
+    public void UpdateAllPlayersStates()
     {
         playerListCache.ForEach(x => { if(x != null) x.UpdateState(); });
     }
 
     public void SetLocalReady()
     {
-        ReadyRoomBase.Instance.SetLocalPlayerReady();
-        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomBase.Instance.IsLocalReady() ? "取消".ToUpper() : "准备".ToUpper();
+        ReadyRoomHandler.Instance.SetLocalPlayerReady();
+        readyButtons[1].GetComponentInChildren<TextMeshProUGUI>().text = ReadyRoomHandler.Instance.IsLocalReady() ? "取消".ToUpper() : "准备".ToUpper();
     }
 
     public void MasterStartTheGame()
     {
-        ReadyRoomBase.Instance.StartGame();
+        ReadyRoomHandler.Instance.StartGame();
     }
 
     public void EnterAsSpectator()
     {
         LobbyUI.ShowConfirmationWindow(GameTexts.EnterAsSpectator, () =>
         {
-            ReadyRoomBase.Instance.JoinToTeam(Team.None);
-            ObserverModeBase.EnterAsSpectator = true;
+            ReadyRoomHandler.Instance.JoinToTeam(Team.None);
+            ObserverMode.EnterAsSpectator = true;
         });
     }
 
@@ -201,9 +215,9 @@ public class ReadyRoomUI : ReadyRoomUIBase
         return count;
     }
 
-    public void LeaveRoom(bool comfirmed)
+    public void LeaveRoom(bool confirmed)
     {
-        if (comfirmed)
+        if (confirmed)
         {
             LobbyUI.Instance.blackScreenFader.FadeIn(0.5f);
             PhotonNetwork.LeaveRoom();

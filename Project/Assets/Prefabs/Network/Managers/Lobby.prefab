@@ -3475,7 +3475,7 @@ MonoBehaviour:
   FadeAlpha: {fileID: 2664586855345788950}
   PlayerNameText: {fileID: 114845612573113638}
   RoomInfoPrefab: {fileID: 2872105872179180323}
-  PhotonStaticticsUI: {fileID: 8576630815106768070}
+  PhotonStatisticsUI: {fileID: 8576630815106768070}
   PhotonGamePrefab: {fileID: 1418751099695426, guid: fc07700dd01b49b4cacfdd7c54536bd4,
     type: 3}
   EnterPasswordUI: {fileID: 1187498181832460}
@@ -5663,7 +5663,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 114931086947653340}
-        m_MethodName: OnEnterPassworld
+        m_MethodName: OnEnterPassword
         m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 114022130884468984}

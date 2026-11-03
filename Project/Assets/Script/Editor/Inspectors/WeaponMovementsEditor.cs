@@ -9,7 +9,7 @@ public class WeaponMovementsEditor : Editor
     Quaternion defaultRotation = Quaternion.identity;
     SwayPreset script;
     SerializedProperty previewProp;
-    public bool isPreviwing = false;
+    public bool isPreviewing = false;
 
     private void OnEnable()
     {
@@ -40,7 +40,7 @@ public class WeaponMovementsEditor : Editor
                 }
                 Tools.current = Tool.Transform;
                 ActiveEditorTracker.sharedTracker.isLocked = true;
-                isPreviwing = false;
+                isPreviewing = false;
             }
             else
             {
@@ -101,12 +101,12 @@ public class WeaponMovementsEditor : Editor
             EditorGUI.indentLevel++;
             GUILayout.BeginVertical("box");
             previewProp.isExpanded = EditorGUILayout.Foldout(previewProp.isExpanded, "Preview Movement");
-            if(isPreviwing != previewProp.isExpanded)
+            if(isPreviewing != previewProp.isExpanded)
             {
                 defaultPosition = script.transform.localPosition;
                 defaultRotation = script.transform.localRotation;
                 script._previewWeight = 0;
-                isPreviwing = previewProp.isExpanded;
+                isPreviewing = previewProp.isExpanded;
             }
             if (previewProp.isExpanded)
             {

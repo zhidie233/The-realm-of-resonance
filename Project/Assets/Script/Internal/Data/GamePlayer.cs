@@ -71,7 +71,7 @@ public class GamePlayer
     }
 
     // 获取真实玩家或机器人的属性值
-    public object GetPlayerPropertie(string key, object defaultValue = null)
+    public object GetPlayerProperty(string key, object defaultValue = null)
     {
         switch (key)
         {

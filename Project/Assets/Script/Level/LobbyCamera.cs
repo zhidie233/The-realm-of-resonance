@@ -2,9 +2,43 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.Animations;
 
-public class LobbyCamera : LobbyCameraBase
+public class LobbyCamera : MonoBehaviourBase
 {
-    #region Public members
+    public enum CameraMode
+    {
+        MapPreview,
+        Spectator
+    }
+    /// 不要通过此脚本移动或旋转相机
+    public bool BlockSelfMovement
+    {
+        get;
+        set;
+    } = false;
+
+    private Camera _cameraComponent = null;
+    public virtual Camera GetCamera()
+    {
+        if (_cameraComponent == null)
+        {
+            _cameraComponent = GetComponent<Camera>();
+        }
+        return _cameraComponent;
+    }
+
+    private static LobbyCamera _instance;
+    public static LobbyCamera Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<LobbyCamera>();
+            }
+            return _instance;
+        }
+    }
+
     [Header("Auto Rotation")]
     [GameToggle] public bool autoRotation = true;
     public Axis rotationDirection = Axis.X;
@@ -16,24 +50,21 @@ public class LobbyCamera : LobbyCameraBase
     public float normalMoveSpeed = 10;
     public float slowMoveFactor = 0.25f;
     public float fastMoveFactor = 3; 
-    #endregion
 
-    #region Private members
     private float rotationX = 0.0f;
     private float rotationY = 0.0f;
     private Transform m_Transform;
-    private Quaternion origiRotation;
+    private Quaternion originRotation;
     private Vector3 originPosition;
     private CameraMode currentCameraMode = CameraMode.MapPreview;
     private Camera cameraComponent;
     private float defaultFov;
-    #endregion
 
     protected override void Awake()
     {
         base.Awake();
         m_Transform = transform;
-        origiRotation = m_Transform.localRotation;
+        originRotation = m_Transform.localRotation;
         originPosition = m_Transform.localPosition;
         cameraComponent = GetComponent<Camera>();
         if (cameraComponent != null) defaultFov = cameraComponent.fieldOfView;
@@ -54,7 +85,7 @@ public class LobbyCamera : LobbyCameraBase
         Rotate();
     }
 
-    public override void SetCameraMode(CameraMode cameraMode)
+    public void SetCameraMode(CameraMode cameraMode)
     {
         currentCameraMode = cameraMode;
     }
@@ -107,17 +138,17 @@ public class LobbyCamera : LobbyCameraBase
         }
     }
 
-    public override void SetActive(bool active)
+    public void SetActive(bool active)
     {
         gameObject.SetActive(active);
     }
 
-    public override void ResetCamera()
+    public void ResetCamera()
     {
         currentCameraMode = CameraMode.MapPreview;
         if (!gameObject.activeInHierarchy)
         {
-            m_Transform.localRotation = origiRotation;
+            m_Transform.localRotation = originRotation;
             m_Transform.localPosition = originPosition;
             if (cameraComponent != null) cameraComponent.fieldOfView = defaultFov;
             return;
@@ -132,17 +163,17 @@ public class LobbyCamera : LobbyCameraBase
             {
                 t += Time.deltaTime * (Time.timeScale / 0.5f);
                 m_Transform.localPosition = Vector3.Lerp(m_Transform.localPosition, originPosition, t);
-                m_Transform.localRotation = Quaternion.Lerp(m_Transform.localRotation, origiRotation, t);
+                m_Transform.localRotation = Quaternion.Lerp(m_Transform.localRotation, originRotation, t);
                 if (cameraComponent != null) cameraComponent.fieldOfView = Mathf.Lerp(cameraComponent.fieldOfView, defaultFov, t);
                 yield return null;
             }
             m_Transform.localPosition = originPosition;
-            m_Transform.localRotation = origiRotation;
+            m_Transform.localRotation = originRotation;
             if (cameraComponent != null) cameraComponent.fieldOfView = defaultFov;
         }
     }
 
-    public override CameraMode GetCameraMode()
+    public CameraMode GetCameraMode()
     {
         return currentCameraMode;
     }

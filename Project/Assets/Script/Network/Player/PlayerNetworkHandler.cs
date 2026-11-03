@@ -5,7 +5,6 @@ using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using System.Linq;
 
-[RequireComponent(typeof(PhotonView))]
 public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
 {
     // 非本方玩家的队伍
@@ -22,9 +21,9 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     PhotonTransformViewPositionModel m_PositionModel = new PhotonTransformViewPositionModel();
     [SerializeField]
     PhotonTransformViewRotationModel m_RotationModel = new PhotonTransformViewRotationModel();
-    public Material InvicibleMat;
+    public Material InvincibleMat;
 
-    private PlayerTagBase DrawName;
+    private PlayerTagDrawer DrawName;
     private bool SendInfo = false;
     private bool isWeaponBlocked = false;
     private NetworkFirearm currentGun;
@@ -43,7 +42,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     // 当前第三人称武器 ID
     public int networkWeaponID { get; set; }
     // 此玩家手中的当前第三人称武器
-    public NetworkFirearm CurrenGun { get; set; }
+    public NetworkFirearm CurrentGun { get; set; }
     // 从此玩家客户端侧接收的当前状态
     public PlayerState NetworkBodyState { get; set; }
 
@@ -56,7 +55,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         _transform = transform;
         _positionControl = new PhotonTransformViewPositionControl(m_PositionModel);
         _rotationControl = new PhotonTransformViewRotationControl(m_RotationModel);
-        DrawName = GetComponent<PlayerTagBase>();
+        DrawName = GetComponent<PlayerTagDrawer>();
         NetworkGuns.ForEach(x =>
         {
             if (x != null) x.gameObject.SetActive(false);
@@ -84,11 +83,11 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         {
             //这个玩家归我们所有：把数据发给其他人
             stream.SendNext(GetHeadLookPosition());
-            stream.SendNext(fpControler.State);
-            stream.SendNext(fpControler.isGrounded);
+            stream.SendNext(fpController.State);
+            stream.SendNext(fpController.isGrounded);
             stream.SendNext((byte)PlayerReferences.gunManager.GetCurrentWeaponID);
             stream.SendNext(FPState);
-            stream.SendNext(fpControler.Velocity);
+            stream.SendNext(fpController.Velocity);
         }
         else
         {
@@ -130,9 +129,9 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     void OnLocalPlayer()
     {
         //发送本机玩家状态，供远程动画使用
-        PlayerReferences.playerAnimations.BodyState = fpControler.State;
-        PlayerReferences.playerAnimations.IsGrounded = fpControler.isGrounded;
-        PlayerReferences.playerAnimations.Velocity = fpControler.Velocity;
+        PlayerReferences.playerAnimations.BodyState = fpController.State;
+        PlayerReferences.playerAnimations.IsGrounded = fpController.isGrounded;
+        PlayerReferences.playerAnimations.Velocity = fpController.Velocity;
         PlayerReferences.playerAnimations.FPState = FPState;
     }
     // 玩家为远程玩家时每帧调用
@@ -173,7 +172,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     void OnEnemyPlayer()
     {
         playerHealthManager.DamageEnabled = true;
-        DrawName.SetActive(ObserverModeBase.Instance.isActive);
+        DrawName.SetActive(ObserverMode.Instance.isActive);
     }
     // 该远程玩家是队友时每帧调用
     void OnTeammatePlayer()
@@ -209,8 +208,8 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
                 currentGun.gameObject.SetActive(true);
                 if (!local)
                 {
-                    CurrenGun = currentGun;
-                    CurrenGun.SetUpType();
+                    CurrentGun = currentGun;
+                    CurrentGun.SetUpType();
                 }
             }
             else
@@ -237,9 +236,9 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
         PlayerReferences.playerAnimations?.SetNetworkGun(weaponType, networkGun);
     }
     // 通知所有其他客户端同步一发子弹
-    public void ReplicateFire(FirearmType weaponType, Vector3 hitPosition, Vector3 inacuracity)
+    public void ReplicateFire(FirearmType weaponType, Vector3 hitPosition, Vector3 inaccuracy)
     {
-        photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inacuracity);
+        photonView.RPC(nameof(FireSync), RpcTarget.Others, weaponType, hitPosition, inaccuracy);
     }
     // 发送射击同步 RPC 的公开方法
     public void IsFireGrenade(float t_spread, Vector3 pos, Quaternion rot, Vector3 direction)
@@ -251,24 +250,24 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     [PunRPC]
     void FireSync(FirearmType weaponType, Vector3 hitPosition, Vector3 inaccuracity)
     {
-        if (CurrenGun == null) return;
+        if (CurrentGun == null) return;
         switch (weaponType)
         {
             case FirearmType.Machinegun:
-                CurrenGun.Fire(hitPosition, inaccuracity);
+                CurrentGun.Fire(hitPosition, inaccuracity);
                 PlayerReferences.playerAnimations.PlayFireAnimation(FirearmType.Machinegun);
                 break;
             case FirearmType.Pistol:
-                CurrenGun.Fire(hitPosition, inaccuracity);
+                CurrentGun.Fire(hitPosition, inaccuracity);
                 PlayerReferences.playerAnimations.PlayFireAnimation(FirearmType.Pistol);
                 break;
             case FirearmType.Burst:
             case FirearmType.Sniper:
             case FirearmType.Shotgun:
-                CurrenGun.Fire(hitPosition, inaccuracity);
+                CurrentGun.Fire(hitPosition, inaccuracity);
                 break;
             case FirearmType.Knife:
-                CurrenGun.KnifeFire();
+                CurrentGun.KnifeFire();
                 PlayerReferences.playerAnimations.PlayFireAnimation(FirearmType.Knife);
                 break;
             default:
@@ -281,15 +280,15 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     [PunRPC]
     void RPCFireCustom(Hashtable data)
     {
-        CurrenGun?.FireCustomLogic(data);
-        if (CurrenGun != null)
-            PlayerReferences.playerAnimations.PlayFireAnimation(CurrenGun.Info.Type);
+        CurrentGun?.FireCustomLogic(data);
+        if (CurrentGun != null)
+            PlayerReferences.playerAnimations.PlayFireAnimation(CurrentGun.Info.Type);
     }
 
     [PunRPC]
     void FireGrenadeRpc(float m_spread, Vector3 pos, Quaternion rot, Vector3 direction)
     {
-        CurrenGun.GrenadeFire(m_spread, pos, rot, direction);
+        CurrentGun.GrenadeFire(m_spread, pos, rot, direction);
     }
     public void SetActiveGrenade(bool active)
     {
@@ -299,12 +298,12 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     [PunRPC]
     void SyncOffAmmoGrenade(bool active)
     {
-        if (CurrenGun == null)
+        if (CurrentGun == null)
         {
             Debug.LogError("第三人称玩家未启用投掷物。");
             return;
         }
-        CurrenGun.DesactiveGrenade(active, InvicibleMat);
+        CurrentGun.DeactivateGrenade(active, InvincibleMat);
     }
     public void SetWeaponBlocked(int blockState)
     {
@@ -355,7 +354,6 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
     }
     void DoDrawEstimatedPositionError()
     {
-        if (NetworkBodyState == PlayerState.InVehicle) return;
         Vector3 targetPosition = _positionControl.GetNetworkPosition();
         Debug.DrawLine(targetPosition, _transform.position, Color.red, 2f);
         Debug.DrawLine(_transform.position, _transform.position + Vector3.up, Color.green, 2f);
@@ -400,7 +398,7 @@ public class PlayerNetworkHandler : MonoBehaviourBase, IPunObservable
             return _playerReferences;
         }
     }
-    private FirstPersonControllerBase fpControler => PlayerReferences.firstPersonController;
+    private FirstPersonController fpController => PlayerReferences.firstPersonController;
     private PlayerHealthManagerBase playerHealthManager => PlayerReferences.playerHealthManager;
     private CharacterController characterController => PlayerReferences.characterController;
 }

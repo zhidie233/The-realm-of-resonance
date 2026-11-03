@@ -7,7 +7,6 @@ using UnityEngine.UI;
 
 public class PlayerHealthManager : PlayerHealthManagerBase
 {
-    #region Public members
     [Header("Settings")]
     [Range(0, 100)] public int health = 100;
     [Range(1, 100)] public int maxHealth = 100;
@@ -28,9 +27,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
     private bool m_autoHealthRecovery = false;
     public bool autoHealthRecovery { get => m_autoHealthRecovery; set => m_autoHealthRecovery = value; }
-    #endregion
 
-    #region Private members
     private TextMeshProUGUI HealthTextUI;
     private Image HealthBar;
     const string FallMethod = "FallDown";
@@ -41,8 +38,8 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     private PlayerNetworkHandler PlayerSync;
     private float TimeToRegenerate = 4;
     private FirearmInventory GunManager;
-    private bool isSuscribed = false;
-    private int protecTime = 0;
+    private bool isSubscribed = false;
+    private int protectTime = 0;
     private RepeatHitDamage repeatHitDamage;
     private CanvasGroup DamageAlpha;
     private float damageAlphaValue, uiFadeDelay = 0;
@@ -51,9 +48,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     private float nextHealthSend = 0;
     private PlayerRig playerReferences;
     private int currentHealth = 100;
-    #endregion
 
-    #region Unity Callbacks
     protected override void Awake()
     {
         if (!PhotonNetwork.IsConnected) return;
@@ -65,7 +60,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         GunManager = playerReferences.gunManager;
         DamageAlpha = UIReferences.Instance.PlayerUI.DamageAlpha;
         m_autoHealthRecovery = GameConfig.Instance.autoHealthRecovery;
-        protecTime = GameConfig.Instance.spawnShieldTime;
+        protectTime = GameConfig.Instance.spawnShieldTime;
         showIndicator = GameConfig.Instance.hitDirectionIndicator;
     }
 
@@ -84,7 +79,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             HealthBar = UIReferences.Instance.PlayerUI.HealthBar;
             UpdateUI();
         }
-        if (protecTime > 0) { InvokeRepeating(nameof(OnProtectCount), 1, 1); }
+        if (protectTime > 0) { InvokeRepeating(nameof(OnProtectCount), 1, 1); }
     }
 
     protected override void OnEnable()
@@ -96,14 +91,14 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             GameEvents.onPickUpHealth += this.OnPickUp;
             GameEvents.onRoundEnd += this.OnRoundEnd;
             NetworkCallbacks.PlayerEnteredRoom += OnPhotonPlayerConnected;
-            isSuscribed = true;
+            isSubscribed = true;
         }
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        if (isSuscribed)
+        if (isSubscribed)
         {
             GameEvents.onPickUpHealth -= this.OnPickUp;
             GameEvents.onRoundEnd -= this.OnRoundEnd;
@@ -119,7 +114,6 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             RegenerateHealth();
         }
     }
-    #endregion
 
     public override void DoDamage(DamageInfo damageData)
     {
@@ -142,7 +136,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     /// 玩家受到坠落冲击伤害时调用
     public override void DoFallDamage(int damage)
     {
-        if (!GameConfig.Instance.fallDamageEnabled || isProtectionEnable || playerReferences.firstPersonController.State == PlayerState.InVehicle || GameController.Instance.GameMatchState == MatchState.Waiting)
+        if (!GameConfig.Instance.fallDamageEnabled || isProtectionEnable || GameController.Instance.GameMatchState == MatchState.Waiting)
             return;
 
         Vector3 downpos = transform.position - transform.TransformVector(new Vector3(0, 5, 1));
@@ -164,7 +158,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     damageAlphaValue = Mathf.Max(1f - (((float)currentHealth - (float)damage) / (float)maxHealth), 0.25f);
                     uiFadeDelay = StartRegenerateIn;
                     GameEvents.DoPlayerCameraShake(damageShakerPresent, "damage");
-                    if (showIndicator) DamageIndicatorBase.Instance?.SetHit(hitDirection);
+                    if (showIndicator) DamageIndicator.Instance?.SetHit(hitDirection);
                     TimeToRegenerate = StartRegenerateIn;
                     GameEvents.DispatchLocalPlayerReceiveDamage(damage);
                 }
@@ -173,7 +167,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
                     // 伤害由本地玩家造成时
                     if (m_sender != null && m_sender.NickName == LocalName && cause != DamageCause.Bot)
                     {
-                        ReticleBase.Instance.OnHit();
+                        ReticlePainter.Instance.OnHit();
                         AudioManager.Instance.PlayClip("body-hit");
                         GameEvents.DispatchLocalPlayerHitEnemy(new GameHitData()
                         {
@@ -241,7 +235,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
 
         if (!isMine)
         {
-            playerReferences.playerRagdoll.Ragdolled(new PlayerRagdollBase.RagdollInfo()
+            playerReferences.playerRagdoll.Ragdolled(new PlayerRagdoll.RagdollInfo()
             {
                 ForcePosition = hitPos,
                 IsFromExplosion = isExplosion,
@@ -252,7 +246,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         {
             //让远程玩家掉落武器
             Transform ngr = (GameConfig.Instance.DiscardWeaponOnDeath) ? null : PlayerSync.NetGunsRoot;
-            playerReferences.playerRagdoll.SetLocalRagdoll(new PlayerRagdollBase.RagdollInfo()
+            playerReferences.playerRagdoll.SetLocalRagdoll(new PlayerRagdoll.RagdollInfo()
             {
                 ForcePosition = hitPos,
                 Velocity = m_CharacterController.velocity,
@@ -283,7 +277,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             {
                 if (photonView.Owner.GetPlayerTeam() == NetworkWrapper.LocalPlayer.GetPlayerTeam())
                 {
-                    ObjectRecyclerBase.Instance.Instantiate("deathicon", transform.position, transform.rotation);
+                    ObjectRecycler.Instance.Instantiate("deathicon", transform.position, transform.rotation);
                 }
             }
             var mplayer = new GamePlayer(photonView, true, false);
@@ -310,7 +304,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             }
             playerReferences.playerRagdoll.gameObject.name = "YOU";
             //显示击杀摄像机
-            DeathCamBase.Instance.SetTarget(new DeathCamBase.DeathCamInfo()
+            DeathCam.Instance.SetTarget(new DeathCam.DeathCamInfo()
             {
                 RealPlayer = sender,
                 TargetName = killer,
@@ -374,12 +368,12 @@ public class PlayerHealthManager : PlayerHealthManagerBase
         localKillInfo.byHeadShot = isHeadshot;
         localKillInfo.KillMethod = m_weapon;
         GameEvents.DispatchLocalKillEvent(localKillInfo);
-        var elimatedTeam = photonView.Owner.GetPlayerTeam();
+        var eliminatedTeam = photonView.Owner.GetPlayerTeam();
         if (isOneTeamMode)
         {
             NetworkWrapper.LocalPlayer.PostScore(score);
         }
-        else if (elimatedTeam != Team.All && elimatedTeam != NetworkWrapper.LocalPlayer.GetPlayerTeam())
+        else if (eliminatedTeam != Team.All && eliminatedTeam != NetworkWrapper.LocalPlayer.GetPlayerTeam())
         {
             NetworkWrapper.LocalPlayer.PostScore(score);
         }
@@ -480,12 +474,12 @@ public class PlayerHealthManager : PlayerHealthManagerBase
     }
     void OnProtectCount()
     {
-        protecTime--;
+        protectTime--;
         if (isMine)
         {
-            UIReferences.Instance.OnSpawnCount(protecTime);
+            UIReferences.Instance.OnSpawnCount(protectTime);
         }
-        if (protecTime <= 0)
+        if (protectTime <= 0)
         {
             CancelInvoke(nameof(OnProtectCount));
         }
@@ -543,7 +537,7 @@ public class PlayerHealthManager : PlayerHealthManagerBase
             currentHealth = maxHealth;
         }
     }
-    private bool isProtectionEnable { get { return (protecTime > 0); } }
+    private bool isProtectionEnable { get { return (protectTime > 0); } }
     public override int GetHealth() => currentHealth;
     public override int GetMaxHealth() => maxHealth;
     public override bool IsDeath()

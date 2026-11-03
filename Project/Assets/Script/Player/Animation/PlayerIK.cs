@@ -1,11 +1,22 @@
 using UnityEngine;
 /// 游戏默认的 IK 实现
-/// 想用自己的 IK 控制系统，只需新建一个脚本
-/// 并继承 PlayerIKBase.cs
 [ExecuteInEditMode]
-public class PlayerIK : PlayerIKBase
+public class PlayerIK : MonoBehaviourBase
 {
-    #region Public members
+    /// 为 true 时不应使用 IK 控制手臂。
+    public bool ControlArmsWithIK
+    {
+        get;
+        set;
+    } = true;
+    /// 当 CustomArmsIKHandler != null 时
+    /// 由它接管手臂 IK，本脚本不再用 IK 控制手臂。
+    public BodyIKController CustomArmsIKHandler 
+    { 
+        get; 
+        set; 
+    } = null;
+
     public Transform Target;
     [Header("UPPER BODY")]
     [Range(0, 1)] public float Weight;
@@ -28,9 +39,7 @@ public class PlayerIK : PlayerIKBase
     [GameToggle] public bool debugFootGizmos = true;
 
     public bool IsCustomHeadTarget { get; set; } = false;
-    #endregion
 
-    #region Private members
     private Transform RightFeed;
     private Transform LeftFeed;
     private float lFootIKWeight, rFootIKWeight = 0;
@@ -40,7 +49,7 @@ public class PlayerIK : PlayerIKBase
     private float leftArmIkWight = 1;
     private float rightArmIKPositionWeight = 0;
     private Transform m_headTransform, rightUpperArm;
-    private PlayerAnimationsBase PlayerAnimation;
+    private PlayerAnimations PlayerAnimation;
     private float deltaTime = 0;
     private Transform m_headTarget;
     private Transform m_leftArmRef;
@@ -50,7 +59,6 @@ public class PlayerIK : PlayerIKBase
     //仅编辑器
     [HideInInspector] public int editor_previewMode = 0;
     [HideInInspector] public float editor_weight = 1;
-    #endregion
 
     protected override void Awake()
     {
@@ -59,7 +67,8 @@ public class PlayerIK : PlayerIKBase
         Init();
     }
 
-    public override void Init()
+    /// 初始化 IK 解算器
+    public void Init()
     {
         if (playerReferences == null) return;
 
@@ -228,7 +237,8 @@ public class PlayerIK : PlayerIKBase
         animator.SetIKRotationWeight(AvatarIKGoal.LeftHand, 0);
     }
 
-    public override Transform HeadLookTarget
+    /// 返回玩家 IK 头部注视的 Transform 引用。
+    public Transform HeadLookTarget
     {
         get
         {
@@ -268,10 +278,10 @@ public class PlayerIK : PlayerIKBase
         {
             if (Application.isPlaying)
             {
-                if (PlayerSync != null && PlayerSync.CurrenGun != null)
+                if (PlayerSync != null && PlayerSync.CurrentGun != null)
                 {
-                    CompareLeftArmTarget(PlayerSync.CurrenGun.LeftHandPosition);
-                    return PlayerSync.CurrenGun.LeftHandPosition;
+                    CompareLeftArmTarget(PlayerSync.CurrentGun.LeftHandPosition);
+                    return PlayerSync.CurrentGun.LeftHandPosition;
                 }
             }
             else

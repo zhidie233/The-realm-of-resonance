@@ -1,10 +1,15 @@
 using UnityEngine;
-#if UNITY_EDITOR
-#endif
 /// 默认出生点实现
-/// 若要使用自己的出生点系统，让脚本从 SpawnPointBase.cs 继承即可
-public class SpawnLocation : SpawnPointBase
+public class SpawnLocation : MonoBehaviour
 {
+    public Team team = Team.All;
+
+    public static implicit operator Transform(SpawnLocation d) => d.transform;
+    /// 注册此出生点
+    public virtual void Initialize()
+    {
+        SpawnPointManager.AddSpawnPoint(this);
+    }
 
     [System.Serializable]
     public enum Shape
@@ -30,7 +35,7 @@ public class SpawnLocation : SpawnPointBase
         Initialize();
     }
     /// 返回符合此出生点设置的出生位置
-    public override void GetSpawnPosition(out Vector3 position, out Quaternion Rotation)
+    public void GetSpawnPosition(out Vector3 position, out Quaternion Rotation)
     {
         GetSpawnPosition(SpawnSpace, out position, out Rotation);
     }

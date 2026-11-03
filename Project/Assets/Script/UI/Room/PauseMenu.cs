@@ -3,9 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PauseMenu : PauseMenuBase
+public class PauseMenu : MonoBehaviour
 {
-    #region Public members    
+    public int CurrentWindow 
+    { 
+        get; 
+        set; 
+    } = -1;
+
+    public bool isMenuOpen 
+    { 
+        get; 
+        set; 
+    } = false;
+
+    public enum LayoutPart
+    {
+        Header = 1,
+        Body = 2,
+        Footer = 4
+    }
+
+    public static bool IsMenuOpen => Instance.isMenuOpen;
+
+    private static PauseMenu _instance;
+    public static PauseMenu Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<PauseMenu>(); }
+            return _instance;
+        }
+    }
+
     public string firstWindow = "scoreboard";
 
     [Header("Windows")]
@@ -18,14 +48,13 @@ public class PauseMenu : PauseMenuBase
     [Header("References")]
     [SerializeField] GameObject content = null;
     [SerializeField] private GameObject[] layoutRoots = null;
-    #endregion
 
     private void Start()
     {
         if (!IsMenuOpen) CloseMenu();
     }
     /// 打开暂停菜单
-    public override void OpenMenu(string windowOpen = "")
+    public void OpenMenu(string windowOpen = "")
     {
         var win = string.IsNullOrEmpty(windowOpen) ? firstWindow : windowOpen;
         SetActiveLayouts(LayoutPart.Header | LayoutPart.Body | LayoutPart.Footer);
@@ -33,7 +62,7 @@ public class PauseMenu : PauseMenuBase
         isMenuOpen = true;
     }
 
-    public override void OpenWindow(string windowName)
+    public void OpenWindow(string windowName)
     {
         var id = windows.FindIndex(x => x.Name == windowName);
         if(id == -1)
@@ -44,7 +73,7 @@ public class PauseMenu : PauseMenuBase
         OpenWindow(id);
     }
 
-    public override void OpenWindow(int windowIndex)
+    public void OpenWindow(int windowIndex)
     {
         if (windowIndex == CurrentWindow && isMenuOpen) return;
 
@@ -58,14 +87,14 @@ public class PauseMenu : PauseMenuBase
         onOpen?.Invoke();
     }
 
-    public override void CloseMenu()
+    public void CloseMenu()
     {
         isMenuOpen = false;
         onClose?.Invoke();
         content.SetActive(false);
     }
 
-    public override void CloseWindow(string windowName)
+    public void CloseWindow(string windowName)
     {
         var id = windows.FindIndex(x => x.Name == windowName);
         if (id != -1)
@@ -75,7 +104,7 @@ public class PauseMenu : PauseMenuBase
         }
     }
     /// 仅启用给定的菜单布局部分（禁用其余部分）
-    public override void SetActiveLayouts(LayoutPart layouts)
+    public void SetActiveLayouts(LayoutPart layouts)
     {
         layoutRoots[0].SetActive(layouts.IsEnumFlagPresent(LayoutPart.Header));
         layoutRoots[1].SetActive(layouts.IsEnumFlagPresent(LayoutPart.Body));

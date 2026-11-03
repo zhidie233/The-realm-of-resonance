@@ -6,7 +6,7 @@ public class AICoverSpot : MonoBehaviour
     [Tooltip("机器人到达该掩体点时是否蹲下")]
     [GameToggle] public bool Crouch = false;
     public float lastUseTime { get; set; } = 0;
-    public List<AICoverSpot> NeighbordPoints = new List<AICoverSpot>();
+    public List<AICoverSpot> NeighborPoints = new List<AICoverSpot>();
 
     private bool m_positionCached = false;
     private Vector3 _position;
@@ -43,21 +43,21 @@ public class AICoverSpot : MonoBehaviour
         return (Time.time - lastUseTime) > timeSpan;
     }
 
-    public AICoverSpot TryGetAvailableNeighbord()
+    public AICoverSpot TryGetAvailableNeighbor()
     {
-        if (NeighbordPoints == null || NeighbordPoints.Count <= 0) return null;
+        if (NeighborPoints == null || NeighborPoints.Count <= 0) return null;
 
-        for (int i = 0; i < NeighbordPoints.Count; i++)
+        for (int i = 0; i < NeighborPoints.Count; i++)
         {
-            if (NeighbordPoints[i] == null) continue;
+            if (NeighborPoints[i] == null) continue;
 
-            if (NeighbordPoints[i].IsAvailable(AICoverSpotManager.Instance.UsageTime))
-                return NeighbordPoints[i];
+            if (NeighborPoints[i].IsAvailable(AICoverSpotManager.Instance.UsageTime))
+                return NeighborPoints[i];
         }
         return null;
     }
 
-    public bool HasNeighbords() => NeighbordPoints != null && NeighbordPoints.Count > 0;
+    public bool HasNeighbors() => NeighborPoints != null && NeighborPoints.Count > 0;
 
     private void OnDrawGizmos()
     {
@@ -73,12 +73,12 @@ public class AICoverSpot : MonoBehaviour
         Gizmos.DrawCube(transform.position, new Vector3(1, 0.1f, 1));
 
         Gizmos.color = Color.red;
-        if (NeighbordPoints.Count > 0)
+        if (NeighborPoints.Count > 0)
         {
-            for (int i = 0; i < NeighbordPoints.Count; i++)
+            for (int i = 0; i < NeighborPoints.Count; i++)
             {
-                if (NeighbordPoints[i] == null) continue;
-                Gizmos.DrawLine(transform.position, NeighbordPoints[i].transform.position);
+                if (NeighborPoints[i] == null) continue;
+                Gizmos.DrawLine(transform.position, NeighborPoints[i].transform.position);
             }
         }
     }

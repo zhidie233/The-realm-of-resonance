@@ -718,7 +718,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   globalChatKey: 116
   teamChatKey: 121
-  messageBufferLenght: 7
+  messageBufferLength: 7
   chatUIRoot: {fileID: 198027870779504362}
   chatInputField: {fileID: 228126805944352366}
   chatText: {fileID: 227549156045744822}

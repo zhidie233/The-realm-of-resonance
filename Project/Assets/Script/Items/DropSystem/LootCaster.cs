@@ -1,12 +1,18 @@
 using UnityEngine;
 using System.Collections;
 
-public class LootCaster : LootCasterBase
+public class LootCaster : MonoBehaviour
 {
+    public struct LootData
+    {
+        public int PackID;
+        public float Delay;
+    }
+
     public GameObject DestroyEffect;
     private int PackID = 0;
 
-    public override void SetUp(LootData dropData)
+    public void SetUp(LootData dropData)
     {
         PackID = dropData.PackID;
         StartCoroutine(CallProcess(dropData.Delay));

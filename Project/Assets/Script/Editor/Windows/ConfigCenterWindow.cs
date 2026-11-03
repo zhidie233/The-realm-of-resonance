@@ -7,11 +7,10 @@ using UnityEngine;
 
 public class ConfigCenterWindow : EditorWindow
 {
-    #region Parameters
     public static Color primaryColor = new Color(0.098f, 0.098f, 0.098f, 1.00f);
     public static Color altColor = new Color(0.07f, 0.07f, 0.07f, 1.00f);
     public static Color altColorLight = new Color(0.5411765f, 0.5411765f, 0.5411765f, 1.00f);
-    public static Color hightlightColor = new Color(1f, 0.9882353f, 0.003921569f, 1.00f);
+    public static Color highlightColor = new Color(1f, 0.9882353f, 0.003921569f, 1.00f);
     public static Color whiteColor = new Color(0.754717f, 0.754717f, 0.754717f, 1.00f);
 
     private List<ManagerPanel> managerPanels = new List<ManagerPanel>()
@@ -42,7 +41,6 @@ public class ConfigCenterWindow : EditorWindow
     public SerializedObject serializedObject;
     private Rect windowRect;
     private Type cachedType;
-    #endregion
 
     private void OnEnable()
     {
@@ -162,7 +160,7 @@ public class ConfigCenterWindow : EditorWindow
             {
                 float w = r.width;
                 r.width = 1;
-                EditorGUI.DrawRect(r, hightlightColor);
+                EditorGUI.DrawRect(r, highlightColor);
                 r.width = w;
             }
             else
@@ -274,7 +272,7 @@ public class ConfigCenterWindow : EditorWindow
 
         GUILayout.Space(18);
         DrawTitleText("Others");
-        w.WorldPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.WorldPrefab, typeof(FirearmPickUpBase), false) as FirearmPickUpBase;
+        w.WorldPrefab = EditorGUILayout.ObjectField("枪械拾取预制体", w.WorldPrefab, typeof(FirearmPickUp), false) as FirearmPickUp;
 
         GUILayout.Space(18);
         EditorGUILayout.BeginHorizontal();
@@ -402,22 +400,22 @@ public class ConfigCenterWindow : EditorWindow
         m.ModeName = EditorGUILayout.TextField("游戏模式名称", m.ModeName);
         m.gameMode = (GameMode)EditorGUILayout.EnumPopup("模式标识", m.gameMode);
         var r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.isEnabled = ResonanceRealmEditorStyles.FeatureToogle(r, m.isEnabled, "是否启用");
+        m.isEnabled = ResonanceRealmEditorStyles.FeatureToggle(r, m.isEnabled, "是否启用");
 
         GUILayout.Space(10);
         DrawTitleText("SETTINGS");
         m.GoalName = EditorGUILayout.TextField("模式目标名称", m.GoalName);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.botsEnabled = ResonanceRealmEditorStyles.FeatureToogle(r, m.botsEnabled, "支持机器人？");
+        m.botsEnabled = ResonanceRealmEditorStyles.FeatureToggle(r, m.botsEnabled, "支持机器人？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.AutoAssignTeams = ResonanceRealmEditorStyles.FeatureToogle(r, m.AutoAssignTeams, "强制自动分配阵营？");
+        m.AutoAssignTeams = ResonanceRealmEditorStyles.FeatureToggle(r, m.AutoAssignTeams, "强制自动分配阵营？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.allowWeaponPickup = ResonanceRealmEditorStyles.FeatureToogle(r, m.allowWeaponPickup, "允许拾取武器？");
+        m.allowWeaponPickup = ResonanceRealmEditorStyles.FeatureToggle(r, m.allowWeaponPickup, "允许拾取武器？");
         GUILayout.Space(2);
         r = GUILayoutUtility.GetRect(GUIContent.none, EditorStyles.label);
-        m.HideRoomAfterStart = ResonanceRealmEditorStyles.FeatureToogle(r, m.HideRoomAfterStart, "开始后隐藏或关闭房间？");
+        m.HideRoomAfterStart = ResonanceRealmEditorStyles.FeatureToggle(r, m.HideRoomAfterStart, "开始后隐藏或关闭房间？");
         m.MinPlayersToStart = EditorGUILayout.IntSlider("开始所需玩家数", m.MinPlayersToStart, 1, 64);
         m.spawnOnRoundBegin = (GameModeSettings.OnRoundBegin)EditorGUILayout.EnumPopup("回合开始时", m.spawnOnRoundBegin);
         m.onDeath = (GameModeSettings.OnDeath)EditorGUILayout.EnumPopup("本地玩家死亡时", m.onDeath);
@@ -700,7 +698,6 @@ public class ConfigCenterWindow : EditorWindow
         }
     }
 
-    #region Manager Windows
     void DrawGameDataSettings()
     {
         if (gameData == null) gameData = GameConfig.Instance;
@@ -741,7 +738,6 @@ public class ConfigCenterWindow : EditorWindow
         GUILayout.Space(10);
         DrawEditorOf(config.supplyConfig);
     }
-    #endregion
 
     private bool lpAlt = false;
     void DrawManagerButtons()
@@ -765,7 +761,7 @@ public class ConfigCenterWindow : EditorWindow
                 EditorGUI.DrawRect(r, altColor);
                 float w = r.width;
                 r.width = 1;
-                EditorGUI.DrawRect(r, hightlightColor);
+                EditorGUI.DrawRect(r, highlightColor);
                 r.width = w;
             }
             if (GUI.Button(r, managerPanels[i].Name, styles["panelButton"]))
@@ -831,7 +827,6 @@ public class ConfigCenterWindow : EditorWindow
         });
     }
 
-    #region Drawers
     public void DrawTitleText(string title)
     {
         GUILayout.Label(title.ToUpper(), styles["titleH2"]);
@@ -877,9 +872,7 @@ public class ConfigCenterWindow : EditorWindow
         editor.OnInspectorGUI();
         EditorGUILayout.EndVertical();
     }
-    #endregion
 
-    #region Utils
     private GUIStyle GetStyle(string name, ResonanceRealmEditorStyles.OnCreateStyleOp onCreate, string overlap = "") => ResonanceRealmEditorStyles.GetUnityStyle(name, onCreate, overlap);
 
     private static Dictionary<string, Texture2D> cachedUnityIcons;
@@ -991,7 +984,6 @@ public class ConfigCenterWindow : EditorWindow
         Levels,
         GameModes,
     }
-    #endregion
 }
 
 public abstract class ConfigCenterTabData

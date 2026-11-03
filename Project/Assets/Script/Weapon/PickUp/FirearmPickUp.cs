@@ -1,25 +1,62 @@
 using System.Collections;
 using UnityEngine;
+using System;
 /// 默认武器拾取脚本
-/// 继承 FirearmPickUpBase 即可用自己的脚本
-public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
+public class FirearmPickUp : MonoBehaviourBase, IRayDetectable
 {
-    #region Public members
+    /// 弹药信息
+    [Serializable]
+    public class AmmoInformation
+    {
+        public int Bullets = 0;
+        public int Clips = 0;
+
+        public int GetBullets
+        {
+            get
+            {
+                int b = Bullets;
+                if (GameConfig.Instance.AmmoType == AmmunitionType.Bullets)
+                {
+                    b = Bullets * Clips;
+                }
+                return b;
+            }
+        }
+    }
+    /// 武器标识
+    [FirearmID] public int WeaponID = 0;
+    /// 这把掉落武器的弹药数据
+    public AmmoInformation Ammunition;
+    /// 这把武器将被自动销毁
+    /// 是否在特定时间后？
+    public bool AutoDestroy = true;
+
+    public FirearmData GunInfo
+    {
+        get
+        {
+            if (_gunInfo == null)
+            {
+                _gunInfo = GameConfig.Instance.GetWeapon(WeaponID);
+            }
+            return _gunInfo;
+        }
+        private set => _gunInfo = value;
+    }
+    private FirearmData _gunInfo;
+
     public DetectMode m_DetectMode = DetectMode.Raycast;
     [HideInInspector]
     public bool PickupOnCollide = true;
     public float DestroyIn = 15f;
     public GameEvents.UEvent onPickUp;
-    #endregion
 
-    #region Private members
     private bool isFocus = false;
     private PlayerRig localPlayerIn = null;
     private bool localInsideTrigger = false;
     private byte uniqueLocal = 0;
-    #endregion
 
-    #region Unity Methods
     protected override void Awake()
     {
         if (!NetworkWrapper.IsConnected) return;
@@ -49,14 +86,14 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
         base.OnDestroy();
         if (!localInsideTrigger) return;
 
-        PickUpUIBase.Instance?.Hide();
+        PickUpUI.Instance?.Hide();
         if (localPlayerIn != null)
         {
             if (m_DetectMode == DetectMode.Raycast)
             {
                 if (localPlayerIn.cameraRay != null)
                 {
-                    localPlayerIn.cameraRay.SetActiver(false, uniqueLocal);
+                    localPlayerIn.cameraRay.SetActivator(false, uniqueLocal);
                 }
             }
         }
@@ -74,19 +111,19 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
         if (playerReferences != null)
         {
             localInsideTrigger = true;
-            FirearmPickUpManagerBase.Instance.LastTrigger = this;
+            FirearmPickUpManager.Instance.LastTrigger = this;
             localPlayerIn = playerReferences;
 
             if (m_DetectMode == DetectMode.Raycast)
             {
                 if (playerReferences.cameraRay != null)
                 {
-                    playerReferences.cameraRay.SetActiver(true, uniqueLocal);
+                    playerReferences.cameraRay.SetActivator(true, uniqueLocal);
                 }
             }
             else if (m_DetectMode == DetectMode.Trigger)
             {
-                PickUpUIBase.Instance?.OnOverWeapon(this);
+                PickUpUI.Instance?.OnOverWeapon(this);
             }
         }
     }
@@ -96,21 +133,20 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
         if (c.isLocalPlayerCollider() && localInsideTrigger)
         {
             localInsideTrigger = false;
-            PickUpUIBase.Instance?.Hide();
+            PickUpUI.Instance?.Hide();
             if (localPlayerIn != null)
             {
                 if (m_DetectMode == DetectMode.Raycast)
                 {
                     if (localPlayerIn.cameraRay != null)
                     {
-                        localPlayerIn.cameraRay.SetActiver(false, uniqueLocal);
+                        localPlayerIn.cameraRay.SetActivator(false, uniqueLocal);
                     }
                 }
                 localPlayerIn = null;
             }
         }
     } 
-    #endregion
 
     public override void OnUpdate()
     {
@@ -118,7 +154,7 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
 
         if (m_DetectMode == DetectMode.Trigger)
         {
-            if (GameInput.Interact() && FirearmPickUpManagerBase.Instance.LastTrigger == this)
+            if (GameInput.Interact() && FirearmPickUpManager.Instance.LastTrigger == this)
             {
                 PickUp();
             }
@@ -134,34 +170,35 @@ public class FirearmPickUp : FirearmPickUpBase, IRayDetectable
         }
     }
     /// 拾取武器
-    public override void PickUp()
+    public void PickUp()
     {
         if (!GetGameMode.GetGameModeInfo().allowWeaponPickup) return;
 
-        FirearmPickUpManagerBase.Instance?.SendPickUp(new FirearmPickUpManagerBase.PickUpData()
+        FirearmPickUpManager.Instance?.SendPickUp(new FirearmPickUpManager.PickUpData()
         {
             Identifier = gameObject.name,
             WeaponID = WeaponID,
             Ammunition = Ammunition
         });
 
-        PickUpUIBase.Instance?.Hide();
+        PickUpUI.Instance?.Hide();
         onPickUp?.Invoke();
     }
     /// 玩家看向武器时调用
     public void OnRayDetectedByPlayer()
     {
         isFocus = true;
-        PickUpUIBase.Instance?.OnOverWeapon(this);
+        PickUpUI.Instance?.OnOverWeapon(this);
     }
     /// 玩家不再看向武器时调用
     public void OnUnDetectedByPlayer()
     {
         isFocus = false;
-        PickUpUIBase.Instance?.Hide();
+        PickUpUI.Instance?.Hide();
     }
 
-    public override void DestroyAfter(float delay)
+    /// 延迟后销毁该武器实例
+    public void DestroyAfter(float delay)
     {
         this.InvokeAfter(delay, () =>
         {

@@ -3,9 +3,26 @@ using System.Collections.Generic;
 using Photon.Realtime;
 using TMPro;
 
-public class RoomChat : RoomChatBase
+public class RoomChat : MonoBehaviourBase
 {
-    public int messageBufferLenght = 7;
+    private bool _isChatAvailable = true;
+    public bool IsChatAvailable
+    {
+        get => _isChatAvailable;
+        set => _isChatAvailable = value;
+    }
+
+    private static RoomChat _instance;
+    public static RoomChat Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<RoomChat>(); }
+            return _instance;
+        }
+    }
+
+    public int messageBufferLength = 7;
     [Header("References")]
     public GameObject chatUIRoot;
     public TMP_InputField chatInputField;
@@ -84,7 +101,7 @@ public class RoomChat : RoomChatBase
 
         string txt = string.Format("[{0}] [{1}]:{2}", messageTarget.ToString().ToUpper(), senderName, message);
         this.messages.Add(txt);
-        if (messages.Count > messageBufferLenght)
+        if (messages.Count > messageBufferLength)
         {
             messages.RemoveAt(0);
         }
@@ -99,7 +116,7 @@ public class RoomChat : RoomChatBase
         Invoke(nameof(HideChat), 5);
     }
     /// 通过网络向其他所有客户端发送文本消息
-    public override void SetChat(string txt)
+    public void SetChat(string txt)
     {
         if (!NetworkWrapper.IsConnected || !CanUseTheChat)
             return;
@@ -113,21 +130,24 @@ public class RoomChat : RoomChatBase
         NetworkWrapper.Instance.SendDataOverNetwork(NetworkKeys.ChatEvent, data);
     }
     /// 仅在本地聊天窗口发布消息。
-    public override void SetChatLocally(string newLine)
+    public void SetChatLocally(string newLine)
     {
         this.messages.Add(newLine);
-        if (messages.Count > messageBufferLenght)
+        if (messages.Count > messageBufferLength)
         {
             messages.RemoveAt(0);
         }
     }
 
-    public override void SetActiveUI(bool active)
+    /// 启用/关闭聊天 UI。
+    public void SetActiveUI(bool active)
     {
         chatInputField.gameObject.SetActive(active);
     }
 
-    public override void OnSubmit()
+    /// 应从输入框取文本
+    /// 然后做与 SetChat(...) 相同的事
+    public void OnSubmit()
     {
         GameConfig.Instance.isChatOpen = !GameConfig.Instance.isChatOpen;
         chatInputField.gameObject.SetActive(GameConfig.Instance.isChatOpen);

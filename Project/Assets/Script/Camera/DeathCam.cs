@@ -1,10 +1,28 @@
 using UnityEngine;
 using System.Collections;
+using Photon.Realtime;
 
-public class DeathCam : DeathCamBase
+public class DeathCam : MonoBehaviourBase
 {
+    private static DeathCam _killcam;
+    public static DeathCam Instance
+    {
+        get
+        {
+            if (_killcam == null) _killcam = SpawnPointManager.Instance.killCameraInstance;
+            return _killcam;
+        }
+    }
 
-    #region Public members
+    public struct DeathCamInfo
+    {
+        public Transform Target;
+        public string TargetName;
+        public int WeaponID;
+        public Transform FallbackTarget;
+        public Player RealPlayer;
+    }
+
     public Transform target = null;
     public float distance = 10.0f;
     public float distanceMax = 15f;
@@ -14,16 +32,13 @@ public class DeathCam : DeathCamBase
     public float yMinLimit = -20f;
     public float ySpeed = 120f;
     public LayerMask layers; 
-    #endregion
 
-    #region Private members
     float x = 0;
     float y = 0;
     private int CurrentTarget = 0;
     private GameController Manager;
     private bool canManipulate = false;
     private DeathCamType cameraType = DeathCamType.WatchBody;
-    #endregion
 
     protected override void OnEnable()
     {
@@ -61,7 +76,7 @@ public class DeathCam : DeathCamBase
     {
         target = null;
         canManipulate = false;
-        DeathCamUIBase.Instance?.Hide();
+        DeathCamUI.Instance?.Hide();
         SetActive(false);
     }
 
@@ -103,7 +118,7 @@ public class DeathCam : DeathCamBase
         transform.position = vector3;
     }
     /// 设置击杀回放聚焦/观察的目标
-    public override DeathCamBase SetTarget(DeathCamInfo info)
+    public DeathCam SetTarget(DeathCamInfo info)
     {
         //如果玩家传入了目标
         if(info.Target != null && (GameConfig.Instance.deathReplayMode == DeathCamType.WatchBody || string.IsNullOrEmpty(info.TargetName)))
@@ -154,17 +169,17 @@ public class DeathCam : DeathCamBase
     private void ReadyToShow(DeathCamInfo info)
     {
         canManipulate = true;
-        DeathCamUIBase.Instance?.Show(info);
+        DeathCamUI.Instance?.Show(info);
         if(GameConfig.Instance.deathReplayMode == DeathCamType.WatchBody && target != null)
         {
             PositionedAndLookAt(target);
         }
     }
 
-    public override void SetActive(bool active)
+    public void SetActive(bool active)
     {
         gameObject.SetActive(active);
-        if (!active) DeathCamUIBase.Instance?.Hide();
+        if (!active) DeathCamUI.Instance?.Hide();
     }
 
     public void SpectPlayer(Transform player)

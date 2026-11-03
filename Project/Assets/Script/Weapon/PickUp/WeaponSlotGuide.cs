@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Weapon Slot Guide", menuName = "项目/Weapon/SlotGuide")]
 public class WeaponSlotGuide : ScriptableObject
@@ -7,12 +5,12 @@ public class WeaponSlotGuide : ScriptableObject
     [Reorderable] public FirearmType[] primarySlots;
     [Reorderable] public FirearmType[] secondarySlots;
     [Reorderable] public FirearmType[] perksSlots;
-    [Reorderable] public FirearmType[] letalSlots;
+    [Reorderable] public FirearmType[] lethalSlots;
     public bool CanBeOnSlot(FirearmType gunType, int slotID)
     {
         if (slotID == 0) return TypeInList(gunType, primarySlots);
         else if(slotID == 1) return TypeInList(gunType, secondarySlots);
-        else if (slotID == 2) return TypeInList(gunType, letalSlots);
+        else if (slotID == 2) return TypeInList(gunType, lethalSlots);
         else return TypeInList(gunType, perksSlots);
     }
 

@@ -78,7 +78,7 @@ public class Footstep : MonoBehaviour
         audioSource.Play();
     }
 
-    public void SetVolumeMuliplier(float multiplier)
+    public void SetVolumeMultiplier(float multiplier)
     {
         volumeMultiplier = multiplier;
     }

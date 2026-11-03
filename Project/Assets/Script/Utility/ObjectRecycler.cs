@@ -2,10 +2,18 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 /// 默认游戏对象池系统
-/// 想用自己的对象池系统，继承 ObjectRecyclerBase.cs 即可
-/// 并确保默认池系统中的预制体使用相同的键/标识。
-public class ObjectRecycler : ObjectRecyclerBase
+public class ObjectRecycler : MonoBehaviour
 {
+    private static ObjectRecycler _instance;
+    public static ObjectRecycler Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<ObjectRecycler>(); }
+            return _instance;
+        }
+    }
+
     [SerializeField]
     private PreRegister[] pooledPrefabs;
 
@@ -44,7 +52,7 @@ public class ObjectRecycler : ObjectRecyclerBase
     }
     /// 实例化池化预制体
     /// 用它代替 GameObject.Instantiate(...)
-    public override GameObject Instantiate(string objectName, Vector3 position, Quaternion rotation)
+    public GameObject Instantiate(string objectName, Vector3 position, Quaternion rotation)
     {
         PooledInstance pool = pools[objectName];
         if(pool != null)

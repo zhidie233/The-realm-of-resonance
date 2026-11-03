@@ -5,19 +5,19 @@ using UnityEngine.Animations;
 public class PlayerRig : PlayerReferencesCommon
 {
     public PlayerNetworkHandler playerNetwork;
-    public FirstPersonControllerBase firstPersonController;
+    public FirstPersonController firstPersonController;
     public PlayerHealthManagerBase playerHealthManager;
     public PlayerConfig playerSettings;
     public FirearmInventory gunManager;
-    public PlayerAnimationsBase playerAnimations;
-    public PlayerRagdollBase playerRagdoll;
-    public KickbackBase recoil;
-    public CameraImpulseBase cameraShaker;
-    public ViewRayBase cameraRay;
-    public SwayStrideBase weaponBob;
-    public WeaponDriftBase weaponSway;
+    public PlayerAnimations playerAnimations;
+    public PlayerRagdoll playerRagdoll;
+    public KickbackHandler recoil;
+    public CameraImpulse cameraShaker;
+    public ViewRay cameraRay;
+    public SwayStride weaponBob;
+    public WeaponDrift weaponSway;
     public HitBoxManager hitBoxManager;
-    public CameraMotionRigBase cameraMotion;
+    public CameraMotionRig cameraMotion;
     public CharacterController characterController;
     public PhotonView photonView;
     public Camera playerCamera;
@@ -83,13 +83,13 @@ public class PlayerRig : PlayerReferencesCommon
         }
     }
 
-    private PlayerIKBase _playerIK = null;
-    public PlayerIKBase playerIK
+    private PlayerIK _playerIK = null;
+    public PlayerIK playerIK
     {
         get
         {
             if (playerAnimations == null) return null;
-            if (_playerIK == null) _playerIK = playerAnimations.GetComponentInChildren<PlayerIKBase>();
+            if (_playerIK == null) _playerIK = playerAnimations.GetComponentInChildren<PlayerIK>();
             return _playerIK;
         }
     }

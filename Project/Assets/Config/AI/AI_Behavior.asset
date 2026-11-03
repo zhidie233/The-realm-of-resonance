@@ -16,7 +16,7 @@ MonoBehaviour:
   weaponAccuracy: 2
   GetRandomTargetOnStart: 1
   forceFollowAtHalfHealth: 0
-  checkEnemysWhenHaveATarget: 1
+  checkEnemiesWhenHaveATarget: 1
   targetOutRangeBehave: 0
   maxCoverTime: 10
   coverColdDown: 15

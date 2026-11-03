@@ -12,7 +12,7 @@ public static class MathHelpers
         return Vector3.Dot(AV, AB) / Vector3.Dot(AB, AB);
     }
 
-    public static Quaternion ClampRotationAroundAxis(Quaternion q, float minimun, float maximun, Axis axis)
+    public static Quaternion ClampRotationAroundAxis(Quaternion q, float minimum, float maximum, Axis axis)
     {
         q.x /= q.w;
         q.y /= q.w;
@@ -23,13 +23,13 @@ public static class MathHelpers
         if (axis == Axis.X)
         {
             angle = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.x);
-            angle = Mathf.Clamp(angle, minimun, maximun);
+            angle = Mathf.Clamp(angle, minimum, maximum);
             q.x = Mathf.Tan(0.5f * Mathf.Deg2Rad * angle);
         }
         else
         {
             angle = 2.0f * Mathf.Rad2Deg * Mathf.Atan(q.y);
-            angle = Mathf.Clamp(angle, minimun, maximun);
+            angle = Mathf.Clamp(angle, minimum, maximum);
             q.y = Mathf.Tan(0.5f * Mathf.Deg2Rad * angle);
         }
 

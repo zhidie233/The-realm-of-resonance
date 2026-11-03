@@ -3,8 +3,19 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class LobbyRoomList : LobbyRoomListBase
+public class LobbyRoomList : MonoBehaviour
 {
+    private static LobbyRoomList _instance;
+    public static LobbyRoomList Instance
+    {
+        get
+        {
+            if (_instance == null) _instance = FindObjectOfType<LobbyRoomList>();
+            if (_instance == null && LobbyUI.Instance != null) _instance = LobbyUI.Instance.GetComponentInChildren<LobbyRoomList>(true);
+            return _instance;
+        }
+    }
+
     public ListLayoutHelper roomListHandler;
     [SerializeField] private TextMeshProUGUI NoRoomText = null;
 
@@ -15,7 +26,7 @@ public class LobbyRoomList : LobbyRoomListBase
         if (!roomListHandler.IsInitialize) roomListHandler.Initialize();
     }
     /// 显示所有可用房间
-    public override void SetRoomList(List<RoomInfo> rooms)
+    public void SetRoomList(List<RoomInfo> rooms)
     {
         //移除旧列表
         roomListHandler.Clear();
@@ -32,7 +43,7 @@ public class LobbyRoomList : LobbyRoomListBase
             {
                 if (info.Name == MatchLobby.Instance.justCreatedRoomName) continue;
 
-                var entry = roomListHandler.InstatiateAndGet<RoomListItemUIBase>();
+                var entry = roomListHandler.InstantiateAndGet<RoomListItemUI>();
                 entry.SetInfo(info);
             }
         }
@@ -69,7 +80,8 @@ public class LobbyRoomList : LobbyRoomListBase
         }
     }
 
-    public override void ClearList()
+    /// 清空列表中的所有房间（含缓存）。
+    public void ClearList()
     {
         cachedRoomList.Clear();
         roomListHandler.Clear();

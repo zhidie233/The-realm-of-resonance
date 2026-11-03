@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class PlayerScoreboardTable : PlayerScoreboardTableBase
+public class PlayerScoreboardTable : MonoBehaviour
 {
     public Team team = Team.All;
     public RectTransform panel;
@@ -27,37 +27,37 @@ public class PlayerScoreboardTable : PlayerScoreboardTableBase
         }
     }
 
-    public override PlayerScoreboardUIBase Instance(Player player, GameObject uiPrefab)
+    public PlayerScoreboardUI Instance(Player player, GameObject uiPrefab)
     {
         GameObject instance = Instantiate(uiPrefab) as GameObject;
         instance.transform.SetParent(panel, false);
-        var script = instance.GetComponent<PlayerScoreboardUIBase>();
+        var script = instance.GetComponent<PlayerScoreboardUI>();
         script.Init(player);
         instance.SetActive(true);
         return script;
     }
 
-    public override PlayerScoreboardUIBase InstanceBot(GameBotProperties player, GameObject uiPrefab)
+    public PlayerScoreboardUI InstanceBot(GameBotProperties player, GameObject uiPrefab)
     {
         GameObject instance = Instantiate(uiPrefab) as GameObject;
         instance.transform.SetParent(panel, false);
-        var script = instance.GetComponent<PlayerScoreboardUIBase>();
+        var script = instance.GetComponent<PlayerScoreboardUI>();
         script.Init(null, player);
         instance.SetActive(true);
         return script;
     }
 
-    public override void SetActive(bool active)
+    public void SetActive(bool active)
     {
         gameObject.SetActive(active);
     }
 
-    public override void SetActiveJoinButton(bool active)
+    public void SetActiveJoinButton(bool active)
     {
         joinButton.SetActive(active);
     }
 
-    public override void ResetJoinButton()
+    public void ResetJoinButton()
     {
         joinButton.GetComponent<Button>().interactable = true;
     }

@@ -1,89 +1,99 @@
 using UnityEngine;
 
-   public class DamageIndicator : DamageIndicatorBase
-   {
-       #region Public members
-       [Range(1, 5)] public float FadeTime = 3;
-       [Header("References")]
-       public RectTransform indicatorPivot;
-       public CanvasGroup indicatorAlpha; 
-       #endregion
+public class DamageIndicator : MonoBehaviourBase
+{
+    private static DamageIndicator _instance;
 
-       #region Private members
-       private float alpha = 0.0f;
-       private float rotationOffset;
-       Vector3 eulerAngle = Vector3.zero;
-       Vector3 forward;
-       Vector3 rhs;
-       private Vector3 attackDirection; 
-       #endregion
+    public static DamageIndicator Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<DamageIndicator>();
+            }
+            return _instance;
+        }
+    }
 
-       protected override void Awake()
-       {
-           base.Awake();
-           enabled = GameConfig.Instance.hitDirectionIndicator;
-           GameEvents.onLocalPlayerSpawn += OnLocalSpawn;
-       }
+    [Range(1, 5)] public float FadeTime = 3;
+    [Header("References")]
+    public RectTransform indicatorPivot;
+    public CanvasGroup indicatorAlpha; 
 
-       protected override void OnDisable()
-       {
-           base.OnDisable();
-           GameEvents.onLocalPlayerSpawn -= OnLocalSpawn;
-           if (indicatorAlpha != null)
-               indicatorAlpha.alpha = 0;
-       }
+    private float alpha = 0.0f;
+    private float rotationOffset;
+    Vector3 eulerAngle = Vector3.zero;
+    Vector3 forward;
+    Vector3 rhs;
+    private Vector3 attackDirection; 
 
-       void OnLocalSpawn()
-       {
-           indicatorAlpha.alpha = 0;
-           alpha = 0;
-       }
-       /// 用于发送新的受击方向
-       public override void SetHit(Vector3 direction)
-       {
-           if (direction == Vector3.zero)
-               return;
+    protected override void Awake()
+    {
+        base.Awake();
+        enabled = GameConfig.Instance.hitDirectionIndicator;
+        GameEvents.onLocalPlayerSpawn += OnLocalSpawn;
+    }
 
-           attackDirection = direction;
-           alpha = 3f;
-       }
-       /// 可见时更新位置
-       public override void OnUpdate()
-       {
-           if (alpha <= 0) return;
-           if (GameCore.LocalPlayerReferences == null) return;
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        GameEvents.onLocalPlayerSpawn -= OnLocalSpawn;
+        if (indicatorAlpha != null)
+            indicatorAlpha.alpha = 0;
+    }
 
-           alpha -= Time.deltaTime;
-           UpdateDirection();
-       }
-       /// 按箭头指示更新方向
-       void UpdateDirection()
-       {
-           rhs = attackDirection - GameCore.LocalPlayerReferences.PlayerCameraTransform.position;
-           rhs.y = 0;
-           rhs.Normalize();
-           if (GameController.Instance.CameraRendered != null)
-           {
-               forward = GameController.Instance.CameraRendered.transform.forward;
-           }
-           else
-           {
-               forward = transform.forward;
-           }
-           float GetPos = Vector3.Dot(forward, rhs);
-           if (Vector3.Cross(forward, rhs).y > 0)
-           {
-               rotationOffset = (1f - GetPos) * 90;
-           }
-           else
-           {
-               rotationOffset = (1f - GetPos) * -90;
-           }
-           if (indicatorPivot != null)
-           {
-               indicatorAlpha.alpha = alpha;
-               eulerAngle.z = -rotationOffset;
-               indicatorPivot.eulerAngles = eulerAngle;
-           }
-       }
-   }
+    void OnLocalSpawn()
+    {
+        indicatorAlpha.alpha = 0;
+        alpha = 0;
+    }
+    /// 用于发送新的受击方向
+    public void SetHit(Vector3 direction)
+    {
+        if (direction == Vector3.zero)
+            return;
+
+        attackDirection = direction;
+        alpha = 3f;
+    }
+    /// 可见时更新位置
+    public override void OnUpdate()
+    {
+        if (alpha <= 0) return;
+        if (GameCore.LocalPlayerReferences == null) return;
+
+        alpha -= Time.deltaTime;
+        UpdateDirection();
+    }
+    /// 按箭头指示更新方向
+    void UpdateDirection()
+    {
+        rhs = attackDirection - GameCore.LocalPlayerReferences.PlayerCameraTransform.position;
+        rhs.y = 0;
+        rhs.Normalize();
+        if (GameController.Instance.CameraRendered != null)
+        {
+            forward = GameController.Instance.CameraRendered.transform.forward;
+        }
+        else
+        {
+            forward = transform.forward;
+        }
+        float GetPos = Vector3.Dot(forward, rhs);
+        if (Vector3.Cross(forward, rhs).y > 0)
+        {
+            rotationOffset = (1f - GetPos) * 90;
+        }
+        else
+        {
+            rotationOffset = (1f - GetPos) * -90;
+        }
+        if (indicatorPivot != null)
+        {
+            indicatorAlpha.alpha = alpha;
+            eulerAngle.z = -rotationOffset;
+            indicatorPivot.eulerAngles = eulerAngle;
+        }
+    }
+}

@@ -8,13 +8,11 @@ public class RoomSettings : MonoBehaviourBase
 {
     [GameToggle] public bool canSuicide = true;
 
-    #region Public properties
     public GameMode CurrentGameMode => CurrentRoomInfo.gameMode;
     public int GameGoal => CurrentRoomInfo.goal;
     public bool AutoAssignTeams => CurrentRoomInfo.autoAssignTeams;
     public GameRoomInfo CurrentRoomInfo { get; set; }
     public bool RoomInfoFetched { get; set; } = false;
-    #endregion
 
     private Dictionary<string, object> matchPersistData = new Dictionary<string, object>();
 
@@ -90,7 +88,7 @@ public class RoomSettings : MonoBehaviourBase
                 return;
             }
 
-            if (!ObserverModeBase.EnterAsSpectator && LobbyCameraBase.Instance.GetCameraMode() != LobbyCameraBase.CameraMode.Spectator)
+            if (!ObserverMode.EnterAsSpectator && LobbyCamera.Instance.GetCameraMode() != LobbyCamera.CameraMode.Spectator)
             {
                 UIReferences.Instance.AutoTeam(true);
                 UIReferences.Instance.ShowMenu(false);

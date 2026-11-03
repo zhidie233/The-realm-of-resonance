@@ -140,7 +140,7 @@ public class EjectPoll : MonoBehaviourBase
         TargetPlayer = player;
         ResetVote();
         isAgainMy = (player.ActorNumber == NetworkWrapper.LocalPlayer.ActorNumber);
-        UI.OpenVotatation(player, by);
+        UI.OpenVotation(player, by);
         IsOpen = true;
     }
 

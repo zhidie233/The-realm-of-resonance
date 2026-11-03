@@ -8,7 +8,7 @@ public class AICoverSpotManager : MonoBehaviour
 {
     public float MaxDistance = 50;
     public float UsageTime = 10;
-    public float maxNeighbordDistance = 25;
+    public float maxNeighborDistance = 25;
     [GameToggle] public bool onlyAllowOneBotPerCover = true;
     [GameToggle] public bool ShowGizmos = true;
 
@@ -98,14 +98,14 @@ public class AICoverSpotManager : MonoBehaviour
         return cover;
     }
 
-    public AICoverSpot GetCloseCover(Transform target, AICoverSpot overrdidePoint)
+    public AICoverSpot GetCloseCover(Transform target, AICoverSpot overridePoint)
     {
         AICoverSpot cover = null;
         float d = MaxDistance;
         for (int i = 0; i < AllCovers.Count; i++)
         {
             float dis = CommonUtil.Distance(target.localPosition, AllCovers[i].Position);
-            if (dis < MaxDistance && dis < d && AllCovers[i] != overrdidePoint)
+            if (dis < MaxDistance && dis < d && AllCovers[i] != overridePoint)
             {
                 d = dis;
                 cover = AllCovers[i];
@@ -122,13 +122,13 @@ public class AICoverSpotManager : MonoBehaviour
         //如果这个掩体最近被用过，就换一个
         if ((Time.time - coverSource.lastUseTime) <= UsageTime)
         {
-            if (coverSource.HasNeighbords())
+            if (coverSource.HasNeighbors())
             {
-                var neighbord = coverSource.TryGetAvailableNeighbord();
-                if (neighbord == null)
-                    neighbord = coverSource.NeighbordPoints[Random.Range(0, coverSource.NeighbordPoints.Count)];
+                var neighbor = coverSource.TryGetAvailableNeighbor();
+                if (neighbor == null)
+                    neighbor = coverSource.NeighborPoints[Random.Range(0, coverSource.NeighborPoints.Count)];
 
-                coverSource = neighbord;
+                coverSource = neighbor;
             }
             else
             {
@@ -170,19 +170,19 @@ public class AICoverSpotManager : MonoBehaviour
     }
 
     [ContextMenu("Calculate Neighbors")]
-    public void CalcuNeighbords()
+    public void CalculateNeighbors()
     {
         AICoverSpot[] allCovers = FindObjectsOfType<AICoverSpot>();
         for (int i = 0; i < allCovers.Length; i++)
         {
             Transform t = allCovers[i].transform;
-            allCovers[i].NeighbordPoints.Clear();
+            allCovers[i].NeighborPoints.Clear();
             for (int e = 0; e < allCovers.Length; e++)
             {
                 if (allCovers[i] == allCovers[e]) continue;
-                if (Vector3.Distance(allCovers[i].transform.position, allCovers[e].transform.position) <= maxNeighbordDistance)
+                if (Vector3.Distance(allCovers[i].transform.position, allCovers[e].transform.position) <= maxNeighborDistance)
                 {
-                    allCovers[i].NeighbordPoints.Add(allCovers[e]);
+                    allCovers[i].NeighborPoints.Add(allCovers[e]);
                 }
             }
             UnityEditor.EditorUtility.SetDirty(allCovers[i]);
@@ -209,7 +209,7 @@ public class AICoverSpotManagerEditor : Editor
 
         if (GUILayout.Button("Bake Neighbors points"))
         {
-            script.CalcuNeighbords();
+            script.CalculateNeighbors();
         }
         if (GUILayout.Button("Align points to floors"))
         {

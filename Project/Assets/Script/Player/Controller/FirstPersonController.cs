@@ -2,9 +2,25 @@ using System;
 using System.Collections;
 using UnityEngine;
 
-[RequireComponent(typeof(CharacterController))]
-public class FirstPersonController : FirstPersonControllerBase
+public class FirstPersonController : MonoBehaviourBase
 {
+    /// 玩家当前的状态
+    public PlayerState State 
+    {
+        get; 
+        set; 
+    } = PlayerState.Idle;
+    /// 用于访问默认游戏控制器的变量
+    private FirstPersonController _gameController = null;
+    public FirstPersonController GameController
+    {
+        get
+        {
+            if (_gameController == null) TryGetComponent(out _gameController);
+            return _gameController;
+        }
+    }
+
     [Header("设置")]
     public float WalkSpeed = 4.5f;
     public float runSpeed = 8;
@@ -27,7 +43,7 @@ public class FirstPersonController : FirstPersonControllerBase
 
     [Range(0, 2)] public float JumpMinRate = 0.82f;
     public float jumpMomentumBooster = 2;
-    public float momentunDecaySpeed = 5;
+    public float momentumDecaySpeed = 5;
     [Range(0, 2)] public float AirControlMultiplier = 0.8f;
     public float m_StickToGroundForce;
     public float m_GravityMultiplier;
@@ -65,9 +81,13 @@ public class FirstPersonController : FirstPersonControllerBase
 
     public float RunFov { get; set; } = 0;
     public CollisionFlags m_CollisionFlags { get; set; }
-    public override Vector3 Velocity { get; set; }
-    public override float VelocityMagnitude { get; set; }
-    public override bool isControlable { get; set; } = true;
+    /// 返回玩家当前速度
+    public Vector3 Velocity { get; set; }
+    /// 返回玩家当前速度大小
+    public float VelocityMagnitude { get; set; }
+    /// 玩家当前是否由用户输入控制，
+    /// 是则返回 true，否则返回 false。
+    public bool isControllable { get; set; } = true;
 
     private bool hasPlatformJump = false;
     private float PlatformJumpForce = 0;
@@ -76,7 +96,7 @@ public class FirstPersonController : FirstPersonControllerBase
     private Vector3 targetDirection, moveDirection = Vector3.zero;
     private bool _previouslyGrounded = true;
     private bool _jumping = false;
-    private bool Crounching = false;
+    private bool Crouching = false;
     private AudioSource _audioSource;
     private bool Finish = false;
     private Vector3 defaultCameraRPosition;
@@ -91,7 +111,7 @@ public class FirstPersonController : FirstPersonControllerBase
     private float lastJumpTime = 0;
     private float WeaponWeight = 1;
     private bool hasTouchGround = false;
-    private bool JumpInmune = false;
+    private bool JumpImmune = false;
     private Transform _transform;
     private RaycastHit[] SurfaceRay = new RaycastHit[1];
     private Vector3 desiredMove, momentum = Vector3.zero;
@@ -99,7 +119,7 @@ public class FirstPersonController : FirstPersonControllerBase
     private bool lastCrouchState = false;
     private float fallingTime = 0;
     private bool haslanding = false;
-    private float capsuleRadious;
+    private float capsuleRadius;
     private readonly Vector3 feetPositionOffset = new Vector3(0, 0.8f, 0);
     private float slideForce = 0;
     private float lastSlideTime = 0;
@@ -127,9 +147,9 @@ public class FirstPersonController : FirstPersonControllerBase
         mouseLook.Init(_transform, headRoot);
         lastJumpTime = Time.time;
         defaultStepOffset = _characterController.stepOffset;
-        capsuleRadious = _characterController.radius * 0.5f;
+        capsuleRadius = _characterController.radius * 0.5f;
         defaultHeight = _characterController.height;
-        isControlable = MatchTimeManagerBase.HaveTimeStarted();
+        isControllable = MatchTimeManager.HaveTimeStarted();
     }
 
     protected override void OnEnable()
@@ -239,18 +259,18 @@ public class FirstPersonController : FirstPersonControllerBase
             if (forcedCrouch) return;
             if (KeepToCrouch)
             {
-                Crounching = GameInput.Crouch();
-                if (Crounching != lastCrouchState)
+                Crouching = GameInput.Crouch();
+                if (Crouching != lastCrouchState)
                 {
                     OnCrouchChanged();
-                    lastCrouchState = Crounching;
+                    lastCrouchState = Crouching;
                 }
             }
             else
             {
                 if (GameInput.Crouch(GameInputType.Down))
                 {
-                    Crounching = !Crounching;
+                    Crouching = !Crouching;
                     OnCrouchChanged();
                 }
             }
@@ -335,7 +355,7 @@ public class FirstPersonController : FirstPersonControllerBase
         desiredMove.Set(_input.x, 0.0f, _input.y);
         desiredMove = _transform.TransformDirection(desiredMove);
         // 获取所接触地面的法线，以便沿地面移动
-        Physics.SphereCastNonAlloc(_transform.localPosition, capsuleRadious, Vector3.down, SurfaceRay, _characterController.height * 0.5f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
+        Physics.SphereCastNonAlloc(_transform.localPosition, capsuleRadius, Vector3.down, SurfaceRay, _characterController.height * 0.5f, Physics.AllLayers, QueryTriggerInteraction.Ignore);
         //根据当前玩家所踩地面的法线确定移动角度
         desiredMove = Vector3.ProjectOnPlane(desiredMove, SurfaceRay[0].normal);
         targetDirection.x = desiredMove.x * speed;
@@ -350,7 +370,7 @@ public class FirstPersonController : FirstPersonControllerBase
         targetDirection += Physics.gravity * m_GravityMultiplier * Time.fixedDeltaTime;
         targetDirection.x = (desiredMove.x * speed) * AirControlMultiplier;
         targetDirection.z = (desiredMove.z * speed) * AirControlMultiplier;
-        momentum = Vector3.Lerp(momentum, Vector3.zero, Time.fixedDeltaTime * momentunDecaySpeed);
+        momentum = Vector3.Lerp(momentum, Vector3.zero, Time.fixedDeltaTime * momentumDecaySpeed);
     }
     // 玩家下落/跳跃后撞到地面时调用
     void OnLand()
@@ -377,7 +397,7 @@ public class FirstPersonController : FirstPersonControllerBase
     }
     void OnCrouchChanged()
     {
-        if (Crounching)
+        if (Crouching)
         {
             State = PlayerState.Crouching;
             UIReferences.Instance.PlayerUI.PlayerStateIcon.sprite = CrouchIcon;
@@ -404,7 +424,7 @@ public class FirstPersonController : FirstPersonControllerBase
     }
     IEnumerator CrouchTransition()
     {
-        bool isCrouch = Crounching || State == PlayerState.Sliding;
+        bool isCrouch = Crouching || State == PlayerState.Sliding;
         float height = isCrouch ? crouchHeight : defaultHeight;
         Vector3 center = new Vector3(0, height * 0.5f, 0);
         Vector3 cameraPosition = CameraRoot.localPosition;
@@ -423,7 +443,7 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
     // 让玩家跳跃
-    public override void DoJump()
+    public void DoJump()
     {
         momentum = desiredMove * jumpMomentumBooster;
         moveDirection.y = (hasPlatformJump) ? PlatformJumpForce : jumpSpeed;
@@ -433,14 +453,14 @@ public class FirstPersonController : FirstPersonControllerBase
         _jumping = true;
         hasPlatformJump = false;
         if (State == PlayerState.Sliding) mouseLook.SetTiltAngle(0);
-        Crounching = false;
+        Crouching = false;
         State = PlayerState.Jumping;
         lastJumpTime = Time.time;
         _characterController.stepOffset = 0;
         m_CollisionFlags = _characterController.Move(moveDirection * Time.deltaTime);
     }
     // 让玩家滑铲
-    public override void DoSlide()
+    public void DoSlide()
     {
         if ((Time.time - lastSlideTime) < slideTime * slideCoolDown) return;
         if (_jumping) return;
@@ -460,11 +480,11 @@ public class FirstPersonController : FirstPersonControllerBase
         mouseLook.UseOnlyCameraRotation();
         this.InvokeAfter(slideTime, () =>
         {
-            if (Crounching && !CommonUtil.isMobile)
+            if (Crouching && !CommonUtil.isMobile)
                 State = PlayerState.Crouching;
             else if (State != PlayerState.Jumping)
                 State = PlayerState.Idle;
-            Crounching = false;
+            Crouching = false;
             DoCrouchTransition();
             lastSlideTime = Time.time;
             mouseLook.SetTiltAngle(0);
@@ -482,7 +502,7 @@ public class FirstPersonController : FirstPersonControllerBase
         targetDirection.y = targetDirection.y - surfacePoint.y;
     }
     // 让玩家进入下坠
-    public override void DoDrop()
+    public void DoDrop()
     {
         if (isGrounded)
         {
@@ -510,7 +530,7 @@ public class FirstPersonController : FirstPersonControllerBase
         m_CollisionFlags = _characterController.Move(targetDirection * Time.fixedDeltaTime);
     }
     // 让玩家滑翔
-    public override void DoGliding()
+    public void DoGliding()
     {
         if (isGrounded)
         {
@@ -538,14 +558,14 @@ public class FirstPersonController : FirstPersonControllerBase
             if (!_ladder.Exiting)
             {
                 _ladder.Exiting = true;
-                bool wasControllable = isControlable;
-                isControlable = false;
+                bool wasControllable = isControllable;
+                isControllable = false;
                 StartCoroutine(MoveTo(_ladder.GetNearestExitPosition(_transform), () =>
                 {
                     SetActiveClimbing(false);
                     _ladder.JumpOut();
                     _ladder = null;
-                    isControlable = true;
+                    isControllable = true;
                     GameEvents.onPlayerLand(0.5f);
                 }));
             }
@@ -582,9 +602,9 @@ public class FirstPersonController : FirstPersonControllerBase
         }
         if (FallDamage && hasTouchGround && haslanding)
         {
-            if (JumpInmune)
+            if (JumpImmune)
             {
-                JumpInmune = false;
+                JumpImmune = false;
                 return fallDistance;
             }
             if ((Time.time - fallingTime) <= 0.4f)
@@ -593,7 +613,7 @@ public class FirstPersonController : FirstPersonControllerBase
                 return fallDistance;
             }
             float ave = fallDistance / DeathFallDistance;
-            if (fallDistance > SafeFallDistance && State != PlayerState.InVehicle)
+            if (fallDistance > SafeFallDistance)
             {
                 int damage = Mathf.FloorToInt(ave * 100);
                 playerReferences.playerHealthManager.DoFallDamage(damage);
@@ -634,7 +654,7 @@ public class FirstPersonController : FirstPersonControllerBase
     }
     private void GetInput(out float outputSpeed)
     {
-        if (!isControlable)
+        if (!isControllable)
         {
             _input = Vector2.zero;
             outputSpeed = 0;
@@ -711,7 +731,7 @@ public class FirstPersonController : FirstPersonControllerBase
                 }
             }
         }
-        if (Crounching)
+        if (Crouching)
         {
             outputSpeed = (State == PlayerState.Crouching) ? crouchSpeed : runSpeed;
             if (State == PlayerState.Sliding)
@@ -740,7 +760,7 @@ public class FirstPersonController : FirstPersonControllerBase
         }
     }
     // 本帧强制玩家停下
-    public override void Stop()
+    public void Stop()
     {
         _input = Vector2.zero;
         moveDirection = Vector3.zero;
@@ -748,7 +768,10 @@ public class FirstPersonController : FirstPersonControllerBase
         targetDirection = Vector3.zero;
         State = PlayerState.Idle;
     }
-    public override void PlayFootStepSound()
+    /// 播放一次脚步声
+    /// 播放的音效应与玩家所在的地面材质对应
+    /// 即玩家当前踩到的地面
+    public void PlayFootStepSound()
     {
         if (State == PlayerState.Sliding || footstep == null) return;
         if (!_characterController.isGrounded && !isClimbing)
@@ -757,9 +780,9 @@ public class FirstPersonController : FirstPersonControllerBase
         {
             if (State == PlayerState.Stealth || State == PlayerState.Crouching)
             {
-                footstep?.SetVolumeMuliplier(footstep.stealthModeVolumeMultiplier);
+                footstep?.SetVolumeMultiplier(footstep.stealthModeVolumeMultiplier);
             }
-            else footstep?.SetVolumeMuliplier(1f);
+            else footstep?.SetVolumeMultiplier(1f);
             footstep?.DetectAndPlaySurface();
         }
         else
@@ -767,13 +790,17 @@ public class FirstPersonController : FirstPersonControllerBase
             footstep?.PlayStepForTag("Generic");
         }
     }
-    public override void PlatformJump(float force)
+    /// 玩家进入平台时处理纵向弹跳
+    /// <param name="force">向上力</param>
+    public void PlatformJump(float force)
     {
         hasPlatformJump = true;
         PlatformJumpForce = force;
-        JumpInmune = true;
+        JumpImmune = true;
     }
-    public override void UpdateMouseLook()
+    /// 更新鼠标视角移动
+    /// 可手动调用更新。
+    public void UpdateMouseLook()
     {
         mouseLook.Update();
         if (GameInput.InputFocus != GameInputFocus.Player) return;
@@ -815,7 +842,7 @@ public class FirstPersonController : FirstPersonControllerBase
     void OnRoundEnd()
     {
         Finish = true;
-        isControlable = false;
+        isControllable = false;
         Stop();
     }
     void OnChangeWeapon(int id)
@@ -833,7 +860,7 @@ public class FirstPersonController : FirstPersonControllerBase
     }
     void OnMatchStart()
     {
-        isControlable = true;
+        isControllable = true;
     }
     void OnGameSettingsChanged() => mouseLook.FetchSettings();
     void OnAimChange(bool aim)
@@ -876,9 +903,9 @@ public class FirstPersonController : FirstPersonControllerBase
         _ladder = ladder;
         // 根据玩家身高设置上梯和下梯位置
         ladder.SetUpBounds(playerReferences);
-        bool wasControllable = isControlable;
-        isControlable = false;
-        JumpInmune = true;
+        bool wasControllable = isControllable;
+        isControllable = false;
+        JumpImmune = true;
         jumpPressed = false;
         SetActiveClimbing(true);
         // 获取让玩家自动移动到开始爬梯/下梯的位置
@@ -888,7 +915,7 @@ public class FirstPersonController : FirstPersonControllerBase
         StartCoroutine(MoveTo(startPos, () =>
         {
             // 位置调整完成之后
-            isControlable = wasControllable;
+            isControllable = wasControllable;
             ladder.Status = ClimbableLadder.LadderStatus.Climbing;
             // 之后的移动由 OnClimbing() 函数处理
         }));
@@ -921,11 +948,13 @@ public class FirstPersonController : FirstPersonControllerBase
             _speed = Mathf.Max(_speed, min);
         }
     }
-    public override float GetCurrentSpeed()
+    /// 返回玩家当前速度
+    public float GetCurrentSpeed()
     {
         return speed;
     }
-    public override float GetSpeedOnState(PlayerState playerState, bool includeModifiers)
+    /// 返回玩家在指定状态下的最高速度
+    public float GetSpeedOnState(PlayerState playerState, bool includeModifiers = false)
     {
         switch (playerState)
         {
@@ -940,30 +969,34 @@ public class FirstPersonController : FirstPersonControllerBase
         }
         return includeModifiers ? WalkSpeed - WeaponWeight : WalkSpeed;
     }
-    public override PlayerRunToAimBehave GetRunToAimBehave()
+    public PlayerRunToAimBehave GetRunToAimBehave()
     {
         return runToAimBehave;
     }
-    public override MouseLookBase GetMouseLook()
+    /// 获取 MouseLook 控制器模块
+    public MouseLook GetMouseLook()
     {
         return mouseLook;
     }
-    public override Footstep GetFootStep()
+    /// 获取脚步控制器模块
+    public Footstep GetFootStep()
     {
         return footstep;
     }
-    public override float GetSprintFov()
+    public float GetSprintFov()
     {
         return RunFov;
     }
-    public override float GetHeadBobMagnitudes(bool vertical)
+    public float GetHeadBobMagnitudes(bool vertical)
     {
         if (vertical) return headVerticalBobMagnitude;
         return headBobMagnitude;
     }
     public Vector3 GetLocalVelocity() => _transform.InverseTransformDirection(Velocity);
     public Vector3 MovementDirection => targetDirection;
-    public override bool isGrounded { get { return _characterController.isGrounded; } }
+    /// 玩家是否接触地面，是则返回 true
+    /// 通常用 CharacterController.IsGrounded
+    public bool isGrounded { get { return _characterController.isGrounded; } }
     [SerializeField]
     public class LerpControlledBob
     {

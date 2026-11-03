@@ -16,5 +16,5 @@ MonoBehaviour:
   - Name: body-hit
     Clip: {fileID: 8300000, guid: 1284b1c52244ead46a1d051575118960, type: 3}
     Volume: 1
-    SpacialAudio: 0
+    SpatialAudio: 0
     Loop: 0

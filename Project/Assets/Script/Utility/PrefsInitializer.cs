@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,7 +5,7 @@ public class PrefsInitializer : MonoBehaviour
 {
 
     public string PrefsKey;
-    public ApplyType m_Type = ApplyType.Toogle;
+    public ApplyType m_Type = ApplyType.Toggle;
 
     [Header("Defaults")]
     public bool DefaultBool = true;
@@ -22,7 +20,7 @@ public class PrefsInitializer : MonoBehaviour
 
     void LoadPrefs()
     {
-        if(m_Type == ApplyType.Toogle)
+        if(m_Type == ApplyType.Toggle)
         {
             GetComponent<Toggle>().isOn = GetUnityKey.GetBoolPrefs(DefaultBool);
         }
@@ -41,7 +39,7 @@ public class PrefsInitializer : MonoBehaviour
     [System.Serializable]
     public enum ApplyType
     {
-        Toogle,
+        Toggle,
         Text,
     }
 }

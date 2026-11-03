@@ -78,7 +78,6 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     }
 
     public void OnChangeRoomPrivate(bool toPrivate) { if (!toPrivate) roomPasswordInputField.text = ""; }
-    #region Getters
     public int Map => MapSettingsSelector.currentOption;
     public int GameMode => GameModeSelector.currentOption;
     public GameModeSettings CurrentGameMode
@@ -101,8 +100,7 @@ public class LobbyRoomCreatorUI : MonoBehaviour
     public bool IsPrivate => !string.IsNullOrEmpty(roomPasswordInputField.text);
     public bool BotsActive => BotsActiveSelector.CurrentSelectionAsBool();
     public bool AutoAssignTeams => TeamSelectionSelector.CurrentSelectionAsBool();
-    public RoundStyle GamePerRound => PerRoundSelector.CurrentSelectionAsBool() == true ? RoundStyle.Rounds : RoundStyle.OneMacht;
-    #endregion
+    public RoundStyle GamePerRound => PerRoundSelector.CurrentSelectionAsBool() == true ? RoundStyle.Rounds : RoundStyle.OneMatch;
 
     private static LobbyRoomCreatorUI _instance;
     public static LobbyRoomCreatorUI Instance

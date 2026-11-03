@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bc6095ed9f99d2e43814d53c14833bdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Resposiveness: 75
+  Responsiveness: 75
   smoothing: 5
   UIObject: {fileID: 1872971695688073597}
 --- !u!1 &1872971695688073597

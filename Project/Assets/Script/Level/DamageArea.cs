@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,7 +9,7 @@ public class DamageArea : MonoBehaviour
     private bool isPlayerCaused = false;
     private DamageInfo cacheInformation;
 
-    private List<PlayerHealthManagerBase> AllHitted = new List<PlayerHealthManagerBase>();
+    private List<PlayerHealthManagerBase> AllHit = new List<PlayerHealthManagerBase>();
     private bool isNetwork = false;
 
     private void OnTriggerEnter(Collider other)
@@ -37,7 +36,7 @@ public class DamageArea : MonoBehaviour
                             Rate = 1,
                             DamageInfo = cacheInformation
                         });
-                        AllHitted.Add(pdm);
+                        AllHit.Add(pdm);
                     }
                     else
                     {
@@ -65,7 +64,7 @@ public class DamageArea : MonoBehaviour
                 var ash = other.transform.root.GetComponent<PlayerHealthManagerBase>();
                 if (ash != null)
                 {
-                    if (!AllHitted.Contains(ash))
+                    if (!AllHit.Contains(ash))
                     {
                         cacheInformation.Direction = transform.position;
                         int gi = GameConfig.Instance.GetWeaponID("Molotov");
@@ -79,7 +78,7 @@ public class DamageArea : MonoBehaviour
                             Rate = 1,
                             DamageInfo = cacheInformation
                         });
-                        AllHitted.Add(ash);
+                        AllHit.Add(ash);
                     }
                 }
             }
@@ -96,7 +95,7 @@ public class DamageArea : MonoBehaviour
                 if (m_Type == AreaType.Repeat)
                 {
                     pdm.CancelRepeatHit();
-                    AllHitted.Remove(pdm);
+                    AllHit.Remove(pdm);
                 }
             }
         }
@@ -105,7 +104,7 @@ public class DamageArea : MonoBehaviour
             var ash = other.transform.root.GetComponent<PlayerHealthManagerBase>();
             if (ash != null)
             {
-                if (AllHitted.Contains(ash)) { AllHitted.Remove(ash); }
+                if (AllHit.Contains(ash)) { AllHit.Remove(ash); }
                 if (m_Type == AreaType.Repeat)
                 {
                     ash.CancelRepeatHit();
@@ -117,7 +116,7 @@ public class DamageArea : MonoBehaviour
     private void OnDisable()
     {
         cacheInformation = null;
-        foreach(var p in AllHitted)
+        foreach(var p in AllHit)
         {
             if (p == null) continue;
             p.CancelRepeatHit();

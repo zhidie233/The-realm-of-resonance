@@ -300,7 +300,7 @@ MonoBehaviour:
   homeMark: {fileID: 1640718837}
   IconSize: {x: 7, y: 7}
   ReturnTime: 5
-  carriyingPlayer: {fileID: 0}
+  carryingPlayer: {fileID: 0}
 --- !u!1 &1594083299827518
 GameObject:
   m_ObjectHideFlags: 0
@@ -535,7 +535,7 @@ MonoBehaviour:
   homeMark: {fileID: 1595989356}
   IconSize: {x: 7, y: 7}
   ReturnTime: 5
-  carriyingPlayer: {fileID: 0}
+  carryingPlayer: {fileID: 0}
 --- !u!1 &597852376840472397
 GameObject:
   m_ObjectHideFlags: 0

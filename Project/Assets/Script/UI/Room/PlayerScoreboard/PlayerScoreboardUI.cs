@@ -3,9 +3,26 @@ using UnityEngine.UI;
 using Photon.Realtime;
 using TMPro;
 
-public class PlayerScoreboardUI : PlayerScoreboardUIBase
+public class PlayerScoreboardUI : MonoBehaviour
 {
-    #region Public members
+    public GameBotProperties Bot 
+    { 
+        get; 
+        set; 
+    }
+
+    public bool isBotBinding 
+    { 
+        get; 
+        set; 
+    } = false;
+
+    public Player RealPlayer 
+    { 
+        get; 
+        set; 
+    }
+
     [SerializeField] private TextMeshProUGUI NameText = null;
     [SerializeField] private TextMeshProUGUI KillsText = null;
     [SerializeField] private TextMeshProUGUI DeathsText = null;
@@ -14,14 +31,11 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
     [SerializeField] private Image LevelIcon = null;
     public TextMeshProUGUI levelNumberText;
     public GameObject localHighlight;
-    #endregion
 
-    #region Private members
-    private bool isInitializated = false;
+    private bool isInitialized = false;
     private Team InitTeam = Team.None;
-    #endregion
     /// 该玩家首次出现在记分板时调用
-    public override void Init(Player player, GameBotProperties bot = null)
+    public void Init(Player player, GameBotProperties bot = null)
     {
         Bot = bot;
         isBotBinding = bot != null;
@@ -40,13 +54,13 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         LevelIcon.gameObject.SetActive(false);
     }
     /// 记分板每次刷新时调用（记分板打开期间）
-    public override bool Refresh()
+    public bool Refresh()
     {
         if (Bot != null || isBotBinding) {  return UpdateBot(); }
 
         if (RealPlayer == null || RealPlayer.GetPlayerTeam() != InitTeam)
         {
-            if (!PlayerScoreboardBase.Instance.RemoveUIBinding(this))
+            if (!PlayerScoreboard.Instance.RemoveUIBinding(this))
             {
                 Destroy();
             }
@@ -75,11 +89,11 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
 
     }
 
-    public override bool UpdateBot()
+    public bool UpdateBot()
     {
         if (Bot == null || string.IsNullOrEmpty(Bot.Name) || !AIManager.Instance.BotsStatistics.Exists(x => x.Name == Bot.Name))
         {
-            if (!PlayerScoreboardBase.Instance.RemoveUIBinding(this))
+            if (!PlayerScoreboard.Instance.RemoveUIBinding(this))
             {
                 Destroy();
                 return false;
@@ -109,20 +123,20 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
     public void OnClick()
     {
         var player = Bot == null ? RealPlayer : null;
-        PlayerScoreboardBase.Instance.OnPlayerClicked(player);
+        PlayerScoreboard.Instance.OnPlayerClicked(player);
     }
 
     void OnEnable()
     {
-        if (RealPlayer == null && !isBotBinding && isInitializated)
+        if (RealPlayer == null && !isBotBinding && isInitialized)
         {
             Destroy(gameObject);
-            isInitializated = true;
+            isInitialized = true;
         }
-        else if (isBotBinding && Bot == null && isInitializated)
+        else if (isBotBinding && Bot == null && isInitialized)
         {
             Destroy(gameObject);
-            isInitializated = true;
+            isInitialized = true;
         }
     }
 
@@ -131,13 +145,13 @@ public class PlayerScoreboardUI : PlayerScoreboardUIBase
         Destroy(gameObject);
     }
 
-    public override int GetScore()
+    public int GetScore()
     {
         if (Bot == null) { return RealPlayer.GetPlayerScore(); }
         else { return Bot.Score; }
     }
 
-    public override Team GetTeam()
+    public Team GetTeam()
     {
         return InitTeam;
     }

@@ -3,16 +3,31 @@ using UnityEngine.UI;
 using TMPro;
 /// 默认游戏拾取 UI 处理器
 /// 此脚本负责接收武器拾取事件的信息并显示给玩家
-/// 要改行为请不要修改此脚本，新建自己的脚本并继承 PickUpUIBase
-/// 以此作为参考。
-public class PickUpUI : PickUpUIBase
+public class PickUpUI : MonoBehaviour
 {
+    public struct DisplayInformation
+    {
+        public string Text;
+        public Sprite Icon;
+        public string InputName;
+    }
+
+    private static PickUpUI _instance;
+    public static PickUpUI Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<PickUpUI>(); }
+            return _instance;
+        }
+    }
+
     public GameObject content;
     public TextMeshProUGUI mainText;
     public Image iconImg;
     public TextMeshProUGUI keyText;
 
-    private FirearmPickUpBase CacheGunPickUp = null;
+    private FirearmPickUp CacheGunPickUp = null;
 
     private void OnEnable()
     {
@@ -29,7 +44,8 @@ public class PickUpUI : PickUpUIBase
         Hide();
     }
 
-    public override void OnOverWeapon(FirearmPickUpBase gunPickUp)
+    /// 玩家进入触发器或准星指向地图中的枪械拾取物时调用
+    public void OnOverWeapon(FirearmPickUp gunPickUp)
     {
         if (gunPickUp == null) return;
 
@@ -45,7 +61,7 @@ public class PickUpUI : PickUpUIBase
         CacheGunPickUp = gunPickUp;
     }
 
-    public override void Show(DisplayInformation information)
+    public void Show(DisplayInformation information)
     {
         mainText.text = information.Text;
         iconImg.sprite = information.Icon;
@@ -58,7 +74,7 @@ public class PickUpUI : PickUpUIBase
         content.SetActive(true);
     }
 
-    public override void Hide()
+    public void Hide()
     {
         content.SetActive(false);
     }

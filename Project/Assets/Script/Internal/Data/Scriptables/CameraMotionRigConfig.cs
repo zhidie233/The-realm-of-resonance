@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "CameraMotionRigSettings", menuName = "项目/Camera/Motion Settings")]
 public class CameraMotionRigConfig : ScriptableObject

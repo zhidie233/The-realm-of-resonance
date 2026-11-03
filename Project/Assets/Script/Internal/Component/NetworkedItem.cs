@@ -7,7 +7,7 @@ public class NetworkedItem : MonoBehaviour
     [GameToggle] public bool isSceneItem = false;
 
     [SerializeField, HideInInspector]
-    private bool isInitializated = false;
+    private bool isInitialized = false;
 
     public int OwnerActorID { get; set; } = -1;
 
@@ -35,24 +35,24 @@ public class NetworkedItem : MonoBehaviour
     {
         // 重置物品名称，因为预制体可能已带有自定义名称。
         m_itemName = string.Empty;
-        isInitializated = false;
+        isInitialized = false;
     }
     /// 本地玩家创建此物品时执行
     void Init()
     {
-        if (isInitializated)
+        if (isInitialized)
         {
             //以防这是场景物品
-            ItemRespawnerBase.Instance.PoolItem(m_itemName, this);
+            PickupSpawner.Instance.PoolItem(m_itemName, this);
             return;
         }
 
         string prefabName = gameObject.name.Replace(" (Clone)", "");
         gameObject.name = ItemName;
         OwnerActorID = NetworkWrapper.LocalPlayer.ActorNumber;
-        isInitializated = true;
+        isInitialized = true;
         //在此把物品加入池中，因为本地玩家不会走添加流程
-        ItemRespawnerBase.Instance.PoolItem(ItemName, this);
+        PickupSpawner.Instance.PoolItem(ItemName, this);
         //不为每个物品各用一个 PhotonView，而是直接同步信息
         //并通过唯一名称识别物品
         var data = CommonUtil.CreatePhotonHashTable();
@@ -72,7 +72,7 @@ public class NetworkedItem : MonoBehaviour
         OwnerActorID = (int)data["actorID"];
 
         gameObject.name = ItemName;
-        isInitializated = true;
+        isInitialized = true;
     }
     /// 为所有客户端销毁此网络物品
     public void DestroySync()
@@ -106,8 +106,8 @@ public class NetworkedItem : MonoBehaviour
 #if UNITY_EDITOR
     private void OnValidate()
     {
-        if (!isSceneItem) { isInitializated = false; }
-        if (Application.isPlaying || !isSceneItem || ItemRespawnerBase.Instance == null) return;
+        if (!isSceneItem) { isInitialized = false; }
+        if (Application.isPlaying || !isSceneItem || PickupSpawner.Instance == null) return;
 
         EditorValidateName();
     }
@@ -118,7 +118,7 @@ public class NetworkedItem : MonoBehaviour
         {
             m_itemName = ItemName;
             gameObject.name = m_itemName;
-            isInitializated = true;
+            isInitialized = true;
         }
         else if (gameObject.name.Contains("("))
         {
@@ -137,7 +137,7 @@ public class NetworkedItem : MonoBehaviour
             m_itemName = m_itemName.Replace("(", "");
             m_itemName = m_itemName.Replace(")", "");
             gameObject.name = m_itemName;
-            isInitializated = true;
+            isInitialized = true;
             EditorUtility.SetDirty(this);
         }
     }

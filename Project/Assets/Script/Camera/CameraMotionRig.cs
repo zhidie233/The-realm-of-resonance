@@ -1,27 +1,25 @@
 using System.Collections;
 using UnityEngine;
 
-public class CameraMotionRig : CameraMotionRigBase
+public class CameraMotionRig : MonoBehaviourBase
 {
     [ScriptableDrawer] public CameraMotionRigConfig motionSettings;
 
-    #region Private members
     private bool wiggleMotion = true;
     private bool breathingMotion = false;
-    private float m_breatingAmplitude;
+    private float m_breathingAmplitude;
     private float m_startBreathingTime;
     private Vector3 breathRotation = Vector3.zero;
     private float sideTilt = 0;
     private Quaternion rotationMotion, extraRotation;
     private bool isSliding = false;
     private PlayerRig playerRefs;
-    #endregion
 
     protected override void Awake()
     {
         base.Awake();
         playerRefs = GetComponentInParent<PlayerRig>();
-        m_breatingAmplitude = motionSettings.breatheAmplitude;
+        m_breathingAmplitude = motionSettings.breatheAmplitude;
         rotationMotion = CachedTransform.localRotation;
     }
 
@@ -74,28 +72,29 @@ public class CameraMotionRig : CameraMotionRigBase
         if (!breathingMotion) return;
 
         float theta = (Time.time - m_startBreathingTime) / motionSettings.breathePeriod;
-        float vertical = m_breatingAmplitude * Mathf.Sin(theta);
-        float horizontal = m_breatingAmplitude * Mathf.Cos(theta * 0.5f);
+        float vertical = m_breathingAmplitude * Mathf.Sin(theta);
+        float horizontal = m_breathingAmplitude * Mathf.Cos(theta * 0.5f);
         breathRotation = (Vector3.up * vertical) + (Vector3.right * horizontal);
     }
 
-    public override void AddCameraRotation(Quaternion rotation)
+    /// 给相机运动额外增加一段旋转
+    public void AddCameraRotation(Quaternion rotation)
     {
         extraRotation = rotation;
     }
 
-    public override void SetActiveBreathing(bool active, float amplitude = 0)
+    public void SetActiveBreathing(bool active, float amplitude = 0)
     {
         breathingMotion = active;
 
         if (!breathingMotion)
         {
-            m_breatingAmplitude = motionSettings.breatheAmplitude;
+            m_breathingAmplitude = motionSettings.breatheAmplitude;
             breathRotation = Vector3.zero;
         }
         else
         {
-            m_breatingAmplitude = amplitude;
+            m_breathingAmplitude = amplitude;
             m_startBreathingTime = Time.time;
         }
     }

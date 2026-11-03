@@ -3,10 +3,9 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
-public class CameraImpulse : CameraImpulseBase
+public class CameraImpulse : MonoBehaviour
 {
-    #region Private members
-    private Vector3 OrigiPosition;
+    private Vector3 OriginPosition;
     private Dictionary<string, ShakePreset> shakersRunning = new Dictionary<string, ShakePreset>();
     private Transform m_Transform;
     private Vector3 tempVector = Vector3.zero;
@@ -15,7 +14,6 @@ public class CameraImpulse : CameraImpulseBase
     float iAmplitude = 1;
     float iFrequency = 0;
     float maxAmplitude = 0;
-    #endregion
 
     private void Awake()
     {
@@ -23,10 +21,11 @@ public class CameraImpulse : CameraImpulseBase
         SetCurrentAsOriginPosition();
     }
 
-    public override void SetCurrentAsOriginPosition()
+    /// 把相机当前位置/旋转设为原点位置
+    public void SetCurrentAsOriginPosition()
     {
         if (m_Transform == null) m_Transform = transform;
-        OrigiPosition = m_Transform.localEulerAngles;
+        OriginPosition = m_Transform.localEulerAngles;
     }
 
     private void OnEnable()
@@ -39,16 +38,18 @@ public class CameraImpulse : CameraImpulseBase
         GameEvents.onLocalPlayerShake -= OnShake;
     }
 
-    public override void SetShake(ShakePreset present, string key)
+    /// 添加或开始一个抖动
+    public void SetShake(ShakePreset present, string key = "global")
     {
         AddShake(present, key, 1);
     }
 
-    public override void Stop()
+    /// 停止所有抖动
+    public void Stop()
     {
         StopAllCoroutines();
         shakersRunning.Clear();
-        m_Transform.localRotation = Quaternion.Euler(OrigiPosition);
+        m_Transform.localRotation = Quaternion.Euler(OriginPosition);
     }
 
     void OnShake(ShakePreset present, string key, float influence)
@@ -75,7 +76,8 @@ public class CameraImpulse : CameraImpulseBase
         }
     }
 
-    public override void RemoveShake(string key)
+    /// 移除/停止指定的抖动
+    public void RemoveShake(string key)
     {
         if (shakersRunning.ContainsKey(key))
         {
@@ -107,7 +109,7 @@ public class CameraImpulse : CameraImpulseBase
                 float amplitude = p.amplitude * p.currentTime;
 
                 if (p.shakeMethod == ShakePreset.ShakeMethod.PerlinNoise)
-                    pos += Shake(amplitude, p.frequency, p.octaves, p.persistance, p.lacunarity, p.burstFrequency, p.burstContrast, p.influence);
+                    pos += Shake(amplitude, p.frequency, p.octaves, p.persistence, p.lacunarity, p.burstFrequency, p.burstContrast, p.influence);
                 else if (p.shakeMethod == ShakePreset.ShakeMethod.RandomSet)
                     pos += ShakeSimple(amplitude);
 
@@ -116,7 +118,7 @@ public class CameraImpulse : CameraImpulseBase
                     shakersRunning.Remove(shakersRunning.ElementAt(i).Key);
                 }
             }
-            m_Transform.localRotation = Quaternion.Euler(OrigiPosition + pos);
+            m_Transform.localRotation = Quaternion.Euler(OriginPosition + pos);
             yield return null;
         }
     }
@@ -129,7 +131,7 @@ public class CameraImpulse : CameraImpulseBase
         return tempVector;
     }
 
-    public Vector3 Shake(float amplitude, float frequency, int octaves, float persistance, float lacunarity, float burstFrequency, int burstContrast, float influence)
+    public Vector3 Shake(float amplitude, float frequency, int octaves, float persistence, float lacunarity, float burstFrequency, int burstContrast, float influence)
     {
         valX = 0;
         valY = 0;
@@ -163,7 +165,7 @@ public class CameraImpulse : CameraImpulseBase
             //记录最大振幅，方便之后归一化
             maxAmplitude += iAmplitude;
 
-            iAmplitude *= persistance;
+            iAmplitude *= persistence;
             iFrequency *= lacunarity;
         }
 

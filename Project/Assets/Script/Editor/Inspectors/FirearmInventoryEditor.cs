@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.AnimatedValues;
 using Photon.Pun;
@@ -10,7 +8,7 @@ public class FirearmInventoryEditor : Editor
 {
     private AnimBool VanguardAnim;
     protected static bool ShowVanguard;
-    private AnimBool EnginnerAnim;
+    private AnimBool EngineerAnim;
     protected static bool ShowEngi;
     private AnimBool PathfinderAnim;
     protected static bool ShowPathfinder;
@@ -23,8 +21,8 @@ public class FirearmInventoryEditor : Editor
 
         VanguardAnim = new AnimBool(ShowVanguard);
         VanguardAnim.valueChanged.AddListener(Repaint);
-        EnginnerAnim = new AnimBool(ShowEngi);
-        EnginnerAnim.valueChanged.AddListener(Repaint);
+        EngineerAnim = new AnimBool(ShowEngi);
+        EngineerAnim.valueChanged.AddListener(Repaint);
         PathfinderAnim = new AnimBool(ShowPathfinder);
         PathfinderAnim.valueChanged.AddListener(Repaint);
         GuardianAnim = new AnimBool(ShowGuardian);
@@ -59,8 +57,8 @@ public class FirearmInventoryEditor : Editor
 
         EditorGUILayout.BeginVertical("box");
         ShowEngi = PhotonGUI.ContainerHeaderFoldout("工程兵兵种", ShowEngi);
-        EnginnerAnim.target = ShowEngi;
-        if (EditorGUILayout.BeginFadeGroup(EnginnerAnim.faded))
+        EngineerAnim.target = ShowEngi;
+        if (EditorGUILayout.BeginFadeGroup(EngineerAnim.faded))
         {
             var so = serializedObject.FindProperty("m_ArtificerClass");
             DrawPresetField(so);
@@ -99,7 +97,7 @@ public class FirearmInventoryEditor : Editor
         GUILayout.BeginVertical("box");
         if (script.changeWeaponStyle == FirearmInventory.ChangeWeaponStyle.HideAndDraw)
         {
-            script.SwichTime = EditorGUILayout.Slider("切换时间", script.SwichTime, 0.1f, 5);
+            script.SwitchTime = EditorGUILayout.Slider("切换时间", script.SwitchTime, 0.1f, 5);
         }
         script.PickUpTime = EditorGUILayout.Slider("拾取时间", script.PickUpTime, 0.1f, 5);
         script.changeWeaponStyle = (FirearmInventory.ChangeWeaponStyle)EditorGUILayout.EnumPopup("切换武器样式", script.changeWeaponStyle, EditorStyles.toolbarPopup);

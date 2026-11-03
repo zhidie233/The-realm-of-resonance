@@ -1,28 +1,35 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PlayerRagdoll : PlayerRagdollBase
+public class PlayerRagdoll : MonoBehaviour
 {
-    #region Public members
+    public struct RagdollInfo
+    {
+        public Vector3 ForcePosition;
+        public Vector3 Velocity;
+        public bool IsFromExplosion;
+        public bool AutoDestroy;
+        public Transform RightHandChild;
+    }
+
     [GameToggle] public bool ApplyVelocityToRagdoll = true;
     public PlayerRig playerReferences;
     public Transform RightHand;
     public Transform PelvisBone;
     public Collider[] playerColliders;
-    public List<Rigidbody> rigidBodys = new List<Rigidbody>();
-    #endregion
+    public List<Rigidbody> rigidbodies = new List<Rigidbody>();
 
     private Collider[] allPlayerCollider;
 
     void Awake()
     {
-        if (rigidBodys.Count > 0)
+        if (rigidbodies.Count > 0)
         {
             SetKinematic();
         }
     }
     /// 设置本地玩家的布娃娃状态
-    public override void SetLocalRagdoll(RagdollInfo info)
+    public void SetLocalRagdoll(RagdollInfo info)
     {
         if (RightHand != null && info.RightHandChild != null)
         {
@@ -36,10 +43,10 @@ public class PlayerRagdoll : PlayerRagdollBase
     /// <param name="kinematic">是否为运动学刚体？</param>
     public void SetKinematic(bool kinematic = true)
     {
-        if (rigidBodys == null || rigidBodys.Count <= 0)
+        if (rigidbodies == null || rigidbodies.Count <= 0)
             return;
 
-        foreach (Rigidbody r in rigidBodys)
+        foreach (Rigidbody r in rigidbodies)
         {
             if (r == null) continue;
             r.isKinematic = kinematic;
@@ -48,7 +55,7 @@ public class PlayerRagdoll : PlayerRagdollBase
     /// 把当前玩家变成布娃娃
     /// 玩家不再由 Character Controller 控制
     /// 并会从玩家根节点上分离
-    public override void Ragdolled(RagdollInfo info)
+    public void Ragdolled(RagdollInfo info)
     {
         gameObject.SetActive(true);
         if (!info.AutoDestroy)
@@ -65,7 +72,7 @@ public class PlayerRagdoll : PlayerRagdollBase
 
         playerReferences.PlayerAnimator.enabled = false;
         SetActiveRagdollPhysics(true);
-        foreach (Rigidbody r in rigidBodys)
+        foreach (Rigidbody r in rigidbodies)
         {
             if (r == null) continue;
 
@@ -84,7 +91,7 @@ public class PlayerRagdoll : PlayerRagdollBase
         if (info.AutoDestroy) Destroy(gameObject, GameConfig.Instance.respawnDelay);
     }
     /// 让本地玩家忽略自身的 Character Controller 碰撞体。
-    public override void IgnorePlayerCollider()
+    public void IgnorePlayerCollider()
     {
         GameObject p = GameController.Instance.LocalPlayer;
         if (p == null) return;
@@ -102,7 +109,7 @@ public class PlayerRagdoll : PlayerRagdollBase
         }
     }
     /// 启用/停用玩家的刚体和碰撞体
-    public override void SetActiveRagdollPhysics(bool active)
+    public void SetActiveRagdollPhysics(bool active)
     {
         for (int i = 0; i < playerColliders.Length; i++)
         {
@@ -110,7 +117,7 @@ public class PlayerRagdoll : PlayerRagdollBase
 
             playerColliders[i].enabled = active;
         }
-        foreach (var item in rigidBodys)
+        foreach (var item in rigidbodies)
         {
             if (item == null) continue;
 
@@ -118,7 +125,7 @@ public class PlayerRagdoll : PlayerRagdollBase
         }
     }
     /// 让该玩家的碰撞体忽略指定的碰撞体
-    public override void IgnoreColliders(Collider[] list, bool ignore)
+    public void IgnoreColliders(Collider[] list, bool ignore)
     {
         if (allPlayerCollider == null || allPlayerCollider.Length <= 0)
         {
@@ -141,14 +148,14 @@ public class PlayerRagdoll : PlayerRagdollBase
     [ContextMenu("Setup")]
     public void SetUpHitBoxes()
     {   
-        GetRigidBodys();
+        GetRigidbodies();
         GetRequireBones();
     }
 
-    void GetRigidBodys()
+    void GetRigidbodies()
     {
-        rigidBodys.Clear();
-        rigidBodys.AddRange(transform.GetComponentsInChildren<Rigidbody>());
+        rigidbodies.Clear();
+        rigidbodies.AddRange(transform.GetComponentsInChildren<Rigidbody>());
         playerColliders = transform.GetComponentsInChildren<Collider>();
     }
 

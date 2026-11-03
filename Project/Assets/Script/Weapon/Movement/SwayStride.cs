@@ -4,20 +4,19 @@ using System;
 using UnityEditor;
 #endif
 /// 默认武器行走摇晃运动
-/// 脚本继承基类 SwayStrideBase.cs 即可用自己的武器脚本
-/// 注意：该默认脚本也控制头部摇晃，若用自己的脚本替换
-/// 要确保同时处理头部摇晃。
-public class SwayStride : SwayStrideBase
+/// 同时控制头部摇晃。
+public class SwayStride : MonoBehaviourBase
 {
+    public float Intensity { get; set; } = 1;
+
     public SwaySettings settings;
 
-    #region Private members
     Vector3 midpoint;
     Vector3 localRotation;
     float timer = 0.0f;
     float lerp = 2;
     float bobbingSpeed;
-    FirstPersonControllerBase motor;
+    FirstPersonController motor;
     float BobbingAmount;
     float tempWalkSpeed = 0;
     float tempRunSpeed = 0;
@@ -34,7 +33,6 @@ public class SwayStride : SwayStrideBase
     private bool useAnimation = false;
     private Quaternion bobRotation = Quaternion.identity;
     private float rotationIntensity = 1;
-    #endregion
 
     protected override void Awake()
     {
@@ -48,7 +46,7 @@ public class SwayStride : SwayStrideBase
         motor = playerReferences.firstPersonController;
         midpoint = transform.localPosition;
         localRotation = transform.localEulerAngles;
-        Intensitity = 1;
+        Intensity = 1;
         rotationIntensity = 1;
     }
 
@@ -84,7 +82,8 @@ public class SwayStride : SwayStrideBase
         Movement();
     }
 
-    public override void Stop()
+    /// 停止行走摇晃运动
+    public void Stop()
     {
         bobbingSpeed = tempIdleSpeed;
         BobbingAmount = settings.WalkOscillationAmount * 0.1f;
@@ -96,7 +95,7 @@ public class SwayStride : SwayStrideBase
 
     void StateControl()
     {
-        if (motor.State == PlayerState.Jumping || motor.State == PlayerState.InVehicle) return;
+        if (motor.State == PlayerState.Jumping) return;
         if (motor.VelocityMagnitude > 0.1f && motor.State != PlayerState.Running)
         {
             bobbingSpeed = tempWalkSpeed;
@@ -163,13 +162,13 @@ public class SwayStride : SwayStrideBase
         float time = Time.smoothDeltaTime;
         if (waveslice != 0)
         {
-            float verticalMovement = waveslice * BobbingAmount * Intensitity;
+            float verticalMovement = waveslice * BobbingAmount * Intensity;
             if (!settings.pitchTowardUp) verticalMovement = -verticalMovement;
-            float horizontalMovement = waveslice2 * BobbingAmount * Intensitity;
+            float horizontalMovement = waveslice2 * BobbingAmount * Intensity;
             float zFlow = waveslice2 * eulerZ * rotationIntensity;
             float xFlow = waveslice * eulerX * rotationIntensity;
 
-            if (motor.isGrounded && motor.State != PlayerState.InVehicle)
+            if (motor.isGrounded)
             {
                 //若玩家正在移动
                 if (motor.VelocityMagnitude > 0.1f && motor.State != PlayerState.Idle)
@@ -209,7 +208,7 @@ public class SwayStride : SwayStrideBase
     }
     void UpdateFootStep()
     {
-        if (!motor.isGrounded || motor.State == PlayerState.InVehicle) return;
+        if (!motor.isGrounded) return;
         if (motor.VelocityMagnitude > 0.1f)
         {
             if (waveslice2 >= 0.97f && !rightFoot)
@@ -226,10 +225,13 @@ public class SwayStride : SwayStrideBase
     }
     void OnLocalAimChange(bool aiming)
     {
-        Intensitity = aiming ? settings.AimIntensity : 1;
+        Intensity = aiming ? settings.AimIntensity : 1;
         rotationIntensity = aiming ? settings.aimRotationIntensity : 1;
     }
-    public override void AnimatedThis(Action<PlayerState> callback, bool useAnim)
+    /// 在别处更新行走动画
+    /// useAnimation == false -> 由武器摇晃脚本控制运动
+    /// else -> 由传入的 'callback' 委托控制，不更新武器摇晃脚本。
+    public void AnimatedThis(Action<PlayerState> callback, bool useAnim)
     {
         AnimateCallback = callback;
         useAnimation = useAnim;

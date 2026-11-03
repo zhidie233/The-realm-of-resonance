@@ -16,7 +16,7 @@ public class LobbyUI : MonoBehaviour
 
     [Header("References")]
     public CanvasGroup FadeAlpha;
-    public GameObject PhotonStaticticsUI;
+    public GameObject PhotonStatisticsUI;
     public GameObject PhotonGamePrefab;
     public GameObject EnterPasswordUI;
     public GameObject SeekingMatchUI;
@@ -34,16 +34,14 @@ public class LobbyUI : MonoBehaviour
     public ConfirmationWindow connectionPopupMessage;
     public CanvasGroupFader blackScreenFader;
 
-    #region Private members
     private string currentWindow = "";
     private int requestedRegionID = -1;
-    #endregion
 
     public void InitialSetup()
     {
         GameEvents.onGameSettingsChange += ApplyRuntimeSettings;
         windows.ForEach(x => { if (x.UIRoot != null) { x.UIRoot.SetActive(false); } });
-        if (PhotonStaticticsUI != null) { PhotonStaticticsUI.SetActive(MatchLobby.Instance.ShowPhotonStatistics); }
+        if (PhotonStatisticsUI != null) { PhotonStatisticsUI.SetActive(MatchLobby.Instance.ShowPhotonStatistics); }
         blackScreenFader.SetAlpha(1);
     }
 
@@ -137,8 +135,6 @@ public class LobbyUI : MonoBehaviour
         MatchLobby.Instance.SignOut();
     }
 
-    #region Settings
-
     public void Setup()
     {
         LoadSettings();
@@ -218,9 +214,7 @@ public class LobbyUI : MonoBehaviour
         // 下拉框设置完成后再绑定回调，避免意外触发监听。
         ServersDropdown.onValueChanged.AddListener(ChangeServerCloud);
     }
-    #endregion
 
-    #region UI Callbacks
     public void EnterName(TMP_InputField field = null)
     {
         if (field == null || string.IsNullOrEmpty(field.text))
@@ -259,9 +253,9 @@ public class LobbyUI : MonoBehaviour
         MatchLobby.Instance.CheckRoomPassword(room);
     }
 
-    public void OnEnterPassworld(TMP_InputField pass)
+    public void OnEnterPassword(TMP_InputField pass)
     {
-        if (!MatchLobby.Instance.SetRoomPassworld(pass.text))
+        if (!MatchLobby.Instance.SetRoomPassword(pass.text))
         {
             PasswordLogText.text = "Wrong room password";
         }
@@ -362,9 +356,7 @@ public class LobbyUI : MonoBehaviour
     public void AutoMatch() { MatchLobby.Instance.AutoMatch(); }
     public void CreateRoom() { MatchLobby.Instance.CreateRoom(); }
     public void SetRememberMe(bool value) { MatchLobby.Instance.SetRememberMe(value); }
-    #endregion
 
-    #region Classes
     [System.Serializable]
     public class WindowUI
     {
@@ -404,5 +396,4 @@ public class LobbyUI : MonoBehaviour
             return _instance;
         }
     }
-    #endregion
 }

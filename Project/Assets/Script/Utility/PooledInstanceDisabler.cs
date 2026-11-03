@@ -20,7 +20,7 @@ public class PooledInstanceDisabler : MonoBehaviour
     {
         if (Pooled)
         {
-            transform.parent = ObjectRecyclerBase.Instance.transform;
+            transform.parent = ObjectRecycler.Instance.transform;
             gameObject.SetActive(false);
         }
         else

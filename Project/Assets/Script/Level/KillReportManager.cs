@@ -93,7 +93,7 @@ public class KillReportManager : KillReportEntry
         kf.KillerTeam = (Team)data["team"];
         kf.messageType = KillReportMessageType.WeaponKillEvent;
 
-        KillReportUIBase.Instance.SetKillFeed(kf);
+        KillReportUI.Instance.SetKillFeed(kf);
     }
 
     void ReceiveMessage(HashTable data)
@@ -102,7 +102,7 @@ public class KillReportManager : KillReportEntry
         kf.Message = (string)data["message"];
         kf.messageType = KillReportMessageType.Message;
 
-        KillReportUIBase.Instance.SetKillFeed(kf);
+        KillReportUI.Instance.SetKillFeed(kf);
     }
 
     void ReceiveOnePlayerMessage(HashTable data)
@@ -113,7 +113,7 @@ public class KillReportManager : KillReportEntry
         kf.KillerTeam = (Team)data["team"];
         kf.messageType = KillReportMessageType.TeamHighlightMessage;
 
-        KillReportUIBase.Instance.SetKillFeed(kf);
+        KillReportUI.Instance.SetKillFeed(kf);
     }
 
     public void OnPhotonPlayerDisconnected(Player otherPlayer)

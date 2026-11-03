@@ -86,7 +86,7 @@ public class FirstPersonControllerEditor : Editor
             script.jumpSpeed = EditorGUILayout.Slider("跳跃力度", script.jumpSpeed, -30, 30);
             script.JumpMinRate = EditorGUILayout.Slider("跳跃间隔", script.JumpMinRate, 0.2f, 1.5f);
             script.jumpMomentumBooster = EditorGUILayout.Slider("跳跃动量增幅", script.jumpMomentumBooster, 0.2f, 4.5f);
-            script.momentunDecaySpeed = EditorGUILayout.Slider("动量衰减速度", script.momentunDecaySpeed, 0.2f, 12f);
+            script.momentumDecaySpeed = EditorGUILayout.Slider("动量衰减速度", script.momentumDecaySpeed, 0.2f, 12f);
             script.m_GravityMultiplier = EditorGUILayout.Slider("重力倍率", script.m_GravityMultiplier, 0.1f, 5);
             script.m_StickToGroundForce = EditorGUILayout.Slider("贴地力", script.m_StickToGroundForce, 4, 12);
             EndChangeCheck();
@@ -103,7 +103,7 @@ public class FirstPersonControllerEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.canSlide = ResonanceRealmEditorStyles.FeatureToogle(r, script.canSlide, "玩家可滑铲");
+            script.canSlide = ResonanceRealmEditorStyles.FeatureToggle(r, script.canSlide, "玩家可滑铲");
             script.slideTime = EditorGUILayout.Slider("滑铲时长", script.slideTime, 0.2f, 1.5f);
             script.slideCoolDown = EditorGUILayout.Slider("滑铲冷却", script.slideCoolDown, 0.1f, 2.5f);
             script.slideFriction = EditorGUILayout.Slider("滑铲摩擦", script.slideFriction, 1, 12);
@@ -122,7 +122,7 @@ public class FirstPersonControllerEditor : Editor
             EditorGUILayout.BeginVertical("box");
             EditorGUI.BeginChangeCheck();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.FallDamage = ResonanceRealmEditorStyles.FeatureToogle(r, script.FallDamage, "坠落伤害");
+            script.FallDamage = ResonanceRealmEditorStyles.FeatureToggle(r, script.FallDamage, "坠落伤害");
             script.SafeFallDistance = EditorGUILayout.Slider("安全高度", script.SafeFallDistance, 0.1f, 7f);
             script.DeathFallDistance = EditorGUILayout.Slider("致死高度", script.DeathFallDistance, script.SafeFallDistance, 25);
             script.AirControlMultiplier = EditorGUILayout.Slider("空中控制倍率", script.AirControlMultiplier, 0, 2);
@@ -145,7 +145,7 @@ public class FirstPersonControllerEditor : Editor
             EditorGUI.BeginChangeCheck();
             if (script.mouseLook == null) script.mouseLook = new MouseLook();
             Rect r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.mouseLook.clampVerticalRotation = ResonanceRealmEditorStyles.FeatureToogle(r, script.mouseLook.clampVerticalRotation, "限制垂直旋转");
+            script.mouseLook.clampVerticalRotation = ResonanceRealmEditorStyles.FeatureToggle(r, script.mouseLook.clampVerticalRotation, "限制垂直旋转");
             if (script.mouseLook.clampVerticalRotation)
             {
                 EditorGUILayout.LabelField($"垂直旋转限制 ({script.mouseLook.MinimumX.ToString("0.0")},{script.mouseLook.MaximumX.ToString("0.0")})");
@@ -184,7 +184,7 @@ public class FirstPersonControllerEditor : Editor
             GUILayout.Label("头部晃动参数可在 SwayStride 中修改。", EditorStyles.helpBox);
             if (GUILayout.Button("定位 SwayStride.cs", EditorStyles.toolbarButton))
             {
-                var wb = script.transform.GetComponentInChildren<SwayStrideBase>(true);
+                var wb = script.transform.GetComponentInChildren<SwayStride>(true);
                 if (wb != null)
                 {
                     Selection.activeObject = wb.gameObject;
@@ -224,13 +224,13 @@ public class FirstPersonControllerEditor : Editor
             script.runToAimBehave = (PlayerRunToAimBehave)EditorGUILayout.EnumPopup("奔跑瞄准行为", script.runToAimBehave);
 
             var r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.KeepToCrouch = ResonanceRealmEditorStyles.FeatureToogle(r, script.KeepToCrouch, "切换蹲下");
+            script.KeepToCrouch = ResonanceRealmEditorStyles.FeatureToggle(r, script.KeepToCrouch, "切换蹲下");
 
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.canStealthMode = ResonanceRealmEditorStyles.FeatureToogle(r, script.canStealthMode, "可使用潜行模式");
+            script.canStealthMode = ResonanceRealmEditorStyles.FeatureToggle(r, script.canStealthMode, "可使用潜行模式");
 
             r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
-            script.RunFovEffect = ResonanceRealmEditorStyles.FeatureToogle(r, script.RunFovEffect, "冲刺视野效果");
+            script.RunFovEffect = ResonanceRealmEditorStyles.FeatureToggle(r, script.RunFovEffect, "冲刺视野效果");
 
             script.crouchHeight = EditorGUILayout.Slider("蹲下高度", script.crouchHeight, 0.2f, 3);
             if (script.RunFovEffect)

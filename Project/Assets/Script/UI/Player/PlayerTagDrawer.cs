@@ -1,10 +1,11 @@
 using UnityEngine;
 /// 默认游戏名称牌（头顶名称）脚本
-/// 若想改用其他方案，例如用 UGUI 代替 OnGUI
-/// 新建自定义脚本并继承 PlayerTagBase.cs
-public class PlayerTagDrawer : PlayerTagBase
+public class PlayerTagDrawer : MonoBehaviourBase
 {
-    #region Public members
+    public static bool BlockDraw = false;
+
+    public string PlayerName { get; set; }
+
     [Header("Settings")]
     public float distanceModifier = 1;
     public float hideDistance = 25;
@@ -12,9 +13,7 @@ public class PlayerTagDrawer : PlayerTagBase
     [Header("References")]
     public NameplateStyle StylePreset;
     public Transform positionReference;
-    #endregion
 
-    #region Private members
     private float distance;
     private Transform myTransform;
     private PlayerHealthManagerBase healthManager;
@@ -22,14 +21,13 @@ public class PlayerTagDrawer : PlayerTagBase
     private bool isFinish = false;
     float screenHeight = 0;
     Vector3 screenPoint;
-    #endregion
 
     protected override void Awake()
     {
         base.Awake();
         healthManager = GetComponent<PlayerHealthManagerBase>();
         ShowHealthBar = GameConfig.Instance.allyHealthBars;
-        isFinish = MatchTimeManagerBase.Instance.IsTimeUp();
+        isFinish = MatchTimeManager.Instance.IsTimeUp();
         this.myTransform = this.transform;
 
         if(GameController.Instance.CameraRendered != null)
@@ -48,12 +46,13 @@ public class PlayerTagDrawer : PlayerTagBase
         GameEvents.onRoundEnd -= OnGameFinish;
     }
 
-    public override void SetName(string DrawName)
+    /// 设置要绘制的名称
+    public void SetName(string DrawName)
     {
         PlayerName = DrawName;
     }
 
-    public override void SetActive(bool active)
+    public void SetActive(bool active)
     {
         this.enabled = active;
     }
@@ -65,7 +64,7 @@ public class PlayerTagDrawer : PlayerTagBase
 
     void OnGUI()
     {
-        if (BlockDraw || GameController.Instance.CameraRendered == null || isFinish || PauseMenuBase.IsMenuOpen)
+        if (BlockDraw || GameController.Instance.CameraRendered == null || isFinish || PauseMenu.IsMenuOpen)
             return;
         if (StylePreset == null) return;
 

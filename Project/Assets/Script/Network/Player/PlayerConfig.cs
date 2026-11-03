@@ -6,7 +6,6 @@ using Photon.Pun;
 public class PlayerConfig : NetworkHelper
 {
 
-    #region Public members
     public Team PlayerTeam = Team.None;
     public List<MonoBehaviour> RemoteOnlyScripts = new List<MonoBehaviour>();
     public List<MonoBehaviour> LocalOnlyScripts = new List<MonoBehaviour>();
@@ -22,7 +21,6 @@ public class PlayerConfig : NetworkHelper
     [Header("Hands Textures")]
     [ScriptableDrawer] public ArmsMaterial armsMaterial;
     private List<ArmsMaterial.MaterialColor> currentWeaponMaterials = new List<ArmsMaterial.MaterialColor>(); 
-    #endregion
 
     void Awake()
     {
@@ -96,7 +94,7 @@ public class PlayerConfig : NetworkHelper
 
     private void OnDisable()
     {
-        SetDeafultWeaponRender();
+        SetDefaultWeaponRender();
         if (isMine)
         {
             GameEvents.onGameSettingsChange -= OnGameSettingsChanged;
@@ -190,10 +188,10 @@ public class PlayerConfig : NetworkHelper
             }
             yield return null;
         }
-        SetDeafultWeaponRender();
+        SetDefaultWeaponRender();
     }
 
-    void SetDeafultWeaponRender()
+    void SetDefaultWeaponRender()
     {
         if (currentWeaponMaterials.Count > 0)
         {

@@ -13661,7 +13661,7 @@ MonoBehaviour:
   ForceFireWhenTargetClose: 1
   Grenades: 3
   GrenadeSpeed: 15
-  MinumumDistanceForGranades: 20
+  MinimumDistanceForGrenades: 20
   aiWeapons:
   - {fileID: 607041757169666518}
   - {fileID: 8835921571633284602}

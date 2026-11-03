@@ -743,7 +743,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [B3ho3Ju]
   autoRespawn: 1
   health: 25
@@ -2072,7 +2072,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -4103,7 +4103,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1923581683}
   - {fileID: 1206405100}
   - {fileID: 393388067}
@@ -4218,7 +4218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1206405100}
   - {fileID: 393388067}
   - {fileID: 2053181474}
@@ -4994,7 +4994,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [eb1IVpF]
   autoRespawn: 1
   health: 25
@@ -5799,7 +5799,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1206405100}
   - {fileID: 2053181474}
   - {fileID: 1822684464}
@@ -7069,7 +7069,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1764855862}
   - {fileID: 1577761915}
   - {fileID: 1450824392}
@@ -8878,7 +8878,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints: []
+  NeighborPoints: []
 --- !u!1001 &599155578
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8986,7 +8986,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1736715204}
   - {fileID: 1233586334}
   - {fileID: 1216880226}
@@ -9282,7 +9282,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [TfM1SST]
   autoRespawn: 1
   health: 25
@@ -9526,7 +9526,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -10164,7 +10164,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1822684464}
   - {fileID: 1769021686}
 --- !u!1001 &660409123
@@ -11207,7 +11207,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [B3ho3Ju]
   autoRespawn: 1
   health: 25
@@ -12227,7 +12227,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1764855862}
   - {fileID: 599164585}
   - {fileID: 1736715204}
@@ -12306,7 +12306,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [qr15a92]
   autoRespawn: 1
   health: 25
@@ -13428,7 +13428,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 2068825323}
 --- !u!1001 &858823195
 PrefabInstance:
@@ -13915,7 +13915,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -17248,7 +17248,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [qr15a92]
   autoRespawn: 1
   health: 25
@@ -17715,7 +17715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 393388067}
   - {fileID: 2053181474}
   - {fileID: 1822684464}
@@ -17872,7 +17872,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 599164585}
   - {fileID: 1736715204}
   - {fileID: 1233586334}
@@ -17980,7 +17980,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [RBGVhFP]
   autoRespawn: 1
   health: 25
@@ -18307,7 +18307,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 599164585}
   - {fileID: 1736715204}
   - {fileID: 1216880226}
@@ -19260,7 +19260,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 301867243}
 --- !u!4 &1304382742
 Transform:
@@ -19723,7 +19723,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [TfM1SST]
   autoRespawn: 1
   health: 25
@@ -20121,7 +20121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1672904601}
 --- !u!4 &1423335421
 Transform:
@@ -20397,7 +20397,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1764855862}
   - {fileID: 599164585}
   - {fileID: 1736715204}
@@ -21874,7 +21874,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -22115,7 +22115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1764855862}
   - {fileID: 800625404}
   - {fileID: 1450824392}
@@ -22142,7 +22142,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -22701,7 +22701,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [eb1IVpF]
   autoRespawn: 1
   health: 25
@@ -23370,7 +23370,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -23670,7 +23670,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1216880226}
   - {fileID: 1763999273}
 --- !u!1001 &1647934721
@@ -23947,7 +23947,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1923581683}
   - {fileID: 1899827322}
   - {fileID: 295996376}
@@ -24583,7 +24583,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 599164585}
   - {fileID: 1233586334}
   - {fileID: 1216880226}
@@ -24941,7 +24941,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1646818484}
   - {fileID: 800625404}
 --- !u!1 &1764855860
@@ -24989,7 +24989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 800625404}
   - {fileID: 1577761915}
   - {fileID: 1450824392}
@@ -25114,7 +25114,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 653029424}
   - {fileID: 1795227144}
 --- !u!4 &1769021687
@@ -25503,7 +25503,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1923581683}
   - {fileID: 1206405100}
   - {fileID: 393388067}
@@ -25893,7 +25893,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1206405100}
   - {fileID: 393388067}
   - {fileID: 2053181474}
@@ -26467,7 +26467,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1923581683}
   - {fileID: 1795227144}
   - {fileID: 295996376}
@@ -26856,7 +26856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1795227144}
   - {fileID: 1899827322}
   - {fileID: 295996376}
@@ -27766,7 +27766,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 484854634}
 --- !u!1001 &2003249661
 PrefabInstance:
@@ -28641,7 +28641,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints:
+  NeighborPoints:
   - {fileID: 1206405100}
   - {fileID: 393388067}
   - {fileID: 1822684464}
@@ -28857,7 +28857,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [RBGVhFP]
   autoRespawn: 1
   health: 25
@@ -29363,11 +29363,11 @@ PrefabInstance:
       value: -59.65999
       objectReference: {fileID: 0}
     - target: {fileID: 114083592290400790, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[1]
+      propertyPath: NeighborPoints.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114083592290400790, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[2]
+      propertyPath: NeighborPoints.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114219092054572608, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
@@ -29375,51 +29375,51 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114355531719935250, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[0]
+      propertyPath: NeighborPoints.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.size
+      propertyPath: NeighborPoints.Array.size
       value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[0]
+      propertyPath: NeighborPoints.Array.data[0]
       value: 
       objectReference: {fileID: 599164585}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[1]
+      propertyPath: NeighborPoints.Array.data[1]
       value: 
       objectReference: {fileID: 1736715204}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[2]
+      propertyPath: NeighborPoints.Array.data[2]
       value: 
       objectReference: {fileID: 1233586334}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[3]
+      propertyPath: NeighborPoints.Array.data[3]
       value: 
       objectReference: {fileID: 1577761915}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[4]
+      propertyPath: NeighborPoints.Array.data[4]
       value: 
       objectReference: {fileID: 1450824392}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[5]
+      propertyPath: NeighborPoints.Array.data[5]
       value: 
       objectReference: {fileID: 484854634}
     - target: {fileID: 114415916861819318, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[6]
+      propertyPath: NeighborPoints.Array.data[6]
       value: 
       objectReference: {fileID: 858573504}
     - target: {fileID: 114501195947022776, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[0]
+      propertyPath: NeighborPoints.Array.data[0]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114501195947022776, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[1]
+      propertyPath: NeighborPoints.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114501195947022776, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[2]
+      propertyPath: NeighborPoints.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114587785019307384, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
@@ -29427,15 +29427,15 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114840086984907928, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[1]
+      propertyPath: NeighborPoints.Array.data[1]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114840086984907928, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[2]
+      propertyPath: NeighborPoints.Array.data[2]
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 114840086984907928, guid: 8c843a6b7ee8e7e41833ccd17aeddbf7, type: 3}
-      propertyPath: NeighbordPoints.Array.data[3]
+      propertyPath: NeighborPoints.Array.data[3]
       value: 
       objectReference: {fileID: 0}
     m_RemovedComponents: []

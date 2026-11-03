@@ -100,7 +100,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health [InouG3B]
   autoRespawn: 1
   health: 25

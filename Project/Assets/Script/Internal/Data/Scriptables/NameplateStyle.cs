@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 [CreateAssetMenu(fileName = "Name Plate Style", menuName = "项目/UI/Name Plate Style")]
 public class NameplateStyle : ScriptableObject

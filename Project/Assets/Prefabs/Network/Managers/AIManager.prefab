@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints: []
+  NeighborPoints: []
 --- !u!1 &1942510279257954
 GameObject:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaxDistance: 50
   UsageTime: 10
-  maxNeighbordDistance: 25
+  maxNeighborDistance: 25
   onlyAllowOneBotPerCover: 1
   ShowGizmos: 1
 --- !u!114 &114587785019307384
@@ -182,4 +182,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Crouch: 0
-  NeighbordPoints: []
+  NeighborPoints: []

@@ -294,12 +294,12 @@ public class WeaponRigEditor : Editor
                 s = movementStateMachine.states.ToList().Find(x => x.state.name == "Movement");
                 var moveBlend = (UnityEditor.Animations.BlendTree)s.state.motion;
 
-                var childs = moveBlend.children;
-                childs[0].motion = script.IdleClip;
-                childs[1].motion = script.IdleClip;
-                childs[2].motion = WalkAnim;
-                childs[3].motion = RunAnim;
-                moveBlend.children = childs;
+                var children = moveBlend.children;
+                children[0].motion = script.IdleClip;
+                children[1].motion = script.IdleClip;
+                children[2].motion = WalkAnim;
+                children[3].motion = RunAnim;
+                moveBlend.children = children;
             }
 
             EditorUtility.SetDirty(controller);

@@ -3,7 +3,7 @@ using UnityEngine;
 using Photon.Pun;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Realtime;
-using static ViewRayBase;
+using static ViewRay;
 
 public static class GameCore
 {
@@ -93,18 +93,18 @@ public static class GameCore
             LocalPlayerReferences.playerRagdoll.IgnoreColliders(colliders, ignore);
         }
         /// 让玩家在相机看向物体时检测到它
-        public static byte AddCameraRayDetection(DetecableInfo detecableInfo)
+        public static byte AddCameraRayDetection(DetectableInfo detectableInfo)
         {
             if (LocalPlayerReferences == null) return 0;
 
-            return LocalPlayerReferences.cameraRay.AddTrigger(detecableInfo);
+            return LocalPlayerReferences.cameraRay.AddTrigger(detectableInfo);
         }
 
-        public static void RemoveCameraDetection(DetecableInfo detecableInfo)
+        public static void RemoveCameraDetection(DetectableInfo detectableInfo)
         {
             if (LocalPlayerReferences == null) return;
 
-            LocalPlayerReferences.cameraRay.RemoveTrigger(detecableInfo);
+            LocalPlayerReferences.cameraRay.RemoveTrigger(detectableInfo);
         }
     }
 

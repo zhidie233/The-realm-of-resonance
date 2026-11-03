@@ -26,8 +26,6 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
         return room;
     }
 
-    #region Photon Callbacks
-
     public void OnConnected()
     {
     }
@@ -67,9 +65,7 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
     public void OnLobbyStatisticsUpdate(List<TypedLobbyInfo> lobbyStatistics)
     {
     }
-    #endregion
 
-    #region Getters
     public MapInfo Map => MapList[LobbyRoomCreatorUI.Instance.Map];
     public int MaxPlayers => GameModeInfo.maxPlayers[LobbyRoomCreatorUI.Instance.MaxPlayer];
     public int MaxPing => MatchLobby.Instance.MaxPing[LobbyRoomCreatorUI.Instance.MaxPing];
@@ -92,7 +88,6 @@ public class LobbyRoomCreator : MonoBehaviour, IConnectionCallbacks, ILobbyCallb
             return m_mapList;
         }
     }
-    #endregion
 
     private static LobbyRoomCreator _instance;
     public static LobbyRoomCreator Instance

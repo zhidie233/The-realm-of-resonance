@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text;
 using ExitGames.Client.Photon;
 using Photon.Pun;
 using Photon.Realtime;
@@ -17,10 +16,10 @@ public class NetworkStats : MonoBehaviour, IConnectionCallbacks
     [SerializeField] private Texture2D ArrowIconUp;
     [SerializeField] private GUIStyle m_Style;
 
-    private int DownCommandsStimated = 0;
-    private int UpCommandsStimated = 0;
-    private int DownPackagesStimated = 0;
-    private int UpPackagesStimated = 0;
+    private int DownCommandsEstimated = 0;
+    private int UpCommandsEstimated = 0;
+    private int DownPackagesEstimated = 0;
+    private int UpPackagesEstimated = 0;
 
     public List<StatInfo> ValuesList = new List<StatInfo>();
     public List<StatInfo> LastValuesList = new List<StatInfo>();
@@ -105,13 +104,13 @@ public class NetworkStats : MonoBehaviour, IConnectionCallbacks
         if (LastValuesList.Count > 0)
         {
             int ncos = ValuesList[18].GetIntValue;
-            DownCommandsStimated = (ncos - LastValuesList[18].GetIntValue) / UpdateRate;
+            DownCommandsEstimated = (ncos - LastValuesList[18].GetIntValue) / UpdateRate;
 
             int dsc = ValuesList[17].GetIntValue;
-            UpCommandsStimated = (dsc - LastValuesList[17].GetIntValue) / UpdateRate;
+            UpCommandsEstimated = (dsc - LastValuesList[17].GetIntValue) / UpdateRate;
 
-            DownPackagesStimated = (ValuesList[11].GetIntValue - LastValuesList[11].GetIntValue) / UpdateRate;
-            UpPackagesStimated = (ValuesList[15].GetIntValue - LastValuesList[15].GetIntValue) / UpdateRate;
+            DownPackagesEstimated = (ValuesList[11].GetIntValue - LastValuesList[11].GetIntValue) / UpdateRate;
+            UpPackagesEstimated = (ValuesList[15].GetIntValue - LastValuesList[15].GetIntValue) / UpdateRate;
         }
         LastValuesList.Clear();
         LastValuesList.AddRange(ValuesList.ToArray());
@@ -143,15 +142,15 @@ public class NetworkStats : MonoBehaviour, IConnectionCallbacks
             GUILayout.Label(ArrowIcon, GUILayout.Height(15), GUILayout.Width(15));
             GUILayout.BeginVertical();
             GUILayout.Label(string.Format("{0}", ValuesList[9].GetByteSize()), m_Style);
-            GUILayout.Label(string.Format("{0}({1}) Packages", ValuesList[11].GetIntValue, DownPackagesStimated), m_Style);
-            GUILayout.Label(string.Format("{0}({1}) Calls", ValuesList[18].GetIntValue, DownCommandsStimated), m_Style);
+            GUILayout.Label(string.Format("{0}({1}) Packages", ValuesList[11].GetIntValue, DownPackagesEstimated), m_Style);
+            GUILayout.Label(string.Format("{0}({1}) Calls", ValuesList[18].GetIntValue, DownCommandsEstimated), m_Style);
             GUILayout.EndVertical();
             GUILayout.Space(20);
             GUILayout.Label(ArrowIconUp, GUILayout.Height(15), GUILayout.Width(15));
             GUILayout.BeginVertical();
             GUILayout.Label(string.Format("{0}", ValuesList[13].GetByteSize()), m_Style);
-            GUILayout.Label(string.Format("{0}({1}) Packages", ValuesList[15].GetIntValue, UpPackagesStimated), m_Style);
-            GUILayout.Label(string.Format("{0}({1}) Calls", ValuesList[17].GetIntValue, UpCommandsStimated), m_Style);
+            GUILayout.Label(string.Format("{0}({1}) Packages", ValuesList[15].GetIntValue, UpPackagesEstimated), m_Style);
+            GUILayout.Label(string.Format("{0}({1}) Calls", ValuesList[17].GetIntValue, UpCommandsEstimated), m_Style);
             GUILayout.EndVertical();
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();

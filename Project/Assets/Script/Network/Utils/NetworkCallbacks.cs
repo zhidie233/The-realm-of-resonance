@@ -1,5 +1,4 @@
 ﻿using System;
-using UnityEngine;
 using Photon.Pun;
 using Photon.Realtime;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
@@ -14,7 +13,6 @@ public sealed class NetworkCallbacks : MonoBehaviourPunCallbacks
     public static Action JoinRoom;
     public static Action<Player> MasterClientSwitched;
 
-    #region Player Callbacks
     public override void OnPlayerPropertiesUpdate(Player target, Hashtable changedProps)
     {
         if (PlayerPropertiesUpdate != null)
@@ -38,9 +36,7 @@ public sealed class NetworkCallbacks : MonoBehaviourPunCallbacks
             PlayerEnteredRoom.Invoke(newPlayer);
         }
     }
-    #endregion
 
-    #region Room Callbacks
     public override void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
     {
         if (RoomPropertiesUpdate != null)
@@ -56,9 +52,7 @@ public sealed class NetworkCallbacks : MonoBehaviourPunCallbacks
             MasterClientSwitched.Invoke(newMasterClient);
         }
     }
-    #endregion
 
-    #region Matchmaking Callbacks
     public override void OnLeftRoom()
     {
         if (LeftRoom != null)
@@ -74,6 +68,5 @@ public sealed class NetworkCallbacks : MonoBehaviourPunCallbacks
             JoinRoom.Invoke();
         }
     } 
-    #endregion
 
 }

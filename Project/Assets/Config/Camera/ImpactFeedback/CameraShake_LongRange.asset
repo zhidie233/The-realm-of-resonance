@@ -16,7 +16,7 @@ MonoBehaviour:
   amplitude: 3
   frequency: 0.318
   octaves: 1
-  persistance: 1.39
+  persistence: 1.39
   lacunarity: 62.1
   burstFrequency: 0.27
   burstContrast: 1

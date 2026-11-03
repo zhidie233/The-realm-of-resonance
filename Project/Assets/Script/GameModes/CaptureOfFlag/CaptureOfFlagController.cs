@@ -54,7 +54,7 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
 
         if (team1 >= CapturesToWin || team2 >= CapturesToWin)
         {
-            MatchTimeManagerBase.Instance.FinishRound();
+            MatchTimeManager.Instance.FinishRound();
         }
     }
 
@@ -144,7 +144,6 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
         }
     }
 
-    #region GameMode Interface
     public void Initialize()
     {
         //检查这是否是当前房间的游戏模式
@@ -176,7 +175,7 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
         {
             finalText = GameTexts.NoOneWonName;
         }
-        RoundFinishScreenBase.Instance?.Show(finalText);
+        RoundFinishScreen.Instance?.Show(finalText);
     }
 
     public void OnLocalPlayerDeath()
@@ -204,11 +203,11 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
             data.Add("f2s", Team2Flag.State);
             if (Team1Flag.State == FlagPoint.FlagState.PickUp)
             {
-                data.Add("f1ca", Team1Flag.carriyingPlayer.View.ViewID);
+                data.Add("f1ca", Team1Flag.carryingPlayer.View.ViewID);
             }
             if (Team2Flag.State == FlagPoint.FlagState.PickUp)
             {
-                data.Add("f2ca", Team1Flag.carriyingPlayer.View.ViewID);
+                data.Add("f2ca", Team1Flag.carryingPlayer.View.ViewID);
             }
             NetworkWrapper.Instance.SendDataOverNetworkToPlayer(NetworkKeys.CaptureOfFlagMode, data, newPlayer);
         }
@@ -237,7 +236,6 @@ public class CaptureOfFlagController : NetworkHelper, IGameMode
             return (NetworkWrapper.LocalPlayer.GetPlayerTeam() == GetWinnerTeam());
         }
     }
-    #endregion
 
     public FlagPoint GetFlag(Team team)
     {

@@ -3,11 +3,28 @@ using System.Collections;
 using UnityEngine.UI;
 using System.Linq;
 /// 默认准星实现
-/// 主准星脚本继承 <see cref="ReticleBase"/> 即可使用自己的准星系统
-public class ReticlePainter : ReticleBase
+public class ReticlePainter : MonoBehaviourBase
 {
+    /// 为 true 时冻结并屏蔽对准星的所有操作/调用
+    public bool Block
+    {
+        get;
+        set;
+    }
 
-    #region Public members
+    private static ReticlePainter m_instance;
+    public static ReticlePainter Instance
+    {
+        get
+        {
+            if (m_instance == null)
+            {
+                m_instance = FindObjectOfType<ReticlePainter>();
+            }
+            return m_instance;
+        }
+    }
+
     [Header("Settings")]
     [GameToggle] public bool fadeOnAim = true;
     [Range(1, 10)] public float ScaleLerp = 5;
@@ -28,9 +45,7 @@ public class ReticlePainter : ReticleBase
 
     [SerializeField] private RectTransform RootContent = null;
     [SerializeField] private RectTransform HitMarkerRoot = null;
-    #endregion
 
-    #region Private members
     private Vector2 InitSizeDelta;
     private bool isAim = false;
     private Canvas m_Canvas;
@@ -43,7 +58,6 @@ public class ReticlePainter : ReticleBase
     private bool m_allowFade = true;
     private PlayerState playerState = PlayerState.Idle;
     private Vector2 extraScale = Vector2.zero;
-    #endregion
 
     protected override void Awake()
     {
@@ -72,7 +86,7 @@ public class ReticlePainter : ReticleBase
             return;
 
         ScaleContent();
-        FadeControll();
+        FadeControl();
     }
 
     protected override void OnEnable()
@@ -115,7 +129,7 @@ public class ReticlePainter : ReticleBase
         RootContent.sizeDelta = Vector2.Lerp(RootContent.sizeDelta, size, Time.unscaledDeltaTime * ScaleLerp);
     }
 
-    void FadeControll()
+    void FadeControl()
     {
         if (CrossAlpha == null)
             return;
@@ -124,7 +138,7 @@ public class ReticlePainter : ReticleBase
         CrossAlpha.alpha = Mathf.Lerp(CrossAlpha.alpha, at, Time.deltaTime * 10);
     }
 
-    public override void SetupCrosshairForWeapon(FirearmController gun)
+    public void SetupCrosshairForWeapon(FirearmController gun)
     {
         if (gun == null) return;
 
@@ -132,7 +146,7 @@ public class ReticlePainter : ReticleBase
         SetupCrosshairForWeapon(gun.WeaponType);
     }
 
-    public override void SetupCrosshairForWeapon(FirearmType gun)
+    public void SetupCrosshairForWeapon(FirearmType gun)
     {
         for (int i = 0; i < weaponCrosshairs.Length; i++)
         {
@@ -157,7 +171,8 @@ public class ReticlePainter : ReticleBase
         genericCrosshair.SetActive(true);
     }
 
-    public override void Show(bool show)
+    /// 显示/隐藏准星
+    public void Show(bool show)
     {
         if (Block || !GameConfig.Instance.reticleEnabled)
             return;
@@ -165,7 +180,7 @@ public class ReticlePainter : ReticleBase
         RootContent.gameObject.SetActive(show);
     }
 
-    public override void OnFire()
+    public void OnFire()
     {
         if (!Interactable)
             return;
@@ -177,7 +192,7 @@ public class ReticlePainter : ReticleBase
         lastTimeFire = Time.time + OnFireScaleRate;
     }
 
-    public override void OnAim(bool aim)
+    public void OnAim(bool aim)
     {
         if (!Interactable)
             return;
@@ -185,7 +200,8 @@ public class ReticlePainter : ReticleBase
         isAim = aim;
     }
 
-    public override void OnHit()
+    /// 本地玩家命中可伤害对象时调用
+    public void OnHit()
     {
         if (HitMarkerRoot == null)
             return;
@@ -194,7 +210,8 @@ public class ReticlePainter : ReticleBase
         StartCoroutine(nameof(OnHitMarker));
     }
 
-    public override void AllowFade(bool allow)
+    /// 允许准星淡入淡出
+    public void AllowFade(bool allow)
     {
        m_allowFade = allow;
     }

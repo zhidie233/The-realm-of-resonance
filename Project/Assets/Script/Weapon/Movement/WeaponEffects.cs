@@ -1,13 +1,13 @@
 using UnityEngine;
 
-public class WeaponEffects : WeaponEffectsBase
+public class WeaponEffects : MonoBehaviour
 {
     public ParticleSystem[] highFxParticles;
     public ParticleSystem[] lowFxParticles;
 
     private ParticleSystem[] targetParticles;
     /// 播放武器开火特效
-    public override void PlayFireFX()
+    public void PlayFireFX()
     {
         if (targetParticles == null) ActiveDependOfTarget();
 

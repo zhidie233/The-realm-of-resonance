@@ -6,10 +6,10 @@ public class AIBotReferences : PlayerReferencesCommon
     public AIBotCore aiShooter;
     public PlayerHealthManagerBase shooterHealth;
     public AIBotNetwork shooterNetwork;
-    public AIBotAttackBase shooterWeapon;
-    public AIBotAnimationBase aiAnimation;
+    public AIBotAttack shooterWeapon;
+    public AIBotAnimation aiAnimation;
     public HitBoxManager hitBoxManager;
-    public PlayerTagBase namePlateDrawer;
+    public PlayerTagDrawer namePlateDrawer;
     public NavMeshAgent Agent;
     [SerializeField] private Animator m_playerAnimator;
     public override Animator PlayerAnimator

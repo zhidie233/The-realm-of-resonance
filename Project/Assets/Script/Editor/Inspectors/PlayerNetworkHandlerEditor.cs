@@ -109,8 +109,8 @@ public class PlayerNetworkHandlerEditor : Editor
 
             if (Application.isPlaying)
             {
-                Selection.activeObject = m_Target.CurrenGun;
-                EditorGUIUtility.PingObject(m_Target.CurrenGun);
+                Selection.activeObject = m_Target.CurrentGun;
+                EditorGUIUtility.PingObject(m_Target.CurrentGun);
             }
             else
             {

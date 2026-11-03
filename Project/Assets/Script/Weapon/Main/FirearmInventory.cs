@@ -16,7 +16,7 @@ public class FirearmInventory : MonoBehaviourBase
     // 初始武器 ID
     public int currentWeaponIndex = 0;
     // 切换武器所需时间
-    public float SwichTime = 1;
+    public float SwitchTime = 1;
     public float PickUpTime = 2.5f;
     public ChangeWeaponStyle changeWeaponStyle = ChangeWeaponStyle.HideAndDraw;
     [Header("引用")]
@@ -25,7 +25,7 @@ public class FirearmInventory : MonoBehaviourBase
     // 当前装备的武器
     public FirearmController CurrentGun { get; set; }
     // 玩家是否可以切换武器
-    public bool CanSwich { get; set; } = true;
+    public bool CanSwitch { get; set; } = true;
 
     public bool isGameStarted { get; set; }
     // 从 GameData 缓存的选项
@@ -40,7 +40,7 @@ public class FirearmInventory : MonoBehaviourBase
     {
         base.Awake();
         ASource = GetComponent<AudioSource>();
-        isGameStarted = MatchTimeManagerBase.HaveTimeStarted();
+        isGameStarted = MatchTimeManager.HaveTimeStarted();
         //玩家实例创建后应用 LobbyMenu 中选定的玩家职业
         SetupEquipment();
     }
@@ -50,7 +50,7 @@ public class FirearmInventory : MonoBehaviourBase
         //禁用所有子武器并取第一个
         foreach (FirearmController g in PlayerEquip) { g?.Setup(true); }
         foreach (FirearmController guns in AllGuns) { guns.gameObject?.SetActive(false); }
-        EquipmentScreenBase.Instance?.SetEquipment(PlayerEquip);
+        EquipmentScreen.Instance?.SetEquipment(PlayerEquip);
         EquipPickUpMode = GameConfig.Instance.swapOnPickupMode;
         var firstWeapon = PlayerEquip[currentWeaponIndex];
         TakeWeapon(firstWeapon);
@@ -131,7 +131,7 @@ public class FirearmInventory : MonoBehaviourBase
 
     void InputControl()
     {
-        if (!CanSwich || GameConfig.Instance.isChatOpen)
+        if (!CanSwitch || GameConfig.Instance.isChatOpen)
             return;
 
         if (GameInput.WeaponSlot(1))
@@ -216,7 +216,7 @@ public class FirearmInventory : MonoBehaviourBase
         PlayerEquip[PreviousGun].gameObject.SetActive(false);
         equippedKnife.gameObject.SetActive(true);
         equippedKnife.QuickMelee(OnReturnWeapon);
-        CanSwich = false;
+        CanSwitch = false;
     }
 
     public void DoSingleGrenadeThrow()
@@ -230,7 +230,7 @@ public class FirearmInventory : MonoBehaviourBase
         PlayerEquip[PreviousGun].gameObject.SetActive(false);
         equippedGrenade.gameObject.SetActive(true);
         StartCoroutine(equippedGrenade.FastGrenadeFire(OnReturnWeapon));
-        CanSwich = false;
+        CanSwitch = false;
     }
 
     public void OnReturnWeapon()
@@ -239,33 +239,33 @@ public class FirearmInventory : MonoBehaviourBase
         currentWeaponIndex = PreviousGun;
         PlayerEquip[currentWeaponIndex].gameObject.SetActive(true);
         CurrentGun = PlayerEquip[currentWeaponIndex];
-        CanSwich = true;
+        CanSwitch = true;
         isFastFire = false;
         GameEvents.ChangeWeaponEvent(PlayerEquip[currentWeaponIndex].WeaponID);
     }
 
     void TakeWeapon(FirearmController gun, bool forced = false)
     {
-        if (!CanSwich && !forced) return;
+        if (!CanSwitch && !forced) return;
         if (gun == null) return;
         gun.gameObject.SetActive(true);
-        CanSwich = true;
+        CanSwitch = true;
     }
     // 调用后本地玩家没有武器，且不能选择任何武器
     public void BlockWeaponTable()
     {
         foreach (FirearmController g in PlayerEquip) { g.gameObject.SetActive(false); }
-        ReticleBase.Instance.Show(false);
-        ReticleBase.Instance.Block = true;
-        CanSwich = false;
+        ReticlePainter.Instance.Show(false);
+        ReticlePainter.Instance.Block = true;
+        CanSwitch = false;
         playerReferences.playerNetwork.SetWeaponBlocked(1);
     }
     // 让本地玩家可以重新切换武器
     public void ReleaseWeapons(bool takeFirst)
     {
-        CanSwich = true;
-        ReticleBase.Instance.Block = false;
-        ReticleBase.Instance.Show(true);
+        CanSwitch = true;
+        ReticlePainter.Instance.Block = false;
+        ReticlePainter.Instance.Show(true);
 
         if (!HasAWeaponActive())
         {
@@ -283,17 +283,17 @@ public class FirearmInventory : MonoBehaviourBase
         {
             PlayerEquip[i] = null;
         }
-        ReticleBase.Instance.Show(false);
-        ReticleBase.Instance.Block = true;
+        ReticlePainter.Instance.Show(false);
+        ReticlePainter.Instance.Block = true;
         GameEvents.ChangeWeaponEvent(-1);
         UIReferences.Instance.PlayerUI.WeaponStatsUI.SetActive(false);
     }
 
-    public void SetInfinityAmmoToAllEquippeds(bool infinity)
+    public void SetInfinityAmmoToAllEquipped(bool infinity)
     {
         AllGuns.ForEach((x) =>
         {
-            if (x != null) x.SetInifinityAmmo(infinity);
+            if (x != null) x.SetInfinityAmmo(infinity);
         });
     }
     // 把当前武器（若有）换成指定武器
@@ -315,7 +315,7 @@ public class FirearmInventory : MonoBehaviourBase
     public void ChangeCurrentWeaponTo(int nextSlotID)
     {
         if (currentWeaponIndex == nextSlotID || PlayerEquip[nextSlotID] == null) return;
-        if (!CanSwich || GameConfig.Instance.isChatOpen)
+        if (!CanSwitch || GameConfig.Instance.isChatOpen)
             return;
 
         var next = PlayerEquip[nextSlotID];
@@ -328,8 +328,8 @@ public class FirearmInventory : MonoBehaviourBase
     // 切换枪械的协程
     public IEnumerator ChangeGun(int IDfrom, GameObject t_next, int newID)
     {
-        CanSwich = false;
-        EquipmentScreenBase.Instance?.SetEquippedSlot(newID);
+        CanSwitch = false;
+        EquipmentScreen.Instance?.SetEquippedSlot(newID);
         float hideTime = PlayerEquip[IDfrom].DisableWeapon();
         //立即禁用当前武器并启用下一把
         if (changeWeaponStyle == ChangeWeaponStyle.CounterStrike)
@@ -340,7 +340,7 @@ public class FirearmInventory : MonoBehaviourBase
         {
             HeadAnimator?.Play("SwichtGun", 0, 0);
             //等待固定延迟后再启用下一把
-            yield return new WaitForSeconds(SwichTime);
+            yield return new WaitForSeconds(SwitchTime);
         }
         else if (changeWeaponStyle == ChangeWeaponStyle.HideCompletelyAndThenDraw)
         {
@@ -361,7 +361,7 @@ public class FirearmInventory : MonoBehaviourBase
     // 本地玩家在地图上拾取武器时调用
     public void PickUpGun(FirearmPickUpData e)
     {
-        if (FirearmPickUpManagerBase.Instance == null)
+        if (FirearmPickUpManager.Instance == null)
         {
             Debug.LogWarning("场景中缺少 PickUpManager。");
             return;
@@ -426,7 +426,7 @@ public class FirearmInventory : MonoBehaviourBase
                         }
                         else
                         {
-                            FirearmPickUpManagerBase.Instance.ThrowGun(new FirearmPickUpManagerBase.ThrowData()
+                            FirearmPickUpManager.Instance.ThrowGun(new FirearmPickUpManager.ThrowData()
                             {
                                 WeaponID = oldGun.WeaponID,
                                 Origin = GetThrowPosition(),
@@ -472,19 +472,19 @@ public class FirearmInventory : MonoBehaviourBase
             gun.bulletsLeft = data.Bullets;
             gun.RemainingClips = data.Clips;
         }
-        EquipmentScreenBase.Instance?.ReplaceSlot(slotID, gun);
+        EquipmentScreen.Instance?.ReplaceSlot(slotID, gun);
     }
     public IEnumerator SwitchToPickUpGun(FirearmController currentGun, FirearmController nextGun, int[] info, int newSlotID)
     {
         HeadAnimator?.Play("TakeGun", 0, 0);
         currentGun?.DisableWeapon();
-        if (currentWeaponIndex != newSlotID) EquipmentScreenBase.Instance?.SetEquippedSlot(newSlotID);
+        if (currentWeaponIndex != newSlotID) EquipmentScreen.Instance?.SetEquippedSlot(newSlotID);
         yield return new WaitForSeconds(PickUpTime);
         AllGuns.ForEach(x => { if (x != null) { x.gameObject.SetActive(false); } });
         TakeWeapon(nextGun, true);
         if (currentGun != null)
         {
-            FirearmPickUpManagerBase.Instance.ThrowGun(new FirearmPickUpManagerBase.ThrowData()
+            FirearmPickUpManager.Instance.ThrowGun(new FirearmPickUpManager.ThrowData()
             {
                 WeaponID = currentGun.WeaponID,
                 Origin = GetThrowPosition(),
@@ -495,7 +495,7 @@ public class FirearmInventory : MonoBehaviourBase
         }
         GameEvents.ChangeWeaponEvent(nextGun.WeaponID);
         UIReferences.Instance.PlayerUI.WeaponStatsUI.SetActive(true);
-        CanSwich = true;
+        CanSwitch = true;
     }
     // 扔掉当前枪械
     public void ThrowCurrent(bool AutoDestroy, Vector3 throwPosition)
@@ -508,7 +508,7 @@ public class FirearmInventory : MonoBehaviourBase
             (int)PlayerEquip[currentWeaponIndex].RemainingClips / PlayerEquip[currentWeaponIndex].bulletsPerClip : (int)PlayerEquip[currentWeaponIndex].RemainingClips;
         info[0] = clips;
         info[1] = PlayerEquip[currentWeaponIndex].bulletsLeft;
-        FirearmPickUpManagerBase.Instance.ThrowGun(new FirearmPickUpManagerBase.ThrowData()
+        FirearmPickUpManager.Instance.ThrowGun(new FirearmPickUpManager.ThrowData()
         {
             WeaponID = actualID,
             Origin = throwPosition,

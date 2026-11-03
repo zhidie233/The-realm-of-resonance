@@ -1,8 +1,35 @@
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 
-public class FirearmPickUpManager : FirearmPickUpManagerBase
+public class FirearmPickUpManager : NetworkHelper
 {
+    public struct ThrowData
+    {
+        public int WeaponID;
+        public Vector3 Origin;
+        public Vector3 Direction;
+        public int[] Data;
+        public bool AutoDestroy;
+    }
+
+    public struct PickUpData
+    {
+        public string Identifier;
+        public int WeaponID;
+        public FirearmPickUp.AmmoInformation Ammunition;
+    }
+
+    public FirearmPickUp LastTrigger { get; set; }
+
+    private static FirearmPickUpManager _instance;
+    public static FirearmPickUpManager Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<FirearmPickUpManager>(); }
+            return _instance;
+        }
+    }
 
     [Range(100,500)] public float ForceImpulse = 350;
 
@@ -30,7 +57,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         }
     }
     /// 调用后同步拾取武器的生成
-    public override void ThrowGun(ThrowData throwData)
+    public void ThrowGun(ThrowData throwData)
     {
         int[] i = new int[3];
         i[0] = throwData.Data[0];
@@ -62,15 +89,15 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
             return;
         }
 
-        GameObject trow;
-        trow = ginfo.WorldPrefab.gameObject;
+        GameObject thrown;
+        thrown = ginfo.WorldPrefab.gameObject;
 
         int[] info = (int[])data["info"];
         GameObject p = FindPlayerRoot(info[2]);
         if (p == null) return;
 
         var direction = (Vector3)data["dir"];
-        GameObject gun = Instantiate(trow, (Vector3)data["origin"], Quaternion.identity) as GameObject;
+        GameObject gun = Instantiate(thrown, (Vector3)data["origin"], Quaternion.identity) as GameObject;
         Collider[] c = p.GetComponentsInChildren<Collider>();
         for (int i = 0; i < c.Length; i++)
         {
@@ -78,7 +105,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         }
         gun.GetComponent<Rigidbody>().AddForce(direction * ForceImpulse);
         int clips = info[0];
-        var gp = gun.GetComponent<FirearmPickUpBase>();
+        var gp = gun.GetComponent<FirearmPickUp>();
         gp.Ammunition.Clips = clips;
         gp.Ammunition.Bullets = info[1];
         gp.AutoDestroy = (bool)data["destroy"];
@@ -87,7 +114,7 @@ public class FirearmPickUpManager : FirearmPickUpManagerBase
         gun.transform.parent = transform;
     }
     /// 通知房间内所有客户端该玩家将要拾取武器
-    public override void SendPickUp(PickUpData pickUpData)
+    public void SendPickUp(PickUpData pickUpData)
     {
         var data = CommonUtil.CreatePhotonHashTable();
         data.Add("type", 0);

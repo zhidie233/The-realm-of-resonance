@@ -1,8 +1,25 @@
 using UnityEngine;
 using TMPro;
 
-public class CountDownHandler : CountDownBase
+public class CountDownHandler : MonoBehaviour
 {
+    /// 当前是否正在倒计时？
+    public virtual bool IsCounting
+    {
+        get;
+        set;
+    } = false;
+
+    private static CountDownHandler _instance;
+    public static CountDownHandler Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<CountDownHandler>(); }
+            return _instance;
+        }
+    }
+
     public GameObject Content;
     public TextMeshProUGUI CountDownText;
     public AudioClip CountAudio;
@@ -26,7 +43,7 @@ public class CountDownHandler : CountDownBase
         OnReceiveCount((int)data["c"]);
     }
 
-    public override void StartCountDown(bool overrideIfStarted = false)
+    public void StartCountDown(bool overrideIfStarted = false)
     {
         if (!NetworkWrapper.IsMasterClient) return;
         if (IsCounting && !overrideIfStarted)
@@ -35,14 +52,14 @@ public class CountDownHandler : CountDownBase
         }
 
         countDown = GameConfig.Instance.prematchTime;
-        MatchTimeManagerBase.Instance.SetTimeState(RoomTimeState.Countdown, true);
+        MatchTimeManager.Instance.SetTimeState(RoomTimeState.Countdown, true);
         GameController.Instance.SetGameState(MatchState.Starting);
         IsCounting = true;
 
         InvokeRepeating(nameof(SetCountDown), 1, 1);
     }
 
-    public override void SetCount(int count)
+    public void SetCount(int count)
     {
         OnCountChanged(count);
     }
@@ -70,11 +87,11 @@ public class CountDownHandler : CountDownBase
         if (countDown <= 0)
         {
             CancelInvoke(nameof(SetCountDown));
-            MatchTimeManagerBase.Instance.InitAfterCountdown();
+            MatchTimeManager.Instance.InitAfterCountdown();
         }
         else
         {
-            MatchTimeManagerBase.Instance.SetTimeState(RoomTimeState.Countdown);
+            MatchTimeManager.Instance.SetTimeState(RoomTimeState.Countdown);
         }
         OnCountChanged(countDown);
     }

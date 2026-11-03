@@ -314,7 +314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 1 [fozcRXY]
   autoRespawn: 1
   health: 25
@@ -454,7 +454,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health 2 [lRZBoLD]
   autoRespawn: 1
   health: 25
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemAuthority: 0
   isSceneItem: 1
-  isInitializated: 1
+  isInitialized: 1
   m_itemName: Health [DNyQ1cl]
   autoRespawn: 1
   health: 25
@@ -641,7 +641,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271499748, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -761,7 +761,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400770, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
@@ -885,7 +885,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271400769, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}
-      propertyPath: isInitializated
+      propertyPath: isInitialized
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6851306170271499748, guid: 41db5472b1968c44a9745c5643193ca2, type: 3}

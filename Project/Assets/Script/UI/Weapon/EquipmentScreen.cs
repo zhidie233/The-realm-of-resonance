@@ -2,9 +2,35 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
-public class EquipmentScreen : EquipmentScreenBase
+public class EquipmentScreen : MonoBehaviour
 {
+    [Serializable]
+    public enum VisibilityMode
+    {
+        AutoHide,
+        AlwaysShow,
+    }
+
+    [Flags]
+    public enum EquipmentFlags : byte
+    {
+        None = 0,
+        Animated = 1
+    }
+
+    private static EquipmentScreen _instance;
+    public static EquipmentScreen Instance
+    {
+        get
+        {
+            if (_instance == null) { _instance = FindObjectOfType<EquipmentScreen>(); }
+            if(_instance == null) { _instance = UIReferences.Instance.GetComponentInChildren<EquipmentScreen>(true); }
+            return _instance;
+        }
+    }
+
     [SerializeField] private VisibilityMode showMode = VisibilityMode.AutoHide;
     [SerializeField] private RectTransform BackRect = null;
     [SerializeField] private RectTransform[] SlotsGroups = null;
@@ -25,7 +51,7 @@ public class EquipmentScreen : EquipmentScreenBase
         IconsImg[0].CrossFadeColor(Color.black, 0.1f, true, true);
     }
 
-    public override void SetVisibility(VisibilityMode visibility)
+    public void SetVisibility(VisibilityMode visibility)
     {
         showMode = visibility;
         if (showMode == VisibilityMode.AlwaysShow)
@@ -38,7 +64,8 @@ public class EquipmentScreen : EquipmentScreenBase
         }
     }
 
-    public override void SetEquipment(List<FirearmController> guns)
+    /// 在槽位 UI 中显示给定的武器
+    public void SetEquipment(List<FirearmController> guns)
     {
         for (int i = 0; i < SlotsGroups.Length; i++)
         {
@@ -53,7 +80,10 @@ public class EquipmentScreen : EquipmentScreenBase
         IconsImg[0].canvasRenderer.SetColor(Color.black);
     }
 
-    public override void ReplaceSlot(int slot, FirearmController newGun)
+    /// 用给定武器信息替换指定槽位的 UI。
+    /// <param name="slot">要替换的槽位。</param>
+    /// <param name="newGun">读取信息的武器。</param>
+    public void ReplaceSlot(int slot, FirearmController newGun)
     {
         if (IconsImg[slot].sprite == null)
         {
@@ -65,7 +95,9 @@ public class EquipmentScreen : EquipmentScreenBase
         SlotsGroups[slot].gameObject.SetActive(true);
     }
 
-    public override void SetEquippedSlot(int nextSlot)
+    /// 把给定槽位标记为当前装备武器
+    /// <param name="slotID">要标记为已装备的槽位。</param>
+    public void SetEquippedSlot(int nextSlot)
     {
         if (!GameConfig.Instance.ShowWeaponEquipment) return;
 
@@ -73,7 +105,9 @@ public class EquipmentScreen : EquipmentScreenBase
         StartCoroutine(ChangeSlot(nextSlot));
     }
 
-    public override void ClearSlots(EquipmentFlags flags)
+    /// 清空武器槽位 UI
+    /// 卸下武器时槽位不会自动刷新，需手动调用。
+    public void ClearSlots(EquipmentFlags flags = EquipmentFlags.None)
     {
         for (int i = 0; i < IconsImg.Length; i++)
         {
@@ -122,12 +156,12 @@ public class EquipmentScreen : EquipmentScreenBase
         }
     }
 
-    public override void SetActive(bool active)
+    public void SetActive(bool active)
     {
         Alpha.gameObject.SetActive(active);
     }
 
-    public override VisibilityMode GetVisibilityMode()
+    public VisibilityMode GetVisibilityMode()
     {
         return showMode;
     }

@@ -1,5 +1,4 @@
 using Photon.Realtime;
-using UnityEngine;
 
 public class TeamDeathMatchMode : NetworkHelper, IGameMode
 {
@@ -12,7 +11,6 @@ public class TeamDeathMatchMode : NetworkHelper, IGameMode
         Initialize();
     }
 
-    #region Interface
     public void Initialize()
     {
         //检查这是否是当前房间的游戏模式
@@ -40,7 +38,7 @@ public class TeamDeathMatchMode : NetworkHelper, IGameMode
             finalText = GameTexts.NoOneWonName;
         }
 
-        RoundFinishScreenBase.Instance?.Show(finalText);
+        RoundFinishScreen.Instance?.Show(finalText);
     }
 
     public void OnLocalPlayerKill()
@@ -95,7 +93,6 @@ public class TeamDeathMatchMode : NetworkHelper, IGameMode
         else { winner = Team.None; }
         return winner;
     }
-    #endregion
 
     void CheckScores(int team1, int team2)
     {
@@ -104,12 +101,12 @@ public class TeamDeathMatchMode : NetworkHelper, IGameMode
         //检查是否有队伍达到最大击杀数
         if (team1 >= RoomSettings.Instance.GameGoal)
         {
-            MatchTimeManagerBase.Instance.FinishRound();
+            MatchTimeManager.Instance.FinishRound();
             return;
         }
         if (team2 >= RoomSettings.Instance.GameGoal)
         {
-            MatchTimeManagerBase.Instance.FinishRound();
+            MatchTimeManager.Instance.FinishRound();
         }
     }
 }

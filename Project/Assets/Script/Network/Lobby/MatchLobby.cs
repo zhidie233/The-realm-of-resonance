@@ -10,7 +10,6 @@ using Random = UnityEngine.Random;
 [DefaultExecutionOrder(-998)]
 public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, IMatchmakingCallbacks
 {
-    #region Public members
     [Header("Photon")]
     public ServerRegionCode DefaultServer = ServerRegionCode.usw;
     [GameToggle] public bool ShowPhotonStatistics;
@@ -18,9 +17,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     [Header("Room Options")]
     //房间最大 Ping
     public int[] MaxPing = new int[] { 100, 200, 500, 1000 };
-    #endregion
 
-    #region Public properties
     public LobbyConnectionState connectionState { get; private set; } = LobbyConnectionState.Disconnected;
     public int CurrentMaxPing { get; set; }
     public int ServerRegionID { get; set; } = -1;
@@ -30,15 +27,12 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     public string CachePlayerName { get; set; }
     public bool JoinedWithPassword { get; set; } = false;
     public Action onShowMenu;
-    #endregion
 
-    #region Private members
     private RoomInfo checkingRoom;
     private bool quittingApp = false;
     private bool isSeekingMatch = false;
     bool alreadyLoadHome = false;
     private bool autoRejoinLobby = false;
-    #endregion
 
     void Awake()
     {
@@ -64,7 +58,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
     IEnumerator InitialLoadProcess()
     {
-        LobbyLoadingScreenBase.Instance
+        LobbyLoadingScreen.Instance
             .SetActive(true)
             .SetText(GameTexts.LoadingLocalContent);
 
@@ -80,7 +74,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
 
         yield return LobbyUI.Instance.blackScreenFader.FadeOut(1);
 
-        LobbyLoadingScreenBase.Instance
+        LobbyLoadingScreen.Instance
             .SetActive(true);
 
         GetPlayerName();
@@ -112,7 +106,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             ConnectToServerRegion(ServerRegionID, true);
         }
 
-        LobbyLoadingScreenBase.Instance
+        LobbyLoadingScreen.Instance
             .SetActive(true)
             .SetText(GameTexts.ConnectingToGameServer);
     }
@@ -123,7 +117,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         {
             // 玩家手动切换区域时
             connectionState = LobbyConnectionState.ChangingRegion;
-            LobbyLoadingScreenBase.Instance.SetActive(true)
+            LobbyLoadingScreen.Instance.SetActive(true)
            .SetText(GameTexts.ConnectingToGameServer);
 
             ServerRegionID = id;
@@ -147,7 +141,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         }
     }
 
-    public void Disconect()
+    public void Disconnect()
     {
         SetLobbyMessenger(false);
         if (NetworkWrapper.IsConnected)
@@ -160,7 +154,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     /// 服务器每次更新房间列表时都会调用
     public void ServerList(List<RoomInfo> roomList)
     {
-        LobbyRoomListBase.Instance.SetRoomList(roomList);
+        LobbyRoomList.Instance.SetRoomList(roomList);
     }
 
     public void SetNickName(string nick)
@@ -210,7 +204,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             LobbyUI.Instance.PlayerNameField.text = CachePlayerName;
             SetNickName(CachePlayerName);
             LobbyUI.Instance.ChangeWindow("player name");
-            LobbyLoadingScreenBase.Instance.HideIn(0.2f, true);
+            LobbyLoadingScreen.Instance.HideIn(0.2f, true);
         }
         else
         {
@@ -251,7 +245,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
                 if (!alreadyLoadHome) { LobbyUI.Instance.Home(); alreadyLoadHome = true; }
                 SetLobbyMessenger(true);
                 ResetValues();
-                LobbyLoadingScreenBase.Instance.HideIn(0.2f, true);
+                LobbyLoadingScreen.Instance.HideIn(0.2f, true);
                 //修复：玩家已在 Lobby 时房间列表不刷新
                 autoRejoinLobby = true;
                 PhotonNetwork.LeaveLobby();
@@ -366,10 +360,9 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     public void SignOut()
     {
         PlayerPrefs.SetString(NetworkKeys.GetUniqueKey("remembernick"), string.Empty);
-        Disconect();
+        Disconnect();
         LobbyUI.Instance.ChangeWindow("player name");
     }
-    #region UGUI
     public void SetRememberMe(bool value)
     {
         rememberMe = value;
@@ -378,7 +371,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     {
         checkingRoom = room;
     }
-    public bool SetRoomPassworld(string pass)
+    public bool SetRoomPassword(string pass)
     {
         if (checkingRoom == null)
         {
@@ -409,7 +402,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
              CommonUtil.LoadLevel(level);
          });
     }
-    #endregion
     private IEnumerator MoveToGameScene()
     {
         //等待检查
@@ -438,7 +430,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     {
         quittingApp = true;
         GameConfig.isDataCached = false;
-        Disconect();
+        Disconnect();
     }
     void SetLobbyMessenger(bool connect)
     {
@@ -447,7 +439,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         if (connect) { LobbyMessenger.Instance.Connect(GameConfig.Instance.buildVersion); }
         else { LobbyMessenger.Instance.Disconnect(); }
     }
-    #region Photon Callbacks
     /// 与游戏服务器连接成功后调用
     public void OnConnected()
     {
@@ -478,12 +469,12 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
         {
             connectionState = LobbyConnectionState.Authenticating;
             RequestSessionVerification();
-            LobbyLoadingScreenBase.Instance.SetText(GameTexts.VerifyingSession);
+            LobbyLoadingScreen.Instance.SetText(GameTexts.VerifyingSession);
         }
         else
         {
             connectionState = LobbyConnectionState.Connected;
-            LobbyLoadingScreenBase.Instance.SetActive(true).HideIn(2, true);
+            LobbyLoadingScreen.Instance.SetActive(true).HideIn(2, true);
         }
         SetLobbyMessenger(true);
         ResetValues();
@@ -507,12 +498,12 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             else if (connectionState == LobbyConnectionState.ChangingRegion)
             {
                 ConnectToServerRegion(ServerRegionID);
-                LobbyRoomListBase.Instance?.ClearList();
+                LobbyRoomList.Instance?.ClearList();
                 return;
             }
             else if (connectionState == LobbyConnectionState.Authenticating)
             {
-                LobbyLoadingScreenBase.Instance.SetText(GameTexts.FinishingUp);
+                LobbyLoadingScreen.Instance.SetText(GameTexts.FinishingUp);
                 if (PhotonNetwork.PhotonServerSettings.AppSettings.UseNameServer)
                 {
                     PhotonNetwork.AuthValues = new AuthenticationValues(NetworkWrapper.NickName);
@@ -614,8 +605,8 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
                     LobbyUI.Instance.connectionPopupMessage.AskConfirmation(GameTexts.AnotherSessionOpen, () =>
                     {
                         connectionState = LobbyConnectionState.Disconnected;
-                        Disconect();
-                        LobbyLoadingScreenBase.Instance.HideIn(0.2f, true);
+                        Disconnect();
+                        LobbyLoadingScreen.Instance.HideIn(0.2f, true);
                         LobbyUI.Instance.ChangeWindow("player name");
                     });
                     return;
@@ -624,7 +615,7 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
             // 该账号没有打开的会话
             connectionState = LobbyConnectionState.Authenticating;
             NetworkWrapper.NickName = CachePlayerName;
-            Disconect();
+            Disconnect();
         }
     }
     public void OnCreatedRoom()
@@ -643,7 +634,6 @@ public class MatchLobby : NetworkHelper, IConnectionCallbacks, ILobbyCallbacks, 
     public void OnLeftRoom()
     {
     }
-    #endregion
     private static MatchLobby _instance;
     public static MatchLobby Instance
     {

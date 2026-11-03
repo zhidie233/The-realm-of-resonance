@@ -4,8 +4,18 @@ using TMPro;
 using System.Collections;
 
 [System.Serializable]
-public class DeathCamUI :  DeathCamUIBase
+public class DeathCamUI : MonoBehaviour
 {
+    private static DeathCamUI _instance;
+    public static DeathCamUI Instance
+    {
+        get
+        {
+            if (_instance == null) _instance = FindObjectOfType<DeathCamUI>();
+            return _instance;
+        }
+    }
+
     [SerializeField] private GameObject content = null;
     [SerializeField] private TextMeshProUGUI KillerNameText = null;
     [SerializeField] private TextMeshProUGUI KillerHealthText = null;
@@ -15,7 +25,7 @@ public class DeathCamUI :  DeathCamUIBase
     public Image levelIcon;
     public TextMeshProUGUI KillCamSpectatingText;
 
-    public override void Show(DeathCamBase.DeathCamInfo kcinfo)
+    public void Show(DeathCam.DeathCamInfo kcinfo)
 {
         var killer = kcinfo.TargetName;
         if (string.IsNullOrEmpty(killer) && kcinfo.Target != null)
@@ -61,14 +71,14 @@ public class DeathCamUI :  DeathCamUIBase
         while (d < 1)
         {
             d += Time.deltaTime / rt;
-            int remaing = Mathf.FloorToInt(rt * (1 - d));
-            remaing = Mathf.Max(0, remaing);
-            respawnCountdown.text = string.Format(GameTexts.RespawnIn, remaing);
+            int remaining = Mathf.FloorToInt(rt * (1 - d));
+            remaining = Mathf.Max(0, remaining);
+            respawnCountdown.text = string.Format(GameTexts.RespawnIn, remaining);
             yield return null;
         }
     }
 
-    public override void Hide()
+    public void Hide()
     {
         content.SetActive(false);
     }

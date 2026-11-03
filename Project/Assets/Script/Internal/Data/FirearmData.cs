@@ -18,6 +18,6 @@ public class FirearmData
     [Range(0, 4)] public float Weight;
 
     [Header("References")]
-    public FirearmPickUpBase WorldPrefab;
+    public FirearmPickUp WorldPrefab;
     [SpritePreview(30, true)] public Sprite WeaponIcon;
 }

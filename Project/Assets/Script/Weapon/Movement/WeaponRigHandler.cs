@@ -2,10 +2,26 @@ using System;
 using System.Collections;
 using UnityEngine;
 /// 处理 FPWeapon 动画的 Game 默认脚本。
-/// 脚本继承 WeaponRigBase.cs 后可以用自己的脚本处理动画
-public class WeaponRigHandler : WeaponRigBase
+public class WeaponRigHandler : MonoBehaviour
 {
-    #region Public members
+    [Flags]
+    public enum AnimationFlags
+    {
+        None = 0,
+        Aiming = 1,
+        QuickFire = 2,
+        SplitReload = 4,
+    }
+
+    public enum WeaponRigType : short
+    {
+        TakeIn,
+        TakeOut,
+        Reload,
+        Fire,
+        AimFire,
+    }
+
     public AnimationType m_AnimationType = AnimationType.Animation;
     public FireBlendMethod fireBlendMethod = FireBlendMethod.FireSpeed;
     public AnimationClip DrawName;
@@ -33,9 +49,7 @@ public class WeaponRigHandler : WeaponRigBase
     public AudioClip Reload_2;
     public AudioClip Reload_3;
     public AudioClip m_Fire;
-    #endregion
 
-    #region Private members
     private FirearmInventory GunManager;
     private bool cancelReload = false;
     private PlayerRig playerReferences;
@@ -53,7 +67,6 @@ public class WeaponRigHandler : WeaponRigBase
             return m_linkWeapon;
         }
     }
-    #endregion
 
     void Awake()
     {
@@ -100,8 +113,9 @@ public class WeaponRigHandler : WeaponRigBase
         }
     }
 
-    #region Base interface
-    public override float PlayFire(AnimationFlags flags)
+    /// 播放开火动画
+    /// <returns>整段动画的耗时。</returns>
+    public float PlayFire(AnimationFlags flags = AnimationFlags.None)
     {
         switch (gunType)
         {
@@ -116,7 +130,9 @@ public class WeaponRigHandler : WeaponRigBase
         }
     }
 
-    public override void PlayReload(float reloadTime, int[] data, AnimationFlags flags, Action onFinish = null)
+    /// 播放换弹动画
+    /// <param name="onFinish">换弹动画播完后调用的回调。</param>
+    public void PlayReload(float reloadTime, int[] data, AnimationFlags flags = AnimationFlags.None, Action onFinish = null)
     {
         if (flags.IsEnumFlagPresent(AnimationFlags.SplitReload))
             SplitReload(reloadTime, data[0]);
@@ -124,29 +140,35 @@ public class WeaponRigHandler : WeaponRigBase
             Reload(reloadTime);
     }
 
-    public override float PlayTakeIn()
+    /// 播放掏枪动画
+    /// <returns>整段动画的耗时。</returns>
+    public float PlayTakeIn()
     {
         // 这里不直接处理，因为 DrawWeapon() 函数从 1 版本就存在。
         return DrawWeapon();
     }
 
-    public override float PlayTakeOut()
+    /// 播放收枪动画
+    /// <returns>整段动画的耗时。</returns>
+    public float PlayTakeOut()
     {
         // 这里不直接处理，因为 HideWeapon() 函数从 1 版本就存在。
         return HideWeapon();
     }
 
-    public override void CancelAnimation(WeaponRigType animationType)
+    /// 处理动画取消。
+    public void CancelAnimation(WeaponRigType animationType)
     {
         if (animationType == WeaponRigType.Reload) cancelReload = true;
     }
 
-    public override float GetAnimationDuration(WeaponRigType animationType, float[] data = null)
+    /// 应返回播放整个序列所需的动画时间。
+    public float GetAnimationDuration(WeaponRigType animationType, float[] data = null)
     {
         switch (animationType)
         {
             case WeaponRigType.Fire:
-                return GetFireLenght;
+                return GetFireLength;
             case WeaponRigType.AimFire:
                 return FireAimAnimation.length / FireSpeed;
             case WeaponRigType.TakeIn:
@@ -169,8 +191,6 @@ public class WeaponRigHandler : WeaponRigBase
                 return 0;
         }
     }
-
-    #endregion
 
     void UpdateAnimated(PlayerState playerState)
     {
@@ -254,7 +274,7 @@ public class WeaponRigHandler : WeaponRigBase
         if (fastFire)
         {
             StartCoroutine(FastGrenade());
-            return GetFireLenght + (DrawName.length / DrawSpeed);
+            return GetFireLength + (DrawName.length / DrawSpeed);
         }
         else
         {
@@ -526,7 +546,7 @@ public class WeaponRigHandler : WeaponRigBase
 
     public void PlayHeadShake() => GunManager.HeadAnimator.Play("shake-small", 0, 0);
 
-    public float GetFireLenght { get { return FireAimAnimation.length / FireSpeed; } }
+    public float GetFireLength { get { return FireAimAnimation.length / FireSpeed; } }
 
     [Serializable]
     public enum AnimationType

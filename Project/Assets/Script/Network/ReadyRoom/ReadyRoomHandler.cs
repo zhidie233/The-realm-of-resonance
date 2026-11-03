@@ -7,8 +7,21 @@ using System.Linq;
 using UnityEngine;
 using HashTable = ExitGames.Client.Photon.Hashtable;
 
-public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCallbacks
+public class ReadyRoomHandler : NetworkHelper, IMatchmakingCallbacks, IInRoomCallbacks
 {
+    private static ReadyRoomHandler _instance;
+    public static ReadyRoomHandler Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<ReadyRoomHandler>();
+            }
+            return _instance;
+        }
+    }
+
     public List<int> readyPlayers = new List<int>();
     static readonly RaiseEventOptions EventsAll = new RaiseEventOptions();
 
@@ -44,10 +57,10 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
         }
     }
 
-    public override void JoinToTeam(Team team)
+    public void JoinToTeam(Team team)
     {
         NetworkWrapper.LocalPlayer.SetPlayerTeam(team);
-        ObserverModeBase.EnterAsSpectator = false;
+        ObserverMode.EnterAsSpectator = false;
     }
 
     void OnLocalEnterInReadyRoom()
@@ -58,7 +71,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
         NetworkWrapper.LocalPlayer.SetCustomProperties(table);
     }
     /// 本地
-    public override void SetLocalPlayerReady()
+    public void SetLocalPlayerReady()
     {
         isLocalReady = !isLocalReady;
         HashTable table = new HashTable();
@@ -84,7 +97,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
         OnUpdateStates();
     }
     /// 主客户端点击开始按钮后调用
-    public override void StartGame()
+    public void StartGame()
     {
         if (!NetworkWrapper.IsMasterClient) return;
 
@@ -109,7 +122,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
     }
     void OnUpdateStates()
     {
-        ReadyRoomUIBase.Instance.UpdateAllPlayersStates();
+        ReadyRoomUI.Instance.UpdateAllPlayersStates();
         if (NetworkWrapper.IsMasterClient)
         {
         }
@@ -178,25 +191,24 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
         OnLocalEnterInReadyRoom();
         AutoJoinToTeam();
         yield return new WaitForSeconds(0.5f);
-        ReadyRoomUIBase.Instance.SetActive(true);
+        ReadyRoomUI.Instance.SetActive(true);
         LobbyUI.Instance.blackScreenFader.FadeOut(0.4f);
     }
     IEnumerator MoveToMap()
     {
-        ReadyRoomUIBase.Instance.ShowLoadingScreen(true);
+        ReadyRoomUI.Instance.ShowLoadingScreen(true);
         yield return new WaitForSeconds(2);
         yield return LobbyUI.Instance.blackScreenFader.FadeIn(0.3f);
         LoadMap();
     }
-    public override bool IsPlayerReady(Player player)
+    public bool IsPlayerReady(Player player)
     {
         return readyPlayers.Contains(player.ActorNumber);
     }
-    public override bool IsLocalReady()
+    public bool IsLocalReady()
     {
         return isLocalReady;
     }
-    #region Photon Callbacks
     public void OnCreatedRoom()
     {
     }
@@ -221,7 +233,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
     }
     public void OnLeftRoom()
     {
-        ReadyRoomUIBase.Instance.SetActive(false);
+        ReadyRoomUI.Instance.SetActive(false);
         if (PhotonNetwork.IsConnected)
         {
             if (!PhotonNetwork.InLobby) { PhotonNetwork.JoinLobby(); }
@@ -233,7 +245,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
     }
     public void OnPlayerEnteredRoom(Player newPlayer)
     {
-        ReadyRoomUIBase.Instance.UpdatePlayerCount();
+        ReadyRoomUI.Instance.UpdatePlayerCount();
         if (NetworkWrapper.IsMasterClient)
         {
             HashTable table = new HashTable();
@@ -244,7 +256,7 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
     }
     public void OnPlayerLeftRoom(Player otherPlayer)
     {
-        ReadyRoomUIBase.Instance.InstancePlayerList();
+        ReadyRoomUI.Instance.InstancePlayerList();
         if (readyPlayers.Contains(otherPlayer.ActorNumber)) { readyPlayers.Remove(otherPlayer.ActorNumber); }
     }
     public void OnRoomPropertiesUpdate(HashTable propertiesThatChanged)
@@ -262,31 +274,30 @@ public class ReadyRoomHandler : ReadyRoomBase, IMatchmakingCallbacks, IInRoomCal
         }
         else
         {
-            ReadyRoomUIBase.Instance.UpdateRoomInfoUI();
+            ReadyRoomUI.Instance.UpdateRoomInfoUI();
             if (propertiesThatChanged.ContainsKey(NetworkKeys.GameModeKey) || propertiesThatChanged.ContainsKey(NetworkKeys.TeamKey))
             {
                 if (!isOneTeamModeUpdate && NetworkWrapper.LocalPlayer.GetPlayerTeam() == Team.All)
                 {
                     AutoJoinToTeam();
                 }
-                ReadyRoomUIBase.Instance.InstancePlayerList();
+                ReadyRoomUI.Instance.InstancePlayerList();
             }
             if (propertiesThatChanged.ContainsKey(NetworkKeys.PlayerTotalScore) || propertiesThatChanged.ContainsKey(NetworkKeys.UserRole))
             {
-                ReadyRoomUIBase.Instance.InstancePlayerList();
+                ReadyRoomUI.Instance.InstancePlayerList();
             }
         }
     }
     public void OnPlayerPropertiesUpdate(Player targetPlayer, ExitGames.Client.Photon.Hashtable changedProps)
     {
-        ReadyRoomUIBase.Instance.UpdatePlayerCount();
-        ReadyRoomUIBase.Instance.InstancePlayerList();
+        ReadyRoomUI.Instance.UpdatePlayerCount();
+        ReadyRoomUI.Instance.InstancePlayerList();
     }
     public void OnMasterClientSwitched(Player newMasterClient)
     {
-        ReadyRoomUIBase.Instance.UpdateRoomInfoUI();
+        ReadyRoomUI.Instance.UpdateRoomInfoUI();
     }
-    #endregion
     [System.Serializable]
     public enum PlayerState
     {

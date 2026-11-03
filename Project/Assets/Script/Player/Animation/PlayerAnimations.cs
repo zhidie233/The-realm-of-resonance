@@ -1,14 +1,49 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class PlayerAnimations : PlayerAnimationsBase
+public class PlayerAnimations : MonoBehaviourBase
 {
-    #region Public members
+    [SerializeField] private Animator m_animator = null;
+    public Animator Animator
+    {
+        get => m_animator;
+        set => m_animator = value;
+    }
+
+    public PlayerState BodyState
+    {
+        get;
+        set;
+    } = PlayerState.Idle;
+
+    public PlayerFPState FPState
+    {
+        get;
+        set;
+    } = PlayerFPState.Idle;
+    /// 该玩家是否接触地面？
+    /// 该值应由 NetworkWrapper.cs 提供
+    public bool IsGrounded
+    {
+        get;
+        set;
+    }
+    /// 该玩家的速度
+    public Vector3 Velocity
+    {
+        get;
+        set;
+    } = Vector3.zero;
+    /// 该玩家的本地速度
+    public Vector3 LocalVelocity
+    {
+        get;
+        set;
+    } = Vector3.zero;
+
     public AnimationCurve dropTiltAngleCurve = AnimationCurve.Linear(0, 0, 1, 1);
     public float blendSmoothness = 10;
-    #endregion
 
-    #region Public properties
     public NetworkFirearm CurrentNetworkGun
     {
         get;
@@ -20,9 +55,7 @@ public class PlayerAnimations : PlayerAnimationsBase
         get;
         set;
     }
-    #endregion
 
-    #region Private members
     private RaycastHit footRay;
     private float reloadSpeed = 1;
     private PlayerState lastBodyState = PlayerState.Idle;
@@ -39,7 +72,6 @@ public class PlayerAnimations : PlayerAnimationsBase
     private float lastYRotation;
     private float movementSpeed;
     private float timeSinceLastMove = 0;
-    #endregion
 
     protected override void Awake()
     {
@@ -100,7 +132,7 @@ public class PlayerAnimations : PlayerAnimationsBase
         deltaTime = Time.deltaTime;
         ControllerInfo();
         Animate();
-        UpperControll();
+        UpperControl();
         UpdateFootstep();
         DropPlayerAngle();
     }
@@ -197,7 +229,7 @@ public class PlayerAnimations : PlayerAnimationsBase
         return false;
     }
 
-    void UpperControll()
+    void UpperControl()
     {
         int _fpState = (int)FPState;
         if (_fpState == 9) { _fpState = 1; }
@@ -214,7 +246,8 @@ public class PlayerAnimations : PlayerAnimationsBase
         m_Transform.localRotation = Quaternion.Slerp(m_Transform.localRotation, Quaternion.Euler(pangle), deltaTime * 4);
     }
 
-    public override void BlockWeapons(int blockState)
+    /// 收起 / 卸下武器
+    public void BlockWeapons(int blockState)
     {
         if (PlayerReferences == null || PlayerReferences.playerIK == null) return;
 
@@ -232,7 +265,8 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    public override void OnGetHit()
+    /// 玩家被敌人击中时调用。
+    public void OnGetHit()
     {
         int r = Random.Range(0, 2);
         string hit = (r == 1) ? "Right Hit" : "Left Hit";
@@ -250,17 +284,18 @@ public class PlayerAnimations : PlayerAnimationsBase
 
         if (BodyState == PlayerState.Stealth)
         {
-            footstep?.SetVolumeMuliplier(footstep.stealthModeVolumeMultiplier);
+            footstep?.SetVolumeMultiplier(footstep.stealthModeVolumeMultiplier);
         }
         else
         {
-            footstep?.SetVolumeMuliplier(1f);
+            footstep?.SetVolumeMultiplier(1f);
         }
 
         footstep?.UpdateStep(movementSpeed);
     }
 
-    public override void PlayFireAnimation(FirearmType typ)
+    /// 播放指定枪械类型的开火动画。
+    public void PlayFireAnimation(FirearmType typ)
     {
         // 检查网络武器是否使用自定义动画
         if (CurrentNetworkGun != null && CurrentNetworkGun.useCustomPlayerAnimations)
@@ -303,14 +338,16 @@ public class PlayerAnimations : PlayerAnimationsBase
         }
     }
 
-    public override void UpdateAnimatorParameters()
+    /// 更新玩家动画器参数。
+    public void UpdateAnimatorParameters()
     {
         ControllerInfo();
         Animate();
-        UpperControll();
+        UpperControl();
     }
 
-    public override void SetNetworkGun(FirearmType weaponType, NetworkFirearm networkGun)
+    /// 玩家切换武器时调用
+    public void SetNetworkGun(FirearmType weaponType, NetworkFirearm networkGun)
     {
         if (Animator == null || !Animator.gameObject.activeInHierarchy) return;
         
@@ -342,7 +379,7 @@ public class PlayerAnimations : PlayerAnimationsBase
     }
     void ResetHandsIK() { PlayerReferences.playerIK.ControlArmsWithIK = true; }
 
-    public FirearmType GetCurretWeaponType() { return cacheWeaponType; }
+    public FirearmType GetCurrentWeaponType() { return cacheWeaponType; }
 
     private PlayerRig _playerReferences = null;
     private PlayerRig PlayerReferences

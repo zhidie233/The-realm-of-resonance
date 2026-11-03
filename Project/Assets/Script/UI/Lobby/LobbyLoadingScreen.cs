@@ -1,57 +1,68 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-   /// 默认的大厅连接加载界面
-   /// 继承 LobbyLoadingScreenBase 即可使用自定义实现
-   /// 并替换 Lobby 画布中的 'Loading' UI。
-   public class LobbyLoadingScreen : LobbyLoadingScreenBase
-   {
-       public GameObject content;
-       public TextMeshProUGUI loadingText;
-       public CanvasGroup canvasGroup;
-       public Animator bottomAnimator;
+/// 默认的大厅连接加载界面
+public class LobbyLoadingScreen : MonoBehaviour
+{
+    private static LobbyLoadingScreen _instance;
+    public static LobbyLoadingScreen Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<LobbyLoadingScreen>();
+            }
+            return _instance;
+        }
+    }
 
-       public override LobbyLoadingScreenBase HideIn(float delay, bool faded)
-       {
-           StopAllCoroutines();
-           StartCoroutine(Hide(delay, faded));
-           return this;
-       }
+    public GameObject content;
+    public TextMeshProUGUI loadingText;
+    public CanvasGroup canvasGroup;
+    public Animator bottomAnimator;
 
-       public override LobbyLoadingScreenBase SetActive(bool active)
-       {
-           content.SetActive(active);
-           if (active)
-           {
-               if (bottomAnimator != null)
-               {
-                   bottomAnimator.SetBool("show", true);
-               }
-               if (canvasGroup != null) canvasGroup.alpha = 1;
-           }
-           return this;
-       }
+    public LobbyLoadingScreen HideIn(float delay, bool faded)
+    {
+        StopAllCoroutines();
+        StartCoroutine(Hide(delay, faded));
+        return this;
+    }
 
-       public override LobbyLoadingScreenBase SetText(string text)
-       {
-           if (loadingText != null) loadingText.text = text;
-           return this;
-       }
+    public LobbyLoadingScreen SetActive(bool active)
+    {
+        content.SetActive(active);
+        if (active)
+        {
+            if (bottomAnimator != null)
+            {
+                bottomAnimator.SetBool("show", true);
+            }
+            if (canvasGroup != null) canvasGroup.alpha = 1;
+        }
+        return this;
+    }
 
-       IEnumerator Hide(float delay, bool faded)
-       {
-           yield return new WaitForSeconds(delay);
-           if(faded)
-           {
-               float d = 1;
-               bottomAnimator.SetBool("show", false);
-               while (d > 0)
-               {
-                   d -= Time.deltaTime / 0.5f;
-                   canvasGroup.alpha = LobbyUI.Instance.blackScreenFader.fadeCurve.Evaluate(d);
-                   yield return null;
-               }
-           }
-           SetActive(false);
-       }
-   }
+    public LobbyLoadingScreen SetText(string text)
+    {
+        if (loadingText != null) loadingText.text = text;
+        return this;
+    }
+
+    IEnumerator Hide(float delay, bool faded)
+    {
+        yield return new WaitForSeconds(delay);
+        if(faded)
+        {
+            float d = 1;
+            bottomAnimator.SetBool("show", false);
+            while (d > 0)
+            {
+                d -= Time.deltaTime / 0.5f;
+                canvasGroup.alpha = LobbyUI.Instance.blackScreenFader.fadeCurve.Evaluate(d);
+                yield return null;
+            }
+        }
+        SetActive(false);
+    }
+}

@@ -263,7 +263,7 @@ public static class ExtensionMethods
         return new GameRoomInfo(room);
     }
     /// 检查指定队伍是否为本地玩家的敌方队伍
-    public static Team OppsositeTeam(this Team team)
+    public static Team OppositeTeam(this Team team)
     {
         if (team == Team.Team1) { return Team.Team2; }
         else if (team == Team.Team2) { return Team.Team1; }
@@ -326,7 +326,7 @@ public static class ExtensionMethods
         return collider.CompareTag(GameCore.LOCAL_PLAYER_TAG);
     }
     /// 将 int 数组按指定字符拼接为字符串数组
-    public static string[] AsStringArray(this int[] array, string endoint = "") => array.Select(x => (x.ToString() + endoint)).ToArray();
+    public static string[] AsStringArray(this int[] array, string endpoint = "") => array.Select(x => (x.ToString() + endpoint)).ToArray();
     /// 检查指定枚举标志属性中是否选中某个标志
     public static bool IsEnumFlagPresent<T>(this T value, T lookingForFlag) where T : Enum
     {

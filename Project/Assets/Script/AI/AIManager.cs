@@ -32,7 +32,7 @@ public class AIManager : NetworkHelper
     private int NumberOfBots = 5;
     private List<AIBotCore> AllBots = new List<AIBotCore>();
     private List<PlayerReferencesCommon> targetsLists = new List<PlayerReferencesCommon>();
-    private bool isMasterAlredyInTeam = false;
+    private bool isMasterAlreadyInTeam = false;
 
     private void Awake()
     {
@@ -119,7 +119,7 @@ public class AIManager : NetworkHelper
         line = GetCompiledSlotsData();
         //再发给新玩家，让他拿到数据在本地更新。
         photonView.RPC(nameof(SyncAllBotsStats), RpcTarget.Others, line, 1);
-        GameEvents.onBotsInitializated?.Invoke();
+        GameEvents.onBotsInitialized?.Invoke();
     }
     //把机器人数据取成一行字符串
     public string GetCompiledBotsData()
@@ -520,7 +520,7 @@ public class AIManager : NetworkHelper
     public void ReplaceBotWithPlayer(Player newPlayer, Team playerTeam)
     {
         if (!BotsActive) return;
-        string remplaceBot = string.Empty;
+        string replaceBot = string.Empty;
         var slotList = playerTeam == Team.Team2 ? Team2PlayersSlots : Team1PlayersSlots;
         //检查这个玩家是否已分配过（可能只是换了队伍）
         if (slotList.Exists(x => x.Player == newPlayer.NickName)) return;
@@ -529,8 +529,8 @@ public class AIManager : NetworkHelper
         if (index != -1)
         {
             //用新玩家替换该机器人的槽位
-            remplaceBot = slotList[index].Bot;
-            DeleteBot(remplaceBot);
+            replaceBot = slotList[index].Bot;
+            DeleteBot(replaceBot);
             slotList[index].Player = newPlayer.NickName;
             slotList[index].Bot = string.Empty;
             //把槽位变更同步给其他玩家
@@ -541,9 +541,9 @@ public class AIManager : NetworkHelper
             }
         }
         //删除被主客户端替换掉的那个机器人
-        if (newPlayer.IsMasterClient && NetworkWrapper.IsMasterClient && !isMasterAlredyInTeam && !string.IsNullOrEmpty(remplaceBot))
+        if (newPlayer.IsMasterClient && NetworkWrapper.IsMasterClient && !isMasterAlreadyInTeam && !string.IsNullOrEmpty(replaceBot))
         {
-            AIBotCore bot = AllBots.Find(x => x.AIName == remplaceBot);
+            AIBotCore bot = AllBots.Find(x => x.AIName == replaceBot);
             if (bot != null)
             {
                 PhotonView bv = bot.GetComponent<PhotonView>();
@@ -552,7 +552,7 @@ public class AIManager : NetworkHelper
                 AllBotsTransforms.Remove(bot.AimTarget);
                 PhotonNetwork.Destroy(bv.gameObject);
             }
-            isMasterAlredyInTeam = true;
+            isMasterAlreadyInTeam = true;
         }
     }
     public void OnMasterClientSwitched(Player newMasterClient)
@@ -703,7 +703,7 @@ public class AIManager : NetworkHelper
                     Team2PlayersSlots[i].Bot = slot[1];
                 }
             }
-            GameEvents.onBotsInitializated?.Invoke();
+            GameEvents.onBotsInitialized?.Invoke();
         }
     }
     void RemoveBotInfo(string botName)
