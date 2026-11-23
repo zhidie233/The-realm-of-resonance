@@ -1,22 +1,23 @@
-#define USE_PPV2
 using UnityEngine;
-#if UNITY_POST_PROCESSING_STACK_V2 && USE_PPV2
-using UnityEngine.Rendering.PostProcessing;
-#endif
-/// 如果控制台报错指向本脚本
-/// 多半是因为项目没有导入 Post Processing 包。
-/// 如果是刻意不用它，按以下方式消除报错：Unity Player Settings -> Other Settings -> Script Define Symbols ->
-/// 在输入框里找到并删除这个字符串：UNITY_POST_PROCESSING_STACK_V2; -> 回车/提交。
-/// 如果并非刻意，去 Window -> Package Manager -> 在左侧面板找到 'Post Processing' 包 -> Import 导入它。
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using System.Linq;
+using System.Reflection;
+
+/// <summary>
+/// 把 GameEvents 的后处理开关映射到 URP：Bloom、色差、动态模糊走 Volume 覆盖，
+/// 环境光遮蔽走 URP 渲染器上的 ScreenSpaceAmbientOcclusion 特性。
+/// </summary>
 public class PostProcessEffects : MonoBehaviour
 {
-#if UNITY_POST_PROCESSING_STACK_V2 && USE_PPV2
-    public PostProcessProfile processProfile;
+    Volume volume;
+    ScriptableRendererData rendererData;
+    ScriptableRendererFeature ssaoFeature;
 
     private void Awake()
     {
-        var sceneVolume = GetComponent<PostProcessVolume>();
-        if (sceneVolume != null) sceneVolume.profile = processProfile;
+        volume = GetComponent<Volume>();
+        ResolveSSAO();
     }
 
     private void OnEnable()
@@ -29,31 +30,50 @@ public class PostProcessEffects : MonoBehaviour
         GameEvents.onEffectChange -= OnPostEffect;
     }
 
-    void OnPostEffect(bool chrab, bool anti, bool bloom, bool ssao, bool motionBlur)
-    {
-        if (processProfile == null) return;
-
-        if (processProfile.HasSettings(typeof(ChromaticAberration)))
-        {
-            processProfile.GetSetting<ChromaticAberration>().active = chrab;
-        }
-        if (processProfile.HasSettings(typeof(Bloom)))
-        {
-            processProfile.GetSetting<Bloom>().active = bloom;
-        }
-        if (processProfile.HasSettings(typeof(AmbientOcclusion)))
-        {
-            processProfile.GetSetting<AmbientOcclusion>().active = ssao;
-        }
-        if (processProfile.HasSettings(typeof(MotionBlur)))
-        {
-            processProfile.GetSetting<MotionBlur>().active = motionBlur;
-        }
-    }
-#endif
-
     private void Start()
     {
         DynamicGI.UpdateEnvironment();
+    }
+
+    void OnPostEffect(bool chrab, bool anti, bool bloom, bool ssao, bool motionBlur)
+    {
+        if (volume != null)
+        {
+            var profile = volume.profile;
+            if (profile != null)
+            {
+                if (profile.TryGet<ChromaticAberration>(out var chromaticAberration))
+                    chromaticAberration.active = chrab;
+                if (profile.TryGet<Bloom>(out var bloomEffect))
+                    bloomEffect.active = bloom;
+                if (profile.TryGet<MotionBlur>(out var motionBlurEffect))
+                    motionBlurEffect.active = motionBlur;
+            }
+        }
+
+        SetSSAO(ssao);
+    }
+
+    void ResolveSSAO()
+    {
+        if (!(GraphicsSettings.currentRenderPipeline is UniversalRenderPipelineAsset pipeline))
+            return;
+
+        var field = typeof(UniversalRenderPipelineAsset).GetField("m_RendererDataList", BindingFlags.Instance | BindingFlags.NonPublic);
+        if (!(field?.GetValue(pipeline) is ScriptableRendererData[] rendererDataList) || rendererDataList.Length == 0)
+            return;
+
+        rendererData = rendererDataList[0];
+        ssaoFeature = rendererData.rendererFeatures
+            .FirstOrDefault(feature => feature != null && feature.GetType().Name == "ScreenSpaceAmbientOcclusion");
+    }
+
+    void SetSSAO(bool enabled)
+    {
+        if (ssaoFeature == null || ssaoFeature.isActive == enabled)
+            return;
+
+        ssaoFeature.SetActive(enabled);
+        rendererData.SetDirty();
     }
 }
