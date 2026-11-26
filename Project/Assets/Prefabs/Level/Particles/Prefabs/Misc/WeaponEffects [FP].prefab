@@ -28232,7 +28232,7 @@ GameObject:
   - component: {fileID: 66429300432029788}
   - component: {fileID: 5312467017889116344}
   m_Layer: 8
-  m_Name: CartridgeEjectEffect
+  m_Name: FxShellEject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

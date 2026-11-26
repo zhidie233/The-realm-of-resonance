@@ -23,7 +23,7 @@ MonoBehaviour:
     Server: 
     Port: 0
     ProxyServer: 
-    Protocol: 0
+    Protocol: 5
     EnableProtocolFallback: 1
     AuthMode: 0
     EnableLobbyStatistics: 0
@@ -38,13 +38,17 @@ MonoBehaviour:
   - FireGrenadeRPC
   - FireSync
   - PickUpHealth
+  - RpcFireLauncher
+  - RpcSyncBotTarget
+  - RpcSyncBotCrouch
+  - RpcRespawnBot
+  - RpcKillBot
+  - RpcDespawnBot
   - RpcAIFire
   - RpcDoDamage
-  - RPCFireCustom
   - RPCMatchState
   - RpcReload
   - RPCSetWBlocked
-  - RPCShooterBot
   - RpcStartTime
   - RPCSyncGame
   - RpcSyncHealth

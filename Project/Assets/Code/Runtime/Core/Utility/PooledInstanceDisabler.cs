@@ -1,0 +1,43 @@
+using UnityEngine;
+using Resonance.Foundation;
+using Resonance.Combat;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.Core
+{
+
+    public class PooledInstanceDisabler : MonoBehaviour
+    {
+
+        public bool Pooled = true;
+        public float lifeTime = 5.0f;
+
+    	void OnEnable()
+        {
+            Invoke(nameof(Disable), lifeTime);
+        }
+
+        private void OnDisable()
+        {
+            CancelInvoke();
+        }
+
+        void Disable()
+        {
+            if (Pooled)
+            {
+                transform.parent = ObjectRecycler.Instance.transform;
+                gameObject.SetActive(false);
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
+    }
+}

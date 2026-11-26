@@ -1,0 +1,140 @@
+using UnityEngine;
+using Resonance.Foundation;
+using Resonance.Core;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.Combat
+{
+
+    public class ProjectileBody : ProjectileBase
+    {
+        public ProjectileType m_Type = ProjectileType.Grenade;
+        public ExplosionMethod explosionMethod = ExplosionMethod.Timer;
+        public int TimeToExploit = 10;
+        public GameObject explosion;
+        public TrailRenderer trailRenderer;
+
+        public int ID { get; set; }
+        public string mName { get; set; }
+        public bool isNetwork { get; set; } = false;
+
+        private float speed = 75.0f;
+        private float impactForce;
+        private float damage;
+        private ShotData bulletData;
+
+        public override void InitProjectile(ShotData data)
+        {
+            bulletData = data;
+            damage = data.Damage;
+            impactForce = data.ImpactForce;
+            speed = data.Speed;
+            ID = data.WeaponID;
+            mName = data.WeaponName;
+            isNetwork = data.isNetwork;
+
+            if (explosionMethod == ExplosionMethod.Timer)
+            {
+                InvokeRepeating(nameof(Counter), 1, 1);
+            }
+
+            if (trailRenderer != null)
+            {
+                trailRenderer.Clear();
+                trailRenderer.enabled = false;
+                if (ProjectConfigRoot.Instance.projectileTrailsEnabled)
+                {
+                    this.InvokeAfter(0.2f, () =>
+                    {
+                        trailRenderer.enabled = true;
+                    });
+                }
+            }
+        }
+
+        void OnCollisionEnter(Collision enterObject)
+        {
+            if (explosionMethod != ExplosionMethod.OnCollision)
+                return;
+
+            switch (enterObject.transform.tag)
+            {
+                case "Projectile":
+                    break;
+                default:
+                    Destroy(gameObject, 0);
+                    ContactPoint contact = enterObject.contacts[0];
+                    Quaternion rotation = Quaternion.FromToRotation(Vector3.forward, contact.normal);
+
+                    GameObject e = Instantiate(explosion, contact.point, rotation) as GameObject;
+                    if (m_Type == ProjectileType.Grenade)
+                    {
+                        var blast = e.GetComponent<ExplosionDamage>();
+                        if (blast != null)
+                        {
+                            blast.InitExplosion(bulletData, bulletData.GameActor);
+                        }
+                    }
+                    else if (m_Type == ProjectileType.Molotov)
+                    {
+                        var da = e.GetComponent<DamageArea>();
+                        if (bulletData.GameActor != null) da.SetInfo(bulletData.GameActor.Name, isNetwork);
+                    }
+                    if (enterObject.rigidbody)
+                    {
+                        enterObject.rigidbody.AddForce(transform.forward * impactForce, ForceMode.Impulse);
+                    }
+                    break;
+            }
+
+        }
+
+        void Counter()
+        {
+            TimeToExploit--;
+
+            if (TimeToExploit <= 0)
+            {
+                GameObject e = Instantiate(explosion, transform.position, Quaternion.identity) as GameObject;
+                if (m_Type == ProjectileType.Grenade)
+                {
+                    var blast = e.GetComponent<ExplosionDamage>();
+                    if (blast != null)
+                    {
+                        var actor = bulletData.GameActor;
+                        if (actor != null && actor.ActorView != null)
+                        {
+                            blast.InitExplosion(bulletData, actor);
+                        }
+                    }
+                }
+                else if (m_Type == ProjectileType.Molotov)
+                {
+
+                }
+                CancelInvoke();
+                Destroy(gameObject);
+            }
+        }
+
+        [System.Serializable]
+        public enum ProjectileType
+        {
+            Grenade,
+            Molotov,
+            Smoke,
+        }
+
+        [System.Serializable]
+        public enum ExplosionMethod
+        {
+            Timer,
+            OnCollision
+        }
+    }
+}

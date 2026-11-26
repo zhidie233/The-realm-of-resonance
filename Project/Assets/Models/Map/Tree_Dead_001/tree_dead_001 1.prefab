@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64799580958610924}
   m_Layer: 0
   m_Name: tree_dead_LOD1
-  m_TagString: Wood
+  m_TagString: SurfaceTimber
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 205869721265643756}
   m_Layer: 0
   m_Name: tree_dead_001 1
-  m_TagString: Wood
+  m_TagString: SurfaceTimber
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 64914321623037606}
   m_Layer: 0
   m_Name: tree_dead_LOD0
-  m_TagString: Wood
+  m_TagString: SurfaceTimber
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

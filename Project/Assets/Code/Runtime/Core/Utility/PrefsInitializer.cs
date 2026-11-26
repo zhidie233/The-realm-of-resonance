@@ -1,0 +1,57 @@
+using UnityEngine;
+using UnityEngine.UI;
+using Resonance.Foundation;
+using Resonance.Combat;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.Core
+{
+
+    public class PrefsInitializer : MonoBehaviour
+    {
+
+        public string PrefsKey;
+        public ApplyType m_Type = ApplyType.Toggle;
+
+        [Header("Defaults")]
+        public bool DefaultBool = true;
+
+        private void Awake()
+        {
+            if (!string.IsNullOrEmpty(PrefsKey))
+            {
+                LoadPrefs();
+            }
+        }
+
+        void LoadPrefs()
+        {
+            if(m_Type == ApplyType.Toggle)
+            {
+                GetComponent<Toggle>().isOn = GetUnityKey.GetBoolPrefs(DefaultBool);
+            }
+        }
+
+        public void Set(bool v)
+        {
+            GetUnityKey.SetBoolPrefs(v);
+        }
+
+        private string GetUnityKey
+        {
+            get { return string.Format("{0}.{1}.{2}", Application.companyName, Application.productName, PrefsKey); }
+        }
+
+        [System.Serializable]
+        public enum ApplyType
+        {
+            Toggle,
+            Text,
+        }
+    }
+}

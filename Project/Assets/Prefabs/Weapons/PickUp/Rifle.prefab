@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 54775595186655914}
   m_Layer: 0
   m_Name: Rifle
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

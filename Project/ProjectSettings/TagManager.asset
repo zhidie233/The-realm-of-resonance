@@ -4,20 +4,19 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - BodyPart
+  - HitZone
   - Projectile
-  - PlayerWeapon
+  - EquippedWeapon
   - Enemy
   - GameManager
-  - ItemManager
-  - Concrete
-  - Metal
-  - Dirt
-  - Wood
-  - Water
+  - SurfaceConcrete
+  - SurfaceMetal
+  - SurfaceSoil
+  - SurfaceTimber
+  - SurfaceLiquid
   - AI
-  - Remote
-  - IgnoreBullet
+  - RemoteActor
+  - BallisticIgnore
   - GroundFire
   - Facility
   - GravityFacility
@@ -27,7 +26,7 @@ TagManager:
   - TransparentFX
   - Ignore Raycast
   - 
-  - Water
+  - SurfaceLiquid
   - UI
   - 
   - 

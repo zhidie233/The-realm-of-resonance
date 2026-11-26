@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 33548297176577640}
   - component: {fileID: 23789305845971424}
   m_Layer: 0
-  m_Name: motolov2
+  m_Name: MolotovBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 64184793072756180}
   m_Layer: 0
   m_Name: wood table
-  m_TagString: Wood
+  m_TagString: SurfaceTimber
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

@@ -415,7 +415,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNetwork: {fileID: 148232367451769757}
-  firstPersonController: {fileID: 147779206003310193}
+  PlayerLocomotionController: {fileID: 147779206003310193}
   playerHealthManager: {fileID: 145168409435013727}
   playerSettings: {fileID: 148106787337144295}
   gunManager: {fileID: 147809960125347799}
@@ -5884,7 +5884,7 @@ GameObject:
   - component: {fileID: 832977349297303704}
   m_Layer: 9
   m_Name: RLegCalf
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11559,7 +11559,7 @@ GameObject:
   - component: {fileID: 97863764689287065}
   - component: {fileID: 98837793965496495}
   m_Layer: 8
-  m_Name: CartridgeEjectEffect
+  m_Name: FxShellEject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -16383,7 +16383,7 @@ GameObject:
   - component: {fileID: 258036258198335335}
   m_Layer: 9
   m_Name: RLegAnkle
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16419,7 +16419,7 @@ GameObject:
   - component: {fileID: 9170849512147862464}
   m_Layer: 9
   m_Name: LLegUpper
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17082,7 +17082,7 @@ GameObject:
   - component: {fileID: 7394913680317000185}
   m_Layer: 9
   m_Name: RLegUpper
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17415,7 +17415,7 @@ GameObject:
   - component: {fileID: 646452238869666612}
   m_Layer: 9
   m_Name: LArmUpper1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17592,7 +17592,7 @@ GameObject:
   - component: {fileID: 255171568382187343}
   m_Layer: 9
   m_Name: LLegAnkle
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -17761,7 +17761,7 @@ GameObject:
   - component: {fileID: 5785161538455221133}
   m_Layer: 9
   m_Name: RArmUpper1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18340,7 +18340,7 @@ GameObject:
   - component: {fileID: 82209237945768845}
   - component: {fileID: 98888960430394701}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (1)
+  m_Name: FxMuzzleFlash (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23590,7 +23590,7 @@ GameObject:
   - component: {fileID: 3287986382724357244}
   m_Layer: 9
   m_Name: Spine1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -23733,7 +23733,7 @@ GameObject:
   - component: {fileID: 255394727857495147}
   m_Layer: 9
   m_Name: Neck1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -24149,7 +24149,7 @@ GameObject:
   - component: {fileID: 82463506162092537}
   - component: {fileID: 98406867806367149}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (2)
+  m_Name: FxMuzzleFlash (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -29116,7 +29116,7 @@ GameObject:
   - component: {fileID: 8437859812826999942}
   m_Layer: 9
   m_Name: NeckHead
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29299,7 +29299,7 @@ GameObject:
   - component: {fileID: 6480993439813418433}
   m_Layer: 9
   m_Name: LLegCalf
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -29444,7 +29444,7 @@ GameObject:
   - component: {fileID: 255474735164484807}
   m_Layer: 9
   m_Name: LArmHand
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34459,7 +34459,7 @@ GameObject:
   - component: {fileID: 197659274823912983}
   m_Layer: 0
   m_Name: WeaponsManager
-  m_TagString: PlayerWeapon
+  m_TagString: EquippedWeapon
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -34829,7 +34829,7 @@ GameObject:
   - component: {fileID: 5808561928722001918}
   m_Layer: 9
   m_Name: LArmForearm1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35005,7 +35005,7 @@ GameObject:
   - component: {fileID: 257981170941720027}
   m_Layer: 9
   m_Name: RArmHand
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35566,7 +35566,7 @@ GameObject:
   - component: {fileID: 274611500574877747}
   - component: {fileID: 200468227865837389}
   m_Layer: 0
-  m_Name: motolov2
+  m_Name: MolotovBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35930,7 +35930,7 @@ GameObject:
   - component: {fileID: 148062158443840657}
   m_Layer: 9
   m_Name: AnimSoldier
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36331,7 +36331,7 @@ GameObject:
   - component: {fileID: 241947187575794777}
   m_Layer: 9
   m_Name: Pelvis
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -36427,7 +36427,7 @@ GameObject:
   - component: {fileID: 3863589763476248035}
   m_Layer: 9
   m_Name: RArmForearm1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65220,7 +65220,7 @@ GameObject:
   - component: {fileID: 4806380009204224129}
   - component: {fileID: 857404273460750437}
   m_Layer: 8
-  m_Name: CartridgeEjectEffect
+  m_Name: FxShellEject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75007,7 +75007,7 @@ GameObject:
   - component: {fileID: 9178528280990094852}
   - component: {fileID: 3906031913707843296}
   m_Layer: 8
-  m_Name: CartridgeEjectEffect
+  m_Name: FxShellEject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -133385,7 +133385,7 @@ GameObject:
   - component: {fileID: 5191367207567524808}
   - component: {fileID: 5220257325073016732}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (2)
+  m_Name: FxMuzzleFlash (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -147218,7 +147218,7 @@ GameObject:
   - component: {fileID: 5221245133885548016}
   - component: {fileID: 5221659191495770172}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (2)
+  m_Name: FxMuzzleFlash (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -153092,7 +153092,7 @@ GameObject:
   - component: {fileID: 5386966318748827680}
   - component: {fileID: 5395524668286002120}
   m_Layer: 8
-  m_Name: motolov2
+  m_Name: MolotovBottle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161996,7 +161996,7 @@ GameObject:
   - component: {fileID: 1735953184386111394}
   - component: {fileID: 5855512647610756934}
   m_Layer: 8
-  m_Name: CartridgeEjectEffect
+  m_Name: FxShellEject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

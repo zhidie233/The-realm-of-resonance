@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 114665214}
   - component: {fileID: 114665213}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (4)
+  m_Name: FxMuzzleFlash (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5200,7 +5200,7 @@ GameObject:
   - component: {fileID: 6872523771983964946}
   m_Layer: 9
   m_Name: LLegCalf
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5380,7 +5380,7 @@ GameObject:
   - component: {fileID: 5246631458591753543}
   m_Layer: 9
   m_Name: NeckHead
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5594,7 +5594,7 @@ GameObject:
   - component: {fileID: 198322035516324416}
   - component: {fileID: 199401630039643320}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (2)
+  m_Name: FxMuzzleFlash (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10509,7 +10509,7 @@ GameObject:
   - component: {fileID: 4342981054205386480}
   m_Layer: 9
   m_Name: RArmForearm1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10838,7 +10838,7 @@ GameObject:
   - component: {fileID: 4697256128730001920}
   m_Layer: 9
   m_Name: RLegCalf
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12400,7 +12400,7 @@ GameObject:
   - component: {fileID: 8909782060458565781}
   m_Layer: 9
   m_Name: LArmUpper1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12990,7 +12990,7 @@ GameObject:
   - component: {fileID: 198396930845212144}
   - component: {fileID: 199678989249452704}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (3)
+  m_Name: FxMuzzleFlash (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -17777,7 +17777,7 @@ GameObject:
   - component: {fileID: 511365921051272014}
   m_Layer: 9
   m_Name: RArmUpper1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18303,7 +18303,7 @@ GameObject:
   - component: {fileID: 7173137948689445631}
   m_Layer: 9
   m_Name: LArmForearm1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18452,7 +18452,7 @@ GameObject:
   - component: {fileID: 2622932987453945150}
   m_Layer: 9
   m_Name: Spine1
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18860,7 +18860,7 @@ GameObject:
   - component: {fileID: 3911698798858997251}
   m_Layer: 9
   m_Name: RLegUpper
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19092,7 +19092,7 @@ GameObject:
   - component: {fileID: 5450711380637324307}
   m_Layer: 9
   m_Name: LLegUpper
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

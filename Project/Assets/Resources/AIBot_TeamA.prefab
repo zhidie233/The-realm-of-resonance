@@ -394,7 +394,7 @@ GameObject:
   - component: {fileID: 4602532260726350690}
   m_Layer: 9
   m_Name: DEF-thigh.R
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -540,7 +540,7 @@ GameObject:
   - component: {fileID: 7935023593651180343}
   - component: {fileID: 7316126071717632734}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (3)
+  m_Name: FxMuzzleFlash (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5719,7 +5719,7 @@ GameObject:
   - component: {fileID: 6654329570507126187}
   m_Layer: 9
   m_Name: DEF-forearm.L
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6091,7 +6091,7 @@ GameObject:
   - component: {fileID: 4994963069431185909}
   m_Layer: 9
   m_Name: DEF-spine.001
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6805,7 +6805,7 @@ GameObject:
   - component: {fileID: 6867128658977376297}
   m_Layer: 9
   m_Name: DEF-upper_arm.L
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7128,7 +7128,7 @@ GameObject:
   - component: {fileID: 6752130707223162446}
   - component: {fileID: 3337872321890371944}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (4)
+  m_Name: FxMuzzleFlash (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12074,7 +12074,7 @@ GameObject:
   - component: {fileID: 3051150219072241641}
   m_Layer: 9
   m_Name: DEF-shin.L
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -12680,7 +12680,7 @@ GameObject:
   - component: {fileID: 8353488723030742631}
   m_Layer: 9
   m_Name: DEF-forearm.R
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13413,7 +13413,7 @@ GameObject:
   - component: {fileID: 5845155505843901659}
   m_Layer: 9
   m_Name: DEF-upper_arm.R
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -13632,7 +13632,6 @@ MonoBehaviour:
   aimTarget: {fileID: 9195337403954385104}
   footstep: {fileID: 1230935284250529299}
   isMaster: 0
-  networkMessagesCounts: []
 --- !u!114 &9217262567660548954
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13779,7 +13778,7 @@ GameObject:
   - component: {fileID: 7911050886308585266}
   - component: {fileID: 61458350079775843}
   m_Layer: 9
-  m_Name: MuzzleFlashEffect (2)
+  m_Name: FxMuzzleFlash (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18600,7 +18599,7 @@ GameObject:
   - component: {fileID: 8418764575799909943}
   m_Layer: 9
   m_Name: DEF-shin.R
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19044,7 +19043,7 @@ GameObject:
   - component: {fileID: 5004896710448994070}
   m_Layer: 9
   m_Name: DEF-thigh.L
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -19229,7 +19228,7 @@ GameObject:
   - component: {fileID: 8607113901922239641}
   m_Layer: 9
   m_Name: DEF-head
-  m_TagString: BodyPart
+  m_TagString: HitZone
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

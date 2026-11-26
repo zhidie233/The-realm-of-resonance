@@ -66,7 +66,7 @@ GameObject:
   - component: {fileID: 6542872}
   m_Layer: 0
   m_Name: bar2
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -171,7 +171,7 @@ GameObject:
   - component: {fileID: 6518200}
   m_Layer: 0
   m_Name: bar1
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -275,7 +275,7 @@ GameObject:
   - component: {fileID: 2376870}
   m_Layer: 0
   m_Name: bars_middle
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

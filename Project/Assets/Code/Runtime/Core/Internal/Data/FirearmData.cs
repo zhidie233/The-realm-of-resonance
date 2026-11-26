@@ -1,0 +1,35 @@
+using System;
+using UnityEngine;
+using Resonance.Foundation;
+using Resonance.Combat;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.Core
+{
+
+    [Serializable]
+    public class FirearmData
+    {
+        [Header("Info")]
+        public string Name;
+        public FirearmType Type = FirearmType.Machinegun;
+        [GameToggle] public bool Active = true;
+
+        [Header("Settings")]
+        [Range(1, 100)] public int Damage;
+        [Range(0.01f, 2f)] public float FireRate = 0.1f;
+        [Range(0.5f, 10)] public float ReloadTime = 2.5f;
+        [Range(0, 1000)] public int Range;
+        [Range(0.01f, 5)] public int Accuracy;
+        [Range(0, 4)] public float Weight;
+
+        [Header("References")]
+        public FirearmPickUp WorldPrefab;
+        [SpritePreview(30, true)] public Sprite WeaponIcon;
+    }
+}

@@ -1,9 +1,9 @@
-Shader "Game/WaterURP"
+Shader "Resonance/WaterURP"
 {
     Properties
     {
         _Depth("Depth", Float) = 1
-        _Streght("Streght", Range(0, 2)) = 0
+        _Strength("Strength", Range(0, 2)) = 0
         _DepthColor("DepthColor", Color) = (0.4575472,0.8941401,1,0.6)
         _ShallowColor("ShallowColor", Color) = (0.365655,0.8946645,0.9339623,0.4901961)
         _MainPattern("MainPattern", 2D) = "bump" {}
@@ -52,7 +52,7 @@ Shader "Game/WaterURP"
 
             CBUFFER_START(UnityPerMaterial)
                 float _Depth;
-                float _Streght;
+                float _Strength;
                 half4 _DepthColor;
                 half4 _ShallowColor;
                 float4 _MainPattern_ST;
@@ -146,7 +146,7 @@ Shader "Game/WaterURP"
                 float2 screenUV = i.screenPos.xy / i.screenPos.w;
                 float rawDepth = SampleSceneDepth(screenUV);
                 float eyeDepth = LinearEyeDepth(rawDepth, _ZBufferParams);
-                float depthFactor = saturate((eyeDepth - (i.screenPos.w + _Depth)) * _Streght);
+                float depthFactor = saturate((eyeDepth - (i.screenPos.w + _Depth)) * _Strength);
 
                 float2 uv1 = i.uv * _MainPattern_ST.xy + _MainPattern_ST.zw + (_Time.y / _Layer1Speed).xx;
                 float2 uv2 = i.uv * _SecondaryPattern_ST.xy + _SecondaryPattern_ST.zw + (_Time.y / _Layer2Speed).xx;

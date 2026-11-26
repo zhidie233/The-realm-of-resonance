@@ -84,5 +84,5 @@ MonoBehaviour:
   HealthBarTexture: {fileID: 2800000, guid: ca4f245ce554ba04e9077565d5667264, type: 3}
   HealthBarThickness: 7
   HealthBackColor: {r: 0, g: 0, b: 0, a: 0.60784316}
-  HealthBarColor: {r: 1, g: 0.89019614, b: 0, a: 1}
+  HealthBarColor: {r: 0.7647059, g: 0.8627451, b: 0.27450982, a: 1}
   HealthBackOffset: {x: 0, y: 0}

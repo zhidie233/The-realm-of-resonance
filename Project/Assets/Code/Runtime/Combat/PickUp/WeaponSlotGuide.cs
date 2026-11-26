@@ -1,0 +1,37 @@
+using UnityEngine;
+using Resonance.Foundation;
+using Resonance.Core;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.Combat
+{
+    [CreateAssetMenu(fileName = "Weapon Slot Guide", menuName = "项目/Weapon/SlotGuide")]
+    public class WeaponSlotGuide : ScriptableObject
+    {
+        [Reorderable] public FirearmType[] primarySlots;
+        [Reorderable] public FirearmType[] secondarySlots;
+        [Reorderable] public FirearmType[] perksSlots;
+        [Reorderable] public FirearmType[] lethalSlots;
+        public bool CanBeOnSlot(FirearmType gunType, int slotID)
+        {
+            if (slotID == 0) return TypeInList(gunType, primarySlots);
+            else if(slotID == 1) return TypeInList(gunType, secondarySlots);
+            else if (slotID == 2) return TypeInList(gunType, lethalSlots);
+            else return TypeInList(gunType, perksSlots);
+        }
+
+        private bool TypeInList(FirearmType gunType, FirearmType[] list)
+        {
+            for (int i = 0; i < list.Length; i++)
+            {
+                if (list[i] == gunType) return true;
+            }
+            return false;
+        }
+    }
+}

@@ -419,7 +419,7 @@ GameObject:
   - component: {fileID: 4220877643015836}
   - component: {fileID: 114299853095851186}
   m_Layer: 2
-  m_Name: CaptureOfFlag
+  m_Name: FlagCapture
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

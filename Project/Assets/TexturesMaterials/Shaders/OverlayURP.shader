@@ -1,4 +1,4 @@
-Shader "Game/Utils/Render OverAllURP"
+Shader "Resonance/OverlayURP"
 {
     Properties
     {

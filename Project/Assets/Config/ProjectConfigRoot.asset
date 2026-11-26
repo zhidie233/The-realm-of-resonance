@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9564851e7ac49099be2e025959dfc39, type: 3}
+  m_Name: ProjectConfigRoot
+  m_EditorClassIdentifier: 
+  rules: {fileID: 11400000, guid: 79c5dfce64664f3cb239361d65a7c1d6, type: 2}
+  weapons: {fileID: 11400000, guid: 77e9a1bbd8244241a791157197f948d8, type: 2}
+  arenas: {fileID: 11400000, guid: af9c769fc0fa44f0a28074637873abd9, type: 2}
+  factions: {fileID: 11400000, guid: 43485376f82c4904a0490ecfadafa6f9, type: 2}
+  resonance: {fileID: 11400000, guid: 4fa8754aa02e4a6dbe82ca6f2277c687, type: 2}
+  defaultSettings: {fileID: 11400000, guid: 5fadfa78dabe7f6429f21e8ed3cc747b, type: 2}
+  mouseLookSettings: {fileID: 11400000, guid: 68ddc6624e6fafd41b8349be7933fcc9, type: 2}
+  tagsAndLayersSettings: {fileID: 11400000, guid: a4bcf2e6bc508bb4b914bd8659a80b09, type: 2}
+  isChatOpen: 0
+  appKey: 
+  channelId: 0
+  sessionTicket: 

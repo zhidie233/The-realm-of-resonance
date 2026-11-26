@@ -1,0 +1,203 @@
+using System.Collections.Generic;
+using UnityEngine;
+using Resonance.Foundation;
+using Resonance.Core;
+using Resonance.Combat;
+using Resonance.Actors;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.Bots
+{
+
+    [ExecuteInEditMode]
+    public class AIBotAnimation : MonoBehaviour
+    {
+        private Animator _animator;
+        public Animator m_Animator
+        {
+            get
+            {
+                if (_animator == null)
+                {
+                    _animator = GetComponent<Animator>();
+                }
+                return _animator;
+            }
+        }
+
+        public virtual Transform GetHumanBone(HumanBodyBones bodyBone)
+        {
+            if (m_Animator == null) return null;
+
+            return m_Animator.GetBoneTransform(bodyBone);
+        }
+
+        [Header("Head Look")]
+        [SerializeField, Range(0, 1)] private float Weight = 0.8f;
+        [SerializeField, Range(0, 1)] private float Body = 0.9f;
+        [SerializeField, Range(0, 1)] private float Head = 1;
+
+        [Header("Ragdoll")]
+        public List<Rigidbody> mRigidBody = new List<Rigidbody>(); 
+
+        private Animator m_animator;
+        private Vector3 localVelocity;
+        private float vertical;
+        private float horizontal;
+        private float turnSpeed;
+        private Vector3 velocity;
+        private float lastYRotation;
+        private float TurnLerp;
+        private float movementSpeed;
+        private Vector3 headTarget;
+        private Dictionary<string, int> animatorHashes;
+        private AIBotReferences references;
+        private float timeSinceLastMove = 0;
+        private Vector3 fixedLookAtPosition = Vector3.zero;
+        private Transform headBone;
+
+        protected virtual void Awake()
+        {
+            references = transform.root.GetComponent<AIBotReferences>();
+            m_animator = GetComponent<Animator>();
+            headBone = m_animator.GetBoneTransform(HumanBodyBones.Head);
+            SetKinematic();
+            if (animatorHashes == null)
+            {
+                FetchHashes();
+            }
+        }
+
+        void FetchHashes()
+        {
+            //用数组缓存哈希值更合适，但为了让其他使用者更容易理解
+            //我决定改用字典缓存，键名表示它对应的参数
+            animatorHashes = new Dictionary<string, int>();
+            animatorHashes.Add("Vertical", Animator.StringToHash("Vertical"));
+            animatorHashes.Add("Horizontal", Animator.StringToHash("Horizontal"));
+            animatorHashes.Add("Speed", Animator.StringToHash("Speed"));
+            animatorHashes.Add("Turn", Animator.StringToHash("Turn"));
+            animatorHashes.Add("isGround", Animator.StringToHash("isGround"));
+        }
+
+        protected virtual void Update()
+        {
+            ControllerInfo();
+            Animate();
+        }
+
+        void ControllerInfo()
+        {
+            velocity = references.shooterNetwork.Velocity;
+            float delta = Time.deltaTime;
+            localVelocity = transform.InverseTransformDirection(velocity);
+            localVelocity.y = 0;
+
+            vertical = Mathf.Lerp(vertical, localVelocity.z, delta * 8);
+            horizontal = Mathf.Lerp(horizontal, localVelocity.x, delta * 8);
+            movementSpeed = velocity.magnitude;
+
+            if (movementSpeed > 0.1f)
+            {
+                timeSinceLastMove = Time.time;
+            }
+
+            turnSpeed = Mathf.DeltaAngle(lastYRotation, transform.rotation.eulerAngles.y);
+            TurnLerp = Mathf.Lerp(TurnLerp, turnSpeed, 7 * delta);
+
+            if (Time.time - timeSinceLastMove < 1)
+            {
+                TurnLerp = 0;
+            }
+
+            if (Time.frameCount % 7 == 0) lastYRotation = lastYRotation = transform.rotation.eulerAngles.y;
+        }
+
+        void Animate()
+        {
+            if (m_animator == null)
+                return;
+
+            m_animator.SetFloat(animatorHashes["Vertical"], vertical);
+            m_animator.SetFloat(animatorHashes["Horizontal"], horizontal);
+            m_animator.SetFloat(animatorHashes["Speed"], movementSpeed);
+            m_animator.SetFloat(animatorHashes["Turn"], TurnLerp);
+            m_animator.SetBool(animatorHashes["isGround"], true);
+        }
+
+        private void OnAnimatorIK(int layerIndex)
+        {
+            if (layerIndex == 1)
+            {
+                fixedLookAtPosition = references.aiShooter.LookAtPosition;
+                if (references.aiShooter.LookingAt != AIGaze.Target && MathHelpers.Distance(fixedLookAtPosition, headBone.position) < Mathf.PI)
+                {
+                    fixedLookAtPosition = (transform.position + (transform.forward * 10));
+                    fixedLookAtPosition.y = headBone.position.y;
+                }
+
+                m_animator.SetLookAtWeight(Weight, Body, Head, 1, 0.4f);
+                headTarget = Vector3.Slerp(headTarget, fixedLookAtPosition, Time.deltaTime * 3);
+                m_animator.SetLookAtPosition(headTarget);
+            }
+        }
+
+        public void SetKinematic()
+        {
+            for(int i = 0; i< mRigidBody.Count; i++)
+            {
+                if (mRigidBody[i] == null) continue;
+
+                mRigidBody[i].isKinematic = true;
+            }
+        }
+
+        /// 让机器人变成布娃娃
+        public void Ragdolled(Vector3 from, bool isExplosion = false)
+        {
+            m_animator.enabled = false;
+
+            for (int i = 0; i < mRigidBody.Count; i++)
+            {
+                if (mRigidBody[i] == null) continue;
+
+                mRigidBody[i].isKinematic = false;
+                mRigidBody[i].detectCollisions = true;
+                Vector3 rhs = transform.position - from;
+                //用精确的判定盒位置代替 transform.position，效果更真实。
+                mRigidBody[i].AddForceAtPosition(rhs.normalized * 150, transform.position);
+                if (isExplosion)
+                {
+                    mRigidBody[i].AddExplosionForce(875, from, 7);
+                }
+            }
+        }
+
+        /// 处理机器人受伤
+        public void OnGetHit()
+        {
+            int r = Random.Range(0, 2);
+            string hit = (r == 1) ? "Right Hit" : "Left Hit";
+            m_animator.Play(hit, 2, 0);
+        }
+
+    #if UNITY_EDITOR
+        [ContextMenu("Get RigidBodys")]
+    #endif
+        public void GetRigidbodies()
+        {
+            Rigidbody[] R = this.transform.GetComponentsInChildren<Rigidbody>();
+
+            foreach (Rigidbody rb in R)
+            {
+                if (!mRigidBody.Contains(rb))
+                {
+                    mRigidBody.Add(rb);
+                }
+            }
+        }
+    }
+}

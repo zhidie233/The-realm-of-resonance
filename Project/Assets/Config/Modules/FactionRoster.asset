@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f226e417ebbb4edea654319b700e06d4, type: 3}
+  m_Name: FactionRoster
+  m_EditorClassIdentifier: 
+  Team1Name: "\u84DD\u961F"
+  Team1Color: {r: 0.03529412, g: 0.5176471, b: 0.8901961, a: 1}
+  Team2Name: "\u7EA2\u961F"
+  Team2Color: {r: 0.92156863, g: 0.3019608, b: 0.29411766, a: 1}
+  Team1PlayerPrefab: {fileID: 7135504912842644769, guid: 77c0e08bd92715b4a9732ce61b4f1bbd, type: 3}
+  Team2PlayerPrefab: {fileID: 6787355089765057219, guid: cb9f7f11e9dd4224d88acd2b4a38250b, type: 3}
+  BotTeam1: {fileID: 575238182293687342, guid: 4baf4208a7e82d147b76a6300faee306, type: 3}
+  BotTeam2: {fileID: 7711766675355324538, guid: ca5c4aab36c1d4249b34f41cf243290f, type: 3}
+  BotTeam3: {fileID: 5091329565238615710, guid: ff3b42bcc9e71f644ab6bf81713108e9, type: 3}
+  GameTeam:
+  - UserName: FairyOnTheTree
+    m_Role: 0
+    Password: www114514
+    m_Color: {r: 1, g: 0, b: 0.1862073, a: 1}

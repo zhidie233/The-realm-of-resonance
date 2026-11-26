@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82f1424e6588435a9dba16f83439bf12, type: 3}
+  m_Name: ResonanceSuite
+  m_EditorClassIdentifier: 
+  resonanceEnabled: 1
+  resonanceConfig: {fileID: 11400000, guid: e323ad59069fd384794ac769020c8c0c, type: 2}
+  gravityConfig: {fileID: 11400000, guid: b78439da22b87f349a9a277adc8d76ca, type: 2}
+  groundFireConfig: {fileID: 11400000, guid: 6817feaeaf9d89d469af2fa8f2494fb5, type: 2}
+  meteoriteConfig: {fileID: 11400000, guid: b08820c1490408d45b387a90c01d9db1, type: 2}
+  robotConfig: {fileID: 11400000, guid: 4a592d5ecbecc5d47884e07eb4400558, type: 2}
+  supplyConfig: {fileID: 11400000, guid: f2fd13b5a00e4a444af72bc4dddb1b87, type: 2}

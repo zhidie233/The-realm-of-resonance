@@ -30040,7 +30040,7 @@ GameObject:
   - component: {fileID: 2105592757}
   m_Layer: 4
   m_Name: WaterPlane
-  m_TagString: Water
+  m_TagString: SurfaceLiquid
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 96

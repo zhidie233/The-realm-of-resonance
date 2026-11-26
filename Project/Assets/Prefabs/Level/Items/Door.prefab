@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 3968862182360484391}
   m_Layer: 0
   m_Name: door
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -166,7 +166,7 @@ GameObject:
   - component: {fileID: 6061852343365267103}
   m_Layer: 0
   m_Name: frame
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -308,7 +308,7 @@ GameObject:
   - component: {fileID: 7645742865332613522}
   m_Layer: 0
   m_Name: Door
-  m_TagString: Metal
+  m_TagString: SurfaceMetal
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295

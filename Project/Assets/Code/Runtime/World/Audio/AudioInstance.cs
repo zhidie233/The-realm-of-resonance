@@ -1,0 +1,60 @@
+using UnityEngine;
+using Resonance.Foundation;
+using Resonance.Core;
+using Resonance.Combat;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.Anomaly;
+using Resonance.UI;
+namespace Resonance.World
+{
+
+    public class AudioInstance : MonoBehaviour
+    {
+        private AudioSource aSource;
+        public int ID { get; set; }
+        public AudioBankData.AudioInfo playingAudio { get; private set; }
+
+        public void Init()
+        {
+            if (aSource == null) { aSource = gameObject.AddComponent<AudioSource>(); }
+        }
+
+        public int SetInstance(AudioBankData.AudioInfo info)
+        {
+            if (aSource == null) { aSource = gameObject.AddComponent<AudioSource>(); }
+
+            aSource.clip = info.Clip;
+            aSource.volume = info.Volume;
+            aSource.spatialBlend = info.SpatialAudio ? 1 : 0;
+            aSource.loop = info.Loop;
+
+            aSource.Play();
+            playingAudio = info;
+            if (!info.Loop)
+            {
+                Invoke("Stop", info.Clip.length);
+            }
+            return ID;
+        }
+
+        public void Stop()
+        {
+            aSource.Stop();
+            gameObject.SetActive(false);
+        }
+
+        public bool isPlaying
+        {
+            get
+            {
+                if (aSource == null) return false;
+
+                return aSource.isPlaying;
+            }
+        }
+        public bool isPlayingClip(string audioName) { return (isPlaying && (playingAudio.Name.ToLower() == audioName.ToLower())); }
+    }
+}

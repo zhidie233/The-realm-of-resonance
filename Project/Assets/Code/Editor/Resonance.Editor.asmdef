@@ -1,0 +1,25 @@
+{
+  "name": "Resonance.Editor",
+  "rootNamespace": "Resonance.Editor",
+  "references": [
+    "Resonance.Foundation",
+    "Resonance.Runtime",
+    "PhotonUnityNetworking",
+    "PhotonUnityNetworking.Editor",
+    "PhotonRealtime",
+    "Unity.TextMeshPro",
+    "Unity.Addressables",
+    "Unity.Addressables.Editor"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

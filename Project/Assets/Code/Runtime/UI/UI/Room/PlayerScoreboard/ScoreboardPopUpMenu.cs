@@ -1,0 +1,144 @@
+using System.Collections.Generic;
+using Photon.Realtime;
+using TMPro;
+using UnityEngine;
+using UnityEngine.UI;
+using System;
+using Resonance.Foundation;
+using Resonance.Core;
+using Resonance.Combat;
+using Resonance.Actors;
+using Resonance.Bots;
+using Resonance.Match;
+using Resonance.Multiplayer;
+using Resonance.World;
+using Resonance.Anomaly;
+namespace Resonance.UI
+{
+
+    public class ScoreboardPopUpMenu : MonoBehaviour
+    {
+        public struct MenuFilter
+        {
+            public bool IsLocalPlayer;
+            public bool IsBot;
+        }
+
+        [Serializable]
+        public class MenuOptions
+        {
+            public string Title;
+            public bool AllowedForLocal = false;
+            public bool AllowedForBots = false;
+
+            [HideInInspector] public Button OptionButton;
+        }
+
+        public static Action<int> onScoreboardMenuAction;
+        public static Player TargetPlayer;
+
+        public List<MenuOptions> options;
+        public ListLayoutHelper listHandler;
+        [SerializeField] private GameObject content = null;
+
+        private void OnEnable()
+        {
+            PrepareMenu();
+            ((RectTransform)transform).position = Input.mousePosition;
+        }
+
+        public ScoreboardPopUpMenu SetActive(bool active)
+        {
+            PrepareMenu();
+            content.SetActive(active);
+            return this;
+        }
+
+        public ScoreboardPopUpMenu SetTargetPlayer(Player player)
+        {
+            TargetPlayer = player;
+            return this;
+        }
+
+        public ScoreboardPopUpMenu FilterMenuOptions(MenuFilter filter)
+        {
+            foreach (var item in options)
+            {
+                if (filter.IsBot)
+                {
+                    if (!item.AllowedForBots)
+                    {
+                        item.OptionButton.interactable = false;
+                        continue;
+                    }
+                }
+
+                if (filter.IsLocalPlayer)
+                {
+                    if (!item.AllowedForLocal)
+                    {
+                        item.OptionButton.interactable = false;
+                        continue;
+                    }
+                }
+
+                item.OptionButton.interactable = true;
+            }
+            return this;
+        }
+
+        public void PrepareMenu()
+        {
+            if (listHandler.IsInitialize) return;
+
+            listHandler.Prefab.SetActive(false);
+            for (int i = 0; i < options.Count; i++)
+            {
+                var btn = listHandler.InstantiateAndGet<Button>();
+                var text = btn.GetComponentInChildren<TextMeshProUGUI>();
+                if(text != null)
+                {
+                    text.text = options[i].Title;
+                }
+                options[i].OptionButton = btn;
+                int id = i;
+                btn.onClick.AddListener(() => { OnOptionClicked(id); });
+            }
+        }
+
+        ///
+        /// <returns>按钮 id</returns>
+        public int AddButton(string buttonName, MenuFilter filter)
+        {
+            if (!listHandler.IsInitialize)
+            {
+                PrepareMenu();
+            }
+
+            var btn = listHandler.InstantiateAndGet<Button>();
+            var text = btn.GetComponentInChildren<TextMeshProUGUI>();
+            if (text != null)
+            {
+                text.text = buttonName;
+            }
+            int id = listHandler.Count - 1;
+            btn.onClick.AddListener(() => { OnOptionClicked(id); });
+
+            options.Add(new MenuOptions()
+            {
+                Title = buttonName,
+                OptionButton = btn,
+                AllowedForBots = filter.IsBot,
+                AllowedForLocal = filter.IsLocalPlayer
+            });
+
+            return id;
+        }
+        /// 玩家点击弹窗按钮之一时调用
+        public void OnOptionClicked(int option)
+        {
+            onScoreboardMenuAction?.Invoke(option);
+            SetActive(false);
+        }
+    }
+}
