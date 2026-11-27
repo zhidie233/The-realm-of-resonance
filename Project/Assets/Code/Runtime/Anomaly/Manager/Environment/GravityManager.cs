@@ -12,21 +12,15 @@ namespace Resonance.Anomaly
         private PlayerLocomotionController _localPlayerController;
         private readonly List<GravityFacility> _gravityFacilities = new List<GravityFacility>();
 
-        protected override void Start()
+        protected override void OnInitialize()
         {
-            base.Start();
-            if (!enabled) return;
-
             FindAllGravityFacilities();
             BindLocalPlayer();
-            UpdateEffect();
-
             EventBus.Subscribe<LocalPlayerSpawnedEvent>(HandleLocalPlayerSpawned);
         }
 
-        protected override void OnDestroy()
+        private void OnDestroy()
         {
-            base.OnDestroy();
             EventBus.Unsubscribe<LocalPlayerSpawnedEvent>(HandleLocalPlayerSpawned);
             if (_localPlayerController != null)
             {
@@ -52,14 +46,13 @@ namespace Resonance.Anomaly
         private void BindLocalPlayer()
         {
             if (GameController.Instance == null || GameController.Instance.LocalPlayer == null) return;
-
             _localPlayerController = GameController.Instance.LocalPlayer.GetComponent<PlayerLocomotionController>();
         }
 
         private void FindAllGravityFacilities()
         {
             _gravityFacilities.Clear();
-            _gravityFacilities.AddRange(Object.FindObjectsOfType<GravityFacility>(true));
+            _gravityFacilities.AddRange(FindObjectsOfType<GravityFacility>(true));
         }
 
         public override void UpdateEffect()

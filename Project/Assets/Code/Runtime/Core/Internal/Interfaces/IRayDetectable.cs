@@ -1,12 +1,3 @@
-using Resonance.Foundation;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Core
 {
     /// 用于标记可被本地玩家相机射线检测到的物体

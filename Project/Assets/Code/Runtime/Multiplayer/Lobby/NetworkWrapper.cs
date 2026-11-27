@@ -5,15 +5,8 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Photon.Pun;
 using Photon.Realtime;
 using ExitGames.Client.Photon;
-using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
 using Resonance.Match;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Multiplayer
 {
 
@@ -116,6 +109,7 @@ namespace Resonance.Multiplayer
         }
 
         public static new Player LocalPlayer { get { return PhotonNetwork.LocalPlayer; } }
+        public static Player MasterClient => PhotonNetwork.MasterClient;
         public static string NickName
         {
             get => PhotonNetwork.NickName;

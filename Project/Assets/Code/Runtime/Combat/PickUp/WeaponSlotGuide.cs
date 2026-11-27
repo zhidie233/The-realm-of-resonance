@@ -1,13 +1,5 @@
 using UnityEngine;
 using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Combat
 {
     [CreateAssetMenu(fileName = "Weapon Slot Guide", menuName = "项目/Weapon/SlotGuide")]

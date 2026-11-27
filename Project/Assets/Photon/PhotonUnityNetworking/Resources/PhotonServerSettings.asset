@@ -58,20 +58,6 @@ MonoBehaviour:
   - SyncCustomizer
   - SyncDamage
   - SyncOffAmmoGrenade
-  - RPC_RequestResonanceChange
-  - RPC_TriggerMeteorite
-  - RPC_PlayImpactEffects
-  - RPC_RequestMeteoriteTrigger
-  - RPC_SetDamageData
-  - StartMeteoriteCountdown
-  - RPC_StartMeteoriteSummon
-  - RPC_HideShooterMarker
-  - RPC_ShowShooterMarker
-  - RPC_SetTarget
-  - RPC_SyncCooldown
-  - RPC_UpdatePosition
-  - RPC_RequestChange
-  - RPC_RequestMeteorite
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 0

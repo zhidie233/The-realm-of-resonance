@@ -15,11 +15,8 @@ namespace Resonance.Anomaly
         private readonly ThresholdIntervalTracker _intervalTracker = new ThresholdIntervalTracker();
         private int lastIndex = 0;
 
-        protected override void Start()
+        protected override void OnInitialize()
         {
-            base.Start();
-            if (!enabled) return;
-
             dropArea = WorldDropZone.FindDropArea();
             if (dropArea == null)
             {

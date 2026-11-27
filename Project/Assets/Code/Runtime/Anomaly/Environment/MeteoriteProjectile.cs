@@ -1,16 +1,8 @@
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
 using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class MeteoriteProjectile : LauncherProjectile
     {
         private Vector3 targetPosition;
@@ -24,19 +16,13 @@ namespace Resonance.Anomaly
 
         private void FixedUpdate()
         {
-            if (!hasTarget)
-            {
-                return;
-            }
+            if (!hasTarget) return;
 
-            // 让陨石朝向目标移动
             Vector3 direction = (targetPosition - transform.position).normalized;
-            transform.position += direction * Time.fixedDeltaTime * bulletData.Speed; // 下落速度取自 MeteoriteConfig
+            transform.position += direction * Time.fixedDeltaTime * bulletData.Speed;
 
-            // 检查是否接近目标
             if (Vector3.Distance(transform.position, targetPosition) < 1f)
             {
-                // 触发爆炸
                 Explode(transform.position);
             }
         }

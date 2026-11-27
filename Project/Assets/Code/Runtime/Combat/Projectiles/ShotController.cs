@@ -3,7 +3,6 @@ using Resonance.Foundation;
 using Resonance.Core;
 using Resonance.Actors;
 using Resonance.Bots;
-using Resonance.Multiplayer;
 namespace Resonance.Combat
 {
 

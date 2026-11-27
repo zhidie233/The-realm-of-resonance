@@ -1,14 +1,6 @@
 using System.Collections;
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Actors
 {
     /// Camera Identity 用于识别当前正在渲染的是哪个相机

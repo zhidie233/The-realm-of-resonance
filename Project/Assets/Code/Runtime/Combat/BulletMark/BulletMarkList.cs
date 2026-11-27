@@ -1,14 +1,5 @@
 using System;
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Combat
 {
     [CreateAssetMenu(fileName = "Bullet Decal List", menuName = "项目/Weapons/Decal/List")]

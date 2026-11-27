@@ -1,13 +1,4 @@
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Core
 {
 
@@ -51,6 +42,8 @@ namespace Resonance.Core
         public const byte DropManager = 20;
         public const byte DoorSystem = 21;
         public const byte CountdownEvent = 22;
+        public const byte ResonanceChangeEvent = 23;
+        public const byte MeteoriteTriggerEvent = 24;
         /// 返回每局唯一的键。
         /// <param name="key">键的端点</param>
         public static string GetUniqueKey(string key)

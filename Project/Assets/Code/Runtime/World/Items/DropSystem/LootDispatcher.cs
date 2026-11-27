@@ -3,13 +3,7 @@ using System.Collections.Generic;
 using HashData = ExitGames.Client.Photon.Hashtable;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.World
 {
     /// 此脚本负责实例化并同步玩家请求的空投/包裹。

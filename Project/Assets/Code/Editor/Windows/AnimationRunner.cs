@@ -3,16 +3,6 @@ using System.Collections.Generic;
 using UnityEditor;
 using UnityEditor.Animations;
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Editor
 {
     /// 编辑器里预览 Animator 的动作：挑一个状态，逐帧拖或连续播放。

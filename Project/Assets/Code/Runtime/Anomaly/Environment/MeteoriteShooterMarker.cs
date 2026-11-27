@@ -1,21 +1,14 @@
 using UnityEngine;
-using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class MeteoriteShooterMarker : MonoBehaviour
     {
         private GamePlayer targetPlayer;
         private float displayTime;
         private float timer;
+        private Camera _cachedCamera;
 
         public void Initialize(GamePlayer player, float time)
         {
@@ -23,11 +16,10 @@ namespace Resonance.Anomaly
             displayTime = time;
             timer = 0f;
 
-            // 将标记设置为玩家的子对象，跟随移动
             if (player.Actor != null)
             {
                 transform.SetParent(player.Actor);
-                transform.localPosition = Vector3.up * 3f; // 头顶位置
+                transform.localPosition = Vector3.up * 3f;
             }
         }
 
@@ -43,14 +35,26 @@ namespace Resonance.Anomaly
             if (timer >= displayTime)
             {
                 Destroy(gameObject);
+                return;
             }
 
-            // 始终面向摄像机
-            if (Camera.main != null)
+            Camera cam = ResolveActiveCamera();
+            if (cam != null)
             {
-                transform.LookAt(Camera.main.transform);
-                transform.Rotate(0, 180, 0); // 让箭头正面朝向摄像机
+                transform.LookAt(cam.transform);
+                transform.Rotate(0f, 180f, 0f);
             }
+        }
+
+        private Camera ResolveActiveCamera()
+        {
+            if (RuntimeServices.LocalPlayerReferences != null && RuntimeServices.LocalPlayerReferences.playerCamera != null)
+                return RuntimeServices.LocalPlayerReferences.playerCamera;
+
+            if (_cachedCamera == null)
+                _cachedCamera = Camera.main;
+
+            return _cachedCamera;
         }
     }
 }

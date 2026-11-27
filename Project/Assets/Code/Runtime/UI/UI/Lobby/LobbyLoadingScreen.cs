@@ -1,15 +1,6 @@
 using System.Collections;
 using TMPro;
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
 namespace Resonance.UI
 {
     /// 默认的大厅连接加载界面

@@ -10,10 +10,8 @@ namespace Resonance.Anomaly
     {
         private readonly ThresholdIntervalTracker _intervalTracker = new ThresholdIntervalTracker();
 
-        protected override void Start()
+        protected override void OnInitialize()
         {
-            base.Start();
-            if (!enabled) return;
             _intervalTracker.SyncBaseline(currentResonance, ProjectConfigRoot.Instance.robotConfig.robotSpawnInterval);
         }
 

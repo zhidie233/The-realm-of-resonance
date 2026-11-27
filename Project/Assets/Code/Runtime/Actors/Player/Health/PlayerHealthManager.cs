@@ -11,7 +11,6 @@ using Resonance.Bots;
 using Resonance.Match;
 using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.Anomaly;
 using Resonance.UI;
 namespace Resonance.Actors
 {

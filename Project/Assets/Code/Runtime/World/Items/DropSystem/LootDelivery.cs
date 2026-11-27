@@ -2,13 +2,6 @@ using System.Collections;
 using UnityEngine;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.World
 {
     /// 此脚本处理游戏默认的空投/包裹投放

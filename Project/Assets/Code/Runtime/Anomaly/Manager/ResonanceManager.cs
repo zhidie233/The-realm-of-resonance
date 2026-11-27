@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using ExitGames.Client.Photon;
-using Photon.Pun;
 using UnityEngine;
 using Resonance.Foundation;
 using Resonance.Domain.Anomaly;
@@ -16,10 +16,10 @@ namespace Resonance.Anomaly
         [SerializeField] private float currentResonance = 0f;
 
         private readonly ResonanceRuleEngine _ruleEngine = new ResonanceRuleEngine();
-        private PhotonView _photonView;
+        private readonly List<IResonanceEffect> _effects = new List<IResonanceEffect>();
         private IResonanceStateSync _stateSync;
 
-        private IResonanceStateSync StateSync => _stateSync ?? (_stateSync = new PhotonResonanceSync(this));
+        private IResonanceStateSync StateSync => _stateSync ?? (_stateSync = new PhotonResonanceSync());
 
         protected virtual void Awake()
         {
@@ -29,30 +29,44 @@ namespace Resonance.Anomaly
                 return;
             }
             Instance = this;
-            _photonView = GetComponent<PhotonView>();
-            _stateSync = new PhotonResonanceSync(this);
+            _stateSync = new PhotonResonanceSync();
         }
 
         public void ConfigureSync(IResonanceStateSync sync)
         {
-            _stateSync = sync ?? new PhotonResonanceSync(this);
+            _stateSync = sync ?? new PhotonResonanceSync();
+        }
+
+        public void RegisterEffect(IResonanceEffect effect)
+        {
+            if (effect == null || _effects.Contains(effect)) return;
+            _effects.Add(effect);
+        }
+
+        public void UnregisterEffect(IResonanceEffect effect)
+        {
+            if (effect != null) _effects.Remove(effect);
         }
 
         protected virtual void OnEnable()
         {
             NetworkCallbacks.RoomPropertiesUpdate += OnRoomPropertiesUpdate;
+            NetworkWrapper.AddNetworkCallback(NetProtocol.ResonanceChangeEvent, HandleNetworkChangeRequest);
             EventBus.Subscribe<CombatDamageDealtEvent>(HandleCombatDamageDealt);
             EventBus.Subscribe<ObjectiveStateChangedEvent>(HandleObjectiveStateChanged);
             EventBus.Subscribe<ResonanceImpulseEvent>(HandleResonanceImpulse);
+            EventBus.Subscribe<RoundEndedEvent>(HandleRoundEnded);
             EventBus.Subscribe<RoomPropertiesResetEvent>(HandleRoomPropertiesReset);
         }
 
         protected virtual void OnDisable()
         {
             NetworkCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesUpdate;
+            NetworkWrapper.RemoveNetworkCallback(HandleNetworkChangeRequest);
             EventBus.Unsubscribe<CombatDamageDealtEvent>(HandleCombatDamageDealt);
             EventBus.Unsubscribe<ObjectiveStateChangedEvent>(HandleObjectiveStateChanged);
             EventBus.Unsubscribe<ResonanceImpulseEvent>(HandleResonanceImpulse);
+            EventBus.Unsubscribe<RoundEndedEvent>(HandleRoundEnded);
             EventBus.Unsubscribe<RoomPropertiesResetEvent>(HandleRoomPropertiesReset);
         }
 
@@ -68,6 +82,15 @@ namespace Resonance.Anomaly
 
             float initial = StateSync.TryReadCurrentValue(out float roomValue) ? roomValue : 0f;
             SetCurrentValue(initial);
+
+            foreach (var manager in FindObjectsOfType<EnvironmentEffectManager>(true))
+            {
+                RegisterEffect(manager);
+            }
+            for (int i = 0; i < _effects.Count; i++)
+            {
+                _effects[i]?.Initialize(currentResonance);
+            }
             EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
         }
 
@@ -81,7 +104,7 @@ namespace Resonance.Anomaly
 
             currentResonance = updated;
             StateSync.PublishValue(currentResonance);
-            EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
+            DispatchResonanceChanged();
         }
 
         /// 任意端请求修改共鸣值：房主直接结算，其余端转交房主
@@ -101,10 +124,10 @@ namespace Resonance.Anomaly
             StateSync.RequestAuthorityChange(changeKey, damage);
         }
 
-        [PunRPC]
-        void RPC_RequestChange(string changeKey, float damage)
+        private void HandleNetworkChangeRequest(Hashtable data)
         {
-            ChangeResonance(changeKey, damage);
+            if (data == null || !data.ContainsKey("key") || !data.ContainsKey("mul")) return;
+            ChangeResonance((string)data["key"], (float)data["mul"]);
         }
 
         void OnRoomPropertiesUpdate(Hashtable propertiesThatChanged)
@@ -112,7 +135,7 @@ namespace Resonance.Anomaly
             if (!propertiesThatChanged.ContainsKey(NetProtocol.ResonanceValueKey)) return;
 
             SetCurrentValue((float)propertiesThatChanged[NetProtocol.ResonanceValueKey]);
-            EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
+            DispatchResonanceChanged();
         }
 
         public float GetCurrentResonance() => currentResonance;
@@ -121,6 +144,23 @@ namespace Resonance.Anomaly
         {
             _ruleEngine.SetValue(value);
             currentResonance = _ruleEngine.CurrentValue;
+        }
+
+        private void DispatchResonanceChanged()
+        {
+            for (int i = 0; i < _effects.Count; i++)
+            {
+                _effects[i]?.ApplyResonance(currentResonance);
+            }
+            EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
+        }
+
+        private void DispatchEffectsReset()
+        {
+            for (int i = 0; i < _effects.Count; i++)
+            {
+                _effects[i]?.ResetEffect(currentResonance);
+            }
         }
 
         private void HandleCombatDamageDealt(CombatDamageDealtEvent e)
@@ -143,6 +183,11 @@ namespace Resonance.Anomaly
             ApplyContribution(ResonanceContributionRouter.RouteDirectImpulse(e.Key, e.Multiplier));
         }
 
+        private void HandleRoundEnded(RoundEndedEvent e)
+        {
+            DispatchEffectsReset();
+        }
+
         private void HandleRoomPropertiesReset(RoomPropertiesResetEvent e)
         {
             _ruleEngine.Reset(0f);
@@ -151,6 +196,7 @@ namespace Resonance.Anomaly
             {
                 StateSync.PublishValue(currentResonance);
             }
+            DispatchEffectsReset();
             EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
         }
 
@@ -170,13 +216,6 @@ namespace Resonance.Anomaly
 
         private sealed class PhotonResonanceSync : IResonanceStateSync
         {
-            private readonly ResonanceManager _owner;
-
-            public PhotonResonanceSync(ResonanceManager owner)
-            {
-                _owner = owner;
-            }
-
             public bool IsAuthority => NetworkWrapper.IsMasterClient;
 
             public bool TryReadCurrentValue(out float value)
@@ -208,8 +247,13 @@ namespace Resonance.Anomaly
 
             public void RequestAuthorityChange(string changeKey, float multiplier)
             {
-                if (_owner._photonView == null || !NetworkWrapper.InRoom) return;
-                _owner._photonView.RPC(nameof(RPC_RequestChange), RpcTarget.MasterClient, changeKey, multiplier);
+                if (!NetworkWrapper.InRoom || NetworkWrapper.Instance == null || NetworkWrapper.MasterClient == null) return;
+                Hashtable data = new Hashtable
+                {
+                    ["key"] = changeKey,
+                    ["mul"] = multiplier
+                };
+                NetworkWrapper.Instance.SendDataOverNetworkToPlayer(NetProtocol.ResonanceChangeEvent, data, NetworkWrapper.MasterClient);
             }
         }
     }

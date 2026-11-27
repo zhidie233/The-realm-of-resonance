@@ -1,14 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Multiplayer
 {
     /// 该脚本负责网络物品的实例化

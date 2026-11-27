@@ -1,13 +1,4 @@
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Core
 {
     /// 本地玩家看向此对象时，脚本触发 OnDetected 或 UnDetected 事件

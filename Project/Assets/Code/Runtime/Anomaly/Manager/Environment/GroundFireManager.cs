@@ -13,11 +13,8 @@ namespace Resonance.Anomaly
         private readonly List<GameObject> activeFires = new List<GameObject>();
         private bool isActive = false;
 
-        protected override void Start()
+        protected override void OnInitialize()
         {
-            base.Start();
-            if (!enabled) return;
-
             GameObject groundFireRoot = GameObject.FindGameObjectWithTag("GroundFire");
             if (groundFireRoot == null)
             {
@@ -35,19 +32,9 @@ namespace Resonance.Anomaly
             var cfg = ProjectConfigRoot.Instance.groundFireConfig;
             var decision = GroundFireRule.Evaluate(currentResonance, cfg.activationThreshold, cfg.effectScaleMultiplier, isActive);
 
-            if (decision.ShouldActivate)
-            {
-                ActivateFires();
-            }
-
-            if (decision.ShouldUpdateIntensity)
-            {
-                UpdateFireIntensity(decision.VerticalScale);
-            }
-            else if (decision.ShouldDeactivate)
-            {
-                DeactivateFires();
-            }
+            if (decision.ShouldActivate) ActivateFires();
+            if (decision.ShouldUpdateIntensity) UpdateFireIntensity(decision.VerticalScale);
+            else if (decision.ShouldDeactivate) DeactivateFires();
 
             isActive = decision.IsActive;
         }
@@ -85,10 +72,7 @@ namespace Resonance.Anomaly
 
         private void DeactivateFires()
         {
-            foreach (var fire in activeFires)
-            {
-                Destroy(fire);
-            }
+            foreach (var fire in activeFires) Destroy(fire);
             activeFires.Clear();
         }
     }

@@ -1,52 +1,57 @@
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
 
 namespace Resonance.Anomaly
 {
-    public abstract class EnvironmentEffectManager : MonoBehaviour
+    public abstract class EnvironmentEffectManager : MonoBehaviour, IResonanceEffect
     {
         protected float currentResonance;
+        private bool _isInitialized;
 
-        protected virtual void Start()
+        protected virtual void OnEnable()
         {
-            if (ResonanceManager.Instance == null)
+            if (ResonanceManager.Instance != null)
             {
-                Debug.LogWarning($"[{GetType().Name}] 场景中不存在 ResonanceManager，共鸣环境效果已禁用。");
-                enabled = false;
-                return;
+                ResonanceManager.Instance.RegisterEffect(this);
             }
-
-            EventBus.Subscribe<ResonanceValueChangedEvent>(HandleResonanceChanged);
-            EventBus.Subscribe<RoundEndedEvent>(HandleRoundEnded);
-            EventBus.Subscribe<RoomPropertiesResetEvent>(HandleRoomReset);
-            currentResonance = ResonanceManager.Instance.GetCurrentResonance();
-            UpdateEffect();
         }
 
-        protected virtual void OnDestroy()
+        protected virtual void OnDisable()
         {
-            EventBus.Unsubscribe<ResonanceValueChangedEvent>(HandleResonanceChanged);
-            EventBus.Unsubscribe<RoundEndedEvent>(HandleRoundEnded);
-            EventBus.Unsubscribe<RoomPropertiesResetEvent>(HandleRoomReset);
+            if (ResonanceManager.Instance != null)
+            {
+                ResonanceManager.Instance.UnregisterEffect(this);
+            }
         }
 
-        public abstract void UpdateEffect();
-
-        protected virtual void OnMatchReset() { }
-
-        private void HandleResonanceChanged(ResonanceValueChangedEvent e)
+        public void Initialize(float initialResonance)
         {
-            currentResonance = e.Value;
-            UpdateEffect();
+            if (_isInitialized) return;
+            _isInitialized = true;
+            currentResonance = initialResonance;
+            OnInitialize();
+            if (enabled)
+            {
+                UpdateEffect();
+            }
         }
 
-        private void HandleRoundEnded(RoundEndedEvent e) => OnMatchReset();
-
-        private void HandleRoomReset(RoomPropertiesResetEvent e)
+        public void ApplyResonance(float resonance)
         {
-            currentResonance = ResonanceManager.Instance != null ? ResonanceManager.Instance.GetCurrentResonance() : 0f;
+            currentResonance = resonance;
+            if (enabled)
+            {
+                UpdateEffect();
+            }
+        }
+
+        public void ResetEffect(float baselineResonance)
+        {
+            currentResonance = baselineResonance;
             OnMatchReset();
         }
+
+        protected virtual void OnInitialize() { }
+        public abstract void UpdateEffect();
+        protected virtual void OnMatchReset() { }
     }
 }
