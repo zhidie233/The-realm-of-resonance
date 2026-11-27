@@ -1,13 +1,6 @@
 using UnityEngine;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
 namespace Resonance.Anomaly
 {
 
@@ -18,7 +11,8 @@ namespace Resonance.Anomaly
 
         public virtual void ReceiveDamage(DamageInfo damageData)
         {
-
+            if (damageData == null || string.IsNullOrEmpty(resonanceKey)) return;
+            EventBus.Publish(new ResonanceImpulseEvent(resonanceKey, damageData.Damage));
         }
     }
 

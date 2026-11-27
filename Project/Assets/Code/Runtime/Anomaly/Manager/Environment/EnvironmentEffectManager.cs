@@ -1,16 +1,9 @@
 using UnityEngine;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public abstract class EnvironmentEffectManager : MonoBehaviour
     {
         protected float currentResonance;
@@ -24,24 +17,36 @@ namespace Resonance.Anomaly
                 return;
             }
 
-            EventBus.Subscribe<ResonanceValueChangedEvent>(OnEvt_onResonanceChanged_OnResonanceChanged);
+            EventBus.Subscribe<ResonanceValueChangedEvent>(HandleResonanceChanged);
+            EventBus.Subscribe<RoundEndedEvent>(HandleRoundEnded);
+            EventBus.Subscribe<RoomPropertiesResetEvent>(HandleRoomReset);
             currentResonance = ResonanceManager.Instance.GetCurrentResonance();
             UpdateEffect();
         }
 
         protected virtual void OnDestroy()
         {
-            EventBus.Unsubscribe<ResonanceValueChangedEvent>(OnEvt_onResonanceChanged_OnResonanceChanged);
-        }
-
-        void OnResonanceChanged(float newResonance)
-        {
-            currentResonance = newResonance;
-            UpdateEffect();
+            EventBus.Unsubscribe<ResonanceValueChangedEvent>(HandleResonanceChanged);
+            EventBus.Unsubscribe<RoundEndedEvent>(HandleRoundEnded);
+            EventBus.Unsubscribe<RoomPropertiesResetEvent>(HandleRoomReset);
         }
 
         public abstract void UpdateEffect();
 
-        private void OnEvt_onResonanceChanged_OnResonanceChanged(ResonanceValueChangedEvent e) => OnResonanceChanged(e.Value);
+        protected virtual void OnMatchReset() { }
+
+        private void HandleResonanceChanged(ResonanceValueChangedEvent e)
+        {
+            currentResonance = e.Value;
+            UpdateEffect();
+        }
+
+        private void HandleRoundEnded(RoundEndedEvent e) => OnMatchReset();
+
+        private void HandleRoomReset(RoomPropertiesResetEvent e)
+        {
+            currentResonance = ResonanceManager.Instance != null ? ResonanceManager.Instance.GetCurrentResonance() : 0f;
+            OnMatchReset();
+        }
     }
 }

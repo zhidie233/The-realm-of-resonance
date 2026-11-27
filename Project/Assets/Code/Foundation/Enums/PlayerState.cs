@@ -24,7 +24,7 @@ namespace Resonance.Foundation
         FireAiming = 9,
     }
 
-    public enum PlayerRunToAimBehave
+    public enum PlayerRunToAimBehavior
     {
         BlockAim = 0,
         StopRunning = 1,

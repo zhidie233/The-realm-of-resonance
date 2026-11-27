@@ -30,7 +30,7 @@ namespace Resonance.Actors
         public Gradient HealthColorGradient;
         private Color CurColor = new Color(0, 0, 0);
         [Header("Shake")]
-        [ScriptableDrawer] public ShakePreset damageShakerPresent;
+        [ScriptableDrawer] public ShakePreset damageShakerPreset;
 
         [Header("Effects")]
         public AudioClip[] HitsSound;
@@ -165,7 +165,7 @@ namespace Resonance.Actors
                     {
                         damageAlphaValue = Mathf.Max(1f - (((float)currentHealth - (float)damage) / (float)maxHealth), 0.25f);
                         uiFadeDelay = StartRegenerateIn;
-                        EventBus.Publish(new CameraShakeEvent(damageShakerPresent, "damage"));
+                        EventBus.Publish(new CameraShakeEvent(damageShakerPreset, "damage"));
                         if (showIndicator) DamageIndicator.Instance?.SetHit(hitDirection);
                         TimeToRegenerate = StartRegenerateIn;
                         EventBus.Publish(new LocalDamageReceivedEvent(damage));
@@ -548,7 +548,7 @@ namespace Resonance.Actors
         private bool isProtectionEnable { get { return (protectTime > 0); } }
         public override int GetHealth() => currentHealth;
         public override int GetMaxHealth() => maxHealth;
-        public override bool IsDeath()
+        public override bool IsDead()
         {
             return isDead;
         }

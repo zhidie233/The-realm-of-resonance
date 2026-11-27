@@ -78,8 +78,8 @@ namespace Resonance.Multiplayer
                         {
                             if(callbackList[i].Code == data.Code)
                             {
-                                Hashtable hastTable = (Hashtable)data.CustomData;
-                                callbackList[i].Callback.Invoke(hastTable);
+                                Hashtable hashTable = (Hashtable)data.CustomData;
+                                callbackList[i].Callback.Invoke(hashTable);
                             }
                         }
                     }

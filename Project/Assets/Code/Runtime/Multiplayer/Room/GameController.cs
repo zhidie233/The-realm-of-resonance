@@ -7,12 +7,10 @@ using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
 using Resonance.Actors;
 using Resonance.Bots;
 using Resonance.Match;
 using Resonance.World;
-using Resonance.Anomaly;
 using Resonance.UI;
 namespace Resonance.Multiplayer
 {
@@ -90,12 +88,12 @@ namespace Resonance.Multiplayer
 
         private void OnEnable()
         {
-            EventBus.Subscribe<RemoteActorChangedEvent>(OnEvt_onRemoteActorChange_OnRemoteActorChange);
+            EventBus.Subscribe<RemoteActorChangedEvent>(HandleRemoteActorChanged);
         }
 
         private void OnDisable()
         {
-            EventBus.Unsubscribe<RemoteActorChangedEvent>(OnEvt_onRemoteActorChange_OnRemoteActorChange);
+            EventBus.Unsubscribe<RemoteActorChangedEvent>(HandleRemoteActorChanged);
             if (registered)
                 PhotonNetwork.RemoveCallbackTarget(this);
             if (GameModeLogic != null)
@@ -744,6 +742,6 @@ namespace Resonance.Multiplayer
         }
         private void HandleLocalPlayerDeathForMode(LocalPlayerDiedEvent _) => GameModeLogic?.OnLocalPlayerDeath();
 
-        private void OnEvt_onRemoteActorChange_OnRemoteActorChange(RemoteActorChangedEvent e) => OnRemoteActorChange(e.Data);
+        private void HandleRemoteActorChanged(RemoteActorChangedEvent e) => OnRemoteActorChange(e.Data);
     }
 }

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: #F7F6F2; color: #0D1017;
+    font-family: "Bahnschrift", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    font-synthesis: none; line-break: strict;
+    padding: 52px 80px;
+  }
+  .topbar {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 18px; border-bottom: 1.5px solid #111318;
+    font-size: 18px; font-weight: 600; color: #4A5260;
+  }
+  .topbar .sec { color: #1A4BFF; letter-spacing: 0.06em; }
+  .main {
+    display: grid; grid-template-columns: 680px 1fr; gap: 64px;
+    height: 670px; padding-top: 44px;
+  }
+  .left-col {
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding-bottom: 24px;
+  }
+  h1 {
+    font-size: 68px; font-weight: 900; line-height: 1.12;
+    letter-spacing: -0.02em; color: #0D1017;
+  }
+  h1 .hl { color: #E8451E; }
+  .desc {
+    margin-top: 28px; font-size: 25px; line-height: 1.65; color: #272D38;
+  }
+  .weights {
+    border-top: 1px solid #D6D8DE; padding-top: 24px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 18px 28px;
+  }
+  .w-item .wk { font-size: 17px; color: #6B7280; font-weight: 600; }
+  .w-item .wv { font-size: 26px; font-weight: 800; color: #0D1017; margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .w-item .wv .pos { color: #1A4BFF; }
+  .w-item .wv .neg { color: #E8451E; }
+
+  .chart-box { position: relative; width: 100%; height: 610px; }
+
+  .kpi-strip {
+    border-top: 2px solid #111318;
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    padding-top: 28px; height: 260px;
+  }
+  .kpi {
+    padding: 0 32px; border-right: 1px solid #D6D8DE;
+  }
+  .kpi:first-child { padding-left: 0; }
+  .kpi:last-child { border-right: none; }
+  .kpi .k-label { font-size: 18px; font-weight: 700; color: #4A5260; }
+  .kpi .k-num {
+    margin-top: 10px; font-size: 76px; font-weight: 900; line-height: 1;
+    font-variant-numeric: tabular-nums; letter-spacing: -0.02em; color: #0D1017;
+  }
+  .kpi .k-num.blue { color: #1A4BFF; }
+  .kpi .k-num.red { color: #E8451E; }
+  .kpi .k-unit { font-size: 28px; font-weight: 700; margin-left: 6px; }
+  .kpi .k-sub { margin-top: 14px; font-size: 20px; color: #4A5260; line-height: 1.4; }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <span class="sec">02 · 核心机制与战场演化</span>
+    <span>MASTERCLIENT 权威结算 · 房间属性 rr.resonance</span>
+  </div>
+
+  <div class="main">
+    <div class="left-col">
+      <div>
+        <h1>每一次交火，<br>都在改写<span class="hl">物理规则</span></h1>
+        <p class="desc">房主端实时汇总对局行为并写入全局共鸣值。一旦跨过临界阈值，五类环境响应在所有客户端同步爆发，强制打破中后期阵地僵局。</p>
+      </div>
+      <div class="weights">
+        <div class="w-item">
+          <div class="wk">命中敌方 / 误伤友方</div>
+          <div class="wv"><span class="pos">+1</span> / <span class="neg">−1</span></div>
+        </div>
+        <div class="w-item">
+          <div class="wk">共鸣增幅器 / 抑制器</div>
+          <div class="wv"><span class="pos">+2</span> / <span class="neg">−2</span></div>
+        </div>
+        <div class="w-item">
+          <div class="wk">夺旗 / 交旗 / 归还</div>
+          <div class="wv"><span class="pos">+10 · +20</span> / <span class="neg">−5</span></div>
+        </div>
+        <div class="w-item">
+          <div class="wk">设施主动触发</div>
+          <div class="wv">召唤陨石 <span class="neg">50×1~3</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-box">
+      <svg viewBox="0 0 1016 610" width="100%" height="100%">
+        <!-- 背景标尺网格线 -->
+        <line x1="60" y1="510" x2="980" y2="510" stroke="#111318" stroke-width="2"/>
+        <line x1="60" y1="390" x2="980" y2="390" stroke="#D6D8DE" stroke-width="1"/>
+        <line x1="60" y1="270" x2="980" y2="270" stroke="#D6D8DE" stroke-width="1"/>
+        <line x1="60" y1="150" x2="980" y2="150" stroke="#D6D8DE" stroke-width="1"/>
+        <line x1="60" y1="50" x2="980" y2="50" stroke="#D6D8DE" stroke-width="1"/>
+
+        <!-- 阈值150熔岩红竖直标尺 -->
+        <line x1="365" y1="30" x2="365" y2="510" stroke="#E8451E" stroke-width="3" stroke-dasharray="8 6"/>
+        <rect x="377" y="34" width="256" height="36" fill="#E8451E"/>
+        <text x="391" y="59" fill="#FFFFFF" font-family="Bahnschrift, Noto Sans SC" font-size="19" font-weight="700">阈值 150 · 46 处火海激活</text>
+
+        <!-- 阈值200与1000细竖线 -->
+        <line x1="535" y1="90" x2="535" y2="510" stroke="#1A4BFF" stroke-width="1.5" stroke-dasharray="4 4"/>
+        <line x1="890" y1="60" x2="890" y2="510" stroke="#0D1017" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+        <!-- 主共鸣跃迁阶梯/曲线 -->
+        <path d="M 80 465 L 220 435 L 365 340 L 535 265 L 720 190 L 890 105 L 965 80"
+              fill="none" stroke="#1A4BFF" stroke-width="5" stroke-linejoin="round"/>
+        <path d="M 365 340 L 535 265 L 720 190 L 890 105 L 965 80"
+              fill="none" stroke="#E8451E" stroke-width="5" stroke-linejoin="round"/>
+
+        <!-- 节点圆点 -->
+        <circle cx="80" cy="465" r="8" fill="#0D1017"/>
+        <circle cx="220" cy="435" r="8" fill="#1A4BFF"/>
+        <circle cx="365" cy="340" r="11" fill="#E8451E" stroke="#F7F6F2" stroke-width="3"/>
+        <circle cx="535" cy="265" r="9" fill="#1A4BFF" stroke="#F7F6F2" stroke-width="3"/>
+        <circle cx="890" cy="105" r="11" fill="#0D1017" stroke="#F7F6F2" stroke-width="3"/>
+
+        <!-- 原位标注文字 (全部 >= 18px，彻底避开所有线条与圆点) -->
+        <text x="80" y="498" fill="#4A5260" font-family="Bahnschrift, Noto Sans SC" font-size="17" font-weight="600">常态 -100 · 初速 5.00</text>
+        <text x="150" y="340" fill="#1A4BFF" font-family="Bahnschrift, Noto Sans SC" font-size="18" font-weight="700">GravityManager 重力爬升</text>
+
+        <text x="380" y="376" fill="#E8451E" font-family="Bahnschrift, Noto Sans SC" font-size="20" font-weight="800">GroundFire 激活 46 处火点</text>
+        <text x="380" y="402" fill="#4A5260" font-family="Bahnschrift, Noto Sans SC" font-size="17">回落至 100 时全端同步销毁</text>
+
+        <text x="556" y="294" fill="#1A4BFF" font-family="Bahnschrift, Noto Sans SC" font-size="20" font-weight="800">SupplyManager · 每跨 200 空投补给</text>
+
+        <text x="872" y="148" text-anchor="end" fill="#0D1017" font-family="Bahnschrift, Noto Sans SC" font-size="20" font-weight="800">RobotManager · 跨 1000 刷第三阵营 AI</text>
+        <text x="872" y="174" text-anchor="end" fill="#4A5260" font-family="Bahnschrift, Noto Sans SC" font-size="17">跳跃初速同步跃升至 11.00</text>
+
+        <!-- X轴刻度 -->
+        <text x="64" y="548" fill="#0D1017" font-family="Bahnschrift" font-size="20" font-weight="700">-100</text>
+        <text x="210" y="548" fill="#0D1017" font-family="Bahnschrift" font-size="20" font-weight="700">0</text>
+        <text x="348" y="548" fill="#E8451E" font-family="Bahnschrift" font-size="22" font-weight="800">150</text>
+        <text x="518" y="548" fill="#1A4BFF" font-family="Bahnschrift" font-size="20" font-weight="700">200</text>
+        <text x="866" y="548" fill="#0D1017" font-family="Bahnschrift" font-size="20" font-weight="700">1000</text>
+        <text x="720" y="590" fill="#6B7280" font-family="Bahnschrift, Noto Sans SC" font-size="17" font-weight="600">全局共鸣值 rr.resonance 演化轴 →</text>
+      </svg>
+    </div>
+  </div>
+
+  <div class="kpi-strip">
+    <div class="kpi">
+      <div class="k-label">高共鸣并发实测帧率</div>
+      <div class="k-num blue">67.7<span class="k-unit">FPS</span></div>
+      <div class="k-sub">46 处火海 + 多 AI 并发交火</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">地面火海同步节点</div>
+      <div class="k-num red">46<span class="k-unit">处</span></div>
+      <div class="k-sub">越过 150 点燃 · 降至 100 熄灭</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">跳跃初速度调制</div>
+      <div class="k-num">11.0<span class="k-unit">m/s</span></div>
+      <div class="k-sub">由初始 5.00 随共鸣 1000 线性跃升</div>
+    </div>
+    <div class="kpi">
+      <div class="k-label">360 帧内存回收增量</div>
+      <div class="k-num">0<span class="k-unit">次 GC</span></div>
+      <div class="k-sub">预热对象池 + 集中帧调度器</div>
+    </div>
+  </div>
+</body>
+</html>

@@ -2,17 +2,12 @@ using ExitGames.Client.Photon;
 using Photon.Pun;
 using UnityEngine;
 using Resonance.Foundation;
+using Resonance.Domain.Anomaly;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class ResonanceManager : NetworkActorBehaviour
     {
         public static ResonanceManager Instance { get; private set; }
@@ -20,7 +15,11 @@ namespace Resonance.Anomaly
         [Header("当前共鸣值")]
         [SerializeField] private float currentResonance = 0f;
 
+        private readonly ResonanceRuleEngine _ruleEngine = new ResonanceRuleEngine();
         private PhotonView _photonView;
+        private IResonanceStateSync _stateSync;
+
+        private IResonanceStateSync StateSync => _stateSync ?? (_stateSync = new PhotonResonanceSync(this));
 
         protected virtual void Awake()
         {
@@ -31,39 +30,57 @@ namespace Resonance.Anomaly
             }
             Instance = this;
             _photonView = GetComponent<PhotonView>();
+            _stateSync = new PhotonResonanceSync(this);
+        }
+
+        public void ConfigureSync(IResonanceStateSync sync)
+        {
+            _stateSync = sync ?? new PhotonResonanceSync(this);
         }
 
         protected virtual void OnEnable()
         {
             NetworkCallbacks.RoomPropertiesUpdate += OnRoomPropertiesUpdate;
+            EventBus.Subscribe<CombatDamageDealtEvent>(HandleCombatDamageDealt);
+            EventBus.Subscribe<ObjectiveStateChangedEvent>(HandleObjectiveStateChanged);
+            EventBus.Subscribe<ResonanceImpulseEvent>(HandleResonanceImpulse);
+            EventBus.Subscribe<RoomPropertiesResetEvent>(HandleRoomPropertiesReset);
         }
 
         protected virtual void OnDisable()
         {
             NetworkCallbacks.RoomPropertiesUpdate -= OnRoomPropertiesUpdate;
+            EventBus.Unsubscribe<CombatDamageDealtEvent>(HandleCombatDamageDealt);
+            EventBus.Unsubscribe<ObjectiveStateChangedEvent>(HandleObjectiveStateChanged);
+            EventBus.Unsubscribe<ResonanceImpulseEvent>(HandleResonanceImpulse);
+            EventBus.Unsubscribe<RoomPropertiesResetEvent>(HandleRoomPropertiesReset);
         }
 
         private void Start()
         {
-            if (ProjectConfigRoot.Instance.resonanceConfig != null)
-                ProjectConfigRoot.Instance.resonanceConfig.Initialize();
+            var config = ProjectConfigRoot.Instance.resonanceConfig;
+            if (config != null)
+            {
+                config.Initialize();
+                _ruleEngine.LoadRules(config.EnumerateRules());
+            }
+            _ruleEngine.IsEnabled = ProjectConfigRoot.Instance.resonanceEnabled;
 
-            currentResonance = ReadRoomResonance();
+            float initial = StateSync.TryReadCurrentValue(out float roomValue) ? roomValue : 0f;
+            SetCurrentValue(initial);
             EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
         }
 
         /// 修改共鸣值，仅房主生效，结果写入房间属性
         public void ChangeResonance(string changeKey, float multiplier = 1f)
         {
-            if (!NetworkWrapper.IsMasterClient) return;
-            if (!ProjectConfigRoot.Instance.resonanceEnabled) return;
+            if (!StateSync.IsAuthority) return;
+            _ruleEngine.IsEnabled = ProjectConfigRoot.Instance.resonanceEnabled;
 
-            currentResonance += ProjectConfigRoot.Instance.resonanceConfig.GetResonanceChangeValue(changeKey) * multiplier;
+            if (!_ruleEngine.TryApplyChange(changeKey, multiplier, out float updated)) return;
 
-            Hashtable properties = new Hashtable();
-            properties[NetProtocol.ResonanceValueKey] = currentResonance;
-            NetworkWrapper.CurrentRoom.SetCustomProperties(properties);
-
+            currentResonance = updated;
+            StateSync.PublishValue(currentResonance);
             EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
         }
 
@@ -76,14 +93,12 @@ namespace Resonance.Anomaly
 
         void SendChangeRequest(string changeKey, float damage)
         {
-            if (NetworkWrapper.IsMasterClient)
+            if (StateSync.IsAuthority)
             {
                 ChangeResonance(changeKey, damage);
                 return;
             }
-
-            if (_photonView == null || !NetworkWrapper.InRoom) return;
-            _photonView.RPC(nameof(RPC_RequestChange), RpcTarget.MasterClient, changeKey, damage);
+            StateSync.RequestAuthorityChange(changeKey, damage);
         }
 
         [PunRPC]
@@ -96,22 +111,106 @@ namespace Resonance.Anomaly
         {
             if (!propertiesThatChanged.ContainsKey(NetProtocol.ResonanceValueKey)) return;
 
-            currentResonance = (float)propertiesThatChanged[NetProtocol.ResonanceValueKey];
+            SetCurrentValue((float)propertiesThatChanged[NetProtocol.ResonanceValueKey]);
             EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
         }
 
-        float ReadRoomResonance()
+        public float GetCurrentResonance() => currentResonance;
+
+        private void SetCurrentValue(float value)
         {
-            if (!NetworkWrapper.InRoom) return 0f;
-            object value;
-            if (NetworkWrapper.CurrentRoom.CustomProperties.TryGetValue(NetProtocol.ResonanceValueKey, out value))
-                return (float)value;
-            return 0f;
+            _ruleEngine.SetValue(value);
+            currentResonance = _ruleEngine.CurrentValue;
         }
 
-        public float GetCurrentResonance()
+        private void HandleCombatDamageDealt(CombatDamageDealtEvent e)
         {
-            return currentResonance;
+            var contribution = ResonanceContributionRouter.RouteCombatDamage(
+                (int)e.AttackerTeam,
+                (int)e.VictimTeam,
+                e.Damage,
+                e.IsOneTeamMode);
+            ApplyContribution(contribution);
+        }
+
+        private void HandleObjectiveStateChanged(ObjectiveStateChangedEvent e)
+        {
+            ApplyContribution(ResonanceContributionRouter.RouteObjective(e.Kind));
+        }
+
+        private void HandleResonanceImpulse(ResonanceImpulseEvent e)
+        {
+            ApplyContribution(ResonanceContributionRouter.RouteDirectImpulse(e.Key, e.Multiplier));
+        }
+
+        private void HandleRoomPropertiesReset(RoomPropertiesResetEvent e)
+        {
+            _ruleEngine.Reset(0f);
+            currentResonance = _ruleEngine.CurrentValue;
+            if (StateSync.IsAuthority)
+            {
+                StateSync.PublishValue(currentResonance);
+            }
+            EventBus.Publish(new ResonanceValueChangedEvent(currentResonance));
+        }
+
+        private void ApplyContribution(ResonanceContribution contribution)
+        {
+            if (!contribution.IsValid) return;
+
+            if (contribution.AuthorityOnly)
+            {
+                ChangeResonance(contribution.Key, contribution.Multiplier);
+            }
+            else
+            {
+                SendChangeRequest(contribution.Key, contribution.Multiplier);
+            }
+        }
+
+        private sealed class PhotonResonanceSync : IResonanceStateSync
+        {
+            private readonly ResonanceManager _owner;
+
+            public PhotonResonanceSync(ResonanceManager owner)
+            {
+                _owner = owner;
+            }
+
+            public bool IsAuthority => NetworkWrapper.IsMasterClient;
+
+            public bool TryReadCurrentValue(out float value)
+            {
+                if (!NetworkWrapper.InRoom)
+                {
+                    value = 0f;
+                    return false;
+                }
+
+                if (NetworkWrapper.CurrentRoom.CustomProperties.TryGetValue(NetProtocol.ResonanceValueKey, out object raw)
+                    && raw is float f)
+                {
+                    value = f;
+                    return true;
+                }
+
+                value = 0f;
+                return false;
+            }
+
+            public void PublishValue(float value)
+            {
+                if (!NetworkWrapper.InRoom) return;
+                Hashtable properties = new Hashtable();
+                properties[NetProtocol.ResonanceValueKey] = value;
+                NetworkWrapper.CurrentRoom.SetCustomProperties(properties);
+            }
+
+            public void RequestAuthorityChange(string changeKey, float multiplier)
+            {
+                if (_owner._photonView == null || !NetworkWrapper.InRoom) return;
+                _owner._photonView.RPC(nameof(RPC_RequestChange), RpcTarget.MasterClient, changeKey, multiplier);
+            }
         }
     }
 }

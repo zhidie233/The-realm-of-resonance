@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: #EFECE6; color: #141413;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    font-synthesis: none; line-break: strict;
+    padding: 50px 72px;
+  }
+  .canvas {
+    display: grid; grid-template-columns: 450px 800px 1fr; gap: 36px;
+    width: 1776px; height: 980px;
+    border-top: 2px solid #141413; border-bottom: 2px solid #141413;
+    padding: 36px 0;
+  }
+  .left-col {
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding-right: 16px;
+  }
+  .sec-tag {
+    font-size: 17px; font-weight: 700; color: #C83E2B; letter-spacing: 0.1em;
+  }
+  h1 {
+    margin-top: 14px;
+    font-family: "SimSun", "Georgia", serif;
+    font-size: 64px; font-weight: 900; line-height: 1.18; color: #141413;
+  }
+  .intro {
+    margin-top: 24px; font-size: 24px; line-height: 1.68; color: #3A3834;
+  }
+  .bench {
+    border-top: 1.5px solid #141413; padding-top: 20px;
+  }
+  .bench-title {
+    font-size: 17px; font-weight: 700; color: #1F4B6E; letter-spacing: 0.08em; margin-bottom: 14px;
+  }
+  .bench-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    padding: 10px 0; border-bottom: 1px solid rgba(20,20,19,0.16);
+    font-size: 21px;
+  }
+  .bench-row strong { font-family: "Bahnschrift", "Consolas", sans-serif; font-size: 28px; color: #C83E2B; }
+
+  .center-mandala {
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .right-col {
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 26px 0 26px 12px;
+  }
+  .resp-item {
+    border-top: 1px solid rgba(20,20,19,0.22);
+    padding-top: 14px;
+  }
+  .resp-item .r-head {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 6px;
+  }
+  .resp-item .r-num {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 50%;
+    background: #141413; color: #EFECE6;
+    font-family: "Bahnschrift", sans-serif; font-size: 17px; font-weight: 700;
+  }
+  .resp-item.hot .r-num { background: #C83E2B; }
+  .resp-item .r-title { font-size: 23px; font-weight: 800; color: #141413; }
+  .resp-item .r-desc { font-size: 20px; color: #4E4C47; line-height: 1.48; padding-left: 42px; }
+</style>
+</head>
+<body>
+<div class="canvas">
+  <div class="left-col">
+    <div>
+      <div class="sec-tag">02 · 共鸣力场图谱</div>
+      <h1>一核驱动<br>五维演进</h1>
+      <p class="intro">以房主端权威结算的单一共鸣值 <span style="font-family:Consolas;font-weight:700;color:#1F4B6E;">rr.resonance</span> 为圆心，吸收战场对抗与设施交互权重，逐环跨越临界阈值，向外辐射五类环境剧变。</p>
+    </div>
+
+    <div class="bench">
+      <div class="bench-title">PHOTON 云端实测基准</div>
+      <div class="bench-row"><span>高共鸣并发平均帧率</span><strong>67.7 FPS</strong></div>
+      <div class="bench-row"><span>阈值 150 激活火海</span><strong>46 处</strong></div>
+      <div class="bench-row" style="border-bottom:none;"><span>360 帧 Gen0 GC 增量</span><strong>0 次</strong></div>
+    </div>
+  </div>
+
+  <div class="center-mandala">
+    <svg viewBox="0 0 800 840" width="800" height="840">
+      <!-- 外围精密刻度环 -->
+      <circle cx="400" cy="420" r="375" fill="none" stroke="#141413" stroke-width="1.5"/>
+      <circle cx="400" cy="420" r="355" fill="none" stroke="rgba(20,20,19,0.28)" stroke-width="1" stroke-dasharray="3 9"/>
+
+      <!-- 阈值高亮弧段（朱砂红与靛青） -->
+      <path d="M 400 95 A 325 325 0 0 1 715 340" fill="none" stroke="#C83E2B" stroke-width="26"/>
+      <path d="M 715 480 A 325 325 0 0 1 400 745" fill="none" stroke="#1F4B6E" stroke-width="26"/>
+      <circle cx="400" cy="420" r="295" fill="none" stroke="#141413" stroke-width="1.2"/>
+
+      <!-- 内环：输入权重区 -->
+      <circle cx="400" cy="420" r="205" fill="#F8F6F1" stroke="#141413" stroke-width="1.5"/>
+      <line x1="195" y1="420" x2="605" y2="420" stroke="rgba(20,20,19,0.2)" stroke-width="1"/>
+      <line x1="400" y1="215" x2="400" y2="625" stroke="rgba(20,20,19,0.2)" stroke-width="1"/>
+
+      <!-- 中心圆：rr.resonance -->
+      <circle cx="400" cy="420" r="88" fill="#C83E2B"/>
+      <text x="400" y="408" text-anchor="middle" fill="#FFFFFF" font-family="Noto Sans SC" font-size="24" font-weight="800">共鸣中枢</text>
+      <text x="400" y="440" text-anchor="middle" fill="#FCE8E4" font-family="Consolas" font-size="18" font-weight="700">rr.resonance</text>
+
+      <!-- 第一环权重文字 -->
+      <text x="295" y="340" text-anchor="middle" fill="#141413" font-family="Noto Sans SC" font-size="18" font-weight="700">命中 +1 / 误伤 -1</text>
+      <text x="505" y="340" text-anchor="middle" fill="#141413" font-family="Noto Sans SC" font-size="18" font-weight="700">增幅 +2 / 抑制 -2</text>
+      <text x="295" y="510" text-anchor="middle" fill="#1F4B6E" font-family="Noto Sans SC" font-size="18" font-weight="700">夺旗 +10 / 交旗 +20</text>
+      <text x="505" y="510" text-anchor="middle" fill="#4E4C47" font-family="Noto Sans SC" font-size="18" font-weight="700">旗帜归还 -5</text>
+
+      <!-- 阈值标签（放在 r=205 与 r=295 之间的纯白环带中，绝不压黑线或粗弧） -->
+      <text x="580" y="255" text-anchor="middle" fill="#C83E2B" font-family="Bahnschrift, Noto Sans SC" font-size="18" font-weight="800">阈值 150 爆发</text>
+      <text x="580" y="605" text-anchor="middle" fill="#1F4B6E" font-family="Bahnschrift, Noto Sans SC" font-size="18" font-weight="800">步长 200 / 1000</text>
+      <text x="220" y="255" text-anchor="middle" fill="#4E4C47" font-family="Bahnschrift, Noto Sans SC" font-size="17" font-weight="700">常态 -100 ~ 0</text>
+
+      <!-- 右侧引出线 -->
+      <line x1="630" y1="130" x2="795" y2="95" stroke="#C83E2B" stroke-width="1.5"/>
+      <line x1="745" y1="265" x2="795" y2="255" stroke="#C83E2B" stroke-width="1.5"/>
+      <line x1="775" y1="420" x2="795" y2="420" stroke="#141413" stroke-width="1.5"/>
+      <line x1="745" y1="575" x2="795" y2="585" stroke="#1F4B6E" stroke-width="1.5"/>
+      <line x1="630" y1="710" x2="795" y2="745" stroke="#141413" stroke-width="1.5"/>
+    </svg>
+  </div>
+
+  <div class="right-col">
+    <div class="resp-item">
+      <div class="r-head"><span class="r-num">1</span><span class="r-title">GravityManager · 重力调制</span></div>
+      <div class="r-desc">跳跃初速按曲线由 5.00 升至 11.00，同步移动重力设施。</div>
+    </div>
+    <div class="resp-item hot">
+      <div class="r-head"><span class="r-num">2</span><span class="r-title">GroundFireManager · 地面火海</span></div>
+      <div class="r-desc">越过 150 激活 46 处火点，伤害随共鸣递增，降至 100 销毁。</div>
+    </div>
+    <div class="resp-item">
+      <div class="r-head"><span class="r-num">3</span><span class="r-title">SupplyManager · 战区空投</span></div>
+      <div class="r-desc">共鸣值每跨越步长 200 自动投放一次补给箱。</div>
+    </div>
+    <div class="resp-item">
+      <div class="r-head"><span class="r-num">4</span><span class="r-title">RobotManager · 第三阵营 AI</span></div>
+      <div class="r-desc">每跨越 1000 刷出中立机器人同时攻击红蓝双方。</div>
+    </div>
+    <div class="resp-item">
+      <div class="r-head"><span class="r-num">5</span><span class="r-title">MeteoriteFacility · 陨石打击</span></div>
+      <div class="r-desc">击中设施召唤陨石（速度 20，基础伤 50 × 1~3 倍）。</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

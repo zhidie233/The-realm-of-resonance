@@ -2,13 +2,10 @@ using System;
 using System.Collections;
 using UnityEngine;
 using Resonance.Foundation;
+using Resonance.Domain.Actors;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Bots;
 using Resonance.Match;
-using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.Anomaly;
 using Resonance.UI;
 namespace Resonance.Actors
 {
@@ -69,7 +66,7 @@ namespace Resonance.Actors
         public float SafeFallDistance = 3;
         [Range(3, 25)]
         public float DeathFallDistance = 15;
-        public PlayerRunToAimBehave runToAimBehave = PlayerRunToAimBehave.StopRunning;
+        public PlayerRunToAimBehavior runToAimBehavior = PlayerRunToAimBehavior.StopRunning;
         [Header("空中控制")]
         public float dropControlSpeed = 25;
         public Vector2 dropTiltSpeedRange = new Vector2(20, 60);
@@ -132,6 +129,11 @@ namespace Resonance.Actors
         private readonly StanceDriver _stanceDriver = new StanceDriver();
         private readonly LadderDriver _ladderDriver = new LadderDriver();
         private readonly AirborneMotionTracker _airborneTracker = new AirborneMotionTracker();
+        private float? _jumpSpeedOverride;
+
+        public float EffectiveJumpSpeed => LocomotionSpeedCalculator.ResolveEffectiveJumpSpeed(jumpSpeed, _jumpSpeedOverride);
+        public void SetJumpSpeedOverride(float? overrideSpeed) => _jumpSpeedOverride = overrideSpeed;
+        public void ClearJumpSpeedOverride() => _jumpSpeedOverride = null;
 
         private bool Crouching { get => _stanceDriver.IsCrouching; set => _stanceDriver.IsCrouching = value; }
         private bool forcedCrouch { get => _stanceDriver.ForcedCrouch; set => _stanceDriver.ForcedCrouch = value; }
@@ -162,20 +164,20 @@ namespace Resonance.Actors
 
         protected virtual void OnEnable()
         {
-            EventBus.Subscribe<RoundEndedEvent>(OnEvt_onRoundEnd_OnRoundEnd);
-            EventBus.Subscribe<WeaponSwitchedEvent>(OnEvt_onChangeWeapon_OnChangeWeapon);
-            EventBus.Subscribe<MatchStartedEvent>(OnEvt_onMatchStart_OnMatchStart);
-            EventBus.Subscribe<GameSettingsChangedEvent>(OnEvt_onGameSettingsChange_OnGameSettingsChanged);
-            EventBus.Subscribe<LocalAimChangedEvent>(OnEvt_onLocalAimChanged_OnAimChange);
+            EventBus.Subscribe<RoundEndedEvent>(HandleRoundEnded);
+            EventBus.Subscribe<WeaponSwitchedEvent>(HandleWeaponSwitched);
+            EventBus.Subscribe<MatchStartedEvent>(HandleMatchStarted);
+            EventBus.Subscribe<GameSettingsChangedEvent>(HandleGameSettingsChanged);
+            EventBus.Subscribe<LocalAimChangedEvent>(HandleLocalAimChanged);
         }
 
         protected virtual void OnDisable()
         {
-            EventBus.Unsubscribe<RoundEndedEvent>(OnEvt_onRoundEnd_OnRoundEnd);
-            EventBus.Unsubscribe<WeaponSwitchedEvent>(OnEvt_onChangeWeapon_OnChangeWeapon);
-            EventBus.Unsubscribe<MatchStartedEvent>(OnEvt_onMatchStart_OnMatchStart);
-            EventBus.Unsubscribe<GameSettingsChangedEvent>(OnEvt_onGameSettingsChange_OnGameSettingsChanged);
-            EventBus.Unsubscribe<LocalAimChangedEvent>(OnEvt_onLocalAimChanged_OnAimChange);
+            EventBus.Unsubscribe<RoundEndedEvent>(HandleRoundEnded);
+            EventBus.Unsubscribe<WeaponSwitchedEvent>(HandleWeaponSwitched);
+            EventBus.Unsubscribe<MatchStartedEvent>(HandleMatchStarted);
+            EventBus.Unsubscribe<GameSettingsChangedEvent>(HandleGameSettingsChanged);
+            EventBus.Unsubscribe<LocalAimChangedEvent>(HandleLocalAimChanged);
         }
 
         protected virtual void Update()
@@ -437,7 +439,7 @@ namespace Resonance.Actors
         public void DoJump()
         {
             momentum = desiredMove * jumpMomentumBooster;
-            moveDirection.y = (hasPlatformJump) ? PlatformJumpForce : jumpSpeed;
+            moveDirection.y = (hasPlatformJump) ? PlatformJumpForce : EffectiveJumpSpeed;
             targetDirection.y = moveDirection.y;
             PlayJumpSound();
             _jump = false;
@@ -547,7 +549,7 @@ namespace Resonance.Actors
             _ladderDriver.TryStepClimb(
                 _input,
                 climbSpeed,
-                jumpSpeed,
+                EffectiveJumpSpeed,
                 jumpPressed,
                 _transform,
                 _characterController,
@@ -569,7 +571,7 @@ namespace Resonance.Actors
                     SetActiveClimbing(false);
                     exited?.JumpOut();
                     targetDirection = -_transform.forward * 20;
-                    targetDirection.y = jumpSpeed;
+                    targetDirection.y = EffectiveJumpSpeed;
                     lastJumpTime = Time.time;
                     jumpPressed = false;
                     _jump = false;
@@ -608,9 +610,9 @@ namespace Resonance.Actors
                             // 记录角色当前是行走还是奔跑
                             if (GameInput.Run() && forwardVelocity > 0.1f)
                             {
-                                if (runToAimBehave == PlayerRunToAimBehave.AimWhileRunning)
+                                if (runToAimBehavior == PlayerRunToAimBehavior.AimWhileRunning)
                                     State = PlayerState.Running;
-                                else if (runToAimBehave == PlayerRunToAimBehave.StopRunning)
+                                else if (runToAimBehavior == PlayerRunToAimBehavior.StopRunning)
                                     State = isAiming ? PlayerState.Walking : PlayerState.Running;
                             }
                             else if (canStealthMode && GameInput.Stealth() && VelocityMagnitude > 0.1f)
@@ -678,7 +680,7 @@ namespace Resonance.Actors
             }
             if (RunFovEffect)
             {
-                float rf = (State == PlayerState.Running && _characterController.isGrounded) ? runFOVAmount : 0;
+                float rf = LocomotionSpeedCalculator.ComputeSprintFovTarget(State == PlayerState.Running, _characterController.isGrounded, runFOVAmount);
                 RunFov = Mathf.Lerp(RunFov, rf, Time.deltaTime * 6);
             }
         }
@@ -857,13 +859,7 @@ namespace Resonance.Actors
             }
             set
             {
-                _speed = value - WeaponWeight;
-                float min = 1.75f;
-                if (State == PlayerState.Stealth)
-                {
-                    min = 1;
-                }
-                _speed = Mathf.Max(_speed, min);
+                _speed = LocomotionSpeedCalculator.ComputeEffectiveSpeed(value, WeaponWeight, State == PlayerState.Stealth);
             }
         }
         /// 返回玩家当前速度
@@ -887,9 +883,9 @@ namespace Resonance.Actors
             }
             return includeModifiers ? WalkSpeed - WeaponWeight : WalkSpeed;
         }
-        public PlayerRunToAimBehave GetRunToAimBehave()
+        public PlayerRunToAimBehavior GetRunToAimBehavior()
         {
-            return runToAimBehave;
+            return runToAimBehavior;
         }
         /// 获取 MouseLook 控制器模块
         public MouseLook GetMouseLook()
@@ -948,10 +944,10 @@ namespace Resonance.Actors
             }
         }
 
-        private void OnEvt_onRoundEnd_OnRoundEnd(RoundEndedEvent e) => OnRoundEnd();
-        private void OnEvt_onChangeWeapon_OnChangeWeapon(WeaponSwitchedEvent e) => OnChangeWeapon(e.WeaponId);
-        private void OnEvt_onMatchStart_OnMatchStart(MatchStartedEvent e) => OnMatchStart();
-        private void OnEvt_onGameSettingsChange_OnGameSettingsChanged(GameSettingsChangedEvent e) => OnGameSettingsChanged();
-        private void OnEvt_onLocalAimChanged_OnAimChange(LocalAimChangedEvent e) => OnAimChange(e.IsAiming);
+        private void HandleRoundEnded(RoundEndedEvent e) => OnRoundEnd();
+        private void HandleWeaponSwitched(WeaponSwitchedEvent e) => OnChangeWeapon(e.WeaponId);
+        private void HandleMatchStarted(MatchStartedEvent e) => OnMatchStart();
+        private void HandleGameSettingsChanged(GameSettingsChangedEvent e) => OnGameSettingsChanged();
+        private void HandleLocalAimChanged(LocalAimChangedEvent e) => OnAimChange(e.IsAiming);
     }
 }

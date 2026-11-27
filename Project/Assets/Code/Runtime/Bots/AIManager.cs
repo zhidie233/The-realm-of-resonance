@@ -577,7 +577,7 @@ namespace Resonance.Bots
                 AIBotCore[] allBots = FindObjectsOfType<AIBotCore>();
                 foreach (var bot in allBots)
                 {
-                    if (bot.isDeath)
+                    if (bot.isDead)
                     {
                         AddBotToRespawn(bot);
                         continue;
@@ -782,7 +782,7 @@ namespace Resonance.Bots
                     if (AllBotsTransforms[i] == null) continue;
                     Transform t = AllBotsTransforms[i].root;
                     AIBotCore asa = t.GetComponent<AIBotCore>();
-                    if (t.name.Contains("(die)") || asa.isDeath) continue;
+                    if (t.name.Contains("(die)") || asa.isDead) continue;
                     if (asa.AITeam != _team && asa.AITeam != Team.None && t != bot.root)
                     {
                         all.Add(AllBotsTransforms[i]);

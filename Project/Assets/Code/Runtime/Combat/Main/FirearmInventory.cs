@@ -297,11 +297,11 @@ namespace Resonance.Combat
             UIReferences.Instance.PlayerUI.WeaponStatsUI.SetActive(false);
         }
 
-        public void SetInfinityAmmoToAllEquipped(bool infinity)
+        public void SetInfiniteAmmoToAllEquipped(bool infinite)
         {
             AllGuns.ForEach((x) =>
             {
-                if (x != null) x.SetInfinityAmmo(infinity);
+                if (x != null) x.SetInfiniteAmmo(infinite);
             });
         }
         // 把当前武器（若有）换成指定武器

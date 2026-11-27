@@ -44,7 +44,7 @@ namespace Resonance.Bots
             set; 
         } = AIGaze.Path;
 
-        public bool isDeath
+        public bool isDead
         {
             get;
             set;

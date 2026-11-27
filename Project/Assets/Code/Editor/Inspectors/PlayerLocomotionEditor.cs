@@ -233,7 +233,7 @@ namespace Resonance.Editor
             {
                 EditorGUILayout.BeginVertical("box");
                 EditorGUI.BeginChangeCheck();
-                script.runToAimBehave = (PlayerRunToAimBehave)EditorGUILayout.EnumPopup("奔跑瞄准行为", script.runToAimBehave);
+                script.runToAimBehavior = (PlayerRunToAimBehavior)EditorGUILayout.EnumPopup("奔跑瞄准行为", script.runToAimBehavior);
 
                 var r = GUILayoutUtility.GetRect(GUIContent.none, GUIStyle.none, GUILayout.Height(EditorGUIUtility.singleLineHeight));
                 script.KeepToCrouch = ResonanceRealmEditorStyles.FeatureToggle(r, script.KeepToCrouch, "切换蹲下");

@@ -46,7 +46,7 @@ namespace Resonance.Editor
             if (script != null)
             {
                 GunManager = script.transform.parent.GetComponent<FirearmInventory>();
-                script.weaponRenders = script.transform.GetComponentsInChildren<Renderer>();
+                script.weaponRenderers = script.transform.GetComponentsInChildren<Renderer>();
                 if (script.playerSettings == null) { script.playerSettings = script.transform.root.GetComponent<PlayerConfig>(); }
             }
 
@@ -382,7 +382,7 @@ namespace Resonance.Editor
 
         void DrawRecoil()
         {
-            script.shakerPresent = EditorGUILayout.ObjectField("震动程度", script.shakerPresent, typeof(ShakePreset), false) as ShakePreset;
+            script.shakerPreset = EditorGUILayout.ObjectField("震动程度", script.shakerPreset, typeof(ShakePreset), false) as ShakePreset;
             script.RecoilAmount = EditorGUILayout.Slider("Recoil", script.RecoilAmount, 0.1f, 10);
             script.RecoilSpeed = EditorGUILayout.Slider("后坐力速度", script.RecoilSpeed, 1, 10);
         }

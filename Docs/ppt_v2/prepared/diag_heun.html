@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1760px; height: 280px; overflow: hidden;
+    background: #F7F6F2;
+    font-family: "Bahnschrift", "Microsoft YaHei", sans-serif;
+  }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 1760 280" width="1760" height="280">
+  <rect width="1760" height="280" fill="#F7F6F2"/>
+  <!-- 5 个瑞士直角框线节点 -->
+  <g stroke="#111318" stroke-width="1.8" fill="#FFFFFF">
+    <rect x="4"   y="20" width="308" height="240"/>
+    <rect x="366" y="20" width="308" height="240"/>
+    <rect x="728" y="20" width="308" height="240"/>
+    <rect x="1090" y="20" width="308" height="240"/>
+    <rect x="1452" y="20" width="304" height="240"/>
+  </g>
+  <!-- 顶色条（直角，无圆角） -->
+  <rect x="4"    y="20" width="308" height="8" fill="#1A4BFF"/>
+  <rect x="366"  y="20" width="308" height="8" fill="#0D1017"/>
+  <rect x="728"  y="20" width="308" height="8" fill="#1A4BFF"/>
+  <rect x="1090" y="20" width="308" height="8" fill="#E8451E"/>
+  <rect x="1452" y="20" width="304" height="8" fill="#0F766E"/>
+
+  <!-- 箭头 -->
+  <path d="M 322 140 L 352 140 M 344 132 L 354 140 L 344 148" fill="none" stroke="#111318" stroke-width="2.5"/>
+  <path d="M 684 140 L 714 140 M 706 132 L 716 140 L 706 148" fill="none" stroke="#111318" stroke-width="2.5"/>
+  <path d="M 1046 140 L 1076 140 M 1068 132 L 1078 140 L 1068 148" fill="none" stroke="#111318" stroke-width="2.5"/>
+  <path d="M 1408 140 L 1438 140 M 1430 132 L 1440 140 L 1430 148" fill="none" stroke="#111318" stroke-width="2.5"/>
+
+  <!-- 文本 -->
+  <text x="28" y="68" fill="#1A4BFF" font-size="22" font-weight="700">01 / 预热对象池取弹</text>
+  <text x="28" y="122" fill="#0D1017" font-size="24" font-weight="700">开火零实例化开销</text>
+  <text x="28" y="164" fill="#4A5260" font-size="19">从预热对象池直接取弹</text>
+  <text x="28" y="196" fill="#4A5260" font-size="19">消除高频连射分配抖动</text>
+
+  <text x="390" y="68" fill="#0D1017" font-size="22" font-weight="700">02 / 二阶 Heun 步进</text>
+  <text x="390" y="122" fill="#0D1017" font-size="24" font-weight="700">FixedUpdate 推进</text>
+  <text x="390" y="164" fill="#4A5260" font-size="19">不给子弹挂载刚体组件</text>
+  <text x="390" y="196" fill="#4A5260" font-size="19">模拟真实重力与弹道下坠</text>
+
+  <text x="752" y="68" fill="#1A4BFF" font-size="22" font-weight="700">03 / 分段射线采样</text>
+  <text x="752" y="122" fill="#0D1017" font-size="24" font-weight="700">每 3 帧采样一次</text>
+  <text x="752" y="164" fill="#4A5260" font-size="19">平衡高速弹道防穿透精度</text>
+  <text x="752" y="196" fill="#4A5260" font-size="19">与物理射线检测 CPU 耗时</text>
+
+  <text x="1114" y="68" fill="#E8451E" font-size="22" font-weight="700">04 / 四路命中分流</text>
+  <text x="1114" y="122" fill="#0D1017" font-size="24" font-weight="700">差异化即时结算</text>
+  <text x="1114" y="164" fill="#4A5260" font-size="19">玩家骨骼 / AI 机器人</text>
+  <text x="1114" y="196" fill="#4A5260" font-size="19">共鸣设施 / 场景碰撞体</text>
+
+  <text x="1476" y="68" fill="#0F766E" font-size="22" font-weight="700">05 / 贴花与归还池</text>
+  <text x="1476" y="122" fill="#0D1017" font-size="24" font-weight="700">零 Gen0 GC 闭环</text>
+  <text x="1476" y="164" fill="#4A5260" font-size="19">墙体命中贴出弹孔贴花</text>
+  <text x="1476" y="196" fill="#4A5260" font-size="19">子弹对象立即归还对象池</text>
+</svg>
+</body>
+</html>

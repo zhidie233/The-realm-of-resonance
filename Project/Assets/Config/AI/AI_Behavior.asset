@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4d89677f941e394aa9780bc6a9dd553, type: 3}
   m_Name: AI_Behavior
   m_EditorClassIdentifier: 
-  agentBehave: 1
+  agentBehavior: 1
   weaponAccuracy: 2
   GetRandomTargetOnStart: 1
   forceFollowAtHalfHealth: 0
   checkEnemiesWhenHaveATarget: 1
-  targetOutRangeBehave: 0
+  targetOutRangeBehavior: 0
   maxCoverTime: 10
   coverColdDown: 15
   randomCoverProbability: 0.1

@@ -175,37 +175,37 @@ MonoBehaviour:
   pooledPrefabs:
   - Name: bullet
     Prefab: {fileID: 100000, guid: 83c2f1113cb82f4458ed92f89bb90803, type: 3}
-    Lenght: 100
+    Length: 100
   - Name: decalm
     Prefab: {fileID: 1000010355441670, guid: 02a509a7fa70ed740ba4197e20c5d32d, type: 3}
-    Lenght: 25
+    Length: 25
   - Name: decalw
     Prefab: {fileID: 1000011190285628, guid: beb3acff7ab73944fb8f470f24d74ed3, type: 3}
-    Lenght: 25
+    Length: 25
   - Name: decalwt
     Prefab: {fileID: 1207871914986542, guid: cc0ed5c90f000224d9121d5a47d39960, type: 3}
-    Lenght: 25
+    Length: 25
   - Name: decals
     Prefab: {fileID: 1000012142692022, guid: a475880e7da0e9548aa05cb7933752cd, type: 3}
-    Lenght: 25
+    Length: 25
   - Name: blood
     Prefab: {fileID: 4749169212277908080, guid: 338f49ce947743a4c9b27bbeb801d862, type: 3}
-    Lenght: 25
+    Length: 25
   - Name: decalc
     Prefab: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
-    Lenght: 25
+    Length: 25
   - Name: decal
     Prefab: {fileID: 1000010844420130, guid: 4edabb1c0dde62743b137378c7d22980, type: 3}
-    Lenght: 40
+    Length: 40
   - Name: deathicon
     Prefab: {fileID: 1304675692033152, guid: fa0fcfe8ebba6cc41b7415678d5e6e61, type: 3}
-    Lenght: 7
+    Length: 7
   - Name: explosion
     Prefab: {fileID: 1577321590075106, guid: 3c0fb8b353537b9469c5fef13421be3d, type: 3}
-    Lenght: 7
+    Length: 7
   - Name: dark-smoke
     Prefab: {fileID: 1727412523231980, guid: b0d95aa6051618848addd190ef56a864, type: 3}
-    Lenght: 3
+    Length: 3
 --- !u!114 &114469179219543914
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -54,7 +54,7 @@ namespace Resonance.Core
         public abstract void IgnoreColliders(Collider[] list, bool ignore);
         /// 判断此玩家是否死亡
         /// 因为玩家死亡后会以布娃娃形式短暂存在于游戏中
-        public abstract bool IsDeath();
+        public abstract bool IsDead();
         /// 获取此玩家的生命值
         public abstract int GetHealth();
         /// 获取此玩家的最大生命值

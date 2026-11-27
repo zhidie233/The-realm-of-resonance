@@ -1,13 +1,11 @@
 using Photon.Pun;
 using UnityEngine;
 using Resonance.Foundation;
+using Resonance.Domain.Anomaly;
 using Resonance.Combat;
 using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.Anomaly;
 using Resonance.UI;
 namespace Resonance.Core
 {
@@ -105,4 +103,38 @@ namespace Resonance.Core
     public readonly struct LocalAmmoUpdatedEvent { public readonly int AmmoCount; public LocalAmmoUpdatedEvent(int ammoCount) { AmmoCount = ammoCount; } }
     public readonly struct LocalDamageReceivedEvent { public readonly int Damage; public LocalDamageReceivedEvent(int damage) { Damage = damage; } }
     public readonly struct RoomPropertiesResetEvent { }
+
+    public readonly struct CombatDamageDealtEvent
+    {
+        public readonly Team AttackerTeam;
+        public readonly Team VictimTeam;
+        public readonly float Damage;
+        public readonly bool IsOneTeamMode;
+
+        public CombatDamageDealtEvent(Team attackerTeam, Team victimTeam, float damage, bool isOneTeamMode)
+        {
+            AttackerTeam = attackerTeam;
+            VictimTeam = victimTeam;
+            Damage = damage;
+            IsOneTeamMode = isOneTeamMode;
+        }
+    }
+
+    public readonly struct ObjectiveStateChangedEvent
+    {
+        public readonly ResonanceObjectiveKind Kind;
+        public ObjectiveStateChangedEvent(ResonanceObjectiveKind kind) { Kind = kind; }
+    }
+
+    public readonly struct ResonanceImpulseEvent
+    {
+        public readonly string Key;
+        public readonly float Multiplier;
+
+        public ResonanceImpulseEvent(string key, float multiplier)
+        {
+            Key = key;
+            Multiplier = multiplier;
+        }
+    }
 }

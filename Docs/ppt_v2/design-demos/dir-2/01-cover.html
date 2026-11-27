@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: #0B0E14; color: #F4F5F7;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    font-synthesis: none; line-break: strict;
+  }
+  .bg-shot {
+    position: absolute; right: 0; top: 0; width: 1260px; height: 1080px;
+    object-fit: cover; object-position: center; opacity: 0.42;
+  }
+  .scrim {
+    position: absolute; inset: 0;
+    background: linear-gradient(90deg, #0B0E14 0%, #0B0E14 42%, rgba(11,14,20,0.58) 76%, rgba(11,14,20,0.38) 100%),
+                linear-gradient(180deg, rgba(11,14,20,0.65) 0%, transparent 25%, transparent 72%, #0B0E14 96%);
+  }
+  .frame {
+    position: relative; z-index: 2;
+    margin: 44px; width: 1832px; height: 992px;
+    border: 1px solid rgba(255,255,255,0.14);
+    padding: 54px 68px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .top-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-family: "Consolas", "Noto Sans SC", monospace;
+    font-size: 18px; letter-spacing: 0.10em; color: #94A0B4;
+  }
+  .top-row .dot {
+    display: inline-block; width: 10px; height: 10px; background: #FF5A1F;
+    margin-right: 12px; vertical-align: middle;
+  }
+  .center-hero { max-width: 1080px; margin: auto 0; }
+  h1 {
+    font-size: 144px; font-weight: 900; line-height: 1.02;
+    letter-spacing: 0.02em; color: #FFFFFF;
+  }
+  .en-mono {
+    margin-top: 20px; font-family: "Consolas", "Bahnschrift", monospace;
+    font-size: 24px; letter-spacing: 0.28em; color: #7C9AC4;
+  }
+  .manifesto {
+    margin-top: 38px; font-size: 32px; line-height: 1.55; color: #D1D5DB;
+    max-width: 920px;
+  }
+  .manifesto .fire { color: #FF5A1F; font-weight: 700; }
+  .wave-deco {
+    position: absolute; left: 0; right: 0; bottom: 168px; pointer-events: none; z-index: 1;
+  }
+  .bottom-bar {
+    border-top: 1px solid rgba(255,255,255,0.14);
+    padding-top: 26px;
+    display: grid; grid-template-columns: 1.3fr 1.8fr 0.8fr 0.9fr; gap: 32px;
+  }
+  .b-col .bk {
+    font-family: "Consolas", "Noto Sans SC", monospace;
+    font-size: 16px; color: #7C9AC4; margin-bottom: 6px; letter-spacing: 0.06em;
+  }
+  .b-col .bv { font-size: 19px; color: #F4F5F7; line-height: 1.45; }
+</style>
+</head>
+<body>
+  <img class="bg-shot" src="../../assets/resonance_fire.png" alt="高共鸣火海实机画面">
+  <div class="scrim"></div>
+
+  <svg class="wave-deco" viewBox="0 0 1920 120" width="1920" height="120" preserveAspectRatio="none">
+    <path d="M 0 75 Q 240 60, 480 75 T 960 65 T 1340 48 T 1680 28 T 1920 18"
+          fill="none" stroke="rgba(255,90,31,0.45)" stroke-width="2.5"/>
+    <path d="M 0 85 Q 240 95, 480 80 T 960 88 T 1340 72 T 1680 58 T 1920 50"
+          fill="none" stroke="rgba(124,154,196,0.28)" stroke-width="1.5"/>
+  </svg>
+
+  <div class="frame">
+    <div class="top-row">
+      <span><span class="dot"></span>THE REALM OF RESONANCE · 实训结题答辩</span>
+      <span>UNITY 2022.3 / URP 14 / PHOTON PUN 2</span>
+    </div>
+
+    <div class="center-hero">
+      <h1>共鸣之境</h1>
+      <div class="en-mono">MULTIPLAYER FPS DRIVEN BY GLOBAL RESONANCE</div>
+      <p class="manifesto">当射击不再只是击杀数值的堆叠，而是触发整座战场的<span class="fire">连锁剧变</span>——重力改写、地面燃起火海、空投降临与第三阵营苏醒。</p>
+    </div>
+
+    <div class="bottom-bar">
+      <div class="b-col">
+        <div class="bk">INSTITUTION · 院校专业</div>
+        <div class="bv">福建师范大学协和学院<br>信息技术系 · 数字媒体技术</div>
+      </div>
+      <div class="b-col">
+        <div class="bk">TEAM · 成员与分工</div>
+        <div class="bv">吴凯东（程序框架） · 杨世杰（业务逻辑）<br>周欣琦（美术、策划、测试）</div>
+      </div>
+      <div class="b-col">
+        <div class="bk">TUTOR · 指导教师</div>
+        <div class="bv">黄取治</div>
+      </div>
+      <div class="b-col">
+        <div class="bk">BUILD · 汇报日期</div>
+        <div class="bv">2026 年 11 月<br>310 脚本 / 44,039 行</div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

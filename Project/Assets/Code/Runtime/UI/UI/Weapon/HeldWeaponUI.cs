@@ -41,7 +41,7 @@ namespace Resonance.UI
             if (gun.Info.Type != FirearmType.Knife)
             {
                 AmmoText.text = bullets.ToString();
-                if (gun.HaveInfinityAmmo)
+                if (gun.HasInfiniteAmmo)
                     ClipText.text = "∞";
                 else
                     ClipText.text = ClipText.text = clips.ToString("F0");

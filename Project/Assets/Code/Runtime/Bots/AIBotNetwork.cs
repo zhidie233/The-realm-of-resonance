@@ -205,7 +205,7 @@ namespace Resonance.Bots
         public void CheckNamePlate()
         {
             References.namePlateDrawer.SetName(AIName);
-            if (!isOneTeamMode && GameController.Instance.LocalPlayer != null && !References.aiShooter.isDeath)
+            if (!isOneTeamMode && GameController.Instance.LocalPlayer != null && !References.aiShooter.isDead)
             {
                 References.namePlateDrawer.SetActive(RuntimeServices.LocalPlayer.Team == AITeam);
             }

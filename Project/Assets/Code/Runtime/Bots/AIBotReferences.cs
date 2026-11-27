@@ -70,9 +70,9 @@ namespace Resonance.Bots
             }
         }
 
-        public override bool IsDeath()
+        public override bool IsDead()
         {
-            return shooterHealth.IsDeath();
+            return shooterHealth.IsDead();
         }
 
         public override int GetHealth()

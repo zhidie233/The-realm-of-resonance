@@ -29,7 +29,7 @@ namespace Resonance.Core
         {
             var p = RuntimeServices.LocalPlayerReferences;
 
-            if (infinityAmmo) p.gunManager.SetInfinityAmmoToAllEquipped(true);
+            if (infinityAmmo) p.gunManager.SetInfiniteAmmoToAllEquipped(true);
         }
 
         private void OnEvt_onLocalPlayerSpawn_OnLocalPlayerSpawn(LocalPlayerSpawnedEvent e) => OnLocalPlayerSpawn();

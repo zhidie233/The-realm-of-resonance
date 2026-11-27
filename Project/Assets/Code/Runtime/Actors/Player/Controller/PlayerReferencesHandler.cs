@@ -137,9 +137,9 @@ namespace Resonance.Actors
         public int ActorNumber => photonView.Owner.ActorNumber;
 
 
-        public override bool IsDeath()
+        public override bool IsDead()
         {
-            return playerHealthManager.IsDeath();
+            return playerHealthManager.IsDead();
         }
 
         public override int GetHealth()

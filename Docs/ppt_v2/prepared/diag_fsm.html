@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 880px; height: 420px; overflow: hidden;
+    background: #F7F6F2;
+    font-family: "Bahnschrift", "Microsoft YaHei", sans-serif;
+  }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 880 420" width="880" height="420">
+  <rect width="880" height="420" fill="#F7F6F2"/>
+  <rect x="2" y="2" width="876" height="416" fill="#FFFFFF" stroke="#111318" stroke-width="1.5"/>
+  <text x="28" y="42" fill="#0D1017" font-size="22" font-weight="700">七态有限状态机（房主端统一调度）</text>
+
+  <!-- 虚线连接 -->
+  <line x1="100" y1="210" x2="100" y2="275" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="270" y1="160" x2="270" y2="275" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="440" y1="185" x2="440" y2="275" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="610" y1="160" x2="610" y2="275" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="780" y1="210" x2="780" y2="275" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+  <line x1="100" y1="210" x2="780" y2="210" stroke="#9CA3AF" stroke-width="1.5" stroke-dasharray="5 5"/>
+
+  <!-- 双核心态：观察 <-> 搜寻 -->
+  <rect x="200" y="92" width="180" height="68" fill="#E8451E"/>
+  <text x="290" y="135" text-anchor="middle" fill="#FFFFFF" font-size="26" font-weight="700">观察</text>
+
+  <rect x="500" y="92" width="180" height="68" fill="#1A4BFF"/>
+  <text x="590" y="135" text-anchor="middle" fill="#FFFFFF" font-size="26" font-weight="700">搜寻</text>
+
+  <!-- 双向箭头 -->
+  <line x1="394" y1="126" x2="486" y2="126" stroke="#0D1017" stroke-width="3"/>
+  <polygon points="392,126 404,119 404,133" fill="#0D1017"/>
+  <polygon points="488,126 476,119 476,133" fill="#0D1017"/>
+
+  <!-- 五个外围状态 -->
+  <g stroke="#111318" stroke-width="1.8" fill="#F7F6F2">
+    <rect x="30"  y="275" width="140" height="64"/>
+    <rect x="200" y="275" width="140" height="64"/>
+    <rect x="370" y="275" width="140" height="64"/>
+    <rect x="540" y="275" width="140" height="64"/>
+    <rect x="710" y="275" width="140" height="64"/>
+  </g>
+  <text x="100" y="316" text-anchor="middle" fill="#0D1017" font-size="23" font-weight="700">待机</text>
+  <text x="270" y="316" text-anchor="middle" fill="#0D1017" font-size="23" font-weight="700">巡逻</text>
+  <text x="440" y="316" text-anchor="middle" fill="#0D1017" font-size="23" font-weight="700">跟随</text>
+  <text x="610" y="316" text-anchor="middle" fill="#0D1017" font-size="23" font-weight="700">掩护</text>
+  <text x="780" y="316" text-anchor="middle" fill="#0D1017" font-size="23" font-weight="700">驻守</text>
+
+  <text x="440" y="388" text-anchor="middle" fill="#4A5260" font-size="18">依据视距感知、受击告警与掩体占用冷却实时迁移</text>
+</svg>
+</body>
+</html>

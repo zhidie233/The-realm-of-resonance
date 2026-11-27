@@ -9409,7 +9409,7 @@ MonoBehaviour:
   detectLayers:
     serializedVersion: 2
     m_Bits: 37377
-  shakerPresent: {fileID: 11400000, guid: bb2d37786e0298648aca3b74c18e594a, type: 2}
+  shakerPreset: {fileID: 11400000, guid: bb2d37786e0298648aca3b74c18e594a, type: 2}
   shakerKey: explosion
 --- !u!82 &82654836542184216
 AudioSource:

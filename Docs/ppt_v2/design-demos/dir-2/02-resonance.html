@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: #0B0E14; color: #F4F5F7;
+    font-family: "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    font-synthesis: none; line-break: strict;
+    padding: 52px 76px;
+    display: flex; flex-direction: column; justify-content: space-between;
+  }
+  .head {
+    display: flex; justify-content: space-between; align-items: flex-end;
+  }
+  .kicker {
+    font-family: "Consolas", "Noto Sans SC", monospace;
+    font-size: 18px; color: #7C9AC4; letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  h1 {
+    font-size: 58px; font-weight: 900; line-height: 1.15; color: #FFFFFF;
+  }
+  h1 .orange { color: #FF5A1F; }
+  .weights-mono {
+    font-family: "Consolas", "Noto Sans SC", monospace;
+    font-size: 19px; color: #94A0B4; text-align: right; line-height: 1.6;
+  }
+  .weights-mono strong { color: #F4F5F7; }
+  .stage { width: 1768px; height: 690px; position: relative; }
+  .foot-line {
+    border-top: 1px solid rgba(255,255,255,0.14);
+    padding-top: 22px;
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 20px; color: #94A0B4;
+  }
+  .foot-line strong { color: #FFFFFF; font-family: "Consolas", "Noto Sans SC", monospace; }
+</style>
+</head>
+<body>
+  <div class="head">
+    <div>
+      <div class="kicker">02 · RESONANCE SPARKLINE · 全局共鸣振荡曲线</div>
+      <h1>单一数值 <span style="font-family:Consolas;color:#7C9AC4;">rr.resonance</span>，把战局推向<span class="orange">剧变</span></h1>
+    </div>
+    <div class="weights-mono">
+      <div><strong>HIT +1 / FF -1</strong> · <strong>增幅器 +2 / 抑制器 -2</strong></div>
+      <div><strong>夺旗 +10 / 交旗 +20 / 归还 -5</strong> · MasterClient 权威结算</div>
+    </div>
+  </div>
+
+  <div class="stage">
+    <svg viewBox="0 0 1768 690" width="1768" height="690">
+      <defs>
+        <linearGradient id="waveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7C9AC4"/>
+          <stop offset="38%" stop-color="#7C9AC4"/>
+          <stop offset="44%" stop-color="#FF5A1F"/>
+          <stop offset="100%" stop-color="#FF5A1F"/>
+        </linearGradient>
+      </defs>
+
+      <!-- 阈值150水平虚线 -->
+      <line x1="40" y1="360" x2="1728" y2="360" stroke="rgba(255,90,31,0.45)" stroke-width="2" stroke-dasharray="8 8"/>
+      <text x="44" y="346" fill="#FF5A1F" font-family="Consolas, Noto Sans SC" font-size="18" font-weight="700">THRESHOLD 150 · 临界爆发线</text>
+
+      <!-- 常态基线 -->
+      <line x1="40" y1="540" x2="1728" y2="540" stroke="rgba(255,255,255,0.12)" stroke-width="1.5" stroke-dasharray="4 6"/>
+      <text x="1500" y="568" fill="#7C9AC4" font-family="Consolas, Noto Sans SC" font-size="17">BASELINE · 常规掩体对抗</text>
+
+      <!-- 振荡波形 -->
+      <path d="M 60 515
+               C 150 515, 200 415, 290 425
+               C 370 435, 420 555, 510 540
+               C 600 525, 660 360, 760 330
+               C 850 305, 920 430, 1020 390
+               C 1120 350, 1180 220, 1280 210
+               C 1380 200, 1460 285, 1550 185
+               C 1620 108, 1665 68, 1710 42"
+            fill="none" stroke="url(#waveGrad)" stroke-width="5.5" stroke-linecap="round"/>
+
+      <!-- 关键波峰/波谷圆点 -->
+      <circle cx="290" cy="425" r="9" fill="#0B0E14" stroke="#7C9AC4" stroke-width="3.5"/>
+      <circle cx="510" cy="540" r="9" fill="#0B0E14" stroke="#7C9AC4" stroke-width="3.5"/>
+      <circle cx="760" cy="330" r="12" fill="#FF5A1F" stroke="#0B0E14" stroke-width="3"/>
+      <circle cx="1020" cy="390" r="9" fill="#0B0E14" stroke="#FF5A1F" stroke-width="3.5"/>
+      <circle cx="1280" cy="210" r="11" fill="#FF5A1F" stroke="#0B0E14" stroke-width="3"/>
+      <circle cx="1550" cy="185" r="11" fill="#FF5A1F" stroke="#0B0E14" stroke-width="3"/>
+      <circle cx="1710" cy="42" r="12" fill="#FFFFFF" stroke="#FF5A1F" stroke-width="4"/>
+
+      <!-- 节点原位标注（全部 >= 18px） -->
+      <text x="290" y="378" text-anchor="middle" fill="#7C9AC4" font-family="Consolas, Noto Sans SC" font-size="18" font-weight="700">共鸣 0 → 100</text>
+      <text x="290" y="404" text-anchor="middle" fill="#F4F5F7" font-family="Noto Sans SC" font-size="22" font-weight="600">重力初速线性爬升</text>
+
+      <text x="510" y="586" text-anchor="middle" fill="#7C9AC4" font-family="Consolas, Noto Sans SC" font-size="18" font-weight="700">抑制器回落 ≤ 100</text>
+      <text x="510" y="614" text-anchor="middle" fill="#94A0B4" font-family="Noto Sans SC" font-size="21">46 处火海同步熄灭销毁</text>
+
+      <text x="760" y="256" text-anchor="middle" fill="#FF5A1F" font-family="Consolas, Noto Sans SC" font-size="20" font-weight="700">越过阈值 150</text>
+      <text x="760" y="290" text-anchor="middle" fill="#FFFFFF" font-family="Noto Sans SC" font-size="26" font-weight="800">46 处地面火海同步点燃</text>
+
+      <text x="1020" y="438" text-anchor="middle" fill="#FF5A1F" font-family="Consolas, Noto Sans SC" font-size="19" font-weight="700">每跨越步长 200</text>
+      <text x="1020" y="468" text-anchor="middle" fill="#F4F5F7" font-family="Noto Sans SC" font-size="23" font-weight="600">SupplyManager 空投补给箱</text>
+
+      <text x="1220" y="138" text-anchor="middle" fill="#FF5A1F" font-family="Consolas, Noto Sans SC" font-size="20" font-weight="700">跨越 1000 · 跳跃初速 11.00</text>
+      <text x="1220" y="172" text-anchor="middle" fill="#FFFFFF" font-family="Noto Sans SC" font-size="25" font-weight="800">第三阵营中立 AI 刷出</text>
+
+      <text x="1550" y="258" text-anchor="middle" fill="#FFFFFF" font-family="Noto Sans SC" font-size="24" font-weight="800">击中设施召唤陨石</text>
+      <text x="1550" y="288" text-anchor="middle" fill="#94A0B4" font-family="Consolas, Noto Sans SC" font-size="18">下落速度 20 · 基础伤害 50 × 1~3 倍</text>
+    </svg>
+  </div>
+
+  <div class="foot-line">
+    <span>Photon 房间属性同步全端一致 · ResonanceSuite.asset 配置驱动五类设施</span>
+    <span>实测并发性能：<strong>67.7 FPS</strong> ｜ 360 帧 <strong>0 次 Gen0 GC</strong></span>
+  </div>
+</body>
+</html>

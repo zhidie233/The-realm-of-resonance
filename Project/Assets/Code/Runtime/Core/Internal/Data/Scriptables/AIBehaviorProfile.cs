@@ -14,12 +14,12 @@ namespace Resonance.Core
     public class AIBehaviorProfile : ScriptableObject
     {
         [Header("Settings")]
-        public AIBrainAction agentBehave = AIBrainAction.Aggressive;
+        public AIBrainAction agentBehavior = AIBrainAction.Aggressive;
         public AIBotWeaponSpread weaponAccuracy = AIBotWeaponSpread.Casual;
         [GameToggle] public bool GetRandomTargetOnStart = true;
         [GameToggle] public bool forceFollowAtHalfHealth = true;
         [GameToggle] public bool checkEnemiesWhenHaveATarget = true;
-        public AIOutOfRangeAction targetOutRangeBehave = AIOutOfRangeAction.KeepFollowingBasedOnState;
+        public AIOutOfRangeAction targetOutRangeBehavior = AIOutOfRangeAction.KeepFollowingBasedOnState;
 
         [Header("Cover")]
         public float maxCoverTime = 10;

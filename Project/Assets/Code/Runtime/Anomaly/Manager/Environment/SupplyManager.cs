@@ -1,22 +1,18 @@
 using UnityEngine;
 using Resonance.Foundation;
+using Resonance.Domain.Anomaly;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class SupplyManager : EnvironmentEffectManager
     {
         [Header("掉落区域")]
         private BoxCollider dropArea;
 
-        private int lastTriggeredMultiple = -1;
+        private readonly ThresholdIntervalTracker _intervalTracker = new ThresholdIntervalTracker();
         private int lastIndex = 0;
 
         protected override void Start()
@@ -24,27 +20,30 @@ namespace Resonance.Anomaly
             base.Start();
             if (!enabled) return;
 
-            GameObject dropAreaObject = GameObject.FindGameObjectWithTag("DropArea");
-            if (dropAreaObject == null || dropAreaObject.GetComponent<BoxCollider>() == null)
+            dropArea = WorldDropZone.FindDropArea();
+            if (dropArea == null)
             {
                 enabled = false;
                 return;
             }
 
-            dropArea = dropAreaObject.GetComponent<BoxCollider>();
-            lastTriggeredMultiple = Mathf.FloorToInt(currentResonance / ProjectConfigRoot.Instance.supplyConfig.supplyInterval);
+            _intervalTracker.SyncBaseline(currentResonance, ProjectConfigRoot.Instance.supplyConfig.supplyInterval);
         }
 
         public override void UpdateEffect()
         {
             if (!NetworkWrapper.IsMasterClient) return;
 
-            int currentMultiple = Mathf.FloorToInt(currentResonance / ProjectConfigRoot.Instance.supplyConfig.supplyInterval);
+            int interval = ProjectConfigRoot.Instance.supplyConfig.supplyInterval;
+            if (!_intervalTracker.TryConsumeNextMilestone(currentResonance, interval)) return;
 
-            if (currentMultiple <= 0 || currentMultiple <= lastTriggeredMultiple) return;
-
-            lastTriggeredMultiple = currentMultiple;
             DropItem();
+        }
+
+        protected override void OnMatchReset()
+        {
+            _intervalTracker.SyncBaseline(currentResonance, ProjectConfigRoot.Instance.supplyConfig.supplyInterval);
+            lastIndex = 0;
         }
 
         private void DropItem()
@@ -54,26 +53,11 @@ namespace Resonance.Anomaly
             int[] packIDs = ProjectConfigRoot.Instance.supplyConfig.supplyPackIDs;
             if (packIDs == null || packIDs.Length == 0) return;
 
-            EventBus.Publish(new AirSupplyRequestedEvent(GetRandomPositionInDropArea(), packIDs[lastIndex]));
+            EventBus.Publish(new AirSupplyRequestedEvent(WorldDropZone.SampleWorldPoint(dropArea, 1f), packIDs[lastIndex]));
 
             lastIndex++;
             if (lastIndex >= packIDs.Length)
                 lastIndex = 0;
-        }
-
-        private Vector3 GetRandomPositionInDropArea()
-        {
-            if (dropArea == null) return Vector3.zero;
-
-            Vector3 localRandomPos = new Vector3(
-                Random.Range(-dropArea.size.x * 0.5f, dropArea.size.x * 0.5f),
-                Random.Range(-dropArea.size.y * 0.5f, dropArea.size.y * 0.5f),
-                Random.Range(-dropArea.size.z * 0.5f, dropArea.size.z * 0.5f)
-            );
-
-            Vector3 worldPos = dropArea.transform.TransformPoint(localRandomPos);
-            Vector3 offset = new Vector3(0, 1f, 0);
-            return worldPos - offset;
         }
     }
 }

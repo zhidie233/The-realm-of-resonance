@@ -5,12 +5,8 @@ using Photon.Realtime;
 using Resonance.Foundation;
 using Resonance.Core;
 using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Combat
 {
 
@@ -22,7 +18,7 @@ namespace Resonance.Combat
         public float explosionRadius = 50f;
         public float DisappearIn = 3f;
         public LayerMask detectLayers;
-        public ShakePreset shakerPresent;
+        public ShakePreset shakerPreset;
         public string shakerKey = "explosion";
 
         private RaycastHit hitInfo;
@@ -116,17 +112,7 @@ namespace Resonance.Combat
                 odi.Cause = (!creator.isRealPlayer) ? DamageCause.Bot : DamageCause.Explosion;
                 odi.WeaponID = cachedData.WeaponID;
                 odi.Actor = NetworkWrapper.LocalPlayer;
-                // 检查团队关系并调整共鸣值
-                if (!isOneTeamMode && player.GetPlayerTeam() == creator.Team)
-                {
-                    // 爆炸伤害友军，降低共鸣值
-                    ResonanceManager.RequestChange("Teammate", odi.Damage);
-                }
-                else
-                {
-                    // 爆炸伤害敌人，升高共鸣值
-                    ResonanceManager.RequestChange("Enemy", odi.Damage);
-                }
+                EventBus.Publish(new CombatDamageDealtEvent(creator.Team, player.GetPlayerTeam(), odi.Damage, isOneTeamMode));
                 pdm?.DoDamage(odi);
             }
         }
@@ -181,7 +167,7 @@ namespace Resonance.Combat
         {
             if (isMyInRange() == true)
             {
-                EventBus.Publish(new CameraShakeEvent(shakerPresent, "shakerKey"));
+                EventBus.Publish(new CameraShakeEvent(shakerPreset, "shakerKey"));
             }
         }
         // 根据玩家与爆炸点的距离计算产生的伤害

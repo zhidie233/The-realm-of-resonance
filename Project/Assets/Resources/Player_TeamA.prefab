@@ -25751,7 +25751,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 7
-  shakerPresent: {fileID: 11400000, guid: d657b415119b3e4468b932e640667e0f, type: 2}
+  shakerPreset: {fileID: 11400000, guid: d657b415119b3e4468b932e640667e0f, type: 2}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 1
@@ -25790,7 +25790,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 0}
   ReloadSound3: {fileID: 0}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 5618531932591148854}
   - {fileID: 7329400195351153400}
   playerSettings: {fileID: 3219982229663696390}
@@ -49635,7 +49635,7 @@ MonoBehaviour:
   FallDamage: 1
   SafeFallDistance: 4.5
   DeathFallDistance: 15
-  runToAimBehave: 1
+  runToAimBehavior: 1
   dropControlSpeed: 20
   dropTiltSpeedRange: {x: 20, y: 50}
   mouseLook:
@@ -49781,7 +49781,7 @@ MonoBehaviour:
     m_ColorSpace: -1
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
-  damageShakerPresent: {fileID: 11400000, guid: 7b88b59570ca07f4abd15843c08a5a15, type: 2}
+  damageShakerPreset: {fileID: 11400000, guid: 7b88b59570ca07f4abd15843c08a5a15, type: 2}
   HitsSound:
   - {fileID: 8300000, guid: 3d4737a2c0fc95d4fadeb16367e672b5, type: 3}
   - {fileID: 8300000, guid: 9ea1f86ddfa38044fb8732cfea0afffd, type: 3}
@@ -154595,7 +154595,7 @@ MonoBehaviour:
   aimRotation: {x: -0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 25
-  shakerPresent: {fileID: 11400000, guid: a3d25cc2cbea1664bb8ecef7524410fe, type: 2}
+  shakerPreset: {fileID: 11400000, guid: a3d25cc2cbea1664bb8ecef7524410fe, type: 2}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 1
@@ -154633,7 +154633,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 8300000, guid: 839d35f4f05fdde409bf7896ef657339, type: 3}
   ReloadSound3: {fileID: 8300000, guid: c83dde09243fd824490bda86374ca336, type: 3}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 8887295392338180478}
   - {fileID: 2410047933616980419}
   - {fileID: 1113664186675648729}
@@ -160285,7 +160285,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 14
-  shakerPresent: {fileID: 11400000, guid: 269e68467058807429eec4167697dadb, type: 2}
+  shakerPreset: {fileID: 11400000, guid: 269e68467058807429eec4167697dadb, type: 2}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 1
@@ -160323,7 +160323,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 8300000, guid: 6e28555106a46384b85f4c75c6a68614, type: 3}
   ReloadSound3: {fileID: 8300000, guid: c707bb1d3b39b6348b345760328c1d5b, type: 3}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 8887701082690863924}
   - {fileID: 1230430468058291950}
   - {fileID: 8314234809120016088}
@@ -171868,7 +171868,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 7
-  shakerPresent: {fileID: 11400000, guid: d657b415119b3e4468b932e640667e0f, type: 2}
+  shakerPreset: {fileID: 11400000, guid: d657b415119b3e4468b932e640667e0f, type: 2}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 1
@@ -171907,7 +171907,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 0}
   ReloadSound3: {fileID: 0}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 980338753854791764}
   - {fileID: 5814299005290810178}
   - {fileID: 4803156394163808168}
@@ -172698,7 +172698,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: -1.591, z: 0}
   useSmooth: 1
   AimSmooth: 26
-  shakerPresent: {fileID: 11400000, guid: 87380dd138918434ea0fe0c802e09272, type: 2}
+  shakerPreset: {fileID: 11400000, guid: 87380dd138918434ea0fe0c802e09272, type: 2}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 0
@@ -172736,7 +172736,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 8300000, guid: ea70b8ce1050ed442995ea6a60e9e7f6, type: 3}
   ReloadSound3: {fileID: 8300000, guid: 95599442132d05d48bb5310bebb0fe8b, type: 3}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 6391602705010562144}
   - {fileID: 2993050165514739854}
   - {fileID: 1040199719751219347}
@@ -199747,7 +199747,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 14
-  shakerPresent: {fileID: 11400000, guid: 269e68467058807429eec4167697dadb, type: 2}
+  shakerPreset: {fileID: 11400000, guid: 269e68467058807429eec4167697dadb, type: 2}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 1
@@ -199785,7 +199785,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 8300000, guid: 6e28555106a46384b85f4c75c6a68614, type: 3}
   ReloadSound3: {fileID: 8300000, guid: c707bb1d3b39b6348b345760328c1d5b, type: 3}
   DelaySource: {fileID: 9055564064901724291}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 3114302275511325200}
   - {fileID: 3389099410537368884}
   - {fileID: 6488123642808237927}
@@ -231722,7 +231722,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 10
-  shakerPresent: {fileID: 0}
+  shakerPreset: {fileID: 0}
   aimZoom: 50
   CanAuto: 1
   CanSemi: 1
@@ -231760,7 +231760,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 8300000, guid: ea70b8ce1050ed442995ea6a60e9e7f6, type: 3}
   ReloadSound3: {fileID: 8300000, guid: 95599442132d05d48bb5310bebb0fe8b, type: 3}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 5087652912446233160}
   - {fileID: 647256194900945784}
   playerSettings: {fileID: 3219982229663696390}
@@ -238652,7 +238652,7 @@ MonoBehaviour:
   aimRotation: {x: 0, y: 0, z: 0}
   useSmooth: 1
   AimSmooth: 12
-  shakerPresent: {fileID: 11400000, guid: d657b415119b3e4468b932e640667e0f, type: 2}
+  shakerPreset: {fileID: 11400000, guid: d657b415119b3e4468b932e640667e0f, type: 2}
   aimZoom: 15
   CanAuto: 1
   CanSemi: 1
@@ -238690,7 +238690,7 @@ MonoBehaviour:
   ReloadSound2: {fileID: 8300000, guid: dee27a9a35247c24389c7d51e6849a06, type: 3}
   ReloadSound3: {fileID: 8300000, guid: dc952f62783baf048855d68f2a1017fd, type: 3}
   DelaySource: {fileID: 0}
-  weaponRenders:
+  weaponRenderers:
   - {fileID: 5358918106558067947}
   - {fileID: 7502588561226701298}
   - {fileID: 374820086528737902}

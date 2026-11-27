@@ -1,23 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Resonance.Foundation;
+using Resonance.Domain.Anomaly;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class GroundFireManager : EnvironmentEffectManager
     {
         private Transform groundFiresTransform;
-        private List<Transform> fireZones = new List<Transform>();
-
-        private List<GameObject> activeFires = new List<GameObject>();
+        private readonly List<Transform> fireZones = new List<Transform>();
+        private readonly List<GameObject> activeFires = new List<GameObject>();
         private bool isActive = false;
 
         protected override void Start()
@@ -39,16 +32,29 @@ namespace Resonance.Anomaly
 
         public override void UpdateEffect()
         {
-            if (currentResonance >= ProjectConfigRoot.Instance.groundFireConfig.activationThreshold)
+            var cfg = ProjectConfigRoot.Instance.groundFireConfig;
+            var decision = GroundFireRule.Evaluate(currentResonance, cfg.activationThreshold, cfg.effectScaleMultiplier, isActive);
+
+            if (decision.ShouldActivate)
             {
-                if (!isActive)
-                {
-                    ActivateFires();
-                    isActive = true;
-                }
-                UpdateFireIntensity();
+                ActivateFires();
             }
-            else if (isActive)
+
+            if (decision.ShouldUpdateIntensity)
+            {
+                UpdateFireIntensity(decision.VerticalScale);
+            }
+            else if (decision.ShouldDeactivate)
+            {
+                DeactivateFires();
+            }
+
+            isActive = decision.IsActive;
+        }
+
+        protected override void OnMatchReset()
+        {
+            if (isActive)
             {
                 DeactivateFires();
                 isActive = false;
@@ -64,7 +70,7 @@ namespace Resonance.Anomaly
             }
         }
 
-        private void UpdateFireIntensity()
+        private void UpdateFireIntensity(float verticalScale)
         {
             float damage = ProjectConfigRoot.Instance.groundFireConfig.fireDamageCurve.Evaluate(currentResonance);
             foreach (var fire in activeFires)
@@ -73,7 +79,7 @@ namespace Resonance.Anomaly
                 if (fireComponent != null)
                     fireComponent.Damage = (int)damage;
 
-                fire.transform.localScale = new Vector3(1, (1f + currentResonance * 0.01f) * ProjectConfigRoot.Instance.groundFireConfig.effectScaleMultiplier, 1);
+                fire.transform.localScale = new Vector3(1f, verticalScale, 1f);
             }
         }
 

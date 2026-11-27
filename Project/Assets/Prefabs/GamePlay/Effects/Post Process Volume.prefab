@@ -45,7 +45,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 218d0de2f2b1fdd4aaea3d44104cb54f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  processProfile: {fileID: 11400000, guid: 4e8a3bc35a05cd04cb4757b6dba982e2, type: 2}
 --- !u!114 &1209864816762992939
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,14 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
 namespace Resonance.Anomaly
 {
 
@@ -46,6 +37,18 @@ namespace Resonance.Anomaly
                 Initialize();
 
             return resonanceChangeDict.ContainsKey(key) ? resonanceChangeDict[key] : 0f;
+        }
+
+        public IEnumerable<KeyValuePair<string, float>> EnumerateRules()
+        {
+            for (int i = 0; i < resonanceChanges.Count; i++)
+            {
+                var entry = resonanceChanges[i];
+                if (entry != null)
+                {
+                    yield return new KeyValuePair<string, float>(entry.key, entry.magnification);
+                }
+            }
         }
 
         // 在Inspector中更新后重新初始化

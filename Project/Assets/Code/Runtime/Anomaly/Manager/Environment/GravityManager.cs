@@ -2,20 +2,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
 using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class GravityManager : EnvironmentEffectManager
     {
         private PlayerLocomotionController _localPlayerController;
-        private List<GravityFacility> _gravityFacilities = new List<GravityFacility>();
+        private readonly List<GravityFacility> _gravityFacilities = new List<GravityFacility>();
 
         protected override void Start()
         {
@@ -26,22 +21,35 @@ namespace Resonance.Anomaly
             BindLocalPlayer();
             UpdateEffect();
 
-            EventBus.Subscribe<LocalPlayerSpawnedEvent>(OnEvt_onLocalPlayerSpawn_OnLocalPlayerSpawn);
+            EventBus.Subscribe<LocalPlayerSpawnedEvent>(HandleLocalPlayerSpawned);
         }
 
         protected override void OnDestroy()
         {
             base.OnDestroy();
-            EventBus.Unsubscribe<LocalPlayerSpawnedEvent>(OnEvt_onLocalPlayerSpawn_OnLocalPlayerSpawn);
+            EventBus.Unsubscribe<LocalPlayerSpawnedEvent>(HandleLocalPlayerSpawned);
+            if (_localPlayerController != null)
+            {
+                _localPlayerController.ClearJumpSpeedOverride();
+            }
         }
 
-        void OnLocalPlayerSpawn()
+        protected override void OnMatchReset()
+        {
+            if (_localPlayerController != null)
+            {
+                _localPlayerController.ClearJumpSpeedOverride();
+            }
+            UpdateFacilityTransform();
+        }
+
+        private void HandleLocalPlayerSpawned(LocalPlayerSpawnedEvent e)
         {
             BindLocalPlayer();
             UpdateEffect();
         }
 
-        void BindLocalPlayer()
+        private void BindLocalPlayer()
         {
             if (GameController.Instance == null || GameController.Instance.LocalPlayer == null) return;
 
@@ -59,7 +67,7 @@ namespace Resonance.Anomaly
             if (_localPlayerController != null)
             {
                 float gravityMultiplier = ProjectConfigRoot.Instance.gravityConfig.jumpForce.Evaluate(currentResonance);
-                _localPlayerController.jumpSpeed = gravityMultiplier;
+                _localPlayerController.SetJumpSpeedOverride(gravityMultiplier);
             }
 
             UpdateFacilityTransform();
@@ -75,7 +83,5 @@ namespace Resonance.Anomaly
                     facility.UpdateTransformBasedOnResonance(currentResonance, maxResonance);
             }
         }
-
-        private void OnEvt_onLocalPlayerSpawn_OnLocalPlayerSpawn(LocalPlayerSpawnedEvent e) => OnLocalPlayerSpawn();
     }
 }

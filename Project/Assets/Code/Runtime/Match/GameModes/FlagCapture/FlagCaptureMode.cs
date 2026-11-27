@@ -2,13 +2,9 @@ using Photon.Realtime;
 using UnityEngine;
 using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Resonance.Foundation;
+using Resonance.Domain.Anomaly;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
 using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
 using Resonance.UI;
 namespace Resonance.Match
 {
@@ -113,28 +109,18 @@ namespace Resonance.Match
                     flag.Recover(player);
                     break;
             }
-            // 夺旗模式共鸣值事件（ChangeResonance 内部仅房主生效，天然防止多端重复累加）
             switch (newState)
             {
                 case FlagPoint.FlagState.PickUp:
-                    // 敌方夺走旗帜，战场激化，提升共鸣值
-                    AddResonance("FlagPickUp");
+                    EventBus.Publish(new ObjectiveStateChangedEvent(ResonanceObjectiveKind.FlagPickedUp));
                     break;
                 case FlagPoint.FlagState.Captured:
-                    // 成功交旗，大幅提升共鸣值
-                    AddResonance("FlagCapture");
+                    EventBus.Publish(new ObjectiveStateChangedEvent(ResonanceObjectiveKind.FlagCaptured));
                     break;
                 case FlagPoint.FlagState.InHome:
-                    // 夺回己方旗帜，缓解战场激化，降低共鸣值
-                    AddResonance("FlagRecover");
+                    EventBus.Publish(new ObjectiveStateChangedEvent(ResonanceObjectiveKind.FlagRecovered));
                     break;
             }
-        }
-        /// 由旗帜事件触发共鸣值变化（数值在 ResonanceConfig 中配置）
-        private void AddResonance(string resonanceKey)
-        {
-            if (ResonanceManager.Instance == null) return;
-            ResonanceManager.Instance.ChangeResonance(resonanceKey);
         }
 
         void SyncFlags(Hashtable data)

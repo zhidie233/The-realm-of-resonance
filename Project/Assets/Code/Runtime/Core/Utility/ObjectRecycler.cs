@@ -34,7 +34,7 @@ namespace Resonance.Core
         {
             for (int i = 0; i < pooledPrefabs.Length; i++)
             {
-                RegisterObject(pooledPrefabs[i].Name, pooledPrefabs[i].Prefab, pooledPrefabs[i].Lenght);
+                RegisterObject(pooledPrefabs[i].Name, pooledPrefabs[i].Prefab, pooledPrefabs[i].Length);
             }
         }
         /// 添加一个新的池化预制体
@@ -103,7 +103,7 @@ namespace Resonance.Core
         {
             public string Name;
             public GameObject Prefab;
-            public int Lenght;
+            public int Length;
         }
     }
 }

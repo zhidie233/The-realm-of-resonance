@@ -3,11 +3,7 @@ using Resonance.Foundation;
 using Resonance.Core;
 using Resonance.Actors;
 using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
 namespace Resonance.Combat
 {
 
@@ -210,40 +206,15 @@ namespace Resonance.Combat
             if (damageable != null)
             {
                 DamageInfo damageData = BuildBaseDamageData();
-                // 检查是否是真人
                 var playerRefs = hit.transform.root.GetComponent<PlayerRig>();
-                if (playerRefs != null)//是真人
+                if (playerRefs != null)
                 {
-                    if (isOneTeamMode)
-                    {
-                        // 自由混战：所有玩家互为敌人，命中即提升共鸣值
-                        ResonanceManager.RequestChange("Enemy", damageData.Damage);
-                    }
-                    else if (playerRefs.playerSettings.PlayerTeam == bulletData.GameActor.Team)
-                    {
-                        // 攻击友军，降低共鸣值
-                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
-                    }
-                    else
-                    {
-                        // 攻击敌人，升高共鸣值
-                        ResonanceManager.RequestChange("Enemy", damageData.Damage);
-                    }
+                    PublishCombatDamage(playerRefs.playerSettings.PlayerTeam, damageData.Damage);
                 }
-                //不是真人
-                var botRefs = hit.transform.root.GetComponent<AIBotReferences>();//判断是不是人机
-                if (botRefs != null && !isOneTeamMode)//是人机
+                var botRefs = hit.transform.root.GetComponent<AIBotReferences>();
+                if (botRefs != null && !isOneTeamMode)
                 {
-                    if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
-                    {
-                        // 攻击友军，降低共鸣值
-                        ResonanceManager.RequestChange("Teammate", damageData.Damage);
-                    }
-                    else
-                    {
-                        // 攻击敌人，升高共鸣值
-                        ResonanceManager.RequestChange("Enemy", damageData.Damage);
-                    }
+                    PublishCombatDamage(botRefs.PlayerTeam, damageData.Damage);
                 }
                 //检查子弹来自机器人还是真人玩家。
                 if (bulletData.GameActor != null)
@@ -280,25 +251,10 @@ namespace Resonance.Combat
                 {
                     //回调在 HitBox.cs 中
                     var damageData = BuildBaseDamageData();
-                    //不是真人
-                    var botRefs = hit.transform.root.GetComponent<AIBotReferences>();//判断是不是人机
-                    if (botRefs != null)//是人机
+                    var botRefs = hit.transform.root.GetComponent<AIBotReferences>();
+                    if (botRefs != null)
                     {
-                        if (isOneTeamMode)
-                        {
-                            // 自由混战：所有人机均为敌人，命中即提升共鸣值
-                            ResonanceManager.RequestChange("Enemy", damageData.Damage);
-                        }
-                        else if (botRefs.PlayerTeam == bulletData.GameActor.Team)//判断是不是队友
-                        {
-                            // 攻击友军，降低共鸣值
-                            ResonanceManager.RequestChange("Teammate", damageData.Damage);
-                        }
-                        else
-                        {
-                            // 攻击敌人，升高共鸣值
-                            ResonanceManager.RequestChange("Enemy", damageData.Damage);
-                        }
+                        PublishCombatDamage(botRefs.PlayerTeam, damageData.Damage);
                     }
                     damageable.ReceiveDamage(damageData);
                 }
@@ -317,21 +273,7 @@ namespace Resonance.Combat
             if (pdm != null && bulletData.GameActor != null)
             {
                 DamageInfo info = BuildBaseDamageData();
-                if (isOneTeamMode)
-                {
-                    // 自由混战：所有玩家互为敌人，被击中即提升共鸣值
-                    ResonanceManager.RequestChange("Enemy", info.Damage);
-                }
-                else if (pdm.playerSettings.PlayerTeam == bulletData.GameActor.Team)
-                {
-                    // 攻击友军，降低共鸣值
-                    ResonanceManager.RequestChange("Teammate", info.Damage);
-                }
-                else
-                {
-                    // 攻击敌人，升高共鸣值
-                    ResonanceManager.RequestChange("Enemy", info.Damage);
-                }
+                PublishCombatDamage(pdm.playerSettings.PlayerTeam, info.Damage);
                 info.Actor = null;
                 info.Cause = DamageCause.Bot;
                 pdm.playerHealthManager.DoDamage(info);
@@ -342,15 +284,17 @@ namespace Resonance.Combat
         {
             if (bulletData.isNetwork) return;
             IGameDamageable damageable = hit.transform.GetComponent<IGameDamageable>();
-            ResonanceFacility facility = hit.transform.GetComponent<ResonanceFacility>();
             if (damageable != null)
             {
-                //回调在 HitBox.cs 中
                 var damageData = BuildBaseDamageData();
-                if (facility != null)
-                    ResonanceManager.RequestChange(facility.resonanceKey, damageData.Damage);
                 damageable.ReceiveDamage(damageData);
             }
+        }
+
+        private void PublishCombatDamage(Team victimTeam, float damage)
+        {
+            Team attackerTeam = bulletData.GameActor != null ? bulletData.GameActor.Team : Team.None;
+            EventBus.Publish(new CombatDamageDealtEvent(attackerTeam, victimTeam, damage, isOneTeamMode));
         }
         void InstanceHitParticle(string poolPrefab, RaycastHit hit, bool overrideDamageable = false)
         {

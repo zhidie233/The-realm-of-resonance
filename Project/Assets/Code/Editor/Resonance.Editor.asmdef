@@ -3,6 +3,7 @@
   "rootNamespace": "Resonance.Editor",
   "references": [
     "Resonance.Foundation",
+    "Resonance.Domain",
     "Resonance.Runtime",
     "PhotonUnityNetworking",
     "PhotonUnityNetworking.Editor",

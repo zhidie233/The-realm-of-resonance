@@ -107,7 +107,7 @@ namespace Resonance.Bots
             if ((_slowTickTimer += Time.deltaTime) >= 0.5f) { _slowTickTimer = 0f; OnSlowUpdate(); }  
             time = Time.time;
             delta = Time.deltaTime;
-            if (isDeath) return;
+            if (isDead) return;
             isNewDebug = true;
             if (!isGameStarted) return;
             if (Target != null && isMaster)
@@ -133,7 +133,7 @@ namespace Resonance.Bots
         /// 每秒调用一次，而不是每帧
         private void OnSlowUpdate()
         {
-            if (isDeath) return;
+            if (isDead) return;
             if (MatchTimeManager.Instance.IsTimeUp() || !isGameStarted)
             {
                 return;
@@ -210,7 +210,7 @@ namespace Resonance.Bots
         }
         void WhenTargetOutOfRange()
         {
-            if (behaviorSettings.targetOutRangeBehave == AIOutOfRangeAction.SearchNewNearestTarget)
+            if (behaviorSettings.targetOutRangeBehavior == AIOutOfRangeAction.SearchNewNearestTarget)
             {
                 var newTarget = GetNearestPlayer();
                 if (newTarget != Target)
@@ -253,7 +253,7 @@ namespace Resonance.Bots
                 RandomPatrol(false);
                 SetState(AIBrainState.Patrolling);
             }
-            Speed = behaviorSettings.agentBehave == AIBrainAction.Aggressive ? soldierSettings.runSpeed : soldierSettings.walkSpeed;
+            Speed = behaviorSettings.agentBehavior == AIBrainAction.Aggressive ? soldierSettings.runSpeed : soldierSettings.walkSpeed;
             if (!AIWeapon.IsFiring)
             {
                 Anim.SetInteger("UpperState", 4);
@@ -285,7 +285,7 @@ namespace Resonance.Bots
                 CachedTargetDistance = TargetDistance;
                 if (CachedTargetDistance <= soldierSettings.mediumRange && playerInFront)
                 {
-                    if (behaviorSettings.agentBehave == AIBrainAction.Aggressive)
+                    if (behaviorSettings.agentBehavior == AIBrainAction.Aggressive)
                     {
                         if (!Agent.hasPath)
                         {
@@ -341,7 +341,7 @@ namespace Resonance.Bots
                     SetDebugState(9, true);
                     SetLookAtState(AIGaze.Target);
                     TriggerFire(AIBotAttack.FireReason.Forced);
-                    if (behaviorSettings.agentBehave == AIBrainAction.Protective || CachedTargetDistance > soldierSettings.mediumRange)
+                    if (behaviorSettings.agentBehavior == AIBrainAction.Protective || CachedTargetDistance > soldierSettings.mediumRange)
                     {
                         if (CanCover(behaviorSettings.maxCoverTime)) { SwitchCover(); }
                     }
@@ -385,7 +385,7 @@ namespace Resonance.Bots
                 return false;
             }
             //目标太远就没必要躲掩体
-            if (behaviorSettings.agentBehave == AIBrainAction.Aggressive && CachedTargetDistance > 20)
+            if (behaviorSettings.agentBehavior == AIBrainAction.Aggressive && CachedTargetDistance > 20)
             {
                 SetState(AIBrainState.Following);
                 return false;
@@ -429,7 +429,7 @@ namespace Resonance.Bots
                 SetDestination(CurrentCover.transform.position, 0.1f);
                 SetState(AIBrainState.Covering);
                 CoverTime = time;
-                TriggerFire(behaviorSettings.agentBehave == AIBrainAction.Aggressive ? AIBotAttack.FireReason.Normal : AIBotAttack.FireReason.OnMove);
+                TriggerFire(behaviorSettings.agentBehavior == AIBrainAction.Aggressive ? AIBotAttack.FireReason.Normal : AIBotAttack.FireReason.OnMove);
                 return true;
             }
             else
@@ -606,7 +606,7 @@ namespace Resonance.Bots
         void SearchPlayers()
         {
             SetDebugState(-2);
-            Transform target = behaviorSettings.agentBehave == AIBrainAction.Aggressive ? GetNearestPlayer() : GetTargetOnRange();
+            Transform target = behaviorSettings.agentBehavior == AIBrainAction.Aggressive ? GetNearestPlayer() : GetTargetOnRange();
             if (target != null) SetTarget(target);
             //开局随机选一个目标
             if (NetworkWrapper.IsMasterClient && !randomOnStartTake && availableTargets.Count > 0)
@@ -652,7 +652,7 @@ namespace Resonance.Bots
         /// <param name="precision">巡逻时靠近敌人区域的程度</param>
         void RandomPatrol(bool precision)
         {
-            if (isDeath || !NetworkWrapper.IsMasterClient)
+            if (isDead || !NetworkWrapper.IsMasterClient)
                 return;
             float precisionArea = soldierSettings.farRange;
             if (precision)
@@ -664,13 +664,13 @@ namespace Resonance.Bots
                     {
                         SetTarget(GetNearestPlayer());
                     }
-                    SetState(behaviorSettings.agentBehave == AIBrainAction.Protective ? AIBrainState.Covering : AIBrainState.Looking);
+                    SetState(behaviorSettings.agentBehavior == AIBrainAction.Protective ? AIBrainState.Covering : AIBrainState.Looking);
                     precisionArea = 5;
                 }
                 else
                 {
                     SetDebugState(25);
-                    SetState(behaviorSettings.agentBehave == AIBrainAction.Aggressive ? AIBrainState.Following : AIBrainState.Searching);
+                    SetState(behaviorSettings.agentBehavior == AIBrainAction.Aggressive ? AIBrainState.Following : AIBrainState.Searching);
                     precisionArea = 8;
                 }
             }
@@ -678,7 +678,7 @@ namespace Resonance.Bots
             {
                 SetDebugState(26);
                 SetState(AIBrainState.Patrolling);
-                if (behaviorSettings.agentBehave == AIBrainAction.Aggressive && !HasATarget)
+                if (behaviorSettings.agentBehavior == AIBrainAction.Aggressive && !HasATarget)
                 {
                     SetTarget(GetNearestPlayer());
                     SetCrouch(false);
@@ -1180,7 +1180,7 @@ namespace Resonance.Bots
     #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            if (isDeath) return;
+            if (isDead) return;
             if (Agent != null)
             {
                 Gizmos.color = Color.red;

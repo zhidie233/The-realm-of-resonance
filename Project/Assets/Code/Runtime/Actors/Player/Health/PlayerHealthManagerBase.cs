@@ -42,7 +42,7 @@ namespace Resonance.Actors
 
         public abstract void DestroyEntity();
 
-        public abstract bool IsDeath();
+        public abstract bool IsDead();
 
         public class RepeatHitDamage
         {

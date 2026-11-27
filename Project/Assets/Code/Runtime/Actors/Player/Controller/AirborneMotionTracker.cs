@@ -1,16 +1,9 @@
+using System;
 using UnityEngine;
-using Resonance.Foundation;
-using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.Anomaly;
-using Resonance.UI;
+using Resonance.Domain.Actors;
+
 namespace Resonance.Actors
 {
-
     /// <summary>
     /// Tracks vertical apex, fall duration, and computes fall damage on landing.
     /// </summary>
@@ -39,14 +32,12 @@ namespace Resonance.Actors
             if (Mathf.Approximately(currentY, PostGroundVerticalPos)) return;
             if (JumpDirection == 0)
             {
-                JumpDirection = (currentY > PostGroundVerticalPos) ? 1 : -1;
+                JumpDirection = currentY > PostGroundVerticalPos ? 1 : -1;
             }
             else if (JumpDirection == 1)
             {
-                if (currentY < PostGroundVerticalPos)
-                    HigherPointOnJump = PostGroundVerticalPos;
-                else
-                    PostGroundVerticalPos = currentY;
+                if (currentY < PostGroundVerticalPos) HigherPointOnJump = PostGroundVerticalPos;
+                else PostGroundVerticalPos = currentY;
             }
         }
 
@@ -56,41 +47,53 @@ namespace Resonance.Actors
             float safeFallDistance,
             float deathFallDistance,
             PlayerHealthManagerBase healthManager,
-            System.Action<float> playLandingSound,
-            System.Action<float> dispatchLandImpact)
+            Action<float> playLandingSound,
+            Action<float> dispatchLandImpact)
         {
-            float fallDistance = HigherPointOnJump - currentY;
-            if (JumpDirection == -1)
+            var input = new FallEvaluationInput(
+                currentY,
+                HigherPointOnJump,
+                PostGroundVerticalPos,
+                JumpDirection,
+                fallDamageEnabled,
+                HasTouchedGround,
+                HasLanded,
+                JumpImmune,
+                Time.time,
+                FallingTime,
+                safeFallDistance,
+                deathFallDistance);
+
+            var result = FallDamageCalculator.Evaluate(in input);
+
+            if (result.ShouldConsumeJumpImmunity)
             {
-                fallDistance = Mathf.Abs(PostGroundVerticalPos - currentY);
+                JumpImmune = false;
+                return result.FallDistance;
             }
 
-            if (fallDamageEnabled && HasTouchedGround && HasLanded)
+            if (result.ShouldDispatchEarlyLandImpact)
             {
-                if (JumpImmune)
-                {
-                    JumpImmune = false;
-                    return fallDistance;
-                }
-                if ((Time.time - FallingTime) <= 0.4f)
-                {
-                    if (fallDistance > 0.05f) dispatchLandImpact?.Invoke(0.2f);
-                    return fallDistance;
-                }
-                float ratio = fallDistance / deathFallDistance;
-                if (fallDistance > safeFallDistance && healthManager != null)
-                {
-                    int damage = Mathf.FloorToInt(ratio * 100f);
-                    healthManager.DoFallDamage(damage);
-                }
-                playLandingSound?.Invoke(ratio);
+                dispatchLandImpact?.Invoke(result.EarlyLandImpactAmount);
+                return result.FallDistance;
+            }
+
+            if (result.ShouldApplyDamage && healthManager != null)
+            {
+                healthManager.DoFallDamage(result.Damage);
+            }
+
+            if (result.LandingSoundVolume > 0f || result.ShouldUpdateFallingTime || !fallDamageEnabled || !HasTouchedGround || !HasLanded)
+            {
+                playLandingSound?.Invoke(result.LandingSoundVolume);
+            }
+
+            if (result.ShouldUpdateFallingTime)
+            {
                 FallingTime = Time.time;
             }
-            else
-            {
-                playLandingSound?.Invoke(1f);
-            }
-            return fallDistance;
+
+            return result.FallDistance;
         }
     }
 }

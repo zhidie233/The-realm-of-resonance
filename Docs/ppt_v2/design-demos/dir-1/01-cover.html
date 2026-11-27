@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1920px; height: 1080px; overflow: hidden;
+    background: #F7F6F2; color: #0D1017;
+    font-family: "Bahnschrift", "Noto Sans SC", "Microsoft YaHei", sans-serif;
+    font-synthesis: none; line-break: strict;
+  }
+  .page {
+    display: grid;
+    grid-template-columns: 1000px 920px;
+    width: 1920px; height: 1080px;
+  }
+  .left {
+    padding: 58px 72px 58px 80px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    border-right: 1.5px solid #111318;
+  }
+  .masthead {
+    display: flex; justify-content: space-between; align-items: center;
+    padding-bottom: 22px; border-bottom: 1.5px solid #111318;
+    font-size: 18px; font-weight: 600; letter-spacing: 0.08em; color: #1A4BFF;
+  }
+  .masthead .right-tag { color: #4A5260; font-weight: 500; letter-spacing: 0.04em; }
+  .hero { margin: auto 0; padding: 24px 0; }
+  .kicker-line {
+    width: 88px; height: 6px; background: #E8451E; margin-bottom: 28px;
+  }
+  h1 {
+    font-size: 136px; font-weight: 900; line-height: 1.02;
+    letter-spacing: -0.02em; color: #0D1017;
+  }
+  .en-sub {
+    margin-top: 22px; font-size: 22px; font-weight: 700;
+    letter-spacing: 0.24em; color: #4A5260;
+  }
+  .lead {
+    margin-top: 34px; font-size: 28px; line-height: 1.55;
+    color: #272D38; max-width: 780px; font-weight: 400;
+  }
+  .lead strong { color: #1A4BFF; font-weight: 700; }
+  .meta-grid {
+    border-top: 1.5px solid #111318;
+    padding-top: 28px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 22px 48px;
+  }
+  .meta-item .label {
+    font-size: 16px; font-weight: 700; color: #6B7280;
+    letter-spacing: 0.06em; margin-bottom: 6px;
+  }
+  .meta-item .val {
+    font-size: 21px; font-weight: 600; color: #0D1017; line-height: 1.45;
+  }
+  .right {
+    position: relative; width: 920px; height: 1080px; overflow: hidden;
+    background: #111318;
+  }
+  .right img {
+    width: 100%; height: 100%; object-fit: cover; object-position: center;
+    display: block;
+  }
+  .caption-bar {
+    position: absolute; left: 0; right: 0; bottom: 0;
+    background: #0D1017; color: #F7F6F2;
+    padding: 22px 36px;
+    display: flex; justify-content: space-between; align-items: center;
+    border-top: 2px solid #E8451E;
+  }
+  .caption-bar .cap-title { font-size: 20px; font-weight: 600; }
+  .caption-bar .cap-spec { font-size: 18px; color: #9CA3AF; font-variant-numeric: tabular-nums; }
+</style>
+</head>
+<body>
+<div class="page">
+  <div class="left">
+    <div class="masthead">
+      <span>UNITY 2022.3 · PHOTON PUN 2 · URP 14</span>
+      <span class="right-tag">实训结题答辩 · 2026.11</span>
+    </div>
+
+    <div class="hero">
+      <div class="kicker-line"></div>
+      <h1>共鸣之境</h1>
+      <div class="en-sub">THE REALM OF RESONANCE</div>
+      <p class="lead">基于全局共鸣中枢 <strong>rr.resonance</strong> 的联机第一人称射击游戏——让每一次交火、设施争夺与夺旗，实时改写整座战场的物理规则。</p>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-item">
+        <div class="label">院校与专业</div>
+        <div class="val">福建师范大学协和学院<br>信息技术系 · 数字媒体技术</div>
+      </div>
+      <div class="meta-item">
+        <div class="label">指导教师</div>
+        <div class="val">黄取治<br>2026 年 11 月结题汇报</div>
+      </div>
+      <div class="meta-item" style="grid-column: span 2; border-top: 1px solid #D6D8DE; padding-top: 18px;">
+        <div class="label">小组成员与职责分工</div>
+        <div class="val">吴凯东（程序框架设计）　·　杨世杰（业务逻辑实现）　·　周欣琦（美术、策划、测试）</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="right">
+    <img src="../../assets/map_overview.png" alt="OldQuarter 对战地图全景">
+    <div class="caption-bar">
+      <span class="cap-title">OldQuarter 实景 · NavMesh 与 30 处 AI 掩体网络</span>
+      <span class="cap-spec">310 脚本 / 44,039 行</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

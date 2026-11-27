@@ -4,13 +4,8 @@ using System.Collections;
 using Random = UnityEngine.Random;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
 using Resonance.Multiplayer;
 using Resonance.World;
-using Resonance.UI;
 namespace Resonance.Anomaly
 {
 
@@ -23,13 +18,13 @@ namespace Resonance.Anomaly
 
         private void Start()
         {
-            GameObject dropAreaObject = GameObject.FindGameObjectWithTag("DropArea");
-            if (dropAreaObject != null) dropArea = dropAreaObject.GetComponent<BoxCollider>();
+            dropArea = WorldDropZone.FindDropArea();
         }
 
         public override void ReceiveDamage(DamageInfo damageData)
         {
             if (damageData == null || damageData.GameActor == null) return;
+            base.ReceiveDamage(damageData);
 
             // 陨石的目标选择与冷却只由房主判定，其他端把请求转给房主
             if (NetworkWrapper.IsMasterClient)
@@ -168,19 +163,7 @@ namespace Resonance.Anomaly
 
         private Vector3 GetRandomPositionInDropArea()
         {
-            if (dropArea == null) return Vector3.zero;
-
-            // 计算掉落区域内的随机位置
-            Vector3 localRandomPos = new Vector3(
-                Random.Range(-dropArea.size.x * 0.5f, dropArea.size.x * 0.5f),
-                Random.Range(-dropArea.size.y * 0.5f, dropArea.size.y * 0.5f),
-                Random.Range(-dropArea.size.z * 0.5f, dropArea.size.z * 0.5f)
-            );
-
-            // 转换为世界坐标
-            Vector3 worldPos = dropArea.transform.TransformPoint(localRandomPos);
-            Vector3 offset=new Vector3(0, 10f, 0);
-            return worldPos-offset;
+            return WorldDropZone.SampleWorldPoint(dropArea, 10f);
         }
     }
 }

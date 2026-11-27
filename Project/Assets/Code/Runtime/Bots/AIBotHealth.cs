@@ -55,7 +55,7 @@ namespace Resonance.Bots
 
         public void DoDamage(int damage, string weaponName, Vector3 direction, int viewID, bool fromBot, bool ishead)
         {
-            if (m_AIShooter.isDeath)
+            if (m_AIShooter.isDead)
                 return;
 
             photonView.RPC(nameof(RpcDoDamage), RpcTarget.All, damage, weaponName, direction, viewID, fromBot, ishead);
@@ -64,7 +64,7 @@ namespace Resonance.Bots
         [PunRPC]
         void RpcDoDamage(int damage, string weaponName, Vector3 direction, int viewID, bool fromBot, bool ishead)
         {
-            if (m_AIShooter.isDeath)
+            if (m_AIShooter.isDead)
                 return;
 
             Health -= damage;
@@ -128,7 +128,7 @@ namespace Resonance.Bots
 
         void Die(int viewID, bool fromBot, bool ishead, string weaponName, Vector3 direction)
         {
-            m_AIShooter.isDeath = true;
+            m_AIShooter.isDead = true;
             m_AIShooter.OnDeath();
             gameObject.name += " (die)";
             m_AIShooter.AimTarget.name += " (die)";
@@ -311,9 +311,9 @@ namespace Resonance.Bots
         }
         public override int GetHealth() => Health;
         public override int GetMaxHealth() => 100;
-        public override bool IsDeath()
+        public override bool IsDead()
         {
-            return m_AIShooter.isDeath;
+            return m_AIShooter.isDead;
         }
         [PunRPC]
         void RpcSyncHealth(int _health)

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    width: 1160px; height: 640px; overflow: hidden;
+    background: #F7F6F2;
+    font-family: "Bahnschrift", "Microsoft YaHei", sans-serif;
+  }
+</style>
+</head>
+<body>
+<svg viewBox="0 0 1160 640" width="1160" height="640">
+  <rect width="1160" height="640" fill="#F7F6F2"/>
+  <line x1="50" y1="530" x2="1120" y2="530" stroke="#111318" stroke-width="2.5"/>
+  <line x1="50" y1="400" x2="1120" y2="400" stroke="#D6D8DE" stroke-width="1"/>
+  <line x1="50" y1="270" x2="1120" y2="270" stroke="#D6D8DE" stroke-width="1"/>
+  <line x1="50" y1="140" x2="1120" y2="140" stroke="#D6D8DE" stroke-width="1"/>
+  <line x1="50" y1="40"  x2="1120" y2="40"  stroke="#D6D8DE" stroke-width="1"/>
+
+  <!-- 阈值 150 熔岩红竖直标尺 -->
+  <line x1="400" y1="24" x2="400" y2="530" stroke="#E8451E" stroke-width="3" stroke-dasharray="8 6"/>
+  <rect x="414" y="26" width="290" height="40" fill="#E8451E"/>
+  <text x="430" y="53" fill="#FFFFFF" font-family="Bahnschrift, Microsoft YaHei" font-size="21" font-weight="700">阈值 150 · 46 处火海激活</text>
+
+  <!-- 200 与 1000 竖线 -->
+  <line x1="595" y1="90" x2="595" y2="530" stroke="#1A4BFF" stroke-width="1.5" stroke-dasharray="4 4"/>
+  <line x1="1010" y1="60" x2="1010" y2="530" stroke="#0D1017" stroke-width="1.5" stroke-dasharray="4 4"/>
+
+  <!-- 跃迁折线 -->
+  <path d="M 76 484 L 235 452 L 400 350" fill="none" stroke="#1A4BFF" stroke-width="5.5" stroke-linejoin="round"/>
+  <path d="M 400 350 L 595 270 L 800 186 L 1010 100 L 1096 72" fill="none" stroke="#E8451E" stroke-width="5.5" stroke-linejoin="round"/>
+
+  <!-- 节点圆点 -->
+  <circle cx="76" cy="484" r="9" fill="#0D1017"/>
+  <circle cx="235" cy="452" r="9" fill="#1A4BFF"/>
+  <circle cx="400" cy="350" r="12" fill="#E8451E" stroke="#F7F6F2" stroke-width="3"/>
+  <circle cx="595" cy="270" r="10" fill="#1A4BFF" stroke="#F7F6F2" stroke-width="3"/>
+  <circle cx="1010" cy="100" r="12" fill="#0D1017" stroke="#F7F6F2" stroke-width="3"/>
+
+  <!-- 原位标注（全部纯中文工程名，绝不压线） -->
+  <text x="76" y="514" fill="#4A5260" font-family="Bahnschrift, Microsoft YaHei" font-size="18" font-weight="600">常态 -100 · 初速 5.00</text>
+  <text x="155" y="348" fill="#1A4BFF" font-family="Bahnschrift, Microsoft YaHei" font-size="20" font-weight="700">重力调制线性爬升</text>
+
+  <text x="418" y="378" fill="#E8451E" font-family="Bahnschrift, Microsoft YaHei" font-size="22" font-weight="700">地面火海 · 激活 46 处火点</text>
+  <text x="418" y="406" fill="#4A5260" font-family="Bahnschrift, Microsoft YaHei" font-size="18">回落至 100 时全端同步销毁</text>
+
+  <text x="615" y="298" fill="#1A4BFF" font-family="Bahnschrift, Microsoft YaHei" font-size="21" font-weight="700">战区空投 · 每跨 200 投放补给</text>
+
+  <text x="990" y="152" text-anchor="end" fill="#0D1017" font-family="Bahnschrift, Microsoft YaHei" font-size="21" font-weight="700">第三阵营机器人 · 跨 1000 增援</text>
+  <text x="990" y="180" text-anchor="end" fill="#4A5260" font-family="Bahnschrift, Microsoft YaHei" font-size="18">跳跃初速度同步跃升至 11.00</text>
+
+  <!-- X轴刻度 -->
+  <text x="58" y="572" fill="#0D1017" font-family="Bahnschrift" font-size="22" font-weight="700">-100</text>
+  <text x="226" y="572" fill="#0D1017" font-family="Bahnschrift" font-size="22" font-weight="700">0</text>
+  <text x="380" y="572" fill="#E8451E" font-family="Bahnschrift" font-size="24" font-weight="700">150</text>
+  <text x="574" y="572" fill="#1A4BFF" font-family="Bahnschrift" font-size="22" font-weight="700">200</text>
+  <text x="984" y="572" fill="#0D1017" font-family="Bahnschrift" font-size="22" font-weight="700">1000</text>
+  <text x="1115" y="616" text-anchor="end" fill="#4A5260" font-family="Bahnschrift, Microsoft YaHei" font-size="18" font-weight="600">全局共鸣值演化轴 →</text>
+</svg>
+</body>
+</html>

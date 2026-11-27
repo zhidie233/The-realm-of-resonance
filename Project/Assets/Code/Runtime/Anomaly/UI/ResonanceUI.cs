@@ -2,16 +2,9 @@ using TMPro;
 using UnityEngine;
 using Resonance.Foundation;
 using Resonance.Core;
-using Resonance.Combat;
-using Resonance.Actors;
-using Resonance.Bots;
-using Resonance.Match;
-using Resonance.Multiplayer;
-using Resonance.World;
-using Resonance.UI;
+
 namespace Resonance.Anomaly
 {
-
     public class ResonanceUI : MonoBehaviour
     {
         private float currentResonance;
@@ -26,26 +19,27 @@ namespace Resonance.Anomaly
                 return;
             }
 
-            EventBus.Subscribe<ResonanceValueChangedEvent>(OnEvt_onResonanceChanged_OnResonanceChanged);
-            OnResonanceChanged(ResonanceManager.Instance.GetCurrentResonance());
+            EventBus.Subscribe<ResonanceValueChangedEvent>(HandleResonanceChanged);
+            UpdateValue(ResonanceManager.Instance.GetCurrentResonance());
         }
 
-        void OnDestroy()
+        private void OnDestroy()
         {
-            EventBus.Unsubscribe<ResonanceValueChangedEvent>(OnEvt_onResonanceChanged_OnResonanceChanged);
+            EventBus.Unsubscribe<ResonanceValueChangedEvent>(HandleResonanceChanged);
         }
 
-        void OnResonanceChanged(float newResonance)
+        private void HandleResonanceChanged(ResonanceValueChangedEvent e)
+        {
+            UpdateValue(e.Value);
+        }
+
+        private void UpdateValue(float newResonance)
         {
             currentResonance = newResonance;
-            UpdateCurrentResonanceValue();
+            if (resonanceValueText != null)
+            {
+                resonanceValueText.text = currentResonance.ToString();
+            }
         }
-
-        void UpdateCurrentResonanceValue()
-        {
-            resonanceValueText.text = currentResonance.ToString();
-        }
-
-        private void OnEvt_onResonanceChanged_OnResonanceChanged(ResonanceValueChangedEvent e) => OnResonanceChanged(e.Value);
     }
 }
